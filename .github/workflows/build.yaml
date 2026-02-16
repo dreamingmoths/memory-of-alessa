@@ -70,4 +70,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SLUS_206.22_report
-          path: build/report.json
+          path: build/SLUS_206.22/report.json
