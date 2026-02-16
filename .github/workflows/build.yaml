@@ -1,0 +1,73 @@
+name: alessa
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    if: github.repository == 'dreamingmoths/memory-of-alessa'
+    container:
+      image: ghcr.io/dreamingmoths/alessa:latest
+      credentials:
+        username: dreamingmoths
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: install python dependencies
+        run: python3 -m pip install --break-system-packages -r requirements.txt
+
+      - name: copy files
+        run: cp -r /home/* .
+
+      - name: make
+        run: make -j $(nproc)
+
+  progress:
+    if: github.repository == 'dreamingmoths/memory-of-alessa'
+    container:
+      image: ghcr.io/dreamingmoths/alessa:latest
+      credentials:
+        username: dreamingmoths
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: install python dependencies
+        run: python3 -m pip install --break-system-packages -r requirements.txt
+
+      - name: copy files
+        run: cp -r /home/* .
+
+      - name: make
+        run: make -j $(nproc) report
+
+      - name: upload progress
+        uses: actions/upload-artifact@v4
+        with:
+          name: SLUS_206.22_report
+          path: build/report.json
