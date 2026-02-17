@@ -2,13 +2,10 @@
     <h3>✶ memory of alessa ✶</h3>
     <p><em>Silent Hill 3 (PS2) matching decompilation project</em></p>
 </div>
-<div align="center">
-<img alt="% sh3 progress" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fsilenthillmuseum.org%2Freport.json&query=%24.percent&suffix=%25&style=flat&label=sh3%20progress&color=%236a5075">
-</div>
 
 ### project goals
 
-<img alt="% sh3 functions" src="https://decomp.dev/dreamingmoths/memory-of-alessa.svg?mode=shield&label=sh3+functions&color=%23695075&style=flat&measure=matched_functions"> <img alt="% sh2 functions" src="https://decomp.dev/dreamingmoths/memory-of-alessa/SLUS_202.28.svg?mode=shield&label=sh2+functions&color=%23695075&style=flat&measure=matched_functions"> <img alt="% sh3 stages" src="https://img.shields.io/badge/sh3_stages-1%20/%2040-%236a5075">
+<img alt="sh3 functions" src="https://decomp.dev/dreamingmoths/memory-of-alessa.svg?mode=shield&label=sh3+functions&color=%236b4e73&style=flat&measure=matched_functions"> <img alt="sh2 functions" src="https://decomp.dev/dreamingmoths/memory-of-alessa/SLUS_202.28.svg?mode=shield&label=sh2+functions&color=%236b4e73&style=flat&measure=matched_functions"> <img alt="sh3 stages" src="https://img.shields.io/badge/sh3_stages-1%20/%2040-%236b4e73">
 
 ⋆˙⟡ 100% byte-matching decompilation of Silent Hill 3, a survival horror
 masterpiece.
