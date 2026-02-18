@@ -93,12 +93,25 @@ struct SubCharacter* shCharacter_Manage_GetCharacterList() {
     return sh2chara.head;
 }
 
+#define COPY_VEC4(dst, src) \
+do { \
+    float w, z, y, x; \
+    x = (src).x; \
+    y = (src).y; \
+    z = (src).z; \
+    w = (src).w; \
+    (dst).x = x; \
+    (dst).y = y; \
+    (dst).z = z; \
+    (dst).w = w; \
+} while (0)
+
 int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
     SubCharacter * scp; // r2
     int i; // r16
     
     for (i = 0; i < chara->total; i++) {
-        scp = (SubCharacter*)shCharacterCreate(0, 0, 0, 0, chara->ci_sc[i].kind);
+        scp = (SubCharacter*) shCharacterCreate(0, 0, 0, 0, chara->ci_sc[i].kind);
 
 
 
@@ -106,12 +119,12 @@ int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
         scp->sub_status = chara->ci_sc[i].sub_status;
         scp->sub_st = chara->ci_sc[i].sub_st;
         scp->id = chara->ci_sc[i].id;
-        scp->pos = chara->ci_sc[i].pos;
-        scp->rot = chara->ci_sc[i].rot;
-        scp->pos_spd = chara->ci_sc[i].pos_spd;
-        scp->rot_spd = chara->ci_sc[i].ot_spd;
-        scp->b_pos = chara->ci_sc[i].b_pos;
-        scp->b_rot = chara->ci_sc[i].b_rot;   
+        COPY_VEC4(scp->pos, chara->ci_sc[i].pos);
+        COPY_VEC4(scp->rot, chara->ci_sc[i].rot);
+        COPY_VEC4(scp->pos_spd, chara->ci_sc[i].pos_spd);
+        COPY_VEC4(scp->rot_spd, chara->ci_sc[i].ot_spd);
+        COPY_VEC4(scp->b_pos, chara->ci_sc[i].b_pos);
+        COPY_VEC4(scp->b_rot, chara->ci_sc[i].b_rot);
         scp->en_first_status = chara->ci_sc[i].en_first_status;
         scp->eye_y = chara->ci_sc[i].eye_y;
         scp->center_y = chara->ci_sc[i].center_y;

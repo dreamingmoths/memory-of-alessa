@@ -119,7 +119,7 @@ segments:
       - [0x082650, asm, GFW/sh2gfw_read_process]
       - [0x082f60, asm, GFW/sh2gfw_viewclip]
       - [0x0848f0, asm, Heap/sh2_ch_malloc]
-      - [0x084b50, asm, Heap/utilheap]
+      - [0x084b50, c,   Heap/utilheap]
       - [0x084e10, asm, Lens/kari_lf_draw]
       - [0x087720, asm, Lens/lens_flare]
       - [0x087a90, asm, GFW/sh2_get_drawenv]

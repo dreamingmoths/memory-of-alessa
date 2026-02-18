@@ -21,11 +21,19 @@ typedef struct _CL_HITPOLY_HEAD
     int flg;        // offset 0xC, size 0x4
 } CL_HITPOLY_HEAD;
 
+typedef struct
+{
+    float x;
+    float y;
+    float z;
+    float w;
+} __attribute__((aligned(16))) Vector4;
+
 typedef struct _CL_VHIT_WALL
 {
     // total size: 0x30
-    sceVu0FVECTOR cp;            // offset 0x0, size 0x10
-    sceVu0FVECTOR nl;            // offset 0x10, size 0x10
+    Vector4 cp;            // offset 0x0, size 0x10
+    Vector4 nl;            // offset 0x10, size 0x10
     struct _CL_HITPOLY_HEAD *pd; // offset 0x20, size 0x4
 } CL_VHIT_WALL;
 
@@ -50,15 +58,15 @@ typedef struct _CL_VHIT_RESULT
 typedef struct shBattleInfo
 {
     // total size: 0x80
-    sceVu0FVECTOR pos;           // offset 0x0, size 0x10
-    sceVu0FVECTOR vec;           // offset 0x10, size 0x10
+    Vector4 pos;           // offset 0x0, size 0x10
+    Vector4 vec;           // offset 0x10, size 0x10
     u_short id;           // offset 0x20, size 0x2
     u_short kind;         // offset 0x22, size 0x2
     float dead_timer;            // offset 0x24, size 0x4
     float damage;                // offset 0x28, size 0x4
     float shock;                 // offset 0x2C, size 0x4
     int atk_result;       // offset 0x30, size 0x4
-    sceVu0FVECTOR prev_atk_pos;  // offset 0x40, size 0x10
+    Vector4 prev_atk_pos;  // offset 0x40, size 0x10
     struct SubCharacter *target; // offset 0x50, size 0x4
     float hp;                    // offset 0x54, size 0x4
     float hp_max;                // offset 0x58, size 0x4
@@ -79,10 +87,10 @@ typedef struct SubCharacter
     short id;
     u_int step;
     u_int model_type;
-    sceVu0FVECTOR pos;
-    sceVu0FVECTOR rot;
-    sceVu0FVECTOR pos_spd;
-    sceVu0FVECTOR rot_spd;
+    Vector4 pos;
+    Vector4 rot;
+    Vector4 pos_spd;
+    Vector4 rot_spd;
     sceVu0FMATRIX mat;
     struct shSkelton *sk_top;
     float eye_y;
@@ -91,10 +99,10 @@ typedef struct SubCharacter
     float spd_org;
     float spd_y;
     float spd_roty;
-    sceVu0FVECTOR grnd_normal;
+    Vector4 grnd_normal;
     float grnd_height;
-    sceVu0FVECTOR b_pos;
-    sceVu0FVECTOR b_rot;
+    Vector4 b_pos;
+    Vector4 b_rot;
     int en_first_status;
     int colis_fall_timer;
     shBattleInfo battle;
@@ -172,10 +180,10 @@ typedef struct shSkelton
     struct shSkelton *next;   // offset 0x0, size 0x4
     struct shSkelton *parent; // offset 0x4, size 0x4
     sceVu0FMATRIX src_m;      // offset 0x10, size 0x40
-    sceVu0FVECTOR src_t;      // offset 0x50, size 0x10
+    Vector4 src_t;      // offset 0x50, size 0x10
     sceVu0FMATRIX des_m;      // offset 0x60, size 0x40
-    sceVu0FVECTOR des_t;      // offset 0xA0, size 0x10
-    sceVu0FVECTOR axis;       // offset 0xB0, size 0x10
+    Vector4 des_t;      // offset 0xA0, size 0x10
+    Vector4 axis;       // offset 0xB0, size 0x10
     float theta;              // offset 0xC0, size 0x4
     float xx;                 // offset 0xC4, size 0x4
     float yy;                 // offset 0xC8, size 0x4
@@ -222,10 +230,10 @@ typedef struct shAnime3d
     char comp_type;              // offset 0x31, size 0x1
     struct _AnimeInfo *anim_a;   // offset 0x34, size 0x4
     struct _AnimeInfo *anim_b;   // offset 0x38, size 0x4
-    sceVu0FVECTOR rot_neck;      // offset 0x40, size 0x10
-    sceVu0FVECTOR ot_arms;       // offset 0x50, size 0x10
-    sceVu0FVECTOR rot_body_neck; // offset 0x60, size 0x10
-    sceVu0FVECTOR rot_body;      // offset 0x70, size 0x10
+    Vector4 rot_neck;      // offset 0x40, size 0x10
+    Vector4 ot_arms;       // offset 0x50, size 0x10
+    Vector4 rot_body_neck; // offset 0x60, size 0x10
+    Vector4 rot_body;      // offset 0x70, size 0x10
     float scale;                 // offset 0x80, size 0x4
 };
 
@@ -537,12 +545,12 @@ typedef struct _CI_SubCharacter
     u_int sub_st;        // offset 0x8, size 0x4
     short kind;          // offset 0xC, size 0x2
     short id;            // offset 0xE, size 0x2
-    sceVu0FVECTOR pos;          // offset 0x10, size 0x10
-    sceVu0FVECTOR rot;          // offset 0x20, size 0x10
-    sceVu0FVECTOR pos_spd;      // offset 0x30, size 0x10
-    sceVu0FVECTOR ot_spd;       // offset 0x40, size 0x10
-    sceVu0FVECTOR b_pos;        // offset 0x50, size 0x10
-    sceVu0FVECTOR b_rot;        // offset 0x60, size 0x10
+    Vector4 pos;          // offset 0x10, size 0x10
+    Vector4 rot;          // offset 0x20, size 0x10
+    Vector4 pos_spd;      // offset 0x30, size 0x10
+    Vector4 ot_spd;       // offset 0x40, size 0x10
+    Vector4 b_pos;        // offset 0x50, size 0x10
+    Vector4 b_rot;        // offset 0x60, size 0x10
     int en_first_status; // offset 0x70, size 0x4
     float eye_y;                // offset 0x74, size 0x4
     float center_y;             // offset 0x78, size 0x4
@@ -700,10 +708,10 @@ typedef struct shPlayerWork
 {
     // total size: 0x540
     struct SubCharacter *player;          // offset 0x0, size 0x4
-    sceVu0FVECTOR dist_rot;               // offset 0x10, size 0x10
-    sceVu0FVECTOR dist_pos;               // offset 0x20, size 0x10
-    sceVu0FVECTOR pos;                    // offset 0x30, size 0x10
-    sceVu0FVECTOR rot;                    // offset 0x40, size 0x10
+    Vector4 dist_rot;               // offset 0x10, size 0x10
+    Vector4 dist_pos;               // offset 0x20, size 0x10
+    Vector4 pos;                    // offset 0x30, size 0x10
+    Vector4 rot;                    // offset 0x40, size 0x10
     float rot_y;                          // offset 0x50, size 0x4
     float inner_to_wall;                  // offset 0x54, size 0x4
     float dist_to_wall;                   // offset 0x58, size 0x4
@@ -776,9 +784,9 @@ typedef struct shPlayerWork
     u_char reserve2;                      // offset 0x49A, size 0x1
     u_char strike_splash_flg;             // offset 0x49B, size 0x1
     int event_anime;               // offset 0x49C, size 0x4
-    sceVu0FVECTOR tgt_body_angle;         // offset 0x4A0, size 0x10
-    sceVu0FVECTOR tgt_neck_angle;         // offset 0x4B0, size 0x10
-    sceVu0FVECTOR tgt_arms_angle;         // offset 0x4C0, size 0x10
+    Vector4 tgt_body_angle;         // offset 0x4A0, size 0x10
+    Vector4 tgt_neck_angle;         // offset 0x4B0, size 0x10
+    Vector4 tgt_arms_angle;         // offset 0x4C0, size 0x10
     u_char hold_chg[2];                   // offset 0x4D0, size 0x2
     u_char hold_loop[2];                  // offset 0x4D2, size 0x2
     u_char motion_no;                     // offset 0x4D4, size 0x1
@@ -811,7 +819,7 @@ typedef struct shPlayerWork
     u_char cannot_run;                    // offset 0x525, size 0x1
     u_char fall_type;                     // offset 0x526, size 0x1
     u_char reload;                        // offset 0x527, size 0x1
-    u_char weapon;                        // offset 0x528, size 0x1
+    char   weapon;                        // offset 0x528, size 0x1
     u_char shoot_val;                     // offset 0x529, size 0x1
     u_char reload_val;                    // offset 0x52A, size 0x1
     u_char atk_type;                      // offset 0x52B, size 0x1
