@@ -99,6 +99,11 @@ Sequence_Different_Time_Get = 0x13BAD0;
 // sce
 sceVu0CopyMatrix = 0x1210A8;
 
+// utilheap.c
+utilHeapFree                                                                     = 0x1c1d00;
+utilHeapMalloc                                                                   = 0x1c1c20;
+utilHeapInit                                                                     = 0x1c1bb0;
+
 D_8 = 0x8; // ignore:true
 D_10 = 0x10; // ignore:true
 D_120 = 0x120; // ignore:true
@@ -597,7 +602,6 @@ sh3shd_make_reftag_pool_outdoor_for_parallel                                    
 shGsSetDefTBuffDispEnv                                                           = 0x1cea30;
 spkSetEnvLoadImage                                                               = 0x139460;
 strcat                                                                           = 0x112b00;
-utilHeapFree                                                                     = 0x1c1d00;
 vbSetRefView                                                                     = 0x1b67e0;
 vbTransposeMatrixWithoutTr                                                       = 0x1db310;
 vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST                                         = 0x1bc910;
@@ -614,7 +618,6 @@ vwRetNewVelocityToTargetVal                                                     
 EFCTSetDischargeCartridge                                                        = 0x1eeb80;
 dicSetStr                                                                        = 0x156bd0;
 sh3shd_init_outdoor_man2                                                         = 0x20f8a0;
-utilHeapInit                                                                     = 0x1c1bb0;
 vwRenewalXZVelocityToTargetPos                                                   = 0x1c0f40;
 
 HH_Class_Blood_Stick_00                                                          = 0x2f4060;

@@ -170,8 +170,7 @@ typedef struct shAnime3d
     float scale;                 // offset 0x80, size 0x4
 };
 
-// ???
-typedef struct Vector4
+typedef struct
 {
     float x;
     float y;
@@ -191,10 +190,10 @@ typedef struct SubCharacter
     short unk12;   // 0x12
     u_int sub_st;
     u_int model_type;
-    struct Vector4 pos;
-    struct Vector4 rot;
-    struct Vector4 pos_spd;
-    struct Vector4 rot_spd;
+    Vector4 pos;
+    Vector4 rot;
+    Vector4 pos_spd;
+    Vector4 rot_spd;
     // struct /* @anon3 */
     // {
 
