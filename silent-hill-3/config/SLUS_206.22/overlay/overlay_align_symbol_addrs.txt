@@ -1,1 +1,1 @@
-func_01F6D680_overlay_align = 0x1F6D680;
+func_01F6D680_overlay_align = 0x1F6D680; // ignore:true
