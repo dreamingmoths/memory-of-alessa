@@ -61,7 +61,7 @@ segments:
       - [0x028730, asm, Chacter_Draw/model3_equip_n]
       - [0x0287e0, asm, Chacter_Draw/model3_n]
       - [0x029000, asm, Chacter_Draw/model3_sub_n]
-      - [0x0295f0, asm, Chacter_Draw/model3_vu0_n]
+      - [0x0295f0, c,   Chacter_Draw/model3_vu0_n]
       - [0x02c4e0, asm, Chacter_Draw/model3_vu1_n]
       - [0x02e4c0, asm, Chacter_Draw/model_common]
       - [0x02e540, asm, Chacter_Draw/model_n]
