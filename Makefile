@@ -86,7 +86,7 @@ AS := $(BINUTILS)/$(BINUTILS_FLAVOR)-as
 MWCCGAP_AS_FLAGS := -mno-pdr
 AS_FLAGS := \
 	-EL -march=r5900 -mabi=eabi -G=0 \
-	$(MWCCGAP_AS_FLAGS) -I$(INCLUDE)
+	$(MWCCGAP_AS_FLAGS) -I$(INCLUDE) -I$(CONFIG)
 
 LD :=
 ifneq ($(NON_MATCHING),1)
@@ -129,7 +129,8 @@ ALESSATOOL := $(PYTHON) $(TOOLS)/alessatool/alessatool.py --verbose
 GENERATE := $(ALESSATOOL) generate \
 	--template-path $(INCLUDE)/$(SERIAL).inc.lcf \
 	--lcf-output-path $(LINKERS)/$(SERIAL).lcf \
-	--build-path $(BUILD)
+	--build-path $(BUILD) \
+	--config-path $(CONFIG)
 
 GENERATE_FLAGS = --make-full-disasm-for-code
 GENERATE_OVERLAY_FLAGS = --no-lcf --make-full-disasm-for-code

@@ -1,3 +1,4 @@
+import os
 import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
@@ -19,6 +20,7 @@ SECTION_ALIGNMENT_PAIRS: list[tuple[str, int]] = [
 
 @dataclass
 class GenerationArgs:
+    config_path: Path
     template_path: Path
     lcf_output_path: Path
     objdiff_output_path: Path
@@ -48,15 +50,21 @@ def split_yaml(args: GenerationArgs) -> None:
     `objdiff.json`, both, or neither.
     '''
 
-    split.main(
-        args.yamls,
-        modes="all",
-        verbose=args.verbose,
-        use_cache=args.use_cache,
-        make_full_disasm_for_code=args.make_full_disasm_for_code
-    )
+    old_cwd = os.getcwd()
+    try:
+        get_relative_path = lambda path : Path(path).relative_to(args.config_path)
+        os.chdir(args.config_path)
+        split.main(
+            list(map(get_relative_path, args.yamls)),
+            modes="all",
+            verbose=args.verbose,
+            use_cache=args.use_cache,
+            make_full_disasm_for_code=args.make_full_disasm_for_code
+        )
+        generate_linker_dependencies(args)
+    finally:
+        os.chdir(old_cwd)
 
-    generate_linker_dependencies(args)
 
     if not args.no_lcf:
         generate_lcf(args)

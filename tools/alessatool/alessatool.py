@@ -65,6 +65,12 @@ def main():
         help="split yaml and generate artifacts from the result"
     )
     generate_parser.add_argument(
+        "--config-path",
+        type=Path,
+        default=Path(CONFIG) / SERIAL,
+        help="splat will be run from this directory"
+    )
+    generate_parser.add_argument(
         "--template-path",
         type=Path,
         default=Path(INCLUDE) / f"{SERIAL}.inc.lcf"
