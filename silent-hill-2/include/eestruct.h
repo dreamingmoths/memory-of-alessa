@@ -24,7 +24,13 @@
 extern "C" {
 #endif
 
-
+#define SCE_GS_PRIM_POINT       (0)
+#define SCE_GS_PRIM_LINE        (1)
+#define SCE_GS_PRIM_LINESTRIP   (2)
+#define SCE_GS_PRIM_TRI         (3)
+#define SCE_GS_PRIM_TRISTRIP    (4)
+#define SCE_GS_PRIM_TRIFAN      (5)
+#define SCE_GS_PRIM_SPRITE      (6)
 
 /*-dma--------------------------------------------------*/
 
