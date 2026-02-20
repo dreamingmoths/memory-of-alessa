@@ -1,7 +1,7 @@
 #ifndef UTILHEAP_H
 #define UTILHEAP_H
 
-#include "common.h"
+#include "sh2_common.h"
 
 #define CEIL16(x) (((x + 0xF) / 0x10) * 0x10)
 #define FLOOR16(x) (x & ~0xF)

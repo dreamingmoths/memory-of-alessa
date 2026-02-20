@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "Font/font.h"
 
 // @todo: does this have an SH3 equivalent?

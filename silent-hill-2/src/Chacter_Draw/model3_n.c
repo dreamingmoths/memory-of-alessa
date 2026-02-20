@@ -1,6 +1,7 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "model3_sub_n.h"
 #include "model3_n.h"
+#include "eeregs.h"
 
 s8 *Model3SkeletonStructure(sh_Model *model)
 {

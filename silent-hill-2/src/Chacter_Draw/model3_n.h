@@ -1,7 +1,7 @@
 #ifndef MODEL3_N_H
 #define MODEL3_N_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "model3_vu1_n.h"
 
 typedef struct sh_Model

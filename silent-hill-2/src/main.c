@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "connect.h"
 #include "DBG/dbflow.h"
 

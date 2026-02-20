@@ -1,8 +1,10 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "eestruct.h"
+#include "eeregs.h"
 #include "libgraph.h"
 #include "model3_vu0_n.h"
 #include "model_common.h"
+#include "libdmapk.h"
 
 void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
@@ -112,7 +114,29 @@ static void InitAllPacket0(AllPacket* p) {
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitAllPacket0);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", LoadProgram_Vu0);
+static void LoadProgram_Vu0(void) {
+    if (initialized == 0) {
+        sceVif0Packet packet;
+        sceVif0Packet* pk = &packet;
+        sceVif0PkInit(pk, (u_long128*) READ_UNCACHED(&packet_buffer));
+        sceVif0PkCall(pk, model3_mpg0_skel_load, 0U);
+        sceVif0PkEnd(pk, 0U);
+        sceVif0PkTerminate(pk);
+        initialized = 1;
+    }
+
+    do {
+
+    } while (*D0_CHCR & 0x100);
+
+    *D0_QWC = 0;
+    *(u_long**) D0_TADR = (u_long*)&packet_buffer;
+    *D0_CHCR = 0x145;
+
+    do {
+
+    } while (*D0_CHCR & 0x100);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeData0);
 

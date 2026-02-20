@@ -2,6 +2,7 @@
 #include "Chacter/character.h"
 #include "Chacter_Draw/model3_n.h"
 #include "Chacter_Draw/model3_sub_n.h"
+#include "eeregs.h"
 
 int Model3NSkeletons(void* model_) {
     sh_Model* model = (sh_Model*)model_;

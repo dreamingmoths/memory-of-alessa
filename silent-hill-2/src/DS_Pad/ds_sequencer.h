@@ -1,7 +1,7 @@
 #ifndef DS_SEQUENCER_H
 #define DS_SEQUENCER_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
 typedef struct DS_Object_Info

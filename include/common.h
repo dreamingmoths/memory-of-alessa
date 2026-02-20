@@ -7,9 +7,9 @@ typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;
 typedef short s16;
-typedef u_int u32;
+typedef unsigned int u32;
 typedef int s32;
-typedef u_long u64;
+typedef unsigned long u64;
 typedef long s64;
 typedef float f32;
 
@@ -18,15 +18,17 @@ typedef unsigned char u_char;
 typedef unsigned short u_short;
 typedef unsigned int u_int;
 typedef unsigned long u_long;
+typedef unsigned int u_long128;
 
 #define NULL 0
 #define PI 3.1415927f
-#define T0_COUNT ((volatile u32 *)(0x10000000))
+
+#define READ_UNCACHED(addr)      ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
 
 #define ABORT() asm("breakc 0")
 
 #ifdef DEBUG
-int fjAssert_(s8 *file, int line, s8 *str)
+int fjAssert_(const char *file, int line, const char *str) __attribute__((noreturn))
 {
     printf("assertion \"%s\" failed: file \"%s\", line %d\n", str, file, line);
     ABORT();

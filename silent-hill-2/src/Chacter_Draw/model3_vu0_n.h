@@ -1,6 +1,9 @@
 #ifndef MODEL3_VU0_N_H
 #define MODEL3_VU0_N_H
 
+#include "eetypes.h"
+#include "sh2_common.h"
+
 #define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
 
 #define DMArefe (0<<28)
@@ -184,5 +187,9 @@ typedef struct AllPacket {
     struct TriangleNormalEnvironSpecular normal_environ_specular[2]; // offset 0x7E0, size 0x4A0
     struct TriangleSpecularNormal specular_normal[2]; // offset 0xC80, size 0x360
 } AllPacket;
+
+extern u_int model3_mpg0_skel_load[];
+extern signed int initialized; // @ 0x00419FA0
+extern __int128 * packet_buffer; // r2
 
 #endif

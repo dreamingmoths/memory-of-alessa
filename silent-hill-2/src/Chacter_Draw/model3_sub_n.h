@@ -1,7 +1,7 @@
 #ifndef MODEL3_SUB_N_H
 #define MODEL3_SUB_N_H
 
-#include "common.h"
+#include "sh2_common.h"
 
 typedef struct ModelWork
 {

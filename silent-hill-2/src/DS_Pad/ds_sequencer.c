@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "ds_sequencer.h"
 
 void Sequencer_Type_Hispeed(EntryRecord *pER)
