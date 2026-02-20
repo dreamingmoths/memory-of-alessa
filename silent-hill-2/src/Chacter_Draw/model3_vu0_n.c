@@ -95,7 +95,22 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitTriangleNormalEnvi
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitTriangleSpecularNormal);
 
+#ifdef NON_MATCHING
+static void InitAllPacket0(AllPacket* p) {
+    InitTriangleNormal(&p->normal[0]);
+    InitTriangleNormal(&p->normal[1]);
+    InitTriangleNormalEnviron(&p->normal_environ[0]);
+    InitTriangleNormalEnviron(&p->normal_environ[1]);
+    InitTriangleNormalSpecular(&p->normal_specular[0]);
+    InitTriangleNormalSpecular(&p->normal_specular[1]);
+    InitTriangleNormalEnvironSpecular(&p->normal_environ_specular[0]);
+    InitTriangleNormalEnvironSpecular(&p->normal_environ_specular[1]);
+    InitTriangleSpecularNormal(&p->specular_normal[0]);
+    InitTriangleSpecularNormal(&p->specular_normal[1]);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitAllPacket0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", LoadProgram_Vu0);
 
