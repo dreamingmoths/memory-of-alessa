@@ -2,6 +2,7 @@
 #include "eestruct.h"
 #include "libgraph.h"
 #include "model3_vu0_n.h"
+#include "model_common.h"
 
 void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
@@ -27,7 +28,68 @@ void InitTriangleNormal(TriangleNormal* p) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitTriangleNormalEnviron);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitTriangleNormalSpecular);
+void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
+    int qwc = 26;
+
+    p->dmatag.u64[0] = DMAnext | qwc;
+    p->dmatag.u32[2] = SCE_VIF1_SET_NOP(0);
+    p->dmatag.u32[3] = SCE_VIF1_SET_DIRECT(qwc, 0);
+
+    p->n_giftag.u64[0] = SCE_GIF_SET_TAG(
+        1,
+        SCE_GS_TRUE,
+        SCE_GS_TRUE,
+        SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 1, 1, 1, 1, 0, 0, 0, 0),
+        SCE_GIF_PACKED,
+        11
+    );
+    p->n_giftag.u64[1] = GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GIF_PACKED_AD, 1) | GIF_REG(SCE_GS_ST,         2)  | GIF_REG(SCE_GS_RGBAQ,      3)  | 
+        GIF_REG(SCE_GS_XYZF2,      4)  | GIF_REG(SCE_GS_ST,         5)  | GIF_REG(SCE_GS_RGBAQ,      6)  | GIF_REG(SCE_GS_XYZF2,      7)  |
+        GIF_REG(SCE_GS_ST,         8)  | GIF_REG(SCE_GS_RGBAQ,      9)  | GIF_REG(SCE_GS_XYZF2,      10) | GIF_REG(SCE_GS_PRIM,       11);
+
+    p->n_tex0.u64[1] = 6;
+    p->n_clamp.u64[1] = 8;
+
+    p->s_giftag.u64[0] = SCE_GIF_SET_TAG(
+        1,
+        SCE_GS_TRUE,
+        SCE_GS_TRUE,
+        SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 1, 1, 1, 0, 0, 0, 0),
+        SCE_GIF_PACKED,
+        13
+    );
+    p->s_giftag.u64[1] =
+        GIF_REG(SCE_GIF_PACKED_AD, 0)  | 
+        GIF_REG(SCE_GIF_PACKED_AD, 1)  | 
+        GIF_REG(SCE_GIF_PACKED_AD, 2)  | 
+        GIF_REG(SCE_GIF_PACKED_AD, 3)  | 
+        GIF_REG(SCE_GS_RGBAQ, 4)       | 
+        GIF_REG(SCE_GS_ST, 5)          | 
+        GIF_REG(SCE_GS_XYZF2, 6)       | 
+        GIF_REG(SCE_GS_ST, 7)          | 
+        GIF_REG(SCE_GS_XYZF2, 8)       | 
+        GIF_REG(SCE_GS_ST, 9)          | 
+        GIF_REG(SCE_GS_XYZF2, 10)      | 
+        GIF_REG(SCE_GIF_PACKED_AD, 11) | 
+        GIF_REG(SCE_GIF_PACKED_AD, 12);
+
+  p->s_tex0.u64[0] = model_common_work->specular_mapping_tex0;
+  p->s_tex0.u64[1] = 6;
+  p->s_clamp.u64[0] = 5;
+  p->s_clamp.u64[1] = 8;
+  p->s_alpha.u64[0] = 72;
+  p->s_alpha.u64[1] = 66;
+
+  p->s_fogcol.u64[0] = 0;
+  p->s_fogcol.u64[1] = 61;
+  p->s_stq0.fv[2] = 1.0f;
+  p->s_stq1.fv[2] = 1.0f;
+  p->s_stq2.fv[2] = 1.0f;
+
+  p->S_alpha.u64[0] = 68;
+  p->S_alpha.u64[1] = 66;
+  p->S_fogcol.u64[1] = 61;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitTriangleNormalEnvironSpecular);
 
