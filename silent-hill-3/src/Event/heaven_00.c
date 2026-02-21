@@ -1,9 +1,4 @@
-#include "common.h"
-
-extern int func_00199C70(int arg0);
-extern void func_0016CA40(int arg0);
-
-extern u32 D_1D31674[3];
+#include "heaven_00.h"
 
 void func_01F6D680_heaven_00(void)
 {
