@@ -272,9 +272,20 @@ extern u_int D_003B57D0;
 
 extern s32 xitop;
 extern AllData_Vu0 * pAllData_Vu0;
+
 extern u32 _vu_0_0x00380640;
 extern u32 _vu_0_0x00380F00;
 extern u32 _vu_0_0x00381200;
+
+extern u32 D_003B5D00;
+extern u32 D_003B5E40;
+extern u32 D_003B6200;
+extern u32 D_003B6A80;
+
+extern u32 model3_mpg0_lambert_size;
+extern u32 model3_mpg0_para_size;
+extern u32 model3_mpg0_point_size;
+extern u32 model3_mpg0_spot_size;
 
 extern u32 model3_mpg0_specular_size;
 // extern u32 model3_mpg0_persfvg_size;

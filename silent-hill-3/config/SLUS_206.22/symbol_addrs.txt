@@ -118,6 +118,10 @@ all_packet = 0x3669e0;
 xitop = 0x1EE3DC8;
 pAllData_Vu0 = 0x01EE3100;
 model3_mpg0_specular_size = 0x003B6A50;
+model3_mpg0_para_size = 0x003B5F00;
+model3_mpg0_point_size = 0x003B63A0;
+model3_mpg0_lambert_size = 0x003B5E00;
+model3_mpg0_spot_size = 0x003B6C00;
 
 // model_common.c
 model_common_work = 0x1EE8090;
@@ -144,6 +148,11 @@ ktVif0Wait2 = 0x001d8ba0;
 ktVif0Send = 0x001d8be0;
 ktVif0PkBufCurrent = 0x001c5d00;
 ktVif0PkBufNext = 0x1C5C80;
+
+// light_n.c
+LightNValidParallelMatrices = 0x001C4DB0;
+LightNValidExtras = 0x001C4DA0;
+LightReflectionBrightness = 0x001C4EB0;
 
 // utilheap.c
 utilHeapFree                                                                     = 0x1c1d00;

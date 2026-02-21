@@ -8,6 +8,7 @@
 #include "libdmapk.h"
 #include "GFW/sh3gfw_Init_ModelDrawData.h"
 #include "vifot/sh_kt_vif0.h"
+#include "light_n.h"
 
 void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
@@ -229,7 +230,159 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeLambertShadingPacket);
+static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
+    int n_parallels = LightNValidParallelMatrices();
+    int n_extras    = LightNValidExtras();
+    int i;
+    float brightness;
+    Data * lf_data;
+        
+    if (n_parallels > 0) {
+        xmtop ^= 0x80;
+
+        sceVif0PkRefMpg(
+            pk,
+            xmtop,
+            &D_003B5E40,
+            model3_mpg0_para_size,
+            0
+        );
+    }
+
+    for (i = 0; i < n_parallels; i++) {
+
+        lf_data = (Data*)&pAllData_Vu0->plight[i];
+
+        sceVif0PkRef(
+            pk,
+        (    u32 *)lf_data,
+            8U,
+            0x01000101U,
+            (u_int)xitop | 0x6c080000,
+            0
+        );
+
+        sceVif0PkCnt(pk, 0U);
+
+        sceVif0PkAddCode(pk, xitop | 0x04000000);
+        sceVif0PkAddCode(pk, xmtop | 0x14000000);
+
+        xitop ^= 8;
+    }
+
+    for (i = 0; i < n_extras; i++) {
+        int kind;
+        xmtop ^= 0x80;
+        kind  = func_001C4E80(i);
+
+        switch (kind) {
+        
+            /* point light */
+            case 10:
+            case 11:
+                sceVif0PkRefMpg(
+                    pk,
+                    (u16)xmtop,
+                    &D_003B6200,
+                    model3_mpg0_point_size,
+                    0
+                );
+                break;
+        
+            /* spot light */
+            case 13:
+            case 14:
+            case 16:
+                sceVif0PkRefMpg(
+                    pk,
+                    (u16)xmtop,
+                    &D_003B6A80,
+                    model3_mpg0_spot_size,
+                    0
+                );
+                break;
+        }
+
+        lf_data = (Data*)&pAllData_Vu0->elight[i];
+
+        sceVif0PkRef(
+            pk,
+            (u32 *)lf_data,
+            4U,
+            0x01000101U,
+            xitop | 0x6C040000,
+            0
+        );
+
+        sceVif0PkCnt(pk, 0U);
+
+        sceVif0PkAddCode(pk, xitop | 0x04000000);
+        sceVif0PkAddCode(pk, xmtop | 0x14000000);
+
+        xitop ^= 8;
+    }
+
+
+    xmtop ^= 0x80;
+
+    sceVif0PkRefMpg(
+        pk,
+        (u16)xmtop,
+        &D_003B5D00,
+        model3_mpg0_lambert_size,
+        0
+    );
+
+    lf_data = (Data*)&pAllData_Vu0->lambert0;
+
+    sceVif0PkRef(
+        pk,
+        (u32 *)lf_data,
+        8U,
+        0x01000101U,
+        xitop | 0x6C080000,
+        0
+    );
+
+    sceVif0PkCnt(pk, 0U);
+
+    sceVif0PkAddCode(pk, xitop | 0x04000000);
+    sceVif0PkAddCode(pk, xmtop | 0x14000000);
+
+    xitop ^= 8;
+
+    brightness = LightReflectionBrightness();
+
+    lf_data = (Data*)&pAllData_Vu0->lambert1;
+
+    sceVif0PkRef(
+        pk,
+        (u32 *)lf_data,
+        1U,
+        0x01000101U,
+        xitop | 0x6C010000,
+        0
+    );
+
+    sceVif0PkCnt(pk, 0U);
+
+    sceVif0PkAddCode(pk, 0x01000101U);
+    sceVif0PkAddCode(pk, (xitop + 1) | 0x6C030000);
+
+    lf_data = (Data*)sceVif0PkReserve(pk, 0xCU);
+
+    sceVu0CopyVector(lf_data->rgba.fv, part->diffuse);
+    lf_data->rgba.fv[3] = 1.0f;
+    sceVu0CopyVector((&lf_data[1])->rgba.fv, part->ambient);
+    (&lf_data[1])->rgba.fv[3] = 1.0f; 
+    (&lf_data[2])->rgba.fv[2]= (part->phong_param_a * brightness); 
+    (&lf_data[2])->rgba.fv[3]= (part->phong_param_b * brightness);
+
+    sceVif0PkAddCode(pk, xitop | 0x04000000);
+    sceVif0PkAddCode(pk, (xmtop + 2) | 0x14000000);
+
+    xitop ^= 8;
+}
 
 static void MakeClipPacket(Part* part, sceVif0Packet* pk) {
     FlipXMTOP();
