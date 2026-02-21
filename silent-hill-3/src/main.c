@@ -75,7 +75,7 @@ int main(int argc, s8** argv) {
             if (func_00151150(0, 1) != 0) {
                 func_0019BBD0(1, 0, 1);
                 func_0019BBD0(2, 0, 1);
-                func_001004A0(func_00115890(0), 0, 0);
+                func_001004A0(sceDmaGetChan(0), 0, 0);
                 func_0019B540(0xA);
                 func_0012CFE0(0);
                 if (func_0019B580(0x11) != 0) {

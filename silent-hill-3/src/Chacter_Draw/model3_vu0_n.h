@@ -214,6 +214,8 @@ extern int D_003B55C0;
 extern u_int D_003B57D0;
 
 extern u32 xmtop;
+extern AllPacket* all_packet;
+extern int calc_base;
 
 extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase);
 extern void func_0011FE80(sceVif0Packet*, __int128*, int);
