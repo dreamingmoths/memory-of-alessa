@@ -207,6 +207,11 @@ def main():
         default="objdiff.json"
     )
     merge_parser.add_argument(
+        "--categories-path",
+        type=Path,
+        default="categories.json"
+    )
+    merge_parser.add_argument(
         "objdiff_fragments",
         type=Path,
         nargs="+",

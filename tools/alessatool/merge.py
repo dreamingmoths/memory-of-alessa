@@ -6,6 +6,7 @@ from utils import ensure_path_and_write
 @dataclass
 class MergeArgs:
     objdiff_fragments: list[Path]
+    categories_path: Path
     output_path: Path
     verbose: bool
 
@@ -22,10 +23,14 @@ def merge_objdiff_units(args: MergeArgs):
 
     units.sort(key=lambda unit: unit["name"])
 
+    with open(args.categories_path, "r") as progress_categories_json:
+        progress_categories = load(progress_categories_json)
+
     result = dumps({
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
         "build_base": False,
         "build_target": False,
+        "progress_categories": progress_categories,
         "units": units,
     })
 

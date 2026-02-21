@@ -256,7 +256,7 @@ $(LINKER_SCRIPT): $(SPLAT_CONFIG) $(CONFIG)/$(SERIAL).yaml
 	$(GENERATE) $(GENERATE_FLAGS) $(SPLAT_CONFIG) $(CONFIG)/$(SERIAL).yaml
 
 $(OBJDIFF_CONFIG): $(OBJDIFF_FRAGMENTS)
-	$(ALESSATOOL) merge $^
+	$(ALESSATOOL) merge --categories-path $(CONFIG)/categories.json $^
 
 $(BUILD)/objdiff/%.json: $(CONFIG)/%.yaml
 	$(GENERATE_EXPECTED) --objdiff-output-path=$(BUILD)/objdiff/$*.json --make-full-disasm-for-code $(SPLAT_CONFIG) $<

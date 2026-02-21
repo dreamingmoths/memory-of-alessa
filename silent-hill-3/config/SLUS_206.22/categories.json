@@ -1,0 +1,166 @@
+[
+    {
+        "id": "engine",
+        "name": "Engine"
+    },
+    {
+        "id": "amusement_00",
+        "name": "Lakeside Amusement Park (00)"
+    },
+    {
+        "id": "amusement_01",
+        "name": "Lakeside Amusement Park (01)"
+    },
+    {
+        "id": "amusement_02",
+        "name": "Lakeside Amusement Park (02)"
+    },
+    {
+        "id": "apart_00",
+        "name": "Daisy Villa Apartments"
+    },
+    {
+        "id": "building_b_00",
+        "name": "Hilltop Center (B_00)"
+    },
+    {
+        "id": "building_b_01",
+        "name": "Hilltop Center (B_01)"
+    },
+    {
+        "id": "building_b_02",
+        "name": "Hilltop Center (B_02)"
+    },
+    {
+        "id": "building_b_03",
+        "name": "Hilltop Center (B_03)"
+    },
+    {
+        "id": "building_f_00",
+        "name": "Hilltop Center (F_00)"
+    },
+    {
+        "id": "building_f_01",
+        "name": "Hilltop Center (F_01)"
+    },
+    {
+        "id": "building_f_02",
+        "name": "Hilltop Center (F_02)"
+    },
+    {
+        "id": "car_00",
+        "name": "Car Ride to Silent Hill"
+    },
+    {
+        "id": "church_00",
+        "name": "Chapel (00)"
+    },
+    {
+        "id": "church_01",
+        "name": "Chapel (01)"
+    },
+    {
+        "id": "church_02",
+        "name": "Chapel (02)"
+    },
+    {
+        "id": "church_03",
+        "name": "Chapel (03)"
+    },
+    {
+        "id": "city_00",
+        "name": "City"
+    },
+    {
+        "id": "construct_00",
+        "name": "Construction Site"
+    },
+    {
+        "id": "heaven_00",
+        "name": "Heaven's Night"
+    },
+    {
+        "id": "hospital_b_00",
+        "name": "Brookhaven Hospital (B_00)"
+    },
+    {
+        "id": "hospital_b_01",
+        "name": "Brookhaven Hospital (B_01)"
+    },
+    {
+        "id": "hospital_b_02",
+        "name": "Brookhaven Hospital (B_02)"
+    },
+    {
+        "id": "hospital_f_00",
+        "name": "Brookhaven Hospital (F_00)"
+    },
+    {
+        "id": "hospital_f_01",
+        "name": "Brookhaven Hospital (F_01)"
+    },
+    {
+        "id": "hospital_f_02",
+        "name": "Brookhaven Hospital (F_02)"
+    },
+    {
+        "id": "hospital_f_03",
+        "name": "Brookhaven Hospital (F_03)"
+    },
+    {
+        "id": "hospital_turning_00",
+        "name": "Brookhaven Hospital (Turning_00)"
+    },
+    {
+        "id": "mall_b_00",
+        "name": "Central Square Shopping Center (B_00)"
+    },
+    {
+        "id": "mall_b_01",
+        "name": "Central Square Shopping Center (B_01)"
+    },
+    {
+        "id": "mall_b_02",
+        "name": "Central Square Shopping Center (B_02)"
+    },
+    {
+        "id": "mall_f_00",
+        "name": "Central Square Shopping Center (F_00)"
+    },
+    {
+        "id": "mall_f_01",
+        "name": "Central Square Shopping Center (F_01)"
+    },
+    {
+        "id": "motel_00",
+        "name": "Motel"
+    },
+    {
+        "id": "overlay_align",
+        "name": "overlay_align"
+    },
+    {
+        "id": "sewer_00",
+        "name": "Sewers (00)"
+    },
+    {
+        "id": "sewer_01",
+        "name": "Sewers (01)"
+    },
+    {
+        "id": "subway_00",
+        "name": "Hazel Street Subway (00)"
+    },
+    {
+        "id": "subway_01",
+        "name": "Hazel Street Subway (01)"
+    },
+    {
+        "id": "subway_02",
+        "name": "Hazel Street Subway (02)"
+    },
+    {
+        "id": "town_00",
+        "name": "Town"
+    }
+]
