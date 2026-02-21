@@ -284,5 +284,7 @@ extern int alldata_Vu0_page;
 extern f32 mag_114;
 extern f32 offset_115;
 extern struct AllData_Vu0 * pAllData_Vu0;
+extern AllPacket* all_packet;
+extern int calc_base;
 
 #endif

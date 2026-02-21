@@ -5,9 +5,11 @@
 #include "model3_vu0_n.h"
 #include "model3_n.h"
 #include "model_common.h"
+#include "libdma.h"
 #include "libdmapk.h"
 #include "light_n.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
+#include "vifot/sh_kt_vif0.h"
 
 void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
@@ -314,11 +316,21 @@ static void FlipXMTOP() {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeCalcPartPacket);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", KickCalcPartPacket);
+void KickCalcPartPacket() {
+    ktVif0Send(ktVif0PkBufCurrent(), 1);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", TransferToSPR);
+void TransferToSPR() {
+    sceDmaChan* toSPR = sceDmaGetChan(9);
+    ktVif0Wait2();
+    toSPR->sadr = (void*) calc_base;
+    sceDmaSendN(toSPR, (void*) VU0_MEM, 240);
+    calc_base ^= 0x1000;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", PrepareSort);
+void PrepareSort() {
+    InitAllPacket0(all_packet);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", SortTriangleNormal);
 
