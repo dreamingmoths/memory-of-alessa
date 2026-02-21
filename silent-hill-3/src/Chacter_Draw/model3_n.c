@@ -83,9 +83,9 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
 
         func_001C5C50();
         func_001C5CD0();
-        D_01EE8090 = (int*) func_001C5CA0();
+        model_common_work = (ModelCommonWork*) func_001C5CA0();
         model3_junk.fogcol = func_001D2E20();
-        model3_junk.cluster_nodes = NULL;
+        model3_junk._unknown = NULL;
         model3_junk.vi00 = NULL;
     
     

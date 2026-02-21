@@ -5,6 +5,7 @@
 #include "model3_vu0_n.h"
 #include "model_common.h"
 #include "libdmapk.h"
+#include "GFW/sh3gfw_Init_ModelDrawData.h"
 
 void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
@@ -73,7 +74,7 @@ void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
         GIF_REG(SCE_GIF_PACKED_AD, 11) | 
         GIF_REG(SCE_GIF_PACKED_AD, 12);
 
-  p->s_tex0.u64[0] = ((u_long*) D_01EE8090)[0xc54]; // model_common_work->specular_mapping_tex0
+  p->s_tex0.u64[0] = ((u_long*) model_common_work)[0xc54]; // model_common_work->specular_mapping_tex0
   p->s_tex0.u64[1] = 6;
   p->s_clamp.u64[0] = 5;
   p->s_clamp.u64[1] = 8;
@@ -118,7 +119,7 @@ static void LoadProgram_Vu0(void) {
     sceVif0Packet* pk = &sp20;
 
     func_0011FD28(pk, (u_long128*) READ_UNCACHED(&D_01EE30C0));
-    if (model3_junk.unk_0x160 == 0) {
+    if (model3_junk.cluster_nodes2 == 0) {
         func_0011FE80(pk, &D_003B63C0, 0);
     } else {
         func_0011FE80(pk, &D_003BA2C0, 0);
@@ -137,7 +138,96 @@ static void LoadProgram_Vu0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeData0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D44F0);
+extern s32 func_001CC680();
+
+static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
+{
+    sceVif0PkRef(
+        pk,
+        (u_long128 *)((u_char *)part + part->packet_offset),
+        part->packet_qwc, 0, 0, 0
+    );
+    if (func_001CC680() != 0) {
+
+        int n_cluster_data = part->n_cluster_data;
+        ClusterData *cluster_data_top =
+            (ClusterData *)((u_char *)part + part->cluster_data_offset);
+        float (*cluster_nodes)[4] = model3_junk.cluster_nodes;
+        int i;
+
+        for (i = 0; i < n_cluster_data; i++) {
+            ClusterData *cd = &cluster_data_top[i];
+
+            u32 src = cd->src;
+            u32 dst = cd->dst;
+            u32 n   = cd->n;
+
+            sceVif0PkRef(
+                pk,
+                (u_long128 *)((u_char *)cluster_nodes + (src << 4)),
+                n,
+                0x01000104,
+                dst | (n << 16) | 0x6C000000,
+                0
+            );
+        }
+
+        if (model3_junk.vi00 != NULL) {
+            int n_cluster_data = part->n_cluster_data;
+            ClusterData *cluster_data_top =
+                (ClusterData *)((u_char *)part + part->cluster_data_offset);
+            float (*cluster_nodes2)[4] =
+                (float (*)[4])model3_junk.cluster_nodes2;
+            int i;
+
+            for (i = 0; i < n_cluster_data; i++) {
+                ClusterData *cd = &cluster_data_top[i];
+
+                u32 src = cd->src;
+                u32 dst = cd->dst + 1;
+                u32 n   = cd->n;
+
+                sceVif0PkRef(
+                    pk,
+                    (u_long128 *)((u_char *)cluster_nodes2 + (src << 4)),
+                    n,
+                    0x01000104,
+                    dst | (n << 16) | 0x6C000000,
+                    0
+                );
+            }
+        }
+    }
+    {
+        float (*matrices)[4][4] = model_common_work->skeleton_matrices;
+        u_short *skeletons = (u_short *)((u_char *)part + part->skeletons_offset);
+        int skeleton_no = part->n_skeletons;
+        int dst_top = part->data_skeletons_offset;
+        int i;
+        for (i = 0; i < part->n_skeletons; i++) {
+            u16 idx = skeletons[i];
+            sceVif0PkRef(
+                pk,
+                (u_long128 *)(matrices[idx]), 4, 0x01000101,
+                (dst_top + i * 4) | 0x6C040000, 0
+            );
+        }
+    }
+    {
+        u16 *pairs = (u16 *)((u_char *)part + part->skeleton_pairs_offset);
+        int dst_top = part->data_skeleton_pairs_offset;
+        int i;
+        for (i = 0; i < part->n_skeleton_pairs; i++) {
+            u16 idx = pairs[i];
+            float (*src)[4] = (float (*)[4]) & model_common_work->envelope_matrices[idx];
+            sceVif0PkRef(
+                pk,
+                (u_long128 *)(src), 4, 0x01000101,
+                (dst_top + i * 4) | 0x6C040000, 0
+            );
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D4760);
 

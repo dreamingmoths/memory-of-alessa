@@ -104,12 +104,17 @@ InitTriangleNormalSpecular = 0x001d3db0;
 InitAllPacket0 = 0x001d4090;
 LoadProgram_Vu0 = 0x001d40f0;
 MakeData0 = 0x001d41f0;
+MakePartTransferPacket_Vu0 = 0x001d44f0;
+
+// model_common.c
+model_common_work = 0x1EE8090;
 
 // model3_vu1_n.c
 Model3LoadMpg1 = 0x001d6870;
 
 // sce
-sceVu0CopyMatrix = 0x1210A8;
+sceVu0CopyMatrix = 0x001210A8;
+sceVif0PkRef = 0x0011FDE8;
 
 // utilheap.c
 utilHeapFree                                                                     = 0x1c1d00;

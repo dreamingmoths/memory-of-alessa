@@ -24,7 +24,6 @@ typedef struct ModelCommonWork
     unsigned long latitude_mapping_tex0;     // offset 0xE2A8, size 0x4
 } ModelCommonWork;
 
-// Chacter_Draw\model3_vu1_n.c
 typedef struct Model3Junk
 {
     // total size: 0x1C0
@@ -43,12 +42,16 @@ typedef struct Model3Junk
     float wsm[4][4];         // offset 0x120, size 0x40
 
     // float vwm[4][4];           // offset 0x160, size 0x40
-    char unk[0x3c];
-    int unk_0x160;
+    char unk[0x38];
+    float (*cluster_nodes)[4];
+    float (*cluster_nodes2)[4];
 
     void *vi00;                // offset 0x1A0, size 0x4
     void *xtop;                // offset 0x1A4, size 0x4
-    float (*cluster_nodes)[4]; // offset 0x1A8, size 0x4
+
+    // float (*cluster_nodes)[4]; // offset 0x1A8, size 0x4
+    float (*_unknown)[4]; // offset 0x1A8, size 0x4
+
     u_int fogcol;              // offset 0x1AC, size 0x4
     u_char view_clip_and;      // offset 0x1B0, size 0x1
     u_char view_clip_or;       // offset 0x1B1, size 0x1
@@ -94,7 +97,6 @@ typedef struct Model
     u_int reserved_1f;               // offset 0x7C, size 0x4
 } Model;
 
-// ModelCommonWork *model_common_work;
-extern int *D_01EE8090;
+extern ModelCommonWork *model_common_work;
 
 #endif

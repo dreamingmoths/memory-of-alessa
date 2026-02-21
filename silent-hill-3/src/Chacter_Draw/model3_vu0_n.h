@@ -190,6 +190,13 @@ typedef struct AllPacket {
     struct TriangleSpecularNormal specular_normal[2]; // offset 0xC80, size 0x360
 } AllPacket;
 
+typedef struct ClusterData {
+    // total size: 0x6
+    unsigned short src; // offset 0x0, size 0x2
+    unsigned short dst; // offset 0x2, size 0x2
+    unsigned short n; // offset 0x4, size 0x2
+} ClusterData;
+
 extern u_int model3_mpg0_skel_load[];
 extern signed int initialized; // @ 0x00419FA0
 
