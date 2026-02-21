@@ -11,6 +11,7 @@ silent-hill-2/ --- silent hill 2 engine project directory
    src/
    config/
    include/
+include/       --- shared header (.h) files
 build/         --- final build output
 docs/          --- documentation
 rom/           --- contains game files, gets symlinked to `config/<serial>/rom`
