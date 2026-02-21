@@ -197,6 +197,8 @@ typedef struct ClusterData {
     unsigned short n; // offset 0x4, size 0x2
 } ClusterData;
 
+void FlipXMTOP();
+
 extern u_int model3_mpg0_skel_load[];
 extern signed int initialized; // @ 0x00419FA0
 
@@ -205,6 +207,13 @@ extern __int128 D_003B63C0;
 extern __int128 D_003BA2C0;
 
 extern Model3Junk model3_junk;
+
+extern int D_003B5280;
+extern u_int D_003B53B0;
+extern int D_003B55C0;
+extern u_int D_003B57D0;
+
+extern u32 xmtop;
 
 extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase);
 extern void func_0011FE80(sceVif0Packet*, __int128*, int);

@@ -229,9 +229,23 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D4760);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D4BD0);
+static void MakeClipPacket(Part* part, sceVif0Packet* pk) {
+    FlipXMTOP();
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D4C80);
+    if (part->backclip == 0) {
+        sceVif0PkRefMpg(pk, xmtop, (u_int*)&D_003B5280, D_003B53B0, 0);
+    } else {
+        sceVif0PkRefMpg(pk, xmtop, (u_int*)&D_003B55C0, D_003B57D0, 0);
+
+    }
+
+    sceVif0PkCnt(pk, 0);
+    sceVif0PkAddCode(pk, xmtop | 0x14000000);
+}
+
+static void FlipXMTOP() {
+    xmtop ^= 0x80;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D4CA0);
 

@@ -105,6 +105,9 @@ InitAllPacket0 = 0x001d4090;
 LoadProgram_Vu0 = 0x001d40f0;
 MakeData0 = 0x001d41f0;
 MakePartTransferPacket_Vu0 = 0x001d44f0;
+MakeClipPacket = 0x001d4bd0;
+FlipXMTOP = 0x001d4c80;
+xmtop = 0x01ee3dc0;
 
 // model_common.c
 model_common_work = 0x1EE8090;
@@ -114,7 +117,10 @@ Model3LoadMpg1 = 0x001d6870;
 
 // sce
 sceVu0CopyMatrix = 0x001210A8;
+sceVif0PkCnt = 0x0011FD90;
 sceVif0PkRef = 0x0011FDE8;
+sceVif0PkAddCode = 0x0011FF60;
+sceVif0PkRefMpg = 0x0011FF90;
 
 // utilheap.c
 utilHeapFree                                                                     = 0x1c1d00;
