@@ -1,4 +1,4 @@
-#include "common.h"
+#include "amusement_00.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_00", func_01F6D680_amusement_00);
 
