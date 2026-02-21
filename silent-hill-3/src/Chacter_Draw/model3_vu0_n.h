@@ -206,7 +206,8 @@ extern __int128 D_003BA2C0;
 
 extern Model3Junk model3_junk;
 
-extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase); // scePkInit
+extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase);
 extern void func_0011FE80(sceVif0Packet*, __int128*, int);
+extern s32 func_001CC680();
 
 #endif

@@ -138,8 +138,6 @@ static void LoadProgram_Vu0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeData0);
 
-extern s32 func_001CC680();
-
 static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
 {
     sceVif0PkRef(
