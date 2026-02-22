@@ -450,7 +450,7 @@ SECTIONS
 		ALIGNALL(0x4);
 		town_00_data.data.s.o (.data)
 		ALIGNALL(0x10);
-		town_00_bss.bss.s.o (.bss)		
+		town_00.c.o (.bss)		
 	}	>	town_00.bin
 
 	.heaven_00.bin	:
