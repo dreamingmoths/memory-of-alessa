@@ -19,7 +19,7 @@ extern s32 D_01F6E008_town_00;
                                
 extern f32 D_01F6DF80_town_00;
 extern s32 D_01F6DF84_town_00;
-extern s32 D_01F6DF88_town_00;
+extern f32 D_01F6DF88_town_00;
 extern s32 D_01F6DF90_town_00;
 
 extern s32 func_0012FD80(s32, s64);                         
