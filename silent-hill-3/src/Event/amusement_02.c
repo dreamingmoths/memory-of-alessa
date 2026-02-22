@@ -14,6 +14,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/amusement_02", func_01F6DC30_amusement_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_02", func_01F6DD80_amusement_02);
 
+#ifdef NON_MATCHING
 void func_01F6E050_amusement_02() {
     D_01F7AB58_amusement_02 = 1;
 
@@ -25,6 +26,9 @@ void func_01F6E050_amusement_02() {
             return;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/amusement_02", func_01F6E050_amusement_02);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_02", func_01F6E0B0_amusement_02);
 
