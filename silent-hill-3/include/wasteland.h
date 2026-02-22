@@ -1,20 +1,19 @@
 #include "common.h"
 
-void func_001004A0(int arg0, int arg1, int arg2);
 void func_0012BD80();
-void func_0012BDC0();    
+void func_0012BDC0();
 void func_0012C980();
-int func_0012C9B0();      
+int func_0012C9B0();
 void func_0012CED0();
 void func_0012CEF0();
-int func_0012D080();      
+int func_0012D080();
 void func_0012DC50();
 void func_0012DCA0();
 void func_00130640(int arg0);
-int func_00130650();      
+int func_00130650();
 void func_0013A780();
 void func_0013CE70();
-int func_00151150(int arg0, int arg1);  
+int func_00151150(int arg0, int arg1);
 void func_00156370(int arg0);
 void func_00156380();
 void func_00156390();
@@ -39,15 +38,15 @@ void func_001E5050();
 void func_001E5170();
 void func_00337AB0();
 
-int func_00115890(int arg0);    
-void func_0012BDF0(s8* arg0);
+int func_00115890(int arg0);
+void func_0012BDF0(s8 *arg0);
 void func_0012CFE0(int arg0);
 void func_0012DCB0(int arg0);
-void func_0019A7D0(int); 
-void func_0019B450(); 
+void func_0019A7D0(int);
+void func_0019B450();
 void func_0019B540(int arg0);
 int func_0019B580(int arg0);
-void func_0019BBD0(int arg0, int arg1, int arg2); 
+void func_0019BBD0(int arg0, int arg1, int arg2);
 void func_001D9090(int arg0);
 void func_001E4E30(int arg0);
 void func_00281D80(int, int);

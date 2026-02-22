@@ -310,11 +310,13 @@ extern u_int D_003BAD80; // vutext
 extern int func_001C91F0();
 
 extern int D_01EE3DE0;
-extern int D_01EE3DD0;
+extern int draw_base;
 
 extern u32 xmtop;
 extern AllPacket* all_packet;
 extern int calc_base;
+extern int draw_base;
+extern void (* sort_functions[8])(struct ktVif1Ot2 *, struct Part *); // size: 0x20, address: 0x2A9730
 
 extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase);
 extern void func_0011FE80(sceVif0Packet*, __int128*, int);

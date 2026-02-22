@@ -119,11 +119,16 @@ calc_base = 0x001ee3dd8;
 all_packet = 0x3669e0;
 xitop = 0x1EE3DC8;
 pAllData_Vu0 = 0x01EE3100;
+draw_base = 0x01EE3DD0;
+sort_functions = 0x003669F0;
 model3_mpg0_specular_size = 0x003B6A50;
 model3_mpg0_para_size = 0x003B5F00;
 model3_mpg0_point_size = 0x003B63A0;
 model3_mpg0_lambert_size = 0x003B5E00;
 model3_mpg0_spot_size = 0x003B6C00;
+
+// model3_equip_n.c
+Model3WorkEquipmentFlag = 0x001D3790;
 
 // model_common.c
 model_common_work = 0x1EE8090;
@@ -144,6 +149,7 @@ sceVif0PkInit = 0x11FD28;
 sceVif0PkTerminate = 0x0011FD38;
 sceVif0PkAddData = 0x0011FF78;
 sceVif0PkReserve = 0x0011FF48;
+sceDmaSync = 0x001004A0;
 
 // sh_kt_vif0.c
 ktVif0Wait2 = 0x001d8ba0;

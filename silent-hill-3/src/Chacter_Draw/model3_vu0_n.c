@@ -226,7 +226,7 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
             );
         }
 
-        if (model3_junk.vi00 != NULL) {
+        if (model3_junk._unknown_vi00 != NULL) {
             int n_cluster_data = part->n_cluster_data;
             ClusterData *cluster_data_top =
                 (ClusterData *)((u_char *)part + part->cluster_data_offset);
@@ -581,7 +581,37 @@ void MakeCalcPartPacket(Part *part)
     sceVif0PkTerminate(pk);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", DrawPart0);
+void DrawPart0(ktVif1Ot2* ot, Part* part, ModelWork* work) {
+    int func_no = 0;
+    sceDmaChan* toSPR;
+
+    if (Model3WorkEquipmentFlag(work, part->equipment_id) == 0) {
+        return;
+    }
+
+    model3_junk.vi00 = (void*) (draw_base + 0x70000000);
+
+    if (part->envmap_param != 0) {
+        func_no |= 1;
+    }
+    
+    if (part->shading_type == 4) {
+        func_no |= 2;
+        if (part->specular_pos != 0) {
+            func_no |= 4;
+        }
+    }
+
+    if (sort_functions[func_no] != NULL) {
+        toSPR = sceDmaGetChan(9);
+
+        while (sceDmaSync(toSPR, 0, 0) != 0);
+
+        (*(void (*)(ktVif1Ot2 *, Part *))sort_functions[func_no])(ot, part);
+    }
+
+    draw_base ^= 0x1000;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", DrawParts0);
 
@@ -594,7 +624,7 @@ void Model3DrawVu0Parts(Model* model, ModelWork* work) {
 
     D_01EE3DE0 = 0;
     calc_base = 0;
-    D_01EE3DD0 = 0;
+    draw_base = 0;
 
     // arguments 2 & 3 seem to be function pointers:
     DrawParts0(ot, work, func_0025CF10(), func_0025CF00());

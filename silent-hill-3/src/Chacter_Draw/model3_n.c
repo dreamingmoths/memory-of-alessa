@@ -86,7 +86,7 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
         model_common_work = (ModelCommonWork*) func_001C5CA0();
         model3_junk.fogcol = func_001D2E20();
         model3_junk._unknown = NULL;
-        model3_junk.vi00 = NULL;
+        model3_junk._unknown_vi00 = NULL;
     
     
         Model3UpdateMatrices(model, mwork, mwm, scp_d->sc.status & 0x2000);
