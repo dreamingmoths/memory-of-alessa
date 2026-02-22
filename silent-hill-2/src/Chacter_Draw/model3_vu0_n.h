@@ -258,6 +258,11 @@ typedef struct ClusterData {
 } ClusterData;
 
 static void FlipXMTOP();
+void KickCalcPartPacket();
+void TransferToSPR();
+void PrepareSort();
+static void MakeData0();
+static void LoadProgram_Vu0();
 
 extern u_int xmtop; // size: 0x4, address: 0x41AC40
 extern int model3_mpg0_clipv_size; // size: 0x4, address: 0x37FF20

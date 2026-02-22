@@ -4,6 +4,7 @@
 #include "libgraph.h"
 #include "model3_vu0_n.h"
 #include "model3_n.h"
+#include "model3_sub_n.h"
 #include "model_common.h"
 #include "libdma.h"
 #include "libdmapk.h"
@@ -184,7 +185,7 @@ static void InitAllPacket0(AllPacket* p) {
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitAllPacket0);
 #endif
 
-static void LoadProgram_Vu0(void) {
+static void LoadProgram_Vu0() {
     if (initialized == 0) {
         sceVif0Packet packet;
         sceVif0Packet* pk = &packet;
@@ -208,7 +209,7 @@ static void LoadProgram_Vu0(void) {
     } while (*D0_CHCR & 0x100);
 }
 
-static void MakeData0(void)
+static void MakeData0()
 {
     Lambert0Data *lmdata;
     Lambert1Data *lm1data;
@@ -409,6 +410,35 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", SortTriangleSpecularNo
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", DrawPart0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", DrawParts0);
+void DrawParts0(struct ktVif1Ot2* ot, Model* model, ModelWork* work) {
+    int n_parts; 
+    Part * parts_top;
+
+    n_parts = model->n_vu0_parts; // r18
+    parts_top = (Part*)((u_int)model + model->vu0_parts_offset); // r19
+
+    if (n_parts != 0) {
+        Part* part = parts_top;
+        int i; // r20
+
+        LoadProgram_Vu0();
+
+        MakeData0();
+
+        MakeCalcPartPacket(part);
+        KickCalcPartPacket();
+        PrepareSort();
+        for (i = 1; i < (int) n_parts; i++) {
+            Part* next = (Part*)((u_int) part + part->size);
+            MakeCalcPartPacket(next);
+            TransferToSPR();
+            KickCalcPartPacket();
+            DrawPart0(ot, part, work);
+            part = next;
+        }
+        TransferToSPR();
+        DrawPart0(ot, part, work);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", Model3DrawVu0Parts);
