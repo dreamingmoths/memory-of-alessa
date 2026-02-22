@@ -75,5 +75,6 @@ typedef struct
 
 sceDmaChan *sceDmaGetChan(int id);
 void sceDmaSendN(sceDmaChan *d, void *addr, int size);
+int sceDmaSync(sceDmaChan *d, int mode, int timeout);
 
 #endif
