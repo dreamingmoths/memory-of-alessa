@@ -38,8 +38,8 @@ void func_01F6F500_amusement_02(s32 arg0) {
     D_01F7AB78_amusement_02 = arg0;
 }
 
-void func_01F6F520_amusement_02(s32 arg0) {
-    D_01F7AB50_amusement_02 = arg0;
+int func_01F6F510_amusement_02() {
+    return D_01F7AB78_amusement_02;
 }
 
 
