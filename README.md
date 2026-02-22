@@ -7,7 +7,7 @@
 
 [![sh3 functions](https://decomp.dev/dreamingmoths/memory-of-alessa.svg?mode=shield&label=sh3+functions&color=%236b4e73&style=flat&measure=matched_functions)](https://decomp.dev/dreamingmoths/memory-of-alessa)
 ![sh2 functions](https://decomp.dev/dreamingmoths/memory-of-alessa/SLUS_202.28.svg?mode=shield&label=sh2+functions&color=%236b4e73&style=flat&measure=matched_functions)
-[![sh3 stages](https://img.shields.io/badge/sh3_stages-1%20/%2040-%236b4e73)](https://decomp.dev/dreamingmoths/memory-of-alessa?category=heaven_00)
+[![sh3 stages](https://img.shields.io/badge/sh3_stages-2%20/%2040-%236b4e73)](https://decomp.dev/dreamingmoths/memory-of-alessa?category=heaven_00)
 
 ⋆˙⟡ 100% byte-matching decompilation of Silent Hill 3, a survival horror
 masterpiece.
