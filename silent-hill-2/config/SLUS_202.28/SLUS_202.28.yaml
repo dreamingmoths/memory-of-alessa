@@ -164,7 +164,7 @@ segments:
       - [0x0af7a0, asm, Event/stg_name]
       - [0x0b1450, asm, Event/vu0_func]
       - [0x0b1480, asm, Event/demoview]
-      - [0x0b3e30, asm, Font/font]
+      - [0x0b3e30, c,   Font/font]
       - [0x0bab70, asm, Multi_thr/filesys/filecmd]
       - [0x0bc760, asm, Multi_thr/filesys/filepath]
       - [0x0bcd30, asm, Multi_thr/filesys/fileserv]
@@ -358,6 +358,8 @@ segments:
       - [0x1996a0, asm, now_loading]
       - [0x1999a8, data, data]
       - [0x28cf40, .rodata, Chacter/m3_sc]
-      - [0x28cf60, rodata,  rodata]
+      - [0x28cf60, rodata,  rodata_0]
+      - [0x291ac0, .rodata, Font/font]
+      - [0x291c00, rodata, rodata_1]
       - { vram: 0x3c7d80, type: bss, name: bss }
   - [0x2c8480]
