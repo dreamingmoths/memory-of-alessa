@@ -112,6 +112,7 @@ FlipXMTOP = 0x001d4c80;
 KickCalcPartPacket = 0x001d4ca0;
 MakeCalcPartPacket = 0x001d6110;
 Model3DrawVu0Parts = 0x001d67e0;
+MakePartPacket_0x001D5C50 = 0x001D5C50;
 TransferToSPR = 0x001D4CD0;
 PrepareSort = 0x001D4D30;
 xmtop = 0x01ee3dc0;

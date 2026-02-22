@@ -481,7 +481,89 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D55F0);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D5910);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D5C50);
+static void MakePartPacket_0x001D5C50(Part *part)
+{
+    __int128 *packet_buffer = (__int128 *)ktVif0PkBufNext();
+    sceVif0Packet packet;        // r29+0x30
+    sceVif0Packet *pk = &packet; // r16;
+    Data* data;
+    int result;
+
+    sceVif0PkInit(pk, (u_int *)READ_UNCACHED(packet_buffer));
+
+    xitop = 0xF0;
+    xmtop = 0x100;
+    model3_junk.xtop = (void *)((part->xtop * 0x10) + 0x70000000);
+
+    MakePartTransferPacket_Vu0(part, pk);
+    sceVif0PkCnt(pk, 0U);
+    sceVif0PkAddCode(pk, part->xtop | 0x04000000);
+    sceVif0PkAddCode(pk, xitop | 0x6C010000);
+    if (part->shading_type == 1)
+    {
+        // @todo: these were each one line?
+        float tmp, tmp2, tmp3;
+        tmp = part->diffuse[0];
+        sceVif0PkAddData(pk, *(u32 *)&tmp);
+        tmp2 = part->diffuse[1];
+        sceVif0PkAddData(pk, *(u32 *)&tmp2);
+        tmp3 = part->diffuse[2];
+        sceVif0PkAddData(pk, *(u32 *)&tmp3);
+    }
+    else
+    {
+        sceVif0PkAddData(pk, 0U);
+        sceVif0PkAddData(pk, 0U);
+        sceVif0PkAddData(pk, 0U);
+    }
+    sceVif0PkAddData(pk, 0U);
+    sceVif0PkAddCode(pk, 0x14000008U);
+    xitop ^= 8;
+    switch (part->shading_type)
+    {
+    case 1:
+        break;
+    case 2:
+    case 3:
+    case 4:
+        MakeLambertShadingPacket(part, pk);
+        break;
+
+    }
+
+    xmtop ^= 0x80;
+    result = func_0025C0A0();
+    switch (result)
+    {
+        case 0:
+        case 2:
+        sceVif0PkRefMpg(pk, xmtop, &D_003BA0C0, D_003BA170, 0);
+        break;
+    
+        case 1:
+        sceVif0PkRefMpg(pk, xmtop, &D_003BAA00, D_003BAB50, 0);
+        break;
+    }
+
+    sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->unknown_0x580, 6U, 0x01000101U, xitop | 0x6c060000, 0);
+    sceVif0PkCnt(pk, 0U);
+    sceVif0PkAddCode(pk, xitop | 0x04000000);
+    sceVif0PkAddCode(pk, xmtop | 0x14000000);
+    xitop ^= 8;
+    xmtop ^= 0x80;
+    sceVif0PkRefMpg(pk, xmtop, &D_003B9F40, D_003BA080, 0);
+    sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
+    sceVif0PkCnt(pk, 0U);
+    sceVif0PkAddCode(pk, xitop | 0x04000000);
+    sceVif0PkAddCode(pk, xmtop | 0x14000000);
+    sceVif0PkAddCode(pk, 0x10000000U);
+    xitop ^= 8;
+    MakeClipPacket(part, pk);
+    sceVif0PkCnt(pk, 0U);
+    sceVif0PkAddCode(pk, 0x10000000U);
+    sceVif0PkEnd(pk, 0U);
+    sceVif0PkTerminate(pk);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D6000);
 

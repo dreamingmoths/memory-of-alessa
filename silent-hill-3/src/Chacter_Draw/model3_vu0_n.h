@@ -245,7 +245,7 @@ typedef struct AllData_Vu0 {
     struct Lambert1Data lambert1; // offset 0x480, size 0x10
     struct SMapData smap __attribute__((aligned(64)));
     struct PersData pers __attribute__((aligned(64)));
-    char unknown_0x580[0x64]; // guessed size
+    char unknown_0x580[0x64] __attribute__((aligned(64))); // guessed size
     struct EMapData emap __attribute__((aligned(64)));
 } AllData_Vu0;
 
@@ -307,9 +307,18 @@ extern u_int D_003B6940; // vutext
 extern u_int D_003B6080; // vutext
 extern u_int D_003BAB80; // vutext
 extern u_int D_003BAD80; // vutext
+
+extern u_int D_003B9F40;
+extern u_int D_003BA080;
+extern u_int D_003BA0C0;
+extern u_int D_003BA170;
+extern u_int D_003BAA00;
+extern u_int D_003BAB50;
+
 extern int func_001C91F0();
 extern int func_001D0EA0(); // gets model n parts?
 extern Part* func_001D0EC0();
+extern int func_0025C0A0();
 
 extern int D_01EE3DE0;
 extern int draw_base;
