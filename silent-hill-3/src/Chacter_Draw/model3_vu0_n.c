@@ -481,7 +481,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D55F0);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D5910);
 
-static void MakePartPacket_0x001D5C50(Part *part)
+void MakePartPacket_0x001D5C50(Part *part)
 {
     __int128 *packet_buffer = (__int128 *)ktVif0PkBufNext();
     sceVif0Packet packet;        // r29+0x30
