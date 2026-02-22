@@ -21,3 +21,4 @@ tools/objdiff-*
 __pycache__
 decorated.s
 tmp*.c
+*.log
