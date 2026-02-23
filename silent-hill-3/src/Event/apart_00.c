@@ -119,7 +119,30 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DB90_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DDA0_apart_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DEB0_apart_00);
+extern int func_0016C540(void*, void*);
+extern void func_0016DCE0(int);
+
+extern void* D_01F6FD40_apart_00;
+extern void* D_01F6FDA0_apart_00;
+extern int D_1D316AC;
+
+int func_01F6DEB0_apart_00(void)
+{
+    int temp_v0;
+    int var_v0;
+
+    temp_v0 = func_0016C540(&D_01F6FD40_apart_00, &D_01F6FDA0_apart_00);
+    if (temp_v0 != 0) {
+        func_0016DCE0(0);
+        var_v0 = D_1D316AC & 0xDFFFFFFF;
+        D_1D316AC = var_v0;
+    } else {
+        var_v0 = D_1D316AC | 0x20000000;
+        D_1D316AC = var_v0;
+    }
+
+    return temp_v0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DF30_apart_00);
 
