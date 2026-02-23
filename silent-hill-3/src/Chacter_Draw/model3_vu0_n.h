@@ -189,13 +189,16 @@ typedef struct TriangleNormalEnvironSpecular {
     union Q S_fogcol; // offset 0x240, size 0x10
 } TriangleNormalEnvironSpecular;
 
+typedef struct TriangleNormalUnknown {
+    union Q unknown[0x1B];
+} TriangleNormalUnknown;
+
 typedef struct AllPacket {
     // total size: 0xFE0
     struct TriangleNormal normal[2]; // offset 0x0, size 0x1A0
-    struct TriangleNormalEnviron normal_environ[2]; // offset 0x1A0, size 0x2E0
-    struct TriangleNormalSpecular normal_specular[2]; // offset 0x480, size 0x360
-    struct TriangleNormalEnvironSpecular normal_environ_specular[2]; // offset 0x7E0, size 0x4A0
-    struct TriangleSpecularNormal specular_normal[2]; // offset 0xC80, size 0x360
+    struct TriangleNormalSpecular normal_specular[2]; // offset 0x1A0, size 0x360
+    struct TriangleSpecularNormal specular_normal[2]; // offset 0x500, size 0x360
+    struct TriangleNormalUnknown unknown[2]; // offset 0x860, size 0x1B0
 } AllPacket;
 
 typedef struct PersData {

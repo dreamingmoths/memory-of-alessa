@@ -1,6 +1,6 @@
 #include "model3_vu0_n.h"
 
-void InitTriangleNormal(TriangleNormal* p) {
+static void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;
     p->dmatag.u64[0] = DMAnext | qwc;
     p->dmatag.u32[2] = SCE_VIF1_SET_NOP(0);
@@ -22,7 +22,7 @@ void InitTriangleNormal(TriangleNormal* p) {
     p->n_clamp.s64[1] = 8;
 }
 
-void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
+static void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
     int qwc = 26;
 
     p->dmatag.u64[0] = DMAnext | qwc;
@@ -87,7 +87,7 @@ void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D3EA0);
 
-void InitTriangleSpecularNormal(TriangleSpecularNormal* p) {
+static void InitTriangleSpecularNormal(TriangleSpecularNormal* p) {
     int qwc = 26;
 
     p->dmatag.u64[0] = DMAnext | qwc;
@@ -152,22 +152,16 @@ void InitTriangleSpecularNormal(TriangleSpecularNormal* p) {
     p->n_clamp.u64[1] = 8;
 }
 
-#ifdef NON_MATCHING
 static void InitAllPacket0(AllPacket* p) {
     InitTriangleNormal(&p->normal[0]);
     InitTriangleNormal(&p->normal[1]);
-    InitTriangleNormalEnviron(&p->normal_environ[0]);
-    InitTriangleNormalEnviron(&p->normal_environ[1]);
     InitTriangleNormalSpecular(&p->normal_specular[0]);
     InitTriangleNormalSpecular(&p->normal_specular[1]);
-    InitTriangleNormalEnvironSpecular(&p->normal_environ_specular[0]);
-    InitTriangleNormalEnvironSpecular(&p->normal_environ_specular[1]);
     InitTriangleSpecularNormal(&p->specular_normal[0]);
     InitTriangleSpecularNormal(&p->specular_normal[1]);
+    func_001D3EA0(&p->unknown[0]);
+    func_001D3EA0(&p->unknown[1]);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", InitAllPacket0);
-#endif
 
 static void LoadProgram_Vu0(void) {
 
