@@ -1,4 +1,4 @@
-#include "common.h"
+#include "apart_00.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D680_apart_00);
 
@@ -10,7 +10,6 @@ int func_01F6D7B0_apart_00(int arg0) {
     return func_001DE5B0(func_01F6D680_apart_00, arg0, 1);
 }
 
-extern void func_001C2290(int, int, float);
 
 void func_01F6D7D0_apart_00(void* arg0) {
     char* base;
@@ -43,10 +42,7 @@ void func_01F6D7D0_apart_00(void* arg0) {
     }
 }
 
-extern void func_0016F550(int, int);
-extern void func_0019B240(void*, int);
 
-extern char D_01F6FB80_apart_00[];
 
 void func_01F6D840_apart_00(void* arg0) {
     register int s0;
@@ -118,13 +114,6 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D920_apart_00);
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DB90_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DDA0_apart_00);
-
-extern int func_0016C540(void*, void*);
-extern void func_0016DCE0(int);
-
-extern void* D_01F6FD40_apart_00;
-extern void* D_01F6FDA0_apart_00;
-extern int D_1D316AC;
 
 int func_01F6DEB0_apart_00(void)
 {
