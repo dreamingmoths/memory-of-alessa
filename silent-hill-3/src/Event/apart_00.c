@@ -1,5 +1,17 @@
 #include "apart_00.h"
 
+typedef struct Apart00Entry {
+    int   unknown_0x0;
+    float unknown_0x4;
+    float unknown_0x8;
+} Apart00Entry;
+
+typedef struct Apart00Struct {
+    char  unknown_0x0[0x1B8];
+    float unknown_0x1B8;
+    Apart00Entry entries[];
+} Apart00Struct;
+
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D680_apart_00);
 
 void func_01F6D680_apart_00(void);
@@ -42,23 +54,19 @@ void func_01F6D7D0_apart_00(void* arg0) {
     }
 }
 
-
-
-void func_01F6D840_apart_00(void* arg0) {
-    register int s0;
-    register int s1;
-    register char* s2;
-    register char* s3;
+void func_01F6D840_apart_00(void* arg0)
+{
+    int s0;
+    int s1;
+    char* s2;
+    Apart00Struct* s3;
 
     int a0;
-    int off;
-    char* v1;
-
     float f0;
     float f1;
     float t;
 
-    s3 = (char*)arg0;
+    s3 = (Apart00Struct*)arg0;
 
     func_0019B240(arg0, 0x240);
 
@@ -71,34 +79,29 @@ void func_01F6D840_apart_00(void* arg0) {
 
         a0 = *(int*)(s2 + 0x10);
         if (a0 != 0) {
-            off = s1 * 0xC;
-            s1 = s1 + 1;
-
-            v1 = s3 + off;
-            *(int*)(v1 + 0x1BC) = a0;
+            s3->entries[s1].unknown_0x0 = a0;
 
             f0 = *(float*)(s2 + 0x8);
-            *(float*)(v1 + 0x1C0) = f0;
+            s3->entries[s1].unknown_0x4 = f0;
 
             f0 = *(float*)(s2 + 0x14);
-            *(float*)(v1 + 0x1C4) = f0;
+            s3->entries[s1].unknown_0x8 = f0;
+
+            s1 = s1 + 1;
         }
 
         a0 = *(int*)(s2 + 0x18);
         if (a0 != 0) {
-            off = s1 * 0xC;
-            s1 = s1 + 1;
-
-            v1 = s3 + off;
-            *(int*)(v1 + 0x1BC) = a0;
+            s3->entries[s1].unknown_0x0 = a0;
 
             t  = *(float*)(s2 + 0x1C);
             f1 = *(float*)(s2 + 0x0C);
-            f0 = f1 - t;
-            *(float*)(v1 + 0x1C0) = f0;
+            s3->entries[s1].unknown_0x4 = f1 - t;
 
             f0 = *(float*)(s2 + 0x1C);
-            *(float*)(v1 + 0x1C4) = f0;
+            s3->entries[s1].unknown_0x8 = f0;
+
+            s1 = s1 + 1;
         }
 
         s0 = s0 + 1;
@@ -106,7 +109,7 @@ void func_01F6D840_apart_00(void* arg0) {
     } while (s0 < 5);
 
     f0 = *(float*)(s2 + 0x8);
-    *(float*)(s3 + 0x1B8) = f0;
+    s3->unknown_0x1B8 = f0;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D920_apart_00);
