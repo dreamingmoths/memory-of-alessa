@@ -11,7 +11,6 @@ utilHeapCtrl* utilHeapInit(void* buf, u_int bytesize) {
     
     if (buf < (void *) 0x100000) return NULL;
 
-    
     bufhead = (__int128 *) CEIL16((u_int) buf);
     size = FLOOR16((u_int) buf + bytesize);
 
@@ -22,7 +21,6 @@ utilHeapCtrl* utilHeapInit(void* buf, u_int bytesize) {
     heapctrl = (utilHeapCtrl *) bufhead;
 
     heapctrl->size = size;
-
 
     free = size - 0x20, heapctrl->free = free;
 
@@ -41,23 +39,6 @@ utilHeapCtrl* utilHeapInit(void* buf, u_int bytesize) {
 
     return heapctrl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void* utilHeapMalloc(utilHeapCtrl* heapctrl, u_int n)
 {
@@ -82,12 +63,6 @@ void* utilHeapMalloc(utilHeapCtrl* heapctrl, u_int n)
 
                 heapctrl->free -= n;
                 if (size != n) {
-    
-    
-    
-    
-    
-                    
                     postblock = (utilHeapMBlock*) (n + (u_int) mblock + 0x10);
                     postsize = size - n - 0x10;
                     postblock->size = postsize;
@@ -97,7 +72,6 @@ void* utilHeapMalloc(utilHeapCtrl* heapctrl, u_int n)
     
                     heapctrl->free -= 0x10;
     
-                    
                     next = mblock->next;
                     postblock->next = next;
                     postblock->prev = mblock;
@@ -113,40 +87,12 @@ void* utilHeapMalloc(utilHeapCtrl* heapctrl, u_int n)
             }
         }
 
-
         mblock = mblock->next;
     }
-
-
-
 
     return NULL;
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void utilHeapFree(void *obj)
 {
@@ -177,19 +123,11 @@ void utilHeapFree(void *obj)
     mblock->heapctrl = NULL;
     heapctrl->free += mblock->size;
 
-
-    
     postblock = mblock->next;
     if (postblock != NULL) {
 
         if (postblock->heapctrl == NULL) {
             utilHeapMBlock * next;
-
-
-
-
-
-
 
             u_int combinesize = mblock->size;
             combinesize += postblock->size + 0x10;
@@ -209,32 +147,11 @@ void utilHeapFree(void *obj)
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    
     preblock = mblock->prev;
     if (preblock != NULL) {
     
         if (preblock->heapctrl == NULL) {
             utilHeapMBlock * next;
-
-
-
-
-
-
-
-
-
 
             u_int combinesize = preblock->size;
             combinesize += mblock->size + 0x10;
@@ -253,15 +170,4 @@ void utilHeapFree(void *obj)
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }
