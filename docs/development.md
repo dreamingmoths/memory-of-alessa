@@ -1,4 +1,11 @@
-### monorepo overview
+# development
+
+Contributions are welcome!
+
+If you're new to decompilation projects, [contributing.md](contributing.md) is
+an introduction for beginners.
+
+## monorepo overview
 
 The current layout of the project is as follows.
 
@@ -67,15 +74,13 @@ allows us to search for similar functions. It works like so:
 3. Use the result as a starting point for decompiling the SH3 function, editing
    it until it matches.
 
-### more notes
-
-#### more `make` commands
+### `make` commands
 
 For a local [`objdiff`](https://github.com/encounter/objdiff) workflow, generate
 the expected files with the following command.
 
 ```sh
-make expected
+make report
 ```
 
 There are a couple of ways to clean the SH2 directory.
@@ -96,6 +101,11 @@ make deep-clean
 
 or to really delete all setup and reset, run `make death`. This shouldn't be
 necessary in most cases though.
+
+### matching code
+
+To match code, you may use [decomp.me](https://decomp.me). Find an assembly
+file located in `silent-hill-3/config/SLUS_206.22/asm` 
 
 #### sh3 compiler flags
 
