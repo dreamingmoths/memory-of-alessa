@@ -115,8 +115,6 @@ int func_01F6E590_amusement_00(void) {
     }
 }
 
-extern u_int D_1D3169C;
-
 u_int func_01F6E6A0_amusement_00(int arg0) {
     int x;
     switch (arg0) {
