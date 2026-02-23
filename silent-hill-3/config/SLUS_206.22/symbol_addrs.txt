@@ -102,6 +102,7 @@ DrawPart0 = 0x001d65d0;
 DrawParts0 = 0x001d66d0;
 InitTriangleNormalSpecular = 0x001d3db0;
 InitTriangleSpecularNormal = 0x001d3fa0;
+InitTriangleUnknown = 0x001d3ea0;
 InitAllPacket0 = 0x001d4090;
 LoadProgram_Vu0 = 0x001d40f0;
 MakeData0 = 0x001d41f0;

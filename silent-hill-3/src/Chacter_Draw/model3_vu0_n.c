@@ -85,7 +85,78 @@ static void InitTriangleNormalSpecular(TriangleNormalSpecular* p) {
   p->S_fogcol.u64[1] = 61;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", func_001D3EA0);
+static void InitTriangleUnknown(TriangleNormalUnknown* p) {
+    int qwc = 0x1a;
+    Q q;
+    u_int q_adr;
+
+    p->dmatag.u64[0] = DMAnext | qwc;
+    p->dmatag.u32[2] = SCE_VIF1_SET_NOP(0);
+    p->dmatag.u32[3] = SCE_VIF1_SET_DIRECT(qwc, 0);
+
+    (p->n_giftag).u64[0] = SCE_GIF_SET_TAG(
+        1,
+        SCE_GS_TRUE,
+        SCE_GS_TRUE,
+        SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 1, 1, 1, 1, 0, 0, 0, 0),
+        SCE_GIF_PACKED,
+        11
+    );
+  (p->n_giftag).u64[1] = 
+        GIF_REG(SCE_GIF_PACKED_AD, 0)  |
+        GIF_REG(SCE_GIF_PACKED_AD, 1)  |
+        GIF_REG(SCE_GS_ST,         2)  |
+        GIF_REG(SCE_GS_RGBAQ,      3)  |
+        GIF_REG(SCE_GS_XYZF2,      4)  |
+        GIF_REG(SCE_GS_ST,         5)  |
+        GIF_REG(SCE_GS_RGBAQ,      6)  |
+        GIF_REG(SCE_GS_XYZF2,      7)  |
+        GIF_REG(SCE_GS_ST,         8)  |
+        GIF_REG(SCE_GS_RGBAQ,      9)  |
+        GIF_REG(SCE_GS_XYZF2,      10) |
+        GIF_REG(SCE_GS_PRIM,       11);
+  (p->unknown_0x20).u64[1] = 6;
+  (p->unknown_0x30).u64[1] = 8;
+  (p->u_giftag).u64[0] = SCE_GIF_SET_TAG(
+        1,
+        SCE_GS_TRUE,
+        SCE_GS_TRUE,
+        SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 1, 1, 1, 1, 0, 0, 0, 0),
+        SCE_GIF_PACKED,
+        13
+    );
+    (p->u_giftag).u64[1] =
+        GIF_REG(SCE_GIF_PACKED_AD, 0)  | 
+        GIF_REG(SCE_GIF_PACKED_AD, 1)  | 
+        GIF_REG(SCE_GIF_PACKED_AD, 2)  | 
+        GIF_REG(SCE_GS_ST, 3)          | 
+        GIF_REG(SCE_GS_RGBAQ, 4)       | 
+        GIF_REG(SCE_GS_XYZF2, 5)       | 
+        GIF_REG(SCE_GS_ST, 6)          | 
+        GIF_REG(SCE_GS_RGBAQ, 7)       | 
+        GIF_REG(SCE_GS_XYZF2, 8)       | 
+        GIF_REG(SCE_GS_ST, 9)          | 
+        GIF_REG(SCE_GS_RGBAQ, 10)      | 
+        GIF_REG(SCE_GS_XYZF2, 11)      | 
+        GIF_REG(SCE_GIF_PACKED_AD, 12);
+
+    func_0025BF10(&p->unknown_0xe0, 6, 0x8001);
+    func_0025C000(&p->unknown_0x100);
+
+    p->unknown_0xf0.u64[1] = 8;
+    p->unknown_0xf0.u64[0] = 0;
+
+    func_0025C0D0(&q);
+
+    // @todo: is there a better match?
+    q_adr = (u_int)&q;
+    p->unknown_0x180.u128 = ((Q*)q_adr)->u128;
+    p->unknown_0x150.u128 = ((Q*)q_adr)->u128;
+    p->unknown_0x120.u128 = ((Q*)q_adr)->u128;
+
+    p->unknown_0x1a0.u64[0] = 0x44;
+    p->unknown_0x1a0.u64[1] = 0x42;
+}
 
 static void InitTriangleSpecularNormal(TriangleSpecularNormal* p) {
     int qwc = 26;
@@ -159,8 +230,8 @@ static void InitAllPacket0(AllPacket* p) {
     InitTriangleNormalSpecular(&p->normal_specular[1]);
     InitTriangleSpecularNormal(&p->specular_normal[0]);
     InitTriangleSpecularNormal(&p->specular_normal[1]);
-    func_001D3EA0(&p->unknown[0]);
-    func_001D3EA0(&p->unknown[1]);
+    InitTriangleUnknown(&p->unknown[0]);
+    InitTriangleUnknown(&p->unknown[1]);
 }
 
 static void LoadProgram_Vu0(void) {

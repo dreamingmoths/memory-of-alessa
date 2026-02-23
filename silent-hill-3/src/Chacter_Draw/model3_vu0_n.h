@@ -25,7 +25,7 @@
 #define DMAret  (6<<28)
 #define DMAend  (7<<28)
 
-union Q
+typedef union Q
 {
     __int128 u128;         // offset 0x0, size 0x10
     unsigned long u64[2];  // offset 0x0, size 0x8
@@ -39,7 +39,7 @@ union Q
     signed int q[4];       // offset 0x0, size 0x10
     float fv[4];           // offset 0x0, size 0x10
     signed int iv[4];      // offset 0x0, size 0x10
-};
+} Q;
 
 typedef struct TriangleNormal
 {
@@ -190,7 +190,33 @@ typedef struct TriangleNormalEnvironSpecular {
 } TriangleNormalEnvironSpecular;
 
 typedef struct TriangleNormalUnknown {
-    union Q unknown[0x1B];
+	union Q dmatag;
+	union Q n_giftag;
+	union Q unknown_0x20;
+	union Q unknown_0x30;
+	union Q unknown_0x40;
+	union Q unknown_0x50;
+	union Q unknown_0x60;
+	union Q unknown_0x70;
+	union Q unknown_0x80;
+	union Q unknown_0x90;
+	union Q unknown_0xa0;
+	union Q unknown_0xb0;
+	union Q unknown_0xc0;
+	union Q u_giftag;
+	union Q unknown_0xe0;
+	union Q unknown_0xf0;
+	union Q unknown_0x100;
+	union Q unknown_0x110;
+	union Q unknown_0x120;
+	union Q unknown_0x130;
+	union Q unknown_0x140;
+	union Q unknown_0x150;
+	union Q unknown_0x160;
+	union Q unknown_0x170;
+	union Q unknown_0x180;
+	union Q unknown_0x190;
+	union Q unknown_0x1a0;
 } TriangleNormalUnknown;
 
 typedef struct AllPacket {
@@ -322,6 +348,10 @@ extern int func_001C91F0();
 extern int func_001D0EA0(); // gets model n parts?
 extern Part* func_001D0EC0();
 extern int func_0025C0A0();
+
+extern void func_0025BF10(Q*, s32 arg1, s32 arg2);
+extern void func_0025C000(void*);
+extern void func_0025C0D0(Q*);
 
 extern int D_01EE3DE0;
 extern int draw_base;
