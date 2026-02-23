@@ -44,7 +44,7 @@ glabel func_01F6D6C0_heaven_00
 endlabel func_01F6D6C0_heaven_00
 ```
 
-Visit the website [decomp.me](decomp.me) and create a new scratch
+Visit the website [decomp.me](https://decomp.me) and create a new scratch
 there. Paste in the assembly and select the Silent Hill 3 compiler preset.
 
 Now this is the work of decompilation. Try to edit the source file and its
@@ -113,13 +113,15 @@ A project can often be started by taking just one function out of the binary. In
 Splat, we find an assembly split:
 
 ```yaml
-    - [0x0c2130, asm, Heap/utilheap]
+    - [0x000000, asm, code]
 ```
 
 and change it to a code split for C (or C++ in other projects):
 
 ```yaml
-    - [0x0c2130, c,   Heap/utilheap]
+    - [0x000000, asm, code_0]
+    - [0x000040, c,   alessa]
+    - [0x000080, asm, code_1]
 ```
 
 This tells Splat that this split is now implemented in C, so it will be compiled
@@ -151,6 +153,6 @@ suggestions.
 ### next steps?
 
 - read [development.md](development.md)
-- try matching functions on [decomp.me](decomp.me)
+- try matching functions on [decomp.me](https://decomp.me)
 - read more about [splat
 configuration](https://github.com/ethteck/splat/wiki/Configuration)
