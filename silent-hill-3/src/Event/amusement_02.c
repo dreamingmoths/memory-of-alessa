@@ -33,7 +33,6 @@ int func_01F6D680_amusement_02(void) {
 }
 
 int func_01F6D7A0_amusement_02(void) {
-    int temp_a1;
     int var_s0;
 
     var_s0 = 0;
@@ -54,10 +53,9 @@ int func_01F6D7A0_amusement_02(void) {
                 func_0019B540(7);
                 func_001C2290(0, 2.0f);
                 func_0016D500(8, 0, 0);
-                temp_a1 = D_1D316AC;
-                D_1D316AC = temp_a1 & 0xDFFFFFFF;
+                D_1D316AC &= 0xDFFFFFFF;
                 D_1D316AC |= 0x04000000;
-                func_00199830(2, temp_a1);
+                func_00199830(2);
                 func_00190A20(0);
                 var_s0 = 1;
                 D_01F76688_amusement_02 = 0;
