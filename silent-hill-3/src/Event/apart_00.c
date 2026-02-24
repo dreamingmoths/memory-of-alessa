@@ -45,7 +45,6 @@ void func_01F6D7D0_apart_00(void* arg0) {
 
         func_001C2290(
             temp_a0,
-            temp_a1,
             *(float*)(temp_v1 + 0x1C4)
         );
 
@@ -136,7 +135,22 @@ int func_01F6DEB0_apart_00(void)
     return temp_v0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DF30_apart_00);
+int func_01F6DF30_apart_00(void)
+{
+    int temp_v0;
+
+    temp_v0 = func_0016C540(&D_01F6FDC0_apart_00, &D_01F6FE20_apart_00);
+
+    if (temp_v0 != 0) {
+        if (func_001646C0() != 0) {
+            func_001602D0(0x271E, 3, 1, 1.0f);
+        }
+
+        func_001C2290(5, 0.5f);
+    }
+
+    return temp_v0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DFB0_apart_00);
 
@@ -152,4 +166,24 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E800_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E9A0_apart_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6EB70_apart_00);
+void func_01F6EB70_apart_00(void)
+{
+    int v0;
+    u_int w;
+
+    v0 = func_00199C70(7);
+    if (v0 == 1) {
+        w = D_1D31674.unk4;
+        if (((w >> 7) & 1U) == 0) {
+            D_1D31674.unk4 = w | 0x80U;
+        }
+    }
+
+    v0 = func_00199C70(9);
+    if (v0 == 1) {
+        w = D_1D31674.unk4;
+        if (((w >> 14) & 1U) == 0) {
+            D_1D31674.unk4 = w | 0x4000U;
+        }
+    }
+}
