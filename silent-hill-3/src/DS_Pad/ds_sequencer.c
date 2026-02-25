@@ -104,9 +104,32 @@ INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C6F0);
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C790);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", Node_Next_Search);
+static int Node_Next_Search(Record_Info* pInfo, float Time) {
+    u_int node_num = pInfo->pObject->DataNode_num;
+    DS_Record * pDSR = pInfo->pAddress;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", Node_Current_Search);
+    int result = -1;
+    u_int i;
+    for (i = 0; i < node_num; i++, pDSR++) {
+        if (Time < pDSR->Time) {
+            result = i;
+            break;
+        }
+    }
+
+    return result;
+}
+
+static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0x10 */) {
+    signed int result = -1; // r7
+    signed int num = Node_Next_Search(pInfo, Time); // r2
+
+    if (num > 0) {
+        result = num - 1;
+    }
+
+    return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C8C0);
 
