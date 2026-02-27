@@ -206,7 +206,7 @@ segments:
       - [0x10e600, asm, Effect/screen_effect]
       - [0x10e950, asm, GFW/sh2gfw_SemiTrans_FrameWork]
       - [0x10f000, asm, Fog/spack]
-      - [0x10f800, asm, jump_menu]
+      - [0x10f800, c,   jump_menu]
       - [0x110cf0, asm, DBG/dbflow]
       - [0x110fc0, asm, Item/otn_option]
       - [0x11c4c0, asm, Chacter/m3_play_common]
