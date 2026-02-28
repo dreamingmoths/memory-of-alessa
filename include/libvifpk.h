@@ -37,4 +37,14 @@ void sceVif0PkAddData(sceVif0Packet *pPacket, u_int data);
 void sceVif0PkRef(sceVif0Packet *pPacket, u_long128 *pRef, u_int size, u_int opt1, u_int opt2, u_int flag);
 u_int *sceVif0PkReserve(sceVif0Packet *pPacket, u_int count);
 
+void sceVif0PkInit(sceVif0Packet *pPacket, u_long128 *pBase);
+void sceVif0PkReset(sceVif0Packet *pPacket);
+void sceVif0PkNext(sceVif0Packet *pPacket, u_long128 *pNext, u_int flag);
+void sceVif0PkCall(sceVif0Packet *pPacket, u_long128 *pCall, u_int flag);
+void sceVif0PkEnd(sceVif0Packet *pPacket, u_int flag);
+void sceVif0PkCnt(sceVif0Packet *pPacket, u_int flag);
+void sceVif0PkRefMpg(sceVif0Packet *pPacket, u_short vuaddr, u_long128 *pMicro, u_int size, u_int opt1);
+u_long128 *sceVif0PkTerminate(sceVif0Packet *pPacket);
+
+
 #endif

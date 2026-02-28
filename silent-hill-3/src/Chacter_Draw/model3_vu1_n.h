@@ -6,22 +6,6 @@
 #include "libdma.h"
 #include "model_common.h"
 
-typedef union Q
-{
-    __int128 u128;         // offset 0x0, size 0x10
-    unsigned long u64[2];  // offset 0x0, size 0x8
-    unsigned int u32[4];   // offset 0x0, size 0x10
-    unsigned short u16[8]; // offset 0x0, size 0x10
-    unsigned char u8[16];  // offset 0x0, size 0x10
-    signed long s64[2];    // offset 0x0, size 0x8
-    signed int s32[4];     // offset 0x0, size 0x10
-    signed short s16[8];   // offset 0x0, size 0x10
-    signed char s8[16];    // offset 0x0, size 0x10
-    signed int q[4];       // offset 0x0, size 0x10
-    float fv[4];           // offset 0x0, size 0x10
-    signed int iv[4];      // offset 0x0, size 0x10
-} Q;
-
 typedef struct Part
 {
     // total size: 0x90

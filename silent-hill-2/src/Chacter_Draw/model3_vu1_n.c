@@ -38,7 +38,7 @@ static void MakeNormalPacket(Part* part, sceVif1Packet* pk) {
         data = (NDrawData*)sceVif1PkReserve(pk, 0x20U);
 
         if (!(((u_int)data & 0x03) == 0)) {
-            printf("model3_vu1_n.c:986> assert:(%s)\n\0\0\0", "((u_int)data & 0x03) == 0\0\0");
+            printf("model3_vu1_n.c:945> assert:(%s)\n\0\0\0", "((u_int)data & 0x03) == 0\0\0");
             do {} while (1);
         }
     
@@ -56,7 +56,35 @@ static void MakeNormalPacket(Part* part, sceVif1Packet* pk) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", MakeEnvironPacket);
+void MakeEnvironPacket(Part* part, sceVif1Packet* pk) {
+    int mpg; // r16
+    struct Data * data; // r2
+
+    mpg = (u_char)((part->backclip == 0) ? 0x1a: 0x1c);
+
+    sceVif1PkCnt(pk, 0U);
+    sceVif1PkAddCode(pk, 0x11000000U);
+    sceVif1PkRef(pk, (u_long128*)(all_data + 0x600), 
+                 8U, 0x01000101U, xitop_0x0041BF08 | 0x6c080000, 0);
+
+    sceVif1PkCnt(pk, 0U);
+    sceVif1PkAddCode(pk, 0x01000101U);
+    sceVif1PkAddCode(pk, (xitop_0x0041BF08 + 8) | 0x6C010000);
+    data = (Data*) sceVif1PkReserve(pk, 4U);
+    if (!(((u_int)data & 0x03) == 0)) {
+        printf("model3_vu1_n.c:986> assert:(%s)\n\0\0\0", "((u_int)data & 0x03) == 0\0\0");
+        do {} while (1);
+    }
+
+    data->rgba.u32[0] = 128;
+    data->rgba.u32[1] = 128;
+    data->rgba.u32[2] = 128;
+    data->rgba.u32[3] = part->envmap_param;
+
+    sceVif1PkAddCode(pk, xitop_0x0041BF08 | 0x04000000);
+    sceVif1PkAddCode(pk, mpg | 0x14000000);
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", MakeSpecularPacket);
 
