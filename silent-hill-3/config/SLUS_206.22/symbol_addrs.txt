@@ -122,7 +122,7 @@ PrepareSort = 0x001D4D30;
 xmtop = 0x01ee3dc0;
 calc_base = 0x001ee3dd8;
 all_packet = 0x3669e0;
-xitop = 0x1EE3DC8;
+xitop = 0x1EE3DC8; // allow_duplicated:True
 pAllData_Vu0 = 0x01EE3100;
 draw_base = 0x01EE3DD0;
 sort_functions = 0x003669F0;
@@ -132,14 +132,18 @@ model3_mpg0_point_size = 0x003B63A0;
 model3_mpg0_lambert_size = 0x003B5E00;
 model3_mpg0_spot_size = 0x003B6C00;
 
+// model3_vu1_n.c
+MakeNormalPacket = 0x001D7840;
+Model3LoadMpg1 = 0x001d6870;
+// xitop = 0x1EE8088; // allow_duplicated:True visibility:local
+spr_data = 0x00366A18; // size:4
+
 // model3_equip_n.c
 Model3WorkEquipmentFlag = 0x001D3790;
 
 // model_common.c
 model_common_work = 0x1EE8090;
 
-// model3_vu1_n.c
-Model3LoadMpg1 = 0x001d6870;
 
 // sce
 sceVu0CopyMatrix = 0x001210A8;
@@ -155,6 +159,9 @@ sceVif0PkTerminate = 0x0011FD38;
 sceVif0PkAddData = 0x0011FF78;
 sceVif0PkReserve = 0x0011FF48;
 sceDmaSync = 0x001004A0;
+sceVif1PkCnt = 0x001200D0;
+sceVif1PkAddCode = 0x00120468;
+sceVif1PkReserve = 0x001203D0;
 
 // sdk
 litodp = 0x00124b50;
