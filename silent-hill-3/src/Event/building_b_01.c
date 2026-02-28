@@ -18,7 +18,25 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_01", func_01F6DFF0_building_b_01)
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_01", func_01F6E0F0_building_b_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/building_b_01", func_01F6E2A0_building_b_01);
+void func_01F6E2A0_building_b_01(void) {
+
+    switch (RoomName()) {                              
+        case BUILDING_OTHERWORLD_BATHTUB_ROOM:
+            if (((D_01D31640 >> 0x12) & 1) && !((D_01D31640 >> 0x13) & 1)) { //after the bathtub room awakening cutscene ???
+                func_001C2290(2, 0.0f); 
+            }
+            D_01F6F138_building_b_01 = 0;
+            D_01F6F130_building_b_01 = 0;
+            break;
+        case BUILDING_OTHERWORLD_HANGING_MOTHER_ROOM:
+            D_01F6F118_building_b_01 = 0;
+            D_1D317AC |= 0x20000; //first time entering hanging mother room
+            break;
+        case BUILDING_OTHERWORLD_VINCENT_CORRIDOR:
+            D_1D31714 |= 0x1000; //first time entering vincent corridor
+            break;
+    }
+}
 
 void func_01F6E360_building_b_01(void) {
 
