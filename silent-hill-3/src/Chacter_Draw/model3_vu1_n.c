@@ -54,7 +54,20 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", func_001D7A00);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", func_001D7AA0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", func_001D7B40);
+// MakeSpecularPacketBase?
+void func_001D7B40(Part* part, sceVif1Packet* pk) {
+    int mpg = (part->backclip == 0) ? 0x2e : 0x30;
+
+    sceVif1PkCnt(pk, 0U);
+    sceVif1PkAddCode(pk, 0x11000000U);
+    sceVif1PkRef(pk, (u_long128*)(all_data + 0x730), 
+                 10, 0x01000101U, D_01EE8088 | 0x6c0a0000, 0);
+
+    sceVif1PkCnt(pk, 0U);
+
+    sceVif1PkAddCode(pk, D_01EE8088 | 0x04000000);
+    sceVif1PkAddCode(pk, mpg | 0x14000000);
+}
 
 void MakeSpecularPacket(Part* part, sceVif1Packet* pk) {
     int mpg; // r16
