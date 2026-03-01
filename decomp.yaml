@@ -1,0 +1,26 @@
+name: Silent Hill 2+3
+repo: https://github.com/dreamingmoths/memory-of-alessa
+platform: ps2
+versions:
+- name: sh3
+  fullname: Silent Hill 3 v1.02 (NTSC-U)
+  sha1: dbb94538294b21be38035c0ce6b78354bdfdf2a7
+  paths:
+    target: "rom/SLUS_206.22/SLUS_206.22"
+    elf: "build/SLUS_206.22/SLUS_206.22.elf"
+    build_dir: "build/SLUS_206.22"
+    map: "build/SLUS_206.22.xMAP"
+    compiled_target: "build/SLUS_206.22/SLUS_206.22.rom"
+    asm: "silent-hill-3/config/SLUS_206.22/asm"
+    nonmatchings: "silent-hill-3/config/SLUS_206.22/asm/nonmatchings"
+- name: sh2
+  fullname: Silent Hill 2 v0.10 (VW047-U1)
+  sha1: 888eff71606ff4c1c610e30111b3ca5da647edcc
+  paths:
+    target: "rom/SLUS_202.28/SLUS_202.28"
+    elf: "build/SLUS_202.28/SLUS_202.28.elf"
+    build_dir: "build/SLUS_202.28"
+    map: "build/SLUS_202.28.xMAP"
+    compiled_target: "build/SLUS_202.28/SLUS_202.28.rom"
+    asm: "silent-hill-2/config/SLUS_202.28/asm"
+    nonmatchings: "silent-hill-2/config/SLUS_202.28/asm/nonmatchings"
