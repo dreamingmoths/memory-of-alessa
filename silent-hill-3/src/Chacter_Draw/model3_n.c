@@ -100,7 +100,7 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
         if (func_001CC680() != 0) {
             if (func_001D0EB0() != 0) {
                 unk = func_001D3780(mwork);
-                func_00140A50(func_001CC670(), unk);
+                ClusterAnimeGetWeights(func_001CC670(), unk);
             }
             func_001D2C60(model, mwork);
             if (func_001D0F00() != 0) {

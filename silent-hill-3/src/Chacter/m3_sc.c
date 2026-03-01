@@ -365,7 +365,7 @@ static void shCharacterDelete(SubCharacter* scp) {
     scp_d->model_adr = 0;
     func_001C1B80(scp_d->work);
     scp_d->work = NULL;
-    func_00140760(scp_d->cluster_anime, scp->index);
+    ClusterAnimeDelete(scp_d->cluster_anime, scp->index);
     scp_d->cluster_anime = NULL;
     scp_d->clani_adr = 0;
     shCharacterCutList(scp);
