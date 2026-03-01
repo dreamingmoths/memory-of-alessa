@@ -137,6 +137,7 @@ segments:
       - [0x089e30, asm, Multi_thr/util/cmd_serv]
       - [0x08b280, asm, Multi_thr/util/utilexcl]
       - [0x08b390, asm, Multi_thr/util/utilstr]
+      - [0x08bbc0, asm, shPad/lib_sh_pad]
       - [0x08c760, asm, sh2shd/sh2shd_char_jms]
       - [0x08f6c0, asm, shGs/sh2gfw_GS_NewLoopEnv]
       - [0x08fcd0, asm, shGs/sh2gfw_GsInit]
