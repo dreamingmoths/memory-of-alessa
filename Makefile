@@ -235,10 +235,10 @@ sh2-report:
 	$(MAKE) PROJECT="silent-hill-2" report
 
 sh3-clean:
-	$(MAKE) PROJECT="silent-hill-3" clean
+	$(MAKE) PROJECT="silent-hill-3" clean-project
 
 sh2-clean:
-	$(MAKE) PROJECT="silent-hill-2" clean
+	$(MAKE) PROJECT="silent-hill-2" clean-project
 ###############################################################
 $(LINKERS)/%.d: $(CONFIG)/overlay/%.yaml $(OVERLAY_SPLAT_FILES) $(SETUP)
 	$(GENERATE) $(GENERATE_OVERLAY_FLAGS) $(SPLAT_CONFIG) $<
