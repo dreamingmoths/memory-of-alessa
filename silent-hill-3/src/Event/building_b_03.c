@@ -48,30 +48,27 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DE40_building_b_03)
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DF60_building_b_03);
 
-
 #ifdef NON_MATCHING
-int func_01F6E700_building_b_03(void) {
+int func_01F6E700_building_b_03(void) { 
     int var_s0;
 
     var_s0 = 0;
-    if (!(( D_1D31670 >> 0x16) & 1)) {
+    if (!((D_1D31670 >> 0x16) & 1)) {  //interacting with the elevator from the 5th floor (when you want to enter inside of it)
         D_01F6FC00_building_b_03 = 0;
         D_01F6FC08_building_b_03 = 0.0f;
-        D_1D31670 |= 0x400000;
+        D_1D31670 |= 0x400000; 
         func_001C2290(3, 1.5f);
         func_0016C1A0();
         SeCall(1.0f, 0.0f, 0x4A59);
     }
     D_01F6FC08_building_b_03 += shGetDT();
     switch (D_01F6FC00_building_b_03) {
-
         case 0:
             if (D_01F6FC08_building_b_03 < 0.5f) {
                 return 0;
             }
             SeCall(1.0f, 0.0f, 0x4A58);
             D_01F6FC00_building_b_03 += 1;
-
         case 1:
             if (D_01F6FC08_building_b_03 < 1.5f) {
                 return 0;
@@ -79,8 +76,7 @@ int func_01F6E700_building_b_03(void) {
             func_0016C1B0();
             D_01F6FC00_building_b_03 += 1;
             break;
-
-        default:
+        default:  //this gets executed everytime you reach the 5th floor with the elevator
             var_s0 = 1;
             D_1D31670 &= 0xFFBFFFFF;
             D_1D31714 |= 0x80000000;            
@@ -111,11 +107,11 @@ void func_01F6E8C0_building_b_03(void) {
         case BUILDING_OTHERWORLD_ELEVATOR: //elevator
             D_01F6FC10_building_b_03 = 0;
             D_01F6FC18_building_b_03 = 1.0f;
-            D_1D31718 |= 0x20; //this get set the FIRST TIME you enter the elevator
+            D_1D31718 |= 0x20; //this gets set the FIRST TIME you enter the elevator
             D_01F6FC20_building_b_03 = 1500.0f;
 
             if (!((D_1D31670 >> 6) & 1) && !((D_1D31670 >> 7) & 1) && !((D_1D31670 >> 8) & 1) && !((D_1D31670 >> 9) & 1)) {
-                D_1D31670 |= 0x80; //this get set ONLY WHEN YOU ENTER THE ELEVATOR FROM THE SECOND FLOOR, then it get reset everytime you exit the elevator
+                D_1D31670 |= 0x80; //this gets set ONLY WHEN YOU ENTER THE ELEVATOR FROM THE SECOND FLOOR, then it get reset everytime you exit the elevator
             }            
 
     }
