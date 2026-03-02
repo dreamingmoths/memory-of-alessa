@@ -16,7 +16,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_001414D0);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141510);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141550);
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", QueueObject_enQueue);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_001415F0);
 
@@ -60,7 +60,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141D50);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", InstanceTable_All_Initialize);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141E50);
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", ImpactDescriptor_Post);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141EE0);
 

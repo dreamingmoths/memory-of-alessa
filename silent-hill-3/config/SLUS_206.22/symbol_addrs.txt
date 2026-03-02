@@ -146,7 +146,6 @@ Model3WorkEquipmentFlag = 0x001D3790;
 // model_common.c
 model_common_work = 0x1EE8090;
 
-
 // sce
 sceVu0CopyMatrix = 0x001210A8;
 sceVif0PkCnt = 0x0011FD90;
@@ -165,6 +164,7 @@ sceVif1PkCnt = 0x001200D0;
 sceVif1PkAddCode = 0x00120468;
 sceVif1PkReserve = 0x001203D0;
 sceVif1PkRef = 0x00120128;
+sceMpegCreate = 0x0011dd20;
 
 // sdk
 litodp = 0x00124b50;
@@ -215,8 +215,47 @@ printf = 0x00100590;
 shCharacterGetSkeletons = 0x00140d80;
 close_to_angle_target = 0x00150c80;
 // event_heather_? = 0x00190410;
-Effect_Object_Initialize = 0x1c1de0;
-InstanceTable_All_Initialize = 0x141db0;
+Effect_Object_Initialize = 0x001c1de0;
+InstanceTable_All_Initialize = 0x00141db0;
+ImpactDescriptor_Post = 0x00141e50;
+QueueObject_enQueue = 0x00141550;
+rand = 0x001122c0;
+memcpy = 0x001104b0;
+shCharacterAnimeSet = 0x001dd490;
+SubCharacter_ObjectFunction = 0x00143120;
+SubCharacter_Function_0x00216d70 = 0x00216d70;
+SubCharacter_Function_0x002ba7b0 = 0x002ba7b0;
+SubCharacter_Function_0x00304f60 = 0x00304f60;
+SubCharacter_Function_0x002fe080 = 0x002fe080;
+SubCharacter_Function_0x00291370 = 0x00291370;
+SubCharacter_Function_0x00266d10 = 0x00266d10;
+SubCharacter_Function_0x0025df00 = 0x0025df00;
+SubCharacter_Function_0x00243db0 = 0x00243db0;
+SubCharacter_Function_0x00241380 = 0x00241380;
+SubCharacter_Function_0x00230cd0 = 0x00230cd0;
+shCharacterEnemyFLYAnimeSetP = 0x0029aa10;
+shCharacterEnemyCKNAnimeSetP = 0x0024c180;
+EnemyCKNFunction = 0x00244110;
+
+Object_Initialize = 0x002105c0; // allow_duplicated:True visibility:local
+Object_Draw = 0x002109d0; // allow_duplicated:True visibility:local
+ParabolaMotion_Calculator = 0x00210660; // allow_duplicated:True visibility:local
+Object_Motion_00 = 0x002106d0; // allow_duplicated:True visibility:local
+HH_Class_Suffix_Blood_01 = 0x00210c50;
+HH_Class_Prefix_Blood_01 = 0x00210c60;
+HH_Class_Blood_01 = 0x00210ce0;
+
+// could be wrong
+// Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
+HH_Class_Plural_Phenomenon_00 = 0x002f4270;
+
+// HH_Class_Blood_Pool_Phenomenon_00
+// Object_Initialize = 0x00211690; // allow_duplicated:True visibility:local
+HH_Class_Blood_Pool_Phenomenon_00 = 0x002116e0;
+
+// smoke or flame?
+// Object_Initialize = 0x00212e20; // allow_duplicated:True visibility:local
+HH_Class_Unknown_00 = 0x00213620;
 
 ImpactManager = 0x001410c0;
 Object_Group_InstanceTableInfomeation_Set = 0x00142030;
@@ -227,6 +266,146 @@ ObjectInstance_DataBlock_Get = 0x00142190;
 // item_menu_select.c
 // this TU isn't in SH2, but there's a string that refers to it.
 ItemMenuSelect = 0x002b1420;
+
+// hh_classes
+HH_Class_pMain_0x2 = 0x00212b10;
+HH_Class_pMain_0x3 = 0x00241d30;
+HH_Class_pMain_0x4 = 0x00242fc0;
+HH_Class_pPrefix_0x6 = 0x002425a0;
+HH_Class_pMain_0x6 = 0x00242620;
+HH_Class_pSuffix_0x6 = 0x00242610;
+HH_Class_pPrefix_0x7 = 0x002121c0;
+HH_Class_pMain_0x7 = 0x00212250;
+HH_Class_pSuffix_0x7 = 0x00212240;
+HH_Class_pPrefix_0x9 = 0x00211550;
+HH_Class_pMain_0x9 = 0x002115e0;
+HH_Class_pSuffix_0x9 = 0x002115d0;
+HH_Class_pPrefix_0xb = 0x002f3ba0;
+HH_Class_pMain_0xb = 0x002f3c30;
+HH_Class_pSuffix_0xb = 0x002f3c20;
+HH_Class_pPrefix_0xd = 0x00213580;
+HH_Class_pSuffix_0xd = 0x00213610;
+HH_Class_pPrefix_0xe = 0x003260f0;
+HH_Class_pMain_0xe = 0x00326190;
+HH_Class_pSuffix_0xe = 0x00326180;
+HH_Class_pPrefix_0xf = 0x00332570;
+HH_Class_pMain_0xf = 0x00332610;
+HH_Class_pSuffix_0xf = 0x00332600;
+HH_Class_pPrefix_0x10 = 0x00334620;
+HH_Class_pMain_0x10 = 0x00334760;
+HH_Class_pSuffix_0x10 = 0x003346b0;
+HH_Class_pPrefix_0x11 = 0x003346c0;
+HH_Class_pMain_0x11 = 0x00334860;
+HH_Class_pSuffix_0x11 = 0x00334750;
+HH_Class_pMain_0x12 = 0x003311b0;
+HH_Class_pMain_0x13 = 0x00332fb0;
+HH_Class_pPrefix_0x14 = 0x00253850;
+HH_Class_pMain_0x14 = 0x00253940;
+HH_Class_pSuffix_0x14 = 0x00253930;
+HH_Class_pPrefix_0x15 = 0x00281130;
+HH_Class_pMain_0x15 = 0x00281150;
+HH_Class_pSuffix_0x15 = 0x00281140;
+HH_Class_pPrefix_0x16 = 0x001e66e0;
+HH_Class_pMain_0x16 = 0x001e6770;
+HH_Class_pSuffix_0x16 = 0x001e6760;
+HH_Class_pPrefix_0x17 = 0x001f1270;
+HH_Class_pMain_0x17 = 0x001f1300;
+HH_Class_pSuffix_0x17 = 0x001f12f0;
+HH_Class_pMain_0x18 = 0x001eeb00;
+HH_Class_pPrefix_0x19 = 0x001f14d0;
+HH_Class_pMain_0x19 = 0x001f1580;
+HH_Class_pPrefix_0x1a = 0x00303970;
+HH_Class_pMain_0x1a = 0x00303a00;
+HH_Class_pPrefix_0x1b = 0x00310ab0;
+HH_Class_pMain_0x1b = 0x00310b40;
+HH_Class_pPrefix_0x1c = 0x00310280;
+HH_Class_pMain_0x1c = 0x00310310;
+HH_Class_pMain_0x1d = 0x00311470;
+HH_Class_pPrefix_0x1e = 0x00311a90;
+HH_Class_pMain_0x1e = 0x00311b20;
+HH_Class_pPrefix_0x1f = 0x00312430;
+HH_Class_pMain_0x1f = 0x003124c0;
+HH_Class_pPrefix_0x20 = 0x003273c0;
+HH_Class_pMain_0x20 = 0x00327450;
+HH_Class_pMain_0x21 = 0x00332a80;
+HH_Class_pPrefix_0x22 = 0x00250520;
+HH_Class_pMain_0x22 = 0x002505b0;
+HH_Class_pSuffix_0x22 = 0x002505a0;
+HH_Class_pPrefix_0x23 = 0x002520e0;
+HH_Class_pMain_0x23 = 0x002521a0;
+HH_Class_pSuffix_0x23 = 0x00252190;
+HH_Class_pPrefix_0x24 = 0x00280fc0;
+HH_Class_pMain_0x24 = 0x00281050;
+HH_Class_pSuffix_0x24 = 0x00281040;
+HH_Class_pPrefix_0x25 = 0x002f3690;
+HH_Class_pMain_0x25 = 0x002f3750;
+HH_Class_pSuffix_0x25 = 0x002f3740;
+HH_Class_pPrefix_0x26 = 0x002856d0;
+HH_Class_pMain_0x26 = 0x00285830;
+HH_Class_pSuffix_0x26 = 0x002857c0;
+HH_Class_pPrefix_0x27 = 0x00286b00;
+HH_Class_pMain_0x27 = 0x00286c60;
+HH_Class_pSuffix_0x27 = 0x00286bf0;
+HH_Class_pPrefix_0x28 = 0x003024e0;
+HH_Class_pMain_0x28 = 0x00302690;
+HH_Class_pSuffix_0x28 = 0x00302620;
+HH_Class_pMain_0x29 = 0x0029ad10;
+HH_Class_pMain_0x2a = 0x002a12a0;
+HH_Class_pMain_0x2b = 0x002a48d0;
+HH_Class_pMain_0x2c = 0x002c22d0;
+HH_Class_pMain_0x2d = 0x002cdcd0;
+HH_Class_pMain_0x2e = 0x002de2c0;
+HH_Class_pMain_0x2f = 0x002fbb10;
+HH_Class_pMain_0x30 = 0x002feab0;
+HH_Class_pMain_0x31 = 0x003285a0;
+HH_Class_pMain_0x32 = 0x00328f40;
+HH_Class_pMain_0x33 = 0x00334ee0;
+HH_Class_pPrefix_0x34 = 0x00300e00;
+HH_Class_pMain_0x34 = 0x003003a0;
+HH_Class_pPrefix_0x35 = 0x0032fec0;
+HH_Class_pMain_0x35 = 0x0032fee0;
+HH_Class_pPrefix_0x36 = 0x00330140;
+HH_Class_pMain_0x36 = 0x00330160;
+HH_Class_pPrefix_0x37 = 0x003301f0;
+HH_Class_pMain_0x37 = 0x00330210;
+HH_Class_pPrefix_0x38 = 0x003302c0;
+HH_Class_pMain_0x38 = 0x003302e0;
+HH_Class_pPrefix_0x39 = 0x00330390;
+HH_Class_pMain_0x39 = 0x003303b0;
+HH_Class_pPrefix_0x3a = 0x0032ffb0;
+HH_Class_pMain_0x3a = 0x0032ffd0;
+HH_Class_pPrefix_0x3b = 0x003300a0;
+HH_Class_pMain_0x3b = 0x003300c0;
+HH_Class_pPrefix_0x3c = 0x003304a0;
+HH_Class_pMain_0x3c = 0x003304f0;
+HH_Class_pPrefix_0x3d = 0x003373e0;
+HH_Class_pMain_0x3d = 0x00337460;
+HH_Class_pMain_0x3e = 0x002fdfd0;
+
+// movie_main.c
+MovieInit = 0x002b3830;
+MovieMain = 0x002b3860;
+
+// pss_videodec.c
+cpy2area = 0x002b7630;
+videoDecCreate = 0x002b89d0;
+
+// pss_vibuf.c
+getFIFOindex = 0x002b7a30;
+setD3_CHCR = 0x002b7a70;
+setD4_CHCR = 0x002b7ae0;
+scTag2 = 0x002b7b50;
+viBufCreate = 0x002b7b80;
+viBufReset = 0x002b7bf0;
+viBufBeginPut = 0x002b7d50;
+vifBufEndPut = 0x002b7e50;
+viBufAddDMA = 0x002b7eb0;
+viBufStopDMA = 0x002b80e0;
+viBufRestartDMA = 0x002b81c0;
+viBufDelete = 0x002b84e0;
+viBufFlush = 0x002b8530;
+viBufPutTs = 0x002b86d0;
+viBufGetTs = 0x002b8800;
 
 // dbfntprint.c
 _dbfntvsnprintf = 0x001dbd90;
@@ -729,7 +908,6 @@ vcRenewalBaseCamAngAndAdjustOfsCamAng                                           
 vcRetNearRatioSwitchAreaInXZPos                                                  = 0x1b6c20;
 vcSetNearRoadAryByCharaPos                                                       = 0x1b8a30;
 vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK                                           = 0x1b8300;
-viBufGetTs                                                                       = 0x2b8800;
 viBufModifyPts                                                                   = 0x2b8580;
 vwMatrixToAngleYXZ                                                               = 0x1c1690;
 vwRetNewVelocityToTargetVal                                                      = 0x1c12e0;
@@ -740,7 +918,6 @@ sh3shd_init_outdoor_man2                                                        
 vwRenewalXZVelocityToTargetPos                                                   = 0x1c0f40;
 
 HH_Class_Blood_Stick_00                                                          = 0x2f4060;
-cpy2area                                                                         = 0x2b7630;
 dicCode87                                                                        = 0x157c90;
 drop_shadow_add_micro2kick_packet                                                = 0x177c60;
 efCartridgeDischargeDrawPolyF4                                                   = 0x1eff30;
