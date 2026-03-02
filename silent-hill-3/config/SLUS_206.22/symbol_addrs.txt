@@ -366,6 +366,10 @@ HH_Class_pPrefix_0x3d = 0x003373e0;
 HH_Class_pMain_0x3d = 0x00337460;
 HH_Class_pMain_0x3e = 0x002fdfd0;
 
+// movie_main.c
+MovieInit = 0x002b3830;
+MovieMain = 0x002b3860;
+
 // pss_vibuf.c
 getFIFOindex = 0x002b7a30;
 setD3_CHCR = 0x002b7a70;
