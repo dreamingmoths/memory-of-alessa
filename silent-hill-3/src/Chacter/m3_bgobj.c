@@ -6,6 +6,9 @@
 
 extern void func_001DC9B0(SubCharacter *arg0, int value);
 extern void func_001DCA40(SubCharacter *arg0, int value);
+extern void func_001DD290(SubCharacter*, void(*)(SubCharacter*));
+extern void func_001DD2A0(SubCharacter*, void(*)(SubCharacter*));
+
 
 int RObjectInit(SubCharacter *this)
 {
@@ -65,4 +68,8 @@ void RObjectFunction(SubCharacter *this)
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_bgobj", func_001430C0);
+
+void func_001430C0(SubCharacter *this) {
+    func_001DD290(this, RObjectFunction);
+    func_001DD2A0(this, RObjectFunction);
+}
