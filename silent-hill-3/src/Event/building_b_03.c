@@ -38,7 +38,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DAD0_building_b_03)
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DC90_building_b_03);
 
-INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DCE0_building_b_03);
+void func_01F6DCE0_building_b_03(int arg0) {
+    func_001DE5B0(func_01F6DC90_building_b_03, arg0, 1); 
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DD00_building_b_03);
 
