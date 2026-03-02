@@ -2,7 +2,33 @@
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6D680_building_b_03);
 
-INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6D8F0_building_b_03);
+int func_01F6D8F0_building_b_03(void) { //All of this handle the interaction with the "Flame Purifies All" painting in the otherworld gallery room
+
+    if (!((D_1D31674 >> 6) & 1)) {
+        func_00190A20(2);
+        D_1D31674 |= 0x40;
+        if (!((D_1D31674 >> 3) & 1)) {
+            D_01F6FC30_building_b_03 = 0x19; //this gets set the FIRST TIME you interact with with the "Flame Purifies All" painting, where Heather mentions that she has already seen the painting
+        } else {
+            D_01F6FC30_building_b_03 = 0x1A; //this gets set the SECOND TIME you interact with with the "Flame Purifies All" painting, heather doesnt mention that she saw the painting anymore
+        }
+    }
+   
+    if (func_0016C1C0(D_01F6FC30_building_b_03) == 0) { //no idea what this does for now Sadge
+        return 0;
+    }
+    if (!((D_1D31674 >> 3) & 1)) {
+        D_1D31674 |= 8; //this gets set when you FINISH to interact with the "Flame Purifies All" painting for the FIRST time
+    }
+
+    D_1D316F4 |= 0x20; //These get set when you FINISH to interact with the "Flame Purifies All" painting
+    D_1D317B0 |= 0x40000000; 
+    D_1D31674 &= ~0x40;
+    
+    func_00190A20(0);
+    return 1;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6D9F0_building_b_03);
 
@@ -19,6 +45,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DD00_building_b_03)
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DE40_building_b_03);
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6DF60_building_b_03);
+
 
 #ifdef NON_MATCHING
 int func_01F6E700_building_b_03(void) {
