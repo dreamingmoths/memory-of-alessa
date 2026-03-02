@@ -146,7 +146,6 @@ Model3WorkEquipmentFlag = 0x001D3790;
 // model_common.c
 model_common_work = 0x1EE8090;
 
-
 // sce
 sceVu0CopyMatrix = 0x001210A8;
 sceVif0PkCnt = 0x0011FD90;
@@ -165,6 +164,7 @@ sceVif1PkCnt = 0x001200D0;
 sceVif1PkAddCode = 0x00120468;
 sceVif1PkReserve = 0x001203D0;
 sceVif1PkRef = 0x00120128;
+sceMpegCreate = 0x0011dd20;
 
 // sdk
 litodp = 0x00124b50;
@@ -220,6 +220,7 @@ InstanceTable_All_Initialize = 0x00141db0;
 ImpactDescriptor_Post = 0x00141e50;
 QueueObject_enQueue = 0x00141550;
 rand = 0x001122c0;
+memcpy = 0x001104b0;
 
 Object_Initialize = 0x002105c0; // allow_duplicated:True visibility:local
 Object_Draw = 0x002109d0; // allow_duplicated:True visibility:local
@@ -369,6 +370,10 @@ HH_Class_pMain_0x3e = 0x002fdfd0;
 // movie_main.c
 MovieInit = 0x002b3830;
 MovieMain = 0x002b3860;
+
+// pss_videodec.c
+cpy2area = 0x002b7630;
+videoDecCreate = 0x002b89d0;
 
 // pss_vibuf.c
 getFIFOindex = 0x002b7a30;
@@ -898,7 +903,6 @@ sh3shd_init_outdoor_man2                                                        
 vwRenewalXZVelocityToTargetPos                                                   = 0x1c0f40;
 
 HH_Class_Blood_Stick_00                                                          = 0x2f4060;
-cpy2area                                                                         = 0x2b7630;
 dicCode87                                                                        = 0x157c90;
 drop_shadow_add_micro2kick_packet                                                = 0x177c60;
 efCartridgeDischargeDrawPolyF4                                                   = 0x1eff30;
