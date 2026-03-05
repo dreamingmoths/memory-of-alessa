@@ -35,15 +35,25 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EF30);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EF40);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EFD0);
+u_int func_0022EFD0(u_int mask) {
+    return D_01F2A564 & mask;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EFE0);
+void func_0022EFE0(void) {
+    D_01F2A564 |= 0x40;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F000);
+void func_0022F000(void) {
+    D_01F2A564 &= ~0x40;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F020);
+void func_0022F020(void) {
+    D_01F2A564 |= 0x80;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F040);
+void func_0022F040(void) {
+    D_01F2A564 &= ~0x80;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F060);
 
