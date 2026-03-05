@@ -14,14 +14,26 @@ void func_0022EB70(SubCharacter* scp) {
     }
 }
 
-
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EBD0);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022EC70);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022ECC0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022ED30);
+void func_0022ED30(void) {
+    int i;
+    EnemyWork* var_s0;
+
+    var_s0 = &D_01F27760;
+    i = 0;
+    do {
+        if (var_s0->unk_0x160 != 0) {
+            func_0022FC20(var_s0);
+        }
+        i++;
+        var_s0++;
+    } while (i < 0x20);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022ED90);
 
@@ -67,7 +79,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F150);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F170);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F1D0);
+void func_0022F1D0(void) {
+    D_01F2A581 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022F1E0);
 
