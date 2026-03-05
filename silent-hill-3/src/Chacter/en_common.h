@@ -27,5 +27,6 @@ void func_0022FCF0(EnemyWork* work);
 void func_0022FE80(EnemyWork* work);
 
 extern u_int D_01F2A564;
+extern u_char D_01F2A581;
 
 #endif
