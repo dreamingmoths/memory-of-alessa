@@ -157,6 +157,96 @@ void func_0022FC20(EnemyWork* work) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022FCF0);
+void func_0022FCF0(EnemyWork* work) {
+    switch (work->scp->kind) {
+        case CLOSER_CHARA_ID:
+            func_00230A00(work);
+            break;
+        case DOUBLE_HEAD_CHARA_ID:
+            func_00216AA0(work);
+            break;
+        case NUMB_BODY_CHARA_ID:
+            func_00244000(work);
+            break;
+        case NURSE_CHARA_ID:
+            func_0025E140(work);
+            break;
+        case INSANE_CANCER_CHARA_ID:
+            func_00266F50(work);
+            break;
+        case MISSIONARY_CHARA_ID:
+            func_002870B0(work);
+            break;
+        case SCRAPER_CHARA_ID:
+            func_002BA510(work);
+            break;
+        case GOD_CHARA_ID:
+            func_002D2420(work);
+            break;
+        case SLURPER_E_CHARA_ID:
+            func_00304C50(work);
+            break;
+        case SLURPER_X_CHARA_ID:
+            func_0030DED0(work);
+            break;
+        case PENDULUM_CHARA_ID:
+            func_00293650(work);
+            break;
+        case SPLIT_WORM_CHARA_ID:
+            func_0022E940(work);
+            break;
+        case LEONARD_WOLF_CHARA_ID:
+            func_002CD8B0(work);
+            break;
+        case MEMORY_OF_ALESSA_CHARA_ID:
+            func_002E0EB0(work);
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/en_common", func_0022FE80);
+void func_0022FE80(EnemyWork* work) {
+    switch (work->scp->kind) {
+        case CLOSER_CHARA_ID:
+            func_00230A40(work);
+            break;
+        case DOUBLE_HEAD_CHARA_ID:
+            func_00216B30(work);
+            break;
+        case NUMB_BODY_CHARA_ID:
+            func_00244010(work);
+            break;
+        case NURSE_CHARA_ID:
+            func_0025E150(work);
+            break;
+        case INSANE_CANCER_CHARA_ID:
+            func_00266F60(work);
+            break;
+        case MISSIONARY_CHARA_ID:
+            func_002870F0(work);
+            break;
+        case SCRAPER_CHARA_ID:
+            func_002BA550(work);
+            break;
+        case GOD_CHARA_ID:
+            func_002D2460(work);
+            break;
+        case SLURPER_E_CHARA_ID:
+            func_00304CB0(work);
+            break;
+        case SLURPER_X_CHARA_ID:
+            func_0030DF30(work);
+            /* fallthrough */
+        case PENDULUM_CHARA_ID:
+            func_002936A0(work);
+            break;
+        case SPLIT_WORM_CHARA_ID:
+            func_0022E970(work);
+            break;
+        case LEONARD_WOLF_CHARA_ID:
+            func_002CD8F0(work);
+            break;
+        case MEMORY_OF_ALESSA_CHARA_ID:
+            func_002E0EC0(work);
+            break;
+    }
+}
