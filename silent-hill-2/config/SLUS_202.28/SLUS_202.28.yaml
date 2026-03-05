@@ -181,7 +181,7 @@ segments:
       - [0x0c0a70, asm, Multi_thr/boot/bootoptitem]
       - [0x0c1200, asm, Event/title]
       - [0x0c5a20, asm, SH2_common/pad]
-      - [0x0c6500, asm, DBG/dbfntprint]
+      - [0x0c6500, c,   DBG/dbfntprint]
       - [0x0c6b90, c,   Chacter/sh2_character_manage]
       - [0x0c71a0, asm, DBG/verbose]
       - [0x0c7290, asm, Event/chizu]
