@@ -12,7 +12,7 @@ static inline void vec_copy(__int128* dst, __int128* src) {
 }
 
 void func_01F6D690_city_00(void) {
-    Foo sp;
+    City00Struct sp;
     Bar* var_s0;
     Bar* temp_s1;
 

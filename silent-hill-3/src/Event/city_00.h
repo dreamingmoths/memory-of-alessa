@@ -3,13 +3,13 @@
 
 #include "common.h"
 
-typedef struct _Foo {
-    struct _Bar *unk0;
+typedef struct City00Struct {
+    struct City00Entry *unk0;
     __int128 unk10;
     __int128 unk20;
-} Foo;
+} City00Struct;
 
-typedef struct _Bar {
+typedef struct City00Entry {
     __int128 unk0;
     __int128 unk10;
     __int128 unk20;
