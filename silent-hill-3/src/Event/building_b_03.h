@@ -26,11 +26,11 @@ extern float D_01F6FC20_building_b_03;
 extern int   D_01F6FC28_building_b_03;
 extern int   D_01F6FC30_building_b_03;
 extern int   D_01F6FC40_building_b_03;
-extern u_int D_1D31670;
-extern u_int D_1D31674;
+extern u_int D_1D31670[1];
 extern u_int D_1D316F4;
 extern u_int D_1D31714;
 extern u_int D_1D31718;
 extern u_int D_1D317B0;
 
 #endif
+

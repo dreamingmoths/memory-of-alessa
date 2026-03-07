@@ -497,7 +497,6 @@ func_001B6C14 = 0x1B6C14;
 func_001DB880 = 0x1DB880;
 
 D_1F6D600 = 0x1F6D600; // ignore:true
-D_1D31674 = 0x1D31674; // size:12
 
 gpoutbuff_env = 0x3c8b00;
 

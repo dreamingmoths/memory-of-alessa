@@ -12,6 +12,10 @@ typedef struct Apart00Struct {
     Apart00Entry entries[];
 } Apart00Struct;
 
+static inline int get_bit(int bit) {
+    return (D_1D31670[bit / 32] >> (bit % 32)) & 1;
+}
+
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D680_apart_00);
 
 void func_01F6D680_apart_00(void);
@@ -166,24 +170,13 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E800_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E9A0_apart_00);
 
-void func_01F6EB70_apart_00(void)
-{
-    int v0;
-    u_int w;
-
-    v0 = func_00199C70(7);
-    if (v0 == 1) {
-        w = D_1D31674.unk4;
-        if (((w >> 7) & 1U) == 0) {
-            D_1D31674.unk4 = w | 0x80U;
+void func_01F6EB70_apart_00(void) {
+    if (func_00199C70(7) == 1) {
+        if (!get_bit(0x47)) {
+            D_1D31670[2] |= 0x80;
         }
     }
-
-    v0 = func_00199C70(9);
-    if (v0 == 1) {
-        w = D_1D31674.unk4;
-        if (((w >> 14) & 1U) == 0) {
-            D_1D31674.unk4 = w | 0x4000U;
-        }
+    if ((func_00199C70(9) == 1) && !get_bit(0x4E)) {
+        D_1D31670[2] |= 0x4000;
     }
 }
