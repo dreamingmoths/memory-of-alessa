@@ -25,9 +25,10 @@ extern int D_01F6F118_building_b_01;
 extern int D_01F6F130_building_b_01;
 extern int D_01F6F138_building_b_01;
 extern u_int D_1D3166C;
-extern u_int D_1D31670;
+extern u_int D_1D31670[1];
 extern u_int D_1D31714;
 extern u_int D_1D317AC;
 extern u_int D_1D316AC;
 
 #endif
+
