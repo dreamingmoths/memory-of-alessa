@@ -362,7 +362,7 @@ SECTIONS
 		
 		building_b_00.c.o (.text)
 
-		. = ALIGN(0x80);
+		. = ALIGN(0x100);
 
 		ALIGNALL(0x4);
 		building_b_00_data.data.s.o (.data)
