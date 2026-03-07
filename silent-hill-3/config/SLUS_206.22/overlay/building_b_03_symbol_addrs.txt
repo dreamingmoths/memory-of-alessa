@@ -30,3 +30,4 @@ D_01F6F9A8_building_b_03 = 0x1F6F9A8;
 D_01F6F9B0_building_b_03 = 0x1F6F9B0;
 D_01F6F9B4_building_b_03 = 0x1F6F9B4;
 jtbl_01F6FB80_building_b_03 = 0x1F6FB80;
+D_1D31670 = 0x1D31670; // size:0x10
