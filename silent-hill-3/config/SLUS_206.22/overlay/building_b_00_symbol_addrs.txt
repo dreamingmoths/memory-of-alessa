@@ -21,5 +21,3 @@ D_01F6F990_building_b_00 = 0x1F6F990;
 D_01F6F9F0_building_b_00 = 0x1F6F9F0;
 jtbl_01F6FA80_building_b_00 = 0x1F6FA80;
 jtbl_01F6FAA0_building_b_00 = 0x1F6FAA0;
-D_1D31670 = 0x1D31670; // size:0x10
-
