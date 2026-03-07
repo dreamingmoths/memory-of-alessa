@@ -38,7 +38,7 @@ extern float D_01F6FB10_building_b_00;
 extern u_int D_1D31644;
 extern u_int D_1D31670[3];
 extern u_int D_1D31714;
-extern int   D_1D31710;
+extern int   D_1D31710[4];
 extern int   D_1D317A8;
 
 #endif

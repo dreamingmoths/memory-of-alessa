@@ -50,8 +50,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_00", func_01F6DC40_building_b_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_00", func_01F6DD70_building_b_00);
 
-#ifdef NON_MATCHING
-int func_01F6E0B0_building_b_00(void) { //same elevator bullshit as the others similar functions
+int func_01F6E0B0_building_b_00() { // same elevator bullshit as the others similar functions
     int var_s0;
 
     var_s0 = 0;
@@ -84,16 +83,13 @@ int func_01F6E0B0_building_b_00(void) { //same elevator bullshit as the others s
         default:
             var_s0 = 1;
             D_1D31670[0] &= 0xFFBFFFFF;
-            D_1D31710 |= 0x40000000;
+            D_1D31710[0] |= 0x40000000;
             D_1D31670[0] |= 0x40;
             D_1D317A8 |= 0x100000;
             
     }
     return var_s0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/building_b_00", func_01F6E0B0_building_b_00);
-#endif
 
 
 void func_01F6E270_building_b_00(void) {
@@ -111,9 +107,7 @@ void func_01F6E270_building_b_00(void) {
     }
 }
 
-#ifdef NON_MATCHING
-void func_01F6E2D0_building_b_00(void) {
-    
+void func_01F6E2D0_building_b_00() {
     switch (RoomName()) {                              
         case 0x81:
             if (!((D_1D31644 >> 0x16) & 1)) {
@@ -153,7 +147,3 @@ void func_01F6E2D0_building_b_00(void) {
             break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/building_b_00", func_01F6E2D0_building_b_00);
-#endif
-
