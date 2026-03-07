@@ -223,7 +223,29 @@ INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F703B0_amusement_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70750_amusement_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70780_amusement_01);
+void func_01F70780_amusement_01(void) {
+    long id;
+    int count;
+    int* cur;
+    int temp_v0;
+
+    count = 0;
+    for (cur = D_01F74B10_amusement_01; *cur != 0; cur++) {
+        temp_v0 = func_0012FD80(PENDULUM_CHARA_ID, *cur);
+        if (temp_v0 != 0) {
+            if (func_001E2110(temp_v0) == 0) {
+                count++;
+            }
+            if ((*cur != 0x182) && (*cur != 0x183)) {
+                if (!((D_1D3169C >> 0xF) & 1)) {
+                    shCharacter_Manage_Delete(PENDULUM_CHARA_ID, *cur);
+                } else if ((1 < (func_00199770())) && (2 < count)) {
+                    shCharacter_Manage_Delete(PENDULUM_CHARA_ID, *cur);
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70870_amusement_01);
 

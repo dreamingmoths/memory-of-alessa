@@ -637,6 +637,8 @@ SECTIONS
 
 		ALIGNALL(0x4);
 		amusement_01_data.data.s.o (.data)
+		ALIGNALL(0x8);
+		amusement_01.c.o (.rodata)
 		ALIGNALL(0x10);
 		amusement_01_bss.bss.s.o (.bss)		
 	}	>	amusement_01.bin

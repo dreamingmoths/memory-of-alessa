@@ -24,7 +24,8 @@ segments:
     start: 0x80
     bss_size: 0x180
     subsegments:
-      - [0x80,   c,    Event/amusement_01]
-      - [0x3D00, data, amusement_01_data]
+      - [0x80,   c,       Event/amusement_01]
+      - [0x3D00, data,    amusement_01_data]
+      - [0x7580, .rodata, Event/amusement_01]
       - { vram: 0x1F74C80, type: bss, name: amusement_01_bss }
   - [0x7680]
