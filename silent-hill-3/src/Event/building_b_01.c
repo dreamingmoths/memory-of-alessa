@@ -1,5 +1,9 @@
 #include "building_b_01.h"
 
+static inline int get_bit(int bit) {
+    return (D_1D31670[bit / 32] >> (bit % 32)) & 1;
+}
+
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_01", func_01F6D680_building_b_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_01", func_01F6D6E0_building_b_01);
@@ -61,7 +65,7 @@ void func_01F6E360_building_b_01(void) {
                 D_1D31714 &= 0xFFFF7FFF;
             }
     
-            if (!((D_1D31670 >> 0xE) & 1)) { //oxydol check
+            if (!get_bit(0xE)) { //oxydol check
                 func_0016CA40(0x12);
                 D_1D31714 |= 0x4000;
                 break;
