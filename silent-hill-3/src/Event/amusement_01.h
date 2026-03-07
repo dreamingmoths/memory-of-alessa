@@ -82,7 +82,9 @@ extern float D_01F74A50_amusement_01;
 extern int D_01F71460_amusement_01;
 extern float D_01F746C0_amusement_01;
 extern int D_01F74D90_amusement_01;
+extern int D_01F74CF8_amusement_01;
 extern int D_1D316AC;
+extern int RoomName();
 extern u_int D_1D31648;
 
 extern float D_01F74590_amusement_01;

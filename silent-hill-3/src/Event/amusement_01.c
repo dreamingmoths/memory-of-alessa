@@ -75,7 +75,7 @@ void func_01F6DCB0_amusement_01() {
     D_01F74CB0_amusement_01 = 0;
 }
 
-static void func_01F6DCF0_amusement_01(__int128* arg0, s32* arg1, __int128* arg2, s32* arg3, s32* arg4) {
+static void func_01F6DCF0_amusement_01(__int128* arg0, int* arg1, __int128* arg2, int* arg3, int* arg4) {
     sceVu0FVECTOR sp60;
 
     func_0018FE60((__int128*) &sp60);
@@ -127,8 +127,8 @@ int func_01F6DDE0_amusement_01() {
     return ret;
 }
 
-s32 func_01F6DF10_amusement_01() {
-    s32 ret;
+int func_01F6DF10_amusement_01() {
+    int ret;
     f32 angle;
     SubCharacter* danny;
     ret = 0;
@@ -398,13 +398,13 @@ INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70000_amusement_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F701B0_amusement_01);
 
-s32 func_01F702A0_amusement_01(void) {
+int func_01F702A0_amusement_01() {
     switch (D_01F74C88_amusement_01) {
         case 0:
             func_00190A20(2);
             D_1D3169C |= 0x200000;
             SeCall(1.0f, 0.0f, 0x3BC5);
-            if (((u32) D_1D3169C >> 0x14) & 1) {
+            if ((D_1D3169C >> 0x14) & 1) {
                 SeCall(1.0f, 0.0f, 0x4A3B);
             }
             D_01F74C88_amusement_01++;
@@ -429,7 +429,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F703B0_amusement_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70750_amusement_01);
 
-void func_01F70780_amusement_01(void) {
+void func_01F70780_amusement_01() {
     long id;
     int count;
     int* cur;
@@ -455,6 +455,26 @@ void func_01F70780_amusement_01(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70870_amusement_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F709D0_amusement_01);
+void func_01F709D0_amusement_01(void) {
+    SubCharacter* douglas;
+    s16 room;
+
+    D_01F74CF8_amusement_01 = 1;
+    room = RoomName();
+    switch (room) {
+    case 0xE1:
+        func_01F70780_amusement_01();
+        break;
+    case 0xE3:
+        if ((D_1D31648 >> 0x1A) & 1) {
+            douglas = shCharacterGetSubCharacter(DOUGLAS_CC_CHARA_ID, 0x178);
+            douglas->pos.x = -59676.0f;
+            douglas->pos.y = -8.4108f;
+            douglas->pos.z = 58407.0f;
+            douglas->rot.y = PI;
+            func_001DC9E0(douglas, 1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F70A90_amusement_01);
