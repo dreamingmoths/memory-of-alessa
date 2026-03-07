@@ -246,7 +246,13 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPreload);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015CEF0);
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015CF10);
+void func_0015CF10(u_short *dest, u_short *src) {
+    u_short val;
+    do {
+        val = *src++;
+        *dest++ = val;
+    } while (val != 0xFFFF);
+}
 
 #ifdef NON_MATCHING
 void fontPushButton()
