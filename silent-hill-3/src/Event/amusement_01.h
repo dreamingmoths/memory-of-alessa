@@ -4,6 +4,16 @@
 #include "common.h"
 #include "Chacter/m3_sc.h"
 
+typedef struct Amusement01Work {
+    u_char unk_0x0[0x20];
+    float x; // 0x20
+    float y; // 0x24
+    float z; // 0x28
+    float f_0x2c; // 0x2c
+    float f_0x30; // 0x30
+    float angle; // 0x34
+} Amusement01Work;
+
 int func_01F6D680_amusement_01();
 
 void func_001C0EB0(void (*)(__int128*, int*, __int128*, int*, int*), int, int);
@@ -12,17 +22,35 @@ void func_01F6DCF0_amusement_01(__int128* arg0, int* arg1, __int128* arg2, int* 
 
 static void func_01F6DC70_amusement_01(__int128* arg0, int* arg1, __int128* arg2, int* arg3, int* arg4);
 
+void func_01F703B0_amusement_01(float, float);
+
 extern float func_001643C0();
 extern int func_0016C540(float *, float *);
 extern void func_001C2290(int, float);
 extern void func_0018FE60(__int128*);
 extern void func_0016CF70();
 extern int func_0016CF80(int, int, int*);
-extern int func_0012FD80(int, short);
+extern SubCharacter* shCharacterGetSubCharacter(int, short);
 extern u_char func_00199770();
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
 extern int shCharacter_Manage_Delete(u16 kind, u16 id);
+
+extern void SeCall(float, float, int);
+extern void func_0016C3C0();
+extern int func_0016C1C0(int);
+extern void func_00190A20(int a0);
+extern void  func_0016D6B0(u_int);
+extern int func_00190C00();
+extern void func_00317420(u_int);
+extern void func_00317490(int, float);
+extern void func_003174B0(float);
+extern void func_001602D0(int, int, int, float);
+extern int func_00160520(int);
+extern void func_00160AF0(int);                                 /* extern */
+extern void func_0019A940(void);
+extern int func_0019A9B0(float a0);
+
 
 extern sceVu0FVECTOR D_01F74670_amusement_01;
 extern sceVu0FVECTOR D_01F74690_amusement_01[];
@@ -36,6 +64,13 @@ extern int D_01F714D0_amusement_01;
 extern int D_01F71500_amusement_01;
 extern int D_01F71530_amusement_01;
 extern int D_01F74B10_amusement_01[];
+extern float D_01F748F0_amusement_01;
+extern float D_01F74950_amusement_01;
+extern float D_01F74970_amusement_01;
+extern float D_01F749D0_amusement_01;
+extern float D_01F749F0_amusement_01;
+extern float D_01F74A50_amusement_01;
+extern int D_1D316AC;
 extern u_int D_1D31648;
 
 extern float D_01F74590_amusement_01;
