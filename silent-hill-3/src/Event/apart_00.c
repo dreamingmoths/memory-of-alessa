@@ -132,7 +132,6 @@ int func_01F6DDA0_apart_00(void) {
     return temp_s0;
 }
 
-
 int func_01F6DEB0_apart_00(void)
 {
     int temp_v0;
@@ -168,7 +167,20 @@ int func_01F6DF30_apart_00(void)
     return temp_v0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DFB0_apart_00);
+void func_01F6DFB0_apart_00(void) {
+
+    switch (D_01F70058_apart_00) {
+        case 0:
+            func_001603E0(2, 1);
+            D_1D316AC |= 0x20000000;
+            D_01F70058_apart_00 += 1;
+            break;
+    }
+    
+    if (func_0016C9B0(&D_01F6FE40_apart_00, 1, 1) != 0) {
+        D_1D316AC &= 0xDFFFFFFF;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E050_apart_00);
 
