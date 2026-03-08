@@ -1,17 +1,5 @@
 #include "apart_00.h"
 
-typedef struct Apart00Entry {
-    int   unknown_0x0;
-    float unknown_0x4;
-    float unknown_0x8;
-} Apart00Entry;
-
-typedef struct Apart00Struct {
-    char  unknown_0x0[0x1B8];
-    float unknown_0x1B8;
-    Apart00Entry entries[];
-} Apart00Struct;
-
 static inline int get_bit(int bit) {
     return (D_1D31670[bit / 32] >> (bit % 32)) & 1;
 }
@@ -25,7 +13,6 @@ int func_001DE5B0(void (*cb)(void), int arg, int flag);
 int func_01F6D7B0_apart_00(int arg0) {
     return func_001DE5B0(func_01F6D680_apart_00, arg0, 1);
 }
-
 
 void func_01F6D7D0_apart_00(void* arg0) {
     char* base;
@@ -119,7 +106,32 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6D920_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DB90_apart_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6DDA0_apart_00);
+int func_01F6DDA0_apart_00(void) {
+    int temp_s0;
+    SubCharacter* missy;
+
+    switch (D_01F70060_apart_00) {
+        case 0:
+            func_001C2290(2, 0.0f);
+            D_01F70060_apart_00++;
+            break;
+    }
+    temp_s0 = func_0016C540(&D_01F6FCC0_apart_00, &D_01F6FD20_apart_00);
+    missy = shCharacterGetSubCharacter(MISSIONARY_CHARA_ID, MISSIONARY_ID);
+    if (temp_s0 == 0) {
+        func_001E22F0(MISSIONARY_CHARA_ID, MISSIONARY_ID, 0);
+        func_001DC9E0(missy, 0);
+    } else {
+        func_001E22F0(MISSIONARY_CHARA_ID, MISSIONARY_ID, 1);
+        func_001DC9E0(missy, 1);
+        func_001C2290(5, 0.5f);
+        if (func_001646C0() != 0) {
+            func_001602D0(0x2732, 3, 1, 1.0f);
+        }
+    }
+    return temp_s0;
+}
+
 
 int func_01F6DEB0_apart_00(void)
 {
@@ -166,7 +178,51 @@ INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E770_apart_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E7A0_apart_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E800_apart_00);
+void func_01F6E800_apart_00(void) {
+
+    if (!get_bit(0x51)) {
+        func_01F6EB70_apart_00();
+        D_1D31670[2]|= 0x20000;
+    }
+
+    switch (RoomName()) {
+        
+        case APARTMENTS_ROOFTOP:
+            func_01F6E050_apart_00();
+            D_01F70060_apart_00 = 0;
+            if (!((D_01D31640 >> 0x16) & 1)) {
+                func_00316C50(0);
+                if ((D_01D31640 >> 0x15) & 1) {
+                    func_001C2290(2, 0.0f);
+                }
+            }
+            break;
+        
+        case APARTMENTS_LIVING_ROOM:
+            if (func_0016D5B0() != 0) {
+                func_001C2290(2, 0.0f);
+                break;
+            }
+            if (!get_bit(0x4E) && !(get_bit(0x45))) {
+                D_1D31670[2] |= 0x20;
+            }
+            D_1D3171C |= 0x200;
+            break;
+        
+        case APARTMENTS_HARRYS_BEDROOM:
+            D_1D3171C |= 0x40;
+            break;
+        
+        case APARTMENTS_HALLWAY:
+            D_1D3171C |= 0x100;
+            D_1D3171C |= 0x400;
+            break;
+        
+        case APARTMENTS_OUTSIDE:           
+            D_01F70058_apart_00 = 0;
+            break;
+        }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/apart_00", func_01F6E9A0_apart_00);
 
