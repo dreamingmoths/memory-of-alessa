@@ -84,7 +84,48 @@ void func_01F6E3C0_hospital_f_00(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E490_hospital_f_00);
+int func_01F6E490_hospital_f_00(void) {
+    int ret;
+
+    ret = 0;
+    
+    if (!((D_1D31688 >> 4) & 1)) {
+        D_01F6FA88_hospital_f_00 = 0;
+        D_1D31688 |= 0x10;
+        D_01F6FA90_hospital_f_00 = 0.0f;
+        func_001C2290(3, 1.5f);
+        func_0016C1A0();
+        SeCall(1.0f, 0.0f, 0x4A59);
+    }
+    
+    D_01F6FA90_hospital_f_00 += shGetDT();
+    
+    switch (D_01F6FA88_hospital_f_00) {
+        
+        case 0:
+            if (D_01F6FA90_hospital_f_00 < 0.5f) {
+                return 0;
+            }
+            SeCall(1.0f, 0.0f, 0x4A58);
+            D_01F6FA88_hospital_f_00 += 1;
+        
+        case 1:
+            if (D_01F6FA90_hospital_f_00 < 1.5f) {
+                return 0;
+            }
+            func_0016C1B0();
+            D_01F6FA88_hospital_f_00 += 1;
+            break;    
+        
+        default:
+            ret = 1;
+            D_1D31688 &= ~0x10;
+            D_1D3171C |= 0x80000000;
+            D_1D31684 |= 0x100;
+            D_1D317B4 |= 0x8000;
+    }
+    return ret;
+}
 
 void func_01F6E640_hospital_f_00(void) {
 
