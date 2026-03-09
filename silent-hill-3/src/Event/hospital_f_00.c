@@ -60,7 +60,29 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E030_hospital_f_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E050_hospital_f_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E3C0_hospital_f_00); //
+void func_01F6E3C0_hospital_f_00(void) {
+    SubCharacter *scp;
+    int var_s0;
+    int *var_s1;
+    var_s0 = 0;
+    for (var_s1 = &D_01F6F9C0_hospital_f_00; *var_s1 != 0; var_s1++) {
+        scp = shCharacterGetSubCharacter(NURSE_CHARA_ID , *var_s1);
+        if (scp == 0) {
+            continue;
+        }
+        if (func_001E2110(scp) == 0) {
+            var_s0 += 1;
+        }
+        if ((*var_s1 == 0x11B) || (*var_s1 == 0x11C)) {
+            continue;
+        }
+        if (!((D_1D31680 >> 9) & 1)) {
+            shCharacter_Manage_Delete(NURSE_CHARA_ID , *var_s1);
+        } else if (1 < var_s0) {
+            shCharacter_Manage_Delete(NURSE_CHARA_ID , *var_s1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E490_hospital_f_00);
 
