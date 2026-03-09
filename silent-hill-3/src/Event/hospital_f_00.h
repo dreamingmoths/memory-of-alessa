@@ -12,6 +12,13 @@
 #define HOSPITAL_1F_C2_ROOM         0xA4
 #define HOSPITAL_1F_C4_ROOM         0xA5
 
+typedef struct {
+    u8 pad00[0xA8];
+    u32 unkA8;
+    s32 unkAC;
+    s32 unkB0;
+} Unk01F6E050;
+
 int RoomName();
 void func_0016ECE0(int);
 void func_00316C50(int);
@@ -35,8 +42,18 @@ void func_0016C1B0();
 void func_001C2290(int, float);
 float shGetDT();
 void func_001DE5B0(void (*)(), int, int);
-//void func_01F6DFF0_hospital_f_00();
 int func_0016C1C0(int);
+
+int func_0013D080(int, int, int, int);
+int func_00151150(int, int);
+void* func_00156410(int);
+void func_0016BBF0();
+void func_0016BC00(int);
+void func_0016C3C0();
+void func_0016F550(int, int);
+int func_001C2580(int);
+//void func_01F6E030_hospital_f_00(void*);
+void shQzero(void*, int);
 
 extern int D_01F6FA88_hospital_f_00;
 extern int D_01F6FA98_hospital_f_00;
@@ -54,6 +71,7 @@ extern u_int D_1D316F4;
 extern u_int D_1D3171C;
 extern u_int D_1D31720;
 extern u_int D_1D317B4;
+extern u_int D_1D317B8;
 extern u_int D_01D31640[];
 
 #endif
