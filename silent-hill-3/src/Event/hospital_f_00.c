@@ -1,12 +1,48 @@
 #include "hospital_f_00.h"
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D680_hospital_f_00);
+int func_01F6D680_hospital_f_00(void) {
+    if (!((D_1D31680 >> 2) & 1)) {
+        func_0016CD00(&D_01F6F920_hospital_f_00);
+        D_1D31680 |= 4;
+        func_00190A20(2);
+    }
+    if (func_0016BED0(0xBA, 0x1D) == 0) {
+        return 0;
+    }
+    D_1D31680 &= ~4;
+    func_00190A20(0);
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D710_hospital_f_00);
+int func_01F6D710_hospital_f_00(void) {
+    func_0012CFA0();
+    if (func_0012D080() == 0) {
+        func_00190A20(2);
+    }
+    func_0012CFC0();
+    if (func_0016BED0(0x2E, 0x25) == 0) {
+        return 0;
+    }
+    D_1D316F4 |= 0x20000;
+    func_00190A20(0);
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D790_hospital_f_00);
+int func_01F6D790_hospital_f_00(void) {
+    func_0012CFA0();
+    if (func_0012D080() == 0) {
+        func_00190A20(2);
+    }
+    func_0012CFC0();
+    if (func_0016BED0(0x2F, 0x28) == 0) {
+        return 0;
+    }
+    D_1D316F4 |= 0x40000;
+    func_00190A20(0);
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D810_hospital_f_00);
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D810_hospital_f_00); //
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D920_hospital_f_00);
 
@@ -24,7 +60,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E030_hospital_f_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E050_hospital_f_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E3C0_hospital_f_00);
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E3C0_hospital_f_00); //
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E490_hospital_f_00);
 
