@@ -77,7 +77,7 @@ int func_01F6D810_hospital_f_00(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D920_hospital_f_00);
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D920_hospital_f_00); //almost done
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DA80_hospital_f_00);
 
@@ -87,18 +87,121 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DDC0_hospital_f_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DF60_hospital_f_00);
 
-void func_01F6DFF0_hospital_f_00(void *arg0) { //temporary match 
+void func_01F6DFF0_hospital_f_00(void *arg0) {
     func_01F6DF60_hospital_f_00(arg0);
     if (*(u32*)((u8*)arg0 + 0xb0) != 0) {
         func_01F6DDC0_hospital_f_00(arg0);
     }
 }
 
-void func_01F6E030_hospital_f_00(int arg0) {
-    func_001DE5B0(&func_01F6DFF0_hospital_f_00, arg0, 1);
+void func_01F6E030_hospital_f_00(void *arg0) {
+    func_001DE5B0(&func_01F6DFF0_hospital_f_00, (int) arg0, 1);
 }
 
+#ifdef NON_MATCHING
+int func_01F6E050_hospital_f_00(void) {
+    float var_f12;
+    float var_f12_2;
+    Unk01F6E050* temp_s0;
+
+    temp_s0 = func_00156410(9);
+
+    if (!((D_1D31680 >> 8) & 1)) {
+        shQzero(temp_s0, 0xB4);
+        temp_s0->unkB0 = 0x80;
+        func_0016C3C0();
+        D_1D31680 |= 0x100;
+    }
+
+    switch (temp_s0->unkA8) {
+        case 0:
+            func_0016BBF0();
+            func_0016C1A0();
+            func_0016F550(0x28, 1);
+            func_0016F550(0x29, 0);
+            if (func_00151150(0, 1) != 0) {
+                var_f12 = 0.8f;
+            } else {
+                var_f12 = 1.2f;
+            }
+            func_001C2290(3, var_f12);
+            temp_s0->unkA8 = 1U;
+            /* fallthrough */
+        case 1:
+            if ((func_00151150(0, 1) != 0) && (func_001C2580(2) != 0)) {
+                func_001C2290(5, 0.8f);
+                temp_s0->unkA8 = 2U;
+            }
+            break;
+        case 2:
+            func_01F6E030_hospital_f_00(temp_s0);
+            if (func_001C2580(4) != 0) {
+                temp_s0->unkA8 = 3U;
+            }
+            break;
+        case 3:
+            func_01F6E030_hospital_f_00(temp_s0);
+            if (func_0013D080(0, 0, 1, 0x80000) != 0) {
+                temp_s0->unkA8 = 4U;
+            }
+            break;
+        case 4:
+            func_01F6E030_hospital_f_00(temp_s0);
+            func_0016BC00(1);
+            if (func_0016C1C0(0x37) != 0) {
+                func_0016C3C0();
+                temp_s0->unkA8 = 5U;
+                SeCall(1.0f, 0.0f, 0x3840);
+            }
+            break;
+        case 5:
+            if (temp_s0->unkAC < 8) {
+                temp_s0->unkAC += 1;
+                temp_s0->unkB0 = (8 - temp_s0->unkAC) * 128 / 8;
+            } else {
+                temp_s0->unkB0 = 0;
+                temp_s0->unkA8 = 6U;
+                SeCall(1.0f, 0.0f, 0x2B21);
+            }
+            func_01F6E030_hospital_f_00(temp_s0);
+            func_0016BC00(1);
+            break;
+        case 6:
+            func_01F6E030_hospital_f_00(temp_s0);
+            func_0016BC00(1);
+            if (func_0016C1C0(0x38) != 0) {
+                func_0016C3C0();
+                temp_s0->unkA8 = 7U;
+            }
+            break;
+        case 7:
+            func_01F6E030_hospital_f_00(temp_s0);
+            func_0016BC00(1);
+            if (func_00151150(0, 1) != 0) {
+                var_f12_2 = 0.8f;
+            } else {
+                var_f12_2 = 1.2f;
+            }
+            func_001C2290(3, var_f12_2);
+            if (func_001C2580(2) != 0) {
+                temp_s0->unkA8 = 8U;
+            }
+            break;
+        default:
+            func_0016C1B0();
+            func_001C2290(5, 0.8f);
+            if ((D_1D317B8 >> 0xD) & 1) {
+                D_1D317B8 |= 0x4000;
+            }
+            D_1D317B8 |= 0x2000;
+            D_1D31680 &= ~0x100; //???
+            return 1;
+        }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E050_hospital_f_00);
+#endif
 
 void func_01F6E3C0_hospital_f_00(void) {
     SubCharacter *scp;
