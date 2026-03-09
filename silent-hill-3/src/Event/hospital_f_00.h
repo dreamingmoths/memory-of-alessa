@@ -12,7 +12,7 @@
 #define HOSPITAL_1F_C2_ROOM         0xA4
 #define HOSPITAL_1F_C4_ROOM         0xA5
 
-int  RoomName();
+int RoomName();
 void func_0016ECE0(int);
 void func_00316C50(int);
 void func_0016CA40(int);
@@ -20,14 +20,22 @@ void func_01F6EB00_hospital_f_00();
 void func_01F6E3C0_hospital_f_00();
 void func_01F6E850_hospital_f_00();
 void func_01F6E890_hospital_f_00();
+int func_0016BED0(int, int);
+void func_0016CD00(int*);
+void func_00190A20(int);
+void func_0012CFA0();
+void func_0012CFC0();
+int func_0012D080();
 
 extern int D_01F6FA98_hospital_f_00;
 extern int D_01F6FAC0_hospital_f_00;
+extern int D_01F6F920_hospital_f_00;
 extern u_int D_1D31644;
 extern u_int D_1D31680;
 extern u_int D_1D31684;
 extern u_int D_1D31688;
 extern u_int D_1D3168C;
+extern u_int D_1D316F4;
 extern u_int D_1D31720;
 
 #endif
