@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DDC0_hospital_f_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DF60_hospital_f_00);
 
-void func_01F6DFF0_hospital_f_00(void *arg0) {
+void func_01F6DFF0_hospital_f_00(void *arg0) { //temporary match 
     func_01F6DF60_hospital_f_00(arg0);
     if (*(u32*)((u8*)arg0 + 0xb0) != 0) {
         func_01F6DDC0_hospital_f_00(arg0);
