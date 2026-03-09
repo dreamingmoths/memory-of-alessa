@@ -34,6 +34,8 @@ void func_0016C1A0();
 void func_0016C1B0();
 void func_001C2290(int, float);
 float shGetDT();
+void func_001DE5B0(void (*)(), int, int);
+void func_01F6DFF0_hospital_f_00(int);
 
 extern int D_01F6FA88_hospital_f_00;
 extern int D_01F6FA98_hospital_f_00;
