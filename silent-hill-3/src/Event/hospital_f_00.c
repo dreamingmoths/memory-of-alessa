@@ -392,7 +392,20 @@ void func_01F6E850_hospital_f_00(void) {
     
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E890_hospital_f_00);
+void func_01F6E890_hospital_f_00(void) {
+    Q sp10;
+    Q sp20;
+    Q sp30;
+
+    sp10 = D_01F6F9D0_hospital_f_00;
+    sp20 = D_01F6F9E0_hospital_f_00;
+    sp30 = D_01F6F9F0_hospital_f_00;
+    
+    if (func_0019B580(2) == 0) {
+        func_001C7BC0(&sp20, &sp10, &sp30, 0x200);
+    }
+}
+
 
 void func_01F6E900_hospital_f_00(void) {
 
