@@ -79,7 +79,38 @@ int func_01F6D810_hospital_f_00(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6D920_hospital_f_00); //almost done
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DA80_hospital_f_00);
+int func_01F6DA80_hospital_f_00(void) {
+    float temp_f20;
+    int ret;
+
+    switch(D_01F6FAC0_hospital_f_00) {
+        case 0:
+            func_001C2290(6, 0.0f);            
+            D_1D316AC |= 0x20000000;
+            D_01F6FAB8_hospital_f_00 = &D_01F6F930_hospital_f_00;
+            D_01F6FAC0_hospital_f_00 += 1;
+            break;
+    }
+    
+    ret = func_0016C540(&D_01F6F940_hospital_f_00, &D_01F6F9A0_hospital_f_00);
+    if (ret != 0) {
+        D_1D3171C &= 0x7FFFFFFF;
+        D_1D3171C &= ~0x08000000;
+        func_0013D280(0);
+        D_1D316AC &= 0xDFFFFFFF;
+        func_001C2290(5, 0.5f);
+    } else {
+        temp_f20 = func_001643C0();
+        while (D_01F6FAB8_hospital_f_00->unk0 > 0.0f) {
+            if (D_01F6FAB8_hospital_f_00->unk0 > temp_f20) {
+                break;
+            }
+            func_0013D250(0, D_01F6FAB8_hospital_f_00->unk4, 1.0f);
+            D_01F6FAB8_hospital_f_00++;
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DC00_hospital_f_00);
 
@@ -167,6 +198,7 @@ void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
     func_001DE5B0(func_01F6DFF0_hospital_f_00, arg0, 1);
 }
 
+#ifdef NON_MATCHING
 int func_01F6E050_hospital_f_00(void) {
     float var_f12;
     float var_f12_2;
@@ -266,6 +298,9 @@ int func_01F6E050_hospital_f_00(void) {
     }
     return 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E050_hospital_f_00);
+#endif
 
 void func_01F6E3C0_hospital_f_00(void) {
     SubCharacter *scp;
@@ -392,6 +427,7 @@ void func_01F6E850_hospital_f_00(void) {
     
 }
 
+
 void func_01F6E890_hospital_f_00(void) {
     Q sp10;
     Q sp20;
@@ -405,7 +441,6 @@ void func_01F6E890_hospital_f_00(void) {
         func_001C7BC0(&sp20, &sp10, &sp30, 0x200);
     }
 }
-
 
 void func_01F6E900_hospital_f_00(void) {
 
