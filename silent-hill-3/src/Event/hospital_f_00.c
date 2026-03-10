@@ -83,28 +83,96 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DA80_hospital_f_00)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DC00_hospital_f_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DDC0_hospital_f_00);
+void func_01F6DDC0_hospital_f_00(PictureGroup *arg0) {
+    PictureLoad *temp_s2 = &arg0->unk10;
+    Picture *temp_s0 = &arg0->unk64;
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6DF60_hospital_f_00);
+    temp_s2->unk00 = func_00170410(0);
+    temp_s2->unk04 = -1;
+    temp_s2->unk08 = -1;
+    temp_s2->unk0C = 2;
+    PictureLoadImage(temp_s2);
 
-void func_01F6DFF0_hospital_f_00(void *arg0) {
+    shQzero(temp_s0, 0x44);
+    temp_s0->unk00 = func_00170410(0);
+    temp_s0->unk04 = -1;
+    temp_s0->unk08 = -1;
+    temp_s0->unk42 |= 1;
+    temp_s0->unk1C = 0;
+    temp_s0->unk20 = 0;
+    temp_s0->unk24 = 0x800;
+    temp_s0->unk28 = 0xC00;
+    temp_s0->unk42 &= ~8;
+    temp_s0->unk42 |= 4;
+    temp_s0->unk0C = -0x3C0;
+    temp_s0->unk0E = -0x5E0;
+    temp_s0->unk10 = 0x440;
+    temp_s0->unk12 = -0x5E0;
+    temp_s0->unk42 |= 2;
+    temp_s0->unk14 = -0x3C0;
+    temp_s0->unk16 = 0x620;
+    temp_s0->unk18 = 0x440;
+    temp_s0->unk1A = 0x620;
+    temp_s0->unk42 |= 0x80;
+    temp_s0->unk2C = 0x80;
+    temp_s0->unk2D = 0x80;
+    temp_s0->unk2E = 0x80;
+    temp_s0->unk42 |= 0x10;
+    temp_s0->unk2F = arg0->unkB0;
+    temp_s0->unk30 = 0;
+    temp_s0->unk31 = 1;
+    temp_s0->unk32 = 0;
+    temp_s0->unk33 = 1;
+    temp_s0->unk34 = 0;
+    temp_s0->unk42 |= 0x20;
+    temp_s0->unk35 = 1;
+    temp_s0->unk36 = 6;
+    temp_s0->unk37 = 0;
+    temp_s0->unk38 = 0;
+    temp_s0->unk39 = 0;
+    temp_s0->unk3A = 0;
+    temp_s0->unk3B = 1;
+    temp_s0->unk3C = 1;
+    temp_s0->unk42 |= 0x40;
+    temp_s0->unk40 = 3;
+    PictureDraw(temp_s0);
+}
+
+void func_01F6DF60_hospital_f_00(PictureGroup *arg0) {
+    Picture *temp_s0 = &arg0->unk20;
+
+    arg0->unk00.unk00 = func_00170410(1);
+    arg0->unk00.unk04 = -1;
+    arg0->unk00.unk08 = -1;
+    arg0->unk00.unk0C = 0;
+    PictureLoadImage(&arg0->unk00);
+
+    shQzero(temp_s0, 0x44);
+    temp_s0->unk00 = func_00170410(1);
+    temp_s0->unk04 = -1;
+    temp_s0->unk08 = -1;
+    temp_s0->unk42 |= 1;
+    temp_s0->unk40 = 1;
+    PictureDraw(temp_s0);
+}
+
+void func_01F6DFF0_hospital_f_00(PictureGroup *arg0) {
     func_01F6DF60_hospital_f_00(arg0);
-    if (*(u32*)((u8*)arg0 + 0xb0) != 0) {
+    if (arg0->unkB0 != 0) {
         func_01F6DDC0_hospital_f_00(arg0);
     }
 }
 
-void func_01F6E030_hospital_f_00(void *arg0) {
-    func_001DE5B0(&func_01F6DFF0_hospital_f_00, (int) arg0, 1);
+void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
+    func_001DE5B0(func_01F6DFF0_hospital_f_00, arg0, 1);
 }
 
-#ifdef NON_MATCHING
 int func_01F6E050_hospital_f_00(void) {
     float var_f12;
     float var_f12_2;
-    Unk01F6E050* temp_s0;
+    PictureGroup *temp_s0;
 
-    temp_s0 = func_00156410(9);
+    temp_s0 = (PictureGroup*) func_00156410(9);
 
     if (!((D_1D31680 >> 8) & 1)) {
         shQzero(temp_s0, 0xB4);
@@ -126,7 +194,6 @@ int func_01F6E050_hospital_f_00(void) {
             }
             func_001C2290(3, var_f12);
             temp_s0->unkA8 = 1U;
-            /* fallthrough */
         case 1:
             if ((func_00151150(0, 1) != 0) && (func_001C2580(2) != 0)) {
                 func_001C2290(5, 0.8f);
@@ -196,12 +263,9 @@ int func_01F6E050_hospital_f_00(void) {
             D_1D317B8 |= 0x2000;
             D_1D31680 &= ~0x100; //???
             return 1;
-        }
+    }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_00", func_01F6E050_hospital_f_00);
-#endif
 
 void func_01F6E3C0_hospital_f_00(void) {
     SubCharacter *scp;
