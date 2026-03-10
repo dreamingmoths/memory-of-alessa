@@ -110,6 +110,12 @@ void *func_00156410(int); //not sure
 SubCharacter *shCharacterGetSubCharacter(short kind, short id);
 
 float shGetDT();
+int func_0019B580(int);
+void func_001C7BC0(Q*, Q*, Q*, int);
+
+extern Q D_01F6F9D0_hospital_f_00;
+extern Q D_01F6F9E0_hospital_f_00;
+extern Q D_01F6F9F0_hospital_f_00;
 
 extern int D_01F6FA88_hospital_f_00;
 extern int D_01F6FA98_hospital_f_00;
