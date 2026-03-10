@@ -71,6 +71,11 @@ typedef struct {
     s32 unkB0;
 } PictureGroup; //I think this is something specific for this overlay, this will work only here
 
+typedef struct {
+    float unk0;
+    int unk4;
+} Struct_01F6DA80_hospital_f_00;
+
 int RoomName();
 int func_0016BED0(int, int);
 int func_0012D080();
@@ -81,6 +86,8 @@ int func_0013D080(int, int, int, int);
 int func_00151150(int, int);
 int func_001C2580(int);
 int func_00170410(int);
+int func_0019B580(int);
+int func_0016C540(float *, float *);
 
 void func_0016ECE0(int);
 void func_00316C50(int);
@@ -105,13 +112,15 @@ void shQzero(void*, int);
 void PictureDraw(void *);
 void PictureLoadImage(void *);
 void func_001DE5B0(void (*)(), PictureGroup *, s32); //maybe this is the problem
+void func_001C7BC0(Q*, Q*, Q*, int);
+void func_0013D250(int, int, float);
+void func_0013D280(int);
 
 void *func_00156410(int); //not sure
 SubCharacter *shCharacterGetSubCharacter(short kind, short id);
 
 float shGetDT();
-int func_0019B580(int);
-void func_001C7BC0(Q*, Q*, Q*, int);
+float func_001643C0();
 
 extern Q D_01F6F9D0_hospital_f_00;
 extern Q D_01F6F9E0_hospital_f_00;
@@ -124,12 +133,18 @@ extern int D_01F6F920_hospital_f_00;
 extern int D_01F6F9C0_hospital_f_00;
 
 extern float D_01F6FA90_hospital_f_00;
+extern float D_01F6F940_hospital_f_00;
+extern float D_01F6F9A0_hospital_f_00;
+
+extern Struct_01F6DA80_hospital_f_00 D_01F6F930_hospital_f_00;
+extern Struct_01F6DA80_hospital_f_00* D_01F6FAB8_hospital_f_00;
 
 extern u_int D_1D31644;
 extern u_int D_1D31680;
 extern u_int D_1D31684;
 extern u_int D_1D31688;
 extern u_int D_1D3168C;
+extern u_int D_1D316AC;
 extern u_int D_1D316F4;
 extern u_int D_1D3171C;
 extern u_int D_1D31720;
