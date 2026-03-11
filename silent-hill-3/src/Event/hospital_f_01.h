@@ -14,10 +14,16 @@ int RoomName();
 int func_0012D080();
 int func_0016BED0(u_int, u_int);
 int func_00199BB0();
+int func_00199820();
 void func_0012CFA0();
 void func_0012CFC0();
+void func_0016CA40(int);
 void func_00190A20(int);
+void func_001A06F0(int*);
 
+extern int D_01F71000_hospital_f_01;
+extern int D_01F71140_hospital_f_01;
+extern int D_01F711E0_hospital_f_01;
 extern u_int D_1D31644;
 extern u_int D_1D31680;
 extern u_int D_1D31684;
