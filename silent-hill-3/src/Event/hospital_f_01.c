@@ -160,6 +160,88 @@ void func_01F6FD50_hospital_f_01(void) {
         }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F70000_hospital_f_01);
+void func_01F70000_hospital_f_01(void) {
+
+    int riddle_level;
+
+    switch (RoomName()) { 
+        
+        case HOSPITAL_2F_ELEVATOR_HALLWAY:
+            if ((D_1D31684 >> 0x10) & 1) {
+                func_0016CA40(1);
+                D_1D31720 |= 0x8000;
+            } else {
+                D_1D31720 &= 0xFFFF7FFF;
+            }
+    
+            riddle_level = func_00199820() & 0xFF;
+            if (riddle_level <= 0) {
+                func_0016CA40(9);
+            } else if (riddle_level == 1) {
+                func_0016CA40(0xB);
+            } else {
+                func_0016CA40(0xA);
+            }
+            if (!((D_1D31680 >> 0xB) & 1)) {
+                D_1D31720 |= 0x4000;
+                D_1D31720 |= 0x10000;
+            } else {
+                D_1D31720 &= ~0x4000;
+                D_1D31720 &= 0xFFFEFFFF;
+            }
+            break;
+        
+        case HOSPITAL_2F_WOMENS_LOCKER_ROOM:
+            if (!((D_1D31680 >> 4) & 1)) {
+                func_0016CA40(0xB);
+                D_1D31720 |= 0x40000;
+            } else {
+                D_1D31720 &= 0xFFFBFFFF;
+            }
+    
+            if (!(( D_1D31680 >> 5) & 1)) {
+                func_0016CA40(0xA);
+                D_1D31720 |= 0x20000;
+            } else {
+                D_1D31720 &= 0xFFFDFFFF;
+            }
+            break;
+        
+        case HOSPITAL_2F_M_CORRIDOR:
+            if ((D_1D31644 >> 5) & 1) {
+                func_0016CA40(2);
+                func_0016CA40(3);
+                break;
+            }
+            func_0016CA40(1);
+            func_001A06F0(&D_01F71000_hospital_f_01);
+            func_001A06F0(&D_01F71140_hospital_f_01);
+            func_001A06F0(&D_01F711E0_hospital_f_01);
+            break;
+        
+        case HOSPITAL_2F_M4_ROOM:
+            if ((D_1D31684 >> 0x13) & 1) {
+                func_0016CA40(4);
+                D_1D31720 |= 0x10000000;
+            } else {
+                D_1D31720 &= 0xEFFFFFFF;
+            }
+    
+            func_01F6E1C0_hospital_f_01();
+            if ((D_1D31680 >> 0x14) & 1) {
+                func_0016CA40(3);
+                if (!((D_1D31680 >> 6) & 1)) {
+                    func_0016CA40(1);
+                    D_1D31720 |= 0x04000000;
+                } else {
+                    D_1D31720 &= 0xFBFFFFFF;
+                }
+            } else {
+                func_0016CA40(2);
+                D_1D31720 |= 0x04000000;
+            }
+            break;
+        }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F70370_hospital_f_01);
