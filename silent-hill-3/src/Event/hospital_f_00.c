@@ -273,7 +273,6 @@ void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
     func_001DE5B0(func_01F6DFF0_hospital_f_00, arg0, 1);
 }
 
-//THIS ONE GIVES PROBLEMS
 int func_01F6E050_hospital_f_00(void) {
     float var_f12;
     float var_f12_2;

@@ -251,7 +251,9 @@ SECTIONS
 		hospital_f_00_data.data.s.o (.data)
 		ALIGNALL(0x8);
 		hospital_f_00.c.o (.rodata)
-		ALIGNALL(0x10);
+	
+		. = ALIGN(0x80);
+	
 		hospital_f_00_bss.bss.s.o (.bss)		
 	}	>	hospital_f_00.bin
 
