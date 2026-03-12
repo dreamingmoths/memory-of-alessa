@@ -126,6 +126,12 @@ GetActionLevel = 0x199770;
 SetRiddleLevel = 0x199810;
 GetRiddleLevel = 0x199820;
 
+GetExtraNewGame = 0x199BB0;
+
+extra_new_game = 0x01D87FD5; //type:u8
+action_level = 0x01D87FD6; // type:u8
+riddle_level = 0x01D87FD7; // type:u8
+
 // model3_vu0_n.c
 InitTriangleNormal = 0x001d3d50;
 DrawPart0 = 0x001d65d0;
@@ -819,7 +825,7 @@ func_00332A20 = 0x332A20;
 func_001643D0 = 0x1643D0;
 func_0016CA40 = 0x16CA40;
 func_0029AC80 = 0x29AC80;
-func_00199BB0 = 0x199BB0;
+
 func_001E1F20 = 0x1E1F20;
 func_001D37E0 = 0x1D37E0;
 D_01D31640 = 0x1D31640;
