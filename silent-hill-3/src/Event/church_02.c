@@ -1,4 +1,4 @@
-#include "common.h"
+#include "church_02.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6D680_church_02);
 
@@ -90,7 +90,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F725C0_church_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F725E0_church_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F72720_church_02);
+void func_01F72720_church_02(void) {
+    D_01F775C0_church_02 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F72730_church_02);
 
@@ -98,7 +100,48 @@ INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F72790_church_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F72890_church_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F729F0_church_02);
+void func_01F729F0_church_02(void) {
+    D_01F77590_church_02 = 0;
+    D_01F77610_church_02 = 0;
+    D_01F77598_church_02 = 0;
+    D_01F77608_church_02 = -1;
+    D_01F77600_church_02 = -1;
+    func_01F72720_church_02();
+    if (func_0016D5B0() != 0) {
+        func_001C2290(2, 0.0f);
+        return;
+    }
+    D_01F77580_church_02 = 0;
+    switch (RoomName()) { //I will debug the rest another time
+        case CHURCH_LIBRARY:
+            if (GetExtraNewGame() == 1 && (GetRiddleLevel() & 0xFF) == 2) { //Royal Flush Riddle
+                D_1D316A8 |= 0x800000;
+            }
+            break;
+        case 0xFE:
+            break;
+        case 0xFF:
+            break;
+        case 0x100:
+            break;
+        case 0x101:
+            break;
+        case 0x102:
+            break;
+        case 0x103:
+            D_1D316A8 |= 0x4000;
+            break;
+        case 0x104:
+            D_1D316A8 &= ~0x20000;
+            D_1D316A8 &= ~0x40000;
+            break;
+        case 0x108:
+            D_01F775C8_church_02 = 0;
+            break;
+        case 0x109:
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F72B30_church_02);
 
