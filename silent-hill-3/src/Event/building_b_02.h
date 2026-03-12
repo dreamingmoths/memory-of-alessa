@@ -18,7 +18,7 @@ void func_0016C1A0();
 void func_0016C1B0();
 void func_0016CA40(int);
 int func_00190950();
-u_char func_00199770();
+u_char GetActionLevel();
 void func_001A06F0(void *);
 void func_001C2290(int, float);
 int func_001E2110(int);
