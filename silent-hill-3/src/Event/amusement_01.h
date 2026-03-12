@@ -48,7 +48,7 @@ extern void func_0018FE60(__int128*);
 extern void func_0016CF70();
 extern int func_0016CF80(int, int, int*);
 extern SubCharacter* shCharacterGetSubCharacter(int, short);
-extern u_char func_00199770();
+extern u_char GetActionLevel();
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
 extern int shCharacter_Manage_Delete(u16 kind, u16 id);
@@ -69,7 +69,7 @@ extern void func_00317490(int, float);
 extern void func_003174B0(float);
 extern void func_001602D0(int, int, int, float);
 extern int func_00160520(int);
-extern void func_00160AF0(int);                                 /* extern */
+extern void func_00160AF0(int);
 extern void func_0019A940(void);
 extern int func_0019A9B0(float a0);
 extern void func_0015DCD0(float, float, int, float *, int, int);
@@ -87,7 +87,7 @@ extern int func_001C2580(int);
 
 
 extern int func_0016BED0(int, int);
-extern int func_00199820();
+extern int GetRiddleLevel();
 extern int func_001C2580(int);
 
 extern int D_01F74D00_amusement_01;
