@@ -58,7 +58,7 @@ void func_01F6E360_building_b_01(void) {
             break;
             
         case BUILDING_OTHERWORLD_OXYDOL_ROOM:
-            if ((func_00199820() & 0xFF) != 2) { //different hint based on riddle????
+            if ((GetRiddleLevel() & 0xFF) != 2) { //different hint based on riddle????
                 func_0016CA40(0x13);
                 D_1D31714 |= 0x8000;
             } else {
