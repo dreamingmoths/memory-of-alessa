@@ -13,15 +13,10 @@ typedef struct Town00Struct
 } Town00Struct;
 
 int func_01F6D680_town_00();
-
 int func_01F6D7A0_town_00();
-
 void func_01F6D8A0_town_00();
-
 void func_01F6D9D0_town_00();
-
 void func_01F6D9F0_town_00();
-
 void func_01F6DA00_town_00();
 
 Town00Struct state_town_00; // 0x01F6E000
@@ -36,19 +31,16 @@ extern void func_00190AD0();
 extern float D_01F6DF70_town_00;
 extern int D_01F6DF74_town_00;
 extern float D_01F6DF78_town_00;
-
 extern float D_01F6DF80_town_00;
 extern int D_01F6DF84_town_00;
 extern float D_01F6DF88_town_00;
 extern int D_01F6DF90_town_00;
 
 extern SubCharacter* shCharacterGetSubCharacter(int, long);
-extern int func_00199770(int);
+extern int GetActionLevel(int);
 extern int func_001E2110(SubCharacter*);
 extern void shCharacter_Manage_Delete(int, u_short);
-
 extern u_int D_1D31684;
-
 extern void func_001AED70();
 extern void func_001AF0B0();
 
