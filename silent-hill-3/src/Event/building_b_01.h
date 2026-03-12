@@ -11,10 +11,10 @@
 
 void func_0016CA40(int);
 int  func_0016C540(int*, int*);
-int  func_00170810(); //RoomName()
+int  RoomName();
 void func_00189F00(u_short);
 void func_00189FA0(u_short, u_short);
-int  func_00199820();
+int  GetRiddleLevel();
 void func_001C2290(int, float);
 void func_01F6DFF0_building_b_01();
 
