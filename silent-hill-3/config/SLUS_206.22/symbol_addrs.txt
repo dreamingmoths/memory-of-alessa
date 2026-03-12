@@ -121,6 +121,11 @@ Sequence_Different_Time_Get = 0x13BAD0;
 RoomName  = 0x170810;
 room_name = 0x1d41ef0; // type:s64
 
+SetActionLevel = 0x199760;
+GetActionLevel = 0x199770;
+SetRiddleLevel = 0x199810;
+GetRiddleLevel = 0x199820;
+
 // model3_vu0_n.c
 InitTriangleNormal = 0x001d3d50;
 DrawPart0 = 0x001d65d0;
@@ -750,7 +755,7 @@ func_0016D500 = 0x16D500;
 func_001C7C80 = 0x1C7C80;
 func_0016C1A0 = 0x16C1A0;
 func_00280430 = 0x280430;
-func_00199770 = 0x199770;
+
 D_01D319F0 = 0x1D319F0;
 func_003010F0 = 0x3010F0;
 func_001C20C0 = 0x1C20C0;
@@ -830,7 +835,7 @@ func_0016D170 = 0x16D170;
 func_0016D240 = 0x16D240;
 func_001DD650 = 0x1DD650;
 func_0019A230 = 0x19A230;
-func_00199820 = 0x199820;
+
 func_00317420 = 0x317420;
 func_0016E400 = 0x16E400;
 func_00327C40 = 0x327C40;
