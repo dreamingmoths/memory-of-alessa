@@ -586,7 +586,7 @@ int func_01F70000_amusement_01() {
         func_00190A20(5);
         D_01F74C88_amusement_01 = 1;
         D_01F74D00_amusement_01 = -1;
-        if ((func_00199820() & 0xFF) < 2) {
+        if ((GetRiddleLevel() & 0xFF) < 2) {
             D_01F74D00_amusement_01 = 0xA8;
         }
     case 1:
@@ -698,7 +698,7 @@ void func_01F70780_amusement_01() {
             if ((*cur != 0x182) && (*cur != 0x183)) {
                 if (!((D_1D3169C >> 0xF) & 1)) {
                     shCharacter_Manage_Delete(PENDULUM_CHARA_ID, *cur);
-                } else if ((1 < (func_00199770())) && (2 < count)) {
+                } else if ((1 < (GetActionLevel())) && (2 < count)) {
                     shCharacter_Manage_Delete(PENDULUM_CHARA_ID, *cur);
                 }
             }
