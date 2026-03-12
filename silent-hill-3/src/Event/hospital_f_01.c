@@ -151,7 +151,7 @@ void func_01F6FD50_hospital_f_01(void) {
             D_1D31720 |= 0x02000000;
             break;
         case HOSPITAL_2F_WOMENS_LOCKER_ROOM:
-            if (func_00199BB0() == 1) {
+            if (GetExtraNewGame() == 1) {
                 D_1D31688 |= 0x8000;
             } else {
                 D_1D31688 &= 0xFFFF7FFF;
