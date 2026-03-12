@@ -13,7 +13,7 @@
 int RoomName();
 int func_0012D080();
 int func_0016BED0(u_int, u_int);
-int func_00199BB0();
+int GetExtraNewGame();
 int GetRiddleLevel();
 void func_0012CFA0();
 void func_0012CFC0();
@@ -32,3 +32,4 @@ extern u_int D_1D316F4;
 extern u_int D_1D31720;
 
 #endif
+
