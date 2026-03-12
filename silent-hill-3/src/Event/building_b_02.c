@@ -29,7 +29,7 @@ void func_01F6DB60_building_b_02(void) { //I will debug it later
             shCharacter_Manage_Delete(0x20A, *var_s1);
             continue;
         }
-        if (func_00199770() < 3) {
+        if (GetActionLevel() < 3) {
             if (var_s0 > 1) {
                 shCharacter_Manage_Delete(0x20A, *var_s1);
             }
