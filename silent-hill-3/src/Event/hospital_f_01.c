@@ -174,7 +174,7 @@ void func_01F70000_hospital_f_01(void) {
                 D_1D31720 &= 0xFFFF7FFF;
             }
     
-            riddle_level = func_00199820() & 0xFF;
+            riddle_level = GetRiddleLevel() & 0xFF;
             if (riddle_level <= 0) {
                 func_0016CA40(9);
             } else if (riddle_level == 1) {
