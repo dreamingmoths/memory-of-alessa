@@ -63,7 +63,7 @@ int func_01F6D7A0_town_00() {
 
 void func_01F6D8A0_town_00() {
     int value;
-    u8 byte;
+    u8 action_level;
     SubCharacter* scp;
     int count = 0;
 
@@ -84,9 +84,9 @@ void func_01F6D8A0_town_00() {
             continue;
         }
 
-        byte = func_00199770(value);
+        action_level = GetActionLevel(value);
 
-        switch (byte) {
+        switch (action_level) {
             case 1:
                 break;
             case 2:
@@ -95,7 +95,7 @@ void func_01F6D8A0_town_00() {
                 }
                 break;
             default:
-                if (byte < 3) {
+                if (action_level < 3) {
                     break;
                 }
                 if (((D_1D31684 >> 3) & 1) == 0) {
