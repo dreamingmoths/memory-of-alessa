@@ -108,7 +108,13 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F640_hospital_f_01)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F670_hospital_f_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F690_hospital_f_01);
+int func_01F6F690_hospital_f_01(void) {
+    float sp18;
+    float sp1C;
+
+    func_0029F330(&sp18, &sp1C);
+    return func_002A47C0(sp18, sp1C) & 0xFFFF;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F6C0_hospital_f_01);
 
@@ -116,7 +122,47 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F7D0_hospital_f_01)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F880_hospital_f_01);
 
+#ifdef NON_MATCHING
+int func_01F6FBA0_hospital_f_01(void) { //when you enter the elevator from the second floor
+    int ret;
+
+    ret = 0;
+    if (!(( D_1D31688 >> 4) & 1)) {
+        D_01F71688_hospital_f_01 = 0;
+        D_1D31688 |= 0x10;
+        D_01F71690_hospital_f_01 = 0.0f;
+        func_001C2290(3, 1.5f);
+        func_0016C1A0();
+        SeCall(1.0f, 0.0f, 0x4A59);
+    }
+    D_01F71690_hospital_f_01 += shGetDT();
+    switch (D_01F71688_hospital_f_01) {
+        case 0:
+            if (D_01F71690_hospital_f_01 < 0.5f) {
+                return ret;
+            }
+            SeCall(1.0f, 0.0f, 0x4A58);
+            D_01F71688_hospital_f_01 += 1;
+        case 1:
+            if (D_01F71690_hospital_f_01 < 1.5f) {
+                return ret;
+            }
+            func_0016C1B0();
+            D_01F71688_hospital_f_01 += 1;
+            break;        
+        default:
+            ret = 1;
+            D_1D31688 &= ~0x10;
+            D_1D31720 |= 0x2000;
+            D_1D31684 |= 0x200;
+            D_1D317B8 |= 0x100000;
+
+    }
+    return ret;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6FBA0_hospital_f_01);
+#endif
 
 void func_01F6FD50_hospital_f_01(void) {
 
@@ -244,4 +290,28 @@ void func_01F70000_hospital_f_01(void) {
         }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F70370_hospital_f_01);
+int func_01F70370_hospital_f_01(void) {
+    
+    int hours;
+    int minutes;
+    u_int *temp = D_01D31640;
+
+    D_1D318DC = 0;
+    D_1D318E0 = 0;
+    if ((GetRiddleLevel () & 0xFF) == 2) { //check if riddle level is hard
+        hours = (shRandI() % 12) + 12;
+    } else {
+        hours = (shRandI() % 12) + 1;
+    }
+    
+    temp[0xA7] = ((((hours / 10) * 16)  << 8) + ((hours) % 10 * 128 << 1));
+    minutes = shRandI() % 60;
+    temp[0xA7] += minutes % 10 + 16 * (minutes / 10);
+    
+    /* I will leave a clearer version as a comment
+    D_1D318DC = (hours % 10 + 16 * (hours / 10)) << 8;   
+    minutes = shRandI() % 60;
+    D_1D318DC->unk29C += minutes % 10 + 16 * (minutes / 10);
+    */
+
+}
