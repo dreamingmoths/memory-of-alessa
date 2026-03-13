@@ -76,10 +76,13 @@ SECTIONS
 		building_b_03.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_b_03_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		building_b_03_bss.bss.s.o (.bss)		
 	}	>	building_b_03.bin
 
@@ -93,10 +96,13 @@ SECTIONS
 		mall_f_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		mall_f_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		mall_f_01_bss.bss.s.o (.bss)		
 	}	>	mall_f_01.bin
 
@@ -110,10 +116,13 @@ SECTIONS
 		mall_b_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		mall_b_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		mall_b_00_bss.bss.s.o (.bss)		
 	}	>	mall_b_00.bin
 
@@ -127,10 +136,13 @@ SECTIONS
 		mall_b_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		mall_b_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		mall_b_01_bss.bss.s.o (.bss)		
 	}	>	mall_b_01.bin
 
@@ -144,10 +156,13 @@ SECTIONS
 		mall_b_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		mall_b_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		mall_b_02_bss.bss.s.o (.bss)		
 	}	>	mall_b_02.bin
 
@@ -161,10 +176,13 @@ SECTIONS
 		subway_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		subway_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		subway_00_bss.bss.s.o (.bss)		
 	}	>	subway_00.bin
 
@@ -178,10 +196,13 @@ SECTIONS
 		subway_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		subway_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		subway_01_bss.bss.s.o (.bss)		
 	}	>	subway_01.bin
 
@@ -195,10 +216,13 @@ SECTIONS
 		building_b_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_b_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		building_b_01_bss.bss.s.o (.bss)		
 	}	>	building_b_01.bin
 
@@ -212,10 +236,13 @@ SECTIONS
 		sewer_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		sewer_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		sewer_00_bss.bss.s.o (.bss)		
 	}	>	sewer_00.bin
 
@@ -229,10 +256,13 @@ SECTIONS
 		sewer_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		sewer_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		sewer_01_bss.bss.s.o (.bss)		
 	}	>	sewer_01.bin
 
@@ -246,14 +276,15 @@ SECTIONS
 		hospital_f_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_f_00_data.data.s.o (.data)
 		ALIGNALL(0x8);
 		hospital_f_00.c.o (.rodata)
 	
 		. = ALIGN(0x80);
-	
+		ALIGNALL(0x8);
+
 		hospital_f_00_bss.bss.s.o (.bss)		
 	}	>	hospital_f_00.bin
 
@@ -267,8 +298,8 @@ SECTIONS
 		building_f_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_f_00_data.data.s.o (.data)	
 	}	>	building_f_00.bin
 
@@ -282,10 +313,13 @@ SECTIONS
 		building_f_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_f_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		building_f_01_bss.bss.s.o (.bss)		
 	}	>	building_f_01.bin
 
@@ -299,8 +333,8 @@ SECTIONS
 		building_f_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_f_02_data.data.s.o (.data)	
 	}	>	building_f_02.bin
 
@@ -314,10 +348,13 @@ SECTIONS
 		mall_f_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		mall_f_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		mall_f_00_bss.bss.s.o (.bss)		
 	}	>	mall_f_00.bin
 
@@ -331,10 +368,13 @@ SECTIONS
 		subway_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		subway_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		subway_02_bss.bss.s.o (.bss)		
 	}	>	subway_02.bin
 
@@ -348,10 +388,13 @@ SECTIONS
 		building_b_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		building_b_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		building_b_02_bss.bss.s.o (.bss)		
 	}	>	building_b_02.bin
 
@@ -368,7 +411,10 @@ SECTIONS
 
 		ALIGNALL(0x4);
 		building_b_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		building_b_00_bss.bss.s.o (.bss)		
 	}	>	building_b_00.bin
 
@@ -382,10 +428,13 @@ SECTIONS
 		city_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		city_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		city_00_bss.bss.s.o (.bss)		
 	}	>	city_00.bin
 
@@ -399,10 +448,13 @@ SECTIONS
 		apart_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		apart_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		apart_00_bss.bss.s.o (.bss)		
 	}	>	apart_00.bin
 
@@ -416,10 +468,13 @@ SECTIONS
 		car_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		car_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		car_00_bss.bss.s.o (.bss)		
 	}	>	car_00.bin
 
@@ -433,10 +488,13 @@ SECTIONS
 		motel_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		motel_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		motel_00_bss.bss.s.o (.bss)		
 	}	>	motel_00.bin
 
@@ -450,10 +508,13 @@ SECTIONS
 		town_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		town_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		town_00.c.o (.bss)		
 	}	>	town_00.bin
 
@@ -467,8 +528,8 @@ SECTIONS
 		heaven_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		heaven_00_data.data.s.o (.data)
 	
 	}	>	heaven_00.bin
@@ -483,10 +544,13 @@ SECTIONS
 		construct_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		construct_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		construct_00_bss.bss.s.o (.bss)		
 	}	>	construct_00.bin
 
@@ -500,10 +564,13 @@ SECTIONS
 		hospital_f_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_f_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_f_01_bss.bss.s.o (.bss)		
 	}	>	hospital_f_01.bin
 
@@ -517,10 +584,13 @@ SECTIONS
 		hospital_f_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_f_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_f_02_bss.bss.s.o (.bss)		
 	}	>	hospital_f_02.bin
 
@@ -534,10 +604,13 @@ SECTIONS
 		hospital_f_03.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_f_03_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_f_03_bss.bss.s.o (.bss)		
 	}	>	hospital_f_03.bin
 
@@ -551,10 +624,13 @@ SECTIONS
 		hospital_turning_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_turning_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_turning_00_bss.bss.s.o (.bss)		
 	}	>	hospital_turning_00.bin
 
@@ -568,10 +644,13 @@ SECTIONS
 		hospital_b_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_b_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_b_00_bss.bss.s.o (.bss)		
 	}	>	hospital_b_00.bin
 
@@ -585,10 +664,13 @@ SECTIONS
 		hospital_b_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_b_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_b_01_bss.bss.s.o (.bss)		
 	}	>	hospital_b_01.bin
 
@@ -602,10 +684,13 @@ SECTIONS
 		hospital_b_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		hospital_b_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		hospital_b_02_bss.bss.s.o (.bss)		
 	}	>	hospital_b_02.bin
 
@@ -619,10 +704,13 @@ SECTIONS
 		amusement_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		amusement_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		amusement_00_bss.bss.s.o (.bss)		
 	}	>	amusement_00.bin
 
@@ -636,12 +724,15 @@ SECTIONS
 		amusement_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		amusement_01_data.data.s.o (.data)
 		ALIGNALL(0x8);
 		amusement_01.c.o (.rodata)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		amusement_01_bss.bss.s.o (.bss)		
 	}	>	amusement_01.bin
 
@@ -655,12 +746,15 @@ SECTIONS
 		church_02.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		church_02_data.data.s.o (.data)
 		ALIGNALL(0x10);
 		church_02.c.o (.rodata)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		church_02_bss.bss.s.o (.bss)
 		
 	}	>	church_02.bin
@@ -675,10 +769,13 @@ SECTIONS
 		church_00.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		church_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		church_00_bss.bss.s.o (.bss)		
 	}	>	church_00.bin
 
@@ -692,10 +789,13 @@ SECTIONS
 		church_01.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		church_01_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		church_01_bss.bss.s.o (.bss)		
 	}	>	church_01.bin
 
@@ -713,7 +813,10 @@ SECTIONS
 
 		ALIGNALL(0x4);
 		amusement_02_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		amusement_02_bss.bss.s.o (.bss)		
 
 	}	>	amusement_02.bin
@@ -728,10 +831,13 @@ SECTIONS
 		church_03.c.o (.text)
 
 		. = ALIGN(0x80);
-
 		ALIGNALL(0x4);
+
 		church_03_data.data.s.o (.data)
-		ALIGNALL(0x10);
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
 		church_03_bss.bss.s.o (.bss)		
 	}	>	church_03.bin
 
