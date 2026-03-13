@@ -23,5 +23,5 @@ segments:
     vram: 0x1F6D680
     start: 0x80
     subsegments:
-      - [0x80, asm, Event/overlay_align]
+      - [0x80, data, Event/overlay_align]
   - [0x280]

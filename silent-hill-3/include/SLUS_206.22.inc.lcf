@@ -46,7 +46,6 @@ MEMORY
 KEEP_SECTION
 {
 	.rodata,
-	.text,
 	.data,
 	.vutext,
 	.vudata,
@@ -847,7 +846,7 @@ SECTIONS
 		__overlay_align_start = .;
 		. = ALIGN(0x10);
 		overlay_align_overlay_header.s.o (.data)
-		overlay_align.s.o (.text)
+		overlay_align.data.s.o (.data)
 	}	>	overlay_align.bin
 
 }

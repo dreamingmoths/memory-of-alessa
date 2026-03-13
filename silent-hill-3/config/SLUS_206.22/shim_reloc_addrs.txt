@@ -1,0 +1,2 @@
+rom:0x18A368 reloc:MIPS_PC16 symbol:func_01F6E770_apart_00
+rom:0x05FE5C reloc:MIPS_PC16 symbol:func_01F6D740_mall_b_01

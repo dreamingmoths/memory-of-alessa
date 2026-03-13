@@ -10,7 +10,9 @@ options:
   symbol_addrs_path: 
     - symbol_addrs.txt
     - shim_addrs.txt
-  reloc_addrs_path: reloc_addrs.txt
+  reloc_addrs_path:
+    - reloc_addrs.txt
+    - shim_reloc_addrs.txt
   gp_value: 0x3d09f0
   ld_script_path: linkers/SLUS_206.22.ld
   undefined_funcs_auto_path: linkers/sh3_undefined_funcs_auto.main.txt

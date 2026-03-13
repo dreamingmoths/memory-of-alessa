@@ -29,3 +29,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E5B0_hospital_b_00)
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E6C0_hospital_b_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E880_hospital_b_00);
+
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E980_hospital_b_00);
+
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6EA00_hospital_b_00);
