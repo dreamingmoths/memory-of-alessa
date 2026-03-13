@@ -1,11 +1,6 @@
 #include "church_00.h"
 
-static inline void vec_copy(__int128* dst, __int128* src) {
-    asm volatile (""
-         "lq $t7,%1"
-         "sq $t7,%0"
-    :"=r"(dst): "r"(src): "t7");
-}
+UNCURSE_CHURCH();
 
 int func_01F6D680_church_00(void)
 {
@@ -217,9 +212,9 @@ void func_01F6DCF0_church_00(Q* arg0, int* arg1, Q* arg2, int*  arg3, int*  arg4
     sp0.s32  = D_01F6E570_church_00.s32;
     sp10.s32 = D_01F6E580_church_00.s32;
 
-    vec_copy(&arg0->u128, &sp0.u128);
+    qcopy(&arg0->u128, &sp0.u128);
     *arg1 = 0;
-    vec_copy(&arg2->u128, &sp10.u128);
+    qcopy(&arg2->u128, &sp10.u128);
     *arg3 = 0;
     *arg4 = 0;
 }

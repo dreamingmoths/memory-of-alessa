@@ -52,4 +52,19 @@ extern Q D_01F6E580_church_00;
 extern u_int D_1D31644;
 extern u_int D_1D316A4;
 
+// @hack thanks SeCall :')
+#define UNCURSE_CHURCH()                                                   \
+void uncurse(float a0, float a1, float a2, float a3, u_int a4, void* a5) { \
+    float x;                                                               \
+    float y;                                                               \
+    do {                                                                   \
+        SeCall(1.0f, 0.0f, 19000);                                         \
+        do {                                                               \
+            SeCall(a0, 0.0f, 19000);                                       \
+            SeCall(a1, 0.0f, 19000);                                       \
+            SeCall(a1, 0.0f, 19000);                                       \
+        } while(1);                                                        \
+    } while (0);                                                           \
+}
+
 #endif
