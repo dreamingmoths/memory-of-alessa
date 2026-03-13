@@ -42,7 +42,13 @@ INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F930_church_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F940_church_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6FDD0_church_02);
+u_short func_01F6FDD0_church_02(void) {
+    float sp18;
+    float sp1C;
+
+    func_0029F330(&sp18, &sp1C);
+    return func_002A47C0(sp18, sp1C);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6FE00_church_02);
 
