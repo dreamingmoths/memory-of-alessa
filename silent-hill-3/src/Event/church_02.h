@@ -12,6 +12,8 @@ short RoomName();
 int func_0016D5B0();
 int GetExtraNewGame();
 void func_001C2290(int, float);
+void func_0029F330(float*, float*);
+int func_002A47C0(float, float);
 
 extern int D_01F77580_church_02;
 extern int D_01F77590_church_02;
