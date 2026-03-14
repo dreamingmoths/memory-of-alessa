@@ -53,8 +53,57 @@ int func_01F6D7B0_hospital_f_01(void) {
     return 1;
 }
 
+int func_01F6D880_hospital_f_01(void) {
+    int var_s1;
+    int riddle_level;
+    int index;
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6D880_hospital_f_01);
+    if (!((D_1D31688 >> 0xB) & 1)) {
+        if (!((D_1D31688 >> 0xA) & 1)) {
+            D_01F71680_hospital_f_01 = 0;
+        } else {
+            D_01F71680_hospital_f_01 = 1;
+        }
+        D_1D31688 |= 0x800;
+        func_00190A20(2);
+    }
+    riddle_level = GetRiddleLevel() & 0xFF;
+    var_s1 = 0x19;
+    if (riddle_level <= 0) {
+        index = 0x5AB;
+    } else {
+        var_s1 = 0x1A;
+        if (riddle_level >= 2) {
+            var_s1 = 0x1B;
+            index = 0x5AD;
+        } else {
+            index = 0x5AC;
+        }
+    }
+   
+    switch (D_01F71680_hospital_f_01) {
+        case 0:
+            if (!func_0016C1C0(0x1C)) return 0;
+            if (func_00168440()) break;
+            D_01F71680_hospital_f_01++;
+            func_0016C3C0();
+        default:
+            if (!func_0016C1C0(var_s1)) return 0;
+            break;
+    }
+
+    func_00190A20(0);
+    D_1D31688 &= ~0x800;
+    if (!((D_1D31688 >> 10) & 1)) {
+        D_1D31688 |= 0x400;
+    }
+    
+    if (!(((D_01D31640[index >> 5] >> (index & 0x1F)) & 1))) {
+        D_01D31640[index >> 5] |= (1 << (index & 0x1F));
+    }
+    return 1;
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6DA30_hospital_f_01);
 
