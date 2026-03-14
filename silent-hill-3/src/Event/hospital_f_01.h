@@ -21,7 +21,6 @@ void func_0016CA40(int);
 int func_0016BED0(u_int, u_int);
 int func_00168440();
 void func_00190A20(int);
-void func_001A06F0(int*);
 void func_001C2290(int, float);
 void func_0029F330(float*, float*);
 int func_002A47C0(float, float);
