@@ -814,6 +814,8 @@ SECTIONS
 
 		ALIGNALL(0x4);
 		amusement_02_data.data.s.o (.data)
+		ALIGNALL(0x8);
+		amusement_02.c.o (.rodata)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
