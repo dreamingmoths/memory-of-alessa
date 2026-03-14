@@ -180,7 +180,80 @@ int func_01F6E550_hospital_f_02(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6E630_hospital_f_02); // need jumptable
+void func_01F6E630_hospital_f_02(void) {
+
+    int var_a0;
+    int var_v1_2;
+
+    D_01F6FF90_hospital_f_02 = 0;
+    if (!((D_1D31684 >> 1) & 1)) {
+        func_01F6EE10_hospital_f_02();
+        D_1D31684 |= 2;
+    }
+
+    switch (RoomName()) {
+        case 0xAD:
+            D_1D31724 |= 0x20;
+            break;
+
+        case 0xAF:
+            if (((D_1D31684 >> 0xF) & 1) && !((D_1D31684 >> 0x19) & 1) && !((D_1D31688 >> 2) & 1) && !((D_1D31644 >> 5) & 1) && !((D_1D31684 >> 0x18) & 1)) {
+                D_1D31684 |= 0x800000;
+                D_1D31684 |= 0x01000000;
+                break;
+            }
+            D_1D31684 &= 0xFF7FFFFF;
+            break;
+        case 0xB0:
+            D_1D31724 |= 0x80;
+            if (((D_1D31684 >> 0xC) & 1) && !((D_1D31684 >> 0x1C) & 1) && !((D_1D31688 >> 2) & 1) && !((D_1D31644 >> 5) & 1) && !((D_1D31644 >> 0xC) & 1) && !((D_1D31684 >> 0x1B) & 1)) {
+                D_1D31684 |= 0x08000000;
+                D_1D31684 |= 0x04000000;
+            } else {
+                D_1D31684 &= 0xFBFFFFFF;
+            }
+
+            if ((D_1D31688 >> 0x16) & 1) {
+                D_1D31688 &= 0xFFBFFFFF;
+                D_1D31684 |= 0x04000000;
+                break;
+            }
+        case 0xAE:
+        case 0xB1:
+        case 0xB2:
+        default:
+            break;
+        case 0xB3:
+            var_a0 = 0;
+            if ((D_1D31684 >> 0xF) & 1) {
+                var_a0 += 1;
+            }
+            if ((D_1D31684 >> 0x12) & 1) {
+                var_a0 += 1;
+            }
+            if ((D_1D31684 >> 0x15) & 1) {
+                var_a0 += 1;
+            }
+            if ((D_1D31684 >> 0x19) & 1) {
+                var_a0 += 1;
+            }
+            if ((D_1D31684 >> 0x1C) & 1) {
+                var_a0 += 1;
+            }
+            if ((D_1D31688 >> 0x0) & 1) var_a0++;
+            if (var_a0 >= 3) {
+                D_1D31688 |= 0x2;
+            } else {
+                D_1D31688 &= ~0x2;
+            }
+        break;
+
+        case 0xB4:
+            D_01F6FFA0_hospital_f_02 = 0;
+            break;
+        
+        }
+}
 
 void func_01F6E950_hospital_f_02(void) {
     D_01F6FF90_hospital_f_02 = 1;
@@ -213,7 +286,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6EA20_hospital_f_02)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6ECC0_hospital_f_02); // need jumptable
 
-void func_01F6EE10_hospital_f_02(void) {
+int func_01F6EE10_hospital_f_02(void) {
     if (!((D_1D31684 >> 2) & 1)) {
         func_01F6ECC0_hospital_f_02();
         D_1D31684 |= 4;
