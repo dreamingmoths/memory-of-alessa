@@ -1,12 +1,5 @@
 #include "hospital_turning_00.h"
 
-static inline void vec_copy(__int128* dst, __int128* src) {
-    asm volatile (""
-         "lq $t7,%1"
-         "sq $t7,%0"
-    :"=r"(dst): "r"(src): "t7");
-}
-
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_turning_00", func_01F6D680_hospital_turning_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_turning_00", func_01F6D9F0_hospital_turning_00);
