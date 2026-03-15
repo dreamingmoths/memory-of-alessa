@@ -16,6 +16,7 @@ void func_00317420(u_int);
 void func_00317490(int, float);
 void func_003174B0(float);
 void SeCall(float, float, int);
+int shRandI();
 
 extern float D_01F70580_hospital_f_03;
 extern float D_01F705E0_hospital_f_03;
@@ -27,6 +28,7 @@ extern int D_01F708E0_hospital_f_03;
 extern int D_01F70908_hospital_f_03;
 extern int D_01F70910_hospital_f_03;
 
+extern u_int D_01D31640[];
 extern u_int D_1D31644;
 extern u_int D_1D31680;
 extern u_int D_1D31684;
