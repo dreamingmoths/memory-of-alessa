@@ -35,5 +35,6 @@ extern u_int D_1D31684;
 extern u_int D_1D31688;
 extern u_int D_1D316F4;
 extern u_int D_1D31724;
+extern u_int D_1D318E4;
 
 #endif
