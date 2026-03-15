@@ -630,6 +630,8 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		hospital_turning_00_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_turning_00.c.o (.rodata)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
