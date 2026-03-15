@@ -234,7 +234,33 @@ void func_01F6F930_hospital_f_03(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6FAC0_hospital_f_03);
+void func_01F6FAC0_hospital_f_03(void) {
+    int numbers[9];
+    int i, j;
+    int index;
+    u_int *temp = D_01D31640;
+
+    D_1D318E4 = 0;
+
+    for (i = 0; i < 9; i++) {
+        numbers[i] = i + 1;
+    }
+
+    // takes whatever is in temp[0xA9] and sets 4 numbers in it
+    // each number is placed in a 4-bit big segment
+    // i.e. if the numbers 1, 5, 8 and 3 were set it'd basically be
+    // 0b0001 0b0101 0b1000 0b0011
+    // the whole value being 0b0001010110000011
+    for (i = 0; i < 4; i++) {
+        int rand = shRandI();
+        index = rand % (9-i);
+        temp[0xA9] <<= 4;
+        temp[0xA9] += numbers[index];
+        for (j = index; j < 8 - i; j++) {
+            numbers[j] = numbers[j + 1];
+        }
+    }
+}
 
 int func_01F6FC10_hospital_f_03(void) {
     if (!((D_1D31684 >> 2) & 1)) {
