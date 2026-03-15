@@ -59,9 +59,9 @@ void func_01F6DC40_amusement_01() {
 }
 
 static void func_01F6DC70_amusement_01(__int128* arg0, int* arg1, __int128* arg2, int* arg3, int* arg4) {
-    qcopy(arg0, &D_01F74680_amusement_01);
+    vec_copy(arg0, &D_01F74680_amusement_01);
     *arg1 = 1;
-    qcopy(arg2, &D_01F74670_amusement_01);
+    vec_copy(arg2, &D_01F74670_amusement_01);
     *arg3 = 0;
     *arg4 = 0;
 }
@@ -76,12 +76,12 @@ static void func_01F6DCF0_amusement_01(__int128* arg0, int* arg1, __int128* arg2
 
     func_0018FE60((__int128*) &sp60);
     sp60[1] += -700.0f;
-    qcopy(arg0, &D_01F74690_amusement_01[D_01F74CB0_amusement_01]);
+    vec_copy(arg0, &D_01F74690_amusement_01[D_01F74CB0_amusement_01]);
     *arg1 = 1;
     if (D_01F74CB0_amusement_01 != 2) {    
-        qcopy(arg2, sp60);
+        vec_copy(arg2, sp60);
     } else {
-        qcopy(arg2, D_01F74670_amusement_01);
+        vec_copy(arg2, D_01F74670_amusement_01);
     }
     *arg3 = 1;
     *arg4 = 0;

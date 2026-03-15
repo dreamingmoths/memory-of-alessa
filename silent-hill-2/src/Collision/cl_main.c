@@ -56,7 +56,7 @@ static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, s32* whnum, CL_HITPO
             clWallHitData[*whnum].kind = cres.chk;
             clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
             cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-            qcopy(&clWallHitData[*whnum].cv, &cres.cv);
+            vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
 
             *whnum += 1;
         }
@@ -89,7 +89,7 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, s32* whnum) {
                 clWallHitData[*whnum].kind = cres.chk;
                 clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
                 cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-                qcopy(&clWallHitData[*whnum].cv, &cres.cv);
+                vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
 
                 *whnum += 1;
             }
@@ -99,7 +99,29 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, s32* whnum) {
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clMakeWallHitCollectVector);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clAddWallCollectVector);
+void clAddWallCollectVector(float* v0, float* v1, int* flg) {
+    float tv[4];
+
+    if (*flg == 0) {
+        vec_copy(v0, v1);
+    } else {
+        vec_add(v0, v1, tv);
+
+        if (v0[0] > v1[0])
+            tv[0] = tv[0] < v1[0] ? v1[0] : MIN(tv[0], v0[0]);
+        else
+            tv[0] = tv[0] < v0[0] ? v0[0] : MIN(tv[0], v1[0]);
+
+        if (v0[2] > v1[2])
+            tv[2] = tv[2] < v1[2] ? v1[2] : MIN(tv[2], v0[2]);
+        else
+            tv[2] = tv[2] < v0[2] ? v0[2] : MIN(tv[2], v1[2]);
+
+        vec_copy(v0, &tv[0]);
+    }
+
+    *flg += 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckColumn2WallHit);
 

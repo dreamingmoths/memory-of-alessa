@@ -27,6 +27,8 @@ typedef unsigned int u_long128;
 #define QUARTER_TURN 1.5707964f
 #define RADIANS_PER_DEGREE (PI / 180.0f)
 #define TO_RAD(x) RADIANS_PER_DEGREE * (x)
+#define MIN(a,b) ((a) > (b) ? (b) : (a))
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 #define READ_UNCACHED(addr)      ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
 
@@ -73,11 +75,20 @@ typedef union Q
     signed int iv[4];      // offset 0x0, size 0x10
 } Q;
 
-inline void qcopy(void* dst, void* src) {
+inline void vec_copy(void* dst, void* src) {
     asm volatile ("\
          lq t7, 0(%1)\n\
          sq t7, 0(%0)"
     : "=r"(dst): "r"(src): "t7");
+}
+
+inline void vec_add(void* x, void* y, void* out) {
+    asm ("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vadd.xyzw vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "=r"(x), "=r"(y): "r"(out));
 }
 
 extern void * memcpy(void *__dest, void *__src, u_int __n);
