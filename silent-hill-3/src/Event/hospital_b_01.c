@@ -2,7 +2,12 @@
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_01", func_01F6D680_hospital_b_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_01", func_01F6D740_hospital_b_01);
+void func_01F6D740_hospital_b_01(void) {
+    
+    if ((D_1D31698 >> 6) & 1) {                
+        func_0016D170(0x3A98, D_01F6EBB0_hospital_b_01, 0, 0, 1.0f, 5000.0f, D_01F6EBC0_hospital_b_01);
+    }
+}
 
 int func_01F6D7A0_hospital_b_01(void) {
     switch (D_01F6EBA8_hospital_b_01) {
