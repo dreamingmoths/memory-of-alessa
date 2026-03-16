@@ -18,6 +18,9 @@ int RoomName();
 void SeCall(float, float, int);
 SubCharacter* shCharacterGetSubCharacter(int, short);
 float shGetDT();
+void func_0016D170(int, Q*, int, int, float, float, int);
+
+extern Q D_01F6EBB0_hospital_b_01[4];
 
 extern float D_01F6EAF0_hospital_b_01;
 extern float D_01F6EB50_hospital_b_01;
