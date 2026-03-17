@@ -136,38 +136,22 @@ void sh3_Model3UpdateTextures(void *model_)
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", Model3UpdateMatrices);
 
-void Model3UpdateEnvelopeMatrices(void *model_, void *work_)
-{
-    ModelCommonWork *mcw;
-    Model *model;
-    int count;
-    sceVu0FMATRIX *pcms;
-    unsigned char *pairs;
-    sceVu0FMATRIX *dst;
+void Model3UpdateEnvelopeMatrices(Model* model) {
+    int n_pairs = model->n_skeleton_pairs;
+    sceVu0FMATRIX* default_pcms = (sceVu0FMATRIX*) ((int) model + model->default_pcms_offset);
+    sceVu0FMATRIX*  skeleton_matrices = (sceVu0FMATRIX*) &model_common_work->skeleton_matrices[0];
+    struct SkeletonPair * pairs = (struct SkeletonPair*) ((int) model + model->skeleton_pairs_offset);
+    sceVu0FMATRIX* envelope_matrices = &model_common_work->envelope_matrices[0];
     int i;
-    int pcm_offset;
-    int pair_offset;
 
-    model = model_;
-    i = 0;
-    mcw = model_common_work;
-    count = model->n_skeleton_pairs;
-    pcms = (sceVu0FMATRIX *)((char *)model + model->default_pcms_offset);
-    pairs = (unsigned char *)model + model->skeleton_pairs_offset;
-    dst = mcw->envelope_matrices;
-    (void)work_;
+    for (i = 0; i < n_pairs; i++) {
+        struct SkeletonPair * pair = &pairs[i];
+        float (* em)[4] = envelope_matrices[i];
+        int child_no = pair->child_no; 
+        float (* pcm)[4] = default_pcms[i]; // r2
+        float (* cvm)[4] = skeleton_matrices[child_no]; // r2
 
-    if (0 < count)
-    {
-        pcm_offset = 0;
-        pair_offset = 0;
-        do
-        {
-            shMulMatrix(*(sceVu0FMATRIX *)((char *)dst + pcm_offset), mcw->skeleton_matrices[pairs[pair_offset + 1]],
-                        *(sceVu0FMATRIX *)((char *)pcms + pcm_offset));
-            i += 1;
-            pcm_offset += 0x40;
-            pair_offset += 2;
-        } while (i < count);
+        // envelope matrix = child skeleton matrix * parent-child matrix
+        shMulMatrix(em, cvm, pcm);
     }
 }

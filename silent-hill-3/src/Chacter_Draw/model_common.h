@@ -107,5 +107,10 @@ typedef struct Data {
     union Q rgba; // offset 0x0, size 0x10
 } Data;
 
+typedef struct SkeletonPair {
+    // total size: 0x2
+    unsigned char parent_no; // offset 0x0, size 0x1
+    unsigned char child_no; // offset 0x1, size 0x1
+} SkeletonPair;
 
 #endif
