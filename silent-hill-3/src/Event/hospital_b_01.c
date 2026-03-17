@@ -1,11 +1,25 @@
 #include "hospital_b_01.h"
 
+inline void fmatcopy(void *dst, void *src) {
+    asm volatile (
+        "lq $t6, 0(%1)\n\t"
+        "lq $t7, 0x10(%1)\n\t"
+        "sq $t6, 0(%0)\n\t"
+        "sq $t7, 0x10(%0)\n\t"
+        "lq $t6, 0x20(%1)\n\t"
+        "lq $t7, 0x30(%1)\n\t"
+        "sq $t6, 0x20(%0)\n\t"
+        "sq $t7, 0x30(%0)\n\t"
+        : : "r"(dst), "r"(src) : "t6", "t7", "memory"
+    );
+}
+
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_01", func_01F6D680_hospital_b_01);
 
 void func_01F6D740_hospital_b_01(void) {
     
     if ((D_1D31698 >> 6) & 1) {                
-        func_0016D170(0x3A98, D_01F6EBB0_hospital_b_01, 0, 0, 1.0f, 5000.0f, D_01F6EBC0_hospital_b_01);
+        func_0016D170(0x3A98, &D_01F6EBB0_hospital_b_01, 0, 0, 1.0f, 5000.0f, D_01F6EBC0_hospital_b_01);
     }
 }
 
@@ -119,4 +133,72 @@ void func_01F6DB80_hospital_b_01(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_01", func_01F6DC60_hospital_b_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_01", func_01F6DDC0_hospital_b_01);
+void func_01F6DDC0_hospital_b_01(void) {
+    Q *sp20[4];
+    Q sp30;
+    sceVu0FMATRIX sp40;
+    Q *sp80[4];
+    Q sp90;
+    sceVu0FMATRIX spA0;
+    SubCharacter *temp_s0;
+
+    if (!D_01F6EB90_hospital_b_01) {
+        func_01F6DC60_hospital_b_01();
+    }
+
+    switch (RoomName()) {
+    case 0xC6:
+        func_01F6D740_hospital_b_01();
+        if ((D_1D31648 >> 1) & 1) {
+            break;
+        }
+        if (!(D_1D31648 & 1)) {
+            func_0016CBD0(sp20, &sp30, 0x10);
+            fmatcopy(sp40, sp20[0]);
+            func_001C2A80(1, sp40);
+            D_1D3172C |= 0x1000;
+        } else {
+            func_0016CBD0(sp80, &sp90, 0x11);
+            fmatcopy(spA0, sp80[0]);
+            func_001C2A80(1, spA0);
+            clAddDynamicWall(&D_01F6E890_hospital_b_01);
+            D_1D3172C &= ~0x1000;
+        }
+        func_0016CA40(3);
+        func_0016CA40(4);
+        func_0016CA40(5);
+        func_0016CA40(6);
+        func_0016CA40(7);
+        func_0016CA40(8);
+        func_0016CA40(9);
+        func_0016CA40(0xA);
+        func_0016CA40(2);
+        func_0018A260(0xF2);
+        func_0018A310(0xF2, 8, 1);
+        break;
+    case 0xC7:
+        if ((D_1D31698 >> 8) & 1) {
+            if (!((D_1D31698 >> 9) & 1)) {
+                func_01F6D970_hospital_b_01();
+            }
+        }
+        temp_s0 = shCharacterGetSubCharacter(0x101C, 0x146);
+        if (!((D_1D31698 >> 9) & 1) || (func_001DD9F0(temp_s0) == 0)) {
+            clAddDynamicWall(&D_01F6E6B0_hospital_b_01);
+        } else if (!((D_1D31698 >> 0x11) & 1)) {
+            D_1D31698 |= 0x20000;
+        }
+        if ((D_1D31698 >> 9) & 1) {
+            // @hack?
+            if (D_01F6EB98_hospital_b_01) {}
+            func_0016D170(0x3A9A, &temp_s0->pos, 0, 0, 1.0f, 1500.0f, D_01F6EB98_hospital_b_01);
+        }
+        if (!((D_1D31694 >> 7) & 1)) {
+            func_0016CA40(0xA);
+            D_1D3172C |= 0x4000;
+        } else {
+            D_1D3172C &= ~0x4000;
+        }
+        break;
+    }
+}
