@@ -43,7 +43,74 @@ void func_001D3990(float x, float z) {
   model3_junk.xyz_min[2] = x;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", sh3_Model3UpdateTextures);
+void sh3_Model3UpdateTextures(void *model_)
+{
+    int offset;
+    int tex;
+    int tex0;
+    int n_texture_blocks;
+    int n_text_poses;
+    int *texture_blocks;
+    ModelTextPose *text_poses;
+    int i;
+    Model *model;
+    int should_call;
+    int arg_or_flag;
+    int text_poses_offset;
+    int texture_blocks_offset;
+    int tex1;
+    ModelTextPose *pose;
+    uint128 *src;
+    char *dst_base;
+
+    model = model_;
+    texture_blocks_offset = model->texture_blocks_offset;
+    text_poses_offset = model->text_poses_offset;
+    texture_blocks = (int *)((char *)model + texture_blocks_offset);
+    n_texture_blocks = model->n_texture_blocks;
+    n_text_poses = model->n_text_poses;
+    text_poses = (ModelTextPose *)((char *)model + text_poses_offset);
+    arg_or_flag = (int)model;
+    should_call = model->revision < 3U;
+    if (!should_call)
+    {
+        arg_or_flag = model->flag;
+        should_call = (arg_or_flag & 0x40000000) != 0;
+    }
+    if (should_call)
+    {
+        *(s64 *)((char *)model_common_work + 0x62A0) =
+            func_001CC710(arg_or_flag, text_poses_offset, texture_blocks_offset);
+    }
+    if (0 < n_texture_blocks)
+    {
+        i = 0;
+        offset = 0;
+        do
+        {
+            tex = *(int *)((char *)texture_blocks + offset);
+            tex0 = func_001D0D80(tex);
+            tex1 = func_001D0DF0(tex);
+            sh3gfw_Thr_d2TextureSend(tex0, 0, tex1, func_001D0DB0(tex));
+            i += 1;
+            offset += 4;
+        } while (i < n_texture_blocks);
+    }
+    dst_base = (char *)model_common_work + 0x60A0;
+    i = 0;
+    if (0 < n_text_poses)
+    {
+        offset = 0;
+        do
+        {
+            pose = (ModelTextPose *)((char *)text_poses + offset);
+            src = func_001B5B00(func_001D0D80(pose->texture_id), pose->text_pos_param, 1);
+            *(s64 *)(dst_base + offset) = *src;
+            i += 1;
+            offset += 8;
+        } while (i < n_text_poses);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", Model3UpdateMatrices);
 
