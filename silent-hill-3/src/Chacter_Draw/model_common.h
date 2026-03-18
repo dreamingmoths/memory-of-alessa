@@ -11,16 +11,16 @@ typedef struct TextPosParam
 
 typedef struct ModelCommonWork
 {
-    float skeleton_matrices[128][4][4];      
-    float envelope_matrices[256][4][4];      
-    float top_skeleton_matrix[4][4];         
-    float vsp[2][4];                         
-    float vcp[2][4];                         
-    float vcp_gs[2][4];                      
-    struct TextPosParam text_pos_params[64]; 
-    float cluster_nodes[2048][4];            
-    unsigned long specular_mapping_tex0;     
-    unsigned long latitude_mapping_tex0;     
+    float skeleton_matrices[128][4][4];
+    float envelope_matrices[256][4][4];
+    float top_skeleton_matrix[4][4];
+    float vsp[2][4];
+    float vcp[2][4];
+    float vcp_gs[2][4];
+    struct TextPosParam text_pos_params[64];
+    unsigned long specular_mapping_tex0;
+    unsigned long latitude_mapping_tex0;
+    float cluster_nodes[2048][4];
 } ModelCommonWork;
 
 typedef struct Model3Junk
@@ -42,7 +42,7 @@ typedef struct Model3Junk
 
     // float vwm[4][4];           // offset 0x160, size 0x40
     char unk[0x30];
-    void *vi00;                // offset 0x1A0, size 0x4
+    void *vi00; // offset 0x1A0, size 0x4
     void *xtop;
     float (*cluster_nodes)[4];
     float (*cluster_nodes2)[4];
@@ -56,11 +56,11 @@ typedef struct Model3Junk
     // float (*cluster_nodes)[4]; // offset 0x1A8, size 0x4
     float (*_unknown)[4]; // offset 0x1A8, size 0x4
 
-    u_int fogcol;              // offset 0x1AC, size 0x4
-    u_char view_clip_and;      // offset 0x1B0, size 0x1
-    u_char view_clip_or;       // offset 0x1B1, size 0x1
-    u_char gs_clip_and;        // offset 0x1B2, size 0x1
-    u_char gs_clip_or;         // offset 0x1B3, size 0x1
+    u_int fogcol;         // offset 0x1AC, size 0x4
+    u_char view_clip_and; // offset 0x1B0, size 0x1
+    u_char view_clip_or;  // offset 0x1B1, size 0x1
+    u_char gs_clip_and;   // offset 0x1B2, size 0x1
+    u_char gs_clip_or;    // offset 0x1B3, size 0x1
 } Model3Junk;
 
 typedef struct Model
@@ -102,15 +102,17 @@ typedef struct Model
 
 extern ModelCommonWork *model_common_work;
 
-typedef struct Data {
+typedef struct Data
+{
     // total size: 0x10
     union Q rgba; // offset 0x0, size 0x10
 } Data;
 
-typedef struct SkeletonPair {
+typedef struct SkeletonPair
+{
     // total size: 0x2
     unsigned char parent_no; // offset 0x0, size 0x1
-    unsigned char child_no; // offset 0x1, size 0x1
+    unsigned char child_no;  // offset 0x1, size 0x1
 } SkeletonPair;
 
 #endif

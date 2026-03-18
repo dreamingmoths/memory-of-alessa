@@ -101,7 +101,7 @@ void sh3_Model3UpdateTextures(void *model_)
     }
     if (should_call)
     {
-        *(s64 *)((char *)model_common_work + 0x62A0) =
+        *(s64 *)&model_common_work->specular_mapping_tex0 =
             func_001CC710(arg_or_flag, text_poses_offset, texture_blocks_offset);
     }
     if (0 < n_texture_blocks)
