@@ -6,18 +6,18 @@ void fontSetYesNo(int y) {
     int w;
     int w2;
 
-    w = fontPrintWord(fontGetMesAdr((u16*)&msg_station, 0), 0xC8, y, 1, 0);
-    w2 = fontPrintWord(fontGetMesAdr((u16*)&msg_station, 1), 0x138, y, 1, 0);
+    w = fontPrintWord(fontGetMesAdr((u_short*)&msg_station, 0), 0xC8, y, 1, 0);
+    w2 = fontPrintWord(fontGetMesAdr((u_short*)&msg_station, 1), 0x138, y, 1, 0);
 
     if (w2 < w) {
-        font.sel_yu[1] = (u16) w;
+        font.sel_yu[1] = (u_short) w;
         return;
     }
-    font.sel_yu[1] = (u16) w2;
+    font.sel_yu[1] = (u_short) w2;
 }
 
-void fontCopyMessage(u16* pto, u16* pfrom) {
-    u16 n;
+void fontCopyMessage(u_short* pto, u_short* pfrom) {
+    u_short n;
     do {
         n = *pfrom++;
         *pto++ = n;

@@ -95,9 +95,9 @@ signed short item_kind;          // offset 0x222, size 0x2
 signed short item_count;         // offset 0x224, size 0x2
 signed short use_item_kind;      // offset 0x282, size 0x2
 float item_scale;                // offset 0x10, size 0x4
-void GameItemGetCountUp();
-unsigned int GameCalcRankItemGet();
-unsigned int GameCalcRankHiddenItemGet();
+void GameItemGetCountUp(void);
+unsigned int GameCalcRankItemGet(void);
+unsigned int GameCalcRankHiddenItemGet(void);
 unsigned char quiz_get_item; // size: 0x1, address: 0x1F04498
 signed int use_item;         // r16
 static struct                /* @anon7 */

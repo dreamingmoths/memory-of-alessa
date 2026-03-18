@@ -309,9 +309,9 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         int i;
         for (i = 0; i < n_cluster_data; i++) {
             ClusterData *cluster_data = &cluster_data_top[i];
-            u32 src = cluster_data->src;
-            u32 dst = cluster_data->dst;
-            u32 n = cluster_data->n;
+            u_int src = cluster_data->src;
+            u_int dst = cluster_data->dst;
+            u_int n = cluster_data->n;
             sceVif0PkRef(
                 pk,
                 (u_long128 *)((u_char *)cluster_nodes + (src << 4)),
@@ -326,7 +326,7 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         int dst_top = part->data_skeletons_offset;
         int i;
         for (i = 0; i < part->n_skeletons; i++) {
-            u16 idx = skeletons[i];
+            u_short idx = skeletons[i];
             sceVif0PkRef(
                 pk,
                 (u_long128 *)(matrices[idx]), 4, 0x01000101,
@@ -335,11 +335,11 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         }
     }
     {
-        u16 *pairs = (u16 *)((u_char *)part + part->skeleton_pairs_offset);
+        u_short *pairs = (u_short *)((u_char *)part + part->skeleton_pairs_offset);
         int dst_top = part->data_skeleton_pairs_offset;
         int i;
         for (i = 0; i < part->n_skeleton_pairs; i++) {
-            u16 idx = pairs[i];
+            u_short idx = pairs[i];
             float (*src)[4] = (float (*)[4]) & model_common_work->envelope_matrices[idx];
             sceVif0PkRef(
                 pk,
@@ -356,13 +356,13 @@ void MakeClipPacket(Part* part, sceVif0Packet* pk) {
     if ((part->backclip != 0) || (model3_junk.view_clip_or != 0)) {
         if (part->backclip == 0) {
             if (model3_junk.view_clip_or != 0) {
-                FlipXMTOP(part->backclip);
+                FlipXMTOP();
                 sceVif0PkRefMpg(pk, xmtop, &_vu_0_0x0037F980, model3_mpg0_clip0v_size, 0);
                 sceVif0PkCnt(pk, 0U);
                 sceVif0PkAddCode(pk, xmtop | 0x14000000);
             }
         } else {
-            FlipXMTOP(part->backclip);
+            FlipXMTOP();
             sceVif0PkRefMpg(pk, xmtop, &_vu_0_0x0037FB80, model3_mpg0_clip1_size, 0);
             sceVif0PkCnt(pk, 0U);
             sceVif0PkAddCode(pk, xmtop | 0x14000000);

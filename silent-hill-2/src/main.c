@@ -38,7 +38,7 @@ void GameKeyCheck();
 
 int main(int argc, char** argv) {
     int db_test_dvd;
-    u32 step;
+    u_int step;
 
     if (argc < 2) {
         printf_skip(1);

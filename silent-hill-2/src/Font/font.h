@@ -3,7 +3,7 @@
 
 #include "sh2_common.h"
 
-extern u16 *msg_station;
+extern u_short *msg_station;
 #define FONT_STREAM_BUFFER_SIZE 0x4000
 
 typedef struct sh_Model
@@ -77,11 +77,11 @@ typedef struct shSkelton
     void *untouchable;
 } shSkelton;
 
-s8 *Model3SkeletonStructure(sh_Model *model);
-s8 *func_001D2E80(sh_Model *model_);
-u16 fontPrintStrMain(u16 **pstr, int flag);
-u16 func_00158D60(u16 **pstr, int flag);
-void fontPrintStr(u16 *str, int x, int y);
+s_char *Model3SkeletonStructure(sh_Model *model);
+s_char *func_001D2E80(sh_Model *model_);
+u_short fontPrintStrMain(u_short **pstr, int flag);
+u_short func_00158D60(u_short **pstr, int flag);
+void fontPrintStr(u_short *str, int x, int y);
 
 struct FONT_DATA
 {

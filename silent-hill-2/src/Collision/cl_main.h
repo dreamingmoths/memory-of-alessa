@@ -162,9 +162,9 @@ struct _CL_VHIT_RESULT clVHitResult[64]; // size: 0x1000, address: 0x48C000
 float clswPerc[5]; // size: 0x14, address: 0x2A9980
 struct _CL_SELECT_MAP clSelectMap[128]; // size: 0x400, address: 0x48D1B0
 
-void clAllInitCollisionData();
+void clAllInitCollisionData(void);
 
-void clFrameInitCollisionData();
+void clFrameInitCollisionData(void);
 
 static void clCheckColumn2WallHit(struct _CL_HITRESULT * cres /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, struct _CL_HITPOLY_COLUMN * col /* r16 */);
 

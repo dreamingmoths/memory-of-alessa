@@ -22,18 +22,18 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
 
     if (scp_d->model_adr == NULL)
     {
-        SCSetModel(&scp_d->sc, (u64)pMD->sh_Model, (u64)pMD->pAnime);
-        scp_d->model_adr = (u64)pMD->sh_Model;
-        scp_d->anime_adr = (u64)pMD->pAnime;
-        scp_d->clani_adr = (u64)pMD->pCluster;
+        SCSetModel(&scp_d->sc, (u_long)pMD->sh_Model, (u_long)pMD->pAnime);
+        scp_d->model_adr = (u_long)pMD->sh_Model;
+        scp_d->anime_adr = (u_long)pMD->pAnime;
+        scp_d->clani_adr = (u_long)pMD->pCluster;
         (scp_d->anime).anime = (void *)scp_d->anime_adr;
         scp_d->sc.function(&scp_d->sc);
     }
     else
     {
-        scp_d->model_adr = (u64)pMD->sh_Model;
-        scp_d->anime_adr = (u64)pMD->pAnime;
-        scp_d->clani_adr = (u64)pMD->pCluster;
+        scp_d->model_adr = (u_long)pMD->sh_Model;
+        scp_d->anime_adr = (u_long)pMD->pAnime;
+        scp_d->clani_adr = (u_long)pMD->pCluster;
         (scp_d->anime).anime = (void *)scp_d->anime_adr;
         scp_d->models[0] = (void *)scp_d->model_adr;
         scp_d->models[1] = (void *)scp_d->model_adr;

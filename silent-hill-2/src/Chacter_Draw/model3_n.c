@@ -3,19 +3,19 @@
 #include "model3_n.h"
 #include "eeregs.h"
 
-s8 *Model3SkeletonStructure(sh_Model *model)
+s_char *Model3SkeletonStructure(sh_Model *model)
 {
-    s8 *structure;
+    s_char *structure;
     int i;
-    u8 mask;
+    u_char mask;
 
-    structure = (s8 *)((u8 *)model + model->skeleton_structure_offset);
+    structure = (s_char *)((u_char *)model + model->skeleton_structure_offset);
 
     if (!(model->flag & 1))
     {
         for (i = 0; i < model->n_skeletons; i++)
         {
-            u8 d = structure[i];
+            u_char d = structure[i];
 
             mask = d;
             if (mask < 0xFE)

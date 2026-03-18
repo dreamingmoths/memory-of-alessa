@@ -30,12 +30,12 @@ typedef struct Light
     float f_rb;              // offset 0x94, size 0x4
 } Light;
 
-int LightNValidParallelMatrices();
+int LightNValidParallelMatrices(void);
 void LightGetNthViewNLM(float (*nlm)[4] /* r2 */, int n /* r2 */);
 void LightGetNthLCM(float (*lcm)[4] /* r2 */, int n /* r2 */);
 static void LightGetNthViewNHM(float (*nhm)[4] /* r2 */, int unknown);
-int LightNValidExtras();
+int LightNValidExtras(void);
 struct Light *LightNthValidExtra(int n /* r2 */);
-float LightReflectionBrightness();
+float LightReflectionBrightness(void);
 
 #endif
