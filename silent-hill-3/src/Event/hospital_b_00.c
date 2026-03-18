@@ -314,8 +314,6 @@ void func_01F6E5B0_hospital_b_00(void) {
 
 int func_01F6E6C0_hospital_b_00(void) {
     int ret;
-    float arg1;
-    float new_var;
     
     ret = 0;
     if (!GET_FLAG(D_1D31698, 4)) {
@@ -324,8 +322,7 @@ int func_01F6E6C0_hospital_b_00(void) {
         D_01F70608_hospital_b_00 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        new_var = (arg1 = 0.0f);
-        SeCall(1.0f, new_var, 0x4A59); //I saw someone matching this shit this way
+        SeCall(1.0f, 0.0f, 0x4A59);
     }
     D_01F70608_hospital_b_00 += shGetDT();
     switch (D_01F70600_hospital_b_00) {    
