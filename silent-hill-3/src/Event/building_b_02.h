@@ -22,7 +22,6 @@ u_char GetActionLevel(void);
 void clAddDynamicWall(void *);
 void func_001C2290(int, float);
 int func_001E2110(int);
-void shCharacter_Manage_Delete(u_short, u_short);
 
 extern int D_01F6EB80_building_b_02;
 extern int D_01F6EF00_building_b_02;

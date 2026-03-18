@@ -52,7 +52,6 @@ extern SubCharacter *shCharacterGetSubCharacter(int, short);
 extern u_char GetActionLevel(void);
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
-extern int shCharacter_Manage_Delete(u_short kind, u_short id);
 
 extern void SeCall(float, float, int);
 extern float shAngleRegulate(float);

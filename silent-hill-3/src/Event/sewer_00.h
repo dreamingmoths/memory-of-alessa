@@ -42,7 +42,6 @@ void func_003174B0(float);
 int RoomName(void);
 u_char GetActionLevel(void);
 void SeCall(float, float, int);
-int shCharacter_Manage_Delete(u_short, u_short);
 
 extern int D_01F6F8F0_sewer_00[];
 extern int D_01F6F850_sewer_00[];

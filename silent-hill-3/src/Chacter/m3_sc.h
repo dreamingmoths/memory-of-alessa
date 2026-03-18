@@ -3,9 +3,12 @@
 
 #include "Chacter/character.h"
 
+int shCharacter_Manage_Delete(u_short kind, u_short id);
+
+static void shCharacterDelete(SubCharacter* scp);
+
 extern SubCharacter* D_003DAD54;
 extern void* D_003DAD50;
-static void shCharacterDelete(SubCharacter* scp);
 extern int D_003DAD5C;
 
 #define HEATHER_CHARA_ID 0x100

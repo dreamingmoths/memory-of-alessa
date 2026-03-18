@@ -89,7 +89,6 @@ int func_00170410(int);
 int func_0019B580(int);
 int func_001C2580(int);
 int func_001E2110(SubCharacter *);
-int shCharacter_Manage_Delete(u_short kind, u_short id);
 
 int func_0016BED0(int, int);
 int func_0016C1C0(u_int);
