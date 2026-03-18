@@ -21,7 +21,7 @@ void RObjectFunction(SubCharacter *this)
 {
     SubCharacter *scp;
     float wall_pos;
-    s64 mirror_mode;
+    long mirror_mode;
 
     switch (this->step)
     {

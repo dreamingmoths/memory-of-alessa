@@ -21,7 +21,7 @@ void fontClear()
     *D_01D08FA0 = 0;
 }
 
-void fontSetStreamMax(u16 s_max, u16 ws_max, u16 ms_max)
+void fontSetStreamMax(u_short s_max, u_short ws_max, u_short ms_max)
 {
     font.stream_max = s_max;
     font.w_stream_max = ws_max;
@@ -42,7 +42,7 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontLoad);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetData);
 
-void fontSet(u16 code, u16 x, u16 y)
+void fontSet(u_short code, u_short x, u_short y)
 {
     int num;
 
@@ -127,9 +127,9 @@ void fontSetBlankBox(int x0, int x1, int y)
 
 void fontSetLine(int x, int w, int y)
 {
-    u32 b;
-    u32 g;
-    u32 r;
+    u_int b;
+    u_int g;
+    u_int r;
     FONT_STREAM_DATA *fstream;
 
     if (font.st_num >= font.stream_max)
@@ -185,7 +185,7 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015A540);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetColor);
 
-void fontSetColorDirect(u8 r, u8 g, u8 b, u8 alp)
+void fontSetColorDirect(u_char r, u_char g, u_char b, u_char alp)
 {
     font.rgb_u = font.rgb_d = (b << 0x10) | (r | g << 8);
     font.alpha = alp;
@@ -194,7 +194,7 @@ void fontSetColorDirect(u8 r, u8 g, u8 b, u8 alp)
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015A9D0);
 
-void fontSetAlpha(u8 alp)
+void fontSetAlpha(u_char alp)
 {
     font.alpha = alp;
 }
@@ -329,7 +329,7 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectDown);
 #endif
 
 #ifdef NON_MATCHING
-u16 *fontGetMesAdr(u16 *str, u16 num)
+u_short *fontGetMesAdr(u_short *str, u_short num)
 {
     if (str == NULL)
     {
@@ -348,7 +348,7 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetMesAdr);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontMessageNum);
 
-void fontMessage(u16 *str)
+void fontMessage(u_short *str)
 {
     if (str == NULL)
     {
@@ -370,7 +370,7 @@ void fontMessage(u16 *str)
 
 void fontNextMessage()
 {
-    u32 wm;
+    u_int wm;
 
     font.st_num = 0;
     if (font.flag & 1)
@@ -398,7 +398,7 @@ void fontNextMessage()
         }
         else
         {
-            u32 iVar4 = func_0019B580(0x10) ? 0x32 : 0x3C;
+            u_int iVar4 = func_0019B580(0x10) ? 0x32 : 0x3C;
             font.wait_count = ((wm & 0xfff) * iVar4) / 0x3c;
         }
     }
@@ -415,7 +415,7 @@ int fontGetStatus()
     return font.st_num == 0 ? -2 : -1;
 }
 
-void fontWide(u16 w, u16 h)
+void fontWide(u_short w, u_short h)
 {
     font.flag |= 0x800; // sh2 uses 0x400 here
     font.wide_w = w;

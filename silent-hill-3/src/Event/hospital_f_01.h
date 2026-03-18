@@ -10,25 +10,25 @@
 #define HOSPITAL_2F_M4_ROOM 0xAA // this is the clock room
 #define HOSPITAL_2F_M5_ROOM 0xAB
 
-void func_0012CFA0();
-void func_0012CFC0();
-int func_0012D080();
-void func_0016C1A0();
-void func_0016C1B0();
+void func_0012CFA0(void);
+void func_0012CFC0(void);
+int func_0012D080(void);
+void func_0016C1A0(void);
+void func_0016C1B0(void);
 int func_0016C1C0(int);
-void func_0016C3C0();
+void func_0016C3C0(void);
 void func_0016CA40(int);
 int func_0016BED0(u_int, u_int);
-int func_00168440();
+int func_00168440(void);
 void func_00190A20(int);
 void func_001C2290(int, float);
 void func_0029F330(float*, float*);
 int func_002A47C0(float, float);
-int GetExtraNewGame();
+int GetExtraNewGame(void);
 int GetRiddleLevel(void);
-int RoomName();
+int RoomName(void);
 void SeCall(float, float, int);
-float shGetDT();
+float shGetDT(void);
 int shRandI(void);
 
 extern int D_01F71000_hospital_f_01;

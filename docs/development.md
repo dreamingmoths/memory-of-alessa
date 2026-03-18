@@ -102,6 +102,19 @@ make deep-clean
 or to really delete all setup and reset, run `make death`. This shouldn't be
 necessary in most cases though.
 
+### `alessatool` commands
+
+To make full use of the debug information from Silent Hill 2, we need to add the
+line numbers to the assembly. Example:
+
+```sh
+make sh2-report -j
+source tools/scripts/env.sh # will make `alessatool` available
+alessatool annotate --asm-path silent-hill-2/config/SLUS_202.28/asm/Chacter_Draw/model3_sub_n.s
+```
+
+See `alessatool annotate -h` or `alessatool -h` for more information.
+
 ### matching code
 
 To match code, you may use [decomp.me](https://decomp.me). Find an assembly

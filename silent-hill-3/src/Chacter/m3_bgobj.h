@@ -15,7 +15,7 @@ int func_00142EE0(struct SubCharacter *scp /* r16 */);
 void RObjectFunction(struct SubCharacter *);
 
 void func_00142F20(struct SubCharacter *arg0);
-s8 func_00150C60();
-float func_00150C70();
+s_char func_00150C60(void);
+float func_00150C70(void);
 
 #endif

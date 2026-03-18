@@ -112,5 +112,5 @@ struct EnvPacket envpacketdata; // @ 0x002A9580
 __int128 *CharacterOt_RequestPacket(int qwc /* r2 */);
 void CharacterOt_Append(u_int depth /* r3 */, __int128 *packet /* r2 */);
 
-s8 *Model3SkeletonStructure(sh_Model *model);
+s_char *Model3SkeletonStructure(sh_Model *model);
 #endif

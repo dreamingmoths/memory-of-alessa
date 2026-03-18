@@ -12,11 +12,11 @@ int Model3NSkeletons(void* model_) {
 s8* Model3SkeletonStructure(sh_Model* model) {
     s8* structure= (s8*)((u8*)model + model->skeleton_structure_offset);
     int i;
-    u8 mask;
+    u_char mask;
 
     if (!(model->flag & 1)) {
         for (i = 0; i < model->n_skeletons; i++) {
-            u8 d = structure[i];
+            u_char d = structure[i];
             mask = d;
             if ((u8) mask < 0xFE) {
                 mask >>= 1;
@@ -42,7 +42,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_n", sh3_Model_MakeMatrixParams
 // sh2: https://decomp.me/scratch/pHyrW
 void SortEnvPrim(void) {
     EnvPacket* ep;
-    s64 var_v0;
+    long var_v0;
 
     // @todo: define envpacketdata here
     // @todo: struct field names might be incorrect

@@ -208,12 +208,12 @@ typedef struct SubCharacter
     /* 0x1AC */ u_int unk1AC;
     /* 0x1B0 */ u_int unk1B0;
     /* 0x1B4 */ u_int unk1B4;
+    /* 0x1B8 */ u_int unk1B8;
     /* 0x1BC */ u_int unk1BC;
     /* 0x1C0 */ u_int unk1C0;
     /* 0x1C4 */ u_int unk1C4;
     /* 0x1C8 */ u_int unk1C8;
-    /* 0x1D0 */ u_int unk1D0;
-    /* 0x1D4 */ u_int unk1D4;
+    /* 0x1CC */ u_int unk1CC;
 } SubCharacter;
 
 typedef struct sh3gfw_ModelDraw_MAN

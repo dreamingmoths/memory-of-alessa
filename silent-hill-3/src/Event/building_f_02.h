@@ -8,8 +8,8 @@
 #define BUILDING_GALLERY_KATANA_ROOM        0x7D
 
 void func_0016CA40(int);                                 
-int RoomName();                                
-int GetRiddleLevel();   
+int RoomName(void);                                
+int GetRiddleLevel(void);   
 
 extern u_int D_1D31668;
 extern u_int D_1D3166C;

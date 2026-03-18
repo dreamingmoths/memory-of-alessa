@@ -270,7 +270,7 @@ typedef struct ClusterData {
     unsigned short n; // offset 0x4, size 0x2
 } ClusterData;
 
-void FlipXMTOP();
+void FlipXMTOP(void);
 static void DrawParts0(ktVif1Ot2 * ot /* r17 */, ModelWork * work /* r2 */, void (*make)(Part*), void (*draw)(ktVif1Ot2*, Part*, ModelWork*));
 
 extern u_int model3_mpg0_skel_load[];
@@ -287,27 +287,27 @@ extern u_int D_003B53B0;
 extern int D_003B55C0;
 extern u_int D_003B57D0;
 
-extern s32 xitop;
+extern int xitop;
 extern AllData_Vu0 * pAllData_Vu0;
 
-extern u32 _vu_0_0x00380640;
-extern u32 _vu_0_0x00380F00;
-extern u32 _vu_0_0x00381200;
+extern u_int _vu_0_0x00380640;
+extern u_int _vu_0_0x00380F00;
+extern u_int _vu_0_0x00381200;
 
-extern u32 D_003B5D00;
-extern u32 D_003B5E40;
-extern u32 D_003B6200;
-extern u32 D_003B6A80;
+extern u_int D_003B5D00;
+extern u_int D_003B5E40;
+extern u_int D_003B6200;
+extern u_int D_003B6A80;
 
-extern u32 model3_mpg0_lambert_size;
-extern u32 model3_mpg0_para_size;
-extern u32 model3_mpg0_point_size;
-extern u32 model3_mpg0_spot_size;
+extern u_int model3_mpg0_lambert_size;
+extern u_int model3_mpg0_para_size;
+extern u_int model3_mpg0_point_size;
+extern u_int model3_mpg0_spot_size;
 
-extern u32 model3_mpg0_specular_size;
-// extern u32 model3_mpg0_persfvg_size;
-// extern u32 model3_mpg0_venvmap_size;
-extern u32 D_003BAEB0;
+extern u_int model3_mpg0_specular_size;
+// extern u_int model3_mpg0_persfvg_size;
+// extern u_int model3_mpg0_venvmap_size;
+extern u_int D_003BAEB0;
 
 extern int D_003B61C0;
 extern int D_003BAD60;
@@ -323,25 +323,25 @@ extern u_int D_003BA170;
 extern u_int D_003BAA00;
 extern u_int D_003BAB50;
 
-extern int func_001C91F0();
-extern int func_001D0EA0(); // gets model n parts?
-extern Part* func_001D0EC0();
-extern int func_0025C0A0();
+extern int func_001C91F0(void);
+extern int func_001D0EA0(void); // gets model n parts?
+extern Part* func_001D0EC0(void);
+extern int func_0025C0A0(void);
 
-extern void func_0025BF10(Q*, s32 arg1, s32 arg2);
+extern void func_0025BF10(Q*, int arg1, int arg2);
 extern void func_0025C000(void*);
 extern void func_0025C0D0(Q*);
 
 extern int D_01EE3DE0;
 extern int draw_base;
 
-extern u32 xmtop;
+extern u_int xmtop;
 extern AllPacket* all_packet;
 extern int calc_base;
 extern void (* sort_functions[8])(struct ktVif1Ot2 *, struct Part *); // size: 0x20, address: 0x2A9730
 
 extern void func_0011FD28(sceVif0Packet *pPacket, u_long128 *pBase);
 extern void func_0011FE80(sceVif0Packet*, __int128*, int);
-extern s32 func_001CC680();
+extern int func_001CC680(void);
 
 #endif

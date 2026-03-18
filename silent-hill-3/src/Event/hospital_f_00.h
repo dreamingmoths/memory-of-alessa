@@ -14,53 +14,53 @@
 
 typedef struct
 {
-    s32 unk00;
-    s32 unk04;
-    s32 unk08;
-    s16 unk0C;
-    u8 unk0E;
-    u8 unk0F;
+    int unk00;
+    int unk04;
+    int unk08;
+    short unk0C;
+    u_char unk0E;
+    u_char unk0F;
 } PictureLoad;
 
 typedef struct
 {
-    s32 unk00;
-    s32 unk04;
-    s32 unk08;
-    s16 unk0C;
-    s16 unk0E;
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    u32 unk1C;
-    u32 unk20;
-    u32 unk24;
-    u32 unk28;
-    u8 unk2C;
-    u8 unk2D;
-    u8 unk2E;
-    u8 unk2F;
-    u8 unk30;
-    u8 unk31;
-    u8 unk32;
-    u8 unk33;
-    u8 unk34;
-    u8 unk35;
-    u8 unk36;
-    u8 unk37;
-    u8 unk38;
-    u8 unk39;
-    u8 unk3A;
-    u8 unk3B;
-    u8 unk3C;
-    u8 unk3D;
-    u8 unk3E;
-    u8 unk3F;
-    s16 unk40;
-    s16 unk42;
+    int unk00;
+    int unk04;
+    int unk08;
+    short unk0C;
+    short unk0E;
+    short unk10;
+    short unk12;
+    short unk14;
+    short unk16;
+    short unk18;
+    short unk1A;
+    u_int unk1C;
+    u_int unk20;
+    u_int unk24;
+    u_int unk28;
+    u_char unk2C;
+    u_char unk2D;
+    u_char unk2E;
+    u_char unk2F;
+    u_char unk30;
+    u_char unk31;
+    u_char unk32;
+    u_char unk33;
+    u_char unk34;
+    u_char unk35;
+    u_char unk36;
+    u_char unk37;
+    u_char unk38;
+    u_char unk39;
+    u_char unk3A;
+    u_char unk3B;
+    u_char unk3C;
+    u_char unk3D;
+    u_char unk3E;
+    u_char unk3F;
+    short unk40;
+    short unk42;
 } Picture;
 
 typedef struct
@@ -69,9 +69,9 @@ typedef struct
     PictureLoad unk10;
     Picture unk20;
     Picture unk64;
-    u32 unkA8;
-    s32 unkAC;
-    s32 unkB0;
+    u_int unkA8;
+    int unkAC;
+    int unkB0;
 } PictureGroup; // I think this is something specific for this overlay, this will work only here
 
 typedef struct
@@ -80,11 +80,11 @@ typedef struct
     int unk4;
 } Struct_01F6DA80_hospital_f_00;
 
-int RoomName();
-int func_0012D080();
+int RoomName(void);
+int func_0012D080(void);
 int func_0013D080(int, int, int, int);
 int func_00151150(int, int);
-int func_00168440();
+int func_00168440(void);
 int func_00170410(int);
 int func_0019B580(int);
 int func_001C2580(int);
@@ -95,23 +95,23 @@ int func_0016BED0(int, int);
 int func_0016C1C0(u_int);
 int func_0016C540(float *, float *);
 
-float shGetDT();
-float func_001643C0();
+float shGetDT(void);
+float func_001643C0(void);
 
-void func_0012CFA0();
-void func_0012CFC0();
+void func_0012CFA0(void);
+void func_0012CFC0(void);
 void func_0013D250(int, int, float);
 void func_0013D280(int);
 void func_0015DCD0(float, float, int, float *, int, int);
 
 void func_0016CA40(int);
 void func_0016CD00(int *);
-void func_0016C1A0();
-void func_0016C1B0();
-void func_0016C3C0();
+void func_0016C1A0(void);
+void func_0016C1B0(void);
+void func_0016C3C0(void);
 void ItemGet(u_int);
 void func_0016ECE0(int);
-void func_0016BBF0();
+void func_0016BBF0(void);
 void func_0016BC00(int);
 void func_0016F550(int, int);
 

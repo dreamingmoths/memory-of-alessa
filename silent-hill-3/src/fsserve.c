@@ -139,8 +139,8 @@ int func_00153AD0(int arg0, int arg1, int arg2) {
     return var_s0;
 }
 
-int func_00153BA0(char* arg0, u32 arg1){
-    u32 temp_s1;
+int func_00153BA0(char* arg0, u_int arg1){
+    u_int temp_s1;
     int ret = 1;
 
     if(arg0 == NULL){
@@ -176,7 +176,7 @@ int func_00153BA0(char* arg0, u32 arg1){
     return ret;
 }
 
-int func_00153CA0(char* arg0, u32 arg1){
+int func_00153CA0(char* arg0, u_int arg1){
     int ret;
     
     func_00152C20();

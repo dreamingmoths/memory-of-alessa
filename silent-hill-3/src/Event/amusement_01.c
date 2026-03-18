@@ -764,7 +764,7 @@ void func_01F70870_amusement_01() {
 
 void func_01F709D0_amusement_01(void) {
     SubCharacter* douglas;
-    s16 room;
+    short room;
 
     D_01F74CF8_amusement_01 = 1;
     room = RoomName();

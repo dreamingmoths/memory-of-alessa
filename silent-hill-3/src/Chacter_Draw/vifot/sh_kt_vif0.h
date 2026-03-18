@@ -16,9 +16,9 @@ typedef struct ktVif1Ot2 {
     unsigned int mask_2; // offset 0x1C, size 0x4
 } ktVif1Ot2;
 
-void ktVif0Wait2();
+void ktVif0Wait2(void);
 void ktVif0Send(void *p /* r16 */, signed int tte /* r17 */);
-void *ktVif0PkBufCurrent();
+void *ktVif0PkBufCurrent(void);
 ktVif1Ot2 * CharacterOt_KtVif1Ot2(Model* model);
 
 #endif

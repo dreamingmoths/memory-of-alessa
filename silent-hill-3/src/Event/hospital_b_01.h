@@ -4,20 +4,23 @@
 #include "common.h"
 #include "Chacter/m3_sc.h"
 
-float func_001643C0();
+float func_001643C0(void);
 void func_001433A0(SubCharacter*, int, int);
-void func_0016C1A0();
-void func_0016C1B0();
+void func_0016C1A0(void);
+void func_0016C1B0(void);
 int func_0016C540(float*, float*);
 void func_0016D0E0(int, int);
 void func_0016E400(int, int);
 void func_001C2290(int, float);
 int func_001C2580(int);
 void func_002395A0(float);
-int RoomName();
+int RoomName(void);
 void SeCall(float, float, int);
 SubCharacter* shCharacterGetSubCharacter(int, short);
-float shGetDT();
+float shGetDT(void);
+void func_0016D170(int, Q*, int, int, float, float, int);
+
+extern Q D_01F6EBB0_hospital_b_01[4];
 
 extern float D_01F6EAF0_hospital_b_01;
 extern float D_01F6EB50_hospital_b_01;

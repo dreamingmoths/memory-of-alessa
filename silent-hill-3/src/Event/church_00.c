@@ -209,7 +209,7 @@ void func_01F6DCF0_church_00(Q* arg0, int* arg1, Q* arg2, int*  arg3, int*  arg4
     Q sp0;
     Q sp10;
 
-    sp0.s32  = D_01F6E570_church_00.s32;
+    sp0.s32 = D_01F6E570_church_00.s32;
     sp10.s32 = D_01F6E580_church_00.s32;
 
     vec_copy(&arg0->u128, &sp0.u128);

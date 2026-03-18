@@ -63,7 +63,7 @@ int func_01F6D7A0_town_00() {
 
 void func_01F6D8A0_town_00() {
     int value;
-    u8 action_level;
+    u_char action_level;
     SubCharacter* scp;
     int count = 0;
 

@@ -277,9 +277,9 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         for (i = 0; i < n_cluster_data; i++) {
             ClusterData *cd = &cluster_data_top[i];
 
-            u32 src = cd->src;
-            u32 dst = cd->dst;
-            u32 n   = cd->n;
+            u_int src = cd->src;
+            u_int dst = cd->dst;
+            u_int n   = cd->n;
 
             sceVif0PkRef(
                 pk,
@@ -302,9 +302,9 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
             for (i = 0; i < n_cluster_data; i++) {
                 ClusterData *cd = &cluster_data_top[i];
 
-                u32 src = cd->src;
-                u32 dst = cd->dst + 1;
-                u32 n   = cd->n;
+                u_int src = cd->src;
+                u_int dst = cd->dst + 1;
+                u_int n   = cd->n;
 
                 sceVif0PkRef(
                     pk,
@@ -324,7 +324,7 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         int dst_top = part->data_skeletons_offset;
         int i;
         for (i = 0; i < part->n_skeletons; i++) {
-            u16 idx = skeletons[i];
+            u_short idx = skeletons[i];
             sceVif0PkRef(
                 pk,
                 (u_long128 *)(matrices[idx]), 4, 0x01000101,
@@ -333,11 +333,11 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         }
     }
     {
-        u16 *pairs = (u16 *)((u_char *)part + part->skeleton_pairs_offset);
+        u_short *pairs = (u_short *)((u_char *)part + part->skeleton_pairs_offset);
         int dst_top = part->data_skeleton_pairs_offset;
         int i;
         for (i = 0; i < part->n_skeleton_pairs; i++) {
-            u16 idx = pairs[i];
+            u_short idx = pairs[i];
             float (*src)[4] = (float (*)[4]) & model_common_work->envelope_matrices[idx];
             sceVif0PkRef(
                 pk,
@@ -373,7 +373,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
 
         sceVif0PkRef(
             pk,
-        (    u32 *)lf_data,
+        (    u_int *)lf_data,
             8U,
             0x01000101U,
             (u_int)xitop | 0x6c080000,
@@ -400,7 +400,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
             case 11:
                 sceVif0PkRefMpg(
                     pk,
-                    (u16)xmtop,
+                    (u_short)xmtop,
                     &D_003B6200,
                     model3_mpg0_point_size,
                     0
@@ -413,7 +413,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
             case 16:
                 sceVif0PkRefMpg(
                     pk,
-                    (u16)xmtop,
+                    (u_short)xmtop,
                     &D_003B6A80,
                     model3_mpg0_spot_size,
                     0
@@ -425,7 +425,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
 
         sceVif0PkRef(
             pk,
-            (u32 *)lf_data,
+            (u_int *)lf_data,
             4U,
             0x01000101U,
             xitop | 0x6C040000,
@@ -445,7 +445,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
 
     sceVif0PkRefMpg(
         pk,
-        (u16)xmtop,
+        (u_short)xmtop,
         &D_003B5D00,
         model3_mpg0_lambert_size,
         0
@@ -455,7 +455,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
 
     sceVif0PkRef(
         pk,
-        (u32 *)lf_data,
+        (u_int *)lf_data,
         8U,
         0x01000101U,
         xitop | 0x6C080000,
@@ -475,7 +475,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
 
     sceVif0PkRef(
         pk,
-        (u32 *)lf_data,
+        (u_int *)lf_data,
         1U,
         0x01000101U,
         xitop | 0x6C010000,
@@ -569,11 +569,11 @@ void MakePartPacket_0x001D5C50(Part *part)
         // @todo: these were each one line?
         float tmp, tmp2, tmp3;
         tmp = part->diffuse[0];
-        sceVif0PkAddData(pk, *(u32 *)&tmp);
+        sceVif0PkAddData(pk, *(u_int *)&tmp);
         tmp2 = part->diffuse[1];
-        sceVif0PkAddData(pk, *(u32 *)&tmp2);
+        sceVif0PkAddData(pk, *(u_int *)&tmp2);
         tmp3 = part->diffuse[2];
-        sceVif0PkAddData(pk, *(u32 *)&tmp3);
+        sceVif0PkAddData(pk, *(u_int *)&tmp3);
     }
     else
     {
@@ -610,14 +610,14 @@ void MakePartPacket_0x001D5C50(Part *part)
         break;
     }
 
-    sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->unknown_0x580, 6U, 0x01000101U, xitop | 0x6c060000, 0);
+    sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->unknown_0x580, 6U, 0x01000101U, xitop | 0x6c060000, 0);
     sceVif0PkCnt(pk, 0U);
     sceVif0PkAddCode(pk, xitop | 0x04000000);
     sceVif0PkAddCode(pk, xmtop | 0x14000000);
     xitop ^= 8;
     xmtop ^= 0x80;
     sceVif0PkRefMpg(pk, xmtop, &D_003B9F40, D_003BA080, 0);
-    sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
+    sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
     sceVif0PkCnt(pk, 0U);
     sceVif0PkAddCode(pk, xitop | 0x04000000);
     sceVif0PkAddCode(pk, xmtop | 0x14000000);
@@ -654,11 +654,11 @@ void MakeCalcPartPacket(Part *part)
         // @todo: these were each one line?
         float tmp, tmp2, tmp3;
         tmp = part->diffuse[0];
-        sceVif0PkAddData(pk, *(u32 *)&tmp);
+        sceVif0PkAddData(pk, *(u_int *)&tmp);
         tmp2 = part->diffuse[1];
-        sceVif0PkAddData(pk, *(u32 *)&tmp2);
+        sceVif0PkAddData(pk, *(u_int *)&tmp2);
         tmp3 = part->diffuse[2];
-        sceVif0PkAddData(pk, *(u32 *)&tmp3);
+        sceVif0PkAddData(pk, *(u_int *)&tmp3);
     }
     else
     {
@@ -685,7 +685,7 @@ void MakeCalcPartPacket(Part *part)
         xmtop ^= 0x80;
         sceVif0PkRefMpg(pk, xmtop, &D_003B6940, model3_mpg0_specular_size, 0);
         // 
-        sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->smap, 4U, 0x01000101U, xitop | 0x6c040000, 0);
+        sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->smap, 4U, 0x01000101U, xitop | 0x6c040000, 0);
         sceVif0PkCnt(pk, 0U);
         sceVif0PkAddCode(pk, 0x01000101U);
         sceVif0PkAddCode(pk, (xitop + 4) | 0x6C010000);
@@ -704,8 +704,8 @@ void MakeCalcPartPacket(Part *part)
     else
     {
         xmtop ^= 0x80;
-        sceVif0PkRefMpg(pk, (u16)xmtop, &D_003BAB80, D_003BAD60, 0);
-        sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->emap, 2U, 0x01000101U, xitop | 0x6c020000, 0);
+        sceVif0PkRefMpg(pk, (u_short)xmtop, &D_003BAB80, D_003BAD60, 0);
+        sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->emap, 2U, 0x01000101U, xitop | 0x6c020000, 0);
         sceVif0PkCnt(pk, 0U);
         sceVif0PkAddCode(pk, xitop | 0x04000000);
         sceVif0PkAddCode(pk, xmtop | 0x14000000);
@@ -715,7 +715,7 @@ void MakeCalcPartPacket(Part *part)
         sceVif0PkAddCode(pk, 0x10000000U);
     }
 
-    sceVif0PkRef(pk, (u32 *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
+    sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
     sceVif0PkCnt(pk, 0U);
     sceVif0PkAddCode(pk, xitop | 0x04000000);
     sceVif0PkAddCode(pk, xmtop | 0x14000000);

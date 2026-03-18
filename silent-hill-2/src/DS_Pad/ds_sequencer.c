@@ -66,7 +66,7 @@ void Sequencer_Type_Hispeed(EntryRecord *pER)
 
     int Node;
     int Node_Next;
-    u32 now_act_lv_i;
+    u_int now_act_lv_i;
 
     float time;
     float section_0;

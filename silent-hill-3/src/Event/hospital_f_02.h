@@ -3,28 +3,28 @@
 
 #include "common.h"
 
-void func_0012CFA0();
-void func_0012CFC0();
-int func_0012D080();
-void func_0016C1A0();
-void func_0016C1B0();
+void func_0012CFA0(void);
+void func_0012CFC0(void);
+int func_0012D080(void);
+void func_0016C1A0(void);
+void func_0016C1B0(void);
 int func_0016C1C0(int);
-void func_0016C3C0();
+void func_0016C3C0(void);
 int func_0016C540(int*, int*);
 void func_0016D0E0(int, int);
 int func_0016BED0(int, int);
 void func_00190A20(int);
-int func_00190C00();
+int func_00190C00(void);
 int func_0019B580(int);
 void func_001C2290(int, float);
 int func_001C2580(int);
 void func_001C7BC0(Q*, Q*, Q*, s32);
 void func_0029F330(float*, float*);
 int func_002A47C0(float, float);
-void func_01F6D680_hospital_f_02();
-int RoomName();
+void func_01F6D680_hospital_f_02(void);
+int RoomName(void);
 void SeCall(float, float, int);
-float shGetDT();
+float shGetDT(void);
 
 extern int D_01F6FCD0_hospital_f_02;
 extern int D_01F6FD30_hospital_f_02;

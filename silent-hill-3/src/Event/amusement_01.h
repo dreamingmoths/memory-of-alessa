@@ -30,7 +30,7 @@ typedef union DWORD
     float fv[2];
 } DWORD;
 
-int func_01F6D680_amusement_01();
+int func_01F6D680_amusement_01(void);
 
 void func_001C0EB0(void (*)(__int128 *, int *, __int128 *, int *, int *), int, int);
 
@@ -42,29 +42,29 @@ static void func_01F6DC70_amusement_01(__int128 *arg0, int *arg1, __int128 *arg2
 
 void func_01F703B0_amusement_01(float, float);
 
-extern float func_001643C0();
+extern float func_001643C0(void);
 extern int func_0016C540(float *, float *);
 extern void func_001C2290(int, float);
 extern void func_0018FE60(__int128 *);
-extern void func_0016CF70();
+extern void func_0016CF70(void);
 extern int func_0016CF80(int, int, int *);
 extern SubCharacter *shCharacterGetSubCharacter(int, short);
-extern u_char GetActionLevel();
+extern u_char GetActionLevel(void);
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
-extern int shCharacter_Manage_Delete(u16 kind, u16 id);
+extern int shCharacter_Manage_Delete(u_short kind, u_short id);
 
 extern void SeCall(float, float, int);
 extern float shAngleRegulate(float);
-extern float shGetDT();
+extern float shGetDT(void);
 extern float shSinF(float);
-extern int RoomName();
+extern int RoomName(void);
 extern void func_001C2A60(int, float);
-extern void func_0016C3C0();
+extern void func_0016C3C0(void);
 extern int func_0016C1C0(int);
 extern void func_00190A20(int a0);
 extern void ItemGet(u_int);
-extern int func_00190C00();
+extern int func_00190C00(void);
 extern void func_00317420(u_int);
 extern void func_00317490(int, float);
 extern void func_003174B0(float);
@@ -81,13 +81,13 @@ extern void func_001433A0(SubCharacter *, int, int);
 extern void func_0016D8F0(int);
 extern void func_0013D250(int, int, float);
 extern void func_0013D280(int);
-extern int func_0016CB70();
+extern int func_0016CB70(void);
 extern void func_0016E400(int, int);
 extern int func_0016E650(int);
 extern int func_001C2580(int);
 
 extern int func_0016BED0(int, int);
-extern int GetRiddleLevel();
+extern int GetRiddleLevel(void);
 extern int func_001C2580(int);
 
 extern int D_01F74D00_amusement_01;

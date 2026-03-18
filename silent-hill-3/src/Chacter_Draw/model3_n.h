@@ -88,11 +88,11 @@ typedef struct EnvPacket
 } EnvPacket;
 
 int Model3NSkeletons(void *model_);
-s8 *Model3SkeletonStructure(sh_Model *model);
+s_char *Model3SkeletonStructure(sh_Model *model);
 int Model3NClusters(void *model_);
-void Model3DrawPre();
-void sh2_Model_MakeMatrixParams();
-void SortEnvPrim();
+void Model3DrawPre(void);
+void sh2_Model_MakeMatrixParams(void);
+void SortEnvPrim(void);
 int Model3WorkSize(void *model_);
 void Model3InitWork(void *model_, void *work_);
 struct sceVu0FMATRIX Model3WorkMatrices(void *work_);
@@ -105,10 +105,10 @@ extern Model3Junk model3_junk; // size: 0x1C0
 extern EnvPacket envpacketdata;
 
 /* true externs */
-extern int func_001C5C30();
-extern int func_001CC6F0();
-extern int func_0025CF20();
-extern int func_002D7B20();
+extern int func_001C5C30(void);
+extern int func_001CC6F0(void);
+extern int func_0025CF20(void);
+extern int func_002D7B20(void);
 extern int D_00366900;
 extern int D_00366908;
 

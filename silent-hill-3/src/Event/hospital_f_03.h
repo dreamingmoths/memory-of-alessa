@@ -3,20 +3,20 @@
 
 #include "common.h"
 
-int RoomName();
+int RoomName(void);
 int func_0016BED0(u_int, u_int);
 int func_0016C1C0(int);
-void func_0016C3C0();
+void func_0016C3C0(void);
 void func_0016C540(float *, float *);
 void func_0016CA40(int);
 void func_00190A20(int);
-int func_00190C00();
+int func_00190C00(void);
 int func_00199C70(int);
 void func_00317420(u_int);
 void func_00317490(int, float);
 void func_003174B0(float);
 void SeCall(float, float, int);
-int shRandI();
+int shRandI(void);
 
 extern float D_01F70580_hospital_f_03;
 extern float D_01F705E0_hospital_f_03;

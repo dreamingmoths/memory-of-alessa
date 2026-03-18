@@ -4,21 +4,21 @@
 #include "common.h"
 #include "Chacter/character.h"
 
-extern s16 id_counter;
+extern short id_counter;
 
-int shCharacter_Manage_Delete(u16 kind, u16 id);
-int shCharacter_Manage_Init();
+int shCharacter_Manage_Delete(u_short kind, u_short id);
+int shCharacter_Manage_Init(void);
 
 // deletion func?
-void func_0012F4E0();
+void func_0012F4E0(void);
 
 /* maybe externs */
 extern void func_0022EBD0(void *, int);
-extern void func_0025BE20(u32 kind, u32 id);
-extern void func_0022E9D0();
+extern void func_0025BE20(u_int kind, u_int id);
+extern void func_0022E9D0(void);
 
 /* externs */
-extern void *sh3gfw_Get_pMD(u16 unknown);
+extern void *sh3gfw_Get_pMD(u_short unknown);
 extern void SCSetModel(SubCharacterDisp *scp, int model, int anime);
 
 /**

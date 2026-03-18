@@ -4,7 +4,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitEnemy);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enExecTask);
 
-EnLOCAL_DATA* enEntryEnemy(s32 kind) {
+EnLOCAL_DATA* enEntryEnemy(int kind) {
     int i = 0;
     struct EnLOCAL_DATA* dp = &enLocalWork.Data[0];
     while (dp->kind) {

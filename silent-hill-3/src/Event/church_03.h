@@ -14,7 +14,7 @@ void func_0013D250(int, int, float);
 void func_0013D280(int);
 void func_001602D0(int, int, int, float);
 void func_001603E0(int, int);
-float func_001643C0();
+float func_001643C0(void);
 int func_0016C540(int *, int *);
 void func_0016CAF0(int);
 int func_00199C70(int);

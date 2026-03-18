@@ -7,11 +7,11 @@
 #define BUILDING_OTHERWORLD_GALLERY_ROOM   0x92
 #define BUILDING_OTHERWORLD_ELEVATOR       0x93
 
-int   RoomName();
+int   RoomName(void);
 void  SeCall(float, float, long);
-float shGetDT();
-void  func_0016C1A0();
-void  func_0016C1B0();
+float shGetDT(void);
+void  func_0016C1A0(void);
+void  func_0016C1B0(void);
 int   func_0016C1C0(int);
 void  func_00190A20(int);
 void  func_001C2290(int, float);

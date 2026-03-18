@@ -11,12 +11,12 @@
 
 void func_0016CA40(int);
 int  func_0016C540(int*, int*);
-int  RoomName();
+int  RoomName(void);
 void func_00189F00(u_short);
 void func_00189FA0(u_short, u_short);
-int  GetRiddleLevel();
+int  GetRiddleLevel(void);
 void func_001C2290(int, float);
-void func_01F6DFF0_building_b_01();
+void func_01F6DFF0_building_b_01(void);
 
 extern u_int D_01D31640;
 extern int D_01F6EFF0_building_b_01;
