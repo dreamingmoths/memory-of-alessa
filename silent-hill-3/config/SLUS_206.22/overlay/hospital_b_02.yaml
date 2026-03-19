@@ -26,5 +26,6 @@ segments:
     subsegments:
       - [0x80, c, Event/hospital_b_02]
       - [0x3280, data, hospital_b_02_data]
+      - [0x6A00, .rodata, Event/hospital_b_02]
       - { vram: 0x1F74100, type: bss, name: hospital_b_02_bss }
   - [0x6B00]
