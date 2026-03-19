@@ -49,7 +49,7 @@ Model3WorkSize = 0x1D3620;
 Model3InitWork = 0x1D3660;
 Model3WorkClusterWeights = 0x1D3770;
 
-model3_junk = 0x1EE15F0; // size:0x1C0
+model3_junk = 0x1EE15E0; // size:0x1C0
 envpacketdata = 0x366840; // size:0xC0
 
 // model3_sub_n.c

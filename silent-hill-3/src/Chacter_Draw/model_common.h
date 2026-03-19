@@ -26,6 +26,7 @@ typedef struct ModelCommonWork
 typedef struct Model3Junk
 {
     // total size: 0x1C0
+    float unk00[4];
     float xyz_min[4];        // offset 0x0, size 0x10
     float xyz_max[4];        // offset 0x10, size 0x10
     float xyz_min_wide[4];   // offset 0x20, size 0x10

@@ -38,7 +38,6 @@ extern Model3Junk model3_junk;
 extern sceVu0FMATRIX D_003669A0;
 extern sceVu0FVECTOR D_00366910;
 extern sceVu0FVECTOR D_00366920;
-extern sceVu0FVECTOR D_01EE15E0;
 extern sceVu0FVECTOR D_00366930;
 extern sceVu0FVECTOR D_00366940;
 extern sceVu0FVECTOR D_00366950;

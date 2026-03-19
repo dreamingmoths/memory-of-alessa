@@ -44,7 +44,7 @@ void func_001D3860(void)
 
         sceVu0CopyVector(model3_junk.xyz_max, D_00366910);
         sceVu0CopyVector(model3_junk.xyz_min_wide, D_00366920);
-        sceVu0CopyVector(D_01EE15E0, D_00366930);
+        sceVu0CopyVector(model3_junk.unk00, D_00366930);
         sceVu0CopyVector(model3_junk.xyz_min, D_00366940);
         sceVu0CopyVector(model3_junk.xyz_max_wide, D_00366950);
         sceVu0CopyVector(model3_junk.rgba_max, D_00366960);
@@ -60,7 +60,7 @@ void func_001D3860(void)
 void func_001D3990(float x, float z)
 {
     model3_junk.xyz_max[2] = z;
-    D_01EE15E8 = z;
+    model3_junk.unk00[2] = z;
     model3_junk.xyz_min_wide[2] = x;
     model3_junk.xyz_min[2] = x;
 }
