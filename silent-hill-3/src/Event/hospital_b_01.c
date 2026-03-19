@@ -87,7 +87,7 @@ int func_01F6D9D0_hospital_b_01(void) {
             D_1D31698 &= ~0x10;                        
             D_1D3172C |= 0x800;
             D_1D31694 |= 0x40000000;
-            D_1D317C8 |= 0x10;
+            D_1D317C0[2] |= 0x10;
     }
     return ret;
 }
