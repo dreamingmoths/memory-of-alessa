@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #pragma divbyzerocheck on
+#pragma mpwc_relax     on
 
 #include "libvu0.h"
 
@@ -31,6 +32,7 @@ typedef unsigned int u_long128;
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 #define READ_UNCACHED(addr)      ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
+#define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
 
 #define ABORT() asm("breakc 0")
 
