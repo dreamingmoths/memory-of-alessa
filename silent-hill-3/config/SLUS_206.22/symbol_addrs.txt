@@ -56,6 +56,17 @@ envpacketdata = 0x366840; // size:0xC0
 Model3UpdateMatrices = 0x1D3B20;
 sh3_Model3UpdateTextures = 0x1D39C0;
 Model3UpdateEnvelopeMatrices = 0x1D3C90;
+Model3Init = 0x001D3860;
+initialized = 0x01EE3080; // type:s32
+xyz_min_wide$16 = 0x00366910; // size:0x10 visibility:local
+xyz_max_wide$17 = 0x00366920; // size:0x10 visibility:local
+xyz_min$18 = 0x00366930; // size:0x10 visibility:local
+xyz_max$19 = 0x00366940; // size:0x10 visibility:local
+rgba_max$20 = 0x00366950; // size:0x10 visibility:local
+global_ambient$21 = 0x00366960; // size:0x10 visibility:local
+giftag_0$22 = 0x00366970; // size:0x10 visibility:local
+giftag_1$23 = 0x00366980; // size:0x10 visibility:local
+giftag_2$24 = 0x00366990; // size:0x10 visibility:local
 
 // sh3gfw_CharacterOT.c
 CharacterOt_Append = 0x1D1060;
