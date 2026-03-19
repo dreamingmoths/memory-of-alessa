@@ -36,6 +36,6 @@ extern u_int D_1D31648;
 extern u_int D_1D31694;
 extern u_int D_1D31698;
 extern u_int D_1D3172C;
-extern u_int D_1D317C8;
+extern u_int D_1D317C0[];
 
 #endif
