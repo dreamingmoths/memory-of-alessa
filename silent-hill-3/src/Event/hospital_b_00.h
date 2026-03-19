@@ -14,6 +14,43 @@ typedef struct {
     float unk18;
 } unk_01F6E230_hospital_b_00_struct;
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 pad12;
+    s16 pad14;
+    s16 unk16;    
+} Unk01F6F8C0;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} Unk01F70510;
+
+typedef struct {
+    s32 pad0;
+    s16 unk4;
+    s16 unk6;
+    s16 pad8;
+    s16 padA;
+    s32 padC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    s32 pad1C;
+    s32 pad20;
+    f32 unk24;
+    s32 pad28;
+    s32 pad2C;
+    s32 unk30;
+    s32 unk34;
+} Unk01F6E360;
+
 /**
  * @brief Deletes nurses from the birthday room based on drug & ammo points.
  */
@@ -48,7 +85,9 @@ void func_001602D0(int, int, int, float);
 int func_001646C0(void);
 int func_0016C540(int *, int *);
 void func_0019B4B0(int);
-int func_001C2580(int);    
+int func_001C2580(int);
+void func_0016A080(void *);
+int func_0016B4E0(void *);  
 int RoomName(void);
 u_char GetActionLevel(void);
 int GetItemCount(int);
@@ -56,8 +95,13 @@ void SeCall(float, float, int);
 float shGetDT(void);
 void clAddDynamicWall(int *);
 void clAddDynamicFloor(int *);
+void shQzero(void *, int);
 
-void* func_00190AC0(void); 
+void* func_00190AC0(void);
+
+extern Unk01F6F8C0 D_01F6F8C0_hospital_b_00[];
+
+extern Unk01F70510 D_01F70510_hospital_b_00[];
 
 extern int D_01F70528_hospital_b_00;
 extern int D_01F70540_hospital_b_00;
@@ -106,5 +150,6 @@ extern u_int D_1D316F4[];
 extern u_int D_1D31728[];
 extern u_int D_1D317C0[];
 extern u_int D_1D3172C[];
+extern u_int D_1D3177C[];
                             
 #endif
