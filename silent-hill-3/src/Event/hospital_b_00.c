@@ -157,7 +157,21 @@ int func_01F6DA90_hospital_b_00(u_short* arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6DBF0_hospital_b_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6DD80_hospital_b_00);
+void func_01F6DD80_hospital_b_00(void) {
+    int i;
+    int count;
+    int entry;
+
+    if (!GET_FLAG(D_1D31698, 14)) {                
+        for (i = 0, count = 0; D_01F706C0_hospital_b_00 > count; i++, count++) {                      
+                entry = D_01F70640_hospital_b_00[i];
+                if (!GET_FLAG(D_01D31640, entry)) {
+                    return;
+                }                         
+        }
+        D_1D31698[0] |= 0x4000;
+    }
+}
 
 int func_01F6DE10_hospital_b_00(void) {
     int ret;
@@ -248,9 +262,48 @@ int func_01F6E060_hospital_b_00(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E110_hospital_b_00);
+int func_01F6E110_hospital_b_00(void) {
+    int temp_v0;
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E230_hospital_b_00);
+    switch (D_01F70618_hospital_b_00) {
+        case 0:
+            func_001C2290(3, 0.5f);
+            func_0019B4B0(7);
+            D_01F70618_hospital_b_00 += 1;
+    
+        case 1:
+            if (func_001C2580(2) == 0) {
+                return 0;
+            }
+            D_01F70618_hospital_b_00 += 1;
+        default:
+            temp_v0 = func_0016C540(&D_01F70490_hospital_b_00, &D_01F704F0_hospital_b_00);
+            if (temp_v0 == 0) {
+                D_1D31644[0] |= 0x20000000;
+            } else {
+                D_1D31644[0] &= 0xDFFFFFFF;
+                if (func_001646C0() != 0) {
+                    func_001602D0(0x2734, 3, 1, 1.0f);
+                }
+                func_001C2290(5, 0.5f);
+            }
+            return temp_v0;
+    }
+}
+
+int func_01F6E230_hospital_b_00(void) {
+    unk_01F6E230_hospital_b_00_struct* temp_v0;
+
+    if (func_00190A20(8) != 0) { // sus
+        temp_v0 = func_00190AC0();
+        temp_v0->unk0 = 0xB;
+        temp_v0->unk10 = -99987.5f;
+        temp_v0->unk14 = 1643.67f; 
+        temp_v0->unk18 = -99872.05f;
+        temp_v0->unk4 = 0;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_00", func_01F6E290_hospital_b_00);
 
