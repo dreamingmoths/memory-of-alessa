@@ -5,6 +5,15 @@
 #include "Chacter/m3_bgobj.h"
 #include "Chacter/m3_sc.h"
 
+typedef struct {
+    int unk0;
+    int unk4;
+    u_char pad8[8];
+    float unk10;
+    float unk14;
+    float unk18;
+} unk_01F6E230_hospital_b_00_struct;
+
 /**
  * @brief Deletes nurses from the birthday room based on drug & ammo points.
  */
@@ -24,7 +33,7 @@ void func_0016C1B0(void);
 int func_0016C1C0(int);
 void func_0016C3C0(void);   
 int func_0016BED0(int, int);
-void func_00190A20(int);
+int func_00190A20(int);
 int func_00190C00(void);
 void func_001C2290(int, float);
 void func_0016CA40(int);                                
@@ -34,8 +43,13 @@ int func_00190050(void);
 int func_00190950(void);                              
 int func_0019B580(int);                             
 void func_0019F820(void);                                 
-void func_002FE380(void);  
-int RoomName();
+void func_002FE380(void); 
+void func_001602D0(int, int, int, float);
+int func_001646C0(void);
+int func_0016C540(int *, int *);
+void func_0019B4B0(int);
+int func_001C2580(int);    
+int RoomName(void);
 u_char GetActionLevel(void);
 int GetItemCount(int);
 void SeCall(float, float, int);
@@ -43,10 +57,15 @@ float shGetDT(void);
 void clAddDynamicWall(int *);
 void clAddDynamicFloor(int *);
 
+void* func_00190AC0(void); 
+
 extern int D_01F70528_hospital_b_00;
 extern int D_01F70540_hospital_b_00;
 extern int birthday_room_ammo_total;
 extern int birthday_room_drug_total;
+
+extern int D_01F70640_hospital_b_00[];
+extern int D_01F706C0_hospital_b_00;
 
 extern int D_01F70600_hospital_b_00;
 extern float D_01F70608_hospital_b_00;
@@ -67,6 +86,8 @@ extern int D_01F6FEA0_hospital_b_00;
 extern int D_01F70030_hospital_b_00;
 extern int D_01F702B0_hospital_b_00;
 extern int D_01F70350_hospital_b_00;
+extern int D_01F70490_hospital_b_00;
+extern int D_01F704F0_hospital_b_00;
 
 extern int birthday_ampoules;
 extern int birthday_first_aid_kits;
@@ -76,6 +97,7 @@ extern int birthday_shotgun_shells;
 extern int birthday_submachine_gun_bullets;
 
 extern u_int D_01F706F8_hospital_b_00;
+extern u_int D_01D31640[];
 extern u_int D_1D31644[];
 extern u_int D_1D31648[];
 extern u_int D_1D31694[];
