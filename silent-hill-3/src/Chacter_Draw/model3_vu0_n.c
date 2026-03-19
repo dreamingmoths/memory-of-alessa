@@ -234,6 +234,7 @@ static void InitAllPacket0(AllPacket* p) {
     InitTriangleUnknown(&p->unknown[1]);
 }
 
+#ifdef NON_MATCHING
 static void LoadProgram_Vu0(void) {
 
     sceVif0Packet sp20;
@@ -256,9 +257,13 @@ static void LoadProgram_Vu0(void) {
 
     while (*D0_CHCR & 0x100);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", LoadProgram_Vu0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakeData0);
 
+#ifdef NON_MATCHING
 static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
 {
     sceVif0PkRef(
@@ -347,6 +352,9 @@ static void MakePartTransferPacket_Vu0(Part *part, sceVif0Packet *pk)
         }
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu0_n", MakePartTransferPacket_Vu0);
+#endif
 
 static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
     int n_parallels = LightNValidParallelMatrices();

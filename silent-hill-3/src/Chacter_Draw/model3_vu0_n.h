@@ -15,8 +15,6 @@
 #include "light_n.h"
 #include "model3_sub_n.h"
 
-#define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
-
 #define DMArefe (0<<28)
 #define DMAcnt  (1<<28)
 #define DMAnext (2<<28)

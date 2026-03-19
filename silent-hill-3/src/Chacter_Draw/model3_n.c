@@ -39,6 +39,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_n", func_001D2F00);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_n", sh3_Model_MakeMatrixParams);
 
+#ifdef NON_MATCHING
 // sh2: https://decomp.me/scratch/pHyrW
 void SortEnvPrim(void) {
     EnvPacket* ep;
@@ -68,8 +69,11 @@ void SortEnvPrim(void) {
     CharacterOt_Append(0, (__int128*) &ep->head_ep);
     CharacterOt_Append(0xFFF, (__int128*) &ep->head_ep.unk0x70); // @todo maybe head and tail combined into the same struct?
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_n", SortEnvPrim);
+#endif
 
-
+#ifdef NON_MATCHING
 void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
     struct Model * model = (Model* )model_; // r2
     struct ModelWork * mwork = (ModelWork*) work_; // r16
@@ -124,6 +128,9 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
         pef = *T0_COUNT - pef;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_n", Model3Draw_n);
+#endif
 
 int Model3WorkSize(void* model_) {
     int size = 0x30;
