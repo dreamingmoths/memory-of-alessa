@@ -1,5 +1,9 @@
 #include "model3_sub_n.h"
 #include "model_common.h"
+#include "libdma.h"
+#include "eestruct.h"
+#include "eeregs.h"
+#include "libgraph.h"
 
 int func_001D3780(void *work_)
 {
@@ -33,30 +37,70 @@ long func_001D37E0(ModelWorkGroup *arg0, int equipment_id0, int equipment_id1, i
     func_001D37C0(arg0->current, -1, mask);
     return (long)(int)mask;
 }
-void func_001D3860(void)
-{
-    if (D_01EE3080 == 0)
-    {
-        D_00366918 = func_001B4210();
-        D_00366928 = func_001B4200();
-        D_00366938 = func_001B4210();
-        D_00366948 = func_001B4200();
 
-        sceVu0CopyVector(model3_junk.xyz_max, D_00366910);
-        sceVu0CopyVector(model3_junk.xyz_min_wide, D_00366920);
-        sceVu0CopyVector(model3_junk.unk00, D_00366930);
-        sceVu0CopyVector(model3_junk.xyz_min, D_00366940);
-        sceVu0CopyVector(model3_junk.xyz_max_wide, D_00366950);
-        sceVu0CopyVector(model3_junk.rgba_max, D_00366960);
-        sceVu0CopyVector(model3_junk.global_ambient, D_00366970);
-        sceVu0CopyVector(*(sceVu0FVECTOR *)&model3_junk.giftag_0, D_00366980);
-        sceVu0CopyVector(*(sceVu0FVECTOR *)&model3_junk.giftag_1, D_00366990);
+void Model3Init(void) {    
+    if (initialized == 0) {
+        const static float xyz_min_wide[4] = {16.0, 16.0, 0.0, 0.0};
+        const static float xyz_max_wide[4] = {4080.0, 4080.0, 0.0, 0.0};
+        const static float xyz_min[4] = {1024.0, 1024.0, 0.0, 0.0};
+        const static float xyz_max[4] = {3072.0, 3072.0, 0.0, 0.0};
+        const static float rgba_max[4] = {128.0, 128.0, 128.0, 255.0};
+        const static float global_ambient[4] = {1.0, 1.0, 1.0, 1.0};
+        const static long giftag_0[2] = {
+            SCE_GIF_SET_TAG(
+                0,
+                SCE_GS_TRUE,
+                SCE_GS_FALSE,
+                SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+                SCE_GIF_PACKED,
+                1
+            ),
+            GIF_REG(SCE_GIF_PACKED_AD, 0)
+        };
+        const static long giftag_1[2] = {
+            SCE_GIF_SET_TAG(
+                0,
+                SCE_GS_TRUE,
+                SCE_GS_TRUE,
+                SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 1, 0, 0, 0, 0, 0),
+                SCE_GIF_PACKED,
+                3
+            ),
+            GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
+        };
+        const static long giftag_2[2] = {
+            SCE_GIF_SET_TAG(
+                0,
+                SCE_GS_TRUE,
+                SCE_GS_TRUE,
+                SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 1, 1, 0, 0, 0, 0),
+                SCE_GIF_PACKED,
+                3
+            ),
+            GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
+        };
 
-        model3_junk.vi00 = (void *)(u_int)0x70000000;
-        D_01EE3080 = 1;
+        // @hack writing to rodata!?
+        *(float*)&xyz_min_wide[2] = func_001B4210();
+        *(float*)&xyz_max_wide[2] = func_001B4200();
+        *(float*)&xyz_min[2] = func_001B4210();
+        *(float*)&xyz_max[2] = func_001B4200();
+
+        sceVu0CopyVector(model3_junk.xyz_min_wide, (float*) xyz_min_wide);
+        sceVu0CopyVector(model3_junk.xyz_max_wide, (float*) xyz_max_wide);
+        sceVu0CopyVector(model3_junk.xyz_min, (float*) xyz_min);
+        sceVu0CopyVector(model3_junk.xyz_max, (float*) xyz_max);
+        sceVu0CopyVector(model3_junk.rgba_max, (float*) &rgba_max);
+        sceVu0CopyVector(model3_junk.global_ambient, (float*) &global_ambient);
+        sceVu0CopyVector((float* ) &model3_junk.giftag_0, &giftag_0);
+        sceVu0CopyVector((float* ) &model3_junk.giftag_1, &giftag_1);
+        sceVu0CopyVector((float* ) &model3_junk.giftag_2, &giftag_2);
+        model3_junk.vi00 = (void* )0x70000000;
+        initialized = 1;
     }
 }
 
+#ifdef NON_MATCHING
 void func_001D3990(float x, float z)
 {
     model3_junk.xyz_max[2] = z;
@@ -64,6 +108,9 @@ void func_001D3990(float x, float z)
     model3_junk.xyz_min_wide[2] = x;
     model3_junk.xyz_min[2] = x;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", func_001D3990);
+#endif
 
 void sh3_Model3UpdateTextures(void *model_)
 {
@@ -134,6 +181,14 @@ void sh3_Model3UpdateTextures(void *model_)
     }
 }
 
+const sceVu0FMATRIX D_003669A0 = {
+    -1.0, 0.0, 0.0, 0.0,
+     0.0, 1.0, 0.0, 0.0,
+     0.0, 0.0, 1.0, 0.0,
+     0.0, 0.0, 0.0, 1.0
+};
+
+#ifdef NON_MATCHING
 void Model3UpdateMatrices(void *model_, void *work_, float (*mwm)[4], int pef)
 {
     int n_skeletons;
@@ -196,6 +251,9 @@ void Model3UpdateMatrices(void *model_, void *work_, float (*mwm)[4], int pef)
         }
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", Model3UpdateMatrices);
+#endif
 
 void Model3UpdateEnvelopeMatrices(Model *model)
 {

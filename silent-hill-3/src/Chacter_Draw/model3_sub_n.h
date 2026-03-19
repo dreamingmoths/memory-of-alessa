@@ -35,24 +35,9 @@ typedef struct
 } ModelMatrix;
 
 extern Model3Junk model3_junk;
-extern sceVu0FMATRIX D_003669A0;
-extern sceVu0FVECTOR D_00366910;
-extern sceVu0FVECTOR D_00366920;
-extern sceVu0FVECTOR D_00366930;
-extern sceVu0FVECTOR D_00366940;
-extern sceVu0FVECTOR D_00366950;
-extern sceVu0FVECTOR D_00366960;
-extern sceVu0FVECTOR D_00366970;
-extern sceVu0FVECTOR D_00366980;
-extern sceVu0FVECTOR D_00366990;
 void shMulMatrix(sceVu0FMATRIX m0, sceVu0FMATRIX m1, sceVu0FMATRIX m2);
 
-extern int D_01EE3080;
-extern float D_00366918;
-extern float D_00366948;
-extern float D_00366938;
-extern float D_01EE15E8;
-extern float D_00366928;
+extern int initialized;
 
 float func_001B4200(void);
 float func_001B4210(void);
