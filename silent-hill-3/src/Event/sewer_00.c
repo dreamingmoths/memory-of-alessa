@@ -201,7 +201,62 @@ INCLUDE_ASM("asm/nonmatchings/Event/sewer_00", func_01F6DE40_sewer_00);
 
 INCLUDE_ASM("asm/nonmatchings/Event/sewer_00", func_01F6DEC0_sewer_00);
 
-INCLUDE_ASM("asm/nonmatchings/Event/sewer_00", func_01F6E060_sewer_00);
+// Per rabbitizer, addi is not an instruction emitted by compilers
+// https://github.com/Decompollaborate/rabbitizer/blob/b36bbe21ffc542789fe4665bbaead8a4e3643918/include/generated/InstrDescriptor_Descriptors_array.h#L21
+static inline int sewer_room_index(short room)
+{
+    register int out;
+    register int in = room;
+
+    __asm {
+        addi out, in, -SEWER_ROOM_BASE
+    }
+
+    return out;
+}
+void func_01F6E060_sewer_00(void)
+{
+
+    short room;
+    short choice;
+    D_01F6FE50_sewer_00 = 0;
+    D_01F6FE00_sewer_00 = 0;
+
+    room = RoomName();
+    switch (sewer_room_index(room))
+    {
+    case 0:
+        func_001BE4B0(0);
+        func_0013D280(0);
+        return;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 0xA:
+    case 0xB:
+    case 0xC:
+    case 0xF:
+        break;
+    case 0xD:
+        D_01F6FE20_sewer_00 = 0;
+        D_01F6FE28_sewer_00 = 0;
+        if ((D_1D316AC >> 28) & 1)
+        {
+            func_00190A20(0);
+            D_1D316AC &= 0xEFFFFFFF;
+        }
+        break;
+    case 0xE:
+        D_01F6FE60_sewer_00 = 0;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/sewer_00", func_01F6E130_sewer_00);
 
