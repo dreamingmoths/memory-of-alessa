@@ -39,7 +39,6 @@ extern int D_01F6DF90_town_00;
 extern SubCharacter* shCharacterGetSubCharacter(int, long);
 extern int GetActionLevel(int);
 extern int func_001E2110(SubCharacter*);
-extern void shCharacter_Manage_Delete(int, u_short);
 extern u_int D_1D31684;
 extern void func_001AED70(void);
 extern void func_001AF0B0(void);

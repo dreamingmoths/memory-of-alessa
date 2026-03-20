@@ -1,14 +1,10 @@
 #include "building_b_03.h"
 
-static inline int get_bit(int bit) {
-    return (D_1D31670[bit / 32] >> (bit % 32)) & 1;
-}
-
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_03", func_01F6D680_building_b_03);
 
 int func_01F6D8F0_building_b_03(void) { //All of this handle the interaction with the "Flame Purifies All" painting in the otherworld gallery room
 
-    if (!get_bit(0x26)) {
+    if (!GET_FLAG(D_1D31670, 0x26)) {
         func_00190A20(2);
         D_1D31670[1] |= 0x40;
         if (!((D_1D31670[1] >> 3) & 1)) {
@@ -21,7 +17,7 @@ int func_01F6D8F0_building_b_03(void) { //All of this handle the interaction wit
     if (func_0016C1C0(D_01F6FC30_building_b_03) == 0) { //no idea what this does for now Sadge
         return 0;
     }
-    if (!get_bit(0x23)) {
+    if (!GET_FLAG(D_1D31670, 0x23)) {
         D_1D31670[1] |= 8; //this gets set when you FINISH to interact with the "Flame Purifies All" painting for the FIRST time
     }
 
@@ -56,7 +52,7 @@ int func_01F6E700_building_b_03(void) {
     int var_s0;
 
     var_s0 = 0;
-    if (!get_bit(0x16)) {  //interacting with the elevator from the 5th floor (when you want to enter inside of it)
+    if (!GET_FLAG(D_1D31670, 0x16)) {  //interacting with the elevator from the 5th floor (when you want to enter inside of it)
         D_01F6FC00_building_b_03 = 0;
         D_01F6FC08_building_b_03 = 0.0f;
         D_1D31670[0] |= 0x400000; 
@@ -113,7 +109,7 @@ void func_01F6E8C0_building_b_03(void) {
             D_1D31718 |= 0x20; //this gets set the FIRST TIME you enter the elevator
             D_01F6FC20_building_b_03 = 1500.0f;
             
-            if (!get_bit(6) && !get_bit(7) && !get_bit(8) && !get_bit(9)){
+            if (!GET_FLAG(D_1D31670, 6) && !GET_FLAG(D_1D31670, 7) && !GET_FLAG(D_1D31670, 8) && !GET_FLAG(D_1D31670, 9)){
                 D_1D31670[0] |= 0x80; //this gets set ONLY WHEN YOU ENTER THE ELEVATOR FROM THE SECOND FLOOR, then it get reset everytime you exit the elevator
             }            
     }

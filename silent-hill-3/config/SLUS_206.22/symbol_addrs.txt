@@ -145,6 +145,18 @@ extra_new_game = 0x01D87FD5; //type:u8
 action_level = 0x01D87FD6; // type:u8
 riddle_level = 0x01D87FD7; // type:u8
 
+GetItemCount = 0x16D990;
+
+birthday_room_ammo_total = 0x01D31918;
+birthday_room_drug_total = 0x01D3191C;
+
+birthday_handgun_bullets = 0x01D31920;
+birthday_shotgun_shells = 0x01D31924;
+birthday_submachine_gun_bullets = 0x01D31928;
+birthday_health_drinks = 0x01D3192C;
+birthday_first_aid_kits = 0x01D31930;
+birthday_ampoules = 0x01D31934;
+
 // model3_vu0_n.c
 InitTriangleNormal = 0x001d3d50;
 DrawPart0 = 0x001d65d0;
@@ -877,7 +889,7 @@ func_001D37E0 = 0x1D37E0;
 D_01D31640 = 0x1D31640;
 func_001C18E0 = 0x1C18E0;
 func_00327350 = 0x327350;
-func_0016D990 = 0x16D990;
+
 func_00300E70 = 0x300E70;
 func_001C2A80 = 0x1C2A80;
 func_001EC5C0 = 0x1EC5C0;

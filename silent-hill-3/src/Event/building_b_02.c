@@ -1,4 +1,5 @@
 #include "building_b_02.h"
+#include "Chacter/m3_sc.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_02", func_01F6D680_building_b_02);
 

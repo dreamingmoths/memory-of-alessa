@@ -6,7 +6,6 @@
 
 extern short id_counter;
 
-int shCharacter_Manage_Delete(u_short kind, u_short id);
 int shCharacter_Manage_Init(void);
 
 // deletion func?
