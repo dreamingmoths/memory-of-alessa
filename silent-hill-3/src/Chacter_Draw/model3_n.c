@@ -74,7 +74,7 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
     struct ModelWork * mwork = (ModelWork*) work_; // r16
     struct SubCharacterDisp * scp_d = (SubCharacterDisp *) scp_d_; // r17
     int pef; // r2
-    int unk;
+    float* cluster_weights;
 
 
     if (func_0023D040() != 0) {
@@ -98,8 +98,8 @@ void Model3Draw_n(void* scp_d_, void* model_, void* work_, float (*mwm)[4]) {
         // @todo not really sure how any of this lines up to the sh2 code...
         if (func_001CC680() != 0) {
             if (func_001D0EB0() != 0) {
-                unk = func_001D3780(mwork);
-                ClusterAnimeGetWeights(func_001CC670(), unk);
+                cluster_weights = func_001D3780(mwork);
+                ClusterAnimeGetWeights(func_001CC670(), cluster_weights);
             }
             func_001D2C60(model, mwork);
             if (func_001D0F00() != 0) {

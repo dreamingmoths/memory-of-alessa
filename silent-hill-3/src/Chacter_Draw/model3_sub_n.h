@@ -39,6 +39,11 @@ void shMulMatrix(sceVu0FMATRIX m0, sceVu0FMATRIX m1, sceVu0FMATRIX m2);
 
 extern int initialized;
 
+/**
+ * @brief Gets cluster weights from `ModelWork`.
+ */
+float* func_001D3780(void *work_);
+
 float func_001B4200(void);
 float func_001B4210(void);
 s64 func_001CC710(int flag, int text_poses_offset, int texture_blocks_offset);
