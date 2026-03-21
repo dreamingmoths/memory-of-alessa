@@ -33,9 +33,9 @@ void func_00189FA0(u_short, u_short);
 int func_00190950(void);
 int func_001909B0(void);
 void func_01F6DFB0_construct_00(void);
-void func_0018FE60(__int128*);
-void func_0018FE80(__int128*);
-void func_00190000(sceVu0FVECTOR*, f32);
+void func_0018FE60(__int128 *);
+void func_0018FE80(__int128 *);
+void func_00190000(sceVu0FVECTOR*, float);
 void func_00311A30(void);
 
 extern float D_01F6FA10_construct_00;
