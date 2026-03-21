@@ -66,4 +66,21 @@ extern u_int D_1D31708[];
 extern u_int D_1D3170C[];
 extern u_int D_1D318CC[];
 
+// @hack thanks SeCall :')
+/* begin candles, holy rituals to bend SeCall to our will */
+#define UNCURSE_CONSTRUCT_STAR()                          \
+float star_candle_construct_00(float x, float y, int z) { \
+    return 0.0f;                                          \
+}
+
+#define UNCURSE_CONSTRUCT_MOON()                          \
+float moon_candle_construct_00(float x, float y) {        \
+    float charm;                                          \
+    float gem;                                            \
+    charm *= x;                                           \
+    gem *= y;                                             \
+    return charm * charm + gem + gem;                     \
+}
+/* end candles */
+
 #endif

@@ -1,13 +1,16 @@
 #include "construct_00.h"
 
-#ifdef NON_MATCHING
-int func_01F6D680_construct_00() {
-    int temp_v0;
+UNCURSE_CONSTRUCT_STAR();
+
+int func_01F6D680_construct_00(void) {
+    int ret;
 
     switch (D_01F6FA40_construct_00) {        
         case 0:
             func_00190A20(2);
+        
             SeCall(1.0f, 0.0f, 0x32CA); // I hate you SeCall
+        
             func_0013D250(0, &D_01F6F8B0_construct_00, 1.0f);
             D_01F6FA38_construct_00 = 0.0f;
             D_1D316AC[0] |= 0x20000000;
@@ -22,21 +25,21 @@ int func_01F6D680_construct_00() {
             D_01F6FA40_construct_00 += 1;
         
         default:
-            temp_v0 = func_0016C540(&D_01F6F950_construct_00, &D_01F6F9B0_construct_00);
-            if (temp_v0 == 1) {
+            ret = func_0016C540(&D_01F6F950_construct_00, &D_01F6F9B0_construct_00);
+            if (ret == 1) {
                 func_001C2290(5, 0.5f);
                 D_1D316AC[0] &= 0xDFFFFFFF;
                 func_00190A20(0);
             }            
     }
-    return temp_v0;
-}
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/construct_00", func_01F6D680_construct_00);
-#endif
 
-#ifdef NON_MATCHING
+    return ret;
+}
+
+UNCURSE_CONSTRUCT_MOON();
+
 int func_01F6D7E0_construct_00(void) { //check 3th floor sign
+    float volume, zero;
 
     if (!GET_FLAG(D_1D31668, 0)) { 
         D_01F6FA00_construct_00 = 0;
@@ -62,9 +65,6 @@ int func_01F6D7E0_construct_00(void) { //check 3th floor sign
             return 1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/construct_00", func_01F6D7E0_construct_00);
-#endif
 
 int func_01F6D8D0_construct_00(void) { //check 4th floor
     if (!GET_FLAG(D_1D31668, 1)) { 
