@@ -160,7 +160,7 @@ segments:
       - [0x0a6ef0, asm, view/vc_calc]
       - [0x0a7580, asm, Event/event]
       - [0x0ac650, asm, Event/event_sub]
-      - [0x0adf60, asm, Event/item]
+      - [0x0adf60, c, Event/item]
       - [0x0aea60, asm, Event/picture]
       - [0x0af7a0, asm, Event/stg_name]
       - [0x0b1450, asm, Event/vu0_func]
