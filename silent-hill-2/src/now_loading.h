@@ -784,7 +784,6 @@ struct shGsAllEnv {
 int ScreenEffectFadeCheck(void);
 void ScreenEffectFadeStart(signed int type /* r2 */, float time /* r29+0x10 */);
 void ScreenEffectInit(void);
-int fptosi(float);
 
 unsigned short * dicSetStr(void * str /* r2 */);
 void fjFontDrawExecVif1(void);
@@ -794,12 +793,9 @@ void fontSetColorDirect(unsigned char r /* r2 */, unsigned char g /* r2 */, unsi
 unsigned int sh2gfw_DeclimentLoopCounter(struct shGsAllEnv * stdb /* r2 */);
 unsigned int sh2gfw_InclimentLoopCounter(struct shGsAllEnv * stdb /* r2 */);
 
-
 extern int D_01F01DD0; // now_loading_enable
 extern int D_01F01DD8; // now_loading_draw
 extern int D_01F01DE0; // count
-
-extern void* now_loading_str; // I chose this name
 
 extern struct ScreenEffect_Parameter scr_efct;
 
