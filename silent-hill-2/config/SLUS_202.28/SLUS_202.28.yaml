@@ -356,7 +356,7 @@ segments:
       - [0x197870, asm, Effect2/hh_class_water_90]
       - [0x1988b0, asm, Effect2/hh_class_boatmask]
       - [0x199090, asm, pause]
-      - [0x1996a0, asm, now_loading]
+      - [0x1996a0, c, now_loading]
       - [0x1999a8, data, data]
       - [0x28cf40, .rodata, Chacter/m3_sc]
       - [0x28cf60, rodata,  rodata_0]
