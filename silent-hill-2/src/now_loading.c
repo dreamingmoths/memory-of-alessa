@@ -9,17 +9,18 @@ void NowLoadingCheck(void) {
     int fade;
     int time;
 
+
     fade = scr_efct.fade_type;
     switch (fade) {
         case 2:
         case 1:
             temp_f20 = scr_efct.fade_timer_max;
-            if (fptosi(temp_f20) < 4.0f) {
+            if ((int) temp_f20 < 4.0f) {
                 if (ScreenEffectFadeCheck() != 0) {
-                    time = fptosi(scr_efct.fade_timer_now);
+                    time = scr_efct.fade_timer_now;
                     ScreenEffectInit();
                     ScreenEffectFadeStart(1, 4.0f);
-                    scr_efct.fade_timer_now = (f32) time;
+                    scr_efct.fade_timer_now = (float) time;
                     scr_efct.fade_timer_max = 4.0f;
                 }
             } else if (((fade != 2) || !(scr_efct.fade_timer_now < temp_f20)) && !(scr_efct.fade_timer_now < 4.0f)) {
@@ -57,7 +58,7 @@ void NowLoadingDraw(void) {
             x = ((D_01F01DE0 * 0xCE5FDD) % 5) - 2;
             sh2gfw_InclimentLoopCounter(&shGs_AllEnv);
             fontSetColorDirect(0x80, 0x80, 0x80, 0x80);
-            fontPrintStr(dicSetStr(&now_loading_str), x + 0x100, y + 0x100);
+            fontPrintStr(dicSetStr("\\c\\hNow loading"), x + 0x100, y + 0x100);
             fjFontDrawExecVif1();
             fontClear();
             sh2gfw_DeclimentLoopCounter(&shGs_AllEnv);
