@@ -364,7 +364,9 @@ segments:
       - [0x28e2c0, rodata,  rodata_1]
       - [0x28e4b0, .rodata, Collision/cl_main]
       - [0x28e510, rodata,  rodata_2]
+      - [0x291810, .rodata, Event/item]
+      - [0x2918e0, rodata,  rodata_3]
       - [0x291ac0, .rodata, Font/font]
-      - [0x291c00, rodata,  rodata_3]
+      - [0x291c00, rodata,  rodata_4]
       - { vram: 0x3c7d80, type: bss, name: bss }
   - [0x2c8480]
