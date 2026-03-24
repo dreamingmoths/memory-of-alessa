@@ -10553,12 +10553,11 @@ excl_max_rate                                                         = 0x003906
 @2409                                                                 = 0x003910C0; // allow_duplicated:True size:6
 @1059_0x003910D0                                                      = 0x003910D0; // allow_duplicated:True size:32 visibility:local
 @1060_0x003910F0                                                      = 0x003910F0; // allow_duplicated:True size:20 visibility:local
-@904                                                                  = 0x00391110; // allow_duplicated:True size:4
-@932_0x00391140                                                       = 0x00391140; // allow_duplicated:True size:4 visibility:local
+jtbl_ItemGet                                                          = 0x00391110; // allow_duplicated:True size:4 visibility:local
+jtbl_ItemUse                                                          = 0x00391140; // allow_duplicated:True size:4 visibility:local
 @988_0x00391170                                                       = 0x00391170; // allow_duplicated:True size:28 visibility:local
 @989_0x00391190                                                       = 0x00391190; // allow_duplicated:True size:48 visibility:local
-@990_0x003911C0                                                       = 0x003911C0; // allow_duplicated:True size:4 visibility:local
-@905                                                                  = 0x003911E0; // allow_duplicated:True size:4 visibility:local
+jtbl_ItemWeaponReload                                                 = 0x003911C0; // allow_duplicated:True size:4 visibility:local@905                                                                  = 0x003911E0; // allow_duplicated:True size:4 visibility:local
 @1380_0x00391230                                                      = 0x00391230; // allow_duplicated:True size:32 visibility:local
 @1381                                                                 = 0x00391250; // allow_duplicated:True size:48 visibility:local
 @921_0x00391280                                                       = 0x00391280; // allow_duplicated:True size:28 visibility:local
