@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Font/font.h"
+#include "Font/fj_man.h"
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_00157D30);
 
