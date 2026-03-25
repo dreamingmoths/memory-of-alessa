@@ -1,5 +1,9 @@
 #include "item.h"
 
+static inline int clamp(int b, int i) {
+    asm("slt $t7, %1, %0; movn %0, %1, $t7" : "=r"(b) : "r"(i) : ); return b;
+}
+
 void ItemDataInit(void) {
     shQzero(&item, 0x34);
     ItemGet(0x11);
