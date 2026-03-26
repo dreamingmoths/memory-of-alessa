@@ -38,7 +38,7 @@ typedef unsigned int u_long128;
 #define GET_FLAG(x, i) (((x[i >> 5]) >> (i & 0x1F)) & 1)
 #define SET_FLAG(x, i) ((x[i >> 5]) |= (1 << (i & 0x1F)))
 #define REMOVE_FLAG(x, i) ((x)[(i) >> 5] &= ~(1 << ((i) & 0x1F)))
-    
+
 #define ABORT() asm("breakc 0")
 
 #ifdef DEBUG
@@ -73,6 +73,10 @@ typedef union Q
     float fv[4];           // offset 0x0, size 0x10
     signed int iv[4];      // offset 0x0, size 0x10
 } Q;
+
+static inline int clamp(int b, int i) {
+    asm("slt $t7, %1, %0; movn %0, %1, $t7" : "=r"(b) : "r"(i) : ); return b;
+}
 
 inline void vec_copy(void* dst, void* src) {
     asm volatile ("\
