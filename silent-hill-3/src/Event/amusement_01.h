@@ -155,5 +155,8 @@ extern int D_01F74D88_amusement_01;
 extern float D_01F74DB8_amusement_01;
 extern float D_01F74DC0_amusement_01;
 
+extern __int128 D_01F748C0_amusement_01;
+extern sceVu0FVECTOR D_01F748D0_amusement_01;
+extern sceVu0FVECTOR D_01F748E0_amusement_01;
 
 #endif

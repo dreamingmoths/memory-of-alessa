@@ -435,7 +435,28 @@ void func_01F6F3C0_amusement_01(void) {
     D_01F74D18_amusement_01 = 2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F6F430_amusement_01);
+void func_01F6F430_amusement_01(__int128* arg0, int* arg1, __int128* arg2, int* arg3, int* arg4) {
+    sceVu0FVECTOR sp0;
+    sceVu0FVECTOR sp10;
+    
+    sp0 = D_01F748D0_amusement_01;
+    sp10 = D_01F748E0_amusement_01;
+
+    if (D_01F74D18_amusement_01 != 0) {
+        vec_copy(arg0, &D_01F748B0_amusement_01);
+        *arg1 = 0;
+        vec_copy(arg2, &D_01F748C0_amusement_01);
+        *arg3 = 0;
+        *arg4 = 0;
+        D_01F74D18_amusement_01--;
+    } else {
+        vec_copy(arg0, &sp0);
+        *arg1 = 1;
+        vec_copy(arg2, &sp10);
+        *arg3 = 1;
+        *arg4 = 0;
+    }
+}
 
 int func_01F6F4E0_amusement_01(void) {
     SubCharacter* scp;
