@@ -367,7 +367,9 @@ segments:
       - [0x2918e0, rodata,  rodata_3]
       - [0x291ac0, .rodata, Font/font]
       - [0x291c00, rodata,  rodata_4]
-      - [0x29A870, .rodata, Effect2/hh_class_manager]
-      - [0x29A8A0, rodata, rodata_5]
+      - [0x292d60, .rodata, SH2_common/pad]
+      - [0x292d80, rodata,  rodata_5]
+      - [0x29a870, .rodata, Effect2/hh_class_manager]
+      - [0x29a8a0, rodata,  rodata_6]
       - { vram: 0x3c7d80, type: bss, name: bss }
   - [0x2c8480]
