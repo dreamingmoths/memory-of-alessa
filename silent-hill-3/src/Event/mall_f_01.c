@@ -5,7 +5,15 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D680_mall_f_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D820_mall_f_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6DA20_mall_f_01);
+int func_01F6DA20_mall_f_01(void) {
+    int temp_v0;
+
+    temp_v0 = func_0016C540(&D_01F72890_mall_f_01, &D_01F728F0_mall_f_01);
+    if (temp_v0 != 0) {
+        func_001C2290(5, 0.5f);
+    }
+    return temp_v0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6DA70_mall_f_01);
 
