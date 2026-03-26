@@ -8,7 +8,7 @@ int func_0016C540(int *, int *);
 int func_00190A20(int);                                 
 void func_001C2290(int, float);                              
 float shGetDT(void);                                   
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 int func_0016C1C0(int);
 void func_0016C3C0(void);
 int func_00190C00(void);

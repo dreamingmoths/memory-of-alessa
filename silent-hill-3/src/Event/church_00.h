@@ -27,7 +27,7 @@ int func_001C2580(int);
 void func_00300390(void);
 void func_00316C50(int);
 void func_01F6DCF0_church_00(Q*, int*, Q*, int*, int*);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 float shGetDT(void);
 
 extern short D_01F6E550_church_00[];

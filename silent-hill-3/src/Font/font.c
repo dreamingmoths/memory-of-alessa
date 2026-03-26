@@ -2,6 +2,8 @@
 #include "Font/font.h"
 #include "Font/fj_man.h"
 
+struct FONT_DATA font;
+
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_00157D30);
 
 void fontClear()

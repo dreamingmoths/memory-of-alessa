@@ -91,7 +91,7 @@ int func_0016B4E0(void *);
 int RoomName(void);
 u_char GetActionLevel(void);
 int GetItemCount(int);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 float shGetDT(void);
 void clAddDynamicWall(int *);
 void clAddDynamicFloor(int *);

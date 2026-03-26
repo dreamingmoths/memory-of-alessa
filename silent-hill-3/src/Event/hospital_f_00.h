@@ -123,7 +123,7 @@ void func_00316C50(int);
 void PictureDraw(void *);
 void PictureLoadImage(void *);
 void shQzero(void *, int);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 
 void func_001DE5B0(void (*)(), PictureGroup *, s32); // maybe this is the problem
 

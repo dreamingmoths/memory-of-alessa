@@ -31,7 +31,7 @@ int func_00190950(void);
 void func_00190A20(int);
 void func_001A06F0(void *);
 void func_001C2290(int, float);
-void func_001C2A80(int, sceVu0FMATRIX);
+void func_001C2A80(int, sceVu0FMATRIX*);
 int func_001C2580(int);
 void func_001DC9E0(SubCharacter *, int);
 void func_001DA020(int, Q *, Q *);
@@ -41,7 +41,7 @@ void func_00317490(int, float);
 void func_003174B0(float);
 int RoomName(void);
 u_char GetActionLevel(void);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 
 extern int D_01F6F8F0_sewer_00[];
 extern int D_01F6F850_sewer_00[];

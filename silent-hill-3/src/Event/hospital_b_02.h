@@ -24,7 +24,7 @@ int func_00190A20(int);
 void* func_00190AC0(void);
 int func_0013D080(int, int, int, int);
 int func_0016BED0(int, int);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 void func_001916F0(void);
 void func_0029FA30(void);
 int GetRiddleLevel(void);

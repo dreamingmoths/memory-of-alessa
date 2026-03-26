@@ -15,7 +15,7 @@ void func_001C2290(int, float);
 int func_001C2580(int);
 void func_002395A0(float);
 int RoomName(void);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 SubCharacter* shCharacterGetSubCharacter(int, short);
 float shGetDT(void);
 void func_0016D170(int, Q*, int, int, float, float, int);

@@ -8,7 +8,7 @@
 #define BUILDING_OTHERWORLD_ELEVATOR       0x93
 
 int   RoomName(void);
-void  SeCall(float, float, long);
+void  SeCall(float, float, int);
 float shGetDT(void);
 void  func_0016C1A0(void);
 void  func_0016C1B0(void);

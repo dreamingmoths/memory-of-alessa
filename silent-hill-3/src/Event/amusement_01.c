@@ -1,4 +1,5 @@
 #include "amusement_01.h"
+#include "Font/font.h"
 
 int func_01F6D680_amusement_01(void) {
     int ret;
@@ -212,7 +213,160 @@ int func_01F6E220_amusement_01(void) {
     return audioIsPlaying;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F6E2A0_amusement_01);
+void func_01F6E2A0_amusement_01(void) {
+    SubCharacter* heather;
+    sceVu0FMATRIX matrix;
+    sceVu0FVECTOR vec0;
+    sceVu0FVECTOR vec1;
+    float heather_x;
+    float heather_z;
+    int needs_crouch;
+    float y_0;
+    float y_2;
+    float y_1;
+    float y_3;
+    float t;
+
+    // controls the spikes
+    switch (D_01F74C90_amusement_01) {
+        case 0:
+            D_01F74DC0_amusement_01 = 0.0f;
+            D_01F74C90_amusement_01 = 1;
+            D_1D3169C |= 0x1000;
+
+            // this function seems to stop the previous audio.
+            // noping it makes the audios overlap
+            func_01F70750_amusement_01();
+
+            // spikes falling noise
+            SeCall(1.0f, 0.0f, 0x3BCA);
+            /* fallthrough */
+
+        case 1:
+            // if playing on hard or extreme, you need to crouch to survive.
+            // dunno what func_00190950 does though.
+            if (func_00190950() != 1 && GetActionLevel() >= 3) {
+                needs_crouch = 1;
+            } else { 
+                needs_crouch = 0;
+            }
+
+            D_01F74DC0_amusement_01 += 150.0f * (9.8f * shGetDT());
+
+            // get matrix
+            func_001C2AE0(1, &matrix);
+
+            y_0 = matrix[3][1] + D_01F74DC0_amusement_01;
+            matrix[3][1] = y_0;
+
+            if (!(y_0 <= -1200.0f)) {
+                if (needs_crouch == 0) {
+                    matrix[3][1] = -1200.0f;
+                } else {
+                    matrix[3][1] = -1000.0f;
+                }
+            }
+            
+            // set matrix
+            func_001C2A80(1, &matrix);
+
+            // get matrix
+            func_001C2AE0(2, &matrix);
+
+            y_1 = matrix[3][1] + D_01F74DC0_amusement_01;
+            matrix[3][1] = y_1;
+            
+            if (!(y_1 <= -1200.0f)) {
+                if (needs_crouch != 0) {
+                    matrix[3][1] = -1000.0f;
+                    D_01F74C90_amusement_01 = 3;
+                    func_001BE4B0(5);
+                    func_0016CF70();
+                } else {
+                    matrix[3][1] = -1200.0f;
+                    D_01F74C90_amusement_01 = 2;
+                    D_01F74DB0_amusement_01 = 0.0f;
+                    D_01F74DB8_amusement_01 = 0.0f;
+                    func_001BE4B0(5);
+                    func_0016CF70();
+                    func_01F6E220_amusement_01();
+                }
+            }
+            // set matrix
+            func_001C2A80(2, &matrix);
+
+            return;
+
+        case 3:
+            heather = shCharacterGetSubCharacter(HEATHER_CHARA_ID, -1);
+            heather_x = heather->pos.x;
+            vec1[0] = heather_x;
+            vec0[0] = heather_x;
+            heather_z = heather->pos.z;
+            vec1[2] = heather_z;
+            vec0[2] = heather_z;
+            vec0[1] = heather->pos.y - 250.0f;
+            vec1[1] = heather->pos.y;
+            func_001E0130(NULL, &vec0, &vec1, 0xDC);
+            D_01F74C90_amusement_01 = 4;
+            D_1D3169C &= ~0x1000;
+            fontClear();
+            return;
+
+        case 2:
+            func_01F6E220_amusement_01();
+
+            t = D_01F74DB8_amusement_01 + shGetDT();
+            D_01F74DB8_amusement_01 = t;
+
+            if (t < 1.0f) {
+                return;
+            }
+    
+            func_001BE4B0(0);
+            D_01F74C90_amusement_01 = 5;
+
+            func_001C2B80(1, &matrix);
+            D_01F74DC0_amusement_01 = matrix[3][1];
+            D_01F74D88_amusement_01 = SeCall(1.0f, 0.0f, 0x3BCB);
+            /* fallthrough */
+
+        case 5:
+            func_01F6E220_amusement_01();
+
+            func_001C2AE0(1, &matrix);
+            y_2 = matrix[3][1] + (-250.0f * shGetDT());
+            matrix[3][1] = y_2;
+            if (y_2 < D_01F74DC0_amusement_01) {
+                matrix[3][1] = D_01F74DC0_amusement_01;
+            }
+            func_001C2A80(1, &matrix);
+
+            func_001C2AE0(2, &matrix);
+            y_3 = matrix[3][1] + (-250.0f * shGetDT());
+            matrix[3][1] = y_3;
+            if (y_3 < D_01F74DC0_amusement_01) {
+                func_0015DFC0(0x3BCB, D_01F74D88_amusement_01);
+                matrix[3][1] = D_01F74DC0_amusement_01;
+                D_01F74C90_amusement_01 = 6;
+                D_01F74DB0_amusement_01 = 0.0f;
+                D_01F74DB8_amusement_01 = 0.0f;
+            }
+            func_001C2A80(2, &matrix);
+            return;
+
+        case 6:
+            if (func_01F6E220_amusement_01() != 0) {
+                D_01F74C90_amusement_01 = 0;
+                func_0016CF70();
+                D_1D3169C &= 0xFDFFFFFF;
+                D_1D31648 |= 0x40;
+                D_1D31648 |= 0x20;
+                D_1D3169C &= ~0x1000;
+            }
+            break;
+    }
+}
 
 int func_01F6E710_amusement_01(void) {
     int audioIsPlaying;

@@ -1,3 +1,6 @@
+#ifndef FONT_H
+#define FONT_H
+
 #include "common.h"
 
 #define FONT_STREAM_BUFFER_SIZE 0x4000
@@ -112,7 +115,6 @@ typedef struct FONT_STREAM_DATA
 	u_int rgb_d;
 } FONT_STREAM_DATA;
 
-struct FONT_DATA font;
 extern void fontSetColor(int num);
 extern void fontSetStreamMax(u_short s_max, u_short ws_max, u_short ms_max);
 extern u_char D_01D08FA0[16];
@@ -120,7 +122,7 @@ extern short D_003585A8[20][2];
 extern short D_003585AA[20][2];
 extern u_long font_dma_data[34];
 extern char D_01D08FB0[FONT_STREAM_BUFFER_SIZE];
-extern void SeCall(float arg0, float arg1, long arg2);
+extern int SeCall(float arg0, float arg1, int arg2);
 int fontLoad(u_short code);
 void fontClear(void);
 void fontSetStreamMax(u_short s_max, u_short ws_max, u_short ms_max);
@@ -146,3 +148,5 @@ void fontAllCenterOff(void);
 void fontShadowOff(void);
 void fontCrushOn(void);
 void fontCrushOff(void);
+
+#endif

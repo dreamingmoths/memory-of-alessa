@@ -23,7 +23,7 @@ void func_0029F330(float*, float*);
 int func_002A47C0(float, float);
 void func_01F6D680_hospital_f_02(void);
 int RoomName(void);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 float shGetDT(void);
 
 extern int D_01F6FCD0_hospital_f_02;

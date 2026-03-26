@@ -9,7 +9,7 @@
 #define BUILDING_OTHERWORLD_1F_LAST_FAIRY_TAIL_PIECE_ROOM 0x81
 
 int RoomName(void);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 int func_00168440(void);
 void func_0016C1A0(void);
 void func_0016C1B0(void);

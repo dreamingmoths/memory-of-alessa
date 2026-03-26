@@ -11,7 +11,7 @@
 #define BUILDING_OTHERWORLD_4F_SILVER_COIN_ROOM 0x8D
 
 int RoomName(void);
-void SeCall(float, float, int);
+int SeCall(float, float, int);
 float shGetDT(void);
 int shCharacterGetSubCharacter(int, short);
 void func_0016C1A0(void);

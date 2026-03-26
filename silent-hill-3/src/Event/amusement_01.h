@@ -53,7 +53,7 @@ extern u_char GetActionLevel(void);
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
 
-extern void SeCall(float, float, int);
+extern int SeCall(float, float, int);
 extern float shAngleRegulate(float);
 extern float shGetDT(void);
 extern float shSinF(float);
@@ -88,6 +88,17 @@ extern int func_001C2580(int);
 extern int func_0016BED0(int, int);
 extern int GetRiddleLevel(void);
 extern int func_001C2580(int);
+
+extern void fontClear(void);
+extern int func_0015DFC0(int, int);
+extern void func_001BE4B0(int);
+extern void func_001C2A80(int, sceVu0FMATRIX*);
+extern int func_00190950(void);
+extern void func_001C2AE0(int, sceVu0FMATRIX*);
+extern void func_001C2B80(int, float*);
+extern void func_001E0130(float*, float*, float*, int);
+extern int func_01F6E220_amusement_01(void);
+extern int func_01F70750_amusement_01(void);
 
 extern int D_01F74D00_amusement_01;
 extern sceVu0FVECTOR D_01F74670_amusement_01;
@@ -139,5 +150,10 @@ extern __int128 D_01F748B0_amusement_01;
 extern float D_01F748B8_amusement_01;
 extern float D_01F748C8_amusement_01;
 extern int D_01F74D18_amusement_01;
+
+extern int D_01F74D88_amusement_01;
+extern float D_01F74DB8_amusement_01;
+extern float D_01F74DC0_amusement_01;
+
 
 #endif
