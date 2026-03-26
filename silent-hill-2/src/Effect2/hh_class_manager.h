@@ -32,7 +32,7 @@ typedef struct Object_Instance {
 typedef struct Object_DataBlock_Header {
     u_int Enable; // offset 0x0, size 0x4
     struct Object_DataBlock_Header* pNext; // offset 0x4, size 0x4
-}Object_DataBlock_Header;
+}__attribute__((aligned(16))) Object_DataBlock_Header;
 
 typedef struct Object_DataPool_Infomeation {
     u_int Block_Size; // offset 0x0, size 0x4

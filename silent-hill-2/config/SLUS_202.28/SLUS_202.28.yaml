@@ -255,7 +255,7 @@ segments:
       - [0x153490, asm, Multi_thr/scf/sh2_scf]
       - [0x153950, asm, DBG/dbalocate]
       - [0x1539b0, asm, Chacter/bg_chara]
-      - [0x154200, asm, Effect2/hh_class_blood_00]
+      - [0x154200, c, Effect2/hh_class_blood_00]
       - [0x1549e0, asm, Effect2/hh_class_blood_01]
       - [0x1551f0, asm, Effect2/hh_class_blood_02]
       - [0x155b30, asm, Effect2/hh_class_blood_03]
