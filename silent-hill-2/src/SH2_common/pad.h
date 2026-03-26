@@ -1,7 +1,7 @@
 #ifndef PAD_H
 #define PAD_H
 
-#include "common.h"
+#include "sh2_common.h"
 
 // total size: 0x26
 struct shGameKeyAssign {
