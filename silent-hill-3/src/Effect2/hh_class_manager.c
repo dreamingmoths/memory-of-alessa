@@ -1,4 +1,6 @@
-#include "common.h"
+#include "hh_class_manager.h"
+
+static u_int ClassAssociation_DataPool_Initialize(Object_Group_Infomeation* pInfo, u_int Class_Descriptor);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", ImpactManager);
 
@@ -52,7 +54,34 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141AE0);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", Exception_Handling_Instance_Create);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", ClassAssociation_DataPool_Initialize);
+static u_int ClassAssociation_DataPool_Initialize(Object_Group_Infomeation* pInfo, u_int Class_Descriptor) {
+    u_int i;
+    Object_DataBlock_Header* pHeader;       
+    Object_DataPool_Infomeation* pPool_Info; 
+    u_int result = 0; 
+
+    if(pInfo != NULL){
+        pPool_Info = &pInfo->Association_Info.pDataPool_Info[Class_Descriptor]; 
+
+        if(pPool_Info->pBlock_Table != NULL){
+            memset(pPool_Info->pBlock_Table, 0, pPool_Info->Block_Size* pPool_Info->Block_Index_Max);
+
+            
+            pHeader = pPool_Info->pBlock_Table;
+            
+            for(i = 0; i < pPool_Info->Block_Index_Max-1; i++, pHeader = pHeader->pNext){
+                pHeader->pNext = (void*) ((u8*)pHeader + pPool_Info->Block_Size);
+            }
+
+            pHeader->pNext = NULL;
+            pPool_Info->pFreeBlock_List = pPool_Info->pBlock_Table;
+            
+            result = 1;
+        }
+    }
+
+    return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141C80);
 
