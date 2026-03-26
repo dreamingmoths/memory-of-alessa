@@ -190,7 +190,7 @@ segments:
       - [0x0cdf30, asm, DBG/dbkernel]
       - [0x0ce0b0, asm, DBG/dbflag]
       - [0x0ce240, asm, Item/otn_itemmain]
-      - [0x0db910, asm, FilesList/fileslist_bg]
+      - [0x0db910, c, FilesList/fileslist_bg]
       - [0x0db9a0, asm, Enemy/en_fly]
       - [0x0dc570, asm, Multi_thr/kernel/wrap_printf]
       - [0x0dc5b0, asm, sdk]
