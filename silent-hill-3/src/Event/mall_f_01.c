@@ -77,7 +77,14 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6F810_mall_f_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6FB30_mall_f_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6FCB0_mall_f_01);
+int func_01F6FCB0_mall_f_01(void) {
+    Q sp10;
+
+    sp10 = D_01F72AB0_mall_f_01;
+    func_002A2E70(&sp10);
+    D_1D3164C |= 0x04000000;
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6FD00_mall_f_01);
 
