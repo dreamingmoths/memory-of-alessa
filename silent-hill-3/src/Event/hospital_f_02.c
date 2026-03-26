@@ -110,7 +110,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6DBD0_hospital_f_02)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6DC40_hospital_f_02);
 
-int func_01F6DC60_hospital_f_02(void) {
+u_short func_01F6DC60_hospital_f_02(void) {
     float sp18;
     float sp1C;
 

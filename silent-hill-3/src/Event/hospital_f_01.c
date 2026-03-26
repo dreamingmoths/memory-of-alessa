@@ -119,7 +119,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6DAE0_hospital_f_01)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6DB50_hospital_f_01);
 
-int func_01F6DB70_hospital_f_01(void) {
+u_short func_01F6DB70_hospital_f_01(void) {
     float sp18;
     float sp1C;
 
@@ -163,7 +163,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F640_hospital_f_01)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_01", func_01F6F670_hospital_f_01);
 
-int func_01F6F690_hospital_f_01(void) {
+u_short func_01F6F690_hospital_f_01(void) {
     float sp18;
     float sp1C;
 
