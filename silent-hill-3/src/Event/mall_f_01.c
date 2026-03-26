@@ -1,4 +1,5 @@
 #include "common.h"
+#include "mall_b_00.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D680_mall_f_01);
 
@@ -72,7 +73,31 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6FDA0_mall_f_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6FED0_mall_f_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F70070_mall_f_01);
+void func_01F70070_mall_f_01(void) {
+    if (!GET_BIT(D_1D31650, 0x12)) {
+        func_01F70720_mall_f_01();
+        D_1D31650 |= 0x40000;
+    }
+
+    switch (RoomName()) {
+        case 12:
+            D_01F72BC8_mall_f_01 = 0;
+            D_1D31700 |= 8;
+            break;
+        case 17:
+            D_01F72BB8_mall_f_01 = 0;
+            break;
+        case 16:
+            break;
+        case 15:
+            D_1D31784 |= 0x2000;
+            D_1D31700 |= 0x10;
+            break;
+        case 18:
+            D_1D31700 |= 0x40;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F70160_mall_f_01);
 
