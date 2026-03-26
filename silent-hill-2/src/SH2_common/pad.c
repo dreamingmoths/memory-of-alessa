@@ -23,10 +23,122 @@ void shPadInit(void) {
     key_config.light = 0x2000;
     key_config.dash = 0x8000;
     key_config.attack = 0x4000;
-    shPadSetGameKeyAssign(0x8000);
+    shPadSetGameKeyAssign();
 }
 
-INCLUDE_ASM("asm/nonmatchings/SH2_common/pad", shPadSet);
+void shPadSet(void) {
+    int i;
+    int j;
+    int work; u_char *foo;
+    for (i = 0; i < 20; i++) {
+        pad_bak[0][i] = pad[0][i];
+        pad_bak[1][i] = pad[1][i];
+    }
+    repeat[0] = repeat[1] = 0;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    libShPadRead(0, 0, &pad[0][0]);
+    libShPadRead(1, 0, &pad[1][0]);
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    shSysKeyNormalize((char *)pad[0]);
+    shSysKeyNormalize((char *)pad[1]);
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    for (i = 0; i < 2; i++) {
+    
+        
+        
+        // Good luck figuring this one out
+        work = pad[i][2]; work = pad[i][3];
+
+        
+        
+        pad[i][0] = pad[i][0x14];
+        pad[i][1] = pad[i][0x15];
+        pad[i][2] = pad[i][0x16];
+        pad[i][3] = pad[i][0x17];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 20; j++) {
+            if (pad[i][j] != 0) {
+                if (padf[i][j] == 0.0f) repeat[i] |= (1 << j);
+                padf[i][j] += shGetDT();
+                if (padf[i][j] > 0.8f) {
+                    repeat[i] |= (1 << j);
+                    padf[i][j] -= 0.1f;
+                }
+            } else padf[i][j] = 0.0f;
+        }
+    }
+
+    
+    if (shPadTrigger(pad_x, 8)) {
+        pad_x++;
+        if (12 < pad_x) pad_x = 1;
+        printf("Contoroler 2 port change : %d\n", pad_x);
+    }
+}
 
 int shPadGetPort(void) {
     if (dbFlag(-1) == 0) {
