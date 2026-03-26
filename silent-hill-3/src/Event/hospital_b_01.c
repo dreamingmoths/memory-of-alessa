@@ -137,7 +137,7 @@ void func_01F6DDC0_hospital_b_01(void) {
         if (GET_BIT(D_1D31648, 1)) {
             break;
         }
-        if (!(D_1D31648 & 1)) {
+        if (!GET_BIT(D_1D31648, 0)) {
             func_0016CBD0(sp20, &sp30, 0x10);
             mat_copy(sp40, sp20[0]);
             func_001C2A80(1, sp40);
@@ -168,7 +168,7 @@ void func_01F6DDC0_hospital_b_01(void) {
             }
         }
         temp_s0 = shCharacterGetSubCharacter(0x101C, 0x146);
-        if (!((D_1D31698 >> 9) & 1) || (func_001DD9F0(temp_s0) == 0)) {
+        if (!GET_BIT(D_1D31698, 9) || (func_001DD9F0(temp_s0) == 0)) {
             clAddDynamicWall(&D_01F6E6B0_hospital_b_01);
         } else if (!GET_BIT(D_1D31698, 17)) {
             D_1D31698 |= 0x20000;
