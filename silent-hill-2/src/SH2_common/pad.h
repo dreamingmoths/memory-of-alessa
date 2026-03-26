@@ -54,13 +54,17 @@ struct Pad_KeyConfig {
     signed int padding[6]; // offset 0x48, size 0x18
 };
 
-void shPadSetGameKeyAssign();
+void libShPadRead(int a, int b, void *c); //NOT SURE ABOUT THIS
+
+void shPadSetGameKeyAssign(void);
 void shQzero(void*, int);
+float shGetDT(void);
 u_int dbFlag(u_int flag /* r2 */);
-int dbSwitchSysPadPort();
+int dbSwitchSysPadPort(void);
 static unsigned long kc2ga(unsigned long kconf_button /* r2 */);
 void shGameKeyGetAssign(struct shGameKeyAssign * assign /* r2 */);
-void shGameKeySetAssign(struct shGameKeyAssign * assign /* r2 */); 
+int shPadTrigger(signed int port /* r17 */, signed int key /* r16 */);
+int shSysKeyNormalize(char * paddata /* r2 */);
 
 extern struct Pad_KeyConfig key_config;
 extern u_char pad_bak[2][20];
