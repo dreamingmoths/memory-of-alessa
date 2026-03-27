@@ -1,6 +1,9 @@
-#include "common.h"
+#include "subway_01.h"
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6D680_subway_01);
+s32 func_01F6D680_subway_01(void)
+{
+    return 0x1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6D690_subway_01);
 
