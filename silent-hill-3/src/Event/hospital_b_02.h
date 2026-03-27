@@ -2,6 +2,7 @@
 #define HOSPITAL_B_02_H
 
 #include "common.h"
+#include "Chacter/m3_sc.h"
 
 typedef struct {
     int unk0;
@@ -43,6 +44,10 @@ int func_001C2580(int);
 float shGetDT(void);
 int func_0019B580(int);
 void func_001C7BC0(Q *, Q *, Q *, int);
+void func_0016D170(int, Vector4*, int, int, float, float, int);
+void func_0018FE60(u_long128 *);
+int func_001DDAE0(SubCharacter*);
+SubCharacter* shCharacterGetSubCharacter(int, int);
 
 extern u_int D_1D31680[];
 extern u_int D_1D31694[];
@@ -61,5 +66,7 @@ extern int D_01F74100_hospital_b_02;
 extern float D_01F74108_hospital_b_02;
 extern int D_01F74110_hospital_b_02;
 extern float D_01F74118_hospital_b_02;
+extern int D_01F74140_hospital_b_02;
+extern int D_01F74148_hospital_b_02;
 
 #endif
