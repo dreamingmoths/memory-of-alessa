@@ -968,7 +968,88 @@ void func_01F70390_amusement_01(void) {
     func_01F703B0_amusement_01(20.0f, 40.0f);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F703B0_amusement_01);
+void func_01F703B0_amusement_01(float fparg0, float fparg1) {
+    sceVu0FMATRIX matrix0;
+    sceVu0FMATRIX matrix1;
+    sceVu0FMATRIX matrix2;
+    sceVu0FMATRIX matrix3;
+    sceVu0FMATRIX matrix4;
+    sceVu0FMATRIX matrix5;
+    sceVu0FMATRIX matrix6;
+
+    D_01F74CE8_amusement_01 = D_01F74CE8_amusement_01 + (fparg0 * shGetDT());
+    if (D_01F74CE8_amusement_01 > 180.0f) {
+        D_01F74CE8_amusement_01 -= 360.0f; 
+    }
+
+    D_01F74CF0_amusement_01 =  D_01F74CF0_amusement_01 - (fparg1 * shGetDT());
+    if (D_01F74CF0_amusement_01 < -180.0f) {
+        D_01F74CF0_amusement_01 += 360.0f;
+    }
+
+    func_001C2AE0(1, matrix0);
+    func_001C2AE0(2, matrix1);
+    sceVu0UnitMatrix(matrix2);
+    func_00121300(matrix2, matrix2, TO_RAD(D_01F74CE8_amusement_01));
+
+    mat_copy(matrix3, func_001AFE30(3, 1)->matrix);
+    shMulMatrix(matrix2, matrix3, matrix2);
+    func_001C2A80(1, matrix2);
+    mat_copy(matrix0, matrix2);
+
+    asm("
+        lq $t0, 0(%0)
+        lq $t1, 0x10(%0)
+        lq $t2, 0x20(%0)
+        lqc2 $vf4, 0x30(%0)
+        pextlw $t3, $t1, $t0
+        pextuw $t4, $t1, $t0
+        pextlw $t5, $zero, $t2
+        pextuw $t6, $zero, $t2
+        pcpyld $t0, $t5, $t3
+        pcpyud $t1, $t3, $t5
+        pcpyld $t2, $t6, $t4
+        qmtc2 $t0, $vf5
+        qmtc2 $t1, $vf6
+        qmtc2 $t2, $vf7
+        vmulax.xyz $acc, $vf5, $vf4x
+        vmadday.xyz $acc, $vf6, $vf4y
+        vmaddz.xyz $vf4, $vf7, $vf4z
+        sq $t0, 0(%1)
+        sq $t1, 0x10(%1)
+        vsub.xyz $vf4, $vf0xyz, $vf4xyz
+        sq $t2, 0x20(%1)
+        sqc2 $vf4, 0x30(%1)
+    " : : "r"(matrix3), "r"(matrix4));
+
+    sceVu0UnitMatrix(matrix2);
+    sceVu0UnitMatrix(matrix6);
+    sceVu0UnitMatrix(matrix5);
+    shRotMatrixY(matrix5, matrix5, TO_RAD(D_01F74CF0_amusement_01));
+
+    mat_copy(matrix1, func_001AFE30(3, 2)->matrix);
+    shMulMatrix(matrix2, matrix4, matrix1);
+    shMulMatrix(matrix2, matrix2, matrix5);
+    shMulMatrix(matrix2, matrix0[0], matrix2);
+    func_001C2A80(2, matrix2);
+
+    mat_copy(matrix1, func_001AFE30(3, 3)->matrix);
+    shMulMatrix(matrix2, matrix4, matrix1);
+    shMulMatrix(matrix2, matrix2, matrix5);
+    shMulMatrix(matrix2, matrix0, matrix2);
+    func_001C2A80(3, matrix2);
+
+    mat_copy(matrix1, func_001AFE30(3, 4)->matrix);
+    shMulMatrix(matrix2, matrix4, matrix1);
+    shMulMatrix(matrix2, matrix2, matrix5);
+    shMulMatrix(matrix2, matrix0[0], matrix2);
+    func_001C2A80(4, matrix2);
+
+    func_0018A260(0xE2);
+    func_0018A310(0xE2, 0x134, 2);
+    func_0018A310(0xE2, 0x135, 3);
+    func_0018A310(0xE2, 0x136, 4);
+}
 
 int func_01F70750_amusement_01(void) {
     func_0015E780(2);

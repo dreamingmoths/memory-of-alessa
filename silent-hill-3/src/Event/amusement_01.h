@@ -29,6 +29,11 @@ typedef struct Amusement01Pair {
     float end;
 } Amusement01Pair;
 
+typedef struct Amusement01Object {
+    u_char unknown[0x310];
+    sceVu0FMATRIX* matrix;
+} Amusement01Object;
+
 typedef union DWORD
 {
     u_int u32[2];
@@ -112,7 +117,9 @@ extern int func_0016E0F0(void);
 extern void shRotMatrixY(float (* m0)[4] /* r2 */, float (* m1)[4] /* r2 */, float);
 extern void shRotMatrixX(float (* m0)[4] /* r2 */, float (* m1)[4] /* r2 */, float);
 extern void shMulMatrix(float (* m0)[4] /* r2 */, float (* m1)[4] /* r2 */, float (* m2)[4] /* r2 */);
-
+ 
+extern Amusement01Object* func_001AFE30(int, int); 
+extern void func_00121300(sceVu0FMATRIX*, sceVu0FMATRIX*, float);
 
 extern int D_01F74D00_amusement_01;
 extern sceVu0FVECTOR D_01F74670_amusement_01;
@@ -203,6 +210,8 @@ extern int D_01F71400_amusement_01;
 extern int D_01F74CA8_amusement_01;
 extern int D_01F74DA0_amusement_01;
 extern float D_01F74DA8_amusement_01;
+extern float D_01F74CE8_amusement_01;
+extern float D_01F74CF0_amusement_01;
 
 // @hack thanks `func_0015DCD0` :')
 /* begin candles, holy rituals to bend float arguments to our will */
