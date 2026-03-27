@@ -6,9 +6,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D680_mall_f_01);
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D820_mall_f_01);
 
 int func_01F6DA20_mall_f_01(void) {
-    int temp_v0;
-
-    temp_v0 = func_0016C540(&D_01F72890_mall_f_01, &D_01F728F0_mall_f_01);
+    int temp_v0 = func_0016C540(&D_01F72890_mall_f_01, &D_01F728F0_mall_f_01);
     if (temp_v0 != 0) {
         func_001C2290(5, 0.5f);
     }
@@ -36,11 +34,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6E630_mall_f_01);
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6E6E0_mall_f_01);
 
 u_short func_01F6E700_mall_f_01(void) {
-    f32 sp18;
-    f32 sp1C;
+    float sp18;
+    float sp1C;
 
     func_0029F330(&sp18, &sp1C);
-    return func_002A47C0(sp18, sp1C) & 0xFFFF;
+    return func_002A47C0(sp18, sp1C);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6E730_mall_f_01);
@@ -70,11 +68,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6F300_mall_f_01);
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6F510_mall_f_01);
 
 u_short func_01F6F5A0_mall_f_01(void) {
-    f32 sp18;
-    f32 sp1C;
+    float sp18;
+    float sp1C;
 
     func_0029F330(&sp18, &sp1C);
-    return func_002A47C0(sp18, sp1C) & 0xFFFF;
+    return func_002A47C0(sp18, sp1C);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6F5D0_mall_f_01);
