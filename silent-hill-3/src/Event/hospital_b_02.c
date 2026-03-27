@@ -285,7 +285,34 @@ int func_01F6F930_hospital_b_02(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6FAD0_hospital_b_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6FBA0_hospital_b_02);
+void func_01F6FBA0_hospital_b_02(void) {
+    sceVu0FVECTOR sp20;
+    float var_f0;
+    SubCharacter* scp;
+
+    scp = shCharacterGetSubCharacter(0x101F, 0x14E);
+    func_0016D170(0x3B00, &scp->pos, 0, 0, 1.0f, 1000.0f, D_01F74140_hospital_b_02);
+    if ((func_001DDAE0(scp) & 0xFFFF) < 0xF) {
+        D_01F74148_hospital_b_02 = 0;
+        return;
+    }
+    
+    if (D_01F74148_hospital_b_02 == 0) {
+        func_0018FE60((u_long128 *)&sp20);
+
+        if((sp20[1] > -2514.0f)){
+            var_f0 = sp20[1] - -2514.0f;
+        }
+        else{
+            var_f0 = -2514.0f - sp20[1];
+        }
+
+        if (var_f0 <= 1000.0f) {
+            SeCall((1000.0f - var_f0) / 1000.0f, -0.7853982f, 0x3B01);
+            D_01F74148_hospital_b_02 = 1;
+        }    
+    }    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6FCB0_hospital_b_02);
 
