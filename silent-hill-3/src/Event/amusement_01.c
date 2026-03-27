@@ -1,6 +1,10 @@
 #include "amusement_01.h"
 #include "Font/font.h"
 
+static void func_01F6DCF0_amusement_01(u_long128 *arg0, int *arg1, u_long128 *arg2, int *arg3, int *arg4);
+static void func_01F6F430_amusement_01(u_long128 *arg0, int *arg1, u_long128 *arg2, int *arg3, int *arg4);
+static void func_01F6DC70_amusement_01(u_long128 *arg0, int *arg1, u_long128 *arg2, int *arg3, int *arg4);
+
 int func_01F6D680_amusement_01(void) {
     int ret;
 
@@ -52,7 +56,128 @@ int func_01F6D7C0_amusement_01(void) {
     return audioIsPlaying;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F6D840_amusement_01);
+
+int func_01F6D840_amusement_01(void) {
+    sceVu0FVECTOR sp30;
+    sceVu0FVECTOR sp40;
+    sceVu0FVECTOR sp50;
+    Amusement01Pair* entry;
+
+    sp30 = D_01F74640_amusement_01;
+
+    switch (D_01F74C88_amusement_01) {
+        case 0:
+            D_01F74DA8_amusement_01 = 0.0f;
+            D_01F74DA0_amusement_01 = 0;
+    
+            D_1D3169C |= 0x1000;
+    
+            D_01F74CA8_amusement_01 = func_0016E0F0();
+
+            D_1D316A0 &= 0x7FFFFFFF;
+    
+            D_01F74C88_amusement_01++;
+            /* fallthrough */
+    
+        case 1: {
+            float t;
+    
+            func_0016CF80(0xD,0x37,&D_01F71400_amusement_01);
+    
+            t = D_01F74DA8_amusement_01 + shGetDT();
+            D_01F74DA8_amusement_01 = t;
+    
+            if (t < 14.5f)
+                return 0;
+    
+            func_01F6DCB0_amusement_01();
+            func_01F6DDC0_amusement_01();
+    
+            D_01F74C88_amusement_01++;
+        }
+    
+        case 2: {
+            float t;
+    
+            func_0016CF80(0xD,0x37,&D_01F71400_amusement_01);
+    
+            t = D_01F74DA8_amusement_01 + shGetDT();
+            D_01F74DA8_amusement_01 = t;
+    
+            if (t < 31.0f)
+                return 0;
+    
+            func_01F6DDC0_amusement_01();
+    
+            D_01F74C88_amusement_01++;
+        }
+    
+        case 3: {
+            float t;
+    
+            func_0016CF80(0xD,0x37,&D_01F71400_amusement_01);
+    
+            t = D_01F74DA8_amusement_01 + shGetDT();
+            D_01F74DA8_amusement_01 = t;
+    
+            if (t < 48.0f)
+                return 0;
+    
+            D_01F74DA8_amusement_01 = 0.0f;
+    
+            D_01F74C88_amusement_01++;
+        }
+    
+        case 4: {
+            int temp_s0 = func_0016CF80(0xD,0x37,&D_01F71400_amusement_01);
+            int i;
+    
+            D_01F74DA8_amusement_01 += shGetDT();
+            i = 0;
+
+            while (entry = &D_01F74610_amusement_01[i], entry->start != 0.0f) {
+                if (entry->start <= D_01F74DA8_amusement_01 && entry->end > D_01F74DA8_amusement_01) {
+                    sp40 = D_01F74650_amusement_01;
+                    sp50 = D_01F74660_amusement_01;
+            
+                    func_0016CA40(1); 
+                    func_0016E150(1);
+            
+                    func_001C7C80(&sp40, &sp50, &sp30, 0x200);
+            
+                    D_1D316A0 |= 0x80000000;
+                    break;
+                } else {
+                    D_1D316A0 &= 0x7FFFFFFF;
+                    func_0016E150(0);
+                }
+                i++;
+            }
+    
+            if (D_01F74DA0_amusement_01 == 0 && !(D_01F74DA8_amusement_01 < D_01F74610_amusement_01->start)) {
+                func_0015DCD0(1.0f, 10000.0f, 0x3BC8, &sp30, 0, 0);
+                D_01F74DA0_amusement_01 = 1;
+            }
+    
+            if (temp_s0 == 0) {
+                return 0;
+            }
+    
+            func_0016CA80(1);
+            func_0016E150(0);
+    
+            D_01F74C88_amusement_01 = 0;
+            D_1D316A0 &= 0x7FFFFFFF;
+            D_1D3169C &= ~0x1000;
+    
+            func_001C0EE0(0);
+            func_0016CF70();
+        }
+            
+        default:
+            return 1;
+    }
+}
 
 void func_01F6DC40_amusement_01(void) {
     func_001C0EB0(func_01F6DC70_amusement_01, 90, 1);
@@ -96,7 +221,7 @@ int func_01F6DDE0_amusement_01(void) {
     float limit;
     int ret = 0;
     int i;
-    float* cur;
+    Amusement01Pair* cur;
     int state = D_01F74C88_amusement_01;
 
     switch (state) {
@@ -106,9 +231,9 @@ int func_01F6DDE0_amusement_01(void) {
             D_01F74C88_amusement_01++;
             /* fallthrough */
         case 1:
-            for (i = 0; cur = D_01F74610_amusement_01[i], cur[0] != 0.0f; i++) {
+            for (i = 0; cur = &D_01F74610_amusement_01[i], cur->start != 0.0f; i++) {
                 limit = D_01F74D98_amusement_01;
-                if (cur[0] <= limit && cur[1] > limit) {
+                if (cur->start <= limit && cur->end > limit) {
                     func_0016CA40(1);
                 }
             }
@@ -152,7 +277,7 @@ int func_01F6DF10_amusement_01(void) {
                 D_01F74C88_amusement_01++;
         case 2:
                 if (func_0019A9B0(0.2f) != 0) {
-                    func_0015DCD0(1.0f, 10000.0f, 15303, &danny->pos.x, 0, 0);
+                    func_0015DCD0(1.0f, 10000.0f, 15303, &danny->pos, 0, 0);
                     D_01F74C88_amusement_01++;
         case 3:
                     angle = (&D_01F746C0_amusement_01)[D_01F74D90_amusement_01];
@@ -528,7 +653,6 @@ int func_01F6F6C0_amusement_01(void) {
     return ret;
 }
 
-#ifdef NON_MATCHING
 int func_01F6F7A0_amusement_01(void) {
     SubCharacter* heather;
     float temp_f0;
@@ -536,7 +660,7 @@ int func_01F6F7A0_amusement_01(void) {
     int temp_s1;
 
     heather = shCharacterGetSubCharacter(HEATHER_CHARA_ID, -1);
-    switch (D_01F74C88_amusement_01) {              /* irregular */
+    switch (D_01F74C88_amusement_01) {
         case 0:
             func_00190A20(2);
             D_01F74C88_amusement_01++;
@@ -565,11 +689,11 @@ int func_01F6F7A0_amusement_01(void) {
             temp_s1 = func_0016C540(&D_01F74A90_amusement_01, &D_01F74AF0_amusement_01);
             temp_f0 = func_001643C0();
             if (temp_f0 >= 10.0f) {
-                func_0013D250(0, (int) &D_01F74370_amusement_01, 1.0f);
+                func_0013D250(0, &D_01F74370_amusement_01, 1.0f);
             }
             temp_f1 = D_01F74D10_amusement_01->fv[0];
             if (!(temp_f1 <= 0.0f) && (temp_f1 <= temp_f0)) {
-                func_0013D250(0, D_01F74D10_amusement_01->u32[1], 1.0f);
+                func_0013D250(0, (int*) D_01F74D10_amusement_01->u32[1], 1.0f);
                 D_01F74D10_amusement_01++;
             }
             if (temp_s1 == 0) {
@@ -588,9 +712,6 @@ int func_01F6F7A0_amusement_01(void) {
         return 1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F6F7A0_amusement_01);
-#endif
 
 int func_01F6FA20_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
@@ -720,7 +841,8 @@ int func_01F6FDC0_amusement_01(void) {
     }
 }
 
-#ifdef NON_MATCHING
+UNCURSE_AMUSEMENT_MOON();
+
 int func_01F6FED0_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
     case 0:
@@ -751,9 +873,6 @@ int func_01F6FED0_amusement_01(void) {
         return 1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/amusement_01", func_01F6FED0_amusement_01);
-#endif
 
 int func_01F70000_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
@@ -959,6 +1078,8 @@ void func_01F709D0_amusement_01(void) {
     }
 }
 
+
+UNCURSE_AMUSEMENT_BLOOD();
 
 void func_01F70A90_amusement_01(void) {
     sceVu0FMATRIX sp10;
