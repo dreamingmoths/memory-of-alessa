@@ -335,13 +335,15 @@ HH_Class_Blood_Pool_Phenomenon_00 = 0x002116e0;
 // Object_Initialize = 0x00212e20; // allow_duplicated:True visibility:local
 HH_Class_Unknown_00 = 0x00213620;
 
+// hh_class_manager.c
 ImpactManager = 0x001410c0;
 InstanceManager = 0x00141240;
+Instance_Create = 0x00141730;
 Object_Group_InstanceTableInfomeation_Set = 0x00142030;
 Exception_Handling_Instance_Create = 0x00141b40;
 Instance_Search_from_InstanceHandle = 0x00141670;
 ObjectInstance_DataBlock_Get = 0x00142190;
-FreeDataBlock_Stack_FreeCheck = 0x001418B0;
+FreeDataBlock_Stack_FreeCheck = 0x00141a90;
 FreeDataBlock_Stack_Pop = 0x00141AB0;
 FreeDataBlock_Stack_Push = 0x00141AE0;
 Object_Group_ClassAssociationInfomeation_Set = 0x00141FE0;

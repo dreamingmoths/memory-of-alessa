@@ -74,19 +74,11 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", Instance_DesignateClass
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", InstanceHandle_Get_from_ClassDescriptor_and_AttachCount);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141730);
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", Instance_Create);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141820);
 
-static u_int FreeDataBlock_Stack_FreeCheck(Object_DataPool_Infomeation* pInfo) {
-    u_int result = 0; 
-
-    if(pInfo->pFreeBlock_List != NULL){
-        result = 1;
-    }
-
-    return result;
-}
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_001418B0);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_001418D0);
 
@@ -98,8 +90,15 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_001419D0);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", InstanceHierarchyTable_DesignateInstance_Initialize);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141A90);
+static u_int FreeDataBlock_Stack_FreeCheck(Object_DataPool_Infomeation* pInfo) {
+    u_int result = 0; 
 
+    if(pInfo->pFreeBlock_List != NULL){
+        result = 1;
+    }
+
+    return result;
+}
 
 static Object_DataBlock_Header* FreeDataBlock_Stack_Pop(Object_DataPool_Infomeation* pInfo) {
     Object_DataBlock_Header* result = NULL; 

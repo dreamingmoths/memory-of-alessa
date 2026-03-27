@@ -18,7 +18,7 @@ typedef struct ImpactQueue_Element {
 }ImpactQueue_Element;
 
 /**
- * guessed diference:
+ * guessed difference:
  * - `__attribute__((aligned(16)))` added
  */
 typedef struct Object_Instance {
