@@ -340,6 +340,14 @@ Object_Group_InstanceTableInfomeation_Set = 0x00142030;
 Exception_Handling_Instance_Create = 0x00141b40;
 Instance_Search_from_InstanceHandle = 0x00141670;
 ObjectInstance_DataBlock_Get = 0x00142190;
+FreeDataBlock_Stack_FreeCheck = 0x001418B0;
+FreeDataBlock_Stack_Pop = 0x00141AB0;
+FreeDataBlock_Stack_Push = 0x00141AE0;
+Object_Group_ClassAssociationInfomeation_Set = 0x00141FE0;
+ObjectInstance_DesignateClassDescriptorAttach_Count = 0x00142130;
+ObjectInstanceHandle_Get_from_ClassDescriptor_and_AttachCount = 0x00142140;
+Instance_DesignateClassDescriptorAttach_Count = 0x001416B0;
+InstanceHandle_Get_from_ClassDescriptor_and_AttachCount = 0x001416F0;
 
 // item_menu_select.c
 // this TU isn't in SH2, but there's a string that refers to it.

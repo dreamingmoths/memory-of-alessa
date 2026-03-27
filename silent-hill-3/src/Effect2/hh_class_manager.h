@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#define CLASS_DESCRIPTOR_MAX 0x30
+
 typedef struct ImpactQueue_ElementOption {
     float Vector[2][4] __attribute__((aligned(16))); // offset 0x0, size 0x20
     float Float_Value[2]; // offset 0x20, size 0x8
@@ -30,7 +32,7 @@ typedef struct Object_Instance {
 typedef struct Object_DataBlock_Header {
     u_int Enable; // offset 0x0, size 0x4
     struct Object_DataBlock_Header* pNext; // offset 0x4, size 0x4
-}Object_DataBlock_Header;
+}__attribute__((aligned(16))) Object_DataBlock_Header;
 
 typedef struct Object_DataPool_Infomeation {
     u_int Block_Size; // offset 0x0, size 0x4
@@ -77,5 +79,19 @@ typedef struct Object_Group_Infomeation {
     u_int Enable; // offset 0x50, size 0x4
     u_int Step; // offset 0x54, size 0x4
 }Object_Group_Infomeation;
+
+u_int ImpactDescriptor_Post(Object_Group_Infomeation* pInfo, ImpactQueue_Element* pDescriptor);
+u_int Object_Group_Manager(Object_Group_Infomeation* pInfo);
+u_int Object_Group_Infomeation_Set(Object_Group_Infomeation* pInfo);
+u_int Object_Group_QueueInfomeation_Set(Object_Group_Infomeation* pInfo, ImpactQueue_Element* pElement_Base, u_int Length_Max);
+u_int Object_Group_ClassAssociationInfomeation_Set(Object_Group_Infomeation* pInfo, Object_Class* pClass_List, Object_DataPool_Infomeation* pPool_Info_Base, u_int* pClass_Priority_List, u_int Class_Max);
+u_int Object_Group_InstanceTableInfomeation_Set(Object_Group_Infomeation* pInfo, Object_Instance* pInstance_Base, Object_Instance** pInstance_HierarchyTable, u_int Instance_Max);
+u_int Object_Group_All_Initialize(Object_Group_Infomeation* pInfo);
+u_int Object_Group_InstanceTable_DesignateClassDescriptorAttach_Initialize(Object_Group_Infomeation* pInfo, u_int Class_Descriptor);
+u_int Object_Group_InstanceTable_DesignateInstanceHandleAttach_Initialize(Object_Group_Infomeation* pInfo, u_int hInstance);
+u_int ObjectInstance_DesignateClassDescriptorAttach_Count(Object_Group_Infomeation* pInfo, u_int Class_Descriptor);
+u_int ObjectInstanceHandle_Get_from_ClassDescriptor_and_AttachCount(Object_Group_Infomeation* pInfo, u_int Class_Descriptor, u_int CountIndex);
+ImpactQueue_Element* ObjectInstance_Element_Get(Object_Group_Infomeation* pInfo, u_int hInstance);
+void* ObjectInstance_DataBlock_Get(Object_Group_Infomeation* pInfo, u_int hInstance);
 
 #endif
