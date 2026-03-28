@@ -110,7 +110,7 @@ static fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
 }
 
 static struct Stage_Data *StgOverlayGetStageData(StgName stg_name) {
-    switch (stg_name & 0xFF) {
+    switch ((u_char) stg_name) {
     default:
         return &stage_tgs_trial;
     case Stg_toilet:
