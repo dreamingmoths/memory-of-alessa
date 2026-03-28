@@ -1,4 +1,5 @@
 #include "subway_01.h"
+#include "Chacter/m3_sc.h"
 
 s32 func_01F6D680_subway_01(void)
 {
