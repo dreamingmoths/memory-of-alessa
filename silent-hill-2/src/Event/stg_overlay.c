@@ -1,7 +1,7 @@
 #include "stg_overlay.h"
 
-static union fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
-    switch (stg_name & 0xFF) {
+static fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
+    switch ((u_char) stg_name) {
         default:
             return NULL;
         case Stg_toilet:
@@ -219,42 +219,45 @@ static struct Stage_Data *StgOverlayGetStageData(StgName stg_name) {
 }
                         
 void StgOverlay(void) {
-    union fsFileIndex *stage_bin;
-    void *overlay_load_addr;
+    fsFileIndex *stage_bin;
     char *addr;
     int size;
-    int fid;
-    mwOverlayHeader* ovl;
 
     stage_bin = StgOverlayGetFileID(playing.stage);
+
     if (last_stage_bin != stage_bin) {
         last_stage_bin = stage_bin;
         if (stage_bin != 0) {
-            overlay_load_addr = D_1F01E00;
-            ovl = overlay_load_addr;
+            void* overlay_load_addr = D_1F01E00;
+            int fid;
+            mwOverlayHeader* ovl = overlay_load_addr;
+        
             FlushCache(2);
+
             for (;;) {
                 fid = FcRead(stage_bin, overlay_load_addr);
-                if (fid != -1) {
-                    break;
-                }
+                if (fid != -1) break;
+
                 shSyncVEnd(0);
             }
+
             fsSync(0, fid);
+
             addr = overlay_load_addr;
             addr += 0x80;
             addr += ovl->sz_text;
             addr += ovl->sz_data;
             size = ovl->sz_bss;
             UtilMemSet(addr, 0, size);
+
             MWNotifyOverlayLoaded(overlay_load_addr);
-        }
+        }        
     } else {
         verbose(3, "stg_overlay.c:352> stage data is already loaded.\n");
     }
+
     stage = StgOverlayGetStageData(playing.stage);
 }
-
 
 INCLUDE_RODATA("asm/nonmatchings/Event/stg_overlay", root_stage_toilet_bin);
 
