@@ -1,17 +1,15 @@
 #include "subway_01.h"
 #include "Chacter/m3_sc.h"
 
-s32 func_01F6D680_subway_01(void)
+int func_01F6D680_subway_01(void)
 {
     return 0x1;
 }
 
-s32 func_01F6D690_subway_01(void)
+int func_01F6D690_subway_01(void)
 {
-    s32 var_s0;
-
-    var_s0 = 0;
-
+    int var_s0 = 0;
+    
     switch (D_01F70700_subway_01)
     {
         case 0:
@@ -45,22 +43,17 @@ INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E100_subway_01);
 
 void func_01F6E270_subway_01(void)
 {
-    s32 temp_v1;
-    s32* var_s0;
+    int id;
+    int* var_s0 = &D_01F70650_subway_01;
 
-    var_s0 = &D_01F70650_subway_01;
     D_1D3165C |= 0x8000;
     
-    while (temp_v1 = *var_s0)
+    while (id = *var_s0)
     {
-        shCharacter_Manage_Delete(0x200, temp_v1 & 0xFFFF);
+        shCharacter_Manage_Delete(DOUBLE_HEAD_CHARA_ID, id);
         var_s0++;
     }
 }
-
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E2D0_subway_01);
-
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E320_subway_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E380_subway_01);
 
