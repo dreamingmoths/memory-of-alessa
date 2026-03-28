@@ -10,10 +10,10 @@ typedef struct ImpactQueue_ElementOption {
 }ImpactQueue_ElementOption;
 
 typedef struct ImpactQueue_Element {
-    u_int Class_Descriptor; // offset 0x0, size 0x4
-    u_int hInstance; // offset 0x4, size 0x4
-    u_int* pResultHandle_Address; // offset 0x8, size 0x4
-    u_int Reserved[1]; // offset 0xC, size 0x4
+    u_int unk0; // offset 0x0, size 0x4
+    u_int Class_Descriptor; // offset 0x4, size 0x4
+    u_int hInstance; // offset 0x8, size 0x4
+    u_int* pResultHandle_Address; // offset 0xC, size 0x4
     ImpactQueue_ElementOption Option; // offset 0x10, size 0x30
 }ImpactQueue_Element;
 

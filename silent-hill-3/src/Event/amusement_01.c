@@ -977,12 +977,12 @@ void func_01F703B0_amusement_01(float fparg0, float fparg1) {
     sceVu0FMATRIX matrix5;
     sceVu0FMATRIX matrix6;
 
-    D_01F74CE8_amusement_01 = D_01F74CE8_amusement_01 + (fparg0 * shGetDT());
+    D_01F74CE8_amusement_01 += (fparg0 * shGetDT());
     if (D_01F74CE8_amusement_01 > 180.0f) {
         D_01F74CE8_amusement_01 -= 360.0f; 
     }
 
-    D_01F74CF0_amusement_01 =  D_01F74CF0_amusement_01 - (fparg1 * shGetDT());
+    D_01F74CF0_amusement_01 -= (fparg1 * shGetDT());
     if (D_01F74CF0_amusement_01 < -180.0f) {
         D_01F74CF0_amusement_01 += 360.0f;
     }
