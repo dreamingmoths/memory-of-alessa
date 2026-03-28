@@ -77,7 +77,7 @@ segments:
       - [0x0dc970, asm,     text_1_1]
       - [0x0fdfa0, asm,     cri/cri_0] 
       - [0x10eff0, asm,     text_1_2]
-      - [0x110b40, asm,     Effect2/hh_class_0]
+      - [0x110b40, c,       Effect2/hh_class_blood_01]
       - [0x111420, asm,     Effect2/hh_class_1]
       - [0x111c10, asm,     Effect2/hh_class_2]
       - [0x112100, asm,     Effect2/hh_class_3]

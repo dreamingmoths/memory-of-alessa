@@ -319,9 +319,17 @@ Object_Initialize = 0x002105c0; // allow_duplicated:True visibility:local
 Object_Draw = 0x002109d0; // allow_duplicated:True visibility:local
 ParabolaMotion_Calculator = 0x00210660; // allow_duplicated:True visibility:local
 Object_Motion_00 = 0x002106d0; // allow_duplicated:True visibility:local
-HH_Class_Suffix_Blood_01 = 0x00210c50;
+HH_Class_Suffix_Blood_01 = 0x00210cd0;
 HH_Class_Prefix_Blood_01 = 0x00210c60;
 HH_Class_Blood_01 = 0x00210ce0;
+_suppress_coff = 0x00387BB0; // allow_duplicated:True
+_scale_start_list = 0x00387ED8; // allow_duplicated:True
+_rgba_start_list = 0x00387E80; // allow_duplicated:True
+_rgba_end_list = 0x00387E88; // allow_duplicated:True
+_motion_info_list = 0x00387F28; // allow_duplicated:True
+_scale_end_list = 0x00387EE0; // allow_duplicated:True
+
+HH_Effect_Object_Impact_Post = 0x001C20C0;
 
 // could be wrong
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
@@ -836,7 +844,6 @@ func_00280430 = 0x280430;
 
 D_01D319F0 = 0x1D319F0;
 func_003010F0 = 0x3010F0;
-func_001C20C0 = 0x1C20C0;
 func_0015CEF0 = 0x15CEF0;
 func_003027E0 = 0x3027E0;
 func_001C73D0 = 0x1C73D0;
