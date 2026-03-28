@@ -213,6 +213,7 @@ u_int HH_Class_Suffix_Blood_00() {
     
     return result;
 }
+
 u_int HH_Class_Blood_00(void* pBlock, ImpactQueue_Element* pElement) {
     u_int result = 1;
     HH_Object_Blood_00 * pThis = pBlock;

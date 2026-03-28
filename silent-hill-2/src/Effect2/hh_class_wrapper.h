@@ -9,5 +9,7 @@ float HH_ClassWrapper_Float_Clamp(float, float, float);
 float HH_ClassWrapper_FogParameter_A_Get(void);
 float HH_ClassWrapper_FogParameter_B_Get(void);
 void HH_ClassWrapper_Transform_PerspectiveProjection_Clip_forTriangleStrip(int*, sceVu0FVECTOR, sceVu0FMATRIX, sceVu0FMATRIX, float*);
+void HH_ClassWrapper_AlwaysFront_WorldView_Matrix_Get(sceVu0FMATRIX);
+void HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(sceVu0IVECTOR Dst_iVector, float* STQ_fVector, float (* LocalScreen_Matrix)[4], float (* LocalScreen_ClipMatrix)[4], float* Src_fVector, u_int Clip_Mask);
 
 #endif
