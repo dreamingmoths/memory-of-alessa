@@ -28,8 +28,8 @@ typedef struct Motion_Table_Infomeation {
     float diff_rgba_ratio; // offset 0x8, size 0x4
 }Motion_Table_Infomeation;
 
-u_int HH_Class_Prefix_Blood_01();
-u_int HH_Class_Suffix_Blood_01();
+u_int HH_Class_Prefix_Blood_01(void);
+u_int HH_Class_Suffix_Blood_01(void);
 u_int HH_Class_Blood_01(void* pBlock, ImpactQueue_Element* pElement);
 
 #endif
