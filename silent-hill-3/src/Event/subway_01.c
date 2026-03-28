@@ -42,7 +42,20 @@ INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DF90_subway_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E100_subway_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E270_subway_01);
+void func_01F6E270_subway_01(void)
+{
+    s32 temp_v1;
+    s32* var_s0;
+
+    var_s0 = &D_01F70650_subway_01;
+    D_1D3165C |= 0x8000;
+    
+    while (temp_v1 = *var_s0)
+    {
+        shCharacter_Manage_Delete(0x200, temp_v1 & 0xFFFF);
+        var_s0++;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E2D0_subway_01);
 
