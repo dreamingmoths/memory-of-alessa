@@ -5,7 +5,30 @@ s32 func_01F6D680_subway_01(void)
     return 0x1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6D690_subway_01);
+s32 func_01F6D690_subway_01(void)
+{
+    s32 var_s0;
+
+    var_s0 = 0;
+
+    switch (D_01F70700_subway_01)
+    {
+        case 0:
+            func_00190A20(2);
+            D_01F70700_subway_01 += 1;
+        case 1:
+            if (func_0016CED0(0x4F, 0x1D, &D_01F70370_subway_01) != 0)
+            {
+                func_00190A20(0);
+                var_s0 = 1;
+                D_01F70700_subway_01 = 0;
+            }
+            
+            break;
+    }
+    
+    return var_s0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6D720_subway_01);
 
