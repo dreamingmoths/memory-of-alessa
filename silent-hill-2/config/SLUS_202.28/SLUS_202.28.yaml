@@ -295,7 +295,7 @@ segments:
       - [0x16c780, asm, Chacter/m3_boat]
       - [0x16f630, asm, Chacter/lake_wave]
       - [0x16fbf0, asm, Chacter/m3_inu]
-      - [0x16fe80, asm, view/vc_play]
+      - [0x16fe80, c, view/vc_play]
       - [0x170010, asm, LoadBg/loadbg_2x2]
       - [0x1711d0, asm, LoadBg/loadbg_all]
       - [0x172180, asm, LoadBg/loadbg_cam]
