@@ -1,5 +1,4 @@
 #include "subway_01.h"
-#include "Chacter/m3_sc.h"
 
 int func_01F6D680_subway_01(void)
 {
@@ -55,7 +54,6 @@ void func_01F6E270_subway_01(void)
     }
 }
 
-
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E2D0_subway_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E320_subway_01);
@@ -66,6 +64,19 @@ INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E7C0_subway_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E7D0_subway_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E900_subway_01);
+void func_01F6E900_subway_01(Q* arg0, int* arg1, Q* arg2, int* arg3, int* arg4)
+{
+    Q sp0;
+    Q sp10;
+    
+    sp0.s32 = D_01F70660_subway_01.s32;
+    sp10.s32 = D_01F70670_subway_01.s32;
+    
+    vec_copy(&arg0->u128, &sp0.u128);
+    *arg1 = 1;
+    vec_copy(&arg2->u128, &sp10.u128);
+    *arg3 = 1;
+    *arg4 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E960_subway_01);
