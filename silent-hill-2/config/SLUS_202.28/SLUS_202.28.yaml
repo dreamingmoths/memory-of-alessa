@@ -258,7 +258,7 @@ segments:
       - [0x154200, c, Effect2/hh_class_blood_00]
       - [0x1549e0, c, Effect2/hh_class_blood_01]
       - [0x1551f0, c, Effect2/hh_class_blood_02]
-      - [0x155b30, asm, Effect2/hh_class_blood_03]
+      - [0x155b30, c, Effect2/hh_class_blood_03]
       - [0x1562e0, asm, Effect2/hh_class_blood_footmark_00]
       - [0x156750, asm, Effect2/hh_class_blood_pool_phenomenon_00]
       - [0x156a70, asm, Effect2/hh_class_blood_splash_phenomenon_00]
