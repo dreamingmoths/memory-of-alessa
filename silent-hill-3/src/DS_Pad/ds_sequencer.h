@@ -60,3 +60,4 @@ extern float Sequence_Different_Time_Get(MysterySequenceData *unk);
 
 extern void TotalActuaterLV_Keeper(u_int ControllerID /* r2 */, u_int ActuaterType /* r2 */, float ActuaterLV /* r29 */);
 void Sequencer_Type_Hispeed(MysterySequenceData *unk, EntryRecord *pER);
+float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */);
