@@ -191,7 +191,7 @@ static u_int Object_Draw(HH_Object_Blood_00* pThis, ImpactQueue_Element* pElemen
 
 u_int HH_Class_Prefix_Blood_00() {
     u_long tex0; 
-    struct sceVif1Packet* pPk;
+    sceVif1Packet* pPk;
     u_int result = 1;
 
     pPk = HH_Vif1Packet_Current_Get();

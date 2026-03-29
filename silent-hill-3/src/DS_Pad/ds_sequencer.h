@@ -54,9 +54,22 @@ typedef struct MysterySequenceData
     Sequencer_Data data;
 } MysterySequenceData;
 
+typedef struct DS_Record_Edit {
+    // total size: 0x10
+    struct DS_Record Record; // offset 0x0, size 0x8
+    struct DS_Record_Edit * pPrev; // offset 0x8, size 0x4
+    struct DS_Record_Edit * pNext; // offset 0xC, size 0x4
+} DS_Record_Edit;
+
+
 extern int Node_Current_Search(struct Record_Info *pInfo /* r2 */, float Time /* r29+0x10 */);
 extern int Node_Next_Search(struct Record_Info *pInfo /* r2 */, float Time /* r29 */);
 extern float Sequence_Different_Time_Get(MysterySequenceData *unk);
 
 extern void TotalActuaterLV_Keeper(u_int ControllerID /* r2 */, u_int ActuaterType /* r2 */, float ActuaterLV /* r29 */);
 void Sequencer_Type_Hispeed(MysterySequenceData *unk, EntryRecord *pER);
+float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */);
+
+DS_Record_Edit * EditNode_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29 */); 
+static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */);
+

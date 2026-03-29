@@ -130,6 +130,12 @@ Sequencer_Type_Hispeed = 0x13B700;
 Node_Current_Search = 0x13C890;
 Node_Next_Search = 0x13C840;
 Sequence_Different_Time_Get = 0x13BAD0;
+Sequencer_Type_Lowspeed = 0x13B840;
+ActuaterLV_Complement = 0x13C6F0;
+Sequencer_Type_Hispeed_Edit = 0x13B900;
+EditNode_Current_Search = 0x13C8C0;
+ActuaterLV_Complement_Edit = 0x13C790;
+Sequencer_Type_Lowspeed_Edit = 0x13BA30;
 
 RoomName  = 0x170810;
 room_name = 0x1d41ef0; // type:s64

@@ -94,5 +94,10 @@ static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */);
 static EntryRecord * EntryRecord_Get_fromTableIndex(u_int EntryTable_Index /* r2 */);
 static u_int EventMessage_Post(u_int Handle /* r2 */, u_int EventID /* r2 */, float Value /* r29+0x30 */);
 
+static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */);
+
+static DS_Record_Edit * EditNode_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29 */);
+static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */);
+
 
 #endif

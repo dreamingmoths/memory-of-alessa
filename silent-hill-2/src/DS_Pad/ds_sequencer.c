@@ -104,6 +104,119 @@ void Sequencer_Type_Hispeed(EntryRecord *pER)
     }
 }
 
+static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
+
+    Record_Info * pInfo; // r16
+    float time; // r20
+    int Node; // r17
+    int Node_Next; // r2
+    DS_Record * pDSR; // r2
+    float now_act_lv_f; // r29+0x50
+
+    pInfo = &pER->Info;
+    time = pER->Time_Count;
+    Node = Node_Current_Search(pInfo, time);
+    Node_Next = Node_Next_Search(pInfo, time);
+    if ((Node != -1) && (Node_Next != -1)) {
+        pDSR = (DS_Record*)pInfo->pAddress + Node;
+        now_act_lv_f = 0.0f;
+        if (pDSR->Complement_Enable != 0) {
+            now_act_lv_f = ActuaterLV_Complement(pDSR, time);
+        }
+        
+        now_act_lv_f *= pER->Ratio;
+        TotalActuaterLV_Keeper(pER->Controller_ID, 1, now_act_lv_f);
+
+    }
+}
+
+static void Sequencer_Type_Hispeed_Edit(EntryRecord * pER /* r16 */) {
+
+    Record_Info * pInfo; // r2
+    float time; // r20   
+    DS_Record_Edit * pDSR; // r17
+    u_int now_act_lv_i; // r18
+    float section_0; // r21    
+    float section_1; // r29+0x50
+    
+    time = pER->Time_Count;
+    pDSR = EditNode_Current_Search(&pER->Info, time);
+    if ((pDSR != NULL) && (pDSR->pNext != NULL)) {
+        now_act_lv_i = 0;
+        if (pDSR->Record.Complement_Enable != 0) {
+            now_act_lv_i = pDSR->Record.Actuater_LV ? 1 : 0;
+        } else {
+            section_0 = pDSR->Record.Time;
+            section_1 = section_0 + Sequence_Different_Time_Get();
+            if ((section_0 <= time) && (time < section_1)) {
+                now_act_lv_i = pDSR->Record.Actuater_LV ? 1 : 0;
+            }
+        }
+
+        now_act_lv_i *= (pER->Ratio > 0.0f) ? 1 : 0;
+        TotalActuaterLV_Keeper(pER->Controller_ID, 0, now_act_lv_i);
+    }
+}
+
+static void Sequencer_Type_Lowspeed_Edit(EntryRecord * pER /* r16 */)  {
+
+    Record_Info * pInfo; // r2
+    float time; // r20
+    DS_Record_Edit * pDSR; // r2    
+    float now_act_lv_f; // r29+0x30
+
+    time = pER->Time_Count;
+    pDSR = EditNode_Current_Search(&pER->Info, time);
+    if ((pDSR != NULL) && (pDSR->pNext != NULL)) {
+        now_act_lv_f = 0.0f;
+        if (pDSR->Record.Complement_Enable != 0) {
+            now_act_lv_f = ActuaterLV_Complement_Edit(pDSR, time);
+        }
+        
+        now_act_lv_f *= pER->Ratio;
+        TotalActuaterLV_Keeper(pER->Controller_ID, 1, now_act_lv_f);
+    }
+}
+
+static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29    
+    float time_next; // r29
+    float comp_ratio; // r3
+    float act_lv_current; // r29    
+    float act_lv_next; // r29
+    
+    time_current = pDSR->Time;
+    time_next = pDSR[1].Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Actuater_LV;
+    act_lv_next = pDSR[1].Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    
+    return result;
+}
+
+static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29
+    float time_next; // r29
+    float comp_ratio; // r3  
+    float act_lv_current; // r29
+    float act_lv_next; // r29
+
+    time_current = pDSR->Record.Time;
+    time_next = pDSR->pNext->Record.Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Record.Actuater_LV;
+    act_lv_next = pDSR->pNext->Record.Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    return result;
+        
+}
+
+
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
     DS_Record * pDSR = pInfo->pAddress;
@@ -128,6 +241,22 @@ static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0
         result = num - 1;
     }
 
+    return result;
+}
+
+static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
+    DS_Record_Edit * result;
+    DS_Record_Edit * pDSR;
+
+    result = NULL;
+    pDSR = (DS_Record_Edit *)pInfo->pAddress;
+    while (pDSR != NULL) {
+        if (Time < pDSR->Record.Time) {
+            result = pDSR->pPrev;
+            break;
+        }
+        pDSR = pDSR->pNext;
+    }
     return result;
 }
 
