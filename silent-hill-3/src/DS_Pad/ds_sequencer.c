@@ -100,7 +100,23 @@ static void Sequencer_Type_Hispeed_Edit(MysterySequenceData *unk, EntryRecord * 
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BA30);
+static void Sequencer_Type_Lowspeed_Edit(MysterySequenceData *unk, EntryRecord * pER /* r16 */) {
+    Record_Info * pInfo;
+    float time;
+    DS_Record_Edit * pDSR;  
+    float now_act_lv_f;
+
+    time = pER->Time_Count;
+    pDSR = EditNode_Current_Search(&pER->Info, time);
+    if ((pDSR != NULL) && (pDSR->pNext != NULL)) {
+        now_act_lv_f = 0.0f;
+        if (pDSR->Record.Complement_Enable != 0) {
+            now_act_lv_f = ActuaterLV_Complement_Edit(pDSR, time);
+        }
+        
+        unk->data.ActuaterLV[1] += (now_act_lv_f * pER->Ratio);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BAC0);
 
@@ -166,7 +182,24 @@ static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 
     return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C790);
+static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29
+    float time_next; // r29
+    float comp_ratio; // r3  
+    float act_lv_current; // r29
+    float act_lv_next; // r29
+
+    time_current = pDSR->Record.Time;
+    time_next = pDSR->pNext->Record.Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Record.Actuater_LV;
+    act_lv_next = pDSR->pNext->Record.Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    return result;
+        
+}
 
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
