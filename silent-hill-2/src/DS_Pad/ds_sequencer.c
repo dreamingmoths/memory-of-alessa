@@ -130,6 +130,34 @@ static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
     }
 }
 
+static void Sequencer_Type_Hispeed_Edit(EntryRecord * pER /* r16 */) {
+
+    Record_Info * pInfo; // r2
+    float time; // r20   
+    DS_Record_Edit * pDSR; // r17
+    u_int now_act_lv_i; // r18
+    float section_0; // r21    
+    float section_1; // r29+0x50
+    
+    time = pER->Time_Count;
+    pDSR = EditNode_Current_Search(&pER->Info, time);
+    if ((pDSR != NULL) && (pDSR->pNext != NULL)) {
+        now_act_lv_i = 0;
+        if (pDSR->Record.Complement_Enable != 0) {
+            now_act_lv_i = pDSR->Record.Actuater_LV ? 1 : 0;
+        } else {
+            section_0 = pDSR->Record.Time;
+            section_1 = section_0 + Sequence_Different_Time_Get();
+            if ((section_0 <= time) && (time < section_1)) {
+                now_act_lv_i = pDSR->Record.Actuater_LV ? 1 : 0;
+            }
+        }
+
+        now_act_lv_i *= (pER->Ratio > 0.0f) ? 1 : 0;
+        TotalActuaterLV_Keeper(pER->Controller_ID, 0, now_act_lv_i);
+    }
+}
+
 static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
 
     float result; // r29
@@ -148,6 +176,7 @@ static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 
     
     return result;
 }
+
 
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
