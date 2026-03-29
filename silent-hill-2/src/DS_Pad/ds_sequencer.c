@@ -130,6 +130,25 @@ static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
     }
 }
 
+static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29    
+    float time_next; // r29
+    float comp_ratio; // r3
+    float act_lv_current; // r29    
+    float act_lv_next; // r29
+    
+    time_current = pDSR->Time;
+    time_next = pDSR[1].Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Actuater_LV;
+    act_lv_next = pDSR[1].Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    
+    return result;
+}
+
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
     DS_Record * pDSR = pInfo->pAddress;
