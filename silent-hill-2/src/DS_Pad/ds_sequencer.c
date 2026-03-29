@@ -205,6 +205,22 @@ static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0
     return result;
 }
 
+static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
+    DS_Record_Edit * result;
+    DS_Record_Edit * pDSR;
+
+    result = NULL;
+    pDSR = (DS_Record_Edit *)pInfo->pAddress;
+    while (pDSR != NULL) {
+        if (Time < pDSR->Record.Time) {
+            result = pDSR->pPrev;
+            break;
+        }
+        pDSR = pDSR->pNext;
+    }
+    return result;
+}
+
 // | Permission | Meaning                            |
 // | ---------- | ---------------------------------- |
 // | 0          | always allowed                     |
