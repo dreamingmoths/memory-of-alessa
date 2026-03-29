@@ -104,6 +104,32 @@ void Sequencer_Type_Hispeed(EntryRecord *pER)
     }
 }
 
+static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
+
+    Record_Info * pInfo; // r16
+    float time; // r20
+    int Node; // r17
+    int Node_Next; // r2
+    DS_Record * pDSR; // r2
+    float now_act_lv_f; // r29+0x50
+
+    pInfo = &pER->Info;
+    time = pER->Time_Count;
+    Node = Node_Current_Search(pInfo, time);
+    Node_Next = Node_Next_Search(pInfo, time);
+    if ((Node != -1) && (Node_Next != -1)) {
+        pDSR = (DS_Record*)pInfo->pAddress + Node;
+        now_act_lv_f = 0.0f;
+        if (pDSR->Complement_Enable != 0) {
+            now_act_lv_f = ActuaterLV_Complement(pDSR, time);
+        }
+        
+        now_act_lv_f *= pER->Ratio;
+        TotalActuaterLV_Keeper(pER->Controller_ID, 1, now_act_lv_f);
+
+    }
+}
+
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
     DS_Record * pDSR = pInfo->pAddress;
