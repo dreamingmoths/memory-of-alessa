@@ -61,6 +61,17 @@ typedef struct DS_Record_Edit {
     struct DS_Record_Edit * pNext; // offset 0xC, size 0x4
 } DS_Record_Edit;
 
+// total size: 0x18
+typedef struct DSR_MUD {
+    // Members
+    float Different_Time; // offset 0x0, size 0x4
+    unsigned int Handle_History; // offset 0x4, size 0x4
+    unsigned int EntryRecord_Count; // offset 0x8, size 0x4
+    unsigned int enQueue_Pos; // offset 0xC, size 0x4
+    unsigned int deQueue_Pos; // offset 0x10, size 0x4
+    unsigned int EventQueue_Count; // offset 0x14, size 0x4
+} DSR_MUD;
+
 sh2gfw_ModelDraw_MAN *sh2gfw_Get_pMD(int chara_id);
 void SCSetModel(SubCharacter *scp, int model, int anime);
 int shCharacter_Manage_SetDataAdresss(SubCharacter *scp);
@@ -99,5 +110,7 @@ static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 
 static DS_Record_Edit * EditNode_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29 */);
 static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */);
 
+static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */);
+extern DSR_MUD * pMUD;
 
 #endif
