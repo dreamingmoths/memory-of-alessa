@@ -372,3 +372,26 @@ u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int Co
     }
     return result;
 }
+
+static u_int EntryRecord_Handle_Create() {
+    u_int result; // r16
+
+    result = pMUD->Handle_History + 1;
+
+    while (EntryRecord_Handle_Search(result) != 0) {
+        result += 1;
+    }
+    pMUD->Handle_History = result;
+    return result;
+}
+
+static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
+    
+    u_int result;
+
+    result = 0;
+    if (EntryRecord_Get_fromHandle(Handle) != 0) {
+        result = 1;
+    }
+    return result;
+}
