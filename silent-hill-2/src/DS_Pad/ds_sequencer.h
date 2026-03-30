@@ -113,4 +113,6 @@ static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Ti
 static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */);
 extern DSR_MUD * pMUD;
 
+static void Sequence_Different_Time_Set(float Time /* r29 */);
+
 #endif
