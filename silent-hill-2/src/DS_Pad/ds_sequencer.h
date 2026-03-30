@@ -127,4 +127,6 @@ static u_int EventMessageQueue_Length_Get(void);
 static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor);
 extern DSR_MU_EventDescriptor _EventQueue[100];
 
+static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */);
+
 #endif
