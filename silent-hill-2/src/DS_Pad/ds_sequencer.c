@@ -441,3 +441,7 @@ static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
     }
     return result;
 }
+
+static u_int EntryRecord_Type_Get(EntryRecord * pER /* r2 */)  {
+    return pER->Info.pObject->Type;
+}
