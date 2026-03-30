@@ -449,3 +449,7 @@ static u_int EntryRecord_Type_Get(EntryRecord * pER /* r2 */)  {
 static u_int EntryRecord_Condition_Get(EntryRecord * pER /* r2 */) {
     return pER->Condition;
 }
+
+static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */) {
+    pER->Condition = Condition;
+}
