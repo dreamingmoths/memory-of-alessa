@@ -56,11 +56,34 @@ void func_01F6E270_subway_01(void)
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E2D0_subway_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E320_subway_01);
+void func_01F6E320_subway_01(void)
+{
+    D_01F70700_subway_01 = 0;
+    D_01F70708_subway_01 = 0;
+    
+    switch (RoomName())
+    {
+        case 0x35:
+        case 0x36:
+        case 0x37:
+        case 0x38:
+        case 0x3A:
+        case 0x3B:
+        case 0x3C:
+        case 0x3D:
+            break;
+        case 0x39:
+            func_01F6E7C0_subway_01();
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E380_subway_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E7C0_subway_01);
+void func_01F6E7C0_subway_01(void)
+{
+    D_01F70718_subway_01 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E7D0_subway_01);
 
