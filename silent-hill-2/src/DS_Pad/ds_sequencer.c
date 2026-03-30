@@ -422,3 +422,7 @@ static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
     }
     return result;
 }
+
+static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */) {
+    return pER->Handle;
+}
