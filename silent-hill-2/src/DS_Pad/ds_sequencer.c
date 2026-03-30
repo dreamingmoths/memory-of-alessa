@@ -400,7 +400,25 @@ static void Sequence_Different_Time_Set(float Time /* r29 */) {
     pMUD->Different_Time = Time;
 }
 
-
 static float Sequence_Different_Time_Get() {
     return pMUD->Different_Time;
+}
+
+static u_int EventMessageQueue_Length_Get(void) {
+    return 0x64; // 100
+}
+
+static u_int EventMessageQueue_deQueue(struct DSR_MU_EventDescriptor *pDescriptor) {
+    u_int result;
+    u_int length;
+
+    result = 0;
+    length = EventMessageQueue_Length_Get();
+    if (pMUD->EventQueue_Count != 0) {
+        *pDescriptor = _EventQueue[pMUD->deQueue_Pos++];
+        pMUD->deQueue_Pos = pMUD->deQueue_Pos % length;
+        pMUD->EventQueue_Count = pMUD->EventQueue_Count - 1;
+        result = 1;
+    }
+    return result;
 }
