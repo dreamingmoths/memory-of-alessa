@@ -26,5 +26,6 @@ segments:
     subsegments:
       - [0x80, c, Event/subway_01]
       - [0x1780, data, subway_01_data]
+      - [0x3080, .rodata, Event/subway_01]
       - { vram: 0x1F70700, type: bss, name: subway_01_bss }
   - [0x3100]

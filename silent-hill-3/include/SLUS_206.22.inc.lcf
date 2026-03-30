@@ -198,6 +198,8 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		subway_01_data.data.s.o (.data)
+        ALIGNALL(0x10);
+        subway_01.c.o (.rodata)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
