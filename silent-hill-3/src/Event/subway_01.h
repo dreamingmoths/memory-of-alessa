@@ -6,11 +6,16 @@
 
 int func_0016CED0(int, int, int*);
 int func_00190A20(int);
+short RoomName(void);
+void func_01F6E7C0_subway_01(void);
 
 extern int D_01F70370_subway_01;
 extern int D_01F70700_subway_01;
 extern int D_01F70650_subway_01;
 extern int D_1D3165C;
+extern int D_01F70700_subway_01;
+extern int D_01F70708_subway_01;
+extern int D_01F70718_subway_01;
 
 extern Q D_01F70660_subway_01;
 extern Q D_01F70670_subway_01;
