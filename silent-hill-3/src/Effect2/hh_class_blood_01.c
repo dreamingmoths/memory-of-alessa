@@ -2,7 +2,7 @@
 #include "hh_packet.h"
 #include "hh_class_wrapper.h"
 #include "hh_effect_object_def.h"
-#include "hh_effect_object_texture,.h"
+#include "hh_effect_object_texture.h"
 #include "libvifpk.h"
 
 extern int rand(void);
