@@ -400,7 +400,7 @@ static void Sequence_Different_Time_Set(float Time /* r29 */) {
     pMUD->Different_Time = Time;
 }
 
-static float Sequence_Different_Time_Get() {
+static float Sequence_Different_Time_Get(void) {
     return pMUD->Different_Time;
 }
 
@@ -452,4 +452,16 @@ static u_int EntryRecord_Condition_Get(EntryRecord * pER /* r2 */) {
 
 static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */) {
     pER->Condition = Condition;
+}
+
+static void EntryRecordTable_All_Initialize(void) {
+    
+    u_int i; // r16
+
+    i = 0;
+
+    while (i < 0x14) {
+        EntryRecord_Initialize(EntryRecord_Get_fromTableIndex(i));
+        i++;
+    }
 }
