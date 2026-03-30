@@ -430,3 +430,14 @@ static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */) {
 static u_int EntryRecord_Enable_Check(EntryRecord * pER /* r2 */) {
     return pER->Enable;
 }
+
+static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
+
+    u_int result; // r2
+
+    result = 0;
+    if (!(pER->Time_Count <= pER->Time_Max)) {
+        result = 1;
+    }
+    return result;
+}
