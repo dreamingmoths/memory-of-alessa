@@ -395,3 +395,12 @@ static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
     }
     return result;
 }
+
+static void Sequence_Different_Time_Set(float Time /* r29 */) {
+    pMUD->Different_Time = Time;
+}
+
+
+static float Sequence_Different_Time_Get() {
+    return pMUD->Different_Time;
+}
