@@ -72,6 +72,14 @@ typedef struct DSR_MUD {
     unsigned int EventQueue_Count; // offset 0x14, size 0x4
 } DSR_MUD;
 
+// total size: 0xC
+typedef struct DSR_MU_EventDescriptor {
+    // Members
+    unsigned int Handle; // offset 0x0, size 0x4
+    unsigned int EventID; // offset 0x4, size 0x4
+    float Value; // offset 0x8, size 0x4
+} DSR_MU_EventDescriptor;
+
 sh2gfw_ModelDraw_MAN *sh2gfw_Get_pMD(int chara_id);
 void SCSetModel(SubCharacter *scp, int model, int anime);
 int shCharacter_Manage_SetDataAdresss(SubCharacter *scp);
@@ -112,5 +120,11 @@ static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Ti
 
 static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */);
 extern DSR_MUD * pMUD;
+
+static void Sequence_Different_Time_Set(float Time /* r29 */);
+
+static u_int EventMessageQueue_Length_Get(void);
+static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor);
+extern DSR_MU_EventDescriptor _EventQueue[100];
 
 #endif
