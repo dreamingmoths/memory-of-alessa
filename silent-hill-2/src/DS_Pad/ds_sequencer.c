@@ -408,7 +408,7 @@ static u_int EventMessageQueue_Length_Get(void) {
     return 0x64; // 100
 }
 
-static u_int EventMessageQueue_deQueue(struct DSR_MU_EventDescriptor *pDescriptor) {
+static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
     u_int result;
     u_int length;
 
