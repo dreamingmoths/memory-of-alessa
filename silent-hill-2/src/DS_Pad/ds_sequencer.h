@@ -130,6 +130,11 @@ extern DSR_MU_EventDescriptor _EventQueue[100];
 static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */);
 
 static void EntryRecordTable_All_Initialize(void);
-static void EntryRecord_Initialize(EntryRecord * pER /* r2 */); 
+static void EntryRecord_Initialize(EntryRecord * pER /* r2 */);
+
+static u_int EntryRecord_ID_Get(EntryRecord * pER /* r2 */);
+static u_int EntryRecord_Attribute_Get(EntryRecord * pER /* r2 */);
+static u_int EntryRecord_EntryCount_Get(void);
+static u_int EntryRecord_EntryCount_Decrement(void);
 
 #endif
