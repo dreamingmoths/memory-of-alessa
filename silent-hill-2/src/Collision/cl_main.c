@@ -29,9 +29,15 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCollectCharaPosition);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetCharaHitColumn);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clAddDynamicWall);
+void clAddDynamicWall(struct _CL_HITPOLY_PLANE * pl /* r2 */) {
+    clDynamicWallList[clDynamicWallListAct].dw[clDynamicWallList[clDynamicWallListAct].use] = pl;
+    clDynamicWallList[clDynamicWallListAct].use++;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clAddDynamicFloor);
+void clAddDynamicFloor(struct _CL_HITPOLY_PLANE * pl /* r2 */) {
+    clDynamicFloorList[clDynamicFloorListAct].dw[clDynamicFloorList[clDynamicFloorListAct].use] = pl;
+    clDynamicFloorList[clDynamicFloorListAct].use++;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCollectCharaALL);
 
