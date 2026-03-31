@@ -177,6 +177,10 @@ void clBattleAddQue(struct _CL_BATTLE_QUE * que /* r2 */);
 
 struct _CL_BATTLE_RESULT * clBattleGetResult(unsigned int id /* r2 */, struct _CL_BATTLE_RESULT * before /* r2 */);
 
+void clAddDynamicWall(struct _CL_HITPOLY_PLANE * pl /* r2 */);
+
+void clAddDynamicFloor(struct _CL_HITPOLY_PLANE * pl /* r2 */);
+
 // nonmatching:
 
 int clCheckSubColumnToColumn(struct _CL_HITRESULT * result /* r2 */, float (* clm0)[4] /* r2 */, float (* clm1)[4] /* r2 */);
