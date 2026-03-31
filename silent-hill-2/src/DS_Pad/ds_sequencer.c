@@ -465,3 +465,34 @@ static void EntryRecordTable_All_Initialize(void) {
         i++;
     }
 }
+
+static u_int EntryRecord_ID_Get(EntryRecord * pER /* r2 */) {
+    return pER->Info.pObject->ID;
+}
+
+static u_int EntryRecord_Attribute_Get(EntryRecord * pER /* r2 */) {
+    return pER->Info.pObject->Attribute;
+}
+
+static u_int EntryRecord_EntryCount_Get(void) {
+    return pMUD->EntryRecord_Count;
+}
+
+static u_int EntryRecord_EntryFreeCount_Get(void)  {
+    return 0x14 - pMUD->EntryRecord_Count;
+}
+
+static u_int EntryRecord_EntryCount_Increment(void) {
+    return pMUD->EntryRecord_Count++;
+}
+
+static u_int EntryRecord_EntryCount_Decrement(void) {
+    if (pMUD->EntryRecord_Count != 0) {
+        pMUD->EntryRecord_Count--;
+    }
+    return pMUD->EntryRecord_Count;
+}
+
+static void EntryRecord_Initialize(EntryRecord * pER /* r2 */) {
+    memset(pER, 0, sizeof(EntryRecord));
+}
