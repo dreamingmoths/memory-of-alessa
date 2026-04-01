@@ -62,7 +62,7 @@ segments:
       - [0x029000, asm, Chacter_Draw/model3_sub_n]
       - [0x0295f0, c,   Chacter_Draw/model3_vu0_n]
       - [0x02c4e0, c,   Chacter_Draw/model3_vu1_n]
-      - [0x02e4c0, asm, Chacter_Draw/model_common]
+      - [0x02e4c0, c,   Chacter_Draw/model_common]
       - [0x02e540, asm, Chacter_Draw/model_n]
       - [0x02e580, asm, Chacter_Draw/sh2gfw_CharacterOT]
       - [0x02e8d0, asm, Chacter_Draw/sh2gfw_Draw_Character]
@@ -381,6 +381,8 @@ segments:
       - [0x29cb00, .rodata, Effect2/hh_memory_manage]
       - [0x29cb80, rodata,  rodata_9]
       - { vram: 0x03c7d80, type: bss,  name: bss_0 }
+      - { vram: 0x041bf10, type: .bss, name: Chacter_Draw/model_common }
+      - { vram: 0x0438588, type: bss,  name: bss_1 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
-      - { vram: 0x126fbc0, type: bss,  name: bss_1 }
+      - { vram: 0x126fbc0, type: bss,  name: bss_2 }
   - [0x2c8480]

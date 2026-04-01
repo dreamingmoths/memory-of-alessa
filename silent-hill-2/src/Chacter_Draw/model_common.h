@@ -59,8 +59,10 @@ typedef struct ModelCommonWork
     struct TextPosParam text_pos_params[64]; // offset 0xE0A0, size 0x200
     unsigned long specular_mapping_tex0;     // offset 0xE2A0, size 0x4
     unsigned long latitude_mapping_tex0;     // offset 0xE2A8, size 0x4
+    u_char pad[0x50];                        // offset 0xE2B0, size 0x50
 } ModelCommonWork;
 
-ModelCommonWork *model_common_work;
+extern ModelCommonWork *model_common_work;
+
 
 #endif
