@@ -1,18 +1,227 @@
 #include "church_02.h"
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6D680_church_02);
+int func_01F6D680_church_02(void) {
+    int ret;
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6D7B0_church_02);
+    ret = 0;
+    if (GET_FLAG(D_1D316A8, 0x11) && !GET_FLAG(D_1D316A8, 0x12)) {
+        return 1;
+    }
+    switch (D_01F77580_church_02) {
+        case 0:
+            func_00190A20(2);
+            func_001C2290(3, 0.5f);
+            D_01F77580_church_02 += 1;
+        case 1:
+            if (func_0016C540(&D_01F769C0_church_02, &D_01F76A20_church_02) != 0) {
+                D_01F77580_church_02 += 1;
+            case 2:
+                func_00190A20(0);
+                func_001C2290(5, 0.5f);
+                D_01F77580_church_02 = 0;
+                ret = 1;
+                D_1D31644[0] |= 0x10;
+                D_1D317D0[0] |= 0x400000;
+            }
+            break;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DB40_church_02);
+#ifdef NON_MATCHING
+int func_01F6D7B0_church_02(void) {
+    switch (D_01F77580_church_02) {
+        case 0:
+            D_1D316AC[0] |= 0x20000000;
+            func_00190A20(2);
+            SeCall(1.0f, 0.0f, 0x2B21);
+            D_1D316A4[0] |= 0x02000000;
+            ItemGet(0x4B);
+            func_00317490(0x4B, 0.2f);
+            D_01F77580_church_02 += 1;
+            /* fallthrough */
+        case 1:
+            if (func_0016C1C0(0xDE) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            func_003174B0(0.2f);
+            func_001C2290(4, 1.2f);
+            D_01F77580_church_02 += 1;
+        case 2:
+            if (func_001C2580(2) == 0) {
+                return 0;
+            }
+            SeCall(0.5f, 0.0f, 0x4A38);
+            func_0019A940();
+            D_01F77580_church_02 += 1;
+        case 3:
+            if (func_0019A9B0(1.2f) == 0) {
+                return 0;
+            }
+            SeCall(0.5f, 0.0f, 0x4A39);
+            D_01F77580_church_02 += 1;
+        case 4:
+            if (func_0016C540(&D_01F76A40_church_02, &D_01F76AA0_church_02) == 0) {
+                return 0;
+            }
+            func_0016C9C0();
+            if (func_001646C0() != 0) {
+                D_01F77580_church_02 += 2;
+            } else {
+                SeCall(0.5f, 0.0f, 0x4A38);
+            }
+            func_0019A940();
+            D_01F77580_church_02 += 1;
+        case 5:
+            if (func_0019A9B0(1.2f) == 0) {
+                return 0;
+            }
+            SeCall(0.5f, 0.0f, 0x4A39);
+            D_01F77580_church_02 += 1;
+            func_0019A940();
+        case 6:
+            if (func_0019A9B0(1.2f) == 0) {
+                return 0;
+            }
+            D_01F77580_church_02 += 1;
+        case 7:
+            SeCall(1.0f, 0.0f, 0x2B21);
+            func_001C2290(5, 1.2f);
+            D_1D316A4[0] |= 0x04000000;
+            ItemGet(0x4C);
+            func_00317490(0x4C, 0.2f);
+            D_01F77580_church_02 += 1;
+        case 8:
+            if (func_0016C1C0(0xDF) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            func_003174B0(0.2f);
+            D_1D316AC[0] &= 0xDFFFFFFF;
+            func_00190A20(0);
+        default:
+            D_01F77580_church_02 = 0;
+            return 1;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DC10_church_02);
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6D7B0_church_02); //SeCall memes
+#endif
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DCE0_church_02);
+int func_01F6DB40_church_02(void) {
+    switch (D_01F77580_church_02) {
+        case 0:
+            func_00190A20(2);
+            func_0016CD00(&D_01F76AC0_church_02);
+            D_01F77580_church_02 += 1;
+        case 1:
+            if (func_0016C1C0(0x99) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            D_01F77580_church_02 += 1;
+        case 2:
+            if (func_0016BED0(0x12, 0x9A) == 0) {
+                return 0;
+            }
+            func_00190A20(0);
+        default:
+            D_01F77580_church_02 = 0;
+            return 1;
+        }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DE30_church_02);
+int func_01F6DC10_church_02(void) {
+    switch (D_01F77580_church_02) {
+        case 0:
+            func_00190A20(2);
+            func_0016CD00(&D_01F76AC0_church_02);
+            D_01F77580_church_02 += 1;
+        case 1:
+            if (func_0016C1C0(0x9B) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            D_01F77580_church_02 += 1;
+        case 2:
+            if (func_0016BED0(0x13, 0x9C) == 0) {
+                return 0;
+            }
+            func_00190A20(0);
+        default:
+            D_01F77580_church_02 = 0;
+            return 1;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DF20_church_02);
+int func_01F6DCE0_church_02(void) {
+    switch (D_01F77580_church_02) {
+        case 0:
+            func_00190A20(2);
+            func_0016CD00(&D_01F76AD0_church_02);
+            D_01F77580_church_02 += 1;
+    
+        case 1:
+            if (!GET_FLAG(D_1D316F8, 0xA)) {
+                if (func_0016C1C0(0x9D) == 0) {
+                    return 0;
+                }
+                func_0016C3C0();
+            }
+            D_01F77580_church_02 += 1;
+        case 2:
+            if (func_0016BED0(0x14, 0x9E) == 0) {
+                return 0;
+            }
+            func_0012CFA0();
+            func_0012CFE0(0);
+            func_0012CFC0();
+            D_01F77580_church_02 += 1;
+        case 3:
+            if (!GET_FLAG(D_1D316F8, 0xA)) {
+                if (func_0016C1C0(0xA0) == 0) {
+                    return 0;
+                }
+            }
+            func_00190A20(0);
+        default:
+            D_01F77580_church_02 = 0;
+            return 1;
+    }
+}
+
+int func_01F6DE30_church_02(void) {
+    int var_v0;
+
+    switch (D_01F77580_church_02) {
+        case 0:
+            func_00190A20(2);
+            D_01F77580_church_02 += 1;
+    
+        case 1:    
+            if (!GET_FLAG(D_1D316F8, 0xA)) {
+                D_01F77908_church_02 = 0xCB;
+            } else {
+                D_01F77908_church_02 = 0xCC;
+            }                    
+            D_01F77580_church_02 += 1;
+    
+        case 2:
+            if (func_0016BED0(0xD8, D_01F77908_church_02) == 0) {
+                return 0;
+            }
+            D_1D316F8[0] |= 0x01000000;
+            func_00190A20(0);
+        
+        default:
+            D_01F77580_church_02 = 0;
+            return 1;
+    }
+}
+
+INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6DF20_church_02); // matched but I need to remove the gotos
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6E400_church_02);
 
@@ -121,7 +330,7 @@ void func_01F729F0_church_02(void) {
     switch (RoomName()) { //I will debug the rest another time
         case CHURCH_LIBRARY:
             if (GetExtraNewGame() == 1 && (GetRiddleLevel() & 0xFF) == 2) { //Royal Flush Riddle
-                D_1D316A8 |= 0x800000;
+                D_1D316A8[0] |= 0x800000;
             }
             break;
         case 0xFE:
@@ -135,11 +344,11 @@ void func_01F729F0_church_02(void) {
         case 0x102:
             break;
         case 0x103:
-            D_1D316A8 |= 0x4000;
+            D_1D316A8[0] |= 0x4000;
             break;
         case 0x104:
-            D_1D316A8 &= ~0x20000;
-            D_1D316A8 &= ~0x40000;
+            D_1D316A8[0] &= ~0x20000;
+            D_1D316A8[0] &= ~0x40000;
             break;
         case 0x108:
             D_01F775C8_church_02 = 0;
