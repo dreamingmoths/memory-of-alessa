@@ -7,10 +7,10 @@
 //I will add all the others later
 #define CHURCH_ALESSAS_BEDROOM 0x106
 
-u_char GetRiddleLevel();
-short RoomName();
-int func_0016D5B0();
-int GetExtraNewGame();
+u_char GetRiddleLevel(void);
+short RoomName(void);
+int func_0016D5B0(void);
+int GetExtraNewGame(void);
 void func_001C2290(int, float);
 int func_0016C540(float *, float *);
 int func_00190A20(int);
