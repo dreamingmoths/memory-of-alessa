@@ -1,0 +1,3 @@
+func_01F6D680_heaven_00 = 0x1F6D680;
+func_01F6D6C0_heaven_00 = 0x1F6D6C0;
+D_01F6D700_heaven_00 = 0x1F6D700;

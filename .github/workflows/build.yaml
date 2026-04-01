@@ -1,0 +1,92 @@
+name: alessa
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    if: github.repository == 'dreamingmoths/memory-of-alessa'
+    container:
+      image: ghcr.io/dreamingmoths/alessa:latest
+      credentials:
+        username: dreamingmoths
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: install python dependencies
+        run: python3 -m pip install --break-system-packages -r requirements.txt
+
+      - name: copy files
+        run: cp -r /home/* .
+
+      - name: make
+        run: make -j $(nproc)
+
+  progress:
+    if: github.repository == 'dreamingmoths/memory-of-alessa'
+    container:
+      image: ghcr.io/dreamingmoths/alessa:latest
+      credentials:
+        username: dreamingmoths
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        TARGET:
+          - {
+              GAME: "Silent Hill 3",
+              SERIAL: "SLUS_206.22"
+            }
+          - {
+              GAME: "Silent Hill 2",
+              SERIAL: "SLUS_202.28"
+            }
+
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: true
+
+      - name: install python dependencies
+        run: python3 -m pip install --break-system-packages -r requirements.txt
+
+      - name: copy files
+        run: cp -r /home/* .
+
+      - name: make report
+        run: |
+          if [ "${{ matrix.TARGET.GAME }}" = "Silent Hill 3" ]; then
+            make -j $(nproc) sh3-report
+          else
+            make -j $(nproc) sh2-report
+          fi
+
+      - name: upload progress
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.TARGET.SERIAL }}_report
+          path: build/${{ matrix.TARGET.SERIAL }}/report.json

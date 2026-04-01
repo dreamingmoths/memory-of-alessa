@@ -1,0 +1,4 @@
+func_01F6D680_building_f_02 = 0x1F6D680;
+D_01F6D800_building_f_02 = 0x1F6D800;
+func_01F6DD50_building_f_02 = 0x1F6DD50;
+func_01F6DD78_building_f_02 = 0x1F6DD78;

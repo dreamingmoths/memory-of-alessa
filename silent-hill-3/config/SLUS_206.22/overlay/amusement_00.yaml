@@ -1,0 +1,30 @@
+name: amusement_00
+sha1: 981695309623f92b912bf9161cfffb036e3eca69
+options:
+  basename: amusement_00
+  elf_path: amusement_00.bin
+  target_path: rom/overlay/amusement_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/amusement_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: amusement_00_reloc_addrs.txt
+  ld_script_path: linkers/amusement_00.ld
+  undefined_funcs_auto_path: linkers/amusement_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/amusement_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, amusement_00_overlay_header]
+  - name: amusement_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/amusement_00]
+      - [0x1980, data, amusement_00_data]
+      - { vram: 0x1F72D80, type: bss, name: amusement_00_bss }
+  - [0x5780]

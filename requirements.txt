@@ -1,0 +1,2 @@
+splat64[mips]>=0.37.1,<1.0.0
+kaitaistruct==0.11

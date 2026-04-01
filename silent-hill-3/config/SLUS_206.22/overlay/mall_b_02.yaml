@@ -1,0 +1,30 @@
+name: mall_b_02
+sha1: ae43f35122ed5db527535c6af3503da02658567f
+options:
+  basename: mall_b_02
+  elf_path: mall_b_02.bin
+  target_path: rom/overlay/mall_b_02.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/mall_b_02_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: mall_b_02_reloc_addrs.txt
+  ld_script_path: linkers/mall_b_02.ld
+  undefined_funcs_auto_path: linkers/mall_b_02_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/mall_b_02_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, mall_b_02_overlay_header]
+  - name: mall_b_02
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/mall_b_02]
+      - [0xA80, data, mall_b_02_data]
+      - { vram: 0x1F6E880, type: bss, name: mall_b_02_bss }
+  - [0x1280]

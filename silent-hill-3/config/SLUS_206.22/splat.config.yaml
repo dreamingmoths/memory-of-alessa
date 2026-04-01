@@ -1,0 +1,18 @@
+options:
+  compiler: MWCCPS2
+  platform: ps2
+  gp_value: 0x3d09f0
+  ld_dependencies: False
+  base_path: .
+  src_path: ../../src
+  generated_asm_macros_directory: ../../include
+  build_path: build
+  asm_nonmatching_label_macro: ""
+  global_vram_start: 0x0100000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+  generated_macro_inc_content: |
+    # Prepend $ to VU registers.
+    .set ACC, $ACC
+    .set Q, $Q

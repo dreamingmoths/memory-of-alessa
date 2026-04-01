@@ -1,0 +1,30 @@
+name: motel_00
+sha1: 7e1ffc6089397dfe760fce1fb84595506e6f88cd
+options:
+  basename: motel_00
+  elf_path: motel_00.bin
+  target_path: rom/overlay/motel_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/motel_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: motel_00_reloc_addrs.txt
+  ld_script_path: linkers/motel_00.ld
+  undefined_funcs_auto_path: linkers/motel_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/motel_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, motel_00_overlay_header]
+  - name: motel_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/motel_00]
+      - [0x500, data, motel_00_data]
+      - { vram: 0x1F6E100, type: bss, name: motel_00_bss }
+  - [0xB00]

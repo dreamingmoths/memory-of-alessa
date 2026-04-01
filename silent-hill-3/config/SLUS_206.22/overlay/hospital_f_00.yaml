@@ -1,0 +1,31 @@
+name: hospital_f_00
+sha1: eb20e14ed566b5b99930a2015fecfec75580b060
+options:
+  basename: hospital_f_00
+  elf_path: hospital_f_00.bin
+  target_path: rom/overlay/hospital_f_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/hospital_f_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: hospital_f_00_reloc_addrs.txt
+  ld_script_path: linkers/hospital_f_00.ld
+  undefined_funcs_auto_path: linkers/hospital_f_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hospital_f_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, hospital_f_00_overlay_header]
+  - name: hospital_f_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80,   c,       Event/hospital_f_00]
+      - [0x1580, data,    hospital_f_00_data]
+      - [0x2400, .rodata, Event/hospital_f_00]
+      - { vram: 0x1F6FA80, type: bss, name: hospital_f_00_bss }
+  - [0x2480]

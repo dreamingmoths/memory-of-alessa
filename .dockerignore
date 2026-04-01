@@ -1,0 +1,12 @@
+asm
+assets
+build
+linkers
+
+tools/alessatool
+objdiff.json
+
+.DS_Store
+.venv
+.vscode
+.git

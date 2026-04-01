@@ -1,0 +1,31 @@
+name: church_02
+sha1: 9c127dff76b7f7042e43736d26d913cd8752cfa2
+options:
+  basename: church_02
+  elf_path: church_02.bin
+  target_path: rom/overlay/church_02.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/church_02_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: church_02_reloc_addrs.txt
+  ld_script_path: linkers/church_02.ld
+  undefined_funcs_auto_path: linkers/church_02_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/church_02_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, church_02_overlay_header]
+  - name: church_02
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x400
+    subsegments:
+      - [0x80, c, Event/church_02]
+      - [0x6000, data, church_02_data]
+      - [0x9D80, .rodata, Event/church_02]
+      - { vram: 0x1F77580, type: bss, name: church_02_bss }
+  - [0x9F80]

@@ -1,0 +1,30 @@
+name: building_b_02
+sha1: 7bb969de492577b16c5542ba77ba753188823577
+options:
+  basename: building_b_02
+  elf_path: building_b_02.bin
+  target_path: rom/overlay/building_b_02.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/building_b_02_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: building_b_02_reloc_addrs.txt
+  ld_script_path: linkers/building_b_02.ld
+  undefined_funcs_auto_path: linkers/building_b_02_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/building_b_02_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, building_b_02_overlay_header]
+  - name: building_b_02
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/building_b_02]
+      - [0xC80, data, building_b_02_data]
+      - { vram: 0x1F6EF00, type: bss, name: building_b_02_bss }
+  - [0x1900]

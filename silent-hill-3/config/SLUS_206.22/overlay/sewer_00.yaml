@@ -1,0 +1,31 @@
+name: sewer_00
+sha1: d741bbdeb2912fe415b986ce1ca2a09b565bb6cf
+options:
+  basename: sewer_00
+  elf_path: sewer_00.bin
+  target_path: rom/overlay/sewer_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/sewer_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: sewer_00_reloc_addrs.txt
+  ld_script_path: linkers/sewer_00.ld
+  undefined_funcs_auto_path: linkers/sewer_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/sewer_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, sewer_00_overlay_header]
+  - name: sewer_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/sewer_00]
+      - [0xF00, data, sewer_00_data]
+      - [0x2700, .rodata, Event/sewer_00]
+      - { vram: 0x1F6FE00, type: bss, name: sewer_00_bss }
+  - [0x2800]

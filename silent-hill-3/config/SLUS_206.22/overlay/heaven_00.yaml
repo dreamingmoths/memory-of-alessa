@@ -1,0 +1,28 @@
+name: heaven_00
+sha1: b839b11fde9b5f43f22feae4f420f0dc9602218d
+options:
+  basename: heaven_00
+  elf_path: heaven_00.bin
+  target_path: rom/overlay/heaven_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/heaven_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: heaven_00_reloc_addrs.txt
+  ld_script_path: linkers/heaven_00.ld
+  undefined_funcs_auto_path: linkers/heaven_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/heaven_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, heaven_00_overlay_header]
+  - name: heaven_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    subsegments:
+      - [0x80,  c, Event/heaven_00]
+      - [0x100, data, heaven_00_data]
+  - [0x300]

@@ -1,0 +1,142 @@
+func_01F6D680_subway_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_amusement_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_building_b_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_building_b_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_amusement_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D740_amusement_00 = 0x1F6D740; // allow_duplicated:True
+func_01F6D680_subway_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_amusement_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6F510_amusement_02 = 0x1F6F510; // allow_duplicated:True
+func_01F6F520_amusement_02 = 0x1F6F520; // allow_duplicated:True
+func_01F6F530_amusement_02 = 0x1F6F530; // allow_duplicated:True
+func_01F6F540_amusement_02 = 0x1F6F540; // allow_duplicated:True
+func_01F6D680_building_b_03 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_building_b_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_car_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_subway_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D740_subway_00 = 0x1F6D740; // allow_duplicated:True
+func_01F6D680_hospital_turning_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6E230_hospital_turning_00 = 0x1F6E230; // allow_duplicated:True
+func_01F6E770_hospital_turning_00 = 0x1F6E770; // allow_duplicated:True
+func_01F6EB70_hospital_turning_00 = 0x1F6EB70; // allow_duplicated:True
+func_01F6EBA0_hospital_turning_00 = 0x1F6EBA0; // allow_duplicated:True
+func_01F6D680_apart_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6E770_apart_00 = 0x1F6E770; // allow_duplicated:True
+func_01F6E7A0_apart_00 = 0x1F6E7A0; // allow_duplicated:True
+func_01F6EB70_apart_00 = 0x1F6EB70; // allow_duplicated:True
+func_01F6D680_church_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_building_f_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6E230_building_f_01 = 0x1F6E230; // allow_duplicated:True
+func_01F6D680_building_f_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_church_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_sewer_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_church_03 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_building_f_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_church_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_construct_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_sewer_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_hospital_b_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_hospital_b_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6E230_hospital_b_00 = 0x1F6E230; // allow_duplicated:True
+func_01F6D680_hospital_b_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D740_hospital_b_01 = 0x1F6D740; // allow_duplicated:True
+func_01F6D680_town_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_mall_f_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6DDB0_mall_f_01 = 0x1F6DDB0; // allow_duplicated:True
+func_01F6F510_mall_f_01 = 0x1F6F510; // allow_duplicated:True
+func_01F6D680_city_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_mall_f_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_overlay_align = 0x1F6D680; // ignore:true
+func_01F6D680_heaven_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_mall_b_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6DDB0_mall_b_02 = 0x1F6DDB0; // allow_duplicated:True
+func_01F6D680_mall_b_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_mall_b_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D740_mall_b_01 = 0x1F6D740; // allow_duplicated:True
+func_01F6D680_hospital_f_02 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_motel_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_hospital_f_03 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_hospital_f_01 = 0x1F6D680; // allow_duplicated:True
+func_01F6D680_hospital_f_00 = 0x1F6D680; // allow_duplicated:True
+func_01F6F550_amusement_02 = 0x01F6F550;
+
+D_46D190 = 0x46D190;
+
+D_1D316AC = 0x1D316AC;
+D_1D3168C = 0x1D3168C;
+D_1D31690 = 0x1D31690;
+D_1D31648 = 0x1D31648;
+D_1D31694 = 0x1D31694;
+D_1D31728 = 0x1D31728;
+D_1D3169C = 0x1D3169C;
+D_1D31644 = 0x1D31644;
+D_1D31784 = 0x1D31784;
+D_1D3164C = 0x1D3164C;
+D_1D31BF4 = 0x1D31BF4;
+D_1D316F0 = 0x1D316F0;
+D_1D31650 = 0x1D31650;
+D_1D318C0 = 0x1D318C0;
+D_1D31700 = 0x1D31700;
+D_1D316FC = 0x1D316FC;
+D_1D318C4 = 0x1D318C4;
+D_1D318C8 = 0x1D318C8;
+D_1D3171C = 0x1D3171C;
+D_1D316A0 = 0x1D316A0;
+D_1D316F8 = 0x1D316F8;
+D_1D31684 = 0x1D31684;
+D_1D31658 = 0x1D31658;
+
+D_1D31794 = 0x1D31794;
+D_1D31708 = 0x1D31708;
+D_1D316A4 = 0x1D316A4;
+D_1D3166C = 0x1D3166C;
+D_1D316F4 = 0x1D316F4;
+D_1D317A8 = 0x1D317A8;
+D_1D317D4 = 0x1D317D4;
+D_1D31710 = 0x1D31710;
+D_1D31714 = 0x1D31714;
+D_1D31680 = 0x1D31680;
+D_1D31688 = 0x1D31688;
+D_1D317B8 = 0x1D317B8;
+D_1D318DC = 0x1D318DC;
+D_1D31720 = 0x1D31720;
+D_1D318E0 = 0x1D318E0;
+
+D_1D317BC = 0x1D317BC;
+D_1D31668 = 0x1D31668;
+
+D_1D317A4 = 0x1D317A4;
+D_1D3170C = 0x1D3170C;
+
+D_1D31698 = 0x1D31698;
+
+
+D_1D3177C = 0x1D3177C;
+
+D_1D3172C = 0x1D3172C;
+D_1D316A8 = 0x1D316A8;
+D_1D31950 = 0x1D31950;
+
+
+D_1D317B4 = 0x1D317B4;
+D_1D317AC = 0x1D317AC;
+D_1D31654 = 0x1D31654;
+D_1D31704 = 0x1D31704;
+D_1D31664 = 0x1D31664;
+
+D_1D318CC = 0x1D318CC; 
+D_1D31BF0 = 0x1D31BF0; 
+D_1D31660 = 0x1D31660; 
+D_1D3165C = 0x1D3165C; 
+D_1D317B0 = 0x1D317B0; 
+D_1D31718 = 0x1D31718; 
+D_1D318E4 = 0x1D318E4; 
+D_1D31724 = 0x1D31724; 
+
+D_1D318E8 = 0x1D318E8; 
+D_1D318EC = 0x1D318EC; 
+
+
+D_1D31730 = 0x1D31730;
+D_1D317D0 = 0x1D317D0; 
+D_1D31954 = 0x1D31954; 

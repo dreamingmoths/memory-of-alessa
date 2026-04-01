@@ -1,0 +1,868 @@
+MEMORY
+{
+	main	(RWX)	: ORIGIN = 0x100000,	LENGTH = 0x0
+	building_b_03.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_b_03.bin
+	mall_f_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > mall_f_01.bin
+	mall_b_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > mall_b_00.bin
+	mall_b_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > mall_b_01.bin
+	mall_b_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > mall_b_02.bin
+	subway_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > subway_00.bin
+	subway_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > subway_01.bin
+	building_b_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_b_01.bin
+	sewer_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > sewer_00.bin
+	sewer_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > sewer_01.bin
+	hospital_f_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_f_00.bin
+	building_f_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_f_00.bin
+	building_f_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_f_01.bin
+	building_f_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_f_02.bin
+	mall_f_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > mall_f_00.bin
+	subway_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > subway_02.bin
+	building_b_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_b_02.bin
+	building_b_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > building_b_00.bin
+	city_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > city_00.bin
+	apart_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > apart_00.bin
+	car_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > car_00.bin
+	motel_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > motel_00.bin
+	town_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > town_00.bin
+	heaven_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > heaven_00.bin
+	construct_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > construct_00.bin
+	hospital_f_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_f_01.bin
+	hospital_f_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_f_02.bin
+	hospital_f_03.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_f_03.bin
+	hospital_turning_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_turning_00.bin
+	hospital_b_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_b_00.bin
+	hospital_b_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_b_01.bin
+	hospital_b_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > hospital_b_02.bin
+	amusement_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > amusement_00.bin
+	amusement_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > amusement_01.bin
+	church_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > church_02.bin
+	church_00.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > church_00.bin
+	church_01.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > church_01.bin
+	amusement_02.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > amusement_02.bin
+	church_03.bin (RWX) : ORIGIN = 0x1F6D600, LENGTH = 0x0 > church_03.bin
+	overlay_align.bin (RWX) : ORIGIN = 0x1F7AB80, LENGTH = 0x0 > overlay_align.bin
+}
+
+KEEP_SECTION
+{
+	.rodata,
+	.data,
+	.vutext,
+	.vudata,
+	.vubss
+}
+
+SECTIONS
+{
+
+	.main	:
+	{
+		_gp = 0x3d09f0;
+		.	= ALIGN(0x80);
+
+		### 🔴 code 🔴 ###
+
+		. = ALIGN(0x80);
+	}	>	main
+
+	.building_b_03.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_b_03_start = .;
+		. = ALIGN(0x80);
+		building_b_03_overlay_header.s.o (.data)
+
+		building_b_03.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_b_03_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		building_b_03_bss.bss.s.o (.bss)		
+	}	>	building_b_03.bin
+
+	.mall_f_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__mall_f_01_start = .;
+		. = ALIGN(0x80);
+		mall_f_01_overlay_header.s.o (.data)
+		
+		mall_f_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		mall_f_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		mall_f_01_bss.bss.s.o (.bss)		
+	}	>	mall_f_01.bin
+
+	.mall_b_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__mall_b_00_start = .;
+		. = ALIGN(0x80);
+		mall_b_00_overlay_header.s.o (.data)
+		
+		mall_b_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		mall_b_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		mall_b_00_bss.bss.s.o (.bss)		
+	}	>	mall_b_00.bin
+
+	.mall_b_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__mall_b_01_start = .;
+		. = ALIGN(0x80);
+		mall_b_01_overlay_header.s.o (.data)
+		
+		mall_b_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		mall_b_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		mall_b_01_bss.bss.s.o (.bss)		
+	}	>	mall_b_01.bin
+
+	.mall_b_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__mall_b_02_start = .;
+		. = ALIGN(0x80);
+		mall_b_02_overlay_header.s.o (.data)
+		
+		mall_b_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		mall_b_02_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		mall_b_02_bss.bss.s.o (.bss)		
+	}	>	mall_b_02.bin
+
+	.subway_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__subway_00_start = .;
+		. = ALIGN(0x80);
+		subway_00_overlay_header.s.o (.data)
+		
+		subway_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		subway_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		subway_00_bss.bss.s.o (.bss)		
+	}	>	subway_00.bin
+
+	.subway_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__subway_01_start = .;
+		. = ALIGN(0x80);
+		subway_01_overlay_header.s.o (.data)
+		
+		subway_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		subway_01_data.data.s.o (.data)
+        ALIGNALL(0x10);
+        subway_01.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		subway_01_bss.bss.s.o (.bss)		
+	}	>	subway_01.bin
+
+	.building_b_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_b_01_start = .;
+		. = ALIGN(0x80);
+		building_b_01_overlay_header.s.o (.data)
+		
+		building_b_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_b_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		building_b_01_bss.bss.s.o (.bss)		
+	}	>	building_b_01.bin
+
+	.sewer_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__sewer_00_start = .;
+		. = ALIGN(0x80);
+		sewer_00_overlay_header.s.o (.data)
+		
+		sewer_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		sewer_00_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        sewer_00.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		sewer_00_bss.bss.s.o (.bss)		
+	}	>	sewer_00.bin
+
+	.sewer_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__sewer_01_start = .;
+		. = ALIGN(0x80);
+		sewer_01_overlay_header.s.o (.data)
+		
+		sewer_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		sewer_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		sewer_01_bss.bss.s.o (.bss)		
+	}	>	sewer_01.bin
+
+	.hospital_f_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_f_00_start = .;
+		. = ALIGN(0x80);
+		hospital_f_00_overlay_header.s.o (.data)
+		
+		hospital_f_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_f_00_data.data.s.o (.data)
+		ALIGNALL(0x8);
+		hospital_f_00.c.o (.rodata)
+	
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_f_00_bss.bss.s.o (.bss)		
+	}	>	hospital_f_00.bin
+
+	.building_f_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_f_00_start = .;
+		. = ALIGN(0x80);
+		building_f_00_overlay_header.s.o (.data)
+		
+		building_f_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_f_00_data.data.s.o (.data)	
+	}	>	building_f_00.bin
+
+	.building_f_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_f_01_start = .;
+		. = ALIGN(0x80);
+		building_f_01_overlay_header.s.o (.data)
+		
+		building_f_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_f_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		building_f_01_bss.bss.s.o (.bss)		
+	}	>	building_f_01.bin
+
+	.building_f_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_f_02_start = .;
+		. = ALIGN(0x80);
+		building_f_02_overlay_header.s.o (.data)
+		
+		building_f_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_f_02_data.data.s.o (.data)	
+	}	>	building_f_02.bin
+
+	.mall_f_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__mall_f_00_start = .;
+		. = ALIGN(0x80);
+		mall_f_00_overlay_header.s.o (.data)
+		
+		mall_f_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		mall_f_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		mall_f_00_bss.bss.s.o (.bss)		
+	}	>	mall_f_00.bin
+
+	.subway_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__subway_02_start = .;
+		. = ALIGN(0x80);
+		subway_02_overlay_header.s.o (.data)
+		
+		subway_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		subway_02_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		subway_02_bss.bss.s.o (.bss)		
+	}	>	subway_02.bin
+
+	.building_b_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_b_02_start = .;
+		. = ALIGN(0x80);
+		building_b_02_overlay_header.s.o (.data)
+		
+		building_b_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		building_b_02_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		building_b_02_bss.bss.s.o (.bss)		
+	}	>	building_b_02.bin
+
+	.building_b_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__building_b_00_start = .;
+		. = ALIGN(0x80);
+		building_b_00_overlay_header.s.o (.data)
+		
+		building_b_00.c.o (.text)
+
+		. = ALIGN(0x100);
+
+		ALIGNALL(0x4);
+		building_b_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		building_b_00_bss.bss.s.o (.bss)		
+	}	>	building_b_00.bin
+
+	.city_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__city_00_start = .;
+		. = ALIGN(0x80);
+		city_00_overlay_header.s.o (.data)
+		
+		city_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		city_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		city_00_bss.bss.s.o (.bss)		
+	}	>	city_00.bin
+
+	.apart_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__apart_00_start = .;
+		. = ALIGN(0x80);
+		apart_00_overlay_header.s.o (.data)
+		
+		apart_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		apart_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		apart_00_bss.bss.s.o (.bss)		
+	}	>	apart_00.bin
+
+	.car_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__car_00_start = .;
+		. = ALIGN(0x80);
+		car_00_overlay_header.s.o (.data)
+		
+		car_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		car_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		car_00_bss.bss.s.o (.bss)		
+	}	>	car_00.bin
+
+	.motel_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__motel_00_start = .;
+		. = ALIGN(0x80);
+		motel_00_overlay_header.s.o (.data)
+		
+		motel_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		motel_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		motel_00_bss.bss.s.o (.bss)		
+	}	>	motel_00.bin
+
+	.town_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__town_00_start = .;
+		. = ALIGN(0x80);
+		town_00_overlay_header.s.o (.data)
+		
+		town_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		town_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		town_00.c.o (.bss)		
+	}	>	town_00.bin
+
+	.heaven_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__heaven_00_start = .;
+		. = ALIGN(0x80);
+		heaven_00_overlay_header.s.o (.data)
+		
+		heaven_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		heaven_00_data.data.s.o (.data)
+	
+	}	>	heaven_00.bin
+
+	.construct_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__construct_00_start = .;
+		. = ALIGN(0x80);
+		construct_00_overlay_header.s.o (.data)
+		
+		construct_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		construct_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		construct_00_bss.bss.s.o (.bss)		
+	}	>	construct_00.bin
+
+	.hospital_f_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_f_01_start = .;
+		. = ALIGN(0x80);
+		hospital_f_01_overlay_header.s.o (.data)
+		
+		hospital_f_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_f_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_f_01_bss.bss.s.o (.bss)		
+	}	>	hospital_f_01.bin
+
+	.hospital_f_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_f_02_start = .;
+		. = ALIGN(0x80);
+		hospital_f_02_overlay_header.s.o (.data)
+		
+		hospital_f_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_f_02_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_f_02.c.o (.rodata)
+        
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_f_02_bss.bss.s.o (.bss)		
+	}	>	hospital_f_02.bin
+
+	.hospital_f_03.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_f_03_start = .;
+		. = ALIGN(0x80);
+		hospital_f_03_overlay_header.s.o (.data)
+		
+		hospital_f_03.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_f_03_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_f_03.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_f_03_bss.bss.s.o (.bss)		
+	}	>	hospital_f_03.bin
+
+	.hospital_turning_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_turning_00_start = .;
+		. = ALIGN(0x80);
+		hospital_turning_00_overlay_header.s.o (.data)
+		
+		hospital_turning_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_turning_00_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_turning_00.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_turning_00_bss.bss.s.o (.bss)		
+	}	>	hospital_turning_00.bin
+
+	.hospital_b_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_b_00_start = .;
+		. = ALIGN(0x80);
+		hospital_b_00_overlay_header.s.o (.data)
+		
+		hospital_b_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_b_00_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_b_00.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_b_00_bss.bss.s.o (.bss)		
+	}	>	hospital_b_00.bin
+
+	.hospital_b_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_b_01_start = .;
+		. = ALIGN(0x80);
+		hospital_b_01_overlay_header.s.o (.data)
+		
+		hospital_b_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_b_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_b_01_bss.bss.s.o (.bss)		
+	}	>	hospital_b_01.bin
+
+	.hospital_b_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__hospital_b_02_start = .;
+		. = ALIGN(0x80);
+		hospital_b_02_overlay_header.s.o (.data)
+		
+		hospital_b_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		hospital_b_02_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        hospital_b_02.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		hospital_b_02_bss.bss.s.o (.bss)		
+	}	>	hospital_b_02.bin
+
+	.amusement_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__amusement_00_start = .;
+		. = ALIGN(0x80);
+		amusement_00_overlay_header.s.o (.data)
+		
+		amusement_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		amusement_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		amusement_00_bss.bss.s.o (.bss)		
+	}	>	amusement_00.bin
+
+	.amusement_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__amusement_01_start = .;
+		. = ALIGN(0x80);
+		amusement_01_overlay_header.s.o (.data)
+		
+		amusement_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		amusement_01_data.data.s.o (.data)
+		ALIGNALL(0x8);
+		amusement_01.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		amusement_01_bss.bss.s.o (.bss)		
+	}	>	amusement_01.bin
+
+	.church_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__church_02_start = .;
+		. = ALIGN(0x80);
+		church_02_overlay_header.s.o (.data)
+		
+		church_02.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		church_02_data.data.s.o (.data)
+		ALIGNALL(0x10);
+		church_02.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		church_02_bss.bss.s.o (.bss)
+		
+	}	>	church_02.bin
+
+	.church_00.bin	:
+	{
+		_gp = 0x3d09f0;
+		__church_00_start = .;
+		. = ALIGN(0x80);
+		church_00_overlay_header.s.o (.data)
+		
+		church_00.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		church_00_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		church_00_bss.bss.s.o (.bss)		
+	}	>	church_00.bin
+
+	.church_01.bin	:
+	{
+		_gp = 0x3d09f0;
+		__church_01_start = .;
+		. = ALIGN(0x80);
+		church_01_overlay_header.s.o (.data)
+		
+		church_01.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		church_01_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		church_01_bss.bss.s.o (.bss)		
+	}	>	church_01.bin
+
+	.amusement_02.bin	:
+	{
+		_gp = 0x3d09f0;
+		__amusement_02_start = .;
+
+		. = ALIGN(0x80);
+		amusement_02_overlay_header.s.o (.data)		
+		amusement_02.c.o (.text)
+
+		. = ALIGN(0x80);
+
+
+		ALIGNALL(0x4);
+		amusement_02_data.data.s.o (.data)
+		ALIGNALL(0x8);
+		amusement_02.c.o (.rodata)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		amusement_02_bss.bss.s.o (.bss)		
+
+	}	>	amusement_02.bin
+
+	.church_03.bin	:
+	{
+		_gp = 0x3d09f0;
+		__church_03_start = .;
+		. = ALIGN(0x80);
+		church_03_overlay_header.s.o (.data)
+		
+		church_03.c.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		church_03_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		church_03_bss.bss.s.o (.bss)		
+	}	>	church_03.bin
+
+	.overlay_align.bin	:
+	{
+		_gp = 0x3d09f0;
+		__overlay_align_start = .;
+		. = ALIGN(0x10);
+		overlay_align_overlay_header.s.o (.data)
+		overlay_align.data.s.o (.data)
+	}	>	overlay_align.bin
+
+}

@@ -1,0 +1,31 @@
+name: hospital_turning_00
+sha1: c3c1827547b63c2390f5ba46ac8f6fd85a5d5e13
+options:
+  basename: hospital_turning_00
+  elf_path: hospital_turning_00.bin
+  target_path: rom/overlay/hospital_turning_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/hospital_turning_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: hospital_turning_00_reloc_addrs.txt
+  ld_script_path: linkers/hospital_turning_00.ld
+  undefined_funcs_auto_path: linkers/hospital_turning_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hospital_turning_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, hospital_turning_00_overlay_header]
+  - name: hospital_turning_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x700
+    subsegments:
+      - [0x80, c, Event/hospital_turning_00]
+      - [0x1700, data, hospital_turning_00_data]
+      - [0x3900, .rodata, Event/hospital_turning_00]
+      - { vram: 0x1F70F80, type: bss, name: hospital_turning_00_bss }
+  - [0x3980]

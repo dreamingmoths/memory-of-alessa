@@ -1,0 +1,30 @@
+name: city_00
+sha1: cc1ccfe6a24df271ace91cc85bc1423d910e95ef
+options:
+  basename: city_00
+  elf_path: city_00.bin
+  target_path: rom/overlay/city_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/city_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: city_00_reloc_addrs.txt
+  ld_script_path: linkers/city_00.ld
+  undefined_funcs_auto_path: linkers/city_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/city_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, city_00_overlay_header]
+  - name: city_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/city_00]
+      - [0x280, data, city_00_data]
+      - { vram: 0x1F6DB80, type: bss, name: city_00_bss }
+  - [0x580]

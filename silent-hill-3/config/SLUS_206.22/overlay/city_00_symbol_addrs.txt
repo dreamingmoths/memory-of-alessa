@@ -1,0 +1,4 @@
+func_01F6D680_city_00 = 0x1F6D680;
+func_01F6D690_city_00 = 0x1F6D690;
+func_01F6D7F0_city_00 = 0x1F6D7F0;
+D_01F6D880_city_00 = 0x1F6D880;

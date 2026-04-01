@@ -1,0 +1,3 @@
+[submodule "tools/mwccgap"]
+	path = tools/mwccgap
+	url = https://github.com/mkst/mwccgap.git

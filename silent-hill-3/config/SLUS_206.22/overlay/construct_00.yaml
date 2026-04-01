@@ -1,0 +1,30 @@
+name: construct_00
+sha1: 9408d35cf702607e6194032fbc445e66194b63fd
+options:
+  basename: construct_00
+  elf_path: construct_00.bin
+  target_path: rom/overlay/construct_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/construct_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: construct_00_reloc_addrs.txt
+  ld_script_path: linkers/construct_00.ld
+  undefined_funcs_auto_path: linkers/construct_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/construct_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, construct_00_overlay_header]
+  - name: construct_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/construct_00]
+      - [0xE80, data, construct_00_data]
+      - { vram: 0x1F6FA00, type: bss, name: construct_00_bss }
+  - [0x2400]

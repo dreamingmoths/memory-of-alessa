@@ -1,0 +1,30 @@
+name: subway_00
+sha1: 89e74a54c3b8b1bbc12346150d6915b8a05f6286
+options:
+  basename: subway_00
+  elf_path: subway_00.bin
+  target_path: rom/overlay/subway_00.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/subway_00_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: subway_00_reloc_addrs.txt
+  ld_script_path: linkers/subway_00.ld
+  undefined_funcs_auto_path: linkers/subway_00_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/subway_00_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, subway_00_overlay_header]
+  - name: subway_00
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    bss_size: 0x80
+    subsegments:
+      - [0x80, c, Event/subway_00]
+      - [0xF80, data, subway_00_data]
+      - { vram: 0x1F6F600, type: bss, name: subway_00_bss }
+  - [0x2000]

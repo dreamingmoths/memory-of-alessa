@@ -1,0 +1,29 @@
+MEMORY
+{
+	main	(RWX)	: ORIGIN = 0x100000,	LENGTH = 0x0
+}
+
+KEEP_SECTION
+{
+	.rodata,
+	.text,
+	.data,
+	.vutext,
+	.vudata,
+	.vubss
+}
+
+SECTIONS
+{
+
+	.main	:
+	{
+		_gp = 0x3cfc70;
+		.	= ALIGN(0x80);
+
+		### 🔴 code 🔴 ###
+
+		. = ALIGN(0x80);
+	}	>	main
+
+}

@@ -1,0 +1,27 @@
+name: overlay_align
+sha1: 1f6763983967679efdaba16cea3ea3ee97cd68bf
+options:
+  basename: overlay_align
+  elf_path: overlay_align.bin
+  target_path: rom/overlay/overlay_align.bin
+  find_file_boundaries: False
+  asm_path: asm
+  rodata_string_guesser_level: 0
+  symbol_addrs_path:
+   - overlay/overlay_align_symbol_addrs.txt
+   - symbol_addrs.txt
+  reloc_addrs_path: overlay_align_reloc_addrs.txt
+  ld_script_path: linkers/overlay_align.ld
+  undefined_funcs_auto_path: linkers/overlay_align_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/overlay_align_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+
+  - [0, databin, overlay_align_overlay_header]
+  - name: overlay_align
+    type: code
+    vram: 0x1F6D680
+    start: 0x80
+    subsegments:
+      - [0x80, data, Event/overlay_align]
+  - [0x280]

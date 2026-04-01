@@ -1,0 +1,13 @@
+func_01F6D680_hospital_b_01 = 0x1F6D680;
+func_01F6D740_hospital_b_01 = 0x1F6D740;
+func_01F6D7A0_hospital_b_01 = 0x1F6D7A0;
+func_01F6D970_hospital_b_01 = 0x1F6D970;
+func_01F6D9D0_hospital_b_01 = 0x1F6D9D0;
+func_01F6DB80_hospital_b_01 = 0x1F6DB80;
+func_01F6DC60_hospital_b_01 = 0x1F6DC60;
+func_01F6DDC0_hospital_b_01 = 0x1F6DDC0;
+D_01F6E100_hospital_b_01 = 0x1F6E100;
+D_01F6E6B0_hospital_b_01 = 0x1F6E6B0;
+D_01F6E890_hospital_b_01 = 0x1F6E890;
+D_01F6EAF0_hospital_b_01 = 0x1F6EAF0;
+D_01F6EB50_hospital_b_01 = 0x1F6EB50;
