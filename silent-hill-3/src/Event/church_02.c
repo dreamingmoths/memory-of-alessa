@@ -193,7 +193,6 @@ int func_01F6DCE0_church_02(void) {
 }
 
 int func_01F6DE30_church_02(void) {
-    int var_v0;
 
     switch (D_01F77580_church_02) {
         case 0:
