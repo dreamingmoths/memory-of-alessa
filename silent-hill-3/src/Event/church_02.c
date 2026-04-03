@@ -237,7 +237,7 @@ int func_01F6F810_church_02(void) {
 }
 
 int func_01F6F820_church_02(void) {
-    int ret ret = 0;
+    int ret = 0;
 
     switch (D_01F77580_church_02) {
     case 0:
