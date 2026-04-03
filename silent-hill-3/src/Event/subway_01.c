@@ -161,7 +161,47 @@ int func_01F6D720_subway_01(void)
     return var_s0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DAA0_subway_01);
+int func_01F6DAA0_subway_01(void)
+{
+    float temp_f0;
+    float temp_f2;
+    int var_s0;
+
+    var_s0 = 0;
+    
+    switch (D_01F70700_subway_01)
+    {
+        case 0:
+            func_00190A20(2);
+            func_001C2290(3, 0.5f);
+            D_01F70740_subway_01 = &D_01F70400_subway_01;
+            D_01F70700_subway_01++;
+            break;
+        case 1:
+            var_s0 = func_0016C540(&D_01F70420_subway_01, &D_01F70480_subway_01);
+            temp_f0 = func_001643C0();
+            temp_f2 = D_01F70740_subway_01->unk0;
+            
+            if (temp_f2 > 0.0f && temp_f2 <= temp_f0)
+            {
+                func_0013D250(0, (int *) D_01F70740_subway_01->unk4, 1.0f);
+                D_01F70740_subway_01++;
+            }
+            
+            break;
+    }
+    
+    if (var_s0 != 0)
+    {
+        func_00190A20(0);
+        func_001C2290(5, 1.2f);
+        D_01F70708_subway_01 = 4;
+        func_0013D280(0);
+        D_01F70700_subway_01 = 0;
+    }
+    
+    return var_s0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DBE0_subway_01);
 
