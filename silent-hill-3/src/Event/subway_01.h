@@ -4,8 +4,14 @@
 #include "common.h"
 #include "Chacter/m3_sc.h"
 
+typedef struct
+{
+    float unk0;
+    int   unk4;
+} D_01F70400_struct;
+
 int func_00190A20(int);
-int func_0016CED0(int, int, int*);
+int func_0016CED0(int, int, int *);
 short RoomName(void);
 void func_001908A0(float *, float *);
 SubCharacter* shCharacterGetSubCharacter(int, short);
@@ -31,10 +37,15 @@ extern int D_01F70384_subway_01;
 extern int D_01F70180_subway_01;
 extern int D_01F703E0_subway_01;
 extern int D_01F70140_subway_01;
+extern int D_01F70420_subway_01;
+extern int D_01F70480_subway_01;
 extern int D_01F70650_subway_01;
 extern int D_1D3165C;
 extern int D_01F70708_subway_01;
 extern int D_01F70718_subway_01;
+extern D_01F70400_struct* D_01F70740_subway_01;
+
+extern D_01F70400_struct D_01F70400_subway_01;
 
 extern Q D_01F70660_subway_01;
 extern Q D_01F70670_subway_01;
