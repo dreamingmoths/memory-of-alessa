@@ -10,6 +10,43 @@ typedef struct
     int*  unk4;
 } D_01F70400_struct;
 
+typedef struct
+{
+    float unk0;
+    int*  unk4;
+} D_01F70520_struct;
+
+typedef struct
+{
+    /* 0x0 */   short unk0;
+    /* 0x2 */   short unk2;
+    /* 0x4 */   int   unk4;
+    /* 0x8 */   int   unk8;
+    /* 0xC */   short unkC;
+    /* 0xE */   short unkE;
+    /* 0x10 */  short unk10;
+    /* 0x12 */  short unk12;
+    /* 0x14 */  short unk14;
+    /* 0x16 */  short unk16;
+} D_01F6F7D0_struct;
+
+typedef struct
+{
+    /* 0x0 */   int   unk0;
+    /* 0x4 */   short unk4;
+    /* 0x6 */   short unk6;
+    /* 0x8 */   int   unk8[2];
+    /* 0x10 */  float unk10;
+    /* 0x14 */  float unk14;
+    /* 0x18 */  float unk18;
+    /* 0x1C */  int   unk1C[2];
+    /* 0x24 */  float unk24;
+    /* 0x28 */  int   unk28[2];
+    /* 0x30 */  int   unk30;
+    /* 0x34 */  int   unk34;
+    /* 0x38 */  int   unk38[2];
+} func_0016A080_struct;
+
 int func_00190A20(int);
 int func_0016CED0(int, int, int *);
 short RoomName(void);
@@ -31,6 +68,11 @@ void func_0013D280(int);
 float func_00190880(void);
 void func_001BF720(int);
 void func_01F6E270_subway_01(void);
+int func_0016E0F0(void);
+void func_0016E400(int, int);
+int func_0016B4E0(D_01F6F7D0_struct *);
+void shQzero(func_0016A080_struct *, int);
+void func_0016A080(func_0016A080_struct *);
 void func_01F6E7C0_subway_01(void);
 
 extern int D_01F70700_subway_01;
@@ -46,12 +88,23 @@ extern int D_01F704A0_subway_01;
 extern int D_01F70500_subway_01;
 extern int D_1D31648;
 extern int D_1D3165C;
+extern int D_01F70710_subway_01;
+extern int D_01F705C0_subway_01;
+extern int D_01F70620_subway_01;
+extern int D_01F70220_subway_01;
+extern unsigned int D_1D3177C;
+extern int D_01F70640_subway_01;
 extern int D_01F70650_subway_01;
 extern int D_01F70708_subway_01;
 extern int D_01F70718_subway_01;
 
 extern D_01F70400_struct D_01F70400_subway_01;
 extern D_01F70400_struct* D_01F70740_subway_01;
+
+extern D_01F70520_struct D_01F70520_subway_01;
+extern D_01F70520_struct* D_01F70738_subway_01;
+
+extern D_01F6F7D0_struct D_01F6F7D0_subway_01;
 
 extern Q D_01F70660_subway_01;
 extern Q D_01F70670_subway_01;
