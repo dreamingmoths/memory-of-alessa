@@ -248,9 +248,115 @@ int func_01F6DBE0_subway_01(void)
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DD70_subway_01);
+int func_01F6DD70_subway_01(void)
+{
+    float temp_f0;
+    float temp_f0_2;
+    float temp_f1;
+    SubCharacter* temp_s1;
+    SubCharacter* temp_s2;
+    int var_s0 = 0;
+    
+    temp_s1 = shCharacterGetSubCharacter(0x1009, 0x70);
+    temp_s2 = shCharacterGetSubCharacter(0x1019, 0x71);
+    
+    func_001DC9E0(temp_s1, 0);
+    func_001DC9E0(temp_s2, 0);
+    
+    switch (D_01F70700_subway_01)
+    {
+        case 0:
+            func_001C2290(3, 0.8f);
+            func_00190A20(2);
+            D_01F70738_subway_01 = &D_01F70520_subway_01;
+            D_01F70710_subway_01 = func_0016E0F0();
+            D_01F70700_subway_01++;
+            /* fallthrough */
+        case 1:
+            var_s0 = func_0016C540(&D_01F705C0_subway_01, &D_01F70620_subway_01);
+            temp_f0 = func_001643C0();
+            
+            if (temp_f0 >= 396.0f)
+            {
+                func_0013D250(0, &D_01F70220_subway_01, 1.0f);
+            }
+            
+            temp_f0_2 = D_01F70738_subway_01->unk0;
+            
+            if (temp_f0_2 > 0.0f && temp_f0_2 <= temp_f0)
+            {
+                func_0013D250(0, D_01F70738_subway_01->unk4, 1.0f);
+                D_01F70738_subway_01++;
+            }
+            
+            temp_f1 = D_01F70738_subway_01->unk0;
+            
+            if (temp_f1 > 0.0f && temp_f1 <= temp_f0)
+            {
+                func_0013D250(0, D_01F70738_subway_01->unk4, 1.0f);
+                D_01F70738_subway_01++;
+            }
+            
+            if (var_s0 != 0)
+            {
+                func_00190A20(0);
+                func_0013D280(0);
+                func_0016E400(0x22, D_01F70710_subway_01);
+                D_01F70700_subway_01 = 0;
+            }
+            
+            break;
+    }
+    
+    return var_s0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DF90_subway_01);
+void func_01F6DF90_subway_01(void)
+{
+    int* var_s0; 
+    D_01F6F7D0_struct* var_s1;
+    func_0016A080_struct sp30;
+
+    D_1D3165C |= 0x1000;
+
+    if (GET_BIT(D_1D3177C, 0x14))
+    {
+        return;
+    }
+
+    for (var_s0 = &D_01F70640_subway_01; *var_s0 != 0; var_s0++)
+    {
+        if (shCharacterGetSubCharacter(DOUBLE_HEAD_CHARA_ID, *var_s0) == 0)
+        {
+            for (var_s1 = &D_01F6F7D0_subway_01; var_s1 != NULL && var_s1->unk0 != 0; var_s1++)
+            {
+                if (var_s1->unk0 == DOUBLE_HEAD_CHARA_ID && var_s1->unk2 == *var_s0)
+                {
+                    break;
+                }
+            }
+
+            if (var_s1 != NULL && func_0016B4E0(var_s1) != 0)
+            {
+                shQzero(&sp30, 0x40);
+
+                sp30.unk4 = var_s1->unk0;
+                sp30.unk6 = var_s1->unk2;
+                
+                sp30.unk10 = var_s1->unk4;
+                sp30.unk14 = var_s1->unkC;
+                sp30.unk18 = var_s1->unk8;
+                
+                sp30.unk24 = (PI * 2 * var_s1->unkE) / 4096.0f;
+                
+                sp30.unk30 = var_s1->unk10;
+                sp30.unk34 = var_s1->unk16;
+
+                func_0016A080(&sp30);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6E100_subway_01);
 
