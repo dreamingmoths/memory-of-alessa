@@ -1,4 +1,11 @@
 #include "cl_main.h"
+#include "LoadBg/loadbg_cld.h"
+
+static void clCheckColumn2WallHit(struct _CL_HITRESULT * cres /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, struct _CL_HITPOLY_COLUMN * col /* r16 */);
+static void clCheckHitWallCollision(struct _CL_HITPOLY_COLUMN * col /* r19 */, signed int * whnum /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, signed int * ptr /* r16 */);
+static void clCheckColumn2ColumnHit(struct _CL_HITPOLY_COLUMN * col /* r19 */, signed int * whnum /* r18 */, struct _CL_HITPOLY_COLUMN * cl /* r17 */, signed int * ptr /* r16 */);
+static void clCollectCharaHeightNormal(struct SubCharacter * sc /* r17 */);
+static CL_SELECT_MAP * clGetHitSectListMOVEInDoor(void);
 
 void clAllInitCollisionData() {
     clCharaListAct = 0;
@@ -255,7 +262,29 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListMOVE);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListMOVEOutDoor);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListMOVEInDoor);
+static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(void) {
+    int use = 0;
+    CL_CLDHEADER * ch;
+
+    if (clCollisionEnable != 0) {
+        void * * list = loadBgCLD_GetLoadedDataAddrList();
+
+        for (; ch = *list, ch != NULL; list++) {
+            if (ch->disable) {
+                continue;
+            }
+
+            clSelectMap[use].base = ch;
+            clSelectMap[use].sect = 0;
+            use++;
+        }
+    }
+
+    clSelectMap[use].base = NULL;
+
+    return clSelectMap;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyes);
 

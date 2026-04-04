@@ -165,14 +165,6 @@ void clAllInitCollisionData(void);
 
 void clFrameInitCollisionData(void);
 
-static void clCheckColumn2WallHit(struct _CL_HITRESULT * cres /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, struct _CL_HITPOLY_COLUMN * col /* r16 */);
-
-static void clCheckHitWallCollision(struct _CL_HITPOLY_COLUMN * col /* r19 */, signed int * whnum /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, signed int * ptr /* r16 */);
-
-static void clCheckColumn2ColumnHit(struct _CL_HITPOLY_COLUMN * col /* r19 */, signed int * whnum /* r18 */, struct _CL_HITPOLY_COLUMN * cl /* r17 */, signed int * ptr /* r16 */);
-
-static void clCollectCharaHeightNormal(struct SubCharacter * sc /* r17 */);
-
 void clBattleAddQue(struct _CL_BATTLE_QUE * que /* r2 */);
 
 struct _CL_BATTLE_RESULT * clBattleGetResult(unsigned int id /* r2 */, struct _CL_BATTLE_RESULT * before /* r2 */);
