@@ -28,6 +28,9 @@ void func_0019A940(void);
 int func_0019A9B0(float);
 void func_00190C40(void);
 void func_0013D280(int);
+float func_00190880(void);
+void func_001BF720(int);
+void func_01F6E270_subway_01(void);
 void func_01F6E7C0_subway_01(void);
 
 extern int D_01F70700_subway_01;
@@ -39,13 +42,16 @@ extern int D_01F703E0_subway_01;
 extern int D_01F70140_subway_01;
 extern int D_01F70420_subway_01;
 extern int D_01F70480_subway_01;
-extern int D_01F70650_subway_01;
+extern int D_01F704A0_subway_01;
+extern int D_01F70500_subway_01;
+extern int D_1D31648;
 extern int D_1D3165C;
+extern int D_01F70650_subway_01;
 extern int D_01F70708_subway_01;
 extern int D_01F70718_subway_01;
-extern D_01F70400_struct* D_01F70740_subway_01;
 
 extern D_01F70400_struct D_01F70400_subway_01;
+extern D_01F70400_struct* D_01F70740_subway_01;
 
 extern Q D_01F70660_subway_01;
 extern Q D_01F70670_subway_01;
