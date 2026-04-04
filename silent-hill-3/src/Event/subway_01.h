@@ -92,7 +92,7 @@ extern int D_01F70710_subway_01;
 extern int D_01F705C0_subway_01;
 extern int D_01F70620_subway_01;
 extern int D_01F70220_subway_01;
-extern unsigned int D_1D3177C;
+extern u_int D_1D3177C;
 extern int D_01F70640_subway_01;
 extern int D_01F70650_subway_01;
 extern int D_01F70708_subway_01;
