@@ -313,7 +313,7 @@ int func_01F6DD70_subway_01(void)
 
 void func_01F6DF90_subway_01(void)
 {
-    int* var_s0; 
+    int* id; 
     D_01F6F7D0_struct* var_s1;
     func_0016A080_struct sp30;
 
@@ -324,13 +324,13 @@ void func_01F6DF90_subway_01(void)
         return;
     }
 
-    for (var_s0 = &D_01F70640_subway_01; *var_s0 != 0; var_s0++)
+    for (id = &D_01F70640_subway_01; *id != 0; id++)
     {
-        if (shCharacterGetSubCharacter(DOUBLE_HEAD_CHARA_ID, *var_s0) == 0)
+        if (shCharacterGetSubCharacter(DOUBLE_HEAD_CHARA_ID, *id) == 0)
         {
             for (var_s1 = &D_01F6F7D0_subway_01; var_s1 != NULL && var_s1->unk0 != 0; var_s1++)
             {
-                if (var_s1->unk0 == DOUBLE_HEAD_CHARA_ID && var_s1->unk2 == *var_s0)
+                if (var_s1->unk0 == DOUBLE_HEAD_CHARA_ID && var_s1->unk2 == *id)
                 {
                     break;
                 }
