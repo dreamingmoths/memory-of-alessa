@@ -96,11 +96,11 @@ inline void vec_sub(void* x, void* y, void* out) {
 }
 
 inline float float_min(float x, float y) {
-    asm("min.s %0, %1, %2" : "=f"(x) : "f"(x), "f"(y) : ); return x;
+    asm("min.s %0, %0, %1" : "+f"(x) :  "f"(y) : ); return x;
 }
 
 inline float float_max(float x, float y) {
-    asm("max.s %0, %1, %2" : "=f"(x) : "f"(x), "f"(y) : ); return x;
+    asm("max.s %0, %0, %1" : "+f"(x) : "f"(y) : ); return x;
 }
 
 inline void mat_copy(void *dst, void *src) {
@@ -113,7 +113,7 @@ inline void mat_copy(void *dst, void *src) {
         lq $t7, 0x30(%1)\n\
         sq $t6, 0x20(%0)\n\
         sq $t7, 0x30(%0)"
-        : : "r"(dst), "r"(src) : "t6", "t7", "memory"
+        : : "r"(dst), "r"(src) : "t6", "t7"
     );
 }
 
