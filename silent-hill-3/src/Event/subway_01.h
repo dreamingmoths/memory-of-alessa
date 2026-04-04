@@ -7,7 +7,7 @@
 typedef struct
 {
     float unk0;
-    int   unk4;
+    int*  unk4;
 } D_01F70400_struct;
 
 int func_00190A20(int);

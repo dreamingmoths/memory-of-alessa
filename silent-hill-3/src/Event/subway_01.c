@@ -165,9 +165,7 @@ int func_01F6DAA0_subway_01(void)
 {
     float temp_f0;
     float temp_f2;
-    int var_s0;
-
-    var_s0 = 0;
+    int var_s0 = 0;
     
     switch (D_01F70700_subway_01)
     {
@@ -184,7 +182,7 @@ int func_01F6DAA0_subway_01(void)
             
             if (temp_f2 > 0.0f && temp_f2 <= temp_f0)
             {
-                func_0013D250(0, (int *) D_01F70740_subway_01->unk4, 1.0f);
+                func_0013D250(0, D_01F70740_subway_01->unk4, 1.0f);
                 D_01F70740_subway_01++;
             }
             
