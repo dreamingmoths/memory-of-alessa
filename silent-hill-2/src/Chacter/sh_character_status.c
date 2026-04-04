@@ -19,7 +19,6 @@ static void shBattleCheckHitEyes(struct _CL_VHIT_RESULT *eye, struct SubCharacte
     }
 
     clCheckHitEyes(eye, (u_int) scp, sp, ep, net);
-    //clCheckHitEyes(eye, scp->id, sp, ep, net);
 }
 
 void shBattleCheckTargetMyArea(struct shInArea *in_area, struct SubCharacter *scp, struct SubCharacter *tgt, float *look, float *feel) {
