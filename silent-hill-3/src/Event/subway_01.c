@@ -201,7 +201,47 @@ int func_01F6DAA0_subway_01(void)
     return var_s0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DBE0_subway_01);
+int func_01F6DBE0_subway_01(void)
+{
+    int var_s0 = 0;
+    SubCharacter* temp_v0;
+    
+    switch (D_01F70700_subway_01)
+    {
+        case 0:
+            if (func_00190880() > 200.0f)
+            {
+                return 1;
+            }
+            
+            D_1D31648 |= 0x40000;
+            SeCall(1.0f, 0.0f, 0x3139);
+            D_01F70700_subway_01++;
+        case 1:
+            func_00190A20(2);
+            func_001C2290(3, 0.3f);
+            func_01F6E270_subway_01();
+            D_01F70700_subway_01++;
+        case 2:
+            var_s0 = func_0016C540(&D_01F704A0_subway_01, &D_01F70500_subway_01);
+            
+            if (var_s0 != 0)
+            {
+                temp_v0 = shCharacterGetSubCharacter(HEATHER_CHARA_ID, -1);
+                temp_v0->pos.x = -12500.0f;
+                temp_v0->pos.y = 0.0f;
+                temp_v0->pos.z = 62000.0f;
+                temp_v0->rot.y = -1.5707964f;
+                D_01F70700_subway_01 = 0;
+                D_1D3165C |= 0x4000;
+                func_00190A20(0);
+                func_001C2290(5, 1.2f);
+                func_001BF720(0);
+            }
+        default:
+            return var_s0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/subway_01", func_01F6DD70_subway_01);
 
