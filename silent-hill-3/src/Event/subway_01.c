@@ -14,6 +14,7 @@ int func_01F6D690_subway_01(void)
         case 0:
             func_00190A20(2);
             D_01F70700_subway_01 += 1;
+            /* fallthrough */
         case 1:
             if (func_0016CED0(0x4F, 0x1D, &D_01F70370_subway_01) != 0)
             {
@@ -102,6 +103,7 @@ int func_01F6D720_subway_01(void)
             D_01F70700_subway_01 = 1;
             break;
         case 1:
+            /* fallthrough */
         case 2:
             if (func_0016C540(&D_01F70380_subway_01, &D_01F703E0_subway_01) == 0)
             {
@@ -217,11 +219,13 @@ int func_01F6DBE0_subway_01(void)
             D_1D31648 |= 0x40000;
             SeCall(1.0f, 0.0f, 0x3139);
             D_01F70700_subway_01++;
+            /* fallthrough */
         case 1:
             func_00190A20(2);
             func_001C2290(3, 0.3f);
             func_01F6E270_subway_01();
             D_01F70700_subway_01++;
+            /* fallthrough */
         case 2:
             var_s0 = func_0016C540(&D_01F704A0_subway_01, &D_01F70500_subway_01);
             
@@ -231,13 +235,14 @@ int func_01F6DBE0_subway_01(void)
                 temp_v0->pos.x = -12500.0f;
                 temp_v0->pos.y = 0.0f;
                 temp_v0->pos.z = 62000.0f;
-                temp_v0->rot.y = -1.5707964f;
+                temp_v0->rot.y = -PI / 2.0f;
                 D_01F70700_subway_01 = 0;
                 D_1D3165C |= 0x4000;
                 func_00190A20(0);
                 func_001C2290(5, 1.2f);
                 func_001BF720(0);
             }
+            /* fallthrough */
         default:
             return var_s0;
     }
@@ -284,12 +289,19 @@ void func_01F6E320_subway_01(void)
     switch (RoomName())
     {
         case 0x35:
+            /* fallthrough */
         case 0x36:
+            /* fallthrough */
         case 0x37:
+            /* fallthrough */
         case 0x38:
+            /* fallthrough */
         case 0x3A:
+            /* fallthrough */
         case 0x3B:
+            /* fallthrough */
         case 0x3C:
+            /* fallthrough */
         case 0x3D:
             break;
         case 0x39:
