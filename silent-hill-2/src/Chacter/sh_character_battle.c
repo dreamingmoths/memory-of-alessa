@@ -3,17 +3,16 @@
 static void shBattleDamageRevise(float *damage, float *shock, struct SubCharacter *scp, struct _CL_BATTLE_RESULT *result) {
     if (scp->battle.status & 0x40) {
         *damage = 0.0f;
-    }
-    else{
-    switch ((u_int)(u_char)result->btlid) {
-        case 0x2D:
-            scp->battle.hp = -1.0f;
-            *damage = sh2_attack_list[(u_char)result->btlid].ap;
-            break;
-        default:
-            *damage = sh2_attack_list[(u_char)result->btlid].ap;
-            break;
-    }
+    } else {
+        switch ((u_int)(u_char)result->btlid) {
+            case 0x2D:
+                scp->battle.hp = -1.0f;
+                *damage = sh2_attack_list[(u_char)result->btlid].ap;
+                break;
+            default:
+                *damage = sh2_attack_list[(u_char)result->btlid].ap;
+                break;
+        }
     }
     *shock = sh2_attack_list[(u_char)result->btlid].sp;
 }
