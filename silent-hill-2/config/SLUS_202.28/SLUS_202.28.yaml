@@ -44,7 +44,7 @@ segments:
       - [0x01d610, c,   Chacter/m3_sc]
       - [0x01ffc0, asm, Chacter/m3_scu]
       - [0x0206d0, asm, Chacter/m3_wep]
-      - [0x020ca0, asm, Chacter/sh_character_battle]
+      - [0x020ca0, c, Chacter/sh_character_battle]
       - [0x024170, c, Chacter/sh_character_status]
       - [0x0245b0, asm, SH2_common/sh_vu0]
       - [0x0255f0, asm, Chacter/skelton]
