@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_DMA_DMA2CMD_H
-#define MULTI_THR_DMA_DMA2CMD_H
+#ifndef DMA2CMD_H
+#define DMA2CMD_H
 
-#endif // MULTI_THR_DMA_DMA2CMD_H
+#endif // DMA2CMD_H

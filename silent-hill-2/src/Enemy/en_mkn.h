@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_MKN_H
-#define ENEMY_EN_MKN_H
+#ifndef EN_MKN_H
+#define EN_MKN_H
 
-#endif // ENEMY_EN_MKN_H
+#endif // EN_MKN_H

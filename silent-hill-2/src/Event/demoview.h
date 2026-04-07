@@ -1,4 +1,4 @@
-#ifndef EVENT_DEMOVIEW_H
-#define EVENT_DEMOVIEW_H
+#ifndef DEMOVIEW_H
+#define DEMOVIEW_H
 
-#endif // EVENT_DEMOVIEW_H
+#endif // DEMOVIEW_H

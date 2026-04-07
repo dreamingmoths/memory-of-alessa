@@ -1,4 +1,4 @@
-#ifndef LOADBG_LOADBG_KG2_H
-#define LOADBG_LOADBG_KG2_H
+#ifndef LOADBG_KG2_H
+#define LOADBG_KG2_H
 
-#endif // LOADBG_LOADBG_KG2_H
+#endif // LOADBG_KG2_H

@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_EDB_H
-#define CHACTER_M3_EDB_H
+#ifndef M3_EDB_H
+#define M3_EDB_H
 
-#endif // CHACTER_M3_EDB_H
+#endif // M3_EDB_H

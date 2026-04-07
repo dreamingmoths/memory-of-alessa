@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_MARIA_H
-#define CHACTER_M3_MARIA_H
+#ifndef M3_MARIA_H
+#define M3_MARIA_H
 
-#endif // CHACTER_M3_MARIA_H
+#endif // M3_MARIA_H

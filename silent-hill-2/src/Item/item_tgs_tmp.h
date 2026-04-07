@@ -1,4 +1,4 @@
-#ifndef ITEM_ITEM_TGS_TMP_H
-#define ITEM_ITEM_TGS_TMP_H
+#ifndef ITEM_TGS_TMP_H
+#define ITEM_TGS_TMP_H
 
-#endif // ITEM_ITEM_TGS_TMP_H
+#endif // ITEM_TGS_TMP_H

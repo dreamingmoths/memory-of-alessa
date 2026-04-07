@@ -1,4 +1,4 @@
-#ifndef ITEM_OTN_OPTION_H
-#define ITEM_OTN_OPTION_H
+#ifndef OTN_OPTION_H
+#define OTN_OPTION_H
 
-#endif // ITEM_OTN_OPTION_H
+#endif // OTN_OPTION_H

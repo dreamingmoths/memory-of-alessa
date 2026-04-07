@@ -1,4 +1,4 @@
-#ifndef EVENT_CHIZU_H
-#define EVENT_CHIZU_H
+#ifndef CHIZU_H
+#define CHIZU_H
 
-#endif // EVENT_CHIZU_H
+#endif // CHIZU_H

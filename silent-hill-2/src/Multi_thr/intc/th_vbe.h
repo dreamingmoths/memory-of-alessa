@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_INTC_TH_VBE_H
-#define MULTI_THR_INTC_TH_VBE_H
+#ifndef TH_VBE_H
+#define TH_VBE_H
 
-#endif // MULTI_THR_INTC_TH_VBE_H
+#endif // TH_VBE_H

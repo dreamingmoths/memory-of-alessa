@@ -1,4 +1,4 @@
-#ifndef SOUND_SH_SD_CALL_H
-#define SOUND_SH_SD_CALL_H
+#ifndef SH_SD_CALL_H
+#define SH_SD_CALL_H
 
-#endif // SOUND_SH_SD_CALL_H
+#endif // SH_SD_CALL_H

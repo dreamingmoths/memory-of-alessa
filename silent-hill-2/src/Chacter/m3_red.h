@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_RED_H
-#define CHACTER_M3_RED_H
+#ifndef M3_RED_H
+#define M3_RED_H
 
-#endif // CHACTER_M3_RED_H
+#endif // M3_RED_H

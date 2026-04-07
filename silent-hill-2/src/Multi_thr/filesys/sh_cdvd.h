@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_FILESYS_SH_CDVD_H
-#define MULTI_THR_FILESYS_SH_CDVD_H
+#ifndef SH_CDVD_H
+#define SH_CDVD_H
 
-#endif // MULTI_THR_FILESYS_SH_CDVD_H
+#endif // SH_CDVD_H

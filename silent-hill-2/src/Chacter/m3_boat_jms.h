@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_BOAT_JMS_H
-#define CHACTER_M3_BOAT_JMS_H
+#ifndef M3_BOAT_JMS_H
+#define M3_BOAT_JMS_H
 
-#endif // CHACTER_M3_BOAT_JMS_H
+#endif // M3_BOAT_JMS_H

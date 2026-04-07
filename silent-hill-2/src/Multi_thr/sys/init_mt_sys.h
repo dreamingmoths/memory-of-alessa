@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_SYS_INIT_MT_SYS_H
-#define MULTI_THR_SYS_INIT_MT_SYS_H
+#ifndef INIT_MT_SYS_H
+#define INIT_MT_SYS_H
 
-#endif // MULTI_THR_SYS_INIT_MT_SYS_H
+#endif // INIT_MT_SYS_H

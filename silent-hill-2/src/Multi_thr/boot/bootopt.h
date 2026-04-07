@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_BOOT_BOOTOPT_H
-#define MULTI_THR_BOOT_BOOTOPT_H
+#ifndef BOOTOPT_H
+#define BOOTOPT_H
 
-#endif // MULTI_THR_BOOT_BOOTOPT_H
+#endif // BOOTOPT_H

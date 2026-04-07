@@ -1,4 +1,4 @@
-#ifndef MOVIE_PSS_CSCVU1_H
-#define MOVIE_PSS_CSCVU1_H
+#ifndef PSS_CSCVU1_H
+#define PSS_CSCVU1_H
 
-#endif // MOVIE_PSS_CSCVU1_H
+#endif // PSS_CSCVU1_H

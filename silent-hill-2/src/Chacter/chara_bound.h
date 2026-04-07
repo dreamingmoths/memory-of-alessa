@@ -1,4 +1,4 @@
-#ifndef CHACTER_CHARA_BOUND_H
-#define CHACTER_CHARA_BOUND_H
+#ifndef CHARA_BOUND_H
+#define CHARA_BOUND_H
 
-#endif // CHACTER_CHARA_BOUND_H
+#endif // CHARA_BOUND_H

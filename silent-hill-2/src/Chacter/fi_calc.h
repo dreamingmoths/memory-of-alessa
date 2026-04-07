@@ -1,4 +1,4 @@
-#ifndef CHACTER_FI_CALC_H
-#define CHACTER_FI_CALC_H
+#ifndef FI_CALC_H
+#define FI_CALC_H
 
-#endif // CHACTER_FI_CALC_H
+#endif // FI_CALC_H

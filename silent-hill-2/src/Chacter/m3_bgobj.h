@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_BGOBJ_H
-#define CHACTER_M3_BGOBJ_H
+#ifndef M3_BGOBJ_H
+#define M3_BGOBJ_H
 
-#endif // CHACTER_M3_BGOBJ_H
+#endif // M3_BGOBJ_H

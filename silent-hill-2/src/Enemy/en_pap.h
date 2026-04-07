@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_PAP_H
-#define ENEMY_EN_PAP_H
+#ifndef EN_PAP_H
+#define EN_PAP_H
 
-#endif // ENEMY_EN_PAP_H
+#endif // EN_PAP_H

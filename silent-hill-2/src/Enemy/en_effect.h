@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_EFFECT_H
-#define ENEMY_EN_EFFECT_H
+#ifndef EN_EFFECT_H
+#define EN_EFFECT_H
 
-#endif // ENEMY_EN_EFFECT_H
+#endif // EN_EFFECT_H

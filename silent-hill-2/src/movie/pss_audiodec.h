@@ -1,4 +1,4 @@
-#ifndef MOVIE_PSS_AUDIODEC_H
-#define MOVIE_PSS_AUDIODEC_H
+#ifndef PSS_AUDIODEC_H
+#define PSS_AUDIODEC_H
 
-#endif // MOVIE_PSS_AUDIODEC_H
+#endif // PSS_AUDIODEC_H

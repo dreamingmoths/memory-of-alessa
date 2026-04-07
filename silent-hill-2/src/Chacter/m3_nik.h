@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_NIK_H
-#define CHACTER_M3_NIK_H
+#ifndef M3_NIK_H
+#define M3_NIK_H
 
-#endif // CHACTER_M3_NIK_H
+#endif // M3_NIK_H

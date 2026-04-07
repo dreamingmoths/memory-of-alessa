@@ -1,4 +1,4 @@
-#ifndef EVENT_TITLE_H
-#define EVENT_TITLE_H
+#ifndef TITLE_H
+#define TITLE_H
 
-#endif // EVENT_TITLE_H
+#endif // TITLE_H

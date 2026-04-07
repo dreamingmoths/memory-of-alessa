@@ -1,4 +1,4 @@
-#ifndef CHACTER_DRAW_MODEL_N_H
-#define CHACTER_DRAW_MODEL_N_H
+#ifndef MODEL_N_H
+#define MODEL_N_H
 
-#endif // CHACTER_DRAW_MODEL_N_H
+#endif // MODEL_N_H

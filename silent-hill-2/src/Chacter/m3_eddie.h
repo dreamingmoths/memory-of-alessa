@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_EDDIE_H
-#define CHACTER_M3_EDDIE_H
+#ifndef M3_EDDIE_H
+#define M3_EDDIE_H
 
-#endif // CHACTER_M3_EDDIE_H
+#endif // M3_EDDIE_H

@@ -1,4 +1,4 @@
-#ifndef DBG_DBFLAG_H
-#define DBG_DBFLAG_H
+#ifndef DBFLAG_H
+#define DBFLAG_H
 
-#endif // DBG_DBFLAG_H
+#endif // DBFLAG_H

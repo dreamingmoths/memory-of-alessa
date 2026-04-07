@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_ARM_H
-#define ENEMY_EN_ARM_H
+#ifndef EN_ARM_H
+#define EN_ARM_H
 
-#endif // ENEMY_EN_ARM_H
+#endif // EN_ARM_H

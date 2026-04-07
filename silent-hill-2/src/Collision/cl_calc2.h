@@ -1,4 +1,4 @@
-#ifndef COLLISION_CL_CALC2_H
-#define COLLISION_CL_CALC2_H
+#ifndef CL_CALC2_H
+#define CL_CALC2_H
 
-#endif // COLLISION_CL_CALC2_H
+#endif // CL_CALC2_H

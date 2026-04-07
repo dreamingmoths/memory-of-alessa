@@ -1,4 +1,4 @@
-#ifndef SHPAD_LIB_SH_PAD_H
-#define SHPAD_LIB_SH_PAD_H
+#ifndef LIB_SH_PAD_H
+#define LIB_SH_PAD_H
 
-#endif // SHPAD_LIB_SH_PAD_H
+#endif // LIB_SH_PAD_H

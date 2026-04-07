@@ -1,4 +1,4 @@
-#ifndef EVENT_EVENT_H
-#define EVENT_EVENT_H
+#ifndef EVENT_H
+#define EVENT_H
 
-#endif // EVENT_EVENT_H
+#endif // EVENT_H

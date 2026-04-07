@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_FLY_H
-#define ENEMY_EN_FLY_H
+#ifndef EN_FLY_H
+#define EN_FLY_H
 
-#endif // ENEMY_EN_FLY_H
+#endif // EN_FLY_H

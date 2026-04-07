@@ -1,4 +1,4 @@
-#ifndef FOG_FOG_BLOW_H
-#define FOG_FOG_BLOW_H
+#ifndef FOG_BLOW_H
+#define FOG_BLOW_H
 
-#endif // FOG_FOG_BLOW_H
+#endif // FOG_BLOW_H

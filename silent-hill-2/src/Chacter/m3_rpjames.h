@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_RPJAMES_H
-#define CHACTER_M3_RPJAMES_H
+#ifndef M3_RPJAMES_H
+#define M3_RPJAMES_H
 
-#endif // CHACTER_M3_RPJAMES_H
+#endif // M3_RPJAMES_H

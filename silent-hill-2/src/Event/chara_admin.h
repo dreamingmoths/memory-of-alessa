@@ -1,4 +1,4 @@
-#ifndef EVENT_CHARA_ADMIN_H
-#define EVENT_CHARA_ADMIN_H
+#ifndef CHARA_ADMIN_H
+#define CHARA_ADMIN_H
 
-#endif // EVENT_CHARA_ADMIN_H
+#endif // CHARA_ADMIN_H

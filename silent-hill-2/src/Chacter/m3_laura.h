@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_LAURA_H
-#define CHACTER_M3_LAURA_H
+#ifndef M3_LAURA_H
+#define M3_LAURA_H
 
-#endif // CHACTER_M3_LAURA_H
+#endif // M3_LAURA_H

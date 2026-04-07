@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_ONI_H
-#define ENEMY_EN_ONI_H
+#ifndef EN_ONI_H
+#define EN_ONI_H
 
-#endif // ENEMY_EN_ONI_H
+#endif // EN_ONI_H

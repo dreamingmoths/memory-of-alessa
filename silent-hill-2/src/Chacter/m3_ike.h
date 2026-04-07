@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_IKE_H
-#define CHACTER_M3_IKE_H
+#ifndef M3_IKE_H
+#define M3_IKE_H
 
-#endif // CHACTER_M3_IKE_H
+#endif // M3_IKE_H

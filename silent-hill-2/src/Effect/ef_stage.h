@@ -1,4 +1,4 @@
-#ifndef EFFECT_EF_STAGE_H
-#define EFFECT_EF_STAGE_H
+#ifndef EF_STAGE_H
+#define EF_STAGE_H
 
-#endif // EFFECT_EF_STAGE_H
+#endif // EF_STAGE_H

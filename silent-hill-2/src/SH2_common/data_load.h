@@ -1,4 +1,4 @@
-#ifndef SH2_COMMON_DATA_LOAD_H
-#define SH2_COMMON_DATA_LOAD_H
+#ifndef DATA_LOAD_H
+#define DATA_LOAD_H
 
-#endif // SH2_COMMON_DATA_LOAD_H
+#endif // DATA_LOAD_H

@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_UTIL_CMD_SERV_H
-#define MULTI_THR_UTIL_CMD_SERV_H
+#ifndef CMD_SERV_H
+#define CMD_SERV_H
 
-#endif // MULTI_THR_UTIL_CMD_SERV_H
+#endif // CMD_SERV_H

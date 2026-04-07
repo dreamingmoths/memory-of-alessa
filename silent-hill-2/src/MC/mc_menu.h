@@ -1,4 +1,4 @@
-#ifndef MC_MC_MENU_H
-#define MC_MC_MENU_H
+#ifndef MC_MENU_H
+#define MC_MENU_H
 
-#endif // MC_MC_MENU_H
+#endif // MC_MENU_H

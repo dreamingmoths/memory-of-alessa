@@ -1,4 +1,4 @@
-#ifndef HEAP_SH2_CH_MALLOC_H
-#define HEAP_SH2_CH_MALLOC_H
+#ifndef SH2_CH_MALLOC_H
+#define SH2_CH_MALLOC_H
 
-#endif // HEAP_SH2_CH_MALLOC_H
+#endif // SH2_CH_MALLOC_H

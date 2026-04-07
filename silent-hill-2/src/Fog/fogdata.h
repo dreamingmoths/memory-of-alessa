@@ -1,4 +1,4 @@
-#ifndef FOG_FOGDATA_H
-#define FOG_FOGDATA_H
+#ifndef FOGDATA_H
+#define FOGDATA_H
 
-#endif // FOG_FOGDATA_H
+#endif // FOGDATA_H

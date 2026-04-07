@@ -1,4 +1,4 @@
-#ifndef VIEW_VW_MAIN_H
-#define VIEW_VW_MAIN_H
+#ifndef VW_MAIN_H
+#define VW_MAIN_H
 
-#endif // VIEW_VW_MAIN_H
+#endif // VW_MAIN_H

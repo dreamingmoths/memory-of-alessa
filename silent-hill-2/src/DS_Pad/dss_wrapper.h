@@ -1,4 +1,4 @@
-#ifndef DS_PAD_DSS_WRAPPER_H
-#define DS_PAD_DSS_WRAPPER_H
+#ifndef DSS_WRAPPER_H
+#define DSS_WRAPPER_H
 
-#endif // DS_PAD_DSS_WRAPPER_H
+#endif // DSS_WRAPPER_H

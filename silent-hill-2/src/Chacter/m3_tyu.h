@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_TYU_H
-#define CHACTER_M3_TYU_H
+#ifndef M3_TYU_H
+#define M3_TYU_H
 
-#endif // CHACTER_M3_TYU_H
+#endif // M3_TYU_H

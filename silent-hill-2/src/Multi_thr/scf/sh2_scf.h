@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_SCF_SH2_SCF_H
-#define MULTI_THR_SCF_SH2_SCF_H
+#ifndef SH2_SCF_H
+#define SH2_SCF_H
 
-#endif // MULTI_THR_SCF_SH2_SCF_H
+#endif // SH2_SCF_H

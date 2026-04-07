@@ -1,4 +1,4 @@
-#ifndef EFFECT_EF_COMMON_H
-#define EFFECT_EF_COMMON_H
+#ifndef EF_COMMON_H
+#define EF_COMMON_H
 
-#endif // EFFECT_EF_COMMON_H
+#endif // EF_COMMON_H

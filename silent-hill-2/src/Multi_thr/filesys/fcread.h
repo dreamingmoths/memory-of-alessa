@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_FILESYS_FCREAD_H
-#define MULTI_THR_FILESYS_FCREAD_H
+#ifndef FCREAD_H
+#define FCREAD_H
 
-#endif // MULTI_THR_FILESYS_FCREAD_H
+#endif // FCREAD_H

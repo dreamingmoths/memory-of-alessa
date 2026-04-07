@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_DMA_TEXSLOT_H
-#define MULTI_THR_DMA_TEXSLOT_H
+#ifndef TEXSLOT_H
+#define TEXSLOT_H
 
-#endif // MULTI_THR_DMA_TEXSLOT_H
+#endif // TEXSLOT_H

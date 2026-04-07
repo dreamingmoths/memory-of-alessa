@@ -1,4 +1,4 @@
-#ifndef LOADBG_LOADBG_ALL_H
-#define LOADBG_LOADBG_ALL_H
+#ifndef LOADBG_ALL_H
+#define LOADBG_ALL_H
 
-#endif // LOADBG_LOADBG_ALL_H
+#endif // LOADBG_ALL_H

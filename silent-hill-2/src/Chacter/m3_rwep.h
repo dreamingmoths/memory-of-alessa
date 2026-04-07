@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_RWEP_H
-#define CHACTER_M3_RWEP_H
+#ifndef M3_RWEP_H
+#define M3_RWEP_H
 
-#endif // CHACTER_M3_RWEP_H
+#endif // M3_RWEP_H

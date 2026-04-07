@@ -1,4 +1,4 @@
-#ifndef VIEW_VC_MAIN_H
-#define VIEW_VC_MAIN_H
+#ifndef VC_MAIN_H
+#define VC_MAIN_H
 
-#endif // VIEW_VC_MAIN_H
+#endif // VC_MAIN_H

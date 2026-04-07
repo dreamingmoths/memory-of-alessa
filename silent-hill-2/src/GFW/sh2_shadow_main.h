@@ -1,4 +1,4 @@
-#ifndef GFW_SH2_SHADOW_MAIN_H
-#define GFW_SH2_SHADOW_MAIN_H
+#ifndef SH2_SHADOW_MAIN_H
+#define SH2_SHADOW_MAIN_H
 
-#endif // GFW_SH2_SHADOW_MAIN_H
+#endif // SH2_SHADOW_MAIN_H

@@ -1,4 +1,4 @@
-#ifndef MOVIE_PSS_DISP_H
-#define MOVIE_PSS_DISP_H
+#ifndef PSS_DISP_H
+#define PSS_DISP_H
 
-#endif // MOVIE_PSS_DISP_H
+#endif // PSS_DISP_H

@@ -1,4 +1,4 @@
-#ifndef SOUND_SND_SELECT_H
-#define SOUND_SND_SELECT_H
+#ifndef SND_SELECT_H
+#define SND_SELECT_H
 
-#endif // SOUND_SND_SELECT_H
+#endif // SND_SELECT_H

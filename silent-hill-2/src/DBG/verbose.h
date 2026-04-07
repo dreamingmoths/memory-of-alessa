@@ -1,4 +1,4 @@
-#ifndef DBG_VERBOSE_H
-#define DBG_VERBOSE_H
+#ifndef VERBOSE_H
+#define VERBOSE_H
 
-#endif // DBG_VERBOSE_H
+#endif // VERBOSE_H

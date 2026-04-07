@@ -1,4 +1,4 @@
-#ifndef ENEMY_EN_INSECT_H
-#define ENEMY_EN_INSECT_H
+#ifndef EN_INSECT_H
+#define EN_INSECT_H
 
-#endif // ENEMY_EN_INSECT_H
+#endif // EN_INSECT_H

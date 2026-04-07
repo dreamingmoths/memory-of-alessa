@@ -1,4 +1,4 @@
-#ifndef FOG_SPACK_H
-#define FOG_SPACK_H
+#ifndef SPACK_H
+#define SPACK_H
 
-#endif // FOG_SPACK_H
+#endif // SPACK_H

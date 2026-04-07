@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_UTIL_UTILSTR_H
-#define MULTI_THR_UTIL_UTILSTR_H
+#ifndef UTILSTR_H
+#define UTILSTR_H
 
-#endif // MULTI_THR_UTIL_UTILSTR_H
+#endif // UTILSTR_H

@@ -1,4 +1,4 @@
-#ifndef VIEW_VC_PRIO_H
-#define VIEW_VC_PRIO_H
+#ifndef VC_PRIO_H
+#define VC_PRIO_H
 
-#endif // VIEW_VC_PRIO_H
+#endif // VC_PRIO_H

@@ -1,4 +1,4 @@
-#ifndef CHACTER_M3_PAP_H
-#define CHACTER_M3_PAP_H
+#ifndef M3_PAP_H
+#define M3_PAP_H
 
-#endif // CHACTER_M3_PAP_H
+#endif // M3_PAP_H

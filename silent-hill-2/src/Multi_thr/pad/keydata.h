@@ -1,4 +1,4 @@
-#ifndef MULTI_THR_PAD_KEYDATA_H
-#define MULTI_THR_PAD_KEYDATA_H
+#ifndef KEYDATA_H
+#define KEYDATA_H
 
-#endif // MULTI_THR_PAD_KEYDATA_H
+#endif // KEYDATA_H

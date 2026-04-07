@@ -1,4 +1,4 @@
-#ifndef EVENT_MEMO_H
-#define EVENT_MEMO_H
+#ifndef MEMO_H
+#define MEMO_H
 
-#endif // EVENT_MEMO_H
+#endif // MEMO_H

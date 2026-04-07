@@ -1,4 +1,4 @@
-#ifndef EFFECT_EF_SPARKS_H
-#define EFFECT_EF_SPARKS_H
+#ifndef EF_SPARKS_H
+#define EF_SPARKS_H
 
-#endif // EFFECT_EF_SPARKS_H
+#endif // EF_SPARKS_H

@@ -1,4 +1,4 @@
-#ifndef DBG_DBALOCATE_H
-#define DBG_DBALOCATE_H
+#ifndef DBALOCATE_H
+#define DBALOCATE_H
 
-#endif // DBG_DBALOCATE_H
+#endif // DBALOCATE_H

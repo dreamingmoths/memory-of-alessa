@@ -1,4 +1,4 @@
-#ifndef LENS_KARI_LF_DRAW_H
-#define LENS_KARI_LF_DRAW_H
+#ifndef KARI_LF_DRAW_H
+#define KARI_LF_DRAW_H
 
-#endif // LENS_KARI_LF_DRAW_H
+#endif // KARI_LF_DRAW_H

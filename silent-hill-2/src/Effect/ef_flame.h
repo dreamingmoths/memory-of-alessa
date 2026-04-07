@@ -1,4 +1,4 @@
-#ifndef EFFECT_EF_FLAME_H
-#define EFFECT_EF_FLAME_H
+#ifndef EF_FLAME_H
+#define EF_FLAME_H
 
-#endif // EFFECT_EF_FLAME_H
+#endif // EF_FLAME_H

@@ -1,4 +1,4 @@
-#ifndef MC_SAVEDATA_H
-#define MC_SAVEDATA_H
+#ifndef SAVEDATA_H
+#define SAVEDATA_H
 
-#endif // MC_SAVEDATA_H
+#endif // SAVEDATA_H

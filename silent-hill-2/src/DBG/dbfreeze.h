@@ -1,4 +1,4 @@
-#ifndef DBG_DBFREEZE_H
-#define DBG_DBFREEZE_H
+#ifndef DBFREEZE_H
+#define DBFREEZE_H
 
-#endif // DBG_DBFREEZE_H
+#endif // DBFREEZE_H

@@ -1,4 +1,4 @@
-#ifndef EFFECT_EF_PACKET_H
-#define EFFECT_EF_PACKET_H
+#ifndef EF_PACKET_H
+#define EF_PACKET_H
 
-#endif // EFFECT_EF_PACKET_H
+#endif // EF_PACKET_H

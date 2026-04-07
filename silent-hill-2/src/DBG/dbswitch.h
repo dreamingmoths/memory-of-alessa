@@ -1,4 +1,4 @@
-#ifndef DBG_DBSWITCH_H
-#define DBG_DBSWITCH_H
+#ifndef DBSWITCH_H
+#define DBSWITCH_H
 
-#endif // DBG_DBSWITCH_H
+#endif // DBSWITCH_H

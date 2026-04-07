@@ -1,4 +1,4 @@
-#ifndef MOVIE_PSS_STRFILE_H
-#define MOVIE_PSS_STRFILE_H
+#ifndef PSS_STRFILE_H
+#define PSS_STRFILE_H
 
-#endif // MOVIE_PSS_STRFILE_H
+#endif // PSS_STRFILE_H
