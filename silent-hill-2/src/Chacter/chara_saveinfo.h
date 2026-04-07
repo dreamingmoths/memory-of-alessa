@@ -1,0 +1,4 @@
+#ifndef CHARA_SAVEINFO_H
+#define CHARA_SAVEINFO_H
+
+#endif // CHARA_SAVEINFO_H

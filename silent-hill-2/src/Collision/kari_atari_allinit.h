@@ -1,0 +1,4 @@
+#ifndef KARI_ATARI_ALLINIT_H
+#define KARI_ATARI_ALLINIT_H
+
+#endif // KARI_ATARI_ALLINIT_H

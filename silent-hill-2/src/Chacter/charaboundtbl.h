@@ -1,0 +1,4 @@
+#ifndef CHARABOUNDTBL_H
+#define CHARABOUNDTBL_H
+
+#endif // CHARABOUNDTBL_H

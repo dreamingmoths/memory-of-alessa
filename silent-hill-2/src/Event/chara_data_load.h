@@ -1,0 +1,4 @@
+#ifndef CHARA_DATA_LOAD_H
+#define CHARA_DATA_LOAD_H
+
+#endif // CHARA_DATA_LOAD_H

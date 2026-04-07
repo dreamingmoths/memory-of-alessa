@@ -1,21 +1,22 @@
 from pathlib import Path
 from subprocess import run
 from dataclasses import dataclass
+import sys
 
 @dataclass
 class AnnotationArgs:
     vram_start: int | None
     vram_end: int | None
     elf_path: Path
-    asm_path: Path
+    asm_path: Path | None
     out_path: Path
     addr2line_path: Path
     encoding: str
+    stdout: bool
     verbose: bool
 
 def annotate_asm(args: AnnotationArgs):
-    with open(args.asm_path, "r") as asm_file:
-        asm_contents = asm_file.read()
+    asm_contents = args.asm_path.read()
 
     asm_lines = asm_contents.splitlines()
     asm_line_index = 0
@@ -77,7 +78,7 @@ def annotate_asm(args: AnnotationArgs):
         prev_line_number = current_line_number
         current_vram_addr += 0x4
     
-    while asm_line_index < len(asm_lines) - 1:
+    while asm_line_index < len(asm_lines):
         annotated_asm_lines.append(asm_lines[asm_line_index])
         asm_line_index += 1
 
@@ -92,11 +93,14 @@ def annotate_asm(args: AnnotationArgs):
 
     annotated_asm_contents = "\n".join(annotated_asm_lines)
 
-    with open(args.out_path, "w") as out:
-        out.write(annotated_asm_contents)
+    if not args.stdout and args.out_path:
+        with open(args.out_path, "w") as out_file:
+            out_file.write(annotated_asm_contents)
+        if args.verbose:
+            print(f"alessatool/annotate: wrote asm to {args.out_path}")
+    else:
+        sys.stdout.write(annotated_asm_contents)
 
-    if args.verbose:
-        print(f"alessatool/annotate: wrote asm to {args.out_path}")
 
 def find_vram_bounds(asm_lines: list[str]):
     start = None

@@ -1,0 +1,4 @@
+#ifndef FI_LIBVU0_INLINE_H
+#define FI_LIBVU0_INLINE_H
+
+#endif // FI_LIBVU0_INLINE_H

@@ -1,0 +1,4 @@
+#ifndef SH2GFW_SHCAMTEST_H
+#define SH2GFW_SHCAMTEST_H
+
+#endif // SH2GFW_SHCAMTEST_H

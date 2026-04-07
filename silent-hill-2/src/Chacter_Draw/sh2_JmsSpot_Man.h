@@ -1,0 +1,4 @@
+#ifndef SH2_JMSSPOT_MAN_H
+#define SH2_JMSSPOT_MAN_H
+
+#endif // SH2_JMSSPOT_MAN_H

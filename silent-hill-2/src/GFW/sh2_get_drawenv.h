@@ -1,0 +1,4 @@
+#ifndef SH2_GET_DRAWENV_H
+#define SH2_GET_DRAWENV_H
+
+#endif // SH2_GET_DRAWENV_H

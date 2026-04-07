@@ -1,0 +1,4 @@
+#ifndef EF_BROKEN_GLASS_H
+#define EF_BROKEN_GLASS_H
+
+#endif // EF_BROKEN_GLASS_H

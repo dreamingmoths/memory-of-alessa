@@ -1,0 +1,4 @@
+#ifndef SH2SHD_STRUCTS_H
+#define SH2SHD_STRUCTS_H
+
+#endif // SH2SHD_STRUCTS_H

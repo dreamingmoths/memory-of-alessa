@@ -1,0 +1,4 @@
+#ifndef HH_CLASS_WATER_30_H
+#define HH_CLASS_WATER_30_H
+
+#endif // HH_CLASS_WATER_30_H

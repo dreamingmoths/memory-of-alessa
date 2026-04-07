@@ -1,0 +1,4 @@
+#ifndef SH2SHD_SHADOW_ENV_H
+#define SH2SHD_SHADOW_ENV_H
+
+#endif // SH2SHD_SHADOW_ENV_H

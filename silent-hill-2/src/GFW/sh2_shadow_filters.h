@@ -1,0 +1,4 @@
+#ifndef SH2_SHADOW_FILTERS_H
+#define SH2_SHADOW_FILTERS_H
+
+#endif // SH2_SHADOW_FILTERS_H

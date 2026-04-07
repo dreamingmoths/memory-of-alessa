@@ -1,0 +1,4 @@
+#ifndef SH_KT_VIF0PKBUF_H
+#define SH_KT_VIF0PKBUF_H
+
+#endif // SH_KT_VIF0PKBUF_H

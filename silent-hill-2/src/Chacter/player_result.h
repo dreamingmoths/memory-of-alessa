@@ -1,0 +1,4 @@
+#ifndef PLAYER_RESULT_H
+#define PLAYER_RESULT_H
+
+#endif // PLAYER_RESULT_H

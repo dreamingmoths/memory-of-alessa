@@ -1,0 +1,4 @@
+#ifndef BOOTOPTITEM_H
+#define BOOTOPTITEM_H
+
+#endif // BOOTOPTITEM_H

@@ -1,0 +1,4 @@
+#ifndef KARI_PROBE_DRAW_H
+#define KARI_PROBE_DRAW_H
+
+#endif // KARI_PROBE_DRAW_H

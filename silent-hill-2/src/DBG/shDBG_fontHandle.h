@@ -1,0 +1,4 @@
+#ifndef SHDBG_FONTHANDLE_H
+#define SHDBG_FONTHANDLE_H
+
+#endif // SHDBG_FONTHANDLE_H

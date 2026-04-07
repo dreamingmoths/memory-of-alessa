@@ -1,0 +1,4 @@
+#ifndef SH2GFW_SYNCDBG_H
+#define SH2GFW_SYNCDBG_H
+
+#endif // SH2GFW_SYNCDBG_H

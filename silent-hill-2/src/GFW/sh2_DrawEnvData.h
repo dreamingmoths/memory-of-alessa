@@ -1,0 +1,4 @@
+#ifndef SH2_DRAWENVDATA_H
+#define SH2_DRAWENVDATA_H
+
+#endif // SH2_DRAWENVDATA_H

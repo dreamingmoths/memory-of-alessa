@@ -1,0 +1,4 @@
+#ifndef SH2SHD_OUTDOOR_H
+#define SH2SHD_OUTDOOR_H
+
+#endif // SH2SHD_OUTDOOR_H

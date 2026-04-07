@@ -1,0 +1,4 @@
+#ifndef SH2GFW_ALL_SYSINIT_H
+#define SH2GFW_ALL_SYSINIT_H
+
+#endif // SH2GFW_ALL_SYSINIT_H

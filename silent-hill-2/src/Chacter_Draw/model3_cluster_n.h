@@ -1,0 +1,4 @@
+#ifndef MODEL3_CLUSTER_N_H
+#define MODEL3_CLUSTER_N_H
+
+#endif // MODEL3_CLUSTER_N_H

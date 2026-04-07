@@ -145,15 +145,20 @@ def main():
     )
     annotate_parser.add_argument(
         "--asm-path",
-        type=Path,
-        help="path to the asm file to annotate",
-        required=True
+        type=argparse.FileType("r"),
+        default="-",
+        help="path to the asm file to annotate"
     )
     annotate_parser.add_argument(
         "--out-path",
         type=Path,
         default=Path("decorated.s"),
         help="path to write the annotated output"
+    )
+    annotate_parser.add_argument(
+        "--stdout",
+        action="store_true",
+        help="ignore output path, write to stdout"
     )
     annotate_parser.add_argument(
         "--addr2line-path",

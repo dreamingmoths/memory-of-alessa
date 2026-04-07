@@ -1,0 +1,4 @@
+#ifndef HH_CLASS_BLOOD_04_H
+#define HH_CLASS_BLOOD_04_H
+
+#endif // HH_CLASS_BLOOD_04_H

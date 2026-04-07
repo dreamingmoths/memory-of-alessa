@@ -1,0 +1,4 @@
+#ifndef HH_MATH_WRAPPER_H
+#define HH_MATH_WRAPPER_H
+
+#endif // HH_MATH_WRAPPER_H

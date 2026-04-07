@@ -8,7 +8,11 @@ def visit_function(call_tree, func):
     if func_name in call_tree:
         return
     out_nodes = list(func.getCalledFunctions(monitor))
-    call_tree[func_name] = map(lambda f : f.getName(), out_nodes)
+    call_tree[func_name] = {
+        "name": func_name,
+        "address": "0x%s" % func.getEntryPoint(),
+        "callees": map(lambda f : f.getName(), out_nodes)
+    }
     for node in out_nodes:
         visit_function(call_tree, node)
 
@@ -18,9 +22,9 @@ def write_call_tree(call_tree, output_path):
 
 def build_and_write_call_tree(call_tree_path):
     fm = currentProgram.getFunctionManager()
-    func = fm.getFunctionContaining(currentAddress)
     call_tree = dict()
-    visit_function(call_tree, func)
+    for func in fm.getFunctions(True):
+        visit_function(call_tree, func)
     write_call_tree(call_tree, call_tree_path)
 
 def main():

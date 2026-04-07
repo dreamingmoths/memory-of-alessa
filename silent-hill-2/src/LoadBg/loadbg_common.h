@@ -1,0 +1,4 @@
+#ifndef LOADBG_COMMON_H
+#define LOADBG_COMMON_H
+
+#endif // LOADBG_COMMON_H

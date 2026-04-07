@@ -1,0 +1,4 @@
+#ifndef SH2GFW_2D_FILTERS_H
+#define SH2GFW_2D_FILTERS_H
+
+#endif // SH2GFW_2D_FILTERS_H

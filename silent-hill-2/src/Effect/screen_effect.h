@@ -1,0 +1,4 @@
+#ifndef SCREEN_EFFECT_H
+#define SCREEN_EFFECT_H
+
+#endif // SCREEN_EFFECT_H

@@ -1,0 +1,4 @@
+#ifndef ITEM_SCREEN_OBJ_H
+#define ITEM_SCREEN_OBJ_H
+
+#endif // ITEM_SCREEN_OBJ_H

@@ -88,6 +88,9 @@ sh3gfw_SetSlot2Tex = 0x001b5db0;
 // cl_main
 rodata_jyun = 0x00361bc0; // size:0x14
 
+// cl_calc
+clCalcPlaneEquation = 0x0019E6C0;
+
 // vb_main
 vbCalcViewScreenMatrix = 0x001b64a0;
 vbInitCoordinate = 0x001b65c0;

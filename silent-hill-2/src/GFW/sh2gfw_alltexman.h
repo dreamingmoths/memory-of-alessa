@@ -1,0 +1,4 @@
+#ifndef SH2GFW_ALLTEXMAN_H
+#define SH2GFW_ALLTEXMAN_H
+
+#endif // SH2GFW_ALLTEXMAN_H

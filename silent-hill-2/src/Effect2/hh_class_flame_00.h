@@ -1,0 +1,4 @@
+#ifndef HH_CLASS_FLAME_00_H
+#define HH_CLASS_FLAME_00_H
+
+#endif // HH_CLASS_FLAME_00_H
