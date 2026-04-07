@@ -38,15 +38,6 @@ typedef struct shAttackInfo
     unsigned char eff;              // offset 0x23, size 0x1
 } shAttackInfo;
 
-extern void EFCTSetGunFire(float * pos /* r19 */, float * vec /* r18 */);
-extern void EFCTSetGunSmoke(float * pos);
-extern void sh2gfw_Set_JmsGunLight();
-extern short shCharacterAnimeFrameGet_(struct SubCharacter * scp /* r2 */, u_int type /* r2 */);
-extern void shGetJamesWeaponEndPos(float * pos /* r2 */, float * vec /* r2 */);
-extern int ItemWeaponShoot(int kind /* r16 */, int use /* r2 */);
-extern int PlayerNowItemName(u_char wep /* r2 */);
-extern int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float * pos /* r19 */, int status /* r18 */); 
-
 extern shAttackInfo sh2_attack_list[66];
 extern shPlayerWork sh2jms;
 

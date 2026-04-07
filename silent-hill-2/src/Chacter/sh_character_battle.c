@@ -1,6 +1,12 @@
 #include "sh_character_battle.h"
 #include "Collision/cl_main.h"
+#include "Effect/ef_common.h"
 #include "Effect2/hh_class_object_execute.h"
+#include "Chacter_Draw/sh2_JmsSpot_Man.h"
+#include "Chacter/m3_sc.h"
+#include "Chacter/m3_play.h"
+#include "sound/sh_sound.h"
+#include "Event/item.h"
 
 static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp, CL_BATTLE_RESULT *result);
 static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u_short atk);
