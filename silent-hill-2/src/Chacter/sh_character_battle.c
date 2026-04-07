@@ -1,6 +1,13 @@
 #include "sh_character_battle.h"
+#include "Collision/cl_main.h"
+#include "Effect2/hh_class_object_execute.h"
 
-static void shBattleDamageRevise(float *damage, float *shock, struct SubCharacter *scp, struct _CL_BATTLE_RESULT *result) {
+static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp, CL_BATTLE_RESULT *result);
+static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u_short atk);
+static void shBattleAddEffectAttack(SubCharacter *attacker, float *pos, float *vec);
+static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker , u_short atk);
+
+static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp, CL_BATTLE_RESULT *result) {
     if (scp->battle.status & 0x40) {
         *damage = 0.0f;
     } else {
@@ -17,7 +24,7 @@ static void shBattleDamageRevise(float *damage, float *shock, struct SubCharacte
     *shock = sh2_attack_list[(u_char)result->btlid].sp;
 }
 
-static void shBattleSetEffectDamage(struct SubCharacter *scp, float *pos, float *vec, u_short atk) {
+static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u_short atk) {
     float vec_tmp[4];
     int atk_type;
 
@@ -43,20 +50,20 @@ static void shBattleSetEffectDamage(struct SubCharacter *scp, float *pos, float 
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetSoundDamage);
 
-static void shBattleAddEffectAttack(struct SubCharacter *attacker, float *pos, float *vec) {
+static void shBattleAddEffectAttack(SubCharacter *attacker, float *pos, float *vec) {
     EFCTSetGunFire(pos, vec);
     EFCTSetGunSmoke(pos);
     sh2gfw_Set_JmsGunLight();
 }
 
-static void shBattleAttackByHumanGunshotTypeA(struct SubCharacter * attacker /* r20 */, u_short atk /* r16 */) {
+static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker /* r20 */, u_short atk /* r16 */) {
 
     float gunpos[4]; // r29+0x60
     float gunvec[4]; // r29+0x70
     u_short cur_frame; // r2
     u_short st; // r2
     u_short ed; // r16
-    struct _CL_BATTLE_QUE que; // r29+0x80
+    CL_BATTLE_QUE que; // r29+0x80
     int wep; // r2
 
     if (atk == 3 || atk == 7) {
