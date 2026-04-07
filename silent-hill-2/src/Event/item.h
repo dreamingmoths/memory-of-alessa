@@ -106,6 +106,7 @@ struct Stage_Data {
     signed int reserve_11; // offset 0x40, size 0x4
 };
 
+int ItemWeaponShoot(int kind /* r16 */, int use /* r2 */);
 void ItemGet(signed int kind /* r16 */);
 int ItemUse(signed int kind /* r2 */);
 void GameItemGetCountUp();
