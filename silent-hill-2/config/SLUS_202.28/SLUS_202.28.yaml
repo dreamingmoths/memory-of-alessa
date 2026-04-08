@@ -358,30 +358,30 @@ segments:
       - [0x27c230, .data,   Effect2/hh_memory_manage]
       - [0x27c240, data,    data_1]
       - [0x27e280, databin, vudata]
-      - [0x289700, rodata,  rodata_0]
+      - [0x289700, rodata,  rodata_0x289700]
       - [0x28cf40, .rodata, Chacter/m3_sc]
-      - [0x28cf60, rodata,  rodata_1]
+      - [0x28cf60, rodata,  rodata_0x28cf60]
       - [0x28e0b0, .rodata, Chacter_Draw/model3_vu1_n]
-      - [0x28e2c0, rodata,  rodata_2]
+      - [0x28e2c0, rodata,  rodata_0x28e2c0]
       - [0x28e380, .rodata, Collision/cl_main]
-      - [0x28e510, rodata,  rodata_3]
+      - [0x28e510, rodata,  rodata_0x28e510]
       - [0x291810, .rodata, Event/item]
-      - [0x2918e0, rodata,  rodata_4]
+      - [0x2918e0, rodata,  rodata_0x2918e0]
       - [0x291ac0, .rodata, Font/font]
-      - [0x291c00, rodata,  rodata_5]
+      - [0x291c00, rodata,  rodata_0x291c00]
       - [0x292d60, .rodata, SH2_common/pad]
-      - [0x292d80, rodata,  rodata_6]
+      - [0x292d80, rodata,  rodata_0x292d80]
       - [0x2988d0, .rodata, Event/stg_overlay]
-      - [0x298ac8, rodata,  rodata_7]
+      - [0x298ac8, rodata,  rodata_0x298ac8]
       - [0x29a230, .rodata, Event/stage/stg_tgs_trial]
-      - [0x29a280, rodata,  rodata_8]
+      - [0x29a280, rodata,  rodata_0x29a280]
       - [0x29a870, .rodata, Effect2/hh_class_manager]
-      - [0x29a8a0, rodata,  rodata_9]
+      - [0x29a8a0, rodata,  rodata_0x29a8a0]
       - [0x29cb00, .rodata, Effect2/hh_memory_manage]
-      - [0x29cb80, rodata,  rodata_A]
-      - { vram: 0x03c7d80, type: bss,  name: bss_0 }
+      - [0x29cb80, rodata,  rodata_0x29cb80]
+      - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
       - { vram: 0x041bf10, type: .bss, name: Chacter_Draw/model_common }
-      - { vram: 0x0438588, type: bss,  name: bss_1 }
+      - { vram: 0x0438588, type: bss,  name: bss_0x0438588 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
-      - { vram: 0x126fbc0, type: bss,  name: bss_2 }
+      - { vram: 0x126fbc0, type: bss,  name: bss_0x126fbc0 }
   - [0x2c8480]
