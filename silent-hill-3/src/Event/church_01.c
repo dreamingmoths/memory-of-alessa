@@ -180,11 +180,67 @@ INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E140_church_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E1A0_church_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E3D0_church_01);
+int func_01F6E3D0_church_01(void) {
+    switch (D_01F70600_church_01) {
+        case 0:
+            func_00190A20(2);
+            D_01F70600_church_01++;
+            /* fallthrough */
+        case 1:
+            if (func_0016BED0(0x15, 0x53) == 0) {
+                return 0;
+            }
+            func_00190A20(0);
+        default:
+            D_01F70600_church_01 = 0;
+            return 1;
+        }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E460_church_01);
+int func_01F6E460_church_01(void) {
+    switch (D_01F70600_church_01) {
+        case 0:
+            func_00190A20(2);
+            func_0016CD00(&D_01F70430_church_01);
+            D_01F70600_church_01++;
+            if (GET_FLAG(D_1D316A8, 5)) {
+                D_01F70600_church_01++;
+                return 0;
+            }
+        case 1:
+            if (func_0016C1C0(0x5C) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            D_01F70600_church_01++;
+        case 2:
+            if (func_0016BED0(1, 0x5D) == 0) {
+                return 0;
+            }
+            func_0016C3C0();
+            func_00190A20(0);
+        default:
+            D_01F70600_church_01 = 0;
+            return 1;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E570_church_01);
+int func_01F6E570_church_01(void) {
+    switch (D_01F70600_church_01) {
+        case 0:
+            func_00190A20(2);
+            D_01F70600_church_01++;
+            /* fallthrough */
+        case 1:
+            if (func_0016BED0(0x16, 0x4E) == 0) {
+                return 0;
+            }
+            func_00190A20(0);
+        default:
+            D_01F70600_church_01 = 0;
+            return 1;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_01", func_01F6E600_church_01);
 
