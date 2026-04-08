@@ -12,6 +12,7 @@ int func_0016C1C0(int);
 void func_0016C3C0(void);
 extern int D_01F70280_church_01;
 extern int D_01F70400_church_01;
+extern int D_01F70430_church_01;
 extern int D_01F70600_church_01;
 extern int D_01F703F0_church_01;
 extern u_int D_1D316A8[];
