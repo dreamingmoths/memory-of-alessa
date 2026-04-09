@@ -26,5 +26,6 @@ segments:
     subsegments:
       - [0x80, c, Event/church_01]
       - [0x1B80, data, church_01_data]
+      - [0x2F80, .rodata, Event/church_01]
       - { vram: 0x1F70600, type: bss, name: church_01_bss }
   - [0x3000]
