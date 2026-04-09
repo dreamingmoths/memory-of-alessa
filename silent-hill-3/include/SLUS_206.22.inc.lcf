@@ -805,6 +805,8 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		church_01_data.data.s.o (.data)
+        ALIGNALL(0x8);
+        church_01.c.o (.rodata)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
