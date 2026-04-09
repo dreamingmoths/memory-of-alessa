@@ -14,7 +14,7 @@ void fontClear(void);
 void func_0015E780(int);
 void func_0015E7F0(void);
 void func_001603E0(int, int);
-void func_00163A90(int*);
+void func_00163A90(int *);
 void func_00163B30(void);
 void func_00164210(void);
 int func_001646F0(void);
