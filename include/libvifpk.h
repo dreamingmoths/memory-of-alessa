@@ -46,7 +46,13 @@ void sceVif0PkCnt(sceVif0Packet *pPacket, u_int flag);
 void sceVif0PkRefMpg(sceVif0Packet *pPacket, u_short vuaddr, u_long128 *pMicro, u_int size, u_int opt1);
 u_long128 *sceVif0PkTerminate(sceVif0Packet *pPacket);
 
-
+void sceVif1PkInit(sceVif1Packet *pPacket, u_long128 *pBase);
+void sceVif1PkReset(sceVif1Packet *pPacket);
+void sceVif1PkCnt(sceVif1Packet *pPacket, u_int flag);
+void sceVif1PkOpenDirectCode(sceVif1Packet *pPacket, int stall);
+void sceVif1PkCloseDirectCode(sceVif1Packet *pPacket);
+void sceVif1PkEnd(sceVif1Packet *pPacket, u_int flag);
+u_long128 *sceVif1PkTerminate(sceVif1Packet *pPacket);
 u_int *sceVif1PkReserve(sceVif1Packet *pPacket, u_int count);
 
 #endif
