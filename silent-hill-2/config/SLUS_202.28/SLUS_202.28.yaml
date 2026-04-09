@@ -76,7 +76,7 @@ segments:
       - [0x03aed0, asm, DBG/sh2gfw_SyncDBG]
       - [0x03aff0, asm, Effect/ef_broken_glass]
       - [0x03c590, asm, Effect/ef_common]
-      - [0x03e5f0, asm, Effect/ef_malloc]
+      - [0x03e5f0, c, Effect/ef_malloc]
       - [0x03e700, asm, Effect/ef_packet]
       - [0x03e840, asm, Effect/ef_stage]
       - [0x040110, asm, Enemy/en_bos]
