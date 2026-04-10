@@ -40,9 +40,8 @@ void ScreenEffectFadeStart(int type /* r2 */, float time /* r29+0x10 */) {
             break;
         case 3:
         case 8:
-            if (scr_efct.fade_status == 2) {
+            if (scr_efct.fade_status == 2)
                 return;
-            }
             scr_efct.fade_status = 2;
             break;
         case 4:
