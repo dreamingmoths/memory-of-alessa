@@ -16,8 +16,9 @@ extern Q D_01F72AB0_mall_f_01;
 void func_002A2E70(Q*);
 int func_002A47C0(float, float);
 void func_0029F330(float*, float*);
-int func_01F70720_mall_f_01(void);
 int func_0016C540(int*, int*);
 int func_001C2290(int, float);
+void func_01F6EE40_mall_f_01(int);
+int func_01F70720_mall_f_01(void);
 
 #endif

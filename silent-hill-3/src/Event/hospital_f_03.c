@@ -119,7 +119,16 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6E440_hospital_f_03)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6E490_hospital_f_03);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6E650_hospital_f_03);
+void func_01F6E650_hospital_f_03(unk_struct* arg0) {
+    int temp_a1;
+
+    func_01F6E3B0_hospital_f_03();
+    func_01F6E440_hospital_f_03(arg0);
+    temp_a1 = arg0->unk934;
+    if (temp_a1 != 0xF) {
+        func_01F6E490_hospital_f_03(arg0, temp_a1);
+    }
+}
 
 void func_01F6E6A0_hospital_f_03(int arg0) {
     func_001DE5B0(&func_01F6E650_hospital_f_03, arg0, 1);

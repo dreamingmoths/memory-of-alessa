@@ -3,6 +3,11 @@
 
 #include "common.h"
 
+typedef struct unk_struct {
+    u_char pad[0x934];
+    int unk934;
+} unk_struct;
+
 int RoomName(void);
 int func_0016BED0(u_int, u_int);
 int func_0016C1C0(int);
@@ -18,6 +23,9 @@ void func_003174B0(float);
 int func_001DE5B0(int*, int, int);
 int SeCall(float, float, int);
 int shRandI(void);
+int func_01F6E3B0_hospital_f_03(void);
+int func_01F6E440_hospital_f_03(void*);
+int func_01F6E490_hospital_f_03(void*, int);
 
 extern float D_01F70580_hospital_f_03;
 extern float D_01F705E0_hospital_f_03;
@@ -28,7 +36,6 @@ extern int D_01F708D8_hospital_f_03;
 extern int D_01F708E0_hospital_f_03;
 extern int D_01F70908_hospital_f_03;
 extern int D_01F70910_hospital_f_03;
-extern int func_01F6E650_hospital_f_03;
 
 extern u_int D_01D31640[];
 extern u_int D_1D31644;
