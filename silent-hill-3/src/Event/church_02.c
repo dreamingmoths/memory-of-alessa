@@ -258,18 +258,35 @@ int func_01F6F820_church_02(void) {
     return ret;
 }
 
+void func_01F6F8E0_church_02(void) {
+    D_01F77890_church_02 = 0x4A;
+    func_01F6F940_church_02();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F8E0_church_02);
+void func_01F6F8F0_church_02(void) {
+    D_01F77890_church_02 = 0x4B;
+    func_01F6F940_church_02();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F8F0_church_02);
+void func_01F6F900_church_02(void) {
+    D_01F77890_church_02 = 0x4D;
+    func_01F6F940_church_02();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F900_church_02);
+void func_01F6F910_church_02(void) {
+    D_01F77890_church_02 = 0x50;
+    func_01F6F940_church_02();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F910_church_02);
+void func_01F6F920_church_02(void) {
+    D_01F77890_church_02 = 0x51;
+    func_01F6F940_church_02();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F920_church_02);
-
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F930_church_02);
+void func_01F6F930_church_02(void) {
+    D_01F77890_church_02 = 0;
+    func_01F6F940_church_02();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6F940_church_02);
 
@@ -289,17 +306,29 @@ INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6FE80_church_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F6FED0_church_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F70000_church_02);
+int func_01F70000_church_02(int arg0) {
+    return D_01F77858_church_02[arg0][0];
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F70020_church_02);
+int func_01F70020_church_02(void) {
+    func_0016BD90(0, 0, 1.0f);
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F70050_church_02);
+void func_01F70050_church_02(void) {
+    if ((func_01F6FE40_church_02(0xE) != -1) || (func_01F6FE40_church_02(0xD) != -1)
+        || (func_01F6FE40_church_02(0xC) != -1) || (func_01F6FE40_church_02(0xB) != -1)) {
+        func_001DE5B0(&func_01F715C0_church_02, 0, 1);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F700D0_church_02);
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F708C0_church_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F70930_church_02);
+int func_01F70930_church_02(int arg0) {
+    return D_01D31938[arg0];
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/church_02", func_01F70950_church_02);
 

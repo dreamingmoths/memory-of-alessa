@@ -32,6 +32,10 @@ int func_0019A9B0(float);
 int  func_001C2580(int);
 void func_00317490(int, float);
 void func_003174B0(float);
+void func_01F6F940_church_02(void);
+int func_0016BD90(int, int, float);
+int func_001DE5B0(int*, int, int);
+int func_01F6FE40_church_02(int);
 
 extern float D_01F769C0_church_02;
 extern float D_01F76A20_church_02;
@@ -50,6 +54,10 @@ extern int D_01F77600_church_02;
 extern int D_01F77608_church_02;
 extern int D_01F77610_church_02;
 extern int D_01F77908_church_02;
+extern int D_01F77890_church_02;
+extern int D_01F77858_church_02[][3];
+extern int func_01F715C0_church_02;
+extern int D_01D31938[];
 
 extern u_int D_1D316A8[];
 extern u_int D_1D31644[];

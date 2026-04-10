@@ -1,10 +1,12 @@
-#include "common.h"
+#include "sewer_01.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/sewer_01", func_01F6D680_sewer_01);
 
 INCLUDE_ASM("asm/nonmatchings/Event/sewer_01", func_01F6D830_sewer_01);
 
-INCLUDE_ASM("asm/nonmatchings/Event/sewer_01", func_01F6D920_sewer_01);
+void func_01F6D920_sewer_01(void) {
+    func_0016BED0(1, 0x34);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/sewer_01", func_01F6D930_sewer_01);
 
