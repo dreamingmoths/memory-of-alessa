@@ -1,5 +1,4 @@
-#include "common.h"
-#include "mall_b_00.h"
+#include "mall_f_01.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_f_01", func_01F6D680_mall_f_01);
 

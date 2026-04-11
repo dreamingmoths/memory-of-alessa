@@ -115,7 +115,7 @@ u_short func_01F6DC60_hospital_f_02(void) {
     float sp1C;
 
     func_0029F330(&sp18, &sp1C);
-    return func_002A47C0(sp18, sp1C) & 0xFFFF;
+    return func_002A47C0(sp18, sp1C);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6DC90_hospital_f_02);
