@@ -19,7 +19,7 @@ static void SetSparksSize(float * width /* r17 */, float * height /* r16 */) {
 }
 
 static void SetSparksKind(int * kind /* r16 */) {
-    if (!(shRandF() <= 0.5f)) {
+    if (shRandF() > 0.5f) {
         *kind = 0;
         return;
     }
