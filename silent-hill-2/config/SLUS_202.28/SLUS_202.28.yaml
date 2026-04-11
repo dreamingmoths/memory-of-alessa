@@ -227,7 +227,7 @@ segments:
       - [0x12de00, asm, Effect/ef_smoke]
       - [0x12ed10, asm, Effect/ef_flame]
       - [0x130be0, asm, Event/memo]
-      - [0x132c90, asm, Effect/ef_sparks]
+      - [0x132c90, c, Effect/ef_sparks]
       - [0x133550, c,   DS_Pad/ds_sequencer]
       - [0x134ec0, asm, DS_Pad/dss_wrapper]
       - [0x135050, asm, DBG/dbsw_all]
