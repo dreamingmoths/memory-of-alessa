@@ -222,7 +222,7 @@ segments:
       - [0x129200, asm, Enemy/en_oni]
       - [0x12c730, asm, Multi_thr/scf/ps2_scf]
       - [0x12ca20, asm, DBG/dbfreeze]
-      - [0x12cbb0, asm, Effect/ef_rain]
+      - [0x12cbb0, c, Effect/ef_rain]
       - [0x12d7e0, asm, SH2_common/data_load]
       - [0x12de00, asm, Effect/ef_smoke]
       - [0x12ed10, asm, Effect/ef_flame]
