@@ -56,7 +56,7 @@ static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /
 
 static int efRainDropDrawSpray(_EF_RAINDROP_DATA * dat /* r16 */)  {
 
-  _EF_RAIN_LINE line;
+    _EF_RAIN_LINE line;
 	int i;
 
     line.rgba[0] = 0xFF;
