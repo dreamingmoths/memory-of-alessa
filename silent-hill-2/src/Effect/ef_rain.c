@@ -5,7 +5,6 @@ static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /
 static int efRainDropDrawSpray(_EF_RAINDROP_DATA * dat /* r16 */);
 
 int EFCTSetRainDrop(int lev /* r17 */) {
-
     _EF_EF_RAINDROP_TASK * ptr; // r2
     int i; // r16
     
@@ -22,7 +21,6 @@ int EFCTSetRainDrop(int lev /* r17 */) {
 }
 
 void EFCTDelRainDrop(void) {
-
     _shTskTASK * ptr; // r2
     _shTskTASK * seekp; // r16
     
@@ -55,7 +53,6 @@ static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /
 }
 
 static int efRainDropDrawSpray(_EF_RAINDROP_DATA * dat /* r16 */)  {
-
     _EF_RAIN_LINE line;
 	int i;
 
