@@ -132,6 +132,8 @@ segments:
       - [0x210790, asm,     text_0x210790]
       - [0x230440, asm,     Effect2/hh_class_new]
       - [0x230b00, asm,     text_0x230b00]
+      - [0x2345b0, c,       Effect2/hh_class_0x2345b0]
+      - [0x234ee0, asm,     text_0x234ee0]
       - [0x238080, textbin, vutext]
       - [0x23aa80, data,    data]
       - [0x24f4c0, rodata,  rodata_0x24f4c0]
