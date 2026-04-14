@@ -11,17 +11,17 @@ There is a `.clang-format` file that can be applied to format the file, do note 
 You can check the file to see which clang-format values it has, each option can be searched [here]("https://clang.llvm.org/docs/ClangFormatStyleOptions.html") for more information:
 
 - Pointer Alignment: Left
-- Identation Width: 4
+- Indentation Width: 4
 - Comments aligned
 
 ### Function declarations & definitions
-Empty arguments in functions should have `(void)` in its prototype and `()` in its definition
+Empty arguments in functions should have `(void)` in its prototype and `()` in its definition. Omitting the `void` from the prototype might cause mismatches after linking, even if the compilation output matches
 
 ### File ending
 Files should end with a newline for *nix-like systems compatibility
 
-### Extra parenthesis
-Unless readability is improved by adding extra parenthesis, only the necessary ones should be used
+### Extra parentheses
+Unless readability is improved by adding extra parentheses, only the necessary ones should be used
 
 
 ### Explicit conditionals
@@ -32,13 +32,13 @@ Unless it improved readability/is necessary for matching, conditionals should be
 Example 1:
 
 ```
-if(foo != 0){
+if(exampleVar != 0){
     //code..
 }
 ```
 can be converted to
 ```
-if(foo){
+if(exampleVar){
     //code..
 }
 ```
@@ -46,28 +46,30 @@ if(foo){
 Example 2:
 
 ```
-if((bar & 0x8) == 0){
+if((myVar & 0x8) == 0){
     //code..
 }
 ```
 can be converted to
 
 ```
-if(!(bar & 0x8)){
+if(!(myVar & 0x8)){
     //code..
 }
 ```
+
+Strings in the codebase may hint an specific style used by the developers, this styling is then preferred over the styling guides (eg. `((u_int)data & 0x8) == 0`) 
 
 ### NOT bitmasks
 
 Usually the compiler will optimise any `foo & ~0xXXX` bitmask, if such bitmask is detected it should be changed to the `NOT` version:
 
 ```
-foo &= 0x0xDFFFFFFF
+exampleVar &= 0x0xDFFFFFFF
 ```
 should be changed to
 ```
-foo &= ~0x20000000
+exampleVar &= ~0x20000000
 ```
 
 ### Increments
@@ -107,12 +109,12 @@ You can then use it in variables without specifying the type keyword (eg. `struc
 Unknown members in struct will follow the `unkXXX` styling, `XXX` being the offset in the struct, for padding to the next member, you should use `u_char unkXXX[0xNUM]`:
 
 ```
-typedef struct _foo{
+typedef struct _ExampleStruct{
     u_char unk0[0x4];
     u_short unk4;
-    u_short foo;
+    u_short example;
     float unk8;
-}foo;
+}ExampleStruct;
 ````
 
 ### Naming styles 
