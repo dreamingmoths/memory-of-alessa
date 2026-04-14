@@ -32,13 +32,13 @@ Unless it improved readability/is necessary for matching, conditionals should be
 Example 1:
 
 ```
-if(exampleVar != 0){
+if (exampleVar != 0) {
     //code..
 }
 ```
 can be converted to
 ```
-if(exampleVar){
+if (exampleVar) {
     //code..
 }
 ```
@@ -46,14 +46,14 @@ if(exampleVar){
 Example 2:
 
 ```
-if((myVar & 0x8) == 0){
+if ((myVar & 0x8) == 0) {
     //code..
 }
 ```
 can be converted to
 
 ```
-if(!(myVar & 0x8)){
+if (!(myVar & 0x8)) {
     //code..
 }
 ```
@@ -96,11 +96,11 @@ struct _IXY {
 
 _Can be typedef'd to_:
 ```
-typedef struct _IXY{
+typedef struct _IXY {
     // Members
     signed int x; // offset 0x0, size 0x4
     signed int y; // offset 0x4, size 0x4
-}IXY;
+} IXY;
 ```
 
 You can then use it in variables without specifying the type keyword (eg. `struct _IXY* foo` -> `IXY* foo`)
@@ -109,12 +109,12 @@ You can then use it in variables without specifying the type keyword (eg. `struc
 Unknown members in struct will follow the `unkXXX` styling, `XXX` being the offset in the struct, for padding to the next member, you should use `u_char unkXXX[0xNUM]`:
 
 ```
-typedef struct _ExampleStruct{
+typedef struct _ExampleStruct {
     u_char unk0[0x4];
     u_short unk4;
     u_short example;
     float unk8;
-}ExampleStruct;
+} ExampleStruct;
 ````
 
 ### Naming styles 
