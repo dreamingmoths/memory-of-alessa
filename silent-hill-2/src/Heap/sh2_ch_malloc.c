@@ -1,6 +1,6 @@
 #include "sh2_ch_malloc.h"
 
-utilHeapCtrl * shCh_ASC_InitHead(void * bufhead /* r16 */, int size /* r2 */) {
+utilHeapCtrl* shCh_ASC_InitHead(void* bufhead /* r16 */, int size /* r2 */) {
     u_int align; // r2
     
     align = (u_int) bufhead & 0x3F;
@@ -31,8 +31,8 @@ utilHeapCtrl * shCh_ASC_InitHead(void * bufhead /* r16 */, int size /* r2 */) {
     return shCh_ASCDAT_Ctrl;    
 }
 
-void * shCh_ASC_Malloc(u_int n /* r17 */) {
-    void * p; // r16
+void* shCh_ASC_Malloc(u_int n /* r17 */) {
+    void* p; // r16
     
     n = (n += 0xF) & ~0xF; // macro?
     
@@ -66,7 +66,7 @@ void * shCh_ASC_Malloc(u_int n /* r17 */) {
     return p;    
 }
 
-void shCh_ASC_Free(void * p /* r2 */) {
+void shCh_ASC_Free(void* p /* r2 */) {
     utilHeapFree(p);
 }
 
