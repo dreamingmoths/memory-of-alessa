@@ -46,8 +46,8 @@ typedef struct EFCTObject {
     float Pos[4]__attribute__((aligned(16))); // offset 0x40, size 0x10
     short chara_kind; // offset 0x50, size 0x2
     short chara_id; // offset 0x52, size 0x2
-    EFCTVertexData * pVertex; // offset 0x54, size 0x4
-    EFCTAnimationData * pAnimData; // offset 0x58, size 0x4
+    EFCTVertexData* pVertex; // offset 0x54, size 0x4
+    EFCTAnimationData* pAnimData; // offset 0x58, size 0x4
 } EFCTObject;
 
 void EFCTInit(void);
@@ -55,16 +55,16 @@ void EFCTDoTask(void);
 void EFCTSetPassingTimePerFrame(float time /* r29 */);
 void EFCTKickPacket(void);
 
-void EFCTSetGunFire(float * pos /* r19 */, float * vec /* r18 */);
+void EFCTSetGunFire(float* pos /* r19 */, float* vec /* r18 */);
 
-void EFCTSetGunFireEddie(float * Pos /* r16 */, float * vec /* r2 */);
+void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */);
 
-void EFCTSetGunSmoke(float * pos);
-void EFCTResetRGBA(int * rgba /* r2 */, EFCTVertexData * pVertex /* r2 */);
+void EFCTSetGunSmoke(float* pos);
+void EFCTResetRGBA(int* rgba /* r2 */, EFCTVertexData* pVertex /* r2 */);
 float EFCTGetPassingTimePerFrame();
-void ClipEffectObject2(EFCTObject * pObj /* r18 */);
-void DrawPrimitive(EFCTObject * pObj /* r17 */);
-void EFCTThreeDWork(EFCTObject * pObj /* r17 */);
+void ClipEffectObject2(EFCTObject* pObj /* r18 */);
+void DrawPrimitive(EFCTObject* pObj /* r17 */);
+void EFCTThreeDWork(EFCTObject* pObj /* r17 */);
 
 extern u_char EFCTTaskBuf[131072];
 extern u_long128 efctPacket[4096];
