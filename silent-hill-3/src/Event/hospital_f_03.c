@@ -66,7 +66,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6D9F0_hospital_f_03)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6DC20_hospital_f_03);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6DC50_hospital_f_03);
+void func_01F6DC50_hospital_f_03(int arg0) {
+    func_001DE5B0(&func_01F6DC20_hospital_f_03, arg0, 1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_03", func_01F6DC70_hospital_f_03);
 

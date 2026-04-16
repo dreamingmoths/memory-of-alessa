@@ -25,6 +25,8 @@ void func_01F6D680_hospital_f_02(void);
 int RoomName(void);
 int SeCall(float, float, int);
 float shGetDT(void);
+void func_001DE5B0(int*, int, int);
+void func_01F6DBD0_hospital_f_02(void);
 
 extern int D_01F6FCD0_hospital_f_02;
 extern int D_01F6FD30_hospital_f_02;

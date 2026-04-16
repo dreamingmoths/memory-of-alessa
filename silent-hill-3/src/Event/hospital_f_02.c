@@ -108,7 +108,9 @@ void func_01F6DBC0_hospital_f_02(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6DBD0_hospital_f_02);
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_f_02", func_01F6DC40_hospital_f_02);
+void func_01F6DC40_hospital_f_02(int arg0) {
+    func_001DE5B0(&func_01F6DBD0_hospital_f_02, arg0, 1);
+}
 
 u_short func_01F6DC60_hospital_f_02(void) {
     float sp18;

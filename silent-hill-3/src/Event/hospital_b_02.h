@@ -45,6 +45,7 @@ float shGetDT(void);
 int func_0019B580(int);
 void func_001C7BC0(Q *, Q *, Q *, int);
 void func_0016D170(int, Vector4*, int, int, float, float, int);
+void func_01F6E490_hospital_b_02(int);
 void func_0018FE60(u_long128 *);
 int func_001DDAE0(SubCharacter*);
 SubCharacter* shCharacterGetSubCharacter(int, int);

@@ -46,9 +46,12 @@ INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6DFF0_hospital_b_02)
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6E1C0_hospital_b_02); // picture shit
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6E250_hospital_b_02);
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6E250_hospital_b_02); // more picture shit
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6E490_hospital_b_02);
+void func_01F6E490_hospital_b_02(int arg0) {
+    func_01F6E1C0_hospital_b_02();
+    func_01F6E250_hospital_b_02(arg0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6E4C0_hospital_b_02);
 
@@ -191,7 +194,7 @@ int func_01F6E780_hospital_b_02(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6EA60_hospital_b_02);
+INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6EA60_hospital_b_02); // picture shit
 
 INCLUDE_ASM("asm/nonmatchings/Event/hospital_b_02", func_01F6EAF0_hospital_b_02);
 
