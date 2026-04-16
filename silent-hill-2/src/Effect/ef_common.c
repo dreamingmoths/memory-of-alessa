@@ -7,8 +7,8 @@
 #include "Multi_thr/dma/dma1cmd.h"
 
 static void EFCTInitEffectTask(void);
-static void SetGunFire(float * Pos /* r21 */, float * vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
-static void SetGunSmoke(float * Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
+static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
+static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
 
 void EFCTInit(void) {
     shTSKInitTaskList(EFCTTaskBuf, sizeof(EFCTTaskBuf));
@@ -46,11 +46,11 @@ void EFCTDoTask(void) {
 }
 
 void EFCTKickPacket(void) {
-    void * addr = shEfctPkGetKickAddrByd1cSend(); // r2 
+    void* addr = shEfctPkGetKickAddrByd1cSend(); // r2 
     d1cSend(addr);
 }
 
-void EFCTSetGunFire(float * Pos /* r19 */, float * vec /* r18 */) {          
+void EFCTSetGunFire(float* Pos /* r19 */, float* vec /* r18 */) {          
     int weapon_kind; // r16
     u_char light; // r17
     
@@ -60,7 +60,7 @@ void EFCTSetGunFire(float * Pos /* r19 */, float * vec /* r18 */) {
     SetGunSmoke(Pos, weapon_kind, light);
 }
 
-void EFCTSetGunFireEddie(float * Pos /* r16 */, float * vec /* r2 */) {
+void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */) {
     SetGunFire(Pos, vec, 1, 1);
     SetGunSmoke(Pos, 1, 1);
 }
