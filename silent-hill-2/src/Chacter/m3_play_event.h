@@ -3,6 +3,6 @@
 
 #include "common.h"
 
-int PlayerGetJamesWeapon();
+int PlayerGetJamesWeapon(void);
 
 #endif // M3_PLAY_EVENT_H
