@@ -26,6 +26,7 @@ int shRandI(void);
 int func_01F6E3B0_hospital_f_03(void);
 int func_01F6E440_hospital_f_03(void*);
 int func_01F6E490_hospital_f_03(void*, int);
+void func_01F6E650_hospital_f_03(unk_struct*);
 void func_01F6DC20_hospital_f_03(void);
 
 extern float D_01F70580_hospital_f_03;
