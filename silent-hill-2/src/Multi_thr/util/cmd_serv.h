@@ -1,10 +1,6 @@
 #ifndef CMD_SERV_H
 #define CMD_SERV_H
 
-#endif // CMD_SERV_H
-#ifndef CMD_SERV_H
-#define CMD_SERV_H
-
 #include "common.h"
 
 int CmdServInit(u_long* work /* r22 */, int workSize /* r2 */, void* stack /* r21 */, int stackSize /* r20 */, int prio /* r19 */);
