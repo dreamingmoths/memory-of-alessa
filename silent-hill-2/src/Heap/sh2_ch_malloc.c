@@ -6,15 +6,15 @@ utilHeapCtrl* shCh_ASC_InitHead(void* bufhead /* r16 */, int size /* r2 */) {
     align = (u_int) bufhead & 0x3F;
     switch (align) {
         case 16:
-            bufhead = (void *)((char *)bufhead + 0x10);  // can it be written in a different way?
+            bufhead = (void *)((u_char *)bufhead + 0x10);  // can it be written in a different way?
             break;    
         case 32:
             break;    
         case 48:
-            bufhead = (void *)((char *)bufhead + 0x30);
+            bufhead = (void *)((u_char *)bufhead + 0x30);
             break;    
         case 0:
-            bufhead = (void *)((char *)bufhead + 0x20);
+            bufhead = (void *)((u_char *)bufhead + 0x20);
             break;    
         default:
             printf("sh2_ch_malloc.c:52> heap init error\n");
