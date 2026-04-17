@@ -34,7 +34,8 @@ utilHeapCtrl* shCh_ASC_InitHead(void* bufhead /* r16 */, int size /* r2 */) {
 void* shCh_ASC_Malloc(u_int n /* r17 */) {
     void* p; // r16
     
-    n = (n += 0xF) & ~0xF; // macro?
+    n += 0xF;
+    n &= ~0xF;
     
     switch (n & 0x3F) {
         case 0:
