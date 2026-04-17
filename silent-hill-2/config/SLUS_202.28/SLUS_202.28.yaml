@@ -123,7 +123,7 @@ segments:
       - [0x087f00, asm, Chacter/fi_calc]
       - [0x0883c0, asm, Lens/lens_th_draw]
       - [0x088a60, asm, Multi_thr/dma/dma1cmd]
-      - [0x088c70, asm, Multi_thr/dma/dma1serv]
+      - [0x088c70, c,   Multi_thr/dma/dma1serv]
       - [0x088e00, asm, Multi_thr/dma/dma1tscmd]
       - [0x088ed0, asm, Multi_thr/dma/dma2cmd]
       - [0x089090, asm, Multi_thr/dma/dma2serv]
