@@ -1,16 +1,69 @@
-#include "common.h"
+#include "Effect/ef_common.h"
+#include "Effect/ef_packet.h"
+#include "Effect/ef_malloc.h"
+#include "SH2_common/sh2dt.h"
+#include "Event/item.h"
+#include "Chacter/m3_play_event.h"
+#include "Multi_thr/dma/dma1cmd.h"
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTInit); //
+static void EFCTInitEffectTask(void);
+static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
+static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTInitEffectTask); //
+void EFCTInit(void) {
+    shTSKInitTaskList(EFCTTaskBuf, sizeof(EFCTTaskBuf));
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTDoTask); //
+    if (&efctheap != NULL)         
+        EfctInitHeap(&efctheap, sizeof(efctheap));
+    
+    if (&efctPacket != NULL)
+        shEfctPkInit(&efctPacket);
+    
+    EFCTInitEffectTask();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTKickPacket); //
+static void EFCTInitEffectTask(void) {   
+    int i; // r16
+    
+    for (i = 0; i < 32; i++) {
+        EFCTLocalDataBuffer[i].Using = 0;
+        if (EFCTLocalDataBuffer[i].pAnimData != NULL) {
+            EfctFree(EFCTLocalDataBuffer[i].pAnimData);
+            EFCTLocalDataBuffer[i].pAnimData = NULL;
+        }
+        if (EFCTLocalDataBuffer[i].pVertex != NULL) {
+            EfctFree(EFCTLocalDataBuffer[i].pVertex);
+            EFCTLocalDataBuffer[i].pVertex = NULL;
+        }
+    }
+    shTSKFreeTaskLine(4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetGunFire); //
+void EFCTDoTask(void) {
+    shEfctPkReset();
+    EFCTSetPassingTimePerFrame(shGetDT());
+    shTSKExecuteTask(4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetGunFireEddie); //
+void EFCTKickPacket(void) {
+    void* addr = shEfctPkGetKickAddrByd1cSend(); // r2 
+    d1cSend(addr);
+}
+
+void EFCTSetGunFire(float* Pos /* r19 */, float* vec /* r18 */) {          
+    int weapon_kind; // r16
+    u_char light; // r17
+    
+    weapon_kind = PlayerGetJamesWeapon();
+    light = item.light_switch;
+    SetGunFire(Pos, vec, weapon_kind, light);
+    SetGunSmoke(Pos, weapon_kind, light);
+}
+
+void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */) {
+    SetGunFire(Pos, vec, 1, 1);
+    SetGunSmoke(Pos, 1, 1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetGunFire); //
 
