@@ -1,7 +1,7 @@
 #include "Multi_thr/dma/dma1serv.h"
 #include "Multi_thr/util/cmd_serv.h"
 
-static void* d1sCmdWorkP; // correct place for this?
+extern /* static */ void* d1sCmdWorkP;
 
 #line 25
 int d1sInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */) {
