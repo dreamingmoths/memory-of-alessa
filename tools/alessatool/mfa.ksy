@@ -42,9 +42,6 @@ seq:
     repeat-expr: num_files
 
 instances:
-  command_size:
-    value: 0xD8
-  
   header_size:
     value: 0x800
 

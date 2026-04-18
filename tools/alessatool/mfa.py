@@ -4,7 +4,7 @@ import kaitaistruct
 from kaitaistruct import KaitaiStruct, KaitaiStream, BytesIO
 
 
-if getattr(kaitaistruct, 'API_VERSION', (0, 9)) < (0, 9):
+if getattr(kaitaistruct, "API_VERSION", (0, 9)) < (0, 9):
     raise Exception("Incompatible Kaitai Struct Python API: 0.9 or later is required, but you have %s" % (kaitaistruct.__version__))
 
 class Mfa(KaitaiStruct):
@@ -51,38 +51,38 @@ class Mfa(KaitaiStruct):
 
         @property
         def data(self):
-            if hasattr(self, '_m_data'):
+            if hasattr(self, "_m_data"):
                 return self._m_data
 
             _pos = self._io.pos()
             self._io.seek(self.data_ofs)
             self._m_data = self._io.read_bytes(self.len_data)
             self._io.seek(_pos)
-            return getattr(self, '_m_data', None)
+            return getattr(self, "_m_data", None)
 
         @property
         def data_ofs(self):
-            if hasattr(self, '_m_data_ofs'):
+            if hasattr(self, "_m_data_ofs"):
                 return self._m_data_ofs
 
             self._m_data_ofs = (self.base + self._root.file_info[self.index].file_ofs)
-            return getattr(self, '_m_data_ofs', None)
+            return getattr(self, "_m_data_ofs", None)
 
         @property
         def len_data(self):
-            if hasattr(self, '_m_len_data'):
+            if hasattr(self, "_m_len_data"):
                 return self._m_len_data
 
             self._m_len_data = self._root.file_info[self.index].file_size
-            return getattr(self, '_m_len_data', None)
+            return getattr(self, "_m_len_data", None)
 
         @property
         def filename(self):
-            if hasattr(self, '_m_filename'):
+            if hasattr(self, "_m_filename"):
                 return self._m_filename
 
             self._m_filename = self._root.filenames[((self._root.num_files - self.index) - 1)]
-            return getattr(self, '_m_filename', None)
+            return getattr(self, "_m_filename", None)
 
 
     class Info(KaitaiStruct):
@@ -122,19 +122,11 @@ class Mfa(KaitaiStruct):
 
 
     @property
-    def command_size(self):
-        if hasattr(self, '_m_command_size'):
-            return self._m_command_size
-
-        self._m_command_size = 216
-        return getattr(self, '_m_command_size', None)
-
-    @property
     def header_size(self):
-        if hasattr(self, '_m_header_size'):
+        if hasattr(self, "_m_header_size"):
             return self._m_header_size
 
         self._m_header_size = 2048
-        return getattr(self, '_m_header_size', None)
+        return getattr(self, "_m_header_size", None)
 
 
