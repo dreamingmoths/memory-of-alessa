@@ -1,4 +1,10 @@
-#include "dic.h"
+#include "Font/dic.h"
+
+static u_short dicCode81(u_char c);
+static u_short dicCode82(u_char c);
+static u_short dicCode83(u_char c);
+static u_short dicCode84(u_char c);
+static u_short dicCode87(u_char c);
 
 INCLUDE_ASM("asm/nonmatchings/Font/dic", dicSetStr);
 
@@ -6,7 +12,7 @@ INCLUDE_ASM("asm/nonmatchings/Font/dic", func_00157570);
 
 INCLUDE_ASM("asm/nonmatchings/Font/dic", dicCodeAsc);
 
-u_short dicCode81(u_char c) {
+static u_short dicCode81(u_char c) {
     if (!IS_VALID_SJIS_81(c)) {
         return DICTIONARY_INVALID;
     }
@@ -35,7 +41,7 @@ u_short dicCode81(u_char c) {
     return 0x171;
 }
 
-u_short func_00157A90(u_char c) {
+static u_short dicCode82(u_char c) {
     if (!IS_VALID_SJIS_82(c))
         return DICTIONARY_INVALID;
 
@@ -48,8 +54,50 @@ u_short func_00157A90(u_char c) {
     return c + 0x111;                  // 0x9F–0xF1, ぁ–ん
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/dic", func_00157B40);
+u_short dicCode83(u_char c) {
+    if (!IS_VALID_SJIS_83(c)) {
+        return DICTIONARY_INVALID;
+    }
+    if (c < SJIS_83_DEL) {
+        return c + 0x1C3;
+    }
+    if (c <= SJIS_83_KATAKANA_MAX) {
+        return c + 0x1C2;
+    }
+    if (c <= SJIS_83_GREEK_UPPER_MAX) {
+        return c + 0x1BA;
+    }
+    return c + 0x1B2;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Font/dic", func_00157BE0);
+static u_short dicCode84(u_char c) {
+    if (!IS_VALID_SJIS_84(c)) {
+        return DICTIONARY_INVALID;
+    }
+    if (c <= SJIS_84_CYRILLIC_UPPER_MAX) {
+        return c + 0x249;
+    }
+    if (c < SJIS_84_DEL) {
+        return c + 0x23A;
+    }
+    if (c <= SJIS_84_CYRILLIC_LOWER_MAX) {
+        return c + 0x239;
+    }
+    return c + 0x22C;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Font/dic", dicCode87);
+static u_short dicCode87(u_char c) {
+    if (!IS_VALID_SJIS_87(c)) {
+        return DICTIONARY_INVALID;
+    }
+    if (c < SJIS_87_UNITS_MIN - 1) {
+        return c + 0x2AB;
+    }
+    if (c < SJIS_87_UNITS_MAX + 1) {
+        return c + 0x2AA;
+    }
+    if (c == SJIS_87_ERA_HEISEI) {
+        return 0x320;
+    }
+    return c + 0x2A1;
+}
