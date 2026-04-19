@@ -5,8 +5,8 @@
 
 float shAngleRegulate(void);
 float shAtanV(void);
-float shAtan2(void);
-void shAtan_asm(void);
+float shAtan2(float y, float x);
+float shAtan_asm(float angle);
 void sh_ecossin(void);
 float shSinF(float);
 float shCosF(float);
