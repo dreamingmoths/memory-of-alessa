@@ -72,7 +72,7 @@ static u_short dicCode83(u_char c)  {
 
 static u_short dicCode84(u_char c) {
     if (!IS_VALID_SJIS_84(c)) {
-        return 0x7FFF;
+        return DICTIONARY_INVALID;
     }
     if (c <= SJIS_84_CYRILLIC_UPPER_MAX) {
         return c + 0x249;
