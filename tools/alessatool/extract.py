@@ -6,6 +6,10 @@ from pathlib import Path
 from os.path import isdir
 from dataclasses import dataclass
 from kaitaistruct import KaitaiStream
+
+MFA_HEADER_SIZE = 0x800
+MFA_OFFSET_START = 0x8
+
 @dataclass
 class ExtractionArgs:
     archive_path: Path
@@ -57,7 +61,7 @@ def _extract_archive(args: ExtractionArgs, archive_path: Path, stem_prefix=False
     file_size = get_file_size(archive_path)
 
     with archive_path.open("rb") as archive:
-        archive_offset = 0x8
+        archive_offset = MFA_OFFSET_START
         is_first_archive = True
 
         while archive_offset < file_size:
@@ -67,7 +71,7 @@ def _extract_archive(args: ExtractionArgs, archive_path: Path, stem_prefix=False
                 output_dir = stem_prefix and base_output_dir / file_stem or base_output_dir
                 _write_mfa_file(args, file, output_dir)
             
-            archive_offset += mfa.header_size + mfa.archive_size
+            archive_offset += MFA_HEADER_SIZE + mfa.archive_size
             is_first_archive = False
             archive.seek(archive_offset)
 

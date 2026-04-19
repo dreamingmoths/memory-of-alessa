@@ -41,10 +41,6 @@ seq:
     repeat: expr
     repeat-expr: num_files
 
-instances:
-  header_size:
-    value: 0x800
-
 types:
   file:
     params:
@@ -85,4 +81,4 @@ types:
       - id: spaces
         type: u1
         repeat: until
-        repeat-until: _io.pos % 0x10 == 8
+        repeat-until: _io.pos % 0x10 == 0x8
