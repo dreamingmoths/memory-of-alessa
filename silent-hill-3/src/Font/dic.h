@@ -102,4 +102,6 @@
     ((c) < SJIS_87_TRAIL_MIN) \
 )
 
+u_short dicTransCode(u_short code);
+
 #endif // FONT_DIC_H
