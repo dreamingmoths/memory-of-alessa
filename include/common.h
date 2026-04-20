@@ -70,6 +70,14 @@ typedef union Q
     signed int iv[4];      // offset 0x0, size 0x10
 } Q;
 
+typedef struct
+{
+    float x;
+    float y;
+    float z;
+    float w;
+} __attribute__((aligned(16))) Vector4;
+
 inline void vec_copy(void* dst, void* src) {
     asm volatile ("\
          lq t7, 0(%1)\n\

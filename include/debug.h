@@ -10,7 +10,7 @@
 #define ASSERT(cond) \
 do { \
     if (!(cond)) { \
-        printf(ASSTR(__FILE__) ":" ASSTR(__LINE__) "> assert:(%s)\n", #cond); \
+        printf(__FILE__ ":" ASSTR(__LINE__) "> assert:(%s)\n", #cond); \
         do {} while (1); \
     } \
 } while (0);
