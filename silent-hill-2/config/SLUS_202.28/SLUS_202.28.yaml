@@ -214,7 +214,7 @@ segments:
       - [0x121750, asm, Chacter/m3_oni]
       - [0x121c30, asm, sound/snd_select]
       - [0x122340, asm, Chacter/m3_nik]
-      - [0x122560, asm, Multi_thr/loadinit/loadinit]
+      - [0x122560, c,   Multi_thr/loadinit/loadinit]
       - [0x122690, asm, DBG/dbswitch]
       - [0x122b20, asm, Effect/ef_cartridge]
       - [0x1242d0, asm, Chacter/m3_maria_sub]
