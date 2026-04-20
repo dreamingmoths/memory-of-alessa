@@ -170,14 +170,6 @@ typedef struct shAnime3d
     float scale;                 // offset 0x80, size 0x4
 };
 
-typedef struct
-{
-    float x;
-    float y;
-    float z;
-    float w;
-} __attribute__((aligned(16))) Vector4;
-
 typedef struct SubCharacter
 {
 
