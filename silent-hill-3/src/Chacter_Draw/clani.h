@@ -3,6 +3,8 @@
 
 #include "Chacter/character.h"
 
+typedef float (*CalcFunc)(void *, int, int, float);
+
 /**
  * total size: 0x1600
  * @note `cluster_weight_data` added to this struct

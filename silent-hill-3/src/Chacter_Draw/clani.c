@@ -12,7 +12,7 @@ float func_001404C0(void);
 
 ClusterAnimeWork sh3cluster;
 
-const static float (* calc_func_list[2])(void *, int, int, short) __attribute__((section(".rodata"))) = {
+const static CalcFunc calc_func_list[2] __attribute__((section(".rodata"))) = {
     func_001404C0,
     Calc1
 }; 
@@ -127,17 +127,17 @@ void ClusterAnimeSet(shClusterAnime* cap, void* data) {
 void ClusterAnimeExec(shClusterAnime* cap, shAnime3dNew* ap) {
     int sp9C;
     float sp98;
-    Header * header; // r2
-    int n_frames; // r16
-    int n_clusters; // r17
-    int frame; // r18
-    int revision; // r2
-    int total_counter; // r3
+    Header * header;
+    int n_frames;
+    int n_clusters;
+    int frame;
+    int revision;
+    int total_counter;
     float var_f20;
     
-    float (* calc_func)(void *, int, int, float) = NULL; // r20
-    int i; // r21
-    void * cluster; // r2
+    CalcFunc calc_func = NULL;
+    int i;
+    void * cluster;
 
     if (!cap) {
         return;

@@ -4,6 +4,8 @@
 #include "sh2_common.h"
 #include "Chacter/skelton.h"
 
+typedef float (*CalcFunc)(void *, int, int, short);
+
 typedef struct _USXY
 {
     // total size: 0x4

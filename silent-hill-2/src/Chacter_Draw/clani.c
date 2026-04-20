@@ -21,7 +21,7 @@ typedef struct Header {
 } Header;
 
 // size: 0x8, address: 0x2A9530
-static float (* calc_func_list[2])(void *, int, int, short) = {
+static CalcFunc calc_func_list[2] = {
     NULL,
     Calc1
 }; 
@@ -152,7 +152,7 @@ void ClusterAnimeExec(shClusterAnime* cap, shAnime3d* ap) {
     int total_counter; // r3
     short frame_counter; // r19
     
-    float (* calc_func)(void *, int, int, short) = NULL; // r20
+    CalcFunc calc_func = NULL; // r20
     int i; // r21
     void * cluster; // r2
 
