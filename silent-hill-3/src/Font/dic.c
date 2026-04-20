@@ -5,10 +5,48 @@ static u_short dicCode82(u_char c);
 static u_short dicCode83(u_char c);
 static u_short dicCode84(u_char c);
 static u_short dicCode87(u_char c);
+static u_short dicCodeAsc(u_char c);
 
 INCLUDE_ASM("asm/nonmatchings/Font/dic", dicSetStr);
 
-INCLUDE_ASM("asm/nonmatchings/Font/dic", func_00157570);
+u_short dicTransCode(u_short code) {
+    u_char ch = code >> 8;
+    u_char cl = code & 0xFF;
+    
+    switch (ch) {
+        case 0x00: return dicCodeAsc(cl);
+        case 0x81: return dicCode81(cl);
+        case 0x82: return dicCode82(cl);
+        case 0x83: return dicCode83(cl);
+        case 0x84: return dicCode84(cl);
+        case 0x87: return dicCode87(cl);
+        default:
+            if (cl < 0x40 || cl == 0x7F || cl > 0xFC) {
+                return DICTIONARY_INVALID;
+            }
+            if (code >= 0x889F && code < 0x9873) {
+                if (cl > 0x7F) cl--;
+                return ((ch - 0x88) * 0xBC + cl + 0x2A0);
+            }
+            if (code >= 0x989F && code < 0x9FFD) {
+                if (cl > 0x7F) cl--;
+                return ((ch - 0x98) * 0xBC + cl + 0xE35);
+            }
+            if (code >= 0xE040 && code < 0xEAA5) {
+                if (cl > 0x7F) cl--;
+                return ((ch - 0xE0) * 0xBC + cl + 0x1415);
+            }
+            if (code >= 0xED40 && code < 0xEEED) {
+                if (cl > 0x7F) cl--;
+                return ((ch - 0xED) * 0xBC + cl + 0x1BED);
+            }
+            if (code >= 0xFA40 && code < 0xFC4C) {
+                if (cl > 0x7F) cl--;
+                return ((ch - 0xFA) * 0xBC + cl + 0x1BD1);
+            }
+            return DICTIONARY_INVALID;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Font/dic", dicCodeAsc);
 
