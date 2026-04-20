@@ -8,14 +8,14 @@
 
 #include "common.h"
 
-struct shBattleArea
+typedef struct shBattleArea
 {
 
     float center;
     float radius;
-};
+} shBattleArea;
 
-struct shClusterAnime
+typedef struct shClusterAnime
 {
     // total size: 0x10
     void *data;           // offset 0x0, size 0x4
@@ -25,9 +25,9 @@ struct shClusterAnime
     u_char frame_updated; // offset 0x7, size 0x1
     int frame_no;         // offset 0x8, size 0x4
     float *weights;       // offset 0xC, size 0x4
-};
+} shClusterAnime;
 
-struct _CL_HITPOLY_HEAD
+typedef struct _CL_HITPOLY_HEAD
 {
     // total size: 0x10
     u_char kind;    // offset 0x0, size 0x1
@@ -36,35 +36,35 @@ struct _CL_HITPOLY_HEAD
     u_int weight;   // offset 0x4, size 0x4
     u_int material; // offset 0x8, size 0x4
     int flg;        // offset 0xC, size 0x4
-};
+} CL_HITPOLY_HEAD;
 
-struct _CL_VHIT_WALL
+typedef struct _CL_VHIT_WALL
 {
 
     float cp[4];
     float nl[4];
     struct _CL_HITPOLY_HEAD *pd;
-};
+} CL_VHIT_WALL;
 
-struct _CL_VHIT_CHARA
+typedef struct _CL_VHIT_CHARA
 {
 
     struct SubCharacter *sc;
     float cp[4];
-};
+} CL_VHIT_CHARA;
 
-struct _CL_VHIT_RESULT
+typedef struct _CL_VHIT_RESULT
 {
 
     int kind;
     union /* @anon1 */
     {
-        struct _CL_VHIT_WALL wall;
-        struct _CL_VHIT_CHARA chara;
+        CL_VHIT_WALL wall;
+        CL_VHIT_CHARA chara;
     } hobj;
-};
+} CL_VHIT_RESULT;
 
-struct shBattleInfo
+typedef struct shBattleInfo
 {
 
     float pos[4];
@@ -84,7 +84,7 @@ struct shBattleInfo
     struct shBattleArea look;
     struct shBattleArea feel;
     u_char se;
-};
+} shBattleInfo;
 
 typedef struct _USXY
 {
@@ -168,7 +168,7 @@ typedef struct shAnime3d
     sceVu0FVECTOR rot_body_neck; // offset 0x60, size 0x10
     sceVu0FVECTOR rot_body;      // offset 0x70, size 0x10
     float scale;                 // offset 0x80, size 0x4
-};
+} shAnime3d;
 
 typedef struct SubCharacter
 {

@@ -154,7 +154,9 @@ segments:
       - [0x2c8910, rodata,  rodata_0x2c8910]
       - [0x2c8f80, lit4,    lit4]
       - [0x2c8fb0, sdata,   sdata]
-      - {vram: 0x3C8B00,   type: bss,  name: bss}
-      - {vram: 0x1D0EFB0,  type: .bss, name: Font/font}
-      - {vram: 0x1D30570,  type: bss,  name: bss_rest}
+      - { vram: 0x03c8b00,  type: bss,  name: bss_0x03c8b00 }
+      - { vram: 0x046d270,  type: .bss, name: Chacter_Draw/clani }
+      - { vram: 0x046e870,  type: bss,  name: bss_0x046e870}
+      - { vram: 0x1d0efb0,  type: .bss, name: Font/font }
+      - { vram: 0x1d30570,  type: bss,  name: bss_0x1d30570 }
   - [0x2C9080]

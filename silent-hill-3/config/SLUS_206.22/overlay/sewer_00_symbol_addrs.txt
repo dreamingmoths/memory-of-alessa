@@ -27,3 +27,5 @@ D_01F6FCC0_sewer_00 = 0x1F6FCC0;
 jtbl_01F6FD00_sewer_00 = 0x1F6FD00;
 jtbl_01F6FD40_sewer_00 = 0x1F6FD40;
 jtbl_01F6FD80_sewer_00 = 0x1F6FD80;
+
+D_01403D0 = 0x1403D0; // ignore:true
