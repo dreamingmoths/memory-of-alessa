@@ -173,7 +173,7 @@ segments:
       - [0x0bed80, asm, Multi_thr/intc/th_vbe]
       - [0x0bef20, asm, Multi_thr/pad/keydata]
       - [0x0bfc40, asm, Multi_thr/pad/th_pad]
-      - [0x0bff00, asm, Multi_thr/sys/init_mt_sys]
+      - [0x0bff00, c,   Multi_thr/sys/init_mt_sys]
       - [0x0c0820, asm, Multi_thr/boot/bootopt]
       - [0x0c0a70, asm, Multi_thr/boot/bootoptitem]
       - [0x0c1200, asm, Event/title]
