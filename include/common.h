@@ -31,6 +31,8 @@ typedef signed char s_char;
 #define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
 
 #define GET_BIT(x, i) (((x) >> (i)) & 1)
+#define SET_BIT(x, i) ((x) |= (i))
+#define REMOVE_BIT(x, i) ((x) &= ~(i))
 #define GET_FLAG(x, i) (((x[i >> 5]) >> (i & 0x1F)) & 1)
 #define SET_FLAG(x, i) ((x[i >> 5]) |= (1 << (i & 0x1F)))
 #define REMOVE_FLAG(x, i) ((x)[(i) >> 5] &= ~(1 << ((i) & 0x1F)))
