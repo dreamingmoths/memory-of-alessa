@@ -209,4 +209,6 @@ u_short fontPrintStrMain(u_short** pstr /* r29+0x15C */, int flag /* r2 */);
 void fontClear(void);
 void fontMessageNum(u_short* str /* r2 */, u_short num /* r2 */);
 
+int fontGetStatus(void);
+
 #endif // FONT_H
