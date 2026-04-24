@@ -46,7 +46,7 @@ extern void shMulMatrix(float (* m0)[4] /* r2 */, float (* m1)[4] /* r2 */, floa
 extern float shGetFPS(void);
 
 extern struct shPlayerWork sh2jms;
-extern struct _SYS_W sys;
-extern struct _VC_PRE_INFO vcPreInfo;
+extern SYS_W sys;
+extern VC_PRE_INFO vcPreInfo;
 
 #endif

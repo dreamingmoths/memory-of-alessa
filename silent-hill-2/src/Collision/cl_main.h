@@ -5,7 +5,7 @@
 #include "Chacter/character.h"
 #include "Chacter/sh_character_battle.h"
 
-struct _CL_CHARA_LIST {
+typedef struct _CL_CHARA_LIST {
     // total size: 0xE0
     struct _CL_HITPOLY_COLUMN col; // offset 0x0, size 0x30
     struct _CL_HITPOLY_COLUMN wcol; // offset 0x30, size 0x30
@@ -20,7 +20,7 @@ struct _CL_CHARA_LIST {
     signed short movflg; // offset 0xD0, size 0x2
     signed short batflg; // offset 0xD2, size 0x2
     void (* heightfunc)(float *); // offset 0xD4, size 0x4
-};
+} CL_CHARA_LIST;
 typedef struct _CL_SELECT_MAP
 {
     // total size: 0x8
@@ -145,21 +145,21 @@ extern /* static */ struct shAttackInfo sh2_attack_list[66]; // size: 0x948, add
 extern unsigned char clPermColExpFlg[210]; // size: 0xD2, address: 0x2A9880
 extern signed int clCollisionEnable; // size: 0x4, address: 0x4917C0
 extern signed int clUseBattleResult; // size: 0x4, address: 0x48ABE0
-extern struct _CL_BATTLE_RESULT clBattleResult[CL_BATTLE_RESULT_SIZE]; // size: 0x1040, address: 0x489BA0
-extern struct _CL_DYNAMICFLOOR_LIST clDynamicFloorList[2]; // size: 0x88, address: 0x48D010
-extern struct _CL_DYNAMICWALL_LIST clDynamicWallList[2]; // size: 0x108, address: 0x48D0A0
+extern CL_BATTLE_RESULT clBattleResult[CL_BATTLE_RESULT_SIZE]; // size: 0x1040, address: 0x489BA0
+extern CL_DYNAMICFLOOR_LIST clDynamicFloorList[2]; // size: 0x88, address: 0x48D010
+extern CL_DYNAMICWALL_LIST clDynamicWallList[2]; // size: 0x108, address: 0x48D0A0
 extern signed int clCharaListUse[2]; // size: 0x8, address: 0x4917B0
 extern signed int clDynamicFloorListAct; // size: 0x4, address: 0x48D098
 extern signed int clDynamicWallListAct; // size: 0x4, address: 0x48D1A8
 extern signed int clCharaListAct; // size: 0x4, address: 0x4917B8
 extern signed int clUseBattleQue; // size: 0x4, address: 0x48BFF0
-extern struct _CL_CHARA_LIST clCharaList[2][32]; // size: 0x3800, address: 0x48DFB0
-extern struct _CL_WALLHITDAT clWallHitData[32]; // size: 0xA00, address: 0x48D5B0
-extern struct _CL_BATTLE_QUE clBattleQue[64]; // size: 0x1400, address: 0x48ABF0
+extern CL_CHARA_LIST clCharaList[2][32]; // size: 0x3800, address: 0x48DFB0
+extern CL_WALLHITDAT clWallHitData[32]; // size: 0xA00, address: 0x48D5B0
+extern CL_BATTLE_QUE clBattleQue[64]; // size: 0x1400, address: 0x48ABF0
 extern signed int clVHitListUse; // size: 0x4, address: 0x48D000
-extern struct _CL_VHIT_RESULT clVHitResult[64]; // size: 0x1000, address: 0x48C000
+extern CL_VHIT_RESULT clVHitResult[64]; // size: 0x1000, address: 0x48C000
 extern float clswPerc[5]; // size: 0x14, address: 0x2A9980
-extern struct _CL_SELECT_MAP clSelectMap[128]; // size: 0x400, address: 0x48D1B0
+extern CL_SELECT_MAP clSelectMap[128]; // size: 0x400, address: 0x48D1B0
 
 void clAllInitCollisionData(void);
 
