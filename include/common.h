@@ -3,6 +3,7 @@
 
 #pragma divbyzerocheck on
 #pragma mpwc_relax     on
+#pragma fast_fptosi    on
 
 #include "eetypes.h"
 #include "libvu0.h"

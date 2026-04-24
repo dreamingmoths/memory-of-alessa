@@ -3,9 +3,9 @@
 
 #include "sh2_common.h"
 
-extern u_short *msg_station;
+extern u_short* msg_station;
 #define FONT_STREAM_BUFFER_SIZE 0x4000
-
+/*
 typedef struct sh_Model
 {
     u_int id;
@@ -54,27 +54,28 @@ typedef struct _anon3
 
 typedef struct shSkelton
 {
-    struct shSkelton *next;
-    struct shSkelton *parent;
-    _anon5 src_m;
-    _anon3 src_t;
-    _anon5 des_m;
-    _anon3 des_t;
-    _anon3 axis;
-    float theta;
-    float xx;
-    float yy;
-    float zz;
-    float xy;
-    float yz;
-    float zx;
-    u_short c_count;
-    u_short c_speed;
-    char change;
-    char reserved;
-    char is_key;
-    char pad;
-    void *untouchable;
+    // total size: 0xF0
+    struct shSkelton *next;   // offset 0x0, size 0x4
+    struct shSkelton *parent; // offset 0x4, size 0x4
+    sceVu0FMATRIX src_m;      // offset 0x10, size 0x40
+    Vector4 src_t;            // offset 0x50, size 0x10
+    sceVu0FMATRIX des_m;      // offset 0x60, size 0x40
+    Vector4 des_t;            // offset 0xA0, size 0x10
+    Vector4 axis;             // offset 0xB0, size 0x10
+    float theta;              // offset 0xC0, size 0x4
+    float xx;                 // offset 0xC4, size 0x4
+    float yy;                 // offset 0xC8, size 0x4
+    float zz;                 // offset 0xCC, size 0x4
+    float xy;                 // offset 0xD0, size 0x4
+    float yz;                 // offset 0xD4, size 0x4
+    float zx;                 // offset 0xD8, size 0x4
+    u_short c_count;          // offset 0xDC, size 0x2
+    u_short c_speed;          // offset 0xDE, size 0x2
+    s_char change;            // offset 0xE0, size 0x1
+    char reserved;            // offset 0xE1, size 0x1
+    char is_key;              // offset 0xE2, size 0x1
+    char pad;                 // offset 0xE3, size 0x1
+    void *untouchable;        // offset 0xE4, size 0x4
 } shSkelton;
 
 s_char *Model3SkeletonStructure(sh_Model *model);
@@ -83,7 +84,9 @@ u_short fontPrintStrMain(u_short **pstr, int flag);
 u_short func_00158D60(u_short **pstr, int flag);
 void fontPrintStr(u_short *str, int x, int y);
 
-struct FONT_DATA
+*/
+
+typedef struct FONT_DATA
 {
     // total size: 0x215B0
     /* 0x00000 */ u_int tex_head[12];                 // size 0x30
@@ -157,7 +160,7 @@ struct FONT_DATA
     /* 0x215A4 */ int base_x;                         // size 0x4
     /* 0x215A8 */ int base_y;                         // size 0x4
     /* 0x215AC */ int base_z;                         // size 0x4
-};
+} FONT_DATA;
 
 typedef struct WFONT_STREAM_DATA
 {
@@ -195,10 +198,22 @@ typedef struct FONT_STREAM_DATA
     u_int rgb_d;
 } FONT_STREAM_DATA;
 
-struct FONT_DATA font;
+extern FONT_DATA font;
+extern char font_stream_buf[FONT_STREAM_BUFFER_SIZE];
+
 void fontSetColor(int num);
 void fontSetStreamMax(u_short s_max, u_short ws_max, u_short ms_max);
-int fjAssert_(const char *file, int line, const char *str) __attribute__((noreturn));
-char font_stream_buf[FONT_STREAM_BUFFER_SIZE];
+int fjAssert_(const char* file, int line, const char* str) __attribute__((noreturn));
+
+u_short* fontGetMesAdr(u_short* str /* r2 */, u_short num /* r2 */);
+void fontMessage(u_short* str /* r2 */);
+void fontNextMessage(void);
+u_short fontPrintStrMain(u_short** pstr /* r29+0x15C */, int flag /* r2 */);
+
+void fontClear(void);
+void fontMessageNum(u_short* str /* r2 */, u_short num /* r2 */);
+
+int fontGetStatus(void);
+void fontPrintStr(u_short* str /* r29+0x1C */, int x /* r2 */, int y /* r2 */);
 
 #endif

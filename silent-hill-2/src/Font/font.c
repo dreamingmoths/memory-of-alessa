@@ -1,6 +1,9 @@
 #include "sh2_common.h"
 #include "Font/font.h"
 
+FONT_DATA font;
+char font_stream_buf[FONT_STREAM_BUFFER_SIZE];
+
 // @todo: does this have an SH3 equivalent?
 void fontSetYesNo(int y) {
     int w;
@@ -74,3 +77,59 @@ void fontEachTurn() {
     }
 }
 #endif
+
+void fontMessageNum(u_short* str /* r2 */, u_short num /* r2 */) {
+    fontMessage(fontGetMesAdr(str, num));
+}
+
+u_short* fontGetMesAdr(u_short* str /* r2 */, u_short num /* r2 */) {
+    if (str == NULL) {
+        return NULL;
+    }
+    if (num >= str[0]) {
+        printf("message number over! (%d/%d)\n", num, *str);
+        return NULL;
+    }
+    return str + str[num + 1];
+}
+
+void fontMessage(u_short* str /* r2 */)  {
+    if (str == 0) {
+        font.mes_str_now = 0;
+        return;
+    }
+    font.mes_str = str;
+    UNSET_BIT(font.flag, 0x1);
+    fontNextMessage();
+    if ((font.prl_count == 0) && (font.wait_type > 0) && (font.wait_type < 8)) {
+        font.prl_str = font.mes_str;
+        font.prl_count = 1;
+        UNSET_BIT(font.flag, 0x40);
+    }
+}
+
+void fontNextMessage(void) {
+    u_int wm; // r5
+    
+    font.st_num = 0;
+    if (GET_BIT(font.flag, 0)) {
+        font.mes_str_now = NULL;
+        return;
+    }
+    fontSetColor(0);
+    UNSET_BIT(font.flag, 0x8);
+    font.mes_str_now = font.mes_str;
+    wm = fontPrintStrMain(&font.mes_str, 0);
+    if (font.sel_max != 0) {
+        font.wait_type = 4;
+        font.wait_count = -1;
+    } else {
+        font.wait_type = wm >> 12;
+        if ((font.wait_type & 7) == 1 || (font.wait_type & 7) == 0) {
+            font.wait_count = -1;
+        } else {
+            font.wait_count = (((wm & 0xFFF) * 0x3C) / 60);
+        }
+    }
+    SET_BIT(font.flag, 0x2);
+}
