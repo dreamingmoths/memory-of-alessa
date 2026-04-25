@@ -87,7 +87,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/event", EventPositionSet);
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventResultMovePosition);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventCancel);
+void EventCancel(void) {
+    ev_cancel = 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSubFlagSet);
 
