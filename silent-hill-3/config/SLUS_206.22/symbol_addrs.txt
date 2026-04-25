@@ -1035,7 +1035,12 @@ cscVu1SetTag_frfl                                                               
 cscVu1SetTag_prog                                                                = 0x2b4cd0;
 decBs0                                                                           = 0x2b8ef0;
 dicCode81                                                                        = 0x157960;
+dicCode82                                                                        = 0x157a90;
+dicCode83                                                                        = 0x157b40;
+dicCode84                                                                        = 0x157be0;
+dicCode87                                                                        = 0x157c90;
 dicCodeAsc                                                                       = 0x157810;
+dicTransCode                                                                     = 0x157570;
 drop_shadow_micro_init                                                           = 0x177a60;
 efCartridgeDischargeDisp                                                         = 0x1eef90;
 exponent                                                                         = 0x115438;
@@ -1093,7 +1098,7 @@ sh3shd_init_outdoor_man2                                                        
 vwRenewalXZVelocityToTargetPos                                                   = 0x1c0f40;
 
 HH_Class_Blood_Stick_00                                                          = 0x2f4060;
-dicCode87                                                                        = 0x157c90;
+
 drop_shadow_add_micro2kick_packet                                                = 0x177c60;
 // efCartridgeDischargeDrawPolyF4                                                   = 0x1eff30;
 vbApplyMatrixWithoutTr                                                           = 0x1b6f30;
