@@ -46,7 +46,6 @@ void ItemGet(int kind /* r16 */) {
 }
 
 int ItemUse(int kind /* r2 */) {
-
     if (kind < 11) {
         if (item.number[kind] > 0) {
             item.number[kind]--;
@@ -58,14 +57,14 @@ int ItemUse(int kind /* r2 */) {
 
     if (kind < 0x4B) {        
         if ((((kind != 4) && (kind != 6)) && (kind != 8)) && (kind != 10)) {
-            REMOVE_FLAG(item.flag, kind); 
+            UNSET_FLAG(item.flag, kind); 
         }
     } else {            
         switch (kind) {
             case 0x4B:
-                //REMOVE_FLAG(item.flag + 1, 0);
+                //UNSET_FLAG(item.flag + 1, 0);
                 item.flag[1] &= ~1;
-                //REMOVE_FLAG(item.flag + 1, 1);
+                //UNSET_FLAG(item.flag + 1, 1);
                 item.flag[1] &= ~2;
                 break;
             case 0x4C:
@@ -164,7 +163,7 @@ int ItemWeaponReload(int kind /* r2 */, int use /* r2 */) {
 
     if (bullet >= item.number[kind]) {
         bullet = item.number[kind];
-        REMOVE_FLAG(item.flag, kind);
+        UNSET_FLAG(item.flag, kind);
     }
 
     item.number[weapon] += bullet;
