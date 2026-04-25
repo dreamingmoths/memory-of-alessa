@@ -850,14 +850,14 @@ struct Pad_KeyConfig {
 };
 
 // total size: 0x30
-struct _SH2_SYS {
+typedef struct _SH2_SYS {
     // Members
     unsigned int step[8]; // offset 0x0, size 0x20
     unsigned int pre_playable; // offset 0x20, size 0x4
     signed int main_status; // offset 0x24, size 0x4
     unsigned int soft_reset; // offset 0x28, size 0x4
     unsigned int frame_cnt; // offset 0x2C, size 0x4
-};
+} SH2_SYS;
 
 void sh2gfw_Reset_FilterCommand();
 int MovieWaitReady();
@@ -917,7 +917,7 @@ extern char* layer_adr;
 extern u_short msg_buffer[];
 extern short item_to_chara[75];
 extern struct shPlayerWork sh2jms;
-extern struct _SH2_SYS Sh2sys;
+extern SH2_SYS Sh2sys;
 extern struct Pad_KeyConfig key_config;
 extern struct shGsAllEnv shGs_AllEnv;
 
