@@ -77,7 +77,6 @@ struct Item {
     unsigned char last_cursor; // offset 0x30, size 0x1
 };
 
-
 struct Stage_Data {
     // Members
     struct Event_List * ev_list; // offset 0x0, size 0x4
@@ -106,11 +105,23 @@ struct Stage_Data {
     signed int reserve_11; // offset 0x40, size 0x4
 };
 
+// src\Chacter\player_result.c
+extern void GameItemGetCountUp(void);
+
+// src\SH2_common\sh_vu0.c
+extern void shQzero(void*, int);
+
+void ItemDataInit(void);
+void ItemGet(int kind /* r16 */);
+int ItemUse(int kind /* r2 */);
 int ItemWeaponShoot(int kind /* r16 */, int use /* r2 */);
-void ItemGet(signed int kind /* r16 */);
-int ItemUse(signed int kind /* r2 */);
-void GameItemGetCountUp();
-void shQzero(void *, int);
+int ItemWeaponReload(int kind /* r2 */, int use /* r2 */);
+int ItemMedicineUse(int kind /* r16 */);
+float ItemAmpolueEfficacy(void);
+int ItemEventCheck(int kind_0 /* r2 */, int kind_1 /* r2 */, int kind_2 /* r2 */);
+int ItemCombinationUseCheck(int kind_0 /* r2 */, int kind_1 /* r2 */, int kind_2 /* r2 */);
+void ItemPutForShelf(void);
+
 extern struct Playing_Info playing;
 extern struct Item item;
 extern struct Stage_Data* stage;
