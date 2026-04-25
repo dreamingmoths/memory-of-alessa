@@ -3,6 +3,17 @@
 
 #include "common.h"
 #include "Chacter/character.h"
+// this one i've seen in tgs_trial.c
+// https://decomp.me/scratch/tvnWN
+#define SET_EV_STEP(p_step, s_step) \
+do {                                \
+    ev_p_step = p_step;             \
+    ev_s_step = s_step;             \
+} while (0);                        \
+
+// so i guess they had these too?
+#define SET_EV_P_STEP(p_step) do { ev_p_step = p_step; } while (0)
+#define SET_EV_S_STEP(s_step) do { ev_s_step = s_step; } while (0)
 
 union Q_WORDDATA {
     unsigned int ui32[4]; // offset 0x0, size 0x10
@@ -839,14 +850,14 @@ struct Pad_KeyConfig {
 };
 
 // total size: 0x30
-typedef struct _SH2_SYS {
+struct _SH2_SYS {
     // Members
     unsigned int step[8]; // offset 0x0, size 0x20
     unsigned int pre_playable; // offset 0x20, size 0x4
     signed int main_status; // offset 0x24, size 0x4
     unsigned int soft_reset; // offset 0x28, size 0x4
     unsigned int frame_cnt; // offset 0x2C, size 0x4
-} SH2_SYS;
+};
 
 void sh2gfw_Reset_FilterCommand();
 int MovieWaitReady();
@@ -856,43 +867,57 @@ int sh2gfw_FastSet_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
 void sh2gfw_Init_DispOnOffObj();
 int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
 void sh2gfw_Black_Clear();
-void PictureDraw(struct PicDraw_Data * pic /* r21 */);
-void PictureLoadImage(struct sh2gfw_AREA_HEAD * ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
-int EvSubPictureDisplayOnly();
-void EvSubPictureEnd();
-void EvSubPictureFilter();
-void EvSubPictureInit();
-void EvSubPictureStart();
-int fcRead(union fsFile * fp /* r17 */, void * buf /* r16 */);
+void PictureDraw(struct PicDraw_Data* pic /* r21 */);
+void PictureLoadImage(struct sh2gfw_AREA_HEAD* ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
+
+int fcRead(union fsFile* fp /* r17 */, void* buf /* r16 */);
 int ScreenEffectFadeCheck();
 void ScreenEffectFadeStart(int type /* r2 */, float time /* r29+0x10 */);
 int fsSync(int mode /* r17 */, int fid /* r16 */);
 int shPadTrigger(int port /* r17 */, int key /* r16 */);
-int ItemUse(int kind /* r2 */);
-void ItemGet(int kind /* r16 */);
-int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */);
-void fontClear();
-int fontGetStatus();
-void fontMessageNum(u_short * str /* r2 */, u_short num /* r2 */);
+
 void SCNowPlayableEventSwitch(struct SubCharacter * scp /* r2 */, int flag /* r2 */);
 int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */);
 int SeCallPos( int sd_no /* r20 */, float volume /* r20 */, float * pos /* r19 */, int status /* r18 */);
 int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */);
 void PictureDraw(struct PicDraw_Data * pic /* r21 */);
 void PictureLoadImage(struct sh2gfw_AREA_HEAD * ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
-char * get_gp_data_buf_addr();
+char* get_gp_data_buf_addr();
 void shQzero(void *, int);
 
+void PlayerEventAnimeSet(int anime /* r16 */);
+int PlayerEventAnimeSuccessFrame(void);
+int shCharacterAnimeIsEnd(struct SubCharacter * scp /* r2 */);
+void shCharacterAnimePause(struct SubCharacter * scp /* r2 */);
+void shCharacterAnimeRestart(struct SubCharacter * scp /* r2 */);
+struct SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
+
+// almost every function above should be moved to its correct place
+int EvSubMessage(int msg /* r2 */);
+int EvSubQuestion(int msg /* r2 */);
+int EvSubItemUse0(int kind /* r19 */, int message /* r20 */, int se /* r18 */, int stereo /* r17 */, float* pos /* r16 */, int xxx /* r2 */);
+int EvSubItemGet(int kind /* r16 */, int message /* r2 */);
+int EvSubItemGetAndAnim(int kind /* r16 */, int message /* r2 */);
+int EvSubPictureDisplayOnly(void);
+int EvSubPictureDisplay(union fsFileIndex* file /* r16 */, int msg /* r17 */);
+void EvSubPictureLayer(int x0 /* r20 */, int y0 /* r19 */, int x1 /* r18 */, int y1 /* r17 */, int alpha /* r16 */);
+void EvSubPictureFilter(void);
+void EvSubPictureInit(void);
+void EvSubPictureStart(void);
+void EvSubPictureEnd(void);
+void EvDispControlModelExec(int* list /* r16 */);
+int EvSubMovieStart(int demo /* r16 */);
+void EvSubMovieEnd(void);
 extern float ev_filter;
 extern int ev_filter_on;
 extern int ev_cancel;
 extern int ev_prog_flag_set;
 extern int ev_s_step;
-extern char * layer_adr;
+extern char* layer_adr;
 extern u_short msg_buffer[];
 extern short item_to_chara[75];
 extern struct shPlayerWork sh2jms;
-extern SH2_SYS Sh2sys;
+extern struct _SH2_SYS Sh2sys;
 extern struct Pad_KeyConfig key_config;
 extern struct shGsAllEnv shGs_AllEnv;
 
