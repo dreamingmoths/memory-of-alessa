@@ -26,8 +26,27 @@ static int file_trans_merge_to_direct(union fsFileIndex* id /* r2 */) {
     return ret;
 }
 
-// https://decomp.me/scratch/Y4FJV
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fcread", FcFixFile);
+int FcFixFile(union fsFileIndex* id /* r2 */) {
+    union fsFile *file; // r7
+
+    if (id == NULL) {
+        warning_no_entry(id);
+        return -1;
+    }
+    file = id->index.fp;
+    file_trans_merge_to_direct(id);
+    file = fsCmdCheckFixFile(file);
+    if (execEnv_hd_merge_file) {
+        if (!file) {
+            return -1;
+        }
+        return fcFixFile(file);
+    } 
+    if (!file) {
+        return -1;
+    }
+    return fcFixFile(file);    
+}
 
 int fcGetFileSize(union fsFile* file /* r2 */) {
     union fsFile real[1];
