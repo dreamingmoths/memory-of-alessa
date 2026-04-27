@@ -79,7 +79,6 @@ typedef struct ClusterAnimeWork {
     // total size: 0x200
     struct shClusterAnime ca[32]; // offset 0x0, size 0x200
 } ClusterAnimeWork;
-ClusterAnimeWork sh2cluster;
 
 extern ClusterAnimeWork sh2cluster;
 extern float cluster_weight_data[32][20]; // size: 0xA00, address: 0x418780

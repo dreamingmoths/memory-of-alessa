@@ -8,6 +8,8 @@ static float CalcDummy(void);
 static float Calc1(void* cluster, int frame, int n_frames, short f_counter);
 static void ClearWeights(shClusterAnime* cap);
 
+ClusterAnimeWork sh2cluster;
+
 typedef struct Header {
     // total size: 0x10
     u_int id; // offset 0x0, size 0x4
