@@ -1,4 +1,4 @@
-#include "sh_cdvd.h"
+#include "Multi_thr/filesys/sh_cdvd.h"
 
 static int WaitExec(void);
 static int SignalExec(void);
@@ -6,42 +6,6 @@ static int WaitCmd(void);
 static int SignalCmd(void);
 static int ___shCdMmode(int mmode /* r16 */);
 static int ___shCdInit(int initmode /* r16 */);
-
-// ???
-int CreateSema2(int, int, int);
-
-// eekernel.h
-void WaitSema(int);
-
-// eekernel.h
-int SignalSema(int);
-
-// include/libcdvd.h
-int sceCdInit(int init_mode);
-
-// ???
-int iSignalSema(int);
-
-// ???
-int CreateSema2(int, int, int);
-
-// ???
-void sceCdCallback(void f(void));
-
-// ???
-int sceCdInitEeCB(int, void*, int);
-
-// sifdev.h ?
-int sceFsReset(void);         
-
-// sifrpc.h ?
-void sceSifInitRpc(u_int mode);
-
-// ???
-void sceSifLoadFileReset(void);
-
-// sifdev.h
-int sceSifSyncIop(void);
 
 static int WaitExec(void)  {
     int ret; // r2 how is this used?
