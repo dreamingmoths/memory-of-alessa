@@ -287,7 +287,7 @@ segments:
       - [0x16ab10, asm, Effect2/hh_effect_object_texture]
       - [0x16b9c0, c,   Effect2/hh_math_wrapper]
       - [0x16bae0, asm, Effect2/hh_packet]
-      - [0x16c1c0, asm, Multi_thr/filesys/fcread]
+      - [0x16c1c0, c,   Multi_thr/filesys/fcread]
       - [0x16c4c0, asm, Chacter/m3_boat_jms]
       - [0x16c780, asm, Chacter/m3_boat]
       - [0x16f630, asm, Chacter/lake_wave]
