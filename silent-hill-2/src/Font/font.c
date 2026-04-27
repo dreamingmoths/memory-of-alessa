@@ -1,5 +1,7 @@
 #include "sh2_common.h"
 #include "Font/font.h"
+#include "libgraph.h"
+#include "eestruct.h"
 
 extern /* static */ short FontSize[2][2];
 extern /* static */ u_long font_dma_data[34];

@@ -1,7 +1,7 @@
-#include "hh_class_blood_footmark_00.h"
+#include "Effect2/hh_class_blood_footmark_00.h"
+#include "Effect2/hh_packet.h"
+#include "Effect2/hh_class_wrapper.h"
 #include "libvifpk.h"
-#include "hh_packet.h"
-#include "hh_class_wrapper.h"
 
 extern int rand(void);
 

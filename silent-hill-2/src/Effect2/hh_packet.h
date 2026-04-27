@@ -3,8 +3,11 @@
 
 #include "common.h"
 #include "eestruct.h"
+#include "libvifpk.h"
 
 u_int HH_Vif1PacketBuffer_Memory_Allocate_Check(void);
+
+sceVif1Packet* HH_Vif1Packet_Current_Get(void);
 
 void HH_Vif1PacketBuffer_Initialize(void);
 
