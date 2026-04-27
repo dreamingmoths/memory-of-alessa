@@ -3,6 +3,44 @@
 
 #include "common.h"
 
+// I will find their correct place another time
+
+// ???
+extern int CreateSema2(int, int, int);
+
+// eekernel.h
+extern void WaitSema(int);
+
+// eekernel.h
+extern int SignalSema(int);
+
+// include/libcdvd.h
+extern int sceCdInit(int init_mode);
+
+// ???
+extern int iSignalSema(int);
+
+// ???
+extern int CreateSema2(int, int, int);
+
+// ???
+extern void sceCdCallback(void f(void));
+
+// ???
+extern int sceCdInitEeCB(int, void*, int);
+
+// sifdev.h ?
+extern int sceFsReset(void);         
+
+// sifrpc.h ?
+extern void sceSifInitRpc(u_int mode);
+
+// ???
+extern void sceSifLoadFileReset(void);
+
+// sifdev.h
+extern int sceSifSyncIop(void);
+
 // total size: 0x10
 typedef struct shCdWorkT {
     // Members
