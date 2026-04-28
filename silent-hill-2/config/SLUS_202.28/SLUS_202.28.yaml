@@ -139,7 +139,7 @@ segments:
       - [0x08f6c0, asm, shGs/sh2gfw_GS_NewLoopEnv]
       - [0x08fcd0, asm, shGs/sh2gfw_GsInit]
       - [0x0913c0, asm, sound/sd0712/ee/sd_call]
-      - [0x092560, asm, sound/sh_sound]
+      - [0x092560, c,   sound/sh_sound]
       - [0x0955b0, asm, taskman/shtskman]
       - [0x095930, asm, view/vb_main]
       - [0x0960e0, asm, view/vc_main]
