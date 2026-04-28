@@ -6,7 +6,25 @@
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
 
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeWait);
+void SeWait(int wait /* r17 */) {
+    int c; // r16
+
+    if (dbFlag(1) == 0) {
+        do {
+            verbose(4, "sh_sound.c:150> >>>>+++\n");
+            c = wait;
+            while (c > 0) {
+                if (shSdStat() == 0) {
+                    verbose(4, "sh_sound.c:153> <<<<%d", c);
+                    c--;
+                }
+                shSyncVEnd(0);
+                shSdVSync();
+            }
+        } while (shSdStat() != 0);
+        verbose(4, "sh_sound.c:160> <<<<%d", c);
+    }
+}
 
 void SeForceWait(void) {
     SeWait(0x3C);
