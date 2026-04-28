@@ -1,5 +1,7 @@
 #include "sound/sh_sound.h"
+#include "sound/sh_sd_call.h"
 #include "DBG/dbflag.h"
+#include "SH2_common/sh_vu0.h"
 
 static int SeChange2Dto3D(int se /* r2 */);
 
@@ -11,9 +13,49 @@ void SeForceWait(void) {
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeCallInit);
 
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeCallReset);
+void SeCallReset(void) {
+    int i; // r4
+    
+    if (dbFlag(1) == 0) {
+        SeWait(3);
+        shSdCall(0, 0, 0, 0);
+        SeWait(3);
+        shSd3dAllStop();
+        SeWait(3);
+    }
+    for (i = 0; i < 4; i++) {
+        se_2d_manage_data[i].sd = 0;
+    }
+    se_3d_channel_max = 4;
+    se_3d_channel_number = 0;
+    for (i = 0; i < 8; i++) {
+        se_3d_channel_data[i].sd = 0;
+    }
+    shQzero(&bgm, sizeof(Se_BgmBuffer));
+    if (dbFlag(1) == 0) {
+        SeMasterVolumeChange();
+        SeWait(3);
+    }
+    se_load_data = 0;
+    se_3d_load_data = 0;
+    shQzero(&sound_work, sizeof(SOUND_WORK));
+}
 
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeCall);
+int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */) {
+    int ret; // r2
+
+    if (dbFlag(1) != 0) {
+        return 0x10;
+    }
+    if (sd_no == 0) {
+        return 0xF;
+    }
+    ret = shSdCall(sd_no, stereo, 255.0f - (255.0f * volume), 0);
+    if (ret != -1) {
+        ret = 0x10;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeCallPos);
 
