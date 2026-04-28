@@ -1,4 +1,4 @@
-#include "sh_sd_call.h"
+#include "sound/sh_sd_call.h"
 
 static int shSdCallCheck(int i0 /* r16 */);
 

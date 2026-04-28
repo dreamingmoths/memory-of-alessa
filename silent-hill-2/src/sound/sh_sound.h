@@ -3,6 +3,50 @@
 
 #include "common.h"
 
+// total size: 0xC this was an anon
+typedef struct Change_List {
+    // Members
+    int sd_se; // offset 0x0, size 0x4
+    int sd_3d; // offset 0x4, size 0x4
+    int file; // offset 0x8, size 0x4
+} Change_List;
+
+// total size: 0x8
+typedef struct Se_TrackBuffer {
+    // Members
+    u_char status; // offset 0x0, size 0x1
+    u_char fade_in_type; // offset 0x1, size 0x1
+    u_char fade_out_type; // offset 0x2, size 0x1
+    u_char pad; // offset 0x3, size 0x1
+    float volume; // offset 0x4, size 0x4
+} Se_TrackBuffer;
+
+// total size: 0x4C
+typedef struct Se_BgmBuffer {
+    // Members
+    int current; // offset 0x0, size 0x4
+    int next; // offset 0x4, size 0x4
+    int read; // offset 0x8, size 0x4
+    int sdb_no; // offset 0xC, size 0x4
+    float volume; // offset 0x10, size 0x4
+    Se_TrackBuffer track[7]; // offset 0x14, size 0x38
+} Se_BgmBuffer;
+
+// total size: 0x40
+typedef struct Se2D_ManageData {
+    // Members
+    int sd; // offset 0x0, size 0x4
+    float pos[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
+    float vol; // offset 0x20, size 0x4
+    short room; // offset 0x24, size 0x2
+    u_char pos_on; // offset 0x26, size 0x1
+    u_char pre_dist; // offset 0x27, size 0x1
+    short pre_pan; // offset 0x28, size 0x2
+    short status; // offset 0x2A, size 0x2
+    float timer; // offset 0x2C, size 0x4
+    float base; // offset 0x30, size 0x4
+} Se2D_ManageData;
+
 // total size: 0x30
 typedef struct Se3D_ChannelData {
     // Members
@@ -13,17 +57,57 @@ typedef struct Se3D_ChannelData {
     float vol; // offset 0x20, size 0x4
 } Se3D_ChannelData;
 
-// total size: 0xC this was an anon
-typedef struct Change_List {
+// total size: 0x20
+typedef struct _SND_ROAD_AREA {
     // Members
-    int sd_se; // offset 0x0, size 0x4
-    int sd_3d; // offset 0x4, size 0x4
-    int file; // offset 0x8, size 0x4
-} Change_List;
+    float x0; // offset 0x0, size 0x4
+    float z0; // offset 0x4, size 0x4
+    float x1; // offset 0x8, size 0x4
+    float z1; // offset 0xC, size 0x4
+    float x2; // offset 0x10, size 0x4
+    float z2; // offset 0x14, size 0x4
+    float min_hy; // offset 0x18, size 0x4
+    float max_hy; // offset 0x1C, size 0x4
+} SND_ROAD_AREA;
+
+// total size: 0x40
+typedef struct _SOUND_DATA {
+    // Members
+    SND_ROAD_AREA lim_sw; // offset 0x0, size 0x20
+    int flags; // offset 0x20, size 0x4
+    int chanstat[7]; // offset 0x24, size 0x1C
+} SOUND_DATA;
+
+// total size: 0x1C
+typedef struct _NEAR_SOUND_DATA {
+    // Members
+    char inVol[7]; // offset 0x0, size 0x7
+    char outVol[7]; // offset 0x7, size 0x7
+    int errCode; // offset 0x10, size 0x4
+    int absIndex; // offset 0x14, size 0x4
+    float len; // offset 0x18, size 0x4
+} NEAR_SOUND_DATA;
+
+// total size: 0x120
+typedef struct _SOUND_WORK {
+    // Members
+    SOUND_DATA * sound_ary; // offset 0x0, size 0x4
+    float chara_pos[4]  __attribute__((aligned(16))); // offset 0x10, size 0x10
+    float half_w; // offset 0x20, size 0x4
+    int page; // offset 0x24, size 0x4
+    int near_sound_num; // offset 0x28, size 0x4
+    NEAR_SOUND_DATA near_sound_ary[8]; // offset 0x2C, size 0xE0
+    int on_num; // offset 0x10C, size 0x4
+    char on_chan[7]; // offset 0x110, size 0x7
+    int absNum; // offset 0x118, size 0x4
+    int nearindex; // offset 0x11C, size 0x4
+} SOUND_WORK;
 
 void SeWait(int wait /* r17 */);
 void SeForceWait(void);
-int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float * pos /* r19 */, int status /* r18 */);
+void SeCallReset(void);
+int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */);
+int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float* pos /* r19 */, int status /* r18 */);
 int Se3dPlayCheck(int sd_no /* r2 */);
 void SeBgmChange(void);
 void SeSoundLoad(void);
@@ -34,9 +118,18 @@ void Se2dManager(void);
 void Se3dManager(void);
 void SeBgmManager(void);
 int Se3dControl(int sd_no /* r17 */, float volume /* r20 */, float* pos /* r16 */);
+void SeMasterVolumeChange(void);
 
+extern Se_BgmBuffer bgm;
+extern Se2D_ManageData se_2d_manage_data[4];
 extern Se3D_ChannelData se_3d_channel_data[8];
-extern Change_List change_list[242]; // size: 0xB58, address: 0x2B8880
+extern int se_3d_channel_max;
+extern int se_3d_channel_number;
 extern int se_3d_load_data;
+extern int se_load_data;
+extern SOUND_WORK sound_work;
+extern Change_List change_list[242]; // size: 0xB58, address: 0x2B8880
+
+extern void shQzero(void*, int); // we need to find shQzero proper signature
 
 #endif // SH_SOUND_H

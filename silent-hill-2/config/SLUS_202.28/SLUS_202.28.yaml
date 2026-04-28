@@ -337,7 +337,7 @@ segments:
       - [0x18f7c0, asm, LoadBg/loadbg_event]
       - [0x18fe00, asm, LoadBg/loadbg_chara]
       - [0x1909d0, asm, Chacter/player_result]
-      - [0x1913a0, asm, sound/sh_sd_call]
+      - [0x1913a0, c,   sound/sh_sd_call]
       - [0x191c00, asm, Chacter/m3_ty23]
       - [0x191d20, asm, Effect2/hh_class_blood_04]
       - [0x1924f0, asm, Effect2/hh_class_blood_pool_phenomenon_01]
