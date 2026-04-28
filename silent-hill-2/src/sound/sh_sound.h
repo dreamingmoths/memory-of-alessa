@@ -6,9 +6,9 @@
 // total size: 0x30
 typedef struct Se3D_ChannelData {
     // Members
-    signed int sd; // offset 0x0, size 0x4
-    signed int room; // offset 0x4, size 0x4
-    signed int status; // offset 0x8, size 0x4
+    int sd; // offset 0x0, size 0x4
+    int room; // offset 0x4, size 0x4
+    int status; // offset 0x8, size 0x4
     float pos[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
     float vol; // offset 0x20, size 0x4
 } Se3D_ChannelData;
