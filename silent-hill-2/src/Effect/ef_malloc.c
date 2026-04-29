@@ -1,6 +1,6 @@
 #include "ef_malloc.h"
 
-void * EfctInitHeap(void * buf /* r16 */, u_int size /* r2 */) {
+void* EfctInitHeap(void* buf /* r16 */, u_int size /* r2 */) {
     EfctCtrl = utilHeapInit(buf, size);
     if (buf != EfctCtrl) {
         printf("ef_malloc.c:18> address mismatch.\n");
@@ -8,8 +8,8 @@ void * EfctInitHeap(void * buf /* r16 */, u_int size /* r2 */) {
     return EfctCtrl;
 }
 
-void * EfctMalloc(u_int n /* r17 */) {
-    void * p;    
+void* EfctMalloc(u_int n /* r17 */) {
+    void* p;    
     if (EfctCtrl == NULL) {
         return NULL;
     }    
@@ -22,6 +22,6 @@ void * EfctMalloc(u_int n /* r17 */) {
     return p;
 }
 
-void EfctFree(void * obj) {
+void EfctFree(void* obj) {
     utilHeapFree(obj);
 }
