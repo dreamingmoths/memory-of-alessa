@@ -21,8 +21,10 @@ typedef struct EFCTSparksPlane {
 // total size: 0x120
 typedef struct EFCTSparksObject {
     // Members
-    struct EFCTObject base_obj; // offset 0x0, size 0x60
-    struct EFCTSparksPlane plane[2]; // offset 0x60, size 0xC0
+    EFCTObject base_obj; // offset 0x0, size 0x60
+    EFCTSparksPlane plane[2]; // offset 0x60, size 0xC0
 } EFCTSparksObject;
+
+void DrawSparks(EFCTSparksObject* sparks /* r16 */);
 
 #endif // EF_SPARKS_H
