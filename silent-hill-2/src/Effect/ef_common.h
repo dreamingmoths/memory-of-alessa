@@ -50,6 +50,14 @@ typedef struct EFCTObject {
     EFCTAnimationData* pAnimData; // offset 0x58, size 0x4
 } EFCTObject;
 
+// total size: 0x200
+typedef struct EFCTTask {
+    // Members
+    shTskEXECUTE exe; // offset 0x0, size 0x14
+    EFCTObject* pObj; // offset 0x14, size 0x4
+    char freemem[488]; // offset 0x18, size 0x1E8
+} EFCTTask;
+
 void EFCTInit(void);
 void EFCTDoTask(void);
 void EFCTSetPassingTimePerFrame(float time /* r29 */);
@@ -65,6 +73,8 @@ float EFCTGetPassingTimePerFrame();
 void ClipEffectObject2(EFCTObject* pObj /* r18 */);
 void DrawPrimitive(EFCTObject* pObj /* r17 */);
 void EFCTThreeDWork(EFCTObject* pObj /* r17 */);
+
+void EFCTCutEffectTask(EFCTTask* ptr /* r16 */);
 
 extern u_char EFCTTaskBuf[131072];
 extern u_long128 efctPacket[4096];
