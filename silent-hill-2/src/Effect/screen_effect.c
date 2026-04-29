@@ -1,4 +1,4 @@
-#include "screen_effect.h"
+#include "Effect/screen_effect.h"
 #include "GFW/sh2gfw_2d_filters.h"
 #include "SH2_common/sh2dt.h"
 
