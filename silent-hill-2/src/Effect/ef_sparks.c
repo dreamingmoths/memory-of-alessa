@@ -13,12 +13,12 @@ static void RenewSparksRGBA(EFCTSparksObject* sparks);
 static void MoveSparks(EFCTSparksObject* sparks);
 static void SetSparksVertex(float* pos, float width, float height, float* trans, EFCTVertexData* VertexData);
 
-static void SetSparksSize(float * width /* r17 */, float * height /* r16 */) {
+static void SetSparksSize(float* width /* r17 */, float* height /* r16 */) {
     *width = 20.0f + (5.0f * shRandF());
     *height = 20.0f + (5.0f * shRandF());
 }
 
-static void SetSparksKind(int * kind /* r16 */) {
+static void SetSparksKind(int* kind /* r16 */) {
     if (shRandF() > 0.5f) {
         *kind = 0;
         return;
@@ -26,7 +26,7 @@ static void SetSparksKind(int * kind /* r16 */) {
     *kind = 1;
 }
 
-static void SetSparksStartPos(int kind /* r17 */, float * trans /* r16 */) {
+static void SetSparksStartPos(int kind /* r17 */, float* trans /* r16 */) {
 
     float rate; // r29+0x30
     
@@ -39,7 +39,7 @@ static void SetSparksStartPos(int kind /* r17 */, float * trans /* r16 */) {
     trans[2] = shSway1f(-rate, rate);
 }
 
-static void SetSparksSpeed(int kind /* r17 */, float * speed /* r16 */)  {
+static void SetSparksSpeed(int kind /* r17 */, float* speed /* r16 */)  {
 
     float min; // r29+0x30
     float max; // r29+0x30
@@ -54,7 +54,7 @@ static void SetSparksSpeed(int kind /* r17 */, float * speed /* r16 */)  {
     speed[2] = shSway1f(min, max);
 }
 
-static void SetSparksRGBA(int * rgba /* r16 */) {
+static void SetSparksRGBA(int* rgba /* r16 */) {
 
     float rate; // r20
     rate = 0.3f + (0.7f * shRandF());
@@ -64,7 +64,7 @@ static void SetSparksRGBA(int * rgba /* r16 */) {
     rgba[3] = 0x62;
 }
 
-static void RenewSparksPos(EFCTSparksPlane * sparks /* r16 */) {
+static void RenewSparksPos(EFCTSparksPlane* sparks /* r16 */) {
     float ratio = shSinF(PI * (sparks->timer / sparks->life_span));
     sparks->pos[0] = sparks->speed[0] * ratio;
     sparks->pos[2] = sparks->speed[2] * ratio;
@@ -77,7 +77,7 @@ static void RenewSparksPos(EFCTSparksPlane * sparks /* r16 */) {
     
 }
 
-void DrawSparks(EFCTSparksObject * sparks /* r16 */) {
+void DrawSparks(EFCTSparksObject* sparks /* r16 */) {
     if (sparks == NULL) {
         printf("ef_sparks.c:216> assert:(%s)\n", "0"); //unsure about the second arg lmao
         while(1);
@@ -90,7 +90,7 @@ void DrawSparks(EFCTSparksObject * sparks /* r16 */) {
     DrawPrimitive(&sparks->base_obj);
 }
 
-static void CountSparksLifeTimer(EFCTSparksObject * sparks /* r17 */) {
+static void CountSparksLifeTimer(EFCTSparksObject* sparks /* r17 */) {
 
     int i; // r8
 
@@ -104,7 +104,7 @@ static void CountSparksLifeTimer(EFCTSparksObject * sparks /* r17 */) {
     }
 }
 
-static void RenewSparksRGBA(EFCTSparksObject * sparks /* r20 */) {
+static void RenewSparksRGBA(EFCTSparksObject* sparks /* r20 */) {
 
     float ratio; // r20
     int rgba[4]; // r29+0x70
@@ -121,7 +121,7 @@ static void RenewSparksRGBA(EFCTSparksObject * sparks /* r20 */) {
     }
 }
 
-static void MoveSparks(EFCTSparksObject * sparks /* r17 */) {
+static void MoveSparks(EFCTSparksObject* sparks /* r17 */) {
 
     int i; // r16
     float width; // r20        
@@ -143,7 +143,7 @@ static void MoveSparks(EFCTSparksObject * sparks /* r17 */) {
     }
 }
 
-static void SetSparksVertex(float * pos /* r2 */, float width /* r29 */, float height /* r29 */, float * trans /* r2 */, struct EFCTVertexData * VertexData /* r2 */) {
+static void SetSparksVertex(float* pos /* r2 */, float width /* r29 */, float height /* r29 */, float* trans /* r2 */, EFCTVertexData* VertexData /* r2 */) {
     
     VertexData[0].LocalPos[0] = trans[0] + (pos[0] + -width * 0.5f);
     VertexData[0].LocalPos[1] = trans[1] + (pos[1] + -height * 0.5f);
