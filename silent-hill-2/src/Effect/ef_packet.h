@@ -4,11 +4,11 @@
 #include "common.h"
 #include "libvifpk.h"
 
-sceVif1Packet* shEfctPkInit(void * packet /* r2 */);
+sceVif1Packet* shEfctPkInit(void* packet /* r2 */);
 sceVif1Packet* shEfctPkReset(void);
 sceVif1Packet* shEfctPkTaskHead(void);
 sceVif1Packet* shEfctPkTaskTail(void);
-void * shEfctPkGetKickAddrByd1cSend(void);
+void* shEfctPkGetKickAddrByd1cSend(void);
 
 extern sceVif1Packet efctVif1Packet;
 
