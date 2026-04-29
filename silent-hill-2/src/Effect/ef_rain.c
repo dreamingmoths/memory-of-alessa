@@ -1,15 +1,15 @@
 #include "Effect/ef_rain.h"
 #include "SH2_common/sh_vu0.h"
 
-static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /* r2 */);
-static int efRainDropDrawSpray(_EF_RAINDROP_DATA * dat /* r16 */);
+static void efRainDropInitSpray(EF_RAINDROP_DATA* dat /* r16 */, float* pos /* r2 */);
+static int efRainDropDrawSpray(EF_RAINDROP_DATA* dat /* r16 */);
 
 int EFCTSetRainDrop(int lev /* r17 */) {
-    _EF_EF_RAINDROP_TASK * ptr; // r2
+    EF_EF_RAINDROP_TASK* ptr; // r2
     int i; // r16
     
     for (i = 0; i < lev; i++) {
-        ptr = (_EF_EF_RAINDROP_TASK *)shTSKSetTask((void (*)(void *))&EFCTRainDropMain, 4);
+        ptr = (EF_EF_RAINDROP_TASK *)shTSKSetTask((void (*)(void *))&EFCTRainDropMain, 4);
         if (ptr != NULL) {
             ptr->exe.atr = 10;
             ptr->exe.mode = 0;
@@ -21,8 +21,8 @@ int EFCTSetRainDrop(int lev /* r17 */) {
 }
 
 void EFCTDelRainDrop(void) {
-    _shTskTASK * ptr; // r2
-    _shTskTASK * seekp; // r16
+    shTskTASK* ptr; // r2
+    shTskTASK* seekp; // r16
     
     seekp = shTskTaskListTop[4]->exe.next;
     while (1) {
@@ -37,7 +37,7 @@ void EFCTDelRainDrop(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_rain", EFCTRainDropMain);
 
-static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /* r2 */) {
+static void efRainDropInitSpray(EF_RAINDROP_DATA* dat /* r16 */, float* pos /* r2 */) {
     vec_copy(&dat->v[0], pos);
     dat->v[0][1] -= 25.0f;
     dat->v[0][3] = 1.0f;
@@ -52,8 +52,8 @@ static void efRainDropInitSpray(_EF_RAINDROP_DATA * dat /* r16 */, float * pos /
 
 }
 
-static int efRainDropDrawSpray(_EF_RAINDROP_DATA * dat /* r16 */)  {
-    _EF_RAIN_LINE line;
+static int efRainDropDrawSpray(EF_RAINDROP_DATA* dat /* r16 */)  {
+    EF_RAIN_LINE line;
 	int i;
 
     line.rgba[0] = 0xFF;
