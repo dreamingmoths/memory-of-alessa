@@ -1,6 +1,6 @@
-#include "ef_packet.h"
+#include "Effect/ef_packet.h"
 
-sceVif1Packet* shEfctPkInit(void * packet /* r2 */) {
+sceVif1Packet* shEfctPkInit(void* packet /* r2 */) {
     sceVif1PkInit(&efctVif1Packet, packet);
     return &efctVif1Packet;
 }
@@ -21,7 +21,7 @@ sceVif1Packet* shEfctPkTaskTail(void) {
     return &efctVif1Packet;
 }
 
-void * shEfctPkGetKickAddrByd1cSend(void) {
+void* shEfctPkGetKickAddrByd1cSend(void) {
     sceVif1PkEnd(&efctVif1Packet, 0);
     sceVif1PkTerminate(&efctVif1Packet);
     return efctVif1Packet.pBase;
