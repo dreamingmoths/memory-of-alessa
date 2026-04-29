@@ -102,12 +102,12 @@ void fontMessage(u_short* str /* r2 */)  {
         return;
     }
     font.mes_str = str;
-    UNSET_BIT(font.flag, 0x1);
+    UNSET_BIT(font.flag, 0);
     fontNextMessage();
     if ((font.prl_count == 0) && (font.wait_type > 0) && (font.wait_type < 8)) {
         font.prl_str = font.mes_str;
         font.prl_count = 1;
-        UNSET_BIT(font.flag, 0x40);
+        UNSET_BIT(font.flag, 6);
     }
 }
 
@@ -120,7 +120,7 @@ void fontNextMessage(void) {
         return;
     }
     fontSetColor(0);
-    UNSET_BIT(font.flag, 0x8);
+    UNSET_BIT(font.flag, 3);  
     font.mes_str_now = font.mes_str;
     wm = fontPrintStrMain(&font.mes_str, 0);
     if (font.sel_max != 0) {
@@ -226,7 +226,7 @@ void fontAllCenterOn(void) {
 }
 
 void fontAllCenterOff(void) {
-    UNSET_BIT(font.flag, 0x100);
+    UNSET_BIT(font.flag, 8); // 0x100
 }
 
 void fontCrushOn(void) {
