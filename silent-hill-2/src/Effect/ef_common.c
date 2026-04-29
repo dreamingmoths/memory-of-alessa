@@ -9,6 +9,10 @@
 static void EFCTInitEffectTask(void);
 static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
 static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
+static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */);
+static u_short GetEffectLayerNum(short EffectKind /* r2 */);
+static int EFCTDeleteOldBloodDropTask(void);
+static void InitEffectTexEnv(int EffectKind /* r2 */);
 
 void EFCTInit(void) {
     shTSKInitTaskList(EFCTTaskBuf, sizeof(EFCTTaskBuf));
@@ -65,7 +69,28 @@ void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */) {
     SetGunSmoke(Pos, 1, 1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetGunFire); //
+static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */) {
+    EFCTTask* pTask; // r22
+    u_short LayerNum; // r16
+    int i; // r17
+
+    LayerNum = GetEffectLayerNum(4);
+    for (i = 0; i < LayerNum; i++) {
+        pTask = EFCTEntryEffectTask(4);
+        if (pTask == NULL) {
+            if (EFCTDeleteOldBloodDropTask() == 0) {
+                return;
+            }
+            continue;
+        }
+        if (InitEffectObjectGunFire(pTask->pObj, i, Pos, vec, wep_kind, light) == 0) {
+            EFCTCutEffectTask(pTask);
+            return;
+        }
+        pTask->pObj->LayerNum = LayerNum;
+    }
+    InitEffectTexEnv(4);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetGunSmoke); //
 
@@ -83,7 +108,20 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", InitEffectTexEnv);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTEntryEffectTask);
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTCutEffectTask); //
+void EFCTCutEffectTask(EFCTTask* ptr) {
+    if (ptr->pObj->Using == 1) {
+        ptr->pObj->Using = 0;
+        if (ptr->pObj->pVertex != NULL) {
+            EfctFree(ptr->pObj->pVertex);
+            ptr->pObj->pVertex = NULL;
+        }
+        if (ptr->pObj->pAnimData != NULL) {
+            EfctFree(ptr->pObj->pAnimData);
+            ptr->pObj->pAnimData = NULL;
+        }
+        shTSKDelTask((shTskTASK *)ptr);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", InitEffectAnimData);
 
