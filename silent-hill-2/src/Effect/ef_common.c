@@ -1,11 +1,11 @@
 #include "Effect/ef_common.h"
 #include "Effect/ef_packet.h"
 #include "Effect/ef_malloc.h"
-#include "Effect/ef_stage.h"
 #include "SH2_common/sh2dt.h"
 #include "Event/item.h"
 #include "Chacter/m3_play_event.h"
 #include "Multi_thr/dma/dma1cmd.h"
+#include "Effect/ef_stage.h"
 
 static void EFCTInitEffectTask(void);
 static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
@@ -15,14 +15,13 @@ static u_short GetEffectLayerNum(short EffectKind /* r2 */);
 static int EFCTDeleteOldBloodDropTask(void);
 static void InitEffectTexEnv(int EffectKind /* r2 */);
 
-
 void EFCTInit(void) {
     shTSKInitTaskList(EFCTTaskBuf, sizeof(EFCTTaskBuf));
 
-    if (&efctheap != NULL)         
+    if (&efctheap)         
         EfctInitHeap(&efctheap, sizeof(efctheap));
     
-    if (&efctPacket != NULL)
+    if (&efctPacket)
         shEfctPkInit(&efctPacket);
     
     EFCTInitEffectTask();
@@ -33,11 +32,11 @@ static void EFCTInitEffectTask(void) {
     
     for (i = 0; i < 32; i++) {
         EFCTLocalDataBuffer[i].Using = 0;
-        if (EFCTLocalDataBuffer[i].pAnimData != NULL) {
+        if (EFCTLocalDataBuffer[i].pAnimData) {
             EfctFree(EFCTLocalDataBuffer[i].pAnimData);
             EFCTLocalDataBuffer[i].pAnimData = NULL;
         }
-        if (EFCTLocalDataBuffer[i].pVertex != NULL) {
+        if (EFCTLocalDataBuffer[i].pVertex) {
             EfctFree(EFCTLocalDataBuffer[i].pVertex);
             EFCTLocalDataBuffer[i].pVertex = NULL;
         }
@@ -80,7 +79,7 @@ static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind 
     for (i = 0; i < LayerNum; i++) {
         pTask = EFCTEntryEffectTask(4);
         if (pTask == NULL) {
-            if (EFCTDeleteOldBloodDropTask() == 0) {
+            if (!EFCTDeleteOldBloodDropTask()) {
                 return;
             }
             continue;
@@ -113,11 +112,11 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTEntryEffectTask);
 void EFCTCutEffectTask(EFCTTask* ptr) {
     if (ptr->pObj->Using == 1) {
         ptr->pObj->Using = 0;
-        if (ptr->pObj->pVertex != NULL) {
+        if (ptr->pObj->pVertex) {
             EfctFree(ptr->pObj->pVertex);
             ptr->pObj->pVertex = NULL;
         }
-        if (ptr->pObj->pAnimData != NULL) {
+        if (ptr->pObj->pAnimData) {
             EfctFree(ptr->pObj->pAnimData);
             ptr->pObj->pAnimData = NULL;
         }
