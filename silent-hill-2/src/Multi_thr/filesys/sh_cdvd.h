@@ -8,37 +8,38 @@
 // ???
 extern int CreateSema2(int, int, int);
 
-// eekernel.h
+// ee/include/eekernel.h
 extern void WaitSema(int);
 
-// eekernel.h
+// ee/include/eekernel.h
 extern int SignalSema(int);
 
-// include/libcdvd.h
+// common/include/libcdvd.h
 extern int sceCdInit(int init_mode);
 
-// ???
+// ee/include/eekernel.h
 extern int iSignalSema(int);
 
 // ???
 extern int CreateSema2(int, int, int);
 
-// ???
+// common/include/libcdvd.h
+// int *sceCdCallback(void (*func)(int)); this the signature from the sdk, I dont remember from where I got the one below
 extern void sceCdCallback(void f(void));
 
-// ???
-extern int sceCdInitEeCB(int, void*, int);
+// common/include/libcdvd.h
+extern int sceCdInitEeCB(int cb_prio, void *stack_addr, int stack_size);
 
-// sifdev.h ?
+// ee/include/sifdev.h
 extern int sceFsReset(void);         
 
-// sifrpc.h ?
+// ee/include/sifrpc.h
 extern void sceSifInitRpc(u_int mode);
 
-// ???
+// ee/include/sifdev.h
 extern void sceSifLoadFileReset(void);
 
-// sifdev.h
+// ee/include/sifdev.h
 extern int sceSifSyncIop(void);
 
 // total size: 0x10
