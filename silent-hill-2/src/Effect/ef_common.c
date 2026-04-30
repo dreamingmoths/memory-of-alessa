@@ -1,6 +1,7 @@
 #include "Effect/ef_common.h"
 #include "Effect/ef_packet.h"
 #include "Effect/ef_malloc.h"
+#include "Effect/ef_stage.h"
 #include "SH2_common/sh2dt.h"
 #include "Event/item.h"
 #include "Chacter/m3_play_event.h"
@@ -13,6 +14,7 @@ static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */);
 static u_short GetEffectLayerNum(short EffectKind /* r2 */);
 static int EFCTDeleteOldBloodDropTask(void);
 static void InitEffectTexEnv(int EffectKind /* r2 */);
+
 
 void EFCTInit(void) {
     shTSKInitTaskList(EFCTTaskBuf, sizeof(EFCTTaskBuf));
