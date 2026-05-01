@@ -288,16 +288,30 @@ ClusterAnimeGetWeights = 0x00140a50;
 sh3cluster = 0x0046D270; // size:0x1600
 calc_func_list = 0x00356EA0; // size:0x8
 
+// fog.c
+fogInitParticle = 0x001e8000;
+fog_init_part_sub = 0x001e8090;
+fog_part_newpos = 0x001e8190;
+fogResetWall = 0x001e8260;
+fogSetWall = 0x001e8270;
+fogResetObj = 0x001e8390;
+fogSetObj = 0x001e83a0;
+fogSetPartNum = 0x001ea480;
+fogSetProjection = 0x001ea550;
+fogSetWorldPosV = 0x001ea640;
+fogSetLocalPosV = 0x001ea6f0;
+fogSetSpeedLevel = 0x001eaa00;
+fogGetObj = 0x001e8540;
+fogSetColor = 0x001ea440;
+fogInit = 0x001e6b20;
+fog_load_objdata = 0x001e8c30;
+
+
 // ...
 sh3_CharacterDrawOne = 0x001d13d0;
 sceMcGetInfo = 0x0010c5d8;
 sceMcRead = 0x0010c1a0;
 LightGetNthViewNHM = 0x001c4d90;
-fog_load_objdata = 0x001e8c30;
-fogSetSpeedLevel = 0x001eaa00;
-fogGetObj = 0x001e8540;
-fogSetColor = 0x001ea440;
-fogInit = 0x001e6b20;
 PictureLoadImage = 0x001701d0;
 // enEntryEnemy = 0x0022eb70;
 memset = 0x0110668;
