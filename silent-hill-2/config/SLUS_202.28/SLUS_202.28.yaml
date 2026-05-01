@@ -90,7 +90,7 @@ segments:
       - [0x05db10, asm, Enemy/en_red]
       - [0x060ab0, asm, Enemy/en_scu]
       - [0x065700, asm, Enemy/en_tyu]
-      - [0x068ed0, asm, Fog/fog]
+      - [0x068ed0, c,   Fog/fog]
       - [0x06cfa0, asm, Fog/fogdata]
       - [0x06ee60, asm, Fog/sh2gfw_fogtest_main]
       - [0x06f070, c,   SH2_common/sh_vu0]
