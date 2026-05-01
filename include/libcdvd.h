@@ -57,7 +57,9 @@ typedef struct
 int sceCdInit(int init_mode);
 int sceCdMmode(int media);
 int sceCdReadClock(sceCdCLOCK *rtc);
+int *sceCdCallback(void (*func)(int));
 int sceCdStRead(u_int size, u_int *buf, u_int mode, u_int *err);
+int sceCdInitEeCB(int cb_prio, void *stack_addr, int stack_size);
 int sceCdStStop(void);
 
 int sceCdDiskReady(int mode);
