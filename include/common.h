@@ -28,7 +28,9 @@ typedef signed char s_char;
 #define MIN(a,b) ((a) > (b) ? (b) : (a))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-#define READ_UNCACHED(addr)      ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
+#define UNCACHED(p) ((char*)((u_int)p | 0x20000000))
+#define READ_UNCACHED(addr) ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
+
 #define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
 
 /* bit helpers */
