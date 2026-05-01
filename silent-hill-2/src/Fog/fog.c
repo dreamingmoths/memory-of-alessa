@@ -26,7 +26,97 @@ void fogInit(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_set_defpacket);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetEnvironment);
+void fogSetEnvironment(FOG_ENV_DATA* edata) {
+    float d; // r1
+    float m; // r20
+    u_char f; // r16
+    u_char f2; // r17
+    char Double; // r2
+    int old; // r2
+
+    if (edata == fwork.EnvNow) {
+        if ((fwork.WindTimer -= shGetDF()) <= 0) {
+            fogChangeWind(fwork.WindDef);
+        }
+        return;
+    }
+    fwork.EnvNow = edata;
+    if (!edata) {
+        fwork.PartNum = 0;
+        fwork.EnvNow = NULL;
+        return;
+    }
+    f = edata->Flag;
+    m = edata->MaxPos;
+    f2 = 0;
+    if (edata->MaxPos > 2000.0f + fwork.MaxPos) f2 = 1;
+    fwork.MaxPos = m;
+    fog_asm_data1.maxpos = m;
+
+    fog_asm_data1.maxpos_x2 = 2.0f * m;
+    fog_asm_data1.screendiv = 4.0f / m;
+    fog_asm_data1.r_maxpos = 2.0f / m;
+    fog_asm_data3.maxpos = m;
+    d = edata->PartSize;
+    fwork.PartSize = d;
+    fog_asm_data1.part_size = d;
+    fog_asm_data1.wall_range = 10.0f + d;
+    fog_asm_data2.part_size = d;
+    fog_asm_data2.r_part_size = 1.0f / d;
+    d = edata->EscapeRange;
+    fwork.EscapeRange = d;
+    fog_asm_data1.escape_range = d;
+    fog_asm_data1.r_escape_range = 1.0f / d;
+    d = edata->FloorY;
+    fwork.FloorY = d;
+    fog_asm_data2.floor_y = d;
+    fwork.WaterY = edata->WaterY;
+    
+    old = fwork.WindDef;
+    fwork.WindDef = edata->WindDef;
+    if (fwork.WindDef != old) {
+        if (fwork.Global == 5) {
+            fogInitWind();
+        } else {
+            fogChangeWind(fwork.WindDef);
+        }
+    }
+    if (f & 1) {
+        fwork.LimitY = edata->LimitY;
+        fwork.LimitY2 = edata->LimitY - edata->LimitHeight;
+        fog_asm_data1.r_height = 1.0f / edata->LimitHeight;
+    } else {
+        fwork.LimitY = -MAX_FLOAT;
+    }
+    Double = edata->Double;
+    fwork.Double = Double;
+    if (1 < Double) {
+        d = (1 << (Double - 1));
+        fog_asm_data3.r_double = 1.0f / d;
+    } else {
+        d = 1.0f;
+        fog_asm_data3.r_double = 1.0f;
+    }
+    fog_asm_data1.double_rate = 1 << Double;
+    d = m / d;
+    fog_asm_data1.higher_y = Double < 2 ? m : d;
+    fog_asm_data1.lower_y = Double == 0 ? m : 0.0f;
+    fog_asm_data1.y_max = Double == 0 ? 2.0f * m : d;
+    fog_asm_data1.higher_y2 = 2.0f * (Double < 2 ? m : d);
+    fwork.Alpha = edata->Alpha;
+    d = edata->Alpha;
+    fog_asm_data1.alpha = d;
+    fog_asm_data1.minus_alpha = -d / 32.0f;
+    fwork.GridRate = edata->GridRate;
+    if (sh2gfw_Get_NightOrDay() && fwork.Global < 5) {
+        int v = edata->PartNum >> 1; // not part of dwarf, and nonmatching line numbers
+        fogSetPartNum(edata->PartNum < 0 ? ((edata->PartNum + 1) >> 1) : v);
+    } else {
+        fogSetPartNum(edata->PartNum);
+    }
+    fwork.Flag = (fwork.Flag & 0xff00) | f;
+    if (f2) fogInitParticle();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogInitScreen);
 
