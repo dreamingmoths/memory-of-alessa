@@ -1,4 +1,5 @@
 #include "stg_overlay.h"
+#include "SH2_common/playing_info.h"
 
 static fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
     switch ((u_char) stg_name) {

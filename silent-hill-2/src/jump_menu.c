@@ -1,4 +1,5 @@
 #include "jump_menu.h"
+#include "SH2_common/playing_info.h"
 
 void JumpMenuPosNormal(void) {
     if (user_data.flg != 0) {

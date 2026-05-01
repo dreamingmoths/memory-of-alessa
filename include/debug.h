@@ -34,4 +34,4 @@ do { \
     verbose(level, __FILE__ ":" #line "> " __VA_ARGS__); \
 } while (0);
 
-#endif
+#endif // SH_DEBUG_H

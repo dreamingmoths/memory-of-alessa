@@ -1,4 +1,5 @@
 #include "Event/item.h"
+#include "SH2_common/playing_info.h"
 
 void ItemDataInit(void) {
     shQzero(&item, 0x34);

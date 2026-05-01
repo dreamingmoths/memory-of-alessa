@@ -1,7 +1,8 @@
 #include "sound/sh_sound.h"
 #include "sound/sh_sd_call.h"
 #include "DBG/dbflag.h"
-#include "SH2_common/sh_vu0.h" //we need to find shQzero proper signature
+#include "SH2_common/sh_vu0.h"
+#include "SH2_common/playing_info.h"
 #include "debug.h"
 
 static int SeChange2Dto3D(int se /* r2 */);
@@ -10,19 +11,19 @@ static int SeChange3Dto2D(int se /* r2 */);
 void SeWait(int wait /* r17 */) {
     int c; // r16
 
-    if (dbFlag(1) == 0) {
+    if (!dbFlag(1)) {
         do {
             VERBOSE_ON_LINE(150, 4, ">>>>+++\n");
             c = wait;
             while (c > 0) {
-                if (shSdStat() == 0) {
-                    verbose(4, "sh_sound.c:153> <<<<%d", c);
+                if (!shSdStat()) {
+                    VERBOSE_ON_LINE(153, 4, "<<<<%d", c);
                     c--;
                 }
                 shSyncVEnd(0);
                 shSdVSync();
             }
-        } while (shSdStat() != 0);
+        } while (shSdStat());
         VERBOSE_ON_LINE(160, 4, "<<<<%d", c);
     }
 }
@@ -32,11 +33,11 @@ void SeForceWait(void) {
 }
 
 void SeCallInit(int sect /* r18 */, int mmode /* r17 */, char* path /* r16 */) {
-    if (dbFlag(1) == 0) {
+    if (!dbFlag(1)) {
         VERBOSE_ON_LINE(182, 2, "==========1\n");
 
         VERBOSE_ON_LINE(184, 2, "sector: %d\n", sect);
-        if (path != 0) {
+        if (path) {
             sd_setpath(path);
         }
         shSdInit();
@@ -51,7 +52,7 @@ void SeCallInit(int sect /* r18 */, int mmode /* r17 */, char* path /* r16 */) {
 void SeCallReset(void) {
     int i; // r4
     
-    if (dbFlag(1) == 0) {
+    if (!dbFlag(1)) {
         SeWait(3);
         shSdCall(0, 0, 0, 0);
         SeWait(3);
@@ -67,7 +68,7 @@ void SeCallReset(void) {
         se_3d_channel_data[i].sd = 0;
     }
     shQzero(&bgm, sizeof(Se_BgmBuffer));
-    if (dbFlag(1) == 0) {
+    if (!dbFlag(1)) {
         SeMasterVolumeChange();
         SeWait(3);
     }
@@ -79,10 +80,10 @@ void SeCallReset(void) {
 int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */) {
     int ret; // r2
 
-    if (dbFlag(1) != 0) {
+    if (dbFlag(1)) {
         return 0x10;
     }
-    if (sd_no == 0) {
+    if (!sd_no) {
         return 0xF;
     }
     ret = shSdCall(sd_no, stereo, 255.0f - (255.0f * volume), 0);
@@ -163,7 +164,7 @@ float Se2dManageDataTimer(int sd /* r2 */, int clear /* r2 */) {
     if (i == 4) {
         return -1.0f;
     }
-    if (clear != 0) {
+    if (clear) {
         se_2d_manage_data[i].timer = 0.0f;
     }
     return se_2d_manage_data[i].timer;
@@ -177,7 +178,7 @@ int Se3dControl(int sd_no /* r17 */, float volume /* r20 */, float* pos /* r16 *
     if (dbFlag(1)) {
         return 0x10;
     }
-    if (sd_no == 0) {
+    if (!sd_no) {
         return 0xF;
     }
     for (i = 0; i < 8; i++) {
@@ -200,7 +201,7 @@ void SeStop(int sd_no /* r18 */) {
     if (dbFlag(1)) {
         return;
     }
-    if (sd_no == 0) {
+    if (!sd_no) {
         return;
     }
     if (sd_no < 0x9C40) {
@@ -242,15 +243,12 @@ INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeBgmManager);
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", BgmPageSet);
 
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeMasterVolumeChange); //
-/*
 void SeMasterVolumeChange(void) {
-    if (dbFlag(1) == 0) {
+    if (!dbFlag(1)) {
         shSdCall(0x402, playing.bgm_volume * 8, 0, 0);
         shSdCall(0x401, playing.se_volume * 8, 0, 0);
     }
 }
-*/
 
 static int SeChange2Dto3D(int se /* r2 */) {
     int i; // r5
@@ -258,7 +256,7 @@ static int SeChange2Dto3D(int se /* r2 */) {
     if (se >= 0x9C40) {
         return se;
     }
-    for (i = 0; change_list[i].sd_se != 0; i++) {
+    for (i = 0; change_list[i].sd_se; i++) {
         if (se_3d_load_data == change_list[i].file && se == change_list[i].sd_se) {
             return change_list[i].sd_3d;
         }
@@ -272,7 +270,7 @@ static int SeChange3Dto2D(int se /* r2 */) {
     if (se < 0x9C40) {
         return se;
     }
-    for (i = 0; change_list[i].sd_3d != 0; i++) {
+    for (i = 0; change_list[i].sd_3d; i++) {
         if (change_list[i].sd_3d == se) {
             return change_list[i].sd_se;
         }        
