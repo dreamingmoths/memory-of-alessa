@@ -2,48 +2,9 @@
 #define SH_CDVD_H
 
 #include "common.h"
-#include "eekernel.h"
-#include "sifdev.h"
-#include "sifrpc.h"
-
-// I will find their correct place another time
 
 // ???
 extern int CreateSema2(int, int, int);
-
-// ee/include/eekernel.h
-// extern void WaitSema(int);
-
-// ee/include/eekernel.h
-// extern int SignalSema(int);
-
-// common/include/libcdvd.h
-extern int sceCdInit(int init_mode);
-
-// ee/include/eekernel.h
-// extern int iSignalSema(int);
-
-// ???
-extern int CreateSema2(int, int, int);
-
-// common/include/libcdvd.h
-// int *sceCdCallback(void (*func)(int)); this is the signature from the sdk, I dont remember from where I got the one below
-extern void sceCdCallback(void f(void));
-
-// common/include/libcdvd.h
-extern int sceCdInitEeCB(int cb_prio, void *stack_addr, int stack_size);
-
-// ee/include/sifdev.h
-// extern int sceFsReset(void);         
-
-// ee/include/sifrpc.h
-//extern void sceSifInitRpc(u_int mode);
-
-// ee/include/sifdev.h
-// extern void sceSifLoadFileReset(void);
-
-// ee/include/sifdev.h
-// extern int sceSifSyncIop(void);
 
 // total size: 0x10
 typedef struct shCdWorkT {

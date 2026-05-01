@@ -1,4 +1,8 @@
 #include "Multi_thr/filesys/sh_cdvd.h"
+#include "libcdvd.h"
+#include "eekernel.h"
+#include "sifdev.h"
+#include "sifrpc.h"
 
 static int WaitExec(void);
 static int SignalExec(void);
@@ -52,10 +56,10 @@ static int ___shCdInit(int initmode /* r16 */) {
 }
 
 int shCdInit(int initmode /* r16 */, int mmode /* r17 */) {
-    signed int ret; // r16
+    int ret; // r16
     WaitExec();
     ret = ___shCdInit(initmode);
-    if (ret != 0) {
+    if (ret) {
         ret = mmode;
         ___shCdMmode(mmode);
     }
