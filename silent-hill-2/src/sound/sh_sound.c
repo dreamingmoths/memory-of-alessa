@@ -2,6 +2,7 @@
 #include "sound/sh_sd_call.h"
 #include "DBG/dbflag.h"
 #include "SH2_common/sh_vu0.h" //we need to find shQzero proper signature
+#include "debug.h"
 
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
@@ -11,7 +12,7 @@ void SeWait(int wait /* r17 */) {
 
     if (dbFlag(1) == 0) {
         do {
-            verbose(4, "sh_sound.c:150> >>>>+++\n");
+            VERBOSE_ON_LINE(150, 4, ">>>>+++\n");
             c = wait;
             while (c > 0) {
                 if (shSdStat() == 0) {
@@ -22,7 +23,7 @@ void SeWait(int wait /* r17 */) {
                 shSdVSync();
             }
         } while (shSdStat() != 0);
-        verbose(4, "sh_sound.c:160> <<<<%d", c);
+        VERBOSE_ON_LINE(160, 4, "<<<<%d", c);
     }
 }
 
@@ -32,15 +33,16 @@ void SeForceWait(void) {
 
 void SeCallInit(int sect /* r18 */, int mmode /* r17 */, char* path /* r16 */) {
     if (dbFlag(1) == 0) {
-        verbose(2, "sh_sound.c:182> ==========1\n");
-        verbose(2, "sh_sound.c:184> sector: %d\n", sect);
+        VERBOSE_ON_LINE(182, 2, "==========1\n");
+
+        VERBOSE_ON_LINE(184, 2, "sector: %d\n", sect);
         if (path != 0) {
             sd_setpath(path);
         }
         shSdInit();
         shSdCall(0x3E8, sect, mmode, 0);
         shSdCall(0x411, 0, 0, 0);
-        verbose(2, "sh_sound.c:194> ==========2\n");
+        VERBOSE_ON_LINE(194, 2, "==========2\n");
         shSdStat();
         SeForceWait();
     }
