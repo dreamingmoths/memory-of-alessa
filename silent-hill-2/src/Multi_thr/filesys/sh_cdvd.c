@@ -8,7 +8,7 @@ static int ___shCdMmode(int mmode /* r16 */);
 static int ___shCdInit(int initmode /* r16 */);
 
 static int WaitExec(void)  {
-    int ret; // r2 how is this used?
+    int ret;
     if (shCdWork.exec_sid != -1) {
         WaitSema(shCdWork.exec_sid);
     } else {
@@ -24,13 +24,15 @@ static int SignalExec(void) {
 
 
 static int WaitCmd(void) {
-    int ret; // r2 how is this used?
+    int ret;
     if (shCdWork.cmd_sid != -1) {
-        WaitSema(shCdWork.cmd_sid);
+        ret = WaitSema(shCdWork.cmd_sid);
     } else {
-        shCdWork.cmd_sid = CreateSema2(0, 1, 0);
+        ret = CreateSema2(0, 1, 0);
+        shCdWork.cmd_sid = ret;
     }
     cmd_cnt++;
+    return ret;
 }
 
 static int SignalCmd(void) {
@@ -70,10 +72,11 @@ int shCdMmode(int mmode /* r16 */) {
 }
 
 int shCdInitR(int initmode /* r17 */, int mmode /* r16 */) {
-    int ret; // r2 how is this used????
+    int ret;
     do {
-
-    } while (shCdInit(initmode, mmode) == 0);
+        ret = shCdInit(initmode, mmode);
+    } while (!ret);
+    return ret;
 }
 
 void shCdCallbackFunc(void) {
