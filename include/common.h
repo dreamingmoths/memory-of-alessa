@@ -22,6 +22,7 @@ typedef signed char s_char;
 
 #define NULL 0
 #define PI 3.1415927f
+#define MAX_FLOAT 3.4028235e38f
 #define QUARTER_TURN 1.5707964f
 #define RADIANS_PER_DEGREE (PI / 180.0f)
 #define TO_RAD(x) RADIANS_PER_DEGREE * (x)
