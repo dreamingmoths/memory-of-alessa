@@ -15,6 +15,7 @@ typedef struct
 
 int CreateSema(SemaParam *param);
 int SignalSema(int);
+int iSignalSema(int);
 int WaitSema(int);
 int DeleteSema(int);
 
