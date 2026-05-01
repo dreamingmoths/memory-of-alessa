@@ -1,6 +1,28 @@
-#include "common.h"
+#include "sh2_common.h"
+#include "Fog/fog.h"
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogInit);
+extern FOG_WORK fwork; // size: 0x15E90, address: 0x56B6D0
+extern FOG_PACK_WORK pwork; // size: 0x19010, address: 0x5526C0
+extern FOG_WORK2 fwork2; // size: 0x58, address: 0x1202E70
+
+extern /* static */ FOG_ASM_DATA1 fog_asm_data1; // size: 0x70, address: 0x2AB400
+extern /* static */ FOG_ASM_DATA2 fog_asm_data2; // size: 0x70, address: 0x2AB470
+extern /* static */ FOG_ASM_DATA_P fog_asm_data_p; // size: 0x20, address: 0x2AB4E0
+extern /* static */ FOG_ASM_DATA3 fog_asm_data3; // size: 0x10, address: 0x2AB500
+
+void fogInit(void) {
+    shQzero(&fwork, sizeof fwork);
+    shQzero(&fwork2, sizeof fwork2);
+    if (!pwork.pk_env) {
+        fog_set_defpacket();
+    }
+    fog_asm_data_p.packet = UNCACHED(&pwork);
+    fogSetAreaEnvironment();
+    fogSetCollision();
+    fogSetColor(0x80, 0x80, 0x80, 0x80);
+    fogInitScreen();
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_set_defpacket);
 
