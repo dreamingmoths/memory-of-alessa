@@ -1,6 +1,20 @@
 #include "common.h"
+#include "Fog/fog.h"
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogInit);
+extern FOG_WORK fwork;
+extern FOG_PACK_WORK pwork;
+
+extern /* static */ FOG_ASM_DATA_P fog_asm_data_p; // size: 0x20, address: 0x2AB4E0
+
+void fogInit(void) {
+    shQzero(&fwork, sizeof fwork);
+    func_001E6B90();
+    fog_asm_data_p.packet = UNCACHED(&pwork);
+    fogSetColor(0x80, 0x80, 0x80, 0x80);
+    func_001EB090();
+    func_001E74F0();
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001E6B90);
 

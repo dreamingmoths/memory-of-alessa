@@ -23,4 +23,6 @@ float shSinF(float);
 
 float shRandF(void);
 
+void shQzero(void*, int);
+
 #endif // SH_VU0_H

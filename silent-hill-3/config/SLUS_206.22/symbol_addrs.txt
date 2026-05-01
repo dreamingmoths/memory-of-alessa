@@ -305,7 +305,9 @@ fogGetObj = 0x001e8540;
 fogSetColor = 0x001ea440;
 fogInit = 0x001e6b20;
 fog_load_objdata = 0x001e8c30;
-
+fwork = 0x1F04390; // size:0x5e90
+pwork = 0x1EEB380;
+fog_asm_data_p = 0x0036B1E0;
 
 // ...
 sh3_CharacterDrawOne = 0x001d13d0;
