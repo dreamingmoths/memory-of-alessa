@@ -31,7 +31,7 @@ void shCreateNormal(void);
 void shSetMiniMaxN(void);
 char shScreenClipI(int* v0);
 char shScreenClipF(float* v0);
-void shQzero(void);
+void shQzero(void*, int);
 void shFill(void);
 void shMulMatrix(float m0[4], float m1[4], float m2[4]);
 

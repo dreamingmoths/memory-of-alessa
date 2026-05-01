@@ -27,4 +27,11 @@ do { \
     } \
 } while (0);
 
-#endif
+#define VERBOSE(level, ...) do { \
+    verbose(level, __FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__); \
+} while (0);
+#define VERBOSE_ON_LINE(line, level, ...) do { \
+    verbose(level, __FILE__ ":" #line "> " __VA_ARGS__); \
+} while (0);
+
+#endif // SH_DEBUG_H
