@@ -58,7 +58,7 @@ INCLUDE_ASM("asm/nonmatchings/SH2_common/sh_vu0", shSway1f);
 
 INCLUDE_ASM("asm/nonmatchings/SH2_common/sh_vu0", shSway1f_asm);
 
-asm void shCreateNormal(void) {
+asm void shCreateNormal(register float* out, register float* vx, register float* vy, register float* fz) {
 	lqc2    	vf5, 0(a1)
 	lqc2    	vf6, 0(a3)
 	lqc2    	vf7, 0(a2)

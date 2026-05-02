@@ -98,14 +98,21 @@ typedef struct
     float w;
 } __attribute__((aligned(16))) Vector4;
 
-inline void vec_copy(void* dst, void* src) {
+static inline void vec_copy(void* dst, void* src) {
+    asm ("\
+         lq t7, 0(%1)\n\
+         sq t7, 0(%0)"
+    : "+r"(dst), "+r"(src) :: "t7");
+}
+
+static inline void volatile_vec_copy(void* dst, void* src) {
     asm volatile ("\
          lq t7, 0(%1)\n\
          sq t7, 0(%0)"
     : "=r"(dst): "r"(src): "t7");
 }
 
-inline void vec_add(void* x, void* y, void* out) {
+static inline void vec_add(void* x, void* y, void* out) {
     asm ("\
         lqc2 vf4, 0(%0)\n\
         lqc2 vf5, 0(%1)\n\
@@ -114,7 +121,7 @@ inline void vec_add(void* x, void* y, void* out) {
     : "+r"(x), "+r"(y), "+r"(out));
 }
 
-inline void vec_sub(void* x, void* y, void* out) {
+static inline void vec_sub(void* x, void* y, void* out) {
     asm ("\
         lqc2 vf4, 0(%0)\n\
         lqc2 vf5, 0(%1)\n\
@@ -123,8 +130,8 @@ inline void vec_sub(void* x, void* y, void* out) {
     : "+r"(x), "+r"(y), "+r"(out));
 }
 
-inline void vec_scale(float s, void* v, void* out) {
-    asm ("mfc1 t7, %1\n\
+static inline void vec_scale(float s, void* v, void* out) {
+    asm ("mfc1 t7, %1\n
           lqc2 vf4, 0(%0)\n\
           qmtc2 t7, vf5\n\
           vmulx.xyzw vf4, vf4, vf5x\n\
@@ -132,17 +139,17 @@ inline void vec_scale(float s, void* v, void* out) {
     : "+r"(v), "+f"(s), "+r"(out) :: "t7");
 }
 
-inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
+static inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
 
-inline float float_min(float x, float y) {
+static inline float float_min(float x, float y) {
     asm("min.s %0, %0, %1" : "+f"(x) :  "f"(y) : ); return x;
 }
 
-inline float float_max(float x, float y) {
+static inline float float_max(float x, float y) {
     asm("max.s %0, %0, %1" : "+f"(x) : "f"(y) : ); return x;
 }
 
-inline void mat_copy(void *dst, void *src) {
+static inline void mat_copy(void *dst, void *src) {
     asm volatile ("\
         lq $t6, 0(%1)\n\
         lq $t7, 0x10(%1)\n\
