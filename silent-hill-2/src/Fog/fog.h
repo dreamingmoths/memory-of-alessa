@@ -245,7 +245,7 @@ void fogInitParticle(void);
 
 void fog_init_part_sub(struct FOG_PART_DATA* pd);
 
-void fog_part_newpos(void);
+void fog_part_newpos(struct FOG_PART_DATA* pd);
 
 void fogResetWall(void);
 

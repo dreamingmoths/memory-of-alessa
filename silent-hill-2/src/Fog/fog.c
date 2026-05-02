@@ -239,30 +239,139 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_view_screen_fog);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetColor);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetPartNum);
+/* sh2+3 shared func */
+#define PART_MAX 0x2BC
+#line 3448
+void fogSetPartNum(int PartNum) {
+    if (PartNum <= 0) {
+        fwork.PartNum = 0;
+        return;
+    }
+    if (PART_MAX < PartNum) PartNum = PART_MAX;
+    if (fwork.PartNum < PartNum) {
+        int i;
+        for (i = fwork.PartNum; i < PartNum; i++) {
+            fog_part_newpos(&fwork.Part[i]);
+        }
+    }
+    fwork.PartNum = PartNum;
+    fog_asm_data1.gridrate = fwork.GridRate / PartNum;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetProjection);
+void fogSetProjection(float Projection) {
+    fwork.Projection = Projection;
+    fog_asm_data2.part_size_proj2 = fwork.PartSize * Projection;
+    fog_asm_data2.part_size_proj = fwork.PartSize * Projection;
+    fog_asm_data2.proj = Projection;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetFloorY);
+void fogSetFloorY(float FloorY) {
+    fwork.FloorY = FloorY;
+    fog_asm_data2.floor_y = FloorY;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetWorldScreenM);
+void fogSetWorldScreenM(void* WorldScreenM) {
+    mat_copy(fwork.WorldScreenM, WorldScreenM);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetWorldViewM);
+void fogSetWorldViewM(void* WorldViewM) {
+    mat_copy_3x3(fwork.WorldViewM, WorldViewM);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetWorldPosV);
+void fogSetWorldPosV(void* WorldPosV) {
+    if (!(fwork.Flag & 0x40)) {
+        vec_copy(fwork.WorldPosV, WorldPosV);
+    }
+}
+static inline void vec_copy_reverse(void* src, void* dst) {
+    asm ("\
+         lq t7, 0(%1)\n\
+         sq t7, 0(%0)"
+    : "+r"(dst), "+r"(src) :: "t7");
+}
+void fogSetStayPos(void* WorldPosV) {
+    fwork.Flag |= 0x40;
+    vec_copy_reverse(WorldPosV, fwork.WorldPosV);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetStayPos);
+void fogResetStayPos(void) {
+    fwork.Flag &= ~0x40;
+} 
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetStayPos);
+static inline void vec_copy_vu0(void* dst, void* src) {
+    asm ("\
+         lqc2 vf4, 0(%1)\n\
+         vmove.w vf4, vf0\n\
+         sqc2 vf4, 0(%0)"
+    : "+r"(dst), "+r"(src));
+}
+void fogSetStayPoint(void* StayPoint) {
+    vec_copy_vu0(fwork.StayPoint, StayPoint);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetStayPoint);
+void fogResetStayPoint(void) {
+    vec_zero(fwork.StayPoint);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetStayPoint);
+void fogSetCameraPosV(void* CameraPosV) {
+    vec_copy(fwork.CameraPosV, CameraPosV);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetCameraPosV);
+static inline float vec3_length(void* v) {
+    float d;
+    asm("lwc1    %1,0(%0)\n\
+        lwc1     f8,4(%0)\n\
+        lwc1     f9,8(%0)\n\
+        mula.s   %1,%1\n\
+        madda.s  f8,f8\n\
+        madd.s   %1,f9,f9\n\
+        sqrt.s   %1, %1"
+    : "+r"(v), "+f"(d) :: "f8", "f9");
+    return d;
+}
+static inline float float_abs(float x) {
+    asm("abs.s %0, %0" : "+f"(x)); return x;
+}
+inline void vec_sub_reverse(void* y, void* x, void* out) {
+    asm ("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vsub.xyzw vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+    : "+r"(x), "+r"(y), "+r"(out));
+}
+void fogSetLocalPosV(void) {
+    float * FVector = (float*) (SCRATCHPAD_START | 0x3ff0); // r2
+    float * TVector = (float*) (SCRATCHPAD_START | 0x3fe0); // r2
+    float d, dx;
+    vec_sub_reverse(fwork.CameraPosV, fwork.WorldPosV, FVector);
+    d = vec3_length(FVector);
+    if (fwork.Flag & 0x20) {
+        vec_copy(TVector, fwork.LocalPosV);
+        dx = FVector[0] / float_abs(FVector[2]);
+    }
+    if (d > 2000.0f) {
+        vec_scale(2000.0f / d, FVector, FVector);
+        vec_add(fwork.CameraPosV, FVector, fwork.LocalPosV);
+    } else {
+        vec_copy_reverse(fwork.WorldPosV, fwork.LocalPosV);
+        if (fwork.Double != 0) fwork.LocalPosV[1] = fwork.FloorY;
+    }
+    if (fwork.Flag & 0x20) {
+        float mp = fwork.MaxPos;
+        dx *= TVector[2] - fwork.WorldPosV[2];
+        if (dx > mp) dx = mp;
+        if (dx < -mp) dx = -mp;
+        fwork.LocalPosV[0] += dx;
+        fwork.LocalPosV[1] = TVector[1];
+        fwork.LocalPosV[2] = TVector[2];
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetLocalPosV);
+void fogSetSpeedLevel(float SpeedLevel) {
+    fwork.SpeedLevel = SpeedLevel;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetSpeedLevel);
-
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogTex0Adr);
+u_long* fogTex0Adr(void) {
+    return pwork.pk_tex0;
+}
