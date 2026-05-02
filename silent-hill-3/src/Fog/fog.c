@@ -224,29 +224,160 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_view_screen_fog);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetColor);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetPartNum);
+#define PART_MAX 0x2BC
+#line 3448
+void fogSetPartNum(int PartNum) {
+    if (PartNum <= 0) {
+        fwork.PartNum = 0;
+        return;
+    }
+    if (PART_MAX < PartNum) PartNum = PART_MAX;
+    if (fwork.PartNum < PartNum) {
+        int i;
+        for (i = fwork.PartNum; i < PartNum; i++) {
+            fog_part_newpos(&fwork.Part[i]);
+        }
+    }
+    fwork.PartNum = PartNum;
+    fog_asm_data1.gridrate = fwork.GridRate / PartNum;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetProjection);
+void fogSetProjection(float Projection) {
+    fwork.Projection = Projection;
+    fog_asm_data2.part_size_proj2 = fwork.PartSize * Projection;
+    fog_asm_data2.part_size_proj = fwork.PartSize * Projection;
+    fog_asm_data2.proj = Projection;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA580);
+void fogSetAspectRatio(float w, float h) {
+    float f = w * (fwork.PartSize * fwork.Projection);
+    fog_asm_data2.pixel_aspect = h / w;
+    fog_asm_data2.part_size_proj2 = f;
+    fog_asm_data2.part_size_proj = f;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA5C0);
+void fogSetFloorY(float FloorY) {
+    fwork.FloorY = FloorY;
+    fog_asm_data2.floor_y = FloorY;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA5E0);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA610);
+void fogSetWorldScreenM(void* WorldScreenM) {
+    mat_copy(fwork.WorldScreenM, WorldScreenM);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetWorldPosV);
+void fogSetWorldViewM(void* WorldViewM) {
+    mat_copy_3x3(fwork.WorldViewM, WorldViewM);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA670);
+void fogSetWorldPosV(void* WorldPosV) {
+    if (!(fwork.Flag & 0x40)) {
+        vec_copy(fwork.WorldPosV, WorldPosV);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA6A0);
+void fogSetStayPos(void* WorldPosV) {
+    fwork.Flag |= 0x40;
+    vec_copy(fwork.WorldPosV, WorldPosV);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA6C0);
+static inline void vec_copy_vu0(void* dst, void* src) {
+    asm ("\
+         lqc2 vf4, 0(%1)\n\
+         vmove.w vf4, vf0\n\
+         sqc2 vf4, 0(%0)"
+    : "+r"(dst), "+r"(src));
+}
+void fogSetStayPoint(void* StayPoint) {
+    vec_copy_vu0(fwork.StayPoint, StayPoint);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA6D0);
+void fogResetStayPoint(void) {
+    vec_zero(fwork.StayPoint);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetLocalPosV);
+void fogSetCameraPosV(void* CameraPosV) {
+    vec_copy(fwork.CameraPosV, CameraPosV);
+}
+
+static inline void vec_copy_reverse(void* src, void* dst) {
+    asm ("\
+         lq t7, 0(%1)\n\
+         sq t7, 0(%0)"
+    : "+r"(dst), "+r"(src) :: "t7");
+}
+static inline float vec3_length(void* v) {
+    float d;
+    asm("lwc1    %1,0(%0)\n\
+        lwc1     f8,4(%0)\n\
+        lwc1     f9,8(%0)\n\
+        mula.s   %1,%1;\n\
+        madda.s  f8,f8\n\
+        madd.s   %1,f9,f9\n\
+        sqrt.s   %1, %1"
+    : "+r"(v), "+f"(d) :: "f8", "f9");
+    return d;
+}
+static inline float float_abs(float x) {
+    asm("abs.s %0, %0" : "+f"(x)); return x;
+}
+inline void vec_sub_reverse(void* y, void* x, void* out) {
+    asm ("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vsub.xyzw vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+    : "+r"(x), "+r"(y), "+r"(out));
+}
+/**
+ * This function was refactored since the time of the SH2 proto:
+ * - FVector and TVector were moved onto the stack and copied into the
+ *   scratchpad at the end
+ * - More use of `sceVu0` functions instead of inlines
+ * - An additional flag is handled for setting LocalPosV.Z instead of just X
+ */
+void fogSetLocalPosV(void) {
+    sceVu0FVECTOR FVector;
+    sceVu0FVECTOR TVector;
+    float d, dx;
+    vec_sub_reverse(fwork.CameraPosV, fwork.WorldPosV, FVector);
+    d = vec3_length(FVector);
+    if (fwork.Flag & 0x20) {
+        vec_copy_reverse(fwork.LocalPosV, TVector);
+        dx = FVector[0] / float_abs(FVector[2]);
+    }
+    if (fwork.Flag & 0x800) {
+        vec_copy_reverse(fwork.LocalPosV, TVector);
+        dx = FVector[2] / float_abs(FVector[0]);
+    }
+    if (d > 2000.0f) {
+        sceVu0ScaleVector(FVector, FVector, 2000.0f / d);
+        sceVu0AddVector(fwork.LocalPosV, fwork.CameraPosV, FVector);
+    } else {
+        vec_copy_reverse(fwork.WorldPosV, fwork.LocalPosV);
+        if (fwork.Double != 0) fwork.LocalPosV[1] = fwork.FloorY;
+    }
+    if (fwork.Flag & 0x20) {
+        float mp = fwork.MaxPos;
+        dx *= TVector[2] - fwork.WorldPosV[2];
+        if (dx > mp) dx = mp;
+        if (dx < -mp) dx = -mp;
+        fwork.LocalPosV[0] += dx;
+        fwork.LocalPosV[1] = TVector[1];
+        fwork.LocalPosV[2] = TVector[2];
+    }
+    if (fwork.Flag & 0x800) {
+        float mp = fwork.MaxPos;
+        dx *= TVector[0] - fwork.WorldPosV[0];
+        if (dx > mp) dx = mp;
+        if (dx < -mp) dx = -mp;
+        fwork.LocalPosV[0] = TVector[0];
+        fwork.LocalPosV[1] = TVector[1];
+        fwork.LocalPosV[2] += dx;
+    }
+    sceVu0CopyVector((float*) (SCRATCHPAD_START | 0x3ff0), &FVector);
+    sceVu0CopyVector((float*) (SCRATCHPAD_START | 0x3fe0), &TVector);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001EA980);
 
