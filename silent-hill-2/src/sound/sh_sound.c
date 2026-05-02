@@ -8,6 +8,52 @@
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
 
+static int bgm_list[43][2] = {
+    { 0x0000, 0x0000 },
+    { 0x13C9, 0xC3C2 },
+    { 0x13B9, 0xC365 },
+    { 0x13CA, 0xC3C3 },
+    { 0x13A6, 0xC352 },
+    { 0x13CD, 0xC3C6 },
+    { 0x13BD, 0xC3B7 },
+    { 0x13A4, 0xC350 },
+    { 0x13B1, 0xC35D },
+    { 0x13BB, 0xC3B5 },
+    { 0x13BC, 0xC3B6 },
+    { 0x13CC, 0xC3C5 },
+    { 0x13D4, 0xC3CD },
+    { 0x13A7, 0xC353 },
+    { 0x13A8, 0xC354 },
+    { 0x13B5, 0xC361 },
+    { 0x13CE, 0xC3C7 },
+    { 0x13C5, 0xC3BF },
+    { 0x13D2, 0xC3CB },
+    { 0x13B3, 0xC35F },
+    { 0x13BF, 0xC3B9 },
+    { 0x13BA, 0xC3B4 },
+    { 0x13C0, 0xC3BA },
+    { 0x13B8, 0xC364 },
+    { 0x13C1, 0xC3BB },
+    { 0x13C4, 0xC3BE },
+    { 0x13C3, 0xC3BD },
+    { 0x13CB, 0xC3C4 },
+    { 0x13B2, 0xC35E },
+    { 0x13D6, 0xC3D0 },
+    { 0x13B7, 0xC363 },
+    { 0x13CF, 0xC3C8 },
+    { 0x13D5, 0xC3CE },
+    { 0x13B4, 0xC360 },
+    { 0x13C6, 0xC3C0 },
+    { 0x13C7, 0xC3CF },
+    { 0x13D0, 0xC3C9 },
+    { 0x13AC, 0xC358 },
+    { 0x13C2, 0xC3BC },
+    { 0x13D3, 0xC3CC },
+    { 0x13D1, 0xC3CA },
+    { 0x13C8, 0xC3C1 },
+    { 0x13A5, 0xC351 }
+};
+
 void SeWait(int wait /* r17 */) {
     int c; // r16
 
@@ -237,7 +283,29 @@ void SeStop(int sd_no /* r18 */) {
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeBgmChange);
 
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeBgmCall);
+void SeBgmCall(int bgm_no /* r2 */) {
+    int i; // r5
+    
+    if (bgm.current == bgm_list[bgm_no][1]) {
+        return;
+    }
+
+    bgm.next = bgm_list[bgm_no][1];
+    bgm.read = bgm_list[bgm_no][0];
+
+    for (i = 0; i < 7; i++) {
+        if (bgm.track[i].status != 0) {
+            if (bgm.track[i].status == 3) {
+                if (bgm.track[i].fade_out_type == 3) {
+                    bgm.track[i].fade_out_type = 1;
+                }
+            } else {
+                bgm.track[i].status = 3;
+                bgm.track[i].fade_out_type = 1;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeBgmManager);
 

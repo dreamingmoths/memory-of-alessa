@@ -112,6 +112,7 @@ int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float* pos /* r19 */,
 int Se3dPlayCheck(int sd_no /* r2 */);
 void SeStop(int sd_no /* r18 */);
 void SeBgmChange(void);
+void SeBgmCall(int bgm_no /* r2 */);
 void SeSoundLoad(void);
 void SeSoundEffect3dLoad(int data /* r16 */);
 void SeSoundEffectLoad(int data /* r16 */);
