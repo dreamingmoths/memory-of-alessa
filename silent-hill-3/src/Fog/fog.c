@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Fog/fog.h"
+#include "SH3_common/sh_vu0.h"
 
 extern FOG_WORK fwork;
 extern FOG_PACK_WORK pwork;
@@ -110,23 +111,94 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001E7520);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogChangeWind);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogInitParticle);
+void fogInitParticle(void) {
+    int i;
+    FOG_PART_DATA* pd = &fwork;
+    for (i = fwork.PartNum; i > 0; i--) {
+        fog_init_part_sub(pd++);
+    }
+    vec_zero(fwork.sc_degree);
+    fwork.sc_degree[2] = -1.0f;
+    fwork.sc_tdx = shRandF();
+    fwork.sc_tdy = shRandF();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_init_part_sub);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_part_newpos);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetWall);
+void fogResetWall(void) {
+    fwork.WallNum = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetWall);
+#define WALL_MAX 0xBC
+void fogSetWall(void* Vector) {
+    float (* wv)[4] = Vector;
+    FOG_WALL_DATA* wall = &fwork.Wall[fwork.WallNum++];
+    int i;
+    float cv[4];
+    fjAssert(fwork.WallNum <= WALL_MAX, "fog.c", 602);
+    shSetMiniMaxN(wall->min, wall->max, wv, 4);
+    wall->min[0] -= 10.0f;
+    wall->min[2] -= 10.0f;
+    wall->max[0] += 10.0f;
+    wall->max[2] += 10.0f;
+    wall->max[3] = 0.0f, wall->min[3] = 0.0f;
+    vec_zero(cv);
+    for (i = 0; i < 4; i++) {
+        vec_add(cv, wv[i], cv);
+    }
+    vec_scale(0.25, cv, &wall->v0);
+    shCreateNormal(wall->normal, wv[0], wv[1], wv[2]);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetObj);
+void fogResetObj(void) {
+    fwork.ObjMax = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetObj);
+#define OBJ_MAX 168
+void fogSetObj(u_long ID, void* Center, float Size) {
+    FOG_OBJ_DATA* od = fogGetObj(ID);
+    if (!od) {
+        fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 634);
+        od = &fwork.Obj[fwork.ObjMax++];
+    }
+    vec_copy(od->pos, Center);
+    vec_zero(od->mv);
+    od->pos[3] = Size;
+    od->mv[3] = fwork.EscapeRange;
+    od->rer = 1.0f / fwork.EscapeRange;
+    od->id = ID;
+    od->type = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001E8470);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogGetObj);
+void fogSetObj2(u_long ID, void* Center, float Size) {
+    FOG_OBJ_DATA* od = fogGetObj(ID);
+    if (!od) {
+        fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 685);
+        od = &fwork.Obj[fwork.ObjMax++];
+    }
+    vec_copy(od->pos, Center);
+    vec_zero(od->mv);
+    od->pos[3] = Size;
+    od->mv[3] = fwork.EscapeRange;
+    od->rer = 1.0f / fwork.EscapeRange;
+    od->id = ID;
+    od->type = 1;
+}
+
+FOG_OBJ_DATA* fogGetObj(u_long ID) {
+    FOG_OBJ_DATA* pObj = fwork.Obj;
+    int i;
+    for (i = fwork.ObjMax; i > 0; i--) {
+        if (pObj->id == ID) {
+            return pObj;
+        }
+        pObj++;
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogMoveParticle);
 

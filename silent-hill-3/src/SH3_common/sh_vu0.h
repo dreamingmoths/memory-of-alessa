@@ -25,4 +25,6 @@ float shRandF(void);
 
 void shQzero(void*, int);
 
+void shCreateNormal(float* out, float* vx, float* vy, float* fz);
+
 #endif // SH_VU0_H
