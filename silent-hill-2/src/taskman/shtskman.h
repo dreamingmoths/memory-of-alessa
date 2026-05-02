@@ -24,6 +24,6 @@ shTskTASK* shTSKSetTask(void (* func)(void *) /* r6 */, u_char num /* r2 */);
 void shTSKDelTask(shTskTASK* task);
 shTskTASK* shTSKSearchTaskWithAtr(int atr, shTskTASK* start, u_char num);
 
-shTskTASK* shTskTaskListTop[8];
+extern shTskTASK* shTskTaskListTop[8];
 
 #endif // SHTSKMAN_H

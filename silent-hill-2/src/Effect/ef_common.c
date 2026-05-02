@@ -6,6 +6,8 @@
 #include "Chacter/m3_play_event.h"
 #include "Multi_thr/dma/dma1cmd.h"
 #include "Effect/ef_stage.h"
+#include "Effect/ef_broken_glass.h"
+#include "Effect/ef_smoke.h"
 
 static void EFCTInitEffectTask(void);
 static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
@@ -93,15 +95,84 @@ static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind 
     InitEffectTexEnv(4);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetGunSmoke); //
+void EFCTSetGunSmoke(float* pos) {
+    return;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetGunSmoke); //
+static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */) {
+    EFCTTask* pTask; // r21
+    int i; // r16
+    u_short LayerNum; // r17
+    
+    LayerNum = GetEffectLayerNum(5);
+    for (i = 0; i < LayerNum; i++) {
+        pTask = EFCTEntryEffectTask(5);
+        if (pTask == NULL) {
+            if (!EFCTDeleteOldBloodDropTask()) {
+                return;
+            }
+            continue;
+        }
+        if (InitEffectObjectGunSmoke(pTask->pObj, i, Pos, wep_kind, light) == 0) {
+            EFCTCutEffectTask(pTask);
+            return;
+        }
+        pTask->pObj->LayerNum = LayerNum;
+    }
+    InitEffectTexEnv(5);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetDramaDemoAngelaPapa); // yes but unsure
+void EFCTSetDramaDemoAngelaPapa(void) {   
+    float tv_pos[4] = { 19799.402f, -290.5385f, 61208.95f, 1.0f };
+    float tv_dir[4] = { 0.491818f, -0.790657f, -0.36466f, 0.0f };
+    float chara_pos[2][4] = {
+        { 0.0f, 0.0f, 0.0f, 1.0f },
+        { 0.0f, 0.0f, 0.0f, 0.0f }
+    };
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetBrokenGlass); //
+    EFCTSetBrokenGlass(tv_pos, tv_dir, chara_pos);
+    tv_pos[1] += 50.0f;
+    EFCTSetSmoke(tv_pos, 2);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetSmoke); //
+void EFCTSetBrokenGlass(float* parent_pos /* r20 */, float* parent_direction /* r19 */, float (* chara_pos)[4] /* r18 */) {   
+    EFCTTask* pTask; // r21    
+    int i; // r16
+    u_short LayerNum; // r17
+
+    LayerNum = GetEffectLayerNum(6);
+    for (i = 0; i < LayerNum; i++) {
+        pTask = EFCTEntryEffectTask(6);
+        if (pTask == NULL) {
+            return;
+        }
+        if (InitEffectObjectBrokenGlass(pTask->pObj, i, parent_pos, parent_direction, chara_pos) == 0) {
+            EFCTCutEffectTask(pTask);
+            return;
+        }
+        pTask->pObj->LayerNum = LayerNum;
+    }
+    InitEffectTexEnv(6);
+}
+
+void EFCTSetSmoke(float* pos /* r19 */, u_char kind /* r18 */) {
+    EFCTTask* pTask; // r16
+    int i; // r17
+    u_short LayerNum = 1; // r2 useless?
+
+    for (i = 0; i < LayerNum; i++) {
+        pTask = EFCTEntryEffectTask(8);
+        if (pTask == NULL) {
+            return;
+        }
+        if (InitEffectObjectSmoke(pTask->pObj, i, pos, kind) == 0) {
+            EFCTCutEffectTask(pTask);
+            return;
+        }
+        pTask->pObj->LayerNum = LayerNum;
+    }
+    InitEffectTexEnv(8);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", GetEffectLayerNum);
 
