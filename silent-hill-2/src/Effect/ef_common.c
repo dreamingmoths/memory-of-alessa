@@ -123,9 +123,12 @@ static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char lig
 }
 
 void EFCTSetDramaDemoAngelaPapa(void) {   
-    float tv_pos[4] = {19799.402f, -290.5385f, 61208.95f, 1.0f};
-    float tv_dir[4] = {0.491818f, -0.790657f, -0.36466f, 0.0f};
-    float chara_pos[2][4]= {{0.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 0.0f, 0.0f}};
+    float tv_pos[4] = { 19799.402f, -290.5385f, 61208.95f, 1.0f };
+    float tv_dir[4] = { 0.491818f, -0.790657f, -0.36466f, 0.0f };
+    float chara_pos[2][4] = {
+        { 0.0f, 0.0f, 0.0f, 1.0f },
+        { 0.0f, 0.0f, 0.0f, 0.0f }
+    };
 
     EFCTSetBrokenGlass(tv_pos, tv_dir, chara_pos);
     tv_pos[1] += 50.0f;
