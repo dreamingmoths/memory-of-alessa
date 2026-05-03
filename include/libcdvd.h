@@ -68,5 +68,6 @@ int sceCdStInit(u_int bufmax, u_int bankmax, u_int iop_bufaddr);
 int sceCdSearchFile(sceCdlFILE* fp, const char* name);
 int sceCdStStart(u_int lbn, sceCdRMode *mode);
 int sceCdGetDiskType(void);
+int sceCdTrayReq(int param, u_int* traychk);
 
 #endif // SCE_LIBCDVD_H
