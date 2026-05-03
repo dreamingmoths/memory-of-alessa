@@ -237,7 +237,10 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogMakePacket);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_view_screen_fog);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetColor);
+#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
+void fogSetColor(u_char r, u_char g, u_char b, u_char a) {
+    fwork.Color = COLOR_RGBA(r, g, b, a);
+}
 
 /* sh2+3 shared func */
 #define PART_MAX 0x2BC
