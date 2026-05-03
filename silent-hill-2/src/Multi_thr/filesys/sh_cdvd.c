@@ -173,7 +173,7 @@ int shSifLoadModuleR(char* module /* r20 */, int args /* r19 */, char* argp /* r
     int i; // r17
     while ((ret = shSifLoadModule(module, args, argp)) < 0) {
         if (count-- < 0) {
-            VERBOSE(1, "sh_cdvd.c:298> %s: can't load iop");
+            VERBOSE_ON_LINE(298, 1, "%s: can't load iop");
             count = 0x14;
         }
         for (i = 0x3c; i > 0; i--) {
@@ -201,7 +201,7 @@ int shSifRebootIopR(char* imgfile /* r18 */) {
     ret = 0x14;
     while (!shSifRebootIop(imgfile)) {
         if (ret-- < 0) {
-            VERBOSE(1, "sh_cdvd.c:329> %s: can't reboot");
+            VERBOSE_ON_LINE(329, 1, "%s: can't reboot");
             ret = 0x14;
         }
         for (i = 0x3C; i > 0; i--) {
@@ -211,7 +211,7 @@ int shSifRebootIopR(char* imgfile /* r18 */) {
     ret = 5;
     while (!shSifSyncIop()) {
         if (ret-- < 0) {
-            VERBOSE(1, "sh_cdvd.c:340> %s: can't sync iop");
+            VERBOSE_ON_LINE(340, 1, "%s: can't sync iop");
             ret = 5;
         }
         for (i = 0x3C; i > 0; i--) {
@@ -301,7 +301,7 @@ int shCdSearchFile(sceCdlFILE* file /* r2 */, char* fullpath /* r2 */) {
     
     ret = ___shCdSearchFile(file, fullpath);
     hcnt1 = *T3_COUNT;
-    VERBOSE(2, "sh_cdvd.c:639> cd search-file time:%d\n", (u_short)(hcnt1 - hcnt0));
+    VERBOSE_ON_LINE(639, 2, "cd search-file time:%d\n", (u_short) (hcnt1 - hcnt0));
     return ret;
 }
 
@@ -325,7 +325,7 @@ INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdDiskReady);
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", ___shCdDiskReady);
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetDiskType);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetDiskType); // kinda
 
 int shCdTrayReq(int mode /* r17 */, u_int* traycnt /* r16 */) {
     int ret; // r16
@@ -339,15 +339,15 @@ int shCdTrayReq(int mode /* r17 */, u_int* traycnt /* r16 */) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetError);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetError); //
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdStatus);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdStatus); //
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSync);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSync); //
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdStart);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdStart); //
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdEnd);
+INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdEnd); //
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", WaitHd);
 
