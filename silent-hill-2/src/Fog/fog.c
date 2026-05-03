@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "shared/Fog/fog.h"
 #include "Fog/fog.h"
 #include "SH2_common/sh_vu0.h"
 #include "Font/fj_man.h"
@@ -143,7 +144,6 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_part_newpos);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetWall);
 
-#define WALL_MAX 0xBC
 void fogSetWall(void* Vector) {
     float (* wv)[4] = Vector; // r16
     FOG_WALL_DATA* wall = &fwork.Wall[fwork.WallNum++]; // r17
@@ -166,7 +166,6 @@ void fogSetWall(void* Vector) {
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetObj);
 
-#define OBJ_MAX 168
 void fogSetObj(u_long ID, void* Center, float Size) {
     FOG_OBJ_DATA* od = fogGetObj(ID);;
     if (!od) {
@@ -237,13 +236,11 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogMakePacket);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_view_screen_fog);
 
-#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 void fogSetColor(u_char r, u_char g, u_char b, u_char a) {
     fwork.Color = COLOR_RGBA(r, g, b, a);
 }
 
 /* sh2+3 shared func */
-#define PART_MAX 0x2BC
 #line 3448
 void fogSetPartNum(int PartNum) {
     if (PartNum <= 0) {
@@ -286,12 +283,7 @@ void fogSetWorldPosV(void* WorldPosV) {
         vec_copy(fwork.WorldPosV, WorldPosV);
     }
 }
-static inline void vec_copy_reverse(void* src, void* dst) {
-    asm ("\
-         lq t7, 0(%1)\n\
-         sq t7, 0(%0)"
-    : "+r"(dst), "+r"(src) :: "t7");
-}
+
 void fogSetStayPos(void* WorldPosV) {
     fwork.Flag |= 0x40;
     vec_copy_reverse(WorldPosV, fwork.WorldPosV);
@@ -301,13 +293,6 @@ void fogResetStayPos(void) {
     fwork.Flag &= ~0x40;
 } 
 
-static inline void vec_copy_vu0(void* dst, void* src) {
-    asm ("\
-         lqc2 vf4, 0(%1)\n\
-         vmove.w vf4, vf0\n\
-         sqc2 vf4, 0(%0)"
-    : "+r"(dst), "+r"(src));
-}
 void fogSetStayPoint(void* StayPoint) {
     vec_copy_vu0(fwork.StayPoint, StayPoint);
 }
@@ -320,29 +305,6 @@ void fogSetCameraPosV(void* CameraPosV) {
     vec_copy(fwork.CameraPosV, CameraPosV);
 }
 
-static inline float vec3_length(void* v) {
-    float d;
-    asm("lwc1    %1,0(%0)\n\
-        lwc1     f8,4(%0)\n\
-        lwc1     f9,8(%0)\n\
-        mula.s   %1,%1\n\
-        madda.s  f8,f8\n\
-        madd.s   %1,f9,f9\n\
-        sqrt.s   %1, %1"
-    : "+r"(v), "+f"(d) :: "f8", "f9");
-    return d;
-}
-static inline float float_abs(float x) {
-    asm("abs.s %0, %0" : "+f"(x)); return x;
-}
-inline void vec_sub_reverse(void* y, void* x, void* out) {
-    asm ("\
-        lqc2 vf4, 0(%0)\n\
-        lqc2 vf5, 0(%1)\n\
-        vsub.xyzw vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-    : "+r"(x), "+r"(y), "+r"(out));
-}
 void fogSetLocalPosV(void) {
     float * FVector = (float*) (SCRATCHPAD_START | 0x3ff0); // r2
     float * TVector = (float*) (SCRATCHPAD_START | 0x3fe0); // r2
