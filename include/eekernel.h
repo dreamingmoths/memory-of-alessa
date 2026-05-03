@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#define ExitHandler()           __asm__ volatile("sync.l; ei")
+
 typedef struct
 {
     int currentCount;
@@ -18,5 +20,6 @@ int SignalSema(int);
 int iSignalSema(int);
 int WaitSema(int);
 int DeleteSema(int);
+int SetAlarm(u_short, void (*)(int, u_short, void *), void *);
 
 #endif
