@@ -56,15 +56,17 @@ typedef struct
 
 int sceCdInit(int init_mode);
 int sceCdMmode(int media);
-int sceCdReadClock(sceCdCLOCK *rtc);
-int *sceCdCallback(void (*func)(int));
-int sceCdStRead(u_int size, u_int *buf, u_int mode, u_int *err);
-int sceCdInitEeCB(int cb_prio, void *stack_addr, int stack_size);
+int sceCdRead(u_int lbn, u_int sectors, void* buf , sceCdRMode* mode);
+int sceCdReadClock(sceCdCLOCK* rtc);
+int* sceCdCallback(void (*func)(int));
+int sceCdStRead(u_int size, u_int* buf, u_int mode, u_int* err);
+int sceCdInitEeCB(int cb_prio, void* stack_addr, int stack_size);
 int sceCdStStop(void);
 
 int sceCdDiskReady(int mode);
 int sceCdStInit(u_int bufmax, u_int bankmax, u_int iop_bufaddr);
-int sceCdSearchFile(sceCdlFILE *fp, const char *name);
+int sceCdSearchFile(sceCdlFILE* fp, const char* name);
 int sceCdStStart(u_int lbn, sceCdRMode *mode);
+int sceCdGetDiskType(void);
 
 #endif // SCE_LIBCDVD_H
