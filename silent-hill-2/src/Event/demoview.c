@@ -59,14 +59,14 @@ void SubtitlesManager(void) {
                     return;
                 }
                 shSdCall(0x3F7, 0, 0, 0);
-                UNSET_BIT(demo_status, 8);
+                UNSET_BIT(demo_status, 3);
             }
             sbt_timer += 30.0f * shGetDT();
             if (playing.subtitles) {
                 if ((int) sbt_timer > sbt_msg_time->end) {
                     fontClear();
                     sbt_msg_time++;
-                    UNSET_BIT(demo_status, 8);
+                    UNSET_BIT(demo_status, 3);
                 }
                 if (((int) sbt_timer > sbt_msg_time->start) && !GET_BIT(demo_status, 3)) {
                     fontMessageNum(msg_buffer, sbt_msg_no);

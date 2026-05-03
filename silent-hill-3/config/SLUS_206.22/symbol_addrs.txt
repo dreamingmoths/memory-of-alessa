@@ -328,8 +328,25 @@ fogSetCollision = 0x001eb090;
 // spack.c
 spkInit = 0x00138C90;
 
+// shadow
+shadow_micro_init = 0x00177300;
+drop_shadow_set_micro_params = 0x00177c10;
+
+// mc
+mc_0x00322B10 = 0x00322b10;
+
 // sh3dt.c
 shGetDF = 0x0019A910;
+
+// ps2_scf.c
+ps2ScfDefault = 0x003C3EF8; // size:8 visibility:local
+excl_sid = 0x00387B70; // type:s32
+ps2ScfInit = 0x0020EAD0;
+ps2ScfGetAspect = 0x0020EB20;
+ps2ScfGetSpdif = 0x0020EB70;
+ps2ScfGetLanguage = 0x0020EBC0;
+ps2ScfGetTimeZone = 0x0020EC50;
+ps2ScfGetLocalTimefromRTC = 0x0020ED90;
 
 // ...
 sh3_CharacterDrawOne = 0x001d13d0;

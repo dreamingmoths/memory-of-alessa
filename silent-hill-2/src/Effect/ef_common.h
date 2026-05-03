@@ -64,10 +64,12 @@ void EFCTSetPassingTimePerFrame(float time /* r29 */);
 void EFCTKickPacket(void);
 
 void EFCTSetGunFire(float* pos /* r19 */, float* vec /* r18 */);
-
+void EFCTSetBrokenGlass(float * parent_pos /* r20 */, float* parent_direction /* r19 */, float (* chara_pos)[4] /* r18 */);
+void EFCTSetSmoke(float* pos /* r19 */, u_char kind /* r18 */);
+void EFCTSetDramaDemoAngelaPapa(void);
 void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */);
 
-void EFCTSetGunSmoke(float* pos);
+void EFCTSetGunSmoke(float* pos); // there is no argument in the dwarf
 void EFCTResetRGBA(int* rgba /* r2 */, EFCTVertexData* pVertex /* r2 */);
 float EFCTGetPassingTimePerFrame();
 void ClipEffectObject2(EFCTObject* pObj /* r18 */);

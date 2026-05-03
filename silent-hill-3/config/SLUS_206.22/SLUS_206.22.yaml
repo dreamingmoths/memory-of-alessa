@@ -58,6 +58,8 @@ segments:
       - [0x05e0f0, asm,     text_0x05e0f0]
       - [0x06fc20, asm,     Event/picture]
       - [0x070990, asm,     text_0x070990]
+      - [0x077880, c,       sh3shd/sh3shd_shadow_vu1_packet]
+      - [0x0782b0, asm,     text_0x0782b0]
       - [0x09afb0, c,       SH3_common/sh_vu0]
       - [0x09b9d0, asm,     text_0x09b9d0]
       - [0x09ec40, c,       Collision/cl_calc]
@@ -85,6 +87,8 @@ segments:
       - [0x0eca00, asm,     text_0x1ec480]
       - [0x0fdfa0, asm,     cri/cri_0] 
       - [0x10eff0, asm,     text_0x10eff0]
+      - [0x10f050, c,       Multi_thr/scf/ps2_scf]
+      - [0x10f350, asm,     text_0x10f350]
       - [0x110b40, c,       Effect2/hh_class_blood_01]
       - [0x111420, asm,     Effect2/hh_class_1]
       - [0x111c10, asm,     Effect2/hh_class_2]
@@ -108,19 +112,27 @@ segments:
       - [0x15dcd0, asm,     Enemy/en_nse]        # NURSE
       - [0x15e760, asm,     text_0x15e760]
       - [0x166ad0, asm,     Enemy/en_deb]        # INSANE_CANCER
-      - [0x167530, asm,     text_0x167530]
+      - [0x170a20, asm,     text_0x170a20]
       - [0x187340, asm,     Enemy/en_apb]        # MISSIONARY
       - [0x1876c0, asm,     text_0x1876c0]
       - [0x191480, asm,     Enemy/en_fly]        # PENDULUM
       - [0x19b1f0, asm,     text_0x19b1f0]
+      - [0x1a9e40, asm,     Item/item_menu_select]
+      - [0x1b2ba0, asm,     text_0x1b2ba0]
+      - [0x1b41d0, asm,     movie/pss_audiodec]
+      - [0x1b4a70, asm,     movie/pss_cscvu1]
+      - [0x1b5ae0, asm,     movie/pss_disp]
+      - [0x1b6b30, asm,     movie/pss_main]
+      - [0x1b7ad0, asm,     movie/pss_read]
+      - [0x1b7cf0, asm,     movie/pss_readbuf]
+      - [0x1b7e90, asm,     movie/pss_strfile]
       - [0x1b7fb0, c,       movie/pss_vibuf]
       - [0x1b8f50, c,       movie/pss_videodec]
       - [0x1b99a0, c,       movie/pss_vobuf]
       - [0x1b9c20, asm,     text_0x1b9c20]
       - [0x1ba6a0, asm,     Enemy/en_ap2]        # SCRAPER
-      - [0x1bab20, asm,     text_0x1bab20]
+      - [0x1c2760, asm,     text_0x1c2760]
       - [0x1d2630, asm,     Enemy/en_shb]        # GOD
-      - [0x1d2a40, asm,     text_0x1d2a40]
       - [0x1d75a0, asm,     Enemy/en_rod]        # SEWER_MONSTER
       - [0x1d7610, asm,     text_0x1d7610]
       - [0x1e01c0, asm,     Enemy/en_mry]        # CAROUSEL_HORSE
@@ -136,6 +148,8 @@ segments:
       - [0x2052c0, asm,     text_0x2052c0]     
       - [0x20e0d0, c,       Enemy/en_lix]        # SLURPER_X
       - [0x210790, asm,     text_0x210790]
+      - [0x2207b0, asm,     MC/mc]
+      - [0x225cb0, asm,     text_0x225cb0]
       - [0x230440, asm,     Effect2/hh_class_new]
       - [0x230b00, asm,     text_0x230b00]
       - [0x2345b0, c,       Effect2/hh_class_0x2345b0]
@@ -158,6 +172,8 @@ segments:
       - [0x2bf910, rodata,  rodata_0x2bf910]
       - [0x2c0260, .rodata, Fog/fog]
       - [0x2C02B0, rodata,  rodata_0x2c02b0]
+      - [0x2C4478, .rodata, Multi_thr/scf/ps2_scf]
+      - [0x2C4480, rodata,  rodata_0x2c4480]
       - [0x2c5080, .rodata, Enemy/en_common]
       - [0x2c5110, rodata,  rodata_0x2c5110]
       - [0x2c8790, .rodata, Enemy/en_lix]
