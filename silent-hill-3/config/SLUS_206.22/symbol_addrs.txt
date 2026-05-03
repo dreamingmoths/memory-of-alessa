@@ -320,6 +320,13 @@ fog_asm_data_p = 0x0036B1E0; // size:32
 fog_asm_data1 = 0x0036B100; // size:112
 fog_asm_data2 = 0x0036B170; // size:112
 fog_asm_data3 = 0x0036B210; // size:16
+fogInitScreen = 0x001e74f0;
+
+// fogdata.c
+fogSetCollision = 0x001eb090;
+
+// spack.c
+spkInit = 0x00138C90;
 
 // sh3dt.c
 shGetDF = 0x0019A910;

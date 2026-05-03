@@ -15,8 +15,8 @@ void fogInit(void) {
     func_001E6B90();
     fog_asm_data_p.packet = UNCACHED(&pwork);
     fogSetColor(0x80, 0x80, 0x80, 0x80);
-    func_001EB090();
-    func_001E74F0();
+    fogSetCollision();
+    fogInitScreen();
 }
 
 
@@ -105,7 +105,7 @@ void fogSetEnvironment(FOG_ENV_DATA* edata) {
     if (f2) fogInitParticle();
 }
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001E74F0);
+INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogInitScreen);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", func_001E7520);
 
@@ -222,7 +222,11 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogMakePacket);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_view_screen_fog);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogSetColor);
+#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
+void fogSetColor(u_char r, u_char g, u_char b, u_char a) {
+    fwork.Color = COLOR_RGBA(r, g, b, a);
+}
+
 
 #define PART_MAX 0x2BC
 #line 3448
