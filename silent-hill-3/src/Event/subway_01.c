@@ -659,9 +659,9 @@ void func_01F6E900_subway_01(Q* arg0, int* arg1, Q* arg2, int* arg3, int* arg4)
     sp0.s32 = D_01F70660_subway_01.s32;
     sp10.s32 = D_01F70670_subway_01.s32;
     
-    vec_copy(&arg0->u128, &sp0.u128);
+    volatile_vec_copy(&arg0->u128, &sp0.u128);
     *arg1 = 1;
-    vec_copy(&arg2->u128, &sp10.u128);
+    volatile_vec_copy(&arg2->u128, &sp10.u128);
     *arg3 = 1;
     *arg4 = 0;
 }

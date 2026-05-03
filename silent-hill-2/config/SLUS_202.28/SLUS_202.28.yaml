@@ -377,6 +377,8 @@ segments:
       - [0x28e2c0, rodata,  rodata_0x28e2c0]
       - [0x28e380, .rodata, Collision/cl_main]
       - [0x28e510, rodata,  rodata_0x28e510]
+      - [0x28f010, .rodata, Fog/fog]
+      - [0x28f0d0, rodata,  rodata_0x28f0d0]
       - [0x290830, .rodata, sound/sh_sound]
       - [0x290c10, .rodata, rodata_0x290c10]
       - [0x2915c0, .rodata, Event/event]
