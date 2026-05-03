@@ -1,7 +1,21 @@
 #ifndef EE_REGS_H
 #define EE_REGS_H
 
-#define T0_COUNT 		  ((volatile u32 *)(0x10000000))
+/* TIMER */
+#define T0_COUNT          ((volatile u_int *)(0x10000000))
+#define T0_MODE           ((volatile u_int *)(0x10000010))
+#define T0_COMP           ((volatile u_int *)(0x10000020))
+#define T0_HOLD           ((volatile u_int *)(0x10000030))
+#define T1_COUNT          ((volatile u_int *)(0x10000800))
+#define T1_MODE           ((volatile u_int *)(0x10000810))
+#define T1_COMP           ((volatile u_int *)(0x10000820))
+#define T1_HOLD           ((volatile u_int *)(0x10000830))
+#define T2_COUNT          ((volatile u_int *)(0x10001000))
+#define T2_MODE           ((volatile u_int *)(0x10001010))
+#define T2_COMP           ((volatile u_int *)(0x10001020))
+#define T3_COUNT          ((volatile u_int *)(0x10001800))
+#define T3_MODE           ((volatile u_int *)(0x10001810))
+#define T3_COMP           ((volatile u_int *)(0x10001820))
 
 #define D0_CHCR  		  ((volatile u_int *)(0x10008000))
 #define D0_MADR  		  ((volatile u_int *)(0x10008010))
@@ -59,4 +73,3 @@ typedef struct {
 } tD_CHCR;
 
 #endif EE_REGS_H
-
