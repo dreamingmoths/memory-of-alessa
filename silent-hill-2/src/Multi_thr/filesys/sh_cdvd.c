@@ -3,6 +3,7 @@
 #include "eeregs.h"
 #include "sifdev.h"
 #include "sifrpc.h"
+#include "debug.h"
 
 static int WaitExec(void);
 static int SignalExec(void);
@@ -172,7 +173,7 @@ int shSifLoadModuleR(char* module /* r20 */, int args /* r19 */, char* argp /* r
     int i; // r17
     while ((ret = shSifLoadModule(module, args, argp)) < 0) {
         if (count-- < 0) {
-            verbose(1, "sh_cdvd.c:298> %s: can't load iop");
+            VERBOSE(1, "sh_cdvd.c:298> %s: can't load iop");
             count = 0x14;
         }
         for (i = 0x3c; i > 0; i--) {
@@ -200,7 +201,7 @@ int shSifRebootIopR(char* imgfile /* r18 */) {
     ret = 0x14;
     while (!shSifRebootIop(imgfile)) {
         if (ret-- < 0) {
-            verbose(1, "sh_cdvd.c:329> %s: can't reboot");
+            VERBOSE(1, "sh_cdvd.c:329> %s: can't reboot");
             ret = 0x14;
         }
         for (i = 0x3C; i > 0; i--) {
@@ -210,7 +211,7 @@ int shSifRebootIopR(char* imgfile /* r18 */) {
     ret = 5;
     while (!shSifSyncIop()) {
         if (ret-- < 0) {
-            verbose(1, "sh_cdvd.c:340> %s: can't sync iop");
+            VERBOSE(1, "sh_cdvd.c:340> %s: can't sync iop");
             ret = 5;
         }
         for (i = 0x3C; i > 0; i--) {
@@ -249,7 +250,7 @@ INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdReadW);
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSeekW);
 
-static void shCdReadClockRecover(int, u_short, void*) { 
+static void shCdReadClockRecover(int, u_short, void *) { 
     shCdWork.rtc_ok = 1;
     ExitHandler();
 }
@@ -300,7 +301,7 @@ int shCdSearchFile(sceCdlFILE* file /* r2 */, char* fullpath /* r2 */) {
     
     ret = ___shCdSearchFile(file, fullpath);
     hcnt1 = *T3_COUNT;
-    verbose(2, "sh_cdvd.c:639> cd search-file time:%d\n", (u_short)(hcnt1 - hcnt0));
+    VERBOSE(2, "sh_cdvd.c:639> cd search-file time:%d\n", (u_short)(hcnt1 - hcnt0));
     return ret;
 }
 
