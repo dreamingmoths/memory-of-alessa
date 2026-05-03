@@ -282,7 +282,7 @@ segments:
       - [0x168720, asm, Effect2/hh_class_water_common]
       - [0x1691d0, asm, Effect2/hh_class_water_splash_phenomenon_00]
       - [0x169790, c,   Effect2/hh_class_wrapper]
-      - [0x16a310, asm, Effect2/hh_dbg_wrapper]
+      - [0x16a310, c,   Effect2/hh_dbg_wrapper]
       - [0x16a4b0, asm, Effect2/hh_effect_object_def]
       - [0x16ab10, asm, Effect2/hh_effect_object_texture]
       - [0x16b9c0, c,   Effect2/hh_math_wrapper]
@@ -399,6 +399,8 @@ segments:
       - [0x29a280, rodata,  rodata_0x29a280]
       - [0x29a870, .rodata, Effect2/hh_class_manager]
       - [0x29a8a0, rodata,  rodata_0x29a8a0]
+      - [0x29a920, .rodata, Effect2/hh_dbg_wrapper]
+      - [0x29a960, rodata,  rodata_0x29a960]
       - [0x29cb00, .rodata, Effect2/hh_memory_manage]
       - [0x29cb80, rodata,  rodata_0x29cb80]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
@@ -406,6 +408,8 @@ segments:
       - { vram: 0x0419380, type: bss,  name: bss_0x0419380 }
       - { vram: 0x041bf10, type: .bss, name: Chacter_Draw/model_common }
       - { vram: 0x0438588, type: bss,  name: bss_0x0438588 }
+      - { vram: 0x11eb8f0, type: .bss, name: Effect2/hh_dbg_wrapper }
+      - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
       - { vram: 0x126fbc0, type: bss,  name: bss_0x126fbc0 }
   - [0x2c8480]
