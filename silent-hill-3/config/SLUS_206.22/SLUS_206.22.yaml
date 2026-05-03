@@ -106,7 +106,7 @@ segments:
       - [0x15dcd0, asm,     Enemy/en_nse]        # NURSE
       - [0x15e760, asm,     text_0x15e760]
       - [0x166ad0, asm,     Enemy/en_deb]        # INSANE_CANCER
-      - [0x167530, asm,     text_0x167530]
+      - [0x170a20, asm,     text_0x170a20]
       - [0x187340, asm,     Enemy/en_apb]        # MISSIONARY
       - [0x1876c0, asm,     text_0x1876c0]
       - [0x191480, asm,     Enemy/en_fly]        # PENDULUM
@@ -140,6 +140,8 @@ segments:
       - [0x2052c0, asm,     text_0x2052c0]     
       - [0x20e0d0, c,       Enemy/en_lix]        # SLURPER_X
       - [0x210790, asm,     text_0x210790]
+      - [0x2207b0, asm,     MC/mc]
+      - [0x225cb0, asm,     text_0x225cb0]
       - [0x230440, asm,     Effect2/hh_class_new]
       - [0x230b00, asm,     text_0x230b00]
       - [0x2345b0, c,       Effect2/hh_class_0x2345b0]
