@@ -111,6 +111,12 @@ segments:
       - [0x1876c0, asm,     text_0x1876c0]
       - [0x191480, asm,     Enemy/en_fly]        # PENDULUM
       - [0x19b1f0, asm,     text_0x19b1f0]
+      - [0x1b4a70, asm,     movie/pss_cscvu1]
+      - [0x1b5ae0, asm,     movie/pss_disp]
+      - [0x1b6b30, asm,     movie/pss_main]
+      - [0x1b7ad0, asm,     movie/pss_read]
+      - [0x1b7cf0, asm,     movie/pss_readbuf]
+      - [0x1b7e90, asm,     movie/pss_strfile]
       - [0x1b7fb0, c,       movie/pss_vibuf]
       - [0x1b8f50, c,       movie/pss_videodec]
       - [0x1b99a0, c,       movie/pss_vobuf]
