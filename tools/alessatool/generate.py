@@ -8,8 +8,6 @@ import splat.scripts.split as split
 import splat.util.options as splat_options
 from splat.segtypes.linker_entry import LinkerEntry, write_file_if_different, clean_up_path
 from spimdisasm.common.CompilerConfig import compilerOptions
-from splat.disassembler.disassembler_instance import get_instance
-from spimdisasm.common import GlobalConfig as conf
 
 SECTION_ALIGNMENT_PAIRS: list[tuple[str, int]] = [
     (".text", 0x10),
