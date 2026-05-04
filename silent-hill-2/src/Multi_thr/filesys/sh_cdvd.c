@@ -14,9 +14,12 @@ static int ___shCdInit(int initmode /* r16 */);
 static void checkReadAlign(void* buffer /* r2 */);
 static char* name_skip_cdrom0(char* name);
 static void shCdReadClockRecover(int, u_short, void*);
+static int ___shCdDiskReady(int mode /* r16 */);
+static int WaitHd(void);
+static int SignalHd(void);
 
 static int WaitExec(void)  {
-    int ret;
+    int ret; // how is this used?
     if (shCdWork.exec_sid != -1) {
         WaitSema(shCdWork.exec_sid);
     } else {
@@ -48,26 +51,26 @@ static int SignalCmd(void) {
     return SignalSema(shCdWork.cmd_sid);
 }
 
-static int ___shCdMmode(int mmode /* r16 */) {
+static int ___shCdMmode(int mmode) {
     WaitCmd();
     while (!mmode) {
         sceCdDiskReady(0);
         switch (sceCdGetDiskType()) {
-            case 0x14:
-            case 0xFE:
+            case SCECdPS2DVD:
+            case SCECdDVDV:
                 mmode = 2;
                 break;
-            case 0x12:
-            case 0x13:
-            case 0x10:
-            case 0x11:
-            case 0xFD:
+            case SCECdPS2CD:
+            case SCECdPS2CDDA:
+            case SCECdPSCD:
+            case SCECdPSCDDA:
+            case SCECdCDDA:
                 mmode = 1;
                 break;
-            case 0x01:
-            case 0x00:
+            case SCECdDETCT:
+            case SCECdNODISC:
                 break;
-            case 0xFF:
+            case SCECdIllegalMedia:
             default:
                 printf("sh_cdvd.c:149> assert:(%s)\n", "!\"illegal media.\"");
                 while (1);
@@ -176,7 +179,7 @@ int shSifLoadModuleR(char* module /* r20 */, int args /* r19 */, char* argp /* r
             VERBOSE_ON_LINE(298, 1, "%s: can't load iop");
             count = 0x14;
         }
-        for (i = 0x3c; i > 0; i--) {
+        for (i = 0x3C; i > 0; i--) {
             shSyncVEnd(0);
         }
     }
@@ -246,9 +249,52 @@ int shCdSeek(int lsn /* r16 */) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdReadW);
+int shCdReadW(int lsn /* r21 */, int sectors /* r20 */, void* buf /* r19 */, sceCdRMode* mode /* r18 */) {
+    int ret; // r16
+    u_short hcnt0; // r17
+    u_short hcnt1; // r2
+    hcnt0 = *T3_COUNT;
+    VERBOSE_ON_LINE(442, 2, "now CD reading...\n");
+    WaitExec();    
+    SyncDCache(buf, (u_char*)buf + (sectors << 0xB));
+    InvalidDCache(buf, (u_char*)buf + (sectors << 0xB));
+    do {        
+        ret = shCdRead(lsn, sectors, buf, mode);
+        if (ret != 0) {
+            WaitSema(shCdWork.wait_sid);
+            ret = shCdGetError();
+            break;
+        }
+        ret = SCECdErTRMOPN; // 0x31
+    } while (___shCdDiskReady(1) == 2);
+    InvalidDCache(buf, (u_char*)buf + (sectors << 0xB));
+    SyncDCache(buf, (u_char*)buf + (sectors << 0xB));
+    SignalExec();
+    hcnt1 = *T3_COUNT;
+    VERBOSE_ON_LINE(469, 2, "cd read time:%d\n", (u_short) (hcnt1 - hcnt0));
+    return ret;   
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSeekW);
+int shCdSeekW(int lsn /* r18 */) {
+    int ret; // r16    
+    u_short hcnt0; // r17
+    u_short hcnt1; // r2
+    hcnt0 = *T3_COUNT;
+    WaitExec();
+    do {
+        ret = shCdSeek(lsn);
+        if (ret != 0) {
+            WaitSema(shCdWork.wait_sid);
+            ret = shCdGetError();
+            break;
+        }
+        ret = SCECdErTRMOPN; // 0x31
+    } while (___shCdDiskReady(1) == 2);
+    SignalExec();
+    hcnt1 = *T3_COUNT;
+    VERBOSE_ON_LINE(496, 2, "cd seek time:%d\n", (u_short) (hcnt1 - hcnt0));
+    return ret;
+}
 
 static void shCdReadClockRecover(int, u_short, void *) { 
     shCdWork.rtc_ok = 1;
@@ -321,11 +367,36 @@ int ___shCdSearchFile(sceCdlFILE* fp /* r17 */, char* name /* r16 */) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdDiskReady);
+int shCdDiskReady(int mode /* r16 */) {
+    int ret; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", ___shCdDiskReady);
+    WaitExec();
+    ret = ___shCdDiskReady(mode);
+    SignalExec();
+    return ret;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetDiskType); // kinda
+static int ___shCdDiskReady(int mode /* r16 */) {
+    int ret; // r16
+    char* str = NULL; // r2 how is this used??
+
+    WaitCmd();
+    ret = sceCdDiskReady(mode);
+    SignalCmd();
+    return ret;
+}
+
+int shCdGetDiskType(void) {
+    int ret; // r16
+    char* str = NULL; // r2 how is this used? 
+
+    WaitExec();
+    WaitCmd();
+    ret = sceCdGetDiskType();
+    SignalCmd();
+    SignalExec();
+    return ret;
+}
 
 int shCdTrayReq(int mode /* r17 */, u_int* traycnt /* r16 */) {
     int ret; // r16
@@ -339,28 +410,126 @@ int shCdTrayReq(int mode /* r17 */, u_int* traycnt /* r16 */) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdGetError); //
+int shCdGetError(void) {
+    int error; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdStatus); //
+    WaitCmd();
+    error = sceCdGetError();
+    SignalCmd();
+    return error;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSync); //
+int shCdStatus(void) {
+    int stat; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdStart); //
+    WaitExec();
+    WaitCmd();
+    stat = sceCdStatus();
+    SignalCmd();
+    SignalExec();
+    return stat;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shCdSdEnd); //
+int shCdSync(int mode /* r16 */) {
+    int ret; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", WaitHd);
+    WaitCmd();
+    ret = sceCdSync(mode);
+    SignalCmd();
+    return ret;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", SignalHd);
+void shCdSdStart(void) {
+    WaitExec();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shHdInit);
+void shCdSdEnd(void) {
+    SignalExec();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shHdOpen);
+static int WaitHd(void) {
+    int ret; // r2 how is this used?
+    if (shHdWork.hd_sid != -1) {
+        WaitSema(shHdWork.hd_sid);
+    } else {
+        shHdWork.hd_sid = CreateSema2(0, 1, 0);
+    }
+    exec_cnt++;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shHdRead);
+static int SignalHd(void) {
+    exec_cnt--;
+    return SignalSema(shHdWork.hd_sid);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shHdClose);
+int shHdInit(void) {
+    int ret; // r2
+    WaitHd();
+    shHdWork.last_fd = -1;
+    shHdWork.last_filename = 0;
+    shHdWork.last_offset = 1;
+    ret = SignalHd(); 
+    return ret; // not sure
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", shHdLseek);
+int shHdOpen(char* name /* r17 */, int mode /* r16 */) {
+    int ret; // r2
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/sh_cdvd", ___shHdGetFileSize);
+    WaitHd();
+    if (name != NULL) {
+        ret = sceOpen(name, mode);
+    } else {
+        ret = -1;
+    }
+    SignalHd();
+    return ret;
+}
+
+int shHdRead(int fd /* r18 */, void* buffer /* r17 */, int size /* r16 */) {
+    int ret; // r16
+
+    checkReadAlign(buffer);
+    WaitHd();
+    ret = sceRead(fd, buffer, size);
+    SignalHd();
+    return ret;
+}
+
+int shHdClose(int fd /* r16 */) {
+    int ret; // r16
+
+    WaitHd();
+    ret = sceClose(fd);
+    SignalHd();
+    return ret;
+}
+
+int shHdLseek(int fd /* r18 */, int offset /* r17 */, int where /* r16 */) {
+    int ret; // r16
+
+    WaitHd();
+    ret = sceLseek(fd, offset, where);
+    SignalHd();
+    return ret;
+}
+
+int ___shHdGetFileSize(char* name /* r16 */) {
+    int ret; // r16    
+    int fd; // r17
+
+    WaitExec();
+    WaitCmd();
+    fd = shHdOpen(name, 1);
+    if (fd >= 0) {
+        ret = shHdLseek(fd, 0, 2);
+        if (ret < 0) {
+            ret = 0;
+        }
+        shHdClose(fd);
+    } else {
+        ret = -1;
+    }
+    SignalCmd();
+    SignalExec();
+    return ret;
+}
