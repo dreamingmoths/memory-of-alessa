@@ -387,6 +387,8 @@ segments:
       - [0x2918e0, rodata,  rodata_0x2918e0]
       - [0x291ac0, .rodata, Font/font]
       - [0x291c00, rodata,  rodata_0x291c00]
+      - [0x291df0, .rodata, Multi_thr/filesys/sh_cdvd]
+      - [0x291f80, rodata,  rodata_0x291f80]
       - [0x292d60, .rodata, SH2_common/pad]
       - [0x292d80, rodata,  rodata_0x292d80]
       - [0x296710, .rodata, gamemain]
