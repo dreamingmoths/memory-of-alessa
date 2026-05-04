@@ -25,6 +25,27 @@
 #define SCECdSecS2328 1
 #define SCECdSecS2340 2
 
+#define SCECdErTRMOPN 0x31
+
+/*
+ * Macros for sceCdGetDiskType()
+ */
+
+#define SCECdIllgalMedia    0xFF    /* ILIMEDIA - Illegal Media disc */
+#define SCECdIllegalMedia   0xFF    /* ILIMEDIA - Illegal Media disc */
+#define SCECdDVDV           0xFE    /* DVDV - DVD Video disc */
+#define SCECdCDDA           0xFD    /* CDDA - CD with DA tracks */
+#define SCECdPS2DVD         0x14    /* PS2DVD - PS2 DVD disc */
+#define SCECdPS2CDDA        0x13    /* PS2CDDA - PS2 CD with DA tracks */
+#define SCECdPS2CD          0x12    /* PS2CD - PS2 CD without DA tracks */
+#define SCECdPSCDDA         0x11    /* PSCDDA - PS1 CD with DA tracks */
+#define SCECdPSCD           0x10    /* PSCD - PS1 CD without DA tracks */
+#define SCECdDETCT          0x01    /* DETCT - Detecting disc */
+#define SCECdNODISC         0x00    /* NODISC - No disc inserted */
+#define SCECdUNKNOWN        0x05    /* UNKNOWN - Disc type unidentifiable */
+#define SCECdGDTFUNCFAIL    (-1)    /* FUNCFAIL - Function call failed */
+
+
 typedef struct
 {
     u_char stat;
@@ -69,5 +90,9 @@ int sceCdSearchFile(sceCdlFILE* fp, const char* name);
 int sceCdStStart(u_int lbn, sceCdRMode *mode);
 int sceCdGetDiskType(void);
 int sceCdTrayReq(int param, u_int* traychk);
+
+int sceCdGetError(void);
+int sceCdStatus(void);
+int sceCdSync(int mode);
 
 #endif // SCE_LIBCDVD_H
