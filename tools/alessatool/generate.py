@@ -7,6 +7,9 @@ from utils import ensure_path_and_write, normalize_object_path, to_expected_path
 import splat.scripts.split as split
 import splat.util.options as splat_options
 from splat.segtypes.linker_entry import LinkerEntry, write_file_if_different, clean_up_path
+from spimdisasm.common.CompilerConfig import compilerOptions
+from splat.disassembler.disassembler_instance import get_instance
+from spimdisasm.common import GlobalConfig as conf
 
 SECTION_ALIGNMENT_PAIRS: list[tuple[str, int]] = [
     (".text", 0x10),
@@ -56,6 +59,7 @@ def split_yaml(args: GenerationArgs) -> None:
     try:
         get_relative_path = lambda path : Path(path).relative_to(args.config_path)
         os.chdir(args.config_path)
+        configure_spimdisasm()
         split.main(
             list(map(get_relative_path, args.yamls)),
             modes="all",
@@ -73,6 +77,13 @@ def split_yaml(args: GenerationArgs) -> None:
     
     if not args.no_objdiff:
         generate_objdiff_units(args)
+
+def configure_spimdisasm():
+    # switch off the `bigAddendWorkaroundForMigratedFunctions` option, which
+    # truncates `%lo` offsets with `& 0xFFFF`. we turn it off as MWCC has no
+    # assembler, and the truncating can cause AS to fail to pair hi/lo
+    # relocations.
+    compilerOptions["MWCCPS2"].value.bigAddendWorkaroundForMigratedFunctions = False
 
 def generate_linker_dependencies(args: GenerationArgs):
     linker_writer = split.linker_writer
