@@ -1329,7 +1329,7 @@ rom:0xCDEBC reloc:MIPS_PC16 symbol:.L001CD990 addend:0x4
 rom:0xCDEE4 reloc:MIPS_PC16 symbol:.L001CD990 addend:0x4
 rom:0xCDEF8 reloc:MIPS_PC16 symbol:.L001CD990 addend:0x4
 rom:0xE2B58 reloc:MIPS_PC16 symbol:.L001E2660 addend:0x4
-rom:0xE7B20 reloc:MIPS_PC16 symbol:.L001E7CD4 addend:0x4
+// rom:0xE7B20 reloc:MIPS_PC16 symbol:.L001E7CD4 addend:0x4
 rom:0xEDBC0 reloc:MIPS_PC16 symbol:.L001ED784 addend:0x4
 rom:0xEEA6C reloc:MIPS_PC16 symbol:.L001EE8F8 addend:0x4
 rom:0xEEA98 reloc:MIPS_PC16 symbol:.L001EE8F8 addend:0x4
