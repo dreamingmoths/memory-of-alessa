@@ -298,7 +298,7 @@ $(MWCCGAP_ENTRYPOINT):
 $(OVERLAY_SOURCES): $(SOURCE_OVERLAY_ARCHIVE)
 	$(ALESSATOOL) extract \
 		--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
-		--output-dir $(ROM)
+		--output-dir $(ROM) \
 		--overlay
 
 $(ROM_SYMLINK):
