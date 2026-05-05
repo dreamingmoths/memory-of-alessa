@@ -133,11 +133,16 @@ OBJDIFF_CONFIG := objdiff.json
 OBJDIFF_FRAGMENTS = $(patsubst $(CONFIG)/%.yaml, $(BUILD)/objdiff/%.json, $(YAMLS))
 
 ALESSATOOL := $(PYTHON) $(TOOLS)/alessatool/alessatool.py --verbose
+ALESSATOOL_OVERLAY_LOCK := $(OVERLAY_SOURCE_DIR)/.lock
 GENERATE := $(ALESSATOOL) generate \
 	--template-path $(LINKER_TEMPLATE) \
 	--lcf-output-path $(LINKERS)/$(SERIAL).lcf \
 	--build-path $(BUILD) \
 	--config-path $(CONFIG)
+EXTRACT := extract \
+	--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
+	--output-dir $(ROM) \
+	--overlay
 
 GENERATE_FLAGS = --make-full-disasm-for-code
 GENERATE_OVERLAY_FLAGS = --no-lcf --make-full-disasm-for-code
@@ -223,6 +228,9 @@ clean-project:
 	rm -rf $(BUILD)
 	rm -rf $(LINKERS)
 
+extract: $(SOURCE_OVERLAY_ARCHIVE)
+	$(ALESSATOOL) $(EXTRACT)
+
 sh3:
 	$(MAKE) PROJECT="silent-hill-3"
 
@@ -295,11 +303,12 @@ $(OBJDIFF):
 $(MWCCGAP_ENTRYPOINT):
 	$(GIT) submodule update --init --recursive
 
-$(OVERLAY_SOURCES): $(SOURCE_OVERLAY_ARCHIVE)
-	$(ALESSATOOL) extract \
-		--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
-		--output-dir $(ROM) \
-		--overlay
+$(ALESSATOOL_OVERLAY_LOCK): $(SOURCE_OVERLAY_ARCHIVE)
+	@mkdir -p "$(@D)"
+	touch $(ALESSATOOL_OVERLAY_LOCK)
+	$(MAKE) extract
+
+$(OVERLAY_SOURCES): $(OVERLAY_SOURCE_DIR)/.lock
 
 $(ROM_SYMLINK):
 	ln -sf $(realpath $(ROM)) $@
@@ -320,9 +329,9 @@ endef
 ###############################################################
 PHONY_TARGETS := \
 	alessatool clean clean-project compiler-info death debug \
-	deep-clean diff expected heaven hell progress rebuild \
-	report setup sh2 sh3 sh2-clean sh3-clean sh2-report \
-	sh3-report split
+	deep-clean diff expected extract heaven hell progress \
+	rebuild report setup sh2 sh3 sh2-clean sh3-clean \
+	sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)
 ifeq ($(filter $(PHONY_TARGETS) $(OBJDIFF_CONFIG),$(MAKECMDGOALS)),)
 -include $(BINARIES:%=$(LINKERS)/%.d)
