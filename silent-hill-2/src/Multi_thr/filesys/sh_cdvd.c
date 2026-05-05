@@ -476,7 +476,7 @@ int shHdOpen(char* name /* r17 */, int mode /* r16 */) {
     int ret; // r2
 
     WaitHd();
-    if (name != NULL) {
+    if (name) {
         ret = sceOpen(name, mode);
     } else {
         ret = -1;
