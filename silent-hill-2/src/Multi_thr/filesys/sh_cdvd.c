@@ -260,7 +260,7 @@ int shCdReadW(int lsn /* r21 */, int sectors /* r20 */, void* buf /* r19 */, sce
     InvalidDCache(buf, (u_char*)buf + (sectors << 0xB));
     do {        
         ret = shCdRead(lsn, sectors, buf, mode);
-        if (ret != 0) {
+        if (ret) {
             WaitSema(shCdWork.wait_sid);
             ret = shCdGetError();
             break;
