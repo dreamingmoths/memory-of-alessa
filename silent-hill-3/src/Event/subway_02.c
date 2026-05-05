@@ -2,7 +2,7 @@
 
 int func_01F6D680_subway_02(void)
 {
-    int var_s0;
+    int ret;
     SubCharacter* heather = shCharacterGetSubCharacter(HEATHER_CHARA_ID, -1);
     Q sp40;
     Q sp50;
@@ -16,7 +16,7 @@ int func_01F6D680_subway_02(void)
             ++D_01F6F080_subway_02;
             /* fallthrough */
         case 1:
-            var_s0 = func_0016C540(&D_01F6EF10_subway_02, &D_01F6EF70_subway_02);
+            ret = func_0016C540(&D_01F6EF10_subway_02, &D_01F6EF70_subway_02);
 
             if (func_001646F0() == 2)
             {
@@ -53,7 +53,7 @@ int func_01F6D680_subway_02(void)
         func_001DC9E0(heather, 1);
     }
 
-    if (var_s0 != 0)
+    if (ret != 0)
     {
         func_001BE4B0(0);
         func_00190A20(0);
@@ -64,7 +64,7 @@ int func_01F6D680_subway_02(void)
         D_01F6F080_subway_02 = 0;
     }
 
-    return var_s0;
+    return ret;
 }
 
 void func_01F6D8B0_subway_02(void) {
@@ -156,27 +156,23 @@ void func_01F6D9A0_subway_02(void) {
     }
 }
 
-void func_01F6DBE0_subway_02(int arg0)
-{
+void func_01F6DBE0_subway_02(int room) {
     float temp_f4;
     float temp_f3 = 0.0f;
     float temp_f2 = 4000.0f;
     float temp_f1 = 8000.0f;
 
-    func_00170620(&D_01F6F0A0_subway_02, arg0);
+    func_00170620(&D_01F6F0A0_subway_02, room);
     temp_f4 = -4000.0f + D_01F6F0A0_subway_02;
     D_01F6F0C8_subway_02 = temp_f4 + temp_f3;
     D_01F6F0CC_subway_02 = temp_f4 + temp_f2;
     D_01F6F0D0_subway_02 = temp_f4 + temp_f1;
     D_01F6F0C0_subway_02 = D_01F6F0A8_subway_02;
 
-    if (arg0 == 0x46)
-    {
+    if (room == SUBWAY_TRAIN_TAIL_END) {
         D_01F6F0B8_subway_02 = 6000.0f + D_01F6F0A0_subway_02 + 2400.0f;
         D_01F6F0B0_subway_02 = -6000.0f + D_01F6F0A0_subway_02 + 2400.0f;
-    }
-    else
-    {
+    } else {
         D_01F6F0B8_subway_02 = 6000.0f + D_01F6F0A0_subway_02;
         D_01F6F0B0_subway_02 = -6000.0f + D_01F6F0A0_subway_02;
     }
