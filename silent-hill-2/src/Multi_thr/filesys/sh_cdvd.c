@@ -19,7 +19,7 @@ static int WaitHd(void);
 static int SignalHd(void);
 
 static int WaitExec(void)  {
-    int ret; // how is this used?
+    int ret; // @todo how is this used?
     if (shCdWork.exec_sid != -1) {
         WaitSema(shCdWork.exec_sid);
     } else {
