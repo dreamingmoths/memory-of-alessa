@@ -4,6 +4,16 @@
 #include "common.h"
 #include "Chacter/m3_sc.h"
 
+#define SUBWAY_TRAIN_CAR_1        0x3E // savepoint
+#define SUBWAY_TRAIN_CAR_2        0x3F // first numb body
+#define SUBWAY_TRAIN_CAR_3        0x40  
+#define SUBWAY_TRAIN_CAR_4        0x41 // big numb body
+#define SUBWAY_TRAIN_CAR_5        0x42 // medikit and ammo (only on easy?)
+#define SUBWAY_TRAIN_CAR_6        0x43
+#define SUBWAY_TRAIN_CAR_7        0x44 // @todo: check in which one of these 2 spawns a insane cancer (normal+ action level)
+#define SUBWAY_TRAIN_CAR_8        0x45 // last car before sewer
+#define SUBWAY_TRAIN_TAIL_END     0x46 // death from falling from the train
+
 typedef struct
 {
     float  unk0;
@@ -60,7 +70,7 @@ float func_001643C0(void);
 void func_0013D250(int, int *, float);
 void func_001DC9E0(SubCharacter *, int);
 void func_001BE4B0(int);
-void func_00190A20(int);
+int func_00190A20(int);
 void func_00190C40(void);
 void func_0013D280(int);
 int RoomName(void);
