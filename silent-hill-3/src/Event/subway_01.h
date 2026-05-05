@@ -47,7 +47,7 @@ typedef struct
     /* 0x38 */  int   unk38[2];
 } func_0016A080_struct;
 
-void func_00190A20(int);
+int func_00190A20(int);
 int func_0016CED0(int, int, int *);
 short RoomName(void);
 void func_001908A0(float *, float *);
@@ -74,10 +74,10 @@ void func_0016A080(func_0016A080_struct *);
 void clAddDynamicWall(int *);
 int func_001909B0(void);
 void clAddDynamicFloor(int *);
-void func_001DD650(SubCharacter *, int, float *, float *);
-void func_001DD6F0(SubCharacter *, int, float *, float *);
-void func_001E1F20(float *);
-void func_001C0EB0(void (*callback)(void), int, int);
+void func_001DD650(SubCharacter *, int, sceVu0FVECTOR *, sceVu0FVECTOR *);
+void func_001DD6F0(SubCharacter *, int, sceVu0FVECTOR *, sceVu0FVECTOR *);
+void func_001E1F20(sceVu0FVECTOR *);
+void func_001C0EB0(void (*)(), int, int);
 void func_001C0EE0(int);
 float shGetDT(void);
 
@@ -107,9 +107,10 @@ extern int D_01F703E0_subway_01;
 extern int D_01F70140_subway_01;
 extern int D_01F70420_subway_01;
 extern int D_01F70480_subway_01;
+extern int D_01F70708_subway_01;
+extern u_int D_1D31648;
 extern int D_01F704A0_subway_01;
 extern int D_01F70500_subway_01;
-extern u_int D_1D31648;
 extern u_int D_1D3165C;
 extern int D_01F70710_subway_01;
 extern int D_01F705C0_subway_01;
@@ -118,7 +119,6 @@ extern int D_01F70220_subway_01;
 extern u_int D_1D3177C;
 extern int D_01F70640_subway_01;
 extern int D_01F70650_subway_01;
-extern int D_01F70708_subway_01;
 extern int D_01F70000_subway_01;
 extern int D_01F6FEC0_subway_01;
 extern int D_01F6FF60_subway_01;
@@ -134,11 +134,11 @@ extern float D_01F70730_subway_01;
 extern u_int D_1D31644;
 extern float D_01F70728_subway_01;
 
-extern D_01F70400_struct D_01F70400_subway_01;
 extern D_01F70400_struct* D_01F70740_subway_01;
+extern D_01F70400_struct D_01F70400_subway_01;
 
-extern D_01F70520_struct D_01F70520_subway_01;
 extern D_01F70520_struct* D_01F70738_subway_01;
+extern D_01F70520_struct D_01F70520_subway_01;
 
 extern D_01F6F7D0_struct D_01F6F7D0_subway_01;
 
