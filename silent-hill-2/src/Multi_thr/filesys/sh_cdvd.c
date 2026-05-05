@@ -283,7 +283,7 @@ int shCdSeekW(int lsn /* r18 */) {
     WaitExec();
     do {
         ret = shCdSeek(lsn);
-        if (ret != 0) {
+        if (ret) {
             WaitSema(shCdWork.wait_sid);
             ret = shCdGetError();
             break;
