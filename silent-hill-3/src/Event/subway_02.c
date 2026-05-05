@@ -67,93 +67,88 @@ int func_01F6D680_subway_02(void)
     return var_s0;
 }
 
-void func_01F6D8B0_subway_02(void)
-{
-    short temp_a0;
+void func_01F6D8B0_subway_02(void) {
+    short room;
 
     D_01F6F080_subway_02 = 0;
-    temp_a0 = RoomName();
+    room = RoomName();
 
-    switch (temp_a0)
-    {
-        case 0x3E:
-            func_01F6DBE0_subway_02(temp_a0);
+    switch (room) {
+        case SUBWAY_TRAIN_CAR_1:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x3F:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_2:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x40:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_3:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x41:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_4:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x42:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_5:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x43:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_6:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x44:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_7:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x45:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_CAR_8:
+            func_01F6DBE0_subway_02(room);
             break;
-        case 0x46:
-            func_01F6DBE0_subway_02(temp_a0);
+        case SUBWAY_TRAIN_TAIL_END:
+            func_01F6DBE0_subway_02(room);
             break;
     }
 
     func_001BE4B0(1);
 }
 
-void func_01F6D9A0_subway_02(void)
-{
-    switch ((short) RoomName())
-    {
-        case 0x3E:
+void func_01F6D9A0_subway_02(void) {
+    
+    switch ((short) RoomName()) {
+        case SUBWAY_TRAIN_CAR_1:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x3F:
+        case SUBWAY_TRAIN_CAR_2:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x40:
+        case SUBWAY_TRAIN_CAR_3:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x41:
+        case SUBWAY_TRAIN_CAR_4:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x42:
+        case SUBWAY_TRAIN_CAR_5:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x43:
+        case SUBWAY_TRAIN_CAR_6:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x44:
+        case SUBWAY_TRAIN_CAR_7:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x45:
+        case SUBWAY_TRAIN_CAR_8:
             func_01F6DCF0_subway_02(1, 2, 3);
             func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             break;
-        case 0x46:
+        case SUBWAY_TRAIN_TAIL_END:
             func_01F6DCF0_subway_02(1, 2, 3);
 
-            if (func_001C2580(4) == 0 || func_00190940() == 1)
-            {
+            if (func_001C2580(4) == 0 || func_00190940() == 1) {
                 clAddDynamicWall(&D_01F6EC50_subway_02);
             }
 
-            if (func_001643D0() != 0x13)
-            {
+            if (func_001643D0() != 0x13) {
                 func_0013D250(0, &D_01F6ED90_subway_02, 1.0f);
             }
 
@@ -378,17 +373,15 @@ void func_01F6DE80_subway_02(sceVu0FVECTOR* arg0)
     }
 }
 
-void func_01F6E140_subway_02(sceVu0FVECTOR* arg0)
-{
-    switch (RoomName())
-    {
-        case 0x3E:
+void func_01F6E140_subway_02(sceVu0FVECTOR* arg0) {
+    switch (RoomName()) {
+        case SUBWAY_TRAIN_CAR_1:
             /* fallthrough */
-        case 0x3F:
+        case SUBWAY_TRAIN_CAR_2:
             /* fallthrough */
-        case 0x42:
+        case SUBWAY_TRAIN_CAR_5:
             /* fallthrough */
-        case 0x44:
+        case SUBWAY_TRAIN_CAR_7:
             break;
         default:
             func_01F6DE80_subway_02(arg0);
