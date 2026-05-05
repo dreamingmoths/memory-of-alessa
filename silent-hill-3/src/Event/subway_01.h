@@ -47,7 +47,7 @@ typedef struct
     /* 0x38 */  int   unk38[2];
 } func_0016A080_struct;
 
-void func_00190A20(int);
+int func_00190A20(int);
 int func_0016CED0(int, int, int *);
 short RoomName(void);
 void func_001908A0(float *, float *);

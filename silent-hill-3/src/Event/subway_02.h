@@ -78,7 +78,7 @@ int func_001C2580(int);
 int func_00190940(void);
 void clAddDynamicWall(int *);
 int func_001643D0(void);
-void func_00170620(float *, int);
+void func_00170620(float*, int); // second arg here is a room id
 float shGetDT(void);
 void func_001C2AE0(int, sceVu0FMATRIX *);
 void func_001C2A80(int, sceVu0FMATRIX *);
