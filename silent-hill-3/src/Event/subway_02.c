@@ -372,11 +372,8 @@ void func_01F6DE80_subway_02(sceVu0FVECTOR* arg0)
 void func_01F6E140_subway_02(sceVu0FVECTOR* arg0) {
     switch (RoomName()) {
         case SUBWAY_TRAIN_CAR_1:
-            /* fallthrough */
         case SUBWAY_TRAIN_CAR_2:
-            /* fallthrough */
         case SUBWAY_TRAIN_CAR_5:
-            /* fallthrough */
         case SUBWAY_TRAIN_CAR_7:
             break;
         default:
