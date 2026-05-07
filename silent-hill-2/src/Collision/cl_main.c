@@ -1,11 +1,11 @@
 #include "cl_main.h"
 #include "LoadBg/loadbg_cld.h"
 
-static void clCheckColumn2WallHit(struct _CL_HITRESULT * cres /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, struct _CL_HITPOLY_COLUMN * col /* r16 */);
-static void clCheckHitWallCollision(struct _CL_HITPOLY_COLUMN * col /* r19 */, int * whnum /* r18 */, struct _CL_HITPOLY_PLANE * pl /* r17 */, int * ptr /* r16 */);
-static void clCheckColumn2ColumnHit(struct _CL_HITPOLY_COLUMN * col /* r19 */, int * whnum /* r18 */, struct _CL_HITPOLY_COLUMN * cl /* r17 */, int * ptr /* r16 */);
-static void clCollectCharaHeightNormal(struct SubCharacter * sc /* r17 */);
-static CL_SELECT_MAP * clGetHitSectListMOVEInDoor(void);
+static void clCheckColumn2WallHit(CL_HITRESULT* cres /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, CL_HITPOLY_COLUMN* col /* r16 */);
+static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */);
+static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_COLUMN* cl /* r17 */, int* ptr /* r16 */);
+static void clCollectCharaHeightNormal(struct SubCharacter* sc /* r17 */);
+static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(void);
 
 void clAllInitCollisionData() {
     clCharaListAct = 0;
@@ -36,12 +36,12 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCollectCharaPosition);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetCharaHitColumn);
 
-void clAddDynamicWall(struct _CL_HITPOLY_PLANE * pl /* r2 */) {
+void clAddDynamicWall(CL_HITPOLY_PLANE* pl /* r2 */) {
     clDynamicWallList[clDynamicWallListAct].dw[clDynamicWallList[clDynamicWallListAct].use] = pl;
     clDynamicWallList[clDynamicWallListAct].use++;
 }
 
-void clAddDynamicFloor(struct _CL_HITPOLY_PLANE * pl /* r2 */) {
+void clAddDynamicFloor(CL_HITPOLY_PLANE* pl /* r2 */) {
     clDynamicFloorList[clDynamicFloorListAct].dw[clDynamicFloorList[clDynamicFloorListAct].use] = pl;
     clDynamicFloorList[clDynamicFloorListAct].use++;
 }
@@ -69,7 +69,7 @@ static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
             clWallHitData[*whnum].kind = cres.chk;
             clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
             cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-            vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
+            volatile_vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
 
             *whnum += 1;
         }
@@ -102,7 +102,7 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum) {
                 clWallHitData[*whnum].kind = cres.chk;
                 clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
                 cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-                vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
+                volatile_vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
 
                 *whnum += 1;
             }
@@ -152,7 +152,7 @@ static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
             
             clWallHitData[*whnum].kind = 3;
             cres.cv[1] = 0.0f;
-            vec_copy(clWallHitData[*whnum].cv, cres.cv);
+            volatile_vec_copy(clWallHitData[*whnum].cv, cres.cv);
             *whnum += 1;
         }
     }
@@ -160,7 +160,7 @@ static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
 
 static void clCollectCharaHeightNormal(SubCharacter* sc) {
     float st[4]; // r29+0x30
-    Vector4 * pos = &sc->pos; // r2
+    Vector4* pos = &sc->pos; // r2
     float ed[4]; // r29+0x40
     CL_VHIT_RESULT res; // r29+0x50
 
@@ -186,7 +186,7 @@ static void clCollectCharaHeightNormal(SubCharacter* sc) {
 
 void clBattleAddQue(CL_BATTLE_QUE* que) {
     ASSERT(clUseBattleQue < 64);
-    memcpy(&clBattleQue[clUseBattleQue], que, sizeof (struct _CL_BATTLE_QUE));
+    memcpy(&clBattleQue[clUseBattleQue], que, sizeof(CL_BATTLE_QUE));
     clUseBattleQue += 1;
 }
 
@@ -256,7 +256,7 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", Line2PlaneBoundaryCheckXZ);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckCrossLine2BoxXZ);
 
-int clCheckCrossLine2LineXZ(float * va0, float * va1, float * vb0, float * vb1) {
+int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1) {
     float bp[4]; // r29
     float p0[4]; // r29+0x10
     float p1[4]; // r29+0x20
@@ -310,10 +310,10 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListMOVEOutDoor);
 
 static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(void) {
     int use = 0;
-    CL_CLDHEADER * ch;
+    CL_CLDHEADER* ch;
 
     if (clCollisionEnable != 0) {
-        void * * list = loadBgCLD_GetLoadedDataAddrList();
+        void** list = loadBgCLD_GetLoadedDataAddrList();
 
         for (; ch = *list, ch != NULL; list++) {
             if (ch->disable) {
@@ -331,7 +331,7 @@ static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(void) {
     return clSelectMap;
 }
 
-void clCheckHitEyes(struct _CL_VHIT_RESULT * res /* r2 */, u_int id /* r2 */, float * st /* r2 */, float * ed /* r2 */, int thru /* r2 */) {
+void clCheckHitEyes(CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /* r2 */, float* ed /* r2 */, int thru /* r2 */) {
     switch (thru) {
         case 1:
             clCheckHitEyeVector(res, id, st, ed);
