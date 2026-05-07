@@ -63,15 +63,15 @@ float func_001404C0(void) {
 }
 
 static float Calc1(void* cluster, int frame, int n_frames, float time) {
-    Cluster1* cp = (Cluster1*) cluster; // r2
-    int n_keys = cp->n_keys; // r2
-    Element1* ep = &cp->elements; // r16
-    int i0 = 0; // r4
-    int i1 = n_keys - 1; // r7    
-    int mid = i1 >> 1; // r17
-    int mid2; // r18
-    float t_pre; // r29+0x60 // @todo: present in dwarf, but unused here
-    float t; // r20
+    Cluster1* cp = (Cluster1*) cluster;
+    int n_keys = cp->n_keys;
+    Element1* ep = &cp->elements;
+    int i0 = 0;
+    int i1 = n_keys - 1;
+    int mid = i1 >> 1;
+    int mid2; 
+    float t_pre; // @todo: present in dwarf, but unused here
+    float t;
     float d;
 
     if (n_keys <= 0) {
