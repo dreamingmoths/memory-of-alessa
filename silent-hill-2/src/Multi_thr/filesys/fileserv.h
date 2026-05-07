@@ -10,6 +10,12 @@ int fsSync(int mode /* r17 */, int fid /* r16 */);
 int fsGetStat(CmdServStat* stat /* r2 */);
 int fsGetTrayStat(void);
 
+int fcDiskSelectC(void);
+int fcDiskSelectCH(void);
+int fcDiskSelectHC(void);
+
+int fcDiskSelect(int mode /* r2 */);
+
 int fcRead(union fsFile* fp /* r17 */, void* buf /* r16 */);
 int fcFixFile(union fsFile* fp /* r2 */);
 
