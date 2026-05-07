@@ -51,7 +51,16 @@ INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcDiskSelectHC);
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcHdInit);
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcDiskSelect);
+int fcDiskSelect(int mode /* r2 */) {
+    switch (mode) {
+        default:
+            return fcDiskSelectC();
+        case 1:
+            return fcDiskSelectCH();
+        case 2:
+            return fcDiskSelectHC();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcExecDevSelect);
 
