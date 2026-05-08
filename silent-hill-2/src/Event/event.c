@@ -1,10 +1,16 @@
 #include "Event/event.h"
 #include "Chacter/m3_sc.h"
 #include "Font/font.h"
+#include "sound/sh_sound.h"
 
 static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
+static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */);
+static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int pos_t /* r18 */);
 static void EventExecSubFlagSet(Event_List * el /* r2 */);
 static int EventExecMessage(void);
+static int EventExecDoor(void);
+
+extern /* static */ Event_DoorSound door_se[22];
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", FlagInit);
 
@@ -77,13 +83,57 @@ static int EventListElement(Event_List* el /* r2 */, int en /* r2 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", CharToFloat2);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", CharToFloat4);
+float CharToFloat4(char* cp) {
+    char c_work[4];
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", ItemListElement);
+    c_work[0] = cp[0];
+    c_work[1] = cp[1];
+    c_work[2] = cp[2];
+    c_work[3] = cp[3];
+    
+    return *(float*)c_work;
+}
+
+static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */) {
+    switch (en) {
+        case 0:
+            return (il->st >> 0x1D) & 7;
+        case 1:
+            return (il->st >> 0x1A) & 7;
+        case 2:
+            return (il->st >> 0x14) & 0x1F;
+        case 3:
+            return il->st & 0x3FFF;
+        default:
+            return 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", ItemCheckLookPoint);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventPositionSet);
+static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int pos_t /* r18 */) {
+    pos_v[0] = CharToFloat4(&pos_p[0]);
+    pos_v[1] = CharToFloat2(&pos_p[4]);
+    pos_v[2] = CharToFloat4(&pos_p[6]);
+    switch (pos_t) {
+        case 1:
+            pos_v[0] = (pos_v[0] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            break;
+        case 2:
+            pos_v[0] = (pos_v[0] - (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            break;
+        case 3:
+            pos_v[2] = (pos_v[2] - (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            break;
+        case 4:
+            pos_v[2] = (pos_v[2] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            break;
+        case 5:
+            pos_v[0] = (pos_v[0] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            pos_v[2] = (pos_v[2] + (CharToFloat2(&pos_p[0xC]) / 2.0f));
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventResultMovePosition);
 
@@ -91,7 +141,7 @@ void EventCancel(void) {
     ev_cancel = 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSubFlagSet);
+INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSubFlagSet); // https://decomp.me/scratch/uNvCi 
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecFlag);
 
@@ -124,7 +174,65 @@ static int EventExecMessage(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecProgram);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecDoor);
+static int EventExecDoor(void) {
+    Event_List* el; // r16
+    float pos_v[4]; // r29+0x40    
+    char* pos_p; // r6
+    int pos_t; // r2
+    int st; // r17
+    int msg; // r2
+    int se; // r18
+    int fl; // r2
+    
+    if (!ev_e_step) {
+        el = stage->ev_list + ev_active;
+        st = EventListElement(el, 0xD);
+        se = EventListElement(el, 0x12);
+        pos_p = (char *)(stage->ev_pos + EventListElement(el, 8));
+        pos_t = EventListElement(el, 9);
+        EventPositionSet(pos_v, pos_p, pos_t);
+        pos_v[1] += -500.0f;
+        
+        if (st == 7) {
+            msg = EventListElement(el, 0x14);
+            if (msg == 0xFF) {
+                fontMessageNum(msg_station, 5);
+            } else {
+                fontMessageNum(msg_buffer, msg);
+            }
+            SeCallPos(door_se[se].unlock, 1.0f, pos_v, 0);
+        } else if (st == 9) {
+            msg = EventListElement(el, 0x14);
+            if (msg == 0xFF) {
+                fontMessageNum(msg_station, 6);
+            } else if (msg == 0xFE) {
+                fontMessageNum(msg_station, 7);
+            } else {
+                fontMessageNum(msg_buffer, msg);
+            }
+            SeCallPos(door_se[se].jam, 1.0f, pos_v, 0);
+        } else {
+            fontMessageNum(msg_station, 4);
+            SeCallPos(door_se[se].lock, 1.0f, pos_v, 0);
+        }
+        fl = EventListElement(el, 0x16);
+        if (fl != 0) {
+            SET_GAME_FLAG(fl >> 5, fl & 0x1F);
+        }
+        EventExecSubFlagSet(el);
+        SCNowPlayableEventSwitch(sh2jms.player, 1);
+        ev_e_step = 2;
+        ev_p_step = 0;
+        ev_s_step = 0;
+    }
+
+    if (fontGetStatus() == -2 || ev_cancel) {
+        fontClear();
+        SCNowPlayableEventSwitch(sh2jms.player, 0);
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecItem);
 
