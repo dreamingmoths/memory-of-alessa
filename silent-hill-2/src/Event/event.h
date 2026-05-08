@@ -40,6 +40,27 @@ typedef struct Game_Flag {
     s_char trunk[4]; // offset 0x49C, size 0x4
 } Game_Flag;
 
+// total size: 0x10
+typedef struct Item_List {
+    // Members
+    float pos_x; // offset 0x0, size 0x4
+    float pos_z; // offset 0x4, size 0x4
+    u_short pos_y; // offset 0x8, size 0x2
+    u_short rot_y; // offset 0xA, size 0x2
+    u_int st; // offset 0xC, size 0x4
+} Item_List;
+
+// total size: 0xC
+typedef struct Event_DoorSound {
+    // Members
+    short open; // offset 0x0, size 0x2
+    short close; // offset 0x2, size 0x2
+    short unlock; // offset 0x4, size 0x2
+    short jam; // offset 0x6, size 0x2
+    short lock; // offset 0x8, size 0x2
+    short pad; // offset 0xA, size 0x2
+} Event_DoorSound;
+
 // total size: 0x44
 typedef struct Stage_Data {
     // Members
@@ -77,9 +98,12 @@ extern int ev_s_step;
 
 extern Game_Flag game_flag;
 extern u_short msg_buffer[];
+//extern u_short msg_station[]; uncommenting this gives problem with font.h
 extern struct shPlayerWork sh2jms;
 extern Stage_Data* stage;
 
 void EventCancel(void);
+float CharToFloat2(char* cp);
+float CharToFloat4(char* cp);
 
 #endif // EVENT_H
