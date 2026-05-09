@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "Chacter/character.h"
+#include "Event/item.h"
 
 #define SET_EV_STEP(p_step, s_step) \
 do {                                \
@@ -108,6 +109,7 @@ extern int ev_s_step; // size: 0x4, address: 0x11263B8
 extern int ev_p_step; // size: 0x4, address: 0x11263C0
 extern int ev_e_step; // size: 0x4, address: 0x11263C8
 extern int ev_m_step; // size: 0x4, address: 0x11263D0
+extern int ev_prog_flag_set; // size: 0x4, address: 0x11263A8
 
 extern Game_Flag game_flag;
 extern u_short msg_buffer[];
@@ -119,5 +121,7 @@ extern Radio_Data radio;
 void EventCancel(void);
 float CharToFloat2(char* cp);
 float CharToFloat4(char* cp);
+int LightSpotOnOffCheck(void);
+void LightSpotOnOffSet(void);
 
 #endif // EVENT_H
