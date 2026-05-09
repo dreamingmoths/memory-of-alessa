@@ -9,6 +9,7 @@ static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int 
 static void EventExecSubFlagSet(Event_List * el /* r2 */);
 static int EventExecFlag(void);
 static int EventExecMessage(void);
+static int EventExecProgram(void);
 static int EventExecDoor(void);
 
 extern /* static */ Event_DoorSound door_se[22];
@@ -200,7 +201,32 @@ static int EventExecMessage(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecProgram);
+static int EventExecProgram(void) {
+    Event_List* el; // r16
+    int flg; // r2
+    int prog; // r2
+
+    el = stage->ev_list + ev_active;
+    if (ev_e_step == 0) {
+        EventExecSubFlagSet(el);
+        ev_prog_flag_set = 1;
+        ev_e_step = 2;
+        ev_p_step = 0;
+        ev_s_step = 0;
+    }
+    prog = EventListElement(el, 0x13);
+    if (stage->ev_prog[prog](stage) != 0) {
+        if (ev_prog_flag_set != 0) {
+            flg = EventListElement(el, 0x16);
+            if (flg != 0) {
+                SET_GAME_FLAG(flg >> 5, flg & 0x1F);
+                //SET_FLAG(game_flag.flag, flg);
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
 
 static int EventExecDoor(void) {
     Event_List* el; // r16
