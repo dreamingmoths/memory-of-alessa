@@ -61,6 +61,17 @@ typedef struct Event_DoorSound {
     short pad; // offset 0xA, size 0x2
 } Event_DoorSound;
 
+// total size: 0x40
+typedef struct Radio_Data {
+    // Members
+    int se_call; // offset 0x0, size 0x4
+    int event; // offset 0x4, size 0x4
+    float track[4] __attribute__((aligned(16))); // offset 0x8, size 0x10
+    float pan[4] __attribute__((aligned(16))); // offset 0x18, size 0x10
+    float volume; // offset 0x28, size 0x4
+    float pos[4] __attribute__((aligned(16))); // offset 0x30, size 0x10
+} Radio_Data;
+
 // total size: 0x44
 typedef struct Stage_Data {
     // Members
@@ -90,17 +101,20 @@ typedef struct Stage_Data {
     int reserve_11; // offset 0x40, size 0x4
 } Stage_Data;
 
-extern int ev_active;
-extern int ev_cancel;
-extern int ev_e_step;
-extern int ev_p_step;
-extern int ev_s_step;
+extern int sbt_msg_no; // size: 0x4, address: 0x1133C00
+extern int ev_cancel; // size: 0x4, address: 0x11263B0
+extern int ev_active; // size: 0x4, address: 0x1126380
+extern int ev_s_step; // size: 0x4, address: 0x11263B8
+extern int ev_p_step; // size: 0x4, address: 0x11263C0
+extern int ev_e_step; // size: 0x4, address: 0x11263C8
+extern int ev_m_step; // size: 0x4, address: 0x11263D0
 
 extern Game_Flag game_flag;
 extern u_short msg_buffer[];
 //extern u_short msg_station[]; uncommenting this gives problem with font.h
 extern struct shPlayerWork sh2jms;
 extern Stage_Data* stage;
+extern Radio_Data radio;
 
 void EventCancel(void);
 float CharToFloat2(char* cp);
