@@ -7,9 +7,7 @@ static void checkReadAlign(void* buffer /* r2 */);
 static u_long128* fsCmdWork;
 
 int fsInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */) {
-    int ret; // r2
-
-    ret = 0;
+    int ret = 0; // r2
     if (!fsCmdWork) {
         ret = CmdServInit(queue, queueSize, stack, stackSize, th_prio);
         if (ret) {
