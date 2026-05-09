@@ -2,6 +2,8 @@
 #include "Chacter/m3_sc.h"
 #include "Font/font.h"
 #include "sound/sh_sound.h"
+#include "GFW/sh2gfw_LightSet.h"
+#include "Chacter_Draw/sh2_JmsSpot_Man.h"
 
 static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
 static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */);
@@ -11,6 +13,7 @@ static int EventExecFlag(void);
 static int EventExecMessage(void);
 static int EventExecProgram(void);
 static int EventExecDoor(void);
+static int EventExecChizuFail(void);
 
 extern /* static */ Event_DoorSound door_se[22];
 
@@ -215,7 +218,7 @@ static int EventExecProgram(void) {
         ev_s_step = 0;
     }
     prog = EventListElement(el, 0x13);
-    if (stage->ev_prog[prog](stage) != 0) {
+    if (stage->ev_prog[prog]() != 0) {
         if (ev_prog_flag_set != 0) {
             flg = EventListElement(el, 0x16);
             if (flg != 0) {
@@ -294,11 +297,45 @@ INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecMove);
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSave);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", LightSpotOnOffCheck);
+int LightSpotOnOffCheck(void) {
+    if (!GET_BIT(item.flag[0], 15)) {
+        return 0;
+    }
+    if (!item.light_switch) {
+        return 0;
+    }
+    if (GET_GAME_FLAG(8, 16)) {
+        return 0;
+    }
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", LightSpotOnOffSet);
+void LightSpotOnOffSet(void) {
+    if ((sh2gfw_Get_NightOrDay() == 0) || !(GET_BIT(item.flag[0], 15))) {
+        return;
+    }
+    if (LightSpotOnOffCheck()) {
+        sh2gfw_On_JmsSPOT();
+        return;
+    }
+    sh2gfw_Off_JmsSPOT();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecChizuFail);
+static int EventExecChizuFail(void) {
+    if (ev_e_step == 0) {
+        fontMessageNum(msg_station, 2);
+        SCNowPlayableEventSwitch(sh2jms.player, 1);
+        ev_e_step = 2;
+        ev_p_step = 0;
+        ev_s_step = 0;
+    }
+    if ((fontGetStatus() == -2) || (ev_cancel != 0)) {
+        fontClear();
+        SCNowPlayableEventSwitch(sh2jms.player, 0);
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventProgressCheck);
 
