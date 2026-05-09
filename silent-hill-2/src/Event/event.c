@@ -7,6 +7,7 @@ static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
 static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */);
 static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int pos_t /* r18 */);
 static void EventExecSubFlagSet(Event_List * el /* r2 */);
+static int EventExecFlag(void);
 static int EventExecMessage(void);
 static int EventExecDoor(void);
 
@@ -14,7 +15,17 @@ extern /* static */ Event_DoorSound door_se[22];
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", FlagInit);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventProgInit);
+void EventProgInit(void) {
+    ev_m_step = 0;
+    ev_e_step = 0;
+    ev_p_step = 0;
+    ev_s_step = 0;
+    ev_active = -1;
+    ev_cancel = 0;
+    sbt_msg_no = 0;
+    radio.se_call = 0;
+    radio.event = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventMain);
 
@@ -143,7 +154,24 @@ void EventCancel(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSubFlagSet); // https://decomp.me/scratch/uNvCi 
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecFlag);
+static int EventExecFlag(void) {    
+    Event_List* el; // r2   
+    int st; // r6
+    int fl; // r2
+
+    el = stage->ev_list + ev_active;
+    st = EventListElement(el, 0xD);
+    fl = EventListElement(el, 0x16);
+    if (st == 1) {
+        SET_GAME_FLAG(fl >> 5, fl & 0x1F);
+        // SET_FLAG(game_flag.flag, fl); 
+    } else {
+        UNSET_GAME_FLAG(fl >> 5, fl & 0x1F);
+        // UNSET_FLAG(game_flag.flag, fl);
+    }
+    EventExecSubFlagSet(el);
+    return 1;
+}
 
 static int EventExecMessage(void) {
     Event_List* el; // r16
