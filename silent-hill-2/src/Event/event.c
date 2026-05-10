@@ -132,20 +132,20 @@ static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int 
     pos_v[2] = CharToFloat4(&pos_p[6]);
     switch (pos_t) {
         case 1:
-            pos_v[0] = (pos_v[0] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            pos_v[0] += (CharToFloat2(&pos_p[0xA]) / 2.0f);
             break;
         case 2:
-            pos_v[0] = (pos_v[0] - (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            pos_v[0] -= (CharToFloat2(&pos_p[0xA]) / 2.0f);
             break;
         case 3:
-            pos_v[2] = (pos_v[2] - (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            pos_v[2] -= (CharToFloat2(&pos_p[0xA]) / 2.0f);
             break;
         case 4:
-            pos_v[2] = (pos_v[2] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
+            pos_v[2] += (CharToFloat2(&pos_p[0xA]) / 2.0f);
             break;
         case 5:
-            pos_v[0] = (pos_v[0] + (CharToFloat2(&pos_p[0xA]) / 2.0f));
-            pos_v[2] = (pos_v[2] + (CharToFloat2(&pos_p[0xC]) / 2.0f));
+            pos_v[0] += (CharToFloat2(&pos_p[0xA]) / 2.0f);
+            pos_v[2] += (CharToFloat2(&pos_p[0xC]) / 2.0f);
             break;
     }
 }
