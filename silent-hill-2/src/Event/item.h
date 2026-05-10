@@ -51,9 +51,6 @@ struct Stage_Data {
     int reserve_11; // offset 0x40, size 0x4
 };
 
-// src\Chacter\player_result.c
-extern void GameItemGetCountUp(void);
-
 // src\SH2_common\sh_vu0.c
 extern void shQzero(void*, int);
 
