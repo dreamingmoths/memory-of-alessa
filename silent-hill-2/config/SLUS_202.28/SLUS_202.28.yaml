@@ -361,6 +361,8 @@ segments:
       - [0x1aa160, data,    data_0x1aa160]
       - [0x1b87c0, .data,   sound/sh_sound]
       - [0x1b9ae0, data,    data_0x1b9ae0]
+      - [0x24c8c0, .data,   jump_menu]
+      - [0x24c8d0, data,    data_0x24c8d0]
       - [0x24cff8, .data,   Multi_thr/scf/ps2_scf]
       - [0x24d010, data,    data_0x24d010]
       - [0x26f430, .data,   Effect2/hh_class_object_execute]

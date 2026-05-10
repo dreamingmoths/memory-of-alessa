@@ -56,7 +56,7 @@ typedef struct Event_DoorSound {
     // Members
     short open; // offset 0x0, size 0x2
     short close; // offset 0x2, size 0x2
-    short unlock; // offset 0x4, size 0x2
+    short unlock; // ofwfset 0x4, size 0x2
     short jam; // offset 0x6, size 0x2
     short lock; // offset 0x8, size 0x2
     short pad; // offset 0xA, size 0x2
