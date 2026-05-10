@@ -12,7 +12,7 @@
 typedef struct Item {
     // Members
     u_int flag[2]; // offset 0x0, size 0x8
-    u_shortshort number[11]; // offset 0x8, size 0x16
+    u_short number[11]; // offset 0x8, size 0x16
     u_char light_switch; // offset 0x1E, size 0x1
     u_char radio_switch; // offset 0x1F, size 0x1
     u_char radio_volume; // offset 0x20, size 0x1
