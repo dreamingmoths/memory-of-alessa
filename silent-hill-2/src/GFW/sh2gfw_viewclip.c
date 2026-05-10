@@ -1,15 +1,51 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "GFW/sh2_DrawEnvData.h"
 #include "view/vb_main.h"
+#include "view/vw_main.h"
 #include "Event/stg_name.h"
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_viewclip_block);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_ClipDraw_BG);
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_get_blockORIGIN);
+static void sh2gfw_get_blockORIGIN(float (* bbox)[4], float* origin){
+    int ix; // r16
+    int iz; // r4
+    int tmp[4]; // r29+0x40
+    
+    sceVu0ScaleVector(origin, origin, 0.0f);
+    for (ix = 0; ix < 4; ix++) {
+        sceVu0AddVector(origin, origin, bbox[ix]);
+    }
+    
+    sceVu0ScaleVector(origin, origin, 0.25f);
+    sceVu0FTOI0Vector(tmp, origin);
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_Get_CamTilePos);
+    ix = tmp[0] / 20000;    
+    iz = tmp[2] / 20000;
+
+    
+    
+    if (tmp[0] < 0) ix--;
+    if (tmp[2] < 0) iz--;
+    
+    origin[0] = 20000.0f * ix;
+    origin[1] = 0.0f;
+    origin[2] = 20000.0f * iz;
+    origin[3] = 1.0f;
+
+}
+
+int sh2gfw_Get_CamTilePos(float* origin) {
+    int ssx, ssz;
+    float svt[4]; // r29+0x20
+    vwGetViewPosition(svt);
+    sceVu0SubVector(svt, svt, origin);
+
+    ssz = svt[2] / 2500.0f;
+    ssx = svt[0] / 2500.0f;
+    return ssx + (ssz * 8);
+}
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_get_ViewRecTangle);
 
@@ -49,7 +85,17 @@ void sh2gfw_get_viewTriangle(sceVu0FMATRIX view_triangle) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_init_vctagbuf);
+void sh2gfw_init_vctagbuf(void* vc) {
+    Q_WORDDATA* VcBuf = vc;
+    Q_WORDDATA cleardata = { 0x10101010, 0x10101010, 0x10101010, 0x10101010 };
+
+    
+    VcBuf[0] = cleardata;
+    VcBuf[1] = cleardata;
+    VcBuf[2] = cleardata;
+    VcBuf[3] = cleardata;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_make_tagclipdata);
 

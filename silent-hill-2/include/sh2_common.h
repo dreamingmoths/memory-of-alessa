@@ -5,6 +5,8 @@
 
 #include "common.h"
 
+#pragma fast_fptosi off
+
 inline int clamp(int b, int i) {
     asm("slt $t7, %1, %0; movn %0, %1, $t7" : "=r"(b) : "r"(i) : ); return b;
 }
