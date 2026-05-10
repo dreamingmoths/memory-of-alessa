@@ -1,6 +1,9 @@
 #include "common.h"
 #include "Font/font.h"
 #include "Font/fj_man.h"
+#include "SH3_common/sh3dt.h"
+#include "libgraph.h"
+#include "eestruct.h"
 
 struct FONT_DATA font;
 
@@ -204,15 +207,11 @@ void fontSetAlpha(u_char alp)
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015AA10);
 
-#ifdef NON_MATCHING
 void fontBarBlink()
 {
     if ((font.bar_blink += shGetDT()) >= 1.0f)
         font.bar_blink -= 1.0f;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontBarBlink);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontFlush);
 
@@ -224,19 +223,10 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015C410);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPutYesNoSelectBar);
 
-void *fontTexLoad(int texadr, int clutadr)
-{
-    font_dma_data[0x04] =
-        ((long)(int)texadr << 32) | (0x14080000ULL << 32);
-
-    font_dma_data[0x14] =
-        ((long)(int)clutadr << 32) | (0x00010000ULL << 32);
-
-    font.tex0 =
-        (long)(int)texadr |
-        (0x00066542ULL << 16) |
-        ((long)(int)clutadr << 37) |
-        (0x20000000ULL << 32);
+void* fontTexLoad(int texadr, int clutadr) {
+    font_dma_data[0x04] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, texadr, 512 / 64, SCE_GS_PSMT4);
+    font_dma_data[0x14] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, clutadr, 64 / 64, SCE_GS_PSMCT32);
+    font.tex0 = SCE_GS_SET_TEX0(texadr, 512 / 64, SCE_GS_PSMT4, 9 /* 512 */, 9 /* 512 */, SCE_GS_TRUE, SCE_GS_MODULATE, clutadr, SCE_GS_PSMCT32, SCE_GS_FALSE, 0, 1);
 
     return font_dma_data;
 }
@@ -250,14 +240,13 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPreload);
 INCLUDE_ASM("asm/nonmatchings/Font/font", func_0015CEF0);
 
 void func_0015CF10(u_short *dest, u_short *src) {
-    u_short val;
+    u_short n;
     do {
-        val = *src++;
-        *dest++ = val;
-    } while (val != 0xFFFF);
+        n = *src++;
+        *dest++ = n;
+    } while (n != 0xFFFF);
 }
 
-#ifdef NON_MATCHING
 void fontPushButton()
 {
     if (font.wait_type == 4) {
@@ -270,11 +259,7 @@ void fontPushButton()
         font.wait_count = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontPushButton);
-#endif
 
-#ifdef NON_MATCHING
 void fontPushButton2()
 {
     if (((font.wait_type & 7u) != 2) && !(font.flag & 0x10))
@@ -282,9 +267,6 @@ void fontPushButton2()
         font.wait_count = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontPushButton2);
-#endif
 
 #ifdef NON_MATCHING
 void fontSelectUp()
@@ -305,12 +287,8 @@ void fontSelectUp()
         SeCall(1.0f, 0.0f, 10000);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectUp);
-#endif
 
 
-#ifdef NON_MATCHING
 void fontSelectDown()
 {
     if (font.wait_type == 4)
@@ -328,10 +306,10 @@ void fontSelectDown()
     }
 }
 #else
+INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectUp);
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectDown);
 #endif
 
-#ifdef NON_MATCHING
 u_short *fontGetMesAdr(u_short *str, u_short num)
 {
     if (str == NULL)
@@ -345,9 +323,6 @@ u_short *fontGetMesAdr(u_short *str, u_short num)
     }
     return str + str[num + 1];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetMesAdr);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontMessageNum);
 
@@ -360,14 +335,14 @@ void fontMessage(u_short *str)
     }
 
     font.mes_str = str;
-    font.flag &= 0xfffffffe;
+    font.flag &= ~1;
     fontNextMessage();
 
     if (font.prl_count == 0 && font.wait_type > 0 && font.wait_type < 8)
     {
         font.prl_str = font.mes_str;
         font.prl_count = 1;
-        font.flag &= 0xffffffbf;
+        font.flag &= ~0x40;
     }
 }
 

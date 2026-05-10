@@ -35,4 +35,8 @@
 #define SCE_GS_PRIM_CTXT2		(1<<9)
 #define SCE_GS_PRIM_FIX			(1<<10)
 
+#define SCE_GS_MODULATE			(0)
+#define SCE_GS_DECAL			(1)
+#define SCE_GS_HILIGHT			(2)
+
 #endif

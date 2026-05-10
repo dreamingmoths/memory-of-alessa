@@ -29,6 +29,9 @@ typedef signed char s_char;
 #define MIN(a,b) ((a) > (b) ? (b) : (a))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
+#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
+#define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
+
 #define UNCACHED(p) ((char*)((u_int)p | 0x20000000))
 #define READ_UNCACHED(addr) ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
 #define SCRATCHPAD_START 0x70000000

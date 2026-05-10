@@ -4,7 +4,6 @@
 #define WALL_MAX 188
 #define PART_MAX 700
 #define OBJ_MAX 168
-#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 
 typedef struct FOG_PART_DATA {
     // total size: 0x60
