@@ -3,7 +3,6 @@
 
 #include "common.h"
 #include "Chacter/character.h"
-#include "Event/picture.h"
 #include "connect.h"
 
 #define EV_PROG_STEP(p_step) \
@@ -811,11 +810,7 @@ int fsSync(int mode /* r17 */, int fid /* r16 */);
 int shPadTrigger(int port /* r17 */, int key /* r16 */);
 
 void SCNowPlayableEventSwitch(struct SubCharacter * scp /* r2 */, int flag /* r2 */);
-int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */);
-int SeCallPos( int sd_no /* r20 */, float volume /* r20 */, float * pos /* r19 */, int status /* r18 */);
 int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */);
-void PictureDraw(struct PicDraw_Data * pic /* r21 */);
-void PictureLoadImage(struct sh2gfw_AREA_HEAD * ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
 char* get_gp_data_buf_addr();
 void shQzero(void *, int);
 
