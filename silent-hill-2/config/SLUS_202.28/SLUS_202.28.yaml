@@ -216,7 +216,7 @@ segments:
       - [0x122340, asm, Chacter/m3_nik]
       - [0x122560, c,   Multi_thr/loadinit/loadinit]
       - [0x122690, asm, DBG/dbswitch]
-      - [0x122b20, asm, Effect/ef_cartridge]
+      - [0x122b20, c,   Effect/ef_cartridge]
       - [0x1242d0, asm, Chacter/m3_maria_sub]
       - [0x128a00, c,   Event/stg_overlay]
       - [0x129200, asm, Enemy/en_oni]
