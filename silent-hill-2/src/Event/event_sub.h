@@ -803,8 +803,6 @@ int sh2gfw_FastSet_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
 void sh2gfw_Init_DispOnOffObj();
 int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
 void sh2gfw_Black_Clear();
-void PictureDraw(struct PicDraw_Data* pic /* r21 */);
-void PictureLoadImage(struct sh2gfw_AREA_HEAD* ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
 
 int fcRead(union fsFile* fp /* r17 */, void* buf /* r16 */);
 int ScreenEffectFadeCheck();
