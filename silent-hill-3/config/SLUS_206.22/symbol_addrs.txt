@@ -463,6 +463,9 @@ Instance_DesignateClassDescriptorAttach_Count = 0x001416B0;
 InstanceHandle_Get_from_ClassDescriptor_and_AttachCount = 0x001416F0;
 InstanceHierarchyTable_DesignateInstance_Initialize = 0x00141A20;
 
+// m3_play_event
+PlayerGetHeatherWeapon = 0x00190870;
+
 // item_menu_select.c
 // this TU isn't in SH2, but there's a string that refers to it.
 ItemMenuSelect = 0x002b1420;

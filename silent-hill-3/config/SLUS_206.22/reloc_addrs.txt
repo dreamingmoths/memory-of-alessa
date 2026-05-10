@@ -1205,10 +1205,10 @@ rom:0x90148 reloc:MIPS_PC16 symbol:.L0018FC2C addend:0x4
 rom:0x9015C reloc:MIPS_PC16 symbol:.L0018FC2C addend:0x4
 rom:0x90180 reloc:MIPS_PC16 symbol:.L0018FC2C addend:0x4
 rom:0x90194 reloc:MIPS_PC16 symbol:.L0018FC2C addend:0x4
-rom:0x90608 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
-rom:0x90724 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
-rom:0x90744 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
-rom:0x90C84 reloc:MIPS_PC16 symbol:.L001907B4 addend:0x4
+// rom:0x90608 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
+// rom:0x90724 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
+// rom:0x90744 reloc:MIPS_PC16 symbol:.L001901F0 addend:0x4
+// rom:0x90C84 reloc:MIPS_PC16 symbol:.L001907B4 addend:0x4
 rom:0x928A4 reloc:MIPS_PC16 symbol:.L00192368 addend:0x4
 rom:0x948C4 reloc:MIPS_PC16 symbol:.L0019435C addend:0x4
 rom:0x94A20 reloc:MIPS_PC16 symbol:.L001953A4 addend:0x4
