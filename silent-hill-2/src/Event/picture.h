@@ -96,4 +96,7 @@ inline void picture_set_tex_coords(PicDraw_Data* pic, short uvst[4]) {
     pic->status |= 4;
 }
 
+void PictureDraw(PicDraw_Data* pic /* r21 */);
+void PictureLoadImage(sh2gfw_AREA_HEAD* ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
+
 #endif // PICTURE_H
