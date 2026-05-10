@@ -1,9 +1,11 @@
 #include "Event/event_sub.h"
 #include "Event/item.h"
 #include "Event/picture.h"
+#include "Event/stg_name.h"
 #include "Font/font.h"
 #include "sound/sh_sound.h"
 #include "Multi_thr/filesys/fileserv.h"
+#include "Effect/screen_effect.h"
 
 static int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */);
 
