@@ -803,10 +803,9 @@ void sh2gfw_Init_DispOnOffObj();
 int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
 void sh2gfw_Black_Clear();
 
-int fcRead(union fsFile* fp /* r17 */, void* buf /* r16 */);
+
 int ScreenEffectFadeCheck();
 void ScreenEffectFadeStart(int type /* r2 */, float time /* r29+0x10 */);
-int fsSync(int mode /* r17 */, int fid /* r16 */);
 int shPadTrigger(int port /* r17 */, int key /* r16 */);
 
 void SCNowPlayableEventSwitch(struct SubCharacter * scp /* r2 */, int flag /* r2 */);
