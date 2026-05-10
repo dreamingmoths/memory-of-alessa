@@ -794,31 +794,36 @@ struct Pad_KeyConfig {
     int padding[6]; // offset 0x48, size 0x18
 };
 
-void sh2gfw_Reset_FilterCommand();
-int MovieWaitReady();
-void sh2gfw_Set_PauseRetain();
-int BgIsOut(int glb_crd /* r2 */);
-int sh2gfw_FastSet_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
-void sh2gfw_Init_DispOnOffObj();
-int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
-void sh2gfw_Black_Clear();
+// movie/movie_main.c
+extern int MovieWaitReady(void);
+// GFW/sh2gfw_viewclip.c
+extern int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
+extern void sh2gfw_Init_DispOnOffObj(void);
+extern int sh2gfw_FastSet_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
+// GFW/sh2gfw_2d_filters.c
+extern void sh2gfw_Reset_FilterCommand(void);
+extern void sh2gfw_Black_Clear(void);
+extern void sh2gfw_Set_PauseRetain(void);
 
+// SH2_common/pad.c
+extern int shPadTrigger(int port /* r17 */, int key /* r16 */);
 
-int ScreenEffectFadeCheck();
-void ScreenEffectFadeStart(int type /* r2 */, float time /* r29+0x10 */);
-int shPadTrigger(int port /* r17 */, int key /* r16 */);
+// Chacter/sh2_character_manage.c
+extern int shCharacter_Manage_Delete(struct SubCharacter* scp /* r2 */, short kind /* r2 */, short id /* r2 */);
+// gamemain.c
+extern char* get_gp_data_buf_addr(void);
+// SH2_common/sh_vu0.c
+extern void shQzero(void*, int);
 
-void SCNowPlayableEventSwitch(struct SubCharacter * scp /* r2 */, int flag /* r2 */);
-int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */);
-char* get_gp_data_buf_addr();
-void shQzero(void *, int);
-
-void PlayerEventAnimeSet(int anime /* r16 */);
-int PlayerEventAnimeSuccessFrame(void);
-int shCharacterAnimeIsEnd(struct SubCharacter * scp /* r2 */);
-void shCharacterAnimePause(struct SubCharacter * scp /* r2 */);
-void shCharacterAnimeRestart(struct SubCharacter * scp /* r2 */);
-struct SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
+// Chacter/m3_play_event.c
+extern void PlayerEventAnimeSet(int anime /* r16 */);
+extern int PlayerEventAnimeSuccessFrame(void);
+// Chacter/m3_sc.c
+extern void SCNowPlayableEventSwitch(struct SubCharacter* scp /* r2 */, int flag /* r2 */);
+extern int shCharacterAnimeIsEnd(struct SubCharacter* scp /* r2 */);
+extern void shCharacterAnimePause(struct SubCharacter* scp /* r2 */);
+extern void shCharacterAnimeRestart(struct SubCharacter* scp /* r2 */);
+extern struct SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
 
 // almost every function above should be moved to its correct place
 int EvSubMessage(int msg /* r2 */);
