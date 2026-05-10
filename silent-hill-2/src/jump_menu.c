@@ -1,5 +1,9 @@
 #include "jump_menu.h"
 #include "SH2_common/playing_info.h"
+#include "Event/event.h"
+#include "Event/item.h"
+#include "Event/event_sub.h"
+#include "Chacter/player_result.h"
 
 void JumpMenuPosNormal(void) {
     if (user_data.flg != 0) {
