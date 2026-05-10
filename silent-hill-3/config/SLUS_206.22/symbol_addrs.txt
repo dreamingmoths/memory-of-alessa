@@ -94,10 +94,14 @@ d2tscBeginToUseSlot = 0x00130410;
 d2tscSend = 0x001304B0;
 
 // vw
-vwGetViewPosition = 0x001B42A0;
+vwInitViewInfo = 0x001c1830;
 
-// this function seems to be a copy of vwGetViewPosition, unclear purpose.
+// it's possible this function was moved into a header and got included in 
+// multiple places?
+vwGetViewPosition = 0x001b42a0;
+// _vwGetViewPosition = 0x001c18c0;
 // _vwGetViewPosition = 0x001B3E80;
+
 
 // cl_main
 rodata_jyun = 0x00361bc0; // size:0x14

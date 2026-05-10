@@ -87,3 +87,5 @@ INCLUDE_ASM("asm/nonmatchings/GFW/sh3gfw_Texpacket", func_001B60B0);
 INCLUDE_ASM("asm/nonmatchings/GFW/sh3gfw_Texpacket", func_001B60F0);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh3gfw_Texpacket", func_001B6240);
+
+INCLUDE_ASM("asm/nonmatchings/GFW/sh3gfw_Texpacket", func_001B6310);
