@@ -1,5 +1,6 @@
 #include "Event/event_sub.h"
 #include "Event/item.h"
+#include "Event/picture.h"
 #include "Font/font.h"
 
 static int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */);
