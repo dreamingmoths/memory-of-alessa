@@ -250,6 +250,11 @@ int mpegTS(sceMpeg *mp, sceMpegCbDataTimeStamp *cbts, void *anyData)
 
 static int cpy2area(u_char *pd0, int d0, u_char *pd1, int d1, u_char *ps0, int s0, u_char *ps1, int s1)
 {
+    if (d0 < 0 || d1 < 0 || s0 < 0 || s1 < 0)
+    {
+        return 0;
+    }
+
     if (d0 + d1 < s0 + s1)
     {
         return 0;
