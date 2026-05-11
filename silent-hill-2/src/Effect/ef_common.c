@@ -163,7 +163,7 @@ void EFCTSetBrokenGlass(float* parent_pos /* r20 */, float* parent_direction /* 
 void EFCTSetSmoke(float* pos /* r19 */, u_char kind /* r18 */) {
     EFCTTask* pTask; // r16
     int i; // r17
-    u_short LayerNum = 1; // r2 useless?
+    u_short LayerNum = 1; // r2
 
     for (i = 0; i < LayerNum; i++) {
         pTask = EFCTEntryEffectTask(8);
@@ -186,9 +186,8 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", InitEffectTexEnv);
 static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */) {
     EFCTObject* pObject; // r16
     shTskTASK* pTask; // r2    
-    int i; // r4
+    int i = 0; // r4
 
-    i = 0;
     pObject = EFCTLocalDataBuffer;
     while (pObject->Using == 1) {
         if (i >= 32) {
@@ -197,15 +196,15 @@ static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */) {
         i++;
         pObject++;
     }
-    pTask = shTSKSetTask(EFCTControlFunc[(short)Kind], 4);
-    if (pTask == NULL) {
+    pTask = shTSKSetTask(EFCTControlFunc[Kind], 4);
+    if (!pTask) {
         return NULL;
     }
     pObject->EffectKind = Kind;
     pObject->Using = 1;
-    ((EFCTTask*)pTask)->pObj = pObject;
-    ((EFCTTask*)pTask)->exe.atr = (short)Kind;
-    return (EFCTTask*)pTask;
+    ((EFCTTask*) pTask)->pObj = pObject;
+    ((EFCTTask*) pTask)->exe.atr = Kind;
+    return pTask;
 }
 void EFCTCutEffectTask(EFCTTask* ptr) {
     if (ptr->pObj->Using == 1) {
@@ -218,14 +217,14 @@ void EFCTCutEffectTask(EFCTTask* ptr) {
             EfctFree(ptr->pObj->pAnimData);
             ptr->pObj->pAnimData = NULL;
         }
-        shTSKDelTask((shTskTASK *)ptr);
+        shTSKDelTask((shTskTASK*) ptr);
     }
 }
 
 int InitEffectAnimData(u_short TotalFrame /* r17 */, float DrawFrameWait /* r20 */, short StartFrame /* r16 */, EFCTAnimationData** pAnim /* r18 */) {    
     EFCTAnimationData AnimData;
     
-    if (*pAnim != NULL) {
+    if (*pAnim) {
         EfctFree(*pAnim);
         *pAnim = NULL;
     }
@@ -233,10 +232,7 @@ int InitEffectAnimData(u_short TotalFrame /* r17 */, float DrawFrameWait /* r20 
     if (*pAnim == NULL) {
         return 0;
     }
-    if (StartFrame >= TotalFrame) { 
-        printf("ef_common.c:1073> assert:(%s)\n", "StartFrame < TotalFrame");
-        while (1);
-    }
+    ASSERT_ON_LINE(StartFrame < TotalFrame, 1073);
     AnimData.Status = 0;
     AnimData.StartFrameNo = StartFrame;
     if (StartFrame <= 0) {
