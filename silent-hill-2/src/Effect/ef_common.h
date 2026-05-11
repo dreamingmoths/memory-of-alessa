@@ -22,12 +22,12 @@ typedef struct EFCTAnimationData {
 // total size: 0x60
 typedef struct EFCTVertexData {
     // Members
-    float LocalPos[4]__attribute__((aligned(16))); // offset 0x0, size 0x10
-    float WorldPos[4]__attribute__((aligned(16))); // offset 0x10, size 0x10
-    int ScreenPos[4]__attribute__((aligned(16))); // offset 0x20, size 0x10
+    sceVu0FVECTOR LocalPos; // offset 0x0, size 0x10
+    sceVu0FVECTOR WorldPos; // offset 0x10, size 0x10
+    sceVu0IVECTOR ScreenPos; // offset 0x20, size 0x10
     u_char rgba[4]; // offset 0x30, size 0x4
-    float stq[4]__attribute__((aligned(16))); // offset 0x40, size 0x10
-    signed short is_valid; // offset 0x50, size 0x2
+    sceVu0FVECTOR stq; // offset 0x40, size 0x10
+    short is_valid; // offset 0x50, size 0x2
 } EFCTVertexData;
 
 // total size: 0x60
@@ -41,9 +41,9 @@ typedef struct EFCTObject {
     float height; // offset 0xC, size 0x4
     u_short VertexNum; // offset 0x10, size 0x2
     u_short LayerNum; // offset 0x12, size 0x2
-    float trans[4]__attribute__((aligned(16))); // offset 0x20, size 0x10
-    float rot[4]__attribute__((aligned(16))); // offset 0x30, size 0x10
-    float Pos[4]__attribute__((aligned(16))); // offset 0x40, size 0x10
+    sceVu0FVECTOR trans; // offset 0x20, size 0x10
+    sceVu0FVECTOR rot; // offset 0x30, size 0x10
+    sceVu0FVECTOR Pos; // offset 0x40, size 0x10
     short chara_kind; // offset 0x50, size 0x2
     short chara_id; // offset 0x52, size 0x2
     EFCTVertexData* pVertex; // offset 0x54, size 0x4
@@ -71,16 +71,26 @@ void EFCTSetGunFireEddie(float* Pos /* r16 */, float* vec /* r2 */);
 
 void EFCTSetGunSmoke(float* pos); // there is no argument in the dwarf
 void EFCTResetRGBA(int* rgba /* r2 */, EFCTVertexData* pVertex /* r2 */);
-float EFCTGetPassingTimePerFrame();
+float EFCTGetPassingTimePerFrame(void);
 void ClipEffectObject2(EFCTObject* pObj /* r18 */);
 void DrawPrimitive(EFCTObject* pObj /* r17 */);
 void EFCTThreeDWork(EFCTObject* pObj /* r17 */);
 
 void EFCTCutEffectTask(EFCTTask* ptr /* r16 */);
 
+int InitEffectAnimData(u_short TotalFrame /* r17 */, float DrawFrameWait /* r20 */, short StartFrame /* r16 */, EFCTAnimationData** pAnim /* r18 */);
+
+void SetEffectVertexSpriteXY(float width /* r29 */, float height /* r29 */, EFCTVertexData* VertexData /* r2 */);
+void SetEffectVertexSpriteXZ(float width /* r29 */, float height /* r29 */, EFCTVertexData* VertexData /* r2 */);
+int EFCTNextFrame(EFCTObject* pObj /* r2 */, int DoLoop /* r2 */);
+
+void CalibrationZValue(u_int vertex_num /* r2 */, int z /* r2 */, EFCTVertexData* pVertex /* r2 */);
+
 extern u_char EFCTTaskBuf[131072];
 extern u_long128 efctPacket[4096];
 extern u_long128 efctheap[32768];
 extern EFCTObject EFCTLocalDataBuffer[32];
+
+extern float passing_time; // size: 0x4, address: 0x550670
 
 #endif // EF_COMMON_H
