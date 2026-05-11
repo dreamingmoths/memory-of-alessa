@@ -17,7 +17,7 @@ static u_short GetEffectLayerNum(short EffectKind /* r2 */);
 static int EFCTDeleteOldBloodDropTask(void);
 static void InitEffectTexEnv(int EffectKind /* r2 */);
 static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */);
-static signed int EFCTAutoNextFrame(EFCTObject* pObj /* r2 */);
+static int EFCTAutoNextFrame(EFCTObject* pObj /* r2 */);
 static void EFCTDoCtrlDummy(void* ptr /* r2 */);
 
 extern /* static */ void (* EFCTControlFunc[9])(void *);
