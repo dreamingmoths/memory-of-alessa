@@ -61,7 +61,27 @@ void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetWide);
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetBlankBox);
+void fontSetBlankBox(int x0, int x1, int y) {
+    FONT_STREAM_DATA* fstream;
+
+    if (font.st_num >= font.stream_max) {
+        debugPrintf("font over.\n");
+        return;
+    }
+    
+    
+    
+    fstream = &font.stream[font.st_num];
+    fstream->x = x0 * 0x10;
+    fstream->y = y * 0x10;
+    fstream->u = x1 * 0x10;
+    fstream->v = 0xfff7;
+    fstream->rgb_u = font.rgb_u | (font.alpha << 0x18);
+    fstream->rgb_d = font.rgb_d | (font.shadow_now << 0x18);
+    fstream->h = FontSize[font.fonttype][1] * 0x10;
+
+    font.st_num++;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetLine);
 
