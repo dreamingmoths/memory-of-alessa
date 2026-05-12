@@ -20,13 +20,13 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", func_001D37E0);
 
 void Model3Init(void) {    
     if (initialized == 0) {
-        const static float xyz_min_wide[4] = {16.0, 16.0, 0.0, 0.0};
-        const static float xyz_max_wide[4] = {4080.0, 4080.0, 0.0, 0.0};
-        const static float xyz_min[4] = {1024.0, 1024.0, 0.0, 0.0};
-        const static float xyz_max[4] = {3072.0, 3072.0, 0.0, 0.0};
-        const static float rgba_max[4] = {128.0, 128.0, 128.0, 255.0};
-        const static float global_ambient[4] = {1.0, 1.0, 1.0, 1.0};
-        const static long giftag_0[2] = {
+        static float xyz_min_wide[4] = {16.0, 16.0, 0.0, 0.0};
+        static float xyz_max_wide[4] = {4080.0, 4080.0, 0.0, 0.0};
+        static float xyz_min[4] = {1024.0, 1024.0, 0.0, 0.0};
+        static float xyz_max[4] = {3072.0, 3072.0, 0.0, 0.0};
+        static float rgba_max[4] = {128.0, 128.0, 128.0, 255.0};
+        static float global_ambient[4] = {1.0, 1.0, 1.0, 1.0};
+        static long giftag_0[2] = {
             SCE_GIF_SET_TAG(
                 0,
                 SCE_GS_TRUE,
@@ -37,7 +37,7 @@ void Model3Init(void) {
             ),
             GIF_REG(SCE_GIF_PACKED_AD, 0)
         };
-        const static long giftag_1[2] = {
+        static long giftag_1[2] = {
             SCE_GIF_SET_TAG(
                 0,
                 SCE_GS_TRUE,
@@ -48,7 +48,7 @@ void Model3Init(void) {
             ),
             GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
         };
-        const static long giftag_2[2] = {
+        static long giftag_2[2] = {
             SCE_GIF_SET_TAG(
                 0,
                 SCE_GS_TRUE,
@@ -60,11 +60,10 @@ void Model3Init(void) {
             GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
         };
 
-        // @hack writing to rodata!?
-        *(float*)&xyz_min_wide[2] = func_001B4210();
-        *(float*)&xyz_max_wide[2] = func_001B4200();
-        *(float*)&xyz_min[2] = func_001B4210();
-        *(float*)&xyz_max[2] = func_001B4200();
+        xyz_min_wide[2] = func_001B4210();
+        xyz_max_wide[2] = func_001B4200();
+        xyz_min[2] = func_001B4210();
+        xyz_max[2] = func_001B4200();
 
         sceVu0CopyVector(model3_junk.xyz_min_wide, (float*) xyz_min_wide);
         sceVu0CopyVector(model3_junk.xyz_max_wide, (float*) xyz_max_wide);
@@ -90,7 +89,7 @@ void func_001D3990(float max_z, float min_z)
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", sh3_Model3UpdateTextures)
 
-const sceVu0FMATRIX D_003669A0 = {
+sceVu0FMATRIX D_003669A0 = {
     -1.0, 0.0, 0.0, 0.0,
      0.0, 1.0, 0.0, 0.0,
      0.0, 0.0, 1.0, 0.0,

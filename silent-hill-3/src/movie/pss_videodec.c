@@ -76,12 +76,11 @@ int videoDecPutTs(VideoDec *vd, long int pts_val, long int dts_val, u_char *star
     return viBufPutTs(&videoDec.vibuf, &ts);
 }
 
-#ifdef NON_MATCHING
 int videoDecFlush(VideoDec *vd)
 {
     u_char *pd0;
     u_char *pd1;
-    u_char seq_end_code[4] = "\x00\x00\x01\xb7";
+    u_char seq_end_code[4] = {0x00, 0x00, 0x01, 0xb7};
     int d0;
     int d1;
     u_char *pd0_unc;
@@ -111,9 +110,6 @@ int videoDecFlush(VideoDec *vd)
 
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/movie/pss_videodec", videoDecFlush);
-#endif
 
 void videoDecMain(VideoDec* vd) {
     viBufReset(&vd->vibuf);

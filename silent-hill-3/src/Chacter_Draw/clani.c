@@ -13,7 +13,7 @@ float func_00140420(void);
 
 ClusterAnimeWork sh3cluster;
 
-const static CalcFunc calc_func_list[2] __attribute__((section(".rodata"))) = {
+static CalcFunc calc_func_list[2] = {
     func_001404C0,
     Calc1
 }; 

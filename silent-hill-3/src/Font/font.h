@@ -2,9 +2,11 @@
 #define FONT_H
 
 #include "common.h"
+#include "shared/Font/font.h"
 
 #define FONT_CORRECT_Y(y) ((y - 0x800) * 8 / 7 + 0x800)
 #define FONT_STREAM_BUFFER_SIZE 0x4000
+
 typedef struct FONT_DATA {
     // total size: 0x215B0
     u_int tex_head[12]; // size 0x30
@@ -27,7 +29,7 @@ typedef struct FONT_DATA {
     u_short right_y; // size 0x2
     u_short wm; // size 0x2
     u_short hm; // size 0x2
-    short unk20C0; // size 0x2
+    short unk200C0; // size 0x2
     short wait_count; // size 0x2
     short wait_type; // size 0x2
     short page_sound; // size 0x2
@@ -48,8 +50,8 @@ typedef struct FONT_DATA {
     u_short sel_yd[4]; // size 0x8
     short sel_max; // size 0x2
     short sel_now; // size 0x2
+    u_short unk20F4E; // size 0x2
     u_short mes_v[10][64]; // size 0x500
-    u_short * unk20F50; // size 0x2
     u_short * mes_str_now; // size 0x4
     u_short * mes_str; // size 0x4
     u_short * prl_str; // size 0x4
@@ -81,40 +83,6 @@ typedef struct FONT_DATA {
     int base_y; // size 0x4
     int base_z; // size 0x4
 } FONT_DATA;
-
-typedef struct WFONT_STREAM_DATA {
-    // total size: 0x18
-    /* 0x00 */ u_short x; // size 0x2
-    /* 0x02 */ u_short y; // size 0x2
-    /* 0x04 */ u_short vw; // size 0x2
-    /* 0x06 */ u_short vh; // size 0x2
-    /* 0x08 */ u_short u; // size 0x2
-    /* 0x0A */ u_short v; // size 0x2
-    /* 0x0C */ u_int rgb_u; // size 0x4
-    /* 0x10 */ u_int rgb_d; // size 0x4
-    /* 0x14 */ u_short w; // size 0x2
-    /* 0x16 */ u_short h; // size 0x2
-} WFONT_STREAM_DATA;
-
-typedef struct MFONT_STREAM_DATA {
-    // total size: 0x8
-    /* 0x0 */ u_short x; // size 0x2
-    /* 0x2 */ u_short y; // size 0x2
-    /* 0x4 */ u_short u; // size 0x2
-    /* 0x6 */ u_short v; // size 0x2
-} MFONT_STREAM_DATA;
-
-typedef struct FONT_STREAM_DATA
-{
-	u_short x;
-	u_short y;
-	u_short w;
-	u_short h;
-	u_short u;
-	u_short v;
-	u_int rgb_u;
-	u_int rgb_d;
-} FONT_STREAM_DATA;
 
 extern void fontSetColor(int num);
 extern void fontSetStreamMax(u_short s_max, u_short ws_max, u_short ms_max);

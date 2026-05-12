@@ -7,6 +7,9 @@ db_watch_point = 0x3d44b0;
 // font.c
 font = 0x1D0EFB0; // size:136626
 font_dma_data = 0x3585C0; // size:272
+data_defmes = 0x00358750; // size:16 type:s16 visibility:local
+data_fake_mes = 0x00358760; // size:44 type:s16 visibility:local
+fontInit = 0x00157D30;
 fontPrintStrMain = 0x158d60;
 fontPrintStr = 0x158cd0;
 fontPrintStrNum = 0x00158d20;

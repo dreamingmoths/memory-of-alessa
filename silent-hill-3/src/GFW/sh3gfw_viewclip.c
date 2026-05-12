@@ -8,25 +8,6 @@
 static void sh3gfw_init_vctagbuf(void* vc) {
     Q_WORDDATA* VcBuf = vc;
 
-    /*
-        @todo: how to get this into `rodata`?
-
-        const Q_WORDDATA cleardata1 = {
-            0x10101010,
-            0x10101010,
-            0x10101010,
-            0x10101010,
-        };
-        const Q_WORDDATA cleardata2 = {
-            0x20202020,
-            0x20202020,
-            0x20202020,
-            0x20202020,
-        };
-
-        using split:
-        - [0x262280, .rodata, GFW/sh3gfw_viewclip]
-    */
    extern Q_WORDDATA D_00361D00;
    extern Q_WORDDATA D_00361D10;
    Q_WORDDATA cleardata1 = D_00361D00;
