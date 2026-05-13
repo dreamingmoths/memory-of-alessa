@@ -6,7 +6,7 @@
 static void event_jms_stand(void);
 
 int PlayerNowDemoEventMode(void) {
-    return !(sh2jms.player->status & 0x2000) ? 0 : 1;
+    return sh2jms.player->status & 0x2000 ? 1 : 0;
 }
 
 int PlayerEventButtonCheck(int button /* r2 */) {
@@ -28,7 +28,7 @@ int PlayerEventButtonCheck(int button /* r2 */) {
         default:
             return 0;
     }
-    if ((pad != 0) && ((u_char)sh2jms.upper_now < JMS_ST_U_WALL_F)) {
+    if (pad != 0 && (u_char) sh2jms.upper_now < JMS_ST_U_WALL_F) {
         return 1;
     }
     return 0;
@@ -46,7 +46,7 @@ int PlayerEventAnimeSuccessFrame(void) { // https://decomp.me/scratch/NjmuL othe
     AnimeInfo* a_info = shCharacterAnimeGetInfo_(sh2jms.player, 1); // r16
     short frame = shCharacterAnimeFrameGet_(sh2jms.player, 1); // r2 
     
-    if ((a_info->pad != 0) && (frame >= a_info->pad)) {
+    if (a_info->pad != 0 && frame >= a_info->pad) {
         return 1;
     } 
     return 0;
