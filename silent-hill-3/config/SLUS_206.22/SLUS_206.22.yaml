@@ -10,7 +10,7 @@ options:
   symbol_addrs_path: 
     - symbol_addrs.txt
     - shim_addrs.txt
-    - symbol_addrs.cri.txt
+    - cri_symbol_addrs.txt
   reloc_addrs_path:
     - reloc_addrs.txt
     - shim_reloc_addrs.txt
@@ -34,7 +34,8 @@ segments:
       - [0x000580, asm,     crt0]
       - [0x000760, asm,     text_0x000760]
       - [0x000B40, asm,     sdk/mwcc/gcc_wrapper]
-      - [0x000BC0, asm,     sdk/sce/ee/libkernl/klib]
+    
+      - { start: 0x000BC0, type: asm, name: sdk/sce/ee/libkernl/klib,  ld_align_segment_start: 0x8 }
       - [0x001460, asm,     sdk/sce/ee/libkernl/glue]
       - [0x001830, asm,     sdk/sce/ee/libkernl/cache]
       - [0x001AB0, asm,     sdk/sce/ee/libkernl/intr]
@@ -53,7 +54,7 @@ segments:
       - [0x009C20, asm,     sdk/sce/ee/libkernl/diei]
       - [0x009C80, asm,     sdk/sce/ee/libkernl/initsys]
       - [0x009EE8, asm,     sdk/sce/ee/libkernl/libosd]
-      - [0x00A068, asm,     sdk/sce/ee/libkernl/exit]
+      - [0x00A068, asm,     sdk/sce/ee/libkernl/exit_libkernl]
       - [0x00A308, asm,     sdk/sce/ee/libkernl/alarm]
       - [0x00A448, asm,     sdk/sce/ee/libsdr/sdr_main]
       - [0x00A848, asm,     sdk/sce/ee/libcdvd/cdvd000]
@@ -64,12 +65,12 @@ segments:
       - [0x00BFF8, asm,     sdk/sce/ee/libmc/libmc]
       - [0x00D7F0, asm,     sdk/sce/ee/gcc/ee/lib/libc/abs]
       - [0x00D808, asm,     sdk/sce/ee/gcc/ee/lib/libc/atoi]
-      - [0x00D808, asm,     sdk/sce/ee/gcc/ee/lib/libc/bsearch]
+      - [0x00D830, asm,     sdk/sce/ee/gcc/ee/lib/libc/bsearch]
       - [0x00D900, asm,     sdk/sce/ee/gcc/ee/lib/libc/callocr]
       - [0x00D9B8, asm,     sdk/sce/ee/gcc/ee/lib/libc/closer]
       - [0x00DA10, asm,     sdk/sce/ee/gcc/ee/lib/libc/dtoa]
       - [0x00EEA8, asm,     sdk/sce/ee/gcc/ee/lib/libc/errno]
-      - [0x00EEB8, asm,     sdk/sce/ee/gcc/ee/lib/libc/exit]
+      - [0x00EEB8, asm,     sdk/sce/ee/gcc/ee/lib/libc/exit_libc]
       - [0x00EF68, asm,     sdk/sce/ee/gcc/ee/lib/libc/fflush]
       - [0x00F080, asm,     sdk/sce/ee/gcc/ee/lib/libc/findfp]
       - [0x00F320, asm,     sdk/sce/ee/gcc/ee/lib/libc/freer]
@@ -205,6 +206,7 @@ segments:
       - [0x025258, asm,     sdk/sce/ee/gcc/lib/gcc-lib/ee/version/libgcc/_df_to_sf]
       - [0x0252B0, asm,     sdk/sce/ee/gcc/lib/gcc-lib/ee/version/libgcc/_df_to_usi]
       - [0x025350, asm,     sdk/sce/ee/gcc/ee/lib/libm]
+
       # - [0x0259A8, asm,     sdk/sce/ee/gcc/ee/lib/libm/e_fmod]
       # - [0x025DC8, asm,     sdk/sce/ee/gcc/ee/lib/libm/e_pow]
       # - [0x026D18, asm,     sdk/sce/ee/gcc/ee/lib/libm/e_rem_pio2]
@@ -246,6 +248,7 @@ segments:
       # - [0x02C108, asm,     sdk/sce/ee/gcc/ee/lib/libm]
       # - [0x02C120, asm,     sdk/sce/ee/gcc/ee/lib/libm/wf_sqrt]
       - [0x02C140, asm,     unk]
+
       - { start: 0x02cff0, type: c,   name: main, ld_align_segment_start: 0x10 }
       - [0x02d2a0, asm,     text_0x02d2a0]
       - [0x02f3e0, c,       Chacter/m3_sc]
@@ -307,7 +310,8 @@ segments:
       - [0x0eca00, asm,     text_0x1ec480]
       - [0x0ef080, c,       Effect2/hh_class_cartridge]
       - [0x0f0920, asm,     text_0x0f0920]
-      - [0x0F2EC0, asm,     crimw/dev/adx/src/adxt/adx_amp] 
+
+      - { start: 0x0F2EC0, type: asm, name: crimw/dev/adx/src/adxt/adx_amp, ld_align_segment_start: 0x8 }
       - [0x0F35E0, asm,     crimw/dev/adx/src/adxt/adx_bahx] 
       - [0x0F3658, asm,     crimw/dev/adx/src/adxt/adx_baif] 
       - [0x0F3FB8, asm,     crimw/dev/adx/src/adxt/adx_bau] 
@@ -326,7 +330,7 @@ segments:
       - [0x0FA3F8, asm,     crimw/dev/adx/src/adxt/adx_fsvr] 
       - [0x0FA4B0, asm,     crimw/dev/adx/src/adxt/adx_inis] 
       - [0x0FA808, asm,     crimw/dev/adx/src/adxt/srcee/adx_mps2] 
-      - [auto,     asm,     crimw/dev/adx/src/adxt/adx_qtbl] 
+      - [auto,     c,       crimw/dev/adx/src/adxt/adx_qtbl]
       - [0x0FC010, asm,     crimw/dev/adx/src/adxt/srcee/adx_rnap] 
       - [0x0FC3E0, asm,     crimw/dev/adx/src/adxt/adx_sjd] 
       - [0x0FD218, asm,     crimw/dev/adx/src/adxt/adx_stmc] 
@@ -361,8 +365,8 @@ segments:
       - [0x10DB68, asm,     crimw/dev/adx/src/sjr/sjr_clt] 
       - [0x10DF90, asm,     crimw/dev/adx/src/sjx/sjx] 
       - [0x10E658, asm,     crimw/dev/adx/src/svm/svm] 
-      - [0x10F0A0, asm,     text_0x10eff0]
-      - [0x10f050, c,       Multi_thr/scf/ps2_scf]
+
+      - { start: 0x10f050, type: c, name: Multi_thr/scf/ps2_scf, ld_align_segment_start: 0x10 }
       - [0x10f350, asm,     text_0x10f350]
       - [0x110b40, c,       Effect2/hh_class_blood_01]
       - [0x111420, asm,     Effect2/hh_class_1]
@@ -432,8 +436,17 @@ segments:
       - [0x230b00, asm,     text_0x230b00]
       - [0x2345b0, c,       Effect2/hh_class_0x2345b0]
       - [0x234ee0, asm,     text_0x234ee0]
+
       - [0x238080, textbin, vutext]
+
       - [0x23aa80, data,    data]
+      - [0x257420, .data,   Chacter_Draw/clani]
+      - [0x257478, data,    data_0x257478]
+      - [0x258cd0, .data,   Font/font]
+      - [0x258d10, data,    data_0x258d10]
+      - [0x266e90, .data,   Chacter_Draw/model3_sub_n]
+      - [0x266f60, data,    data_0x266f60]
+    
       - [0x26BAC0, data,    crimw/dev/adx/src/adxt/adx_amp] 
       - [0x26BC48, data,    crimw/dev/adx/src/adxt/adx_bahx] 
       - [0x26BC50, data,    crimw/dev/adx/src/adxt/adx_bau] 
@@ -476,17 +489,22 @@ segments:
       - [0x287438, data,    crimw/dev/adx/src/sjx/sjx] 
       - [0x287FA8, data,    crimw/dev/adx/src/svm/svm] 
       - [0x2880F0, data,    data_0x2880F0] 
-      - [0x257420, .data,   Chacter_Draw/clani]
-      - [0x257478, data,    data_0x257478]
-      - [0x258cd0, .data,   Font/font]
-      - [0x258d10, data,    data_0x258d10]
-      - [0x266e90, .data,   Chacter_Draw/model3_sub_n]
-      - [0x266f60, data,    data_0x266f60]
       - [0x29de40, data,    data_0x29de40]
       - [0x29e180, .data,   movie/pss_vibuf]
       - [0x29e198, .data,   movie/pss_videodec]
       - [0x29e1c8, data,    data_0x29e1c8]
-      - [0x2BB480, rodata,  rodata]
+
+      - [0x2BB480, rodata,  rodata_0x2BB480]
+      - [0x2be000, .rodata, DS_Pad/ds_sequencer]
+      - [0x2be020, rodata,  rodata_0x2be020]
+      - [0x2be940, .rodata, Font/font]
+      - [0x2be970, rodata,  rodata_0x2be970]
+      - [0x2bf310, .rodata, Chacter/m3_play_event]
+      - [0x2bf420, rodata,  rodata_0x2bf420]
+      - [0x2bf8d0, .rodata, Collision/cl_main]
+      - [0x2bf910, rodata,  rodata_0x2bf910]
+      - [0x2c0260, .rodata, Fog/fog]
+      - [0x2C02B0, rodata,  rodata_0x2c02b0]
       - [0x2C02F0, rodata,  crimw/dev/adx/src/adxt/adx_baif] 
       - [0x2C0300, rodata,  crimw/dev/adx/src/adxt/adx_bau] 
       - [0x2C0310, rodata,  crimw/dev/adx/src/adxt/adx_bmpa] 
@@ -500,14 +518,14 @@ segments:
       - [0x2C0430, rodata,  crimw/dev/adx/src/adxt/adx_fs] 
       - [0x2C0A78, rodata,  crimw/dev/adx/src/adxt/adx_inis] 
       - [0x2C0AB0, rodata,  crimw/dev/adx/src/adxt/srcee/adx_mps2] 
-      - [0x2C0B10, rodata,  crimw/dev/adx/src/adxt/adx_qtbl] 
+      - [0x2C0B10, .rodata, crimw/dev/adx/src/adxt/adx_qtbl]
       - [0x2C1350, rodata,  crimw/dev/adx/src/adxt/srcee/adx_rnap] 
       - [0x2C1378, rodata,  crimw/dev/adx/src/adxt/adx_stmc] 
       - [0x2C1410, rodata,  crimw/dev/adx/src/adxt/srcee/adx_sudv] 
       - [0x2C1418, rodata,  crimw/dev/adx/src/adxt/srcee/adx_suht] 
       - [0x2C1420, rodata,  crimw/dev/adx/src/adxt/srcee/adx_sumf] 
       - [0x2C1428, rodata,  crimw/dev/adx/src/adxt/adx_tlk] 
-      - [0x2C1AF8, rodata,  crimw/dev/adx/src/adxt/adx_tlk2] 
+      - [0x2C1AF8, rodata,  crimw/dev/adx/src/adxt/adx_tlk2]
       - [0x2C1C70, rodata,  crimw/dev/adx/src/adxt/adx_tsvr] 
       - [0x2C29D0, rodata,  crimw/dev/adx/src/srd/cri_srd] 
       - [0x2C2C98, rodata,  crimw/dev/adx/src/dtr/dtr] 
@@ -526,28 +544,30 @@ segments:
       - [0x2C4220, rodata,  crimw/dev/adx/src/sj/sj_uni] 
       - [0x2C4230, rodata,  crimw/dev/adx/src/sjr/sjr_clt] 
       - [0x2C4260, rodata,  crimw/dev/adx/src/sjx/sjx] 
-      - [0x2C4310, rodata,  crimw/dev/adx/src/svm/svm] 
-      - [0x2C4478, rodata,  rodata_0x2C4478]
-      - [0x2be000, .rodata, DS_Pad/ds_sequencer]
-      - [0x2be020, rodata,  rodata_0x2be020]
-      - [0x2be940, .rodata, Font/font]
-      - [0x2be970, rodata,  rodata_0x2be970]
-      - [0x2bf310, .rodata, Chacter/m3_play_event]
-      - [0x2bf420, rodata,  rodata_0x2bf420]
-      - [0x2bf8d0, .rodata, Collision/cl_main]
-      - [0x2bf910, rodata,  rodata_0x2bf910]
-      - [0x2c0260, .rodata, Fog/fog]
-      - [0x2C02B0, rodata,  rodata_0x2c02b0]
+      - [0x2C4310, rodata,  crimw/dev/adx/src/svm/svm]
       - [0x2C4478, .rodata, Multi_thr/scf/ps2_scf]
       - [0x2C4480, rodata,  rodata_0x2c4480]
       - [0x2c5080, .rodata, Enemy/en_common]
       - [0x2c5110, rodata,  rodata_0x2c5110]
       - [0x2c8790, .rodata, Enemy/en_lix]
       - [0x2c8910, rodata,  rodata_0x2c8910]
+
       - [0x2c8f80, lit4,    lit4]
+
       - { vram: 0x03c8b00,  type: bss,  name: bss_0x03c8b00 }
       - { vram: 0x046d270,  type: .bss, name: Chacter_Draw/clani }
       - { vram: 0x046e870,  type: bss,  name: bss_0x046e870}
       - { vram: 0x1d0efb0,  type: .bss, name: Font/font }
       - { vram: 0x1d30570,  type: bss,  name: bss_0x1d30570 }
+
+      - { vram: 0x1F1D5C0,  type: bss,  name: crimw/dev/adx/src/adxt/adx_bsc }
+      - { vram: 0x1F1DDC0,  type: bss,  name: crimw/dev/adx/src/adxt/adx_errs }
+      - { vram: 0x1F1DDE0,  type: bss,  name: crimw/dev/adx/src/adxt/adx_tlk2 }
+      - { vram: 0x1F1DEE0,  type: bss,  name: crimw/dev/adx/src/cvfs/cri_cvfs }
+      - { vram: 0x1F1E380,  type: bss,  name: crimw/dev/adx/src/dtx/dtx }
+      - { vram: 0x1F1E580,  type: bss,  name: crimw/dev/adx/src/dvci/dvci_sub }
+      - { vram: 0x1F1F580,  type: bss,  name: crimw/dev/adx/src/htci/htci_sub }
+      - { vram: 0x1F205C0,  type: bss,  name: crimw/dev/adx/src/sjr/sjr_clt }
+      - { vram: 0x1F207C0,  type: bss,  name: crimw/dev/adx/src/svm/svm }
+      - { vram: 0x1F20910,  type: bss,  name: bss_0x1F20910 }
   - [0x2C9080]

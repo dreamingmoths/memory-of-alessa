@@ -3383,3 +3383,7 @@ rom:0x7A6B8 reloc:MIPS_PC16 symbol:.L0017A53C addend:0x4
 rom:0x7D108 reloc:MIPS_PC16 symbol:.L0017CF8C addend:0x4
 rom:0x119EB8 reloc:MIPS_PC16 symbol:.L00219D3C addend:0x4
 // rom:0x20F2C4 reloc:MIPS_PC16 symbol:.L00310148 addend:0x4
+
+rom:0x10C34C reloc:MIPS_PC16 symbol:SJMEM_Error addend:0x4
+rom:0x10C884 reloc:MIPS_PC16 symbol:SJRBF_Error addend:0x4
+rom:0x10D08C reloc:MIPS_PC16 symbol:SJUNI_Error addend:0x4
