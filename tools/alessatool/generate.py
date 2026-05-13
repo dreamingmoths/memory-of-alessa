@@ -174,11 +174,9 @@ def generate_objdiff_units(args: GenerationArgs):
         parent = segment.parent
         segment_type = segment.type
 
-        if segment.name == "sce":
-            continue
         if segment.name.startswith("sdk/") or segment.name == "sdk":
             continue
-        if segment.name.startswith("cri/"):
+        if segment.name.startswith("cri/") or segment.name.startswith("crimw/"):
             continue
         if segment.name == "crt0":
             continue
