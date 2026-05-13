@@ -412,6 +412,8 @@ segments:
       - [0x29a8a0, rodata,  rodata_0x29a8a0]
       - [0x29a920, .rodata, Effect2/hh_dbg_wrapper]
       - [0x29a960, rodata,  rodata_0x29a960]
+      - [0x29c140, .rodata, Chacter/m3_play_event]
+      - [0x29c16f, rodata,  rodata_0x29c16f]
       - [0x29cb00, .rodata, Effect2/hh_memory_manage]
       - [0x29cb80, rodata,  rodata_0x29cb80]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
