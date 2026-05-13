@@ -9,8 +9,13 @@ def normalize_object_path(path: Path, prefix_path: Path):
     `{prefix_path}/src/folder/file.c.o`.
     '''
     path_str = path.as_posix()
-    path_str = relative_to_name(path_str, SRC)
-    path_str = relative_to_name(path_str, ASM)
+    if path_str.endswith(".c.o"):
+        path_str = relative_to_name(path_str, SRC)
+    elif path_str.endswith(".s.o"):
+        path_str = relative_to_name(path_str, ASM)
+    else:
+        raise Exception(f"unhandled object file extension: {path_str}")
+
     return (prefix_path / path_str).as_posix()
 
 def relative_to_name(path_str: str, folder: str):
@@ -20,7 +25,7 @@ def relative_to_name(path_str: str, folder: str):
     '''
     folder = f"{folder}/"
     if folder in path_str:
-        path_str = folder + path_str.split(folder)[1]
+        path_str = folder + path_str.split(folder, 1)[1]
     return path_str
 
 def to_expected_path(base_path: str):
