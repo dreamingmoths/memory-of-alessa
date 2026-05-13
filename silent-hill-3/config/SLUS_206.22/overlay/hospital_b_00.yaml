@@ -10,6 +10,7 @@ options:
   symbol_addrs_path:
    - overlay/hospital_b_00_symbol_addrs.txt
    - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
   reloc_addrs_path: hospital_b_00_reloc_addrs.txt
   ld_script_path: linkers/hospital_b_00.ld
   undefined_funcs_auto_path: linkers/hospital_b_00_undefined_funcs_auto.main.txt

@@ -10,6 +10,7 @@ options:
   symbol_addrs_path:
    - overlay/church_03_symbol_addrs.txt
    - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
   reloc_addrs_path: church_03_reloc_addrs.txt
   ld_script_path: linkers/church_03.ld
   undefined_funcs_auto_path: linkers/church_03_undefined_funcs_auto.main.txt

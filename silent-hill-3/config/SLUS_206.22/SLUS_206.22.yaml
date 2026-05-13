@@ -11,6 +11,7 @@ options:
     - symbol_addrs.txt
     - shim_addrs.txt
     - cri_symbol_addrs.txt
+    - sdk_symbol_addrs.txt
   reloc_addrs_path:
     - reloc_addrs.txt
     - shim_reloc_addrs.txt
@@ -302,7 +303,7 @@ segments:
       - [0x0d90b0, asm,     text_0x0d90b0]
       - [0x0dc100, c,       DBG/dbfntprint]
       - [0x0dc410, asm,     text_0x0dc410]
-      - [0x0dc4d0, asm,     sdk/kernel]
+      - [0x0dc4d0, asm,     sdk_wrapper]
       - [0x0dc970, asm,     text_0x0dc970]
       - [0x0e70a0, c,       Fog/fog]
       - [0x0eb070, asm,     text_0x0eb070]

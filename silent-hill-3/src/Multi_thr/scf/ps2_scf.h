@@ -15,7 +15,7 @@ int ps2ScfGetSpdif(void);
 int ps2ScfGetLanguage(void);
 
 
-int func_0020EC10(int arg0);
+int func_0020EC10(sceCdCLOCK* rtc);
 
 
 int ps2ScfGetTimeZone(void);

@@ -10,6 +10,7 @@ options:
   symbol_addrs_path:
    - overlay/car_00_symbol_addrs.txt
    - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
   reloc_addrs_path: car_00_reloc_addrs.txt
   ld_script_path: linkers/car_00.ld
   undefined_funcs_auto_path: linkers/car_00_undefined_funcs_auto.main.txt

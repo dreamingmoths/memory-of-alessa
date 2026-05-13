@@ -2,21 +2,16 @@
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_b_00", func_01F6D680_mall_b_00);
 
-void func_01F6D900_mall_b_00(float arg0)
-{
-    double t = func_00124120(arg0);
-    t = func_0012B398(t);
-    t = func_001248A0(1.0f, t * 1.667f);
-    func_00124CD8(t);
+float func_01F6D900_mall_b_00(float arg0) {
+    double t = func_0012B398(arg0);
+    double d = t * 1.667f;
+    t = 1.0f / d;
+    return t;
 }
 
-void func_01F6D960_mall_b_00(float arg0)
+float func_01F6D960_mall_b_00(float arg0)
 {
-    func_00124CD8(
-        func_0012AB58(
-            func_00124120(1.0f / arg0)
-        )
-    );
+   return atan(1.0f / arg0);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/mall_b_00", func_01F6D9A0_mall_b_00);

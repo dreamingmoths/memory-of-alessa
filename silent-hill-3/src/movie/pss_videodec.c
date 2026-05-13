@@ -176,7 +176,7 @@ int decBs0(VideoDec *vd) {
         }
 
         if (ret < 0) {
-            ErrMessage("sceMpegGetPicture() decode error");
+            ErrMessage_("sceMpegGetPicture() decode error");
         }
 
         if (sys_mpeg.frameCount == 0) {

@@ -17,7 +17,7 @@ int getFIFOindex(ViBuf *f, void *addr)
     }
 }
 
-void setD3_CHCR(u_int val)
+static void setD3_CHCR(u_int val)
 {
     DIntr();
 
@@ -30,7 +30,7 @@ void setD3_CHCR(u_int val)
     EIntr();
 }
 
-void setD4_CHCR(u_int val)
+static void setD4_CHCR(u_int val)
 {
     DIntr();
 
@@ -59,7 +59,7 @@ int viBufCreate(ViBuf *f, u_long128 *data, u_long128 *tag, int size, TimeStamp *
     f->ts = ts;
     f->n_ts = n_ts;
 
-    f->sema = CreateSema((SemaParam*) f);
+    f->sema = CreateSema_((SemaParam*) f);
 
     viBufReset(f);
 
@@ -121,7 +121,7 @@ void viBufBeginPut(ViBuf *f, u_char **ptr0, int *len0, u_char **ptr1, int *len1)
     int fs;
     int fn;
 
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     fs = ((f->dmaStart + f->dmaN) * VIBUF_ELM_SIZE);
     fn = ((f->n - 2 -  f->dmaN) * VIBUF_ELM_SIZE);
@@ -144,17 +144,17 @@ void viBufBeginPut(ViBuf *f, u_char **ptr0, int *len0, u_char **ptr1, int *len1)
         *len1 = en - (f->buffSize - es);
     }
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 }
 
 void viBufEndPut(ViBuf *f, int size)
 {
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     f->readBytes += size;
     f->totalBytes += size;
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 }
 
 int viBufAddDMA(ViBuf *f)
@@ -169,11 +169,11 @@ int viBufAddDMA(ViBuf *f)
 
     isNewData = 0;
 
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     if (!f->isActive)
     {
-        ErrMessage("DMA ADD not active\n");
+        ErrMessage_("DMA ADD not active\n");
         return 0;
     }
 
@@ -234,14 +234,14 @@ int viBufAddDMA(ViBuf *f)
         setD4_CHCR(d4chcr | 0x100);
     }
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 
     return 1;
 }
 
 int viBufStopDMA(ViBuf *f)
 {
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     f->isActive = 0;
 
@@ -262,7 +262,7 @@ int viBufStopDMA(ViBuf *f)
     f->env.ipubp = DGET_IPU_BP();
     f->env.ipuctrl = DGET_IPU_CTRL();
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 
     return 1;
 }
@@ -288,7 +288,7 @@ int viBufRestartDMA(ViBuf *f)
     d4tadr_next = f->env.d4tadr;
     d4chcr_next = f->env.d4chcr | 0x100;
 
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     if (d4madr_next < (u_int)f->data)
     {
@@ -352,7 +352,7 @@ int viBufRestartDMA(ViBuf *f)
 
     f->isActive = 1;
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 
     return 1;
 }
@@ -372,11 +372,11 @@ int viBufDelete(ViBuf *f)
 
 void viBufFlush(ViBuf *f)
 {
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     f->readBytes = bound(f->readBytes, VIBUF_ELM_SIZE);
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 }
 
 int viBufModifyPts(ViBuf *f, TimeStamp *new_ts)
@@ -443,7 +443,7 @@ int viBufPutTs(ViBuf *f, TimeStamp *ts)
 
     ret = 0;
 
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     if (f->count_ts < f->n_ts)
     {
@@ -463,7 +463,7 @@ int viBufPutTs(ViBuf *f, TimeStamp *ts)
         ret = 1;
     }
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 
     return ret;
 }
@@ -495,7 +495,7 @@ int viBufGetTs(ViBuf *f, TimeStamp *ts)
     datasize =  VIBUF_ELM_SIZE * f->n;
     isEnd = 0;
 
-    WaitSema(f->sema);
+    WaitSema_(f->sema);
 
     ts->pts = TS_NONE;
     ts->dts = TS_NONE;
@@ -524,7 +524,7 @@ int viBufGetTs(ViBuf *f, TimeStamp *ts)
         }
     }
 
-    SignalSema(f->sema);
+    SignalSema_(f->sema);
 
     return 1;
 }
