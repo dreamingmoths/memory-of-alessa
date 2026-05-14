@@ -1,6 +1,7 @@
 #include "Enemy/en_common.h"
 #include "shared/Fog/fog.h"
 #include "Fog/fog.h"
+#include "SH2_common/playing_info.h"
 
 void enInitEnemy(void) {
     shQzero(&enLocalWork, sizeof(EnLOCAL_WORK));
@@ -43,7 +44,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlace);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetStage);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetMode);
+int enGetMode(void) {
+    return playing.battle_level;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckDarkOrBright);
 
