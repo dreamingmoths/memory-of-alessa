@@ -39,6 +39,7 @@ struct EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 void enInitEnemy(void);
 struct EnLOCAL_DATA * enEntryEnemy(int kind /* r2 */);
 void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */);
+int enGetMode(void);
 
 extern void shQzero(void*, int);
 
