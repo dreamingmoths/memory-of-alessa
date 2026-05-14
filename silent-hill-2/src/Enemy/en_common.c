@@ -1,6 +1,9 @@
-#include "en_common.h"
+#include "Enemy/en_common.h"
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitEnemy);
+void enInitEnemy(void) {
+    shQzero(&enLocalWork, sizeof(EnLOCAL_WORK));
+    enLocalWork.Max3DSounds = 2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enExecTask);
 
@@ -21,7 +24,12 @@ EnLOCAL_DATA* enEntryEnemy(int kind) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enDeleteEnemy);
+void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */) {
+    if (dp != NULL) {
+        dp->kind = 0;
+        fogEraseObj((dp - enLocalWork.Data) + 0xA);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enDummyCtrl);
 
