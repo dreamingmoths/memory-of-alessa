@@ -18,7 +18,8 @@ struct EnFORBIDDENAREA {
     float x1; // offset 0x8, size 0x4
     float z1; // offset 0xC, size 0x4
 };
-struct EnLOCAL_WORK {
+
+typedef struct EnLOCAL_WORK {
     // total size: 0x1E10
     struct EnLOCAL_DATA Data[32]; // offset 0x0, size 0x1C00
     struct EnCOMMUNICATION Communication[8]; // offset 0x1C00, size 0x100
@@ -32,8 +33,11 @@ struct EnLOCAL_WORK {
     struct _CL_VHIT_RESULT HitResult; // offset 0x1DC0, size 0x40
     int Max3DSounds; // offset 0x1E00, size 0x4
     int ActiveEnemy; // offset 0x1E04, size 0x4
-};
+} EnLOCAL_WORK;
 struct EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
+
+void enInitEnemy(void);
 struct EnLOCAL_DATA * enEntryEnemy(int kind /* r2 */);
+void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */);
 
 #endif
