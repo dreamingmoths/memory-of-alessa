@@ -1,4 +1,6 @@
 #include "Enemy/en_common.h"
+#include "shared/Fog/fog.h"
+#include "Fog/fog.h"
 
 void enInitEnemy(void) {
     shQzero(&enLocalWork, sizeof(EnLOCAL_WORK));
