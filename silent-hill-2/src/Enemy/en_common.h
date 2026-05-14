@@ -40,4 +40,6 @@ void enInitEnemy(void);
 struct EnLOCAL_DATA * enEntryEnemy(int kind /* r2 */);
 void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */);
 
+extern void shQzero(void*, int);
+
 #endif
