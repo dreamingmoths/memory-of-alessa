@@ -52,8 +52,30 @@ void enSetHP(struct EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endura
 float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */);
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */);
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */);
+void enSetSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
+void enSetNewSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
+void enSetSeeLightStatus(struct EnLOCAL_DATA* dp /* r2 */, float center /* r29 */, float radius /* r29 */);
+int enCheckSeeLight(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckAimedByHuman(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckFinishedByHuman(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckNoDamageHuman(struct EnLOCAL_DATA* dp /* r2 */);
+void enAttackStart(struct EnLOCAL_DATA* dp /* r16 */);
+int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */);
+int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */);
+int enCheckHuggedPlayer(void);
+
+void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
+
+int enCheckPlayerLight(void);
+
+int enCheckDeadPlayer(void);
+void enSetGameOver(void);
 
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
+
+void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
 
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundCall3D(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
