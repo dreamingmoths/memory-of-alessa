@@ -473,4 +473,47 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForbiddenArea);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForbiddenAreaSub);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enEventDriven);
+void enEventDriven(int event /* r2 */, int id /* r2 */) {
+    int i; // r3
+    struct EnLOCAL_DATA* dp = enLocalWork.Data; // r6
+
+    switch (event) {                                 /* irregular */
+        case 0:
+            for (i = 0; i < 32; i++, dp++) {
+                if ((dp->kind != 0) && (dp->mlv != 0)) {
+                    dp->mlv = 0;
+                }
+            }
+            break;
+        case 1:
+            for (i = 0; i < 32; i++, dp++) {
+                if ((dp->kind != 0) && (dp->mlv != 1)) {
+                    dp->mlv = 3;
+                }
+            }
+            break;
+        case 2:
+            for (i = 0; i < 32; i++, dp++) {
+                if ((dp->kind == 2) && (dp->type == 6)) {
+                    dp->type = 7;
+                }
+            }
+            break;
+        case 3:
+            for (i = 0; i < 32; i++, dp++) {
+                if (dp->kind == 4) {
+                    dp->mlv = 4;
+                    dp->slv = 3;
+                }
+            }
+            break;
+        case 4:
+            for (i = 0; i < 32; i++, dp++) {
+                if ((dp->kind == 5) && (dp->mlv == 4)) {
+                    dp->slv = event;
+                    dp->sslv = id;
+                }
+            }
+            break;
+    }
+}
