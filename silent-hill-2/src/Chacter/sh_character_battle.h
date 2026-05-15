@@ -41,4 +41,7 @@ typedef struct shAttackInfo
 extern shAttackInfo sh2_attack_list[66];
 extern shPlayerWork sh2jms;
 
+void shBattleAttackHitCheckInit(struct SubCharacter* scp /* r2 */);
+void shBattleAttackHitCheckToHuman(struct SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
+
 #endif
