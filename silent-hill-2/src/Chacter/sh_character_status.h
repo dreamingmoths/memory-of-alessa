@@ -26,5 +26,6 @@ void clCheckHitEyes(struct _CL_VHIT_RESULT * res /* r2 */, u_int id /* r2 */, fl
 struct shInAreaTgtInfo sh2_target_info[20];
 static float _shLength(float * v0 /* r2 */, float * v1 /* r2 */);
 int sh2gfw_Check_CharaDarkOrBright(void * SubChara /* r2 */);
+struct SubCharacter* shBattleGetTargetHuman(struct SubCharacter* scp /* r17 */, u_int type /* r2 */);
 
 #endif
