@@ -137,7 +137,7 @@ typedef struct _CL_HITRESULT {
     sceVu0FVECTOR cp; // offset 0x10, size 0x10
     sceVu0FVECTOR cv; // offset 0x20, size 0x10
     struct _CL_HITPOLY_HEAD * pd; // offset 0x30, size 0x4
-} CL_HITRESULT;
+} __attribute__((aligned(16))) CL_HITRESULT;
 
 #define CL_BATTLE_RESULT_SIZE 65
 

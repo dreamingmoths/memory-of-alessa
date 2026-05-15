@@ -763,7 +763,7 @@ struct shMariaWork {
     Vector4 pos; // offset 0x30, size 0x10
     Vector4 rot; // offset 0x40, size 0x10
     float to_target; // offset 0x50, size 0x4
-    float tgt_pos[5][4]; // offset 0x60, size 0x50
+    sceVu0FVECTOR tgt_pos[5]; // offset 0x60, size 0x50
     signed int tgt_pointer; // offset 0xB0, size 0x4
     signed int pushed_dir; // offset 0xB4, size 0x4
     enum _MARIA_MAIN_STATUS main_status_now; // offset 0xB8, size 0x1

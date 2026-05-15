@@ -47,7 +47,7 @@ int PlayerEventJamesDeadly(void) {
 }
 
 int PlayerEventMariaDeadly(void) {
-    if ((sh2mar.mar_p != NULL) && (sh2mar.dead != 0)) {
+    if (sh2mar.mar_p && sh2mar.dead) {
         return 1;
     }
     return 0;
