@@ -53,6 +53,8 @@ float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */);
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */);
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */);
 
+void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
+
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundCall3D(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundStop(int num /* r2 */);
