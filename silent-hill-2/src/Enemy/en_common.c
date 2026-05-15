@@ -10,6 +10,9 @@
 #include "GFW/sh2gfw_LightSet.h"
 #include "Chacter_Draw/sh2gfw_model_light.h"
 #include "Chacter/sh_character_status.h"
+#include "Chacter/sh_character_battle.h"
+#include "Chacter/player_result.h"
+#include "Chacter/sh2_character_manage.h"
 #include "SH2_common/sh2dt.h"
 
 void enInitEnemy(void) {
@@ -205,33 +208,94 @@ void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->scp->battle.shock = 0.0f;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckDeath);
+int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */) {
+    if (!(dp->scp->battle.hp <= 0.0f)) {
+        return 0;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetHitBack);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckInstantDeath);
+int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */) {
+    if ((dp->last_atk >= 0x19) && (dp->last_atk < 0x23)) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetSize);
+void enSetSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+    dp->size = dp->new_size = size;
+    dp->tall = dp->new_tall = tall;
+    dp->center_y = dp->new_center = center;    
+    dp->eye_y = dp->new_eye = eye;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetNewSize);
+void enSetNewSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+    dp->new_size = size;
+    dp->new_tall = tall;
+    dp->new_center = center;
+    dp->new_eye = eye;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetSeeLightStatus);
+void enSetSeeLightStatus(struct EnLOCAL_DATA* dp /* r2 */, float center /* r29 */, float radius /* r29 */) {
+    struct shBattleInfo* bi = &dp->scp->battle; // r2
+    bi->look.center = center;
+    bi->look.radius = radius;
+    bi->feel.radius = 0.0f;
+    bi->feel.center = 0.0f;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSeeLight);
+int enCheckSeeLight(struct EnLOCAL_DATA* dp /* r2 */) {
+    return shBattleSeeHumanLight(dp->scp) == 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckAimedByHuman);
+int enCheckAimedByHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+    return shBattleAimedByHuman(dp->scp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckFinishedByHuman);
+int enCheckFinishedByHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+    return shBattleFinishedByHuman(dp->scp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckNoDamageHuman);
+int enCheckNoDamageHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+    if (dp->scp->battle.target->kind != 0x105) {
+        return shBattleNoDamageHumanJames();
+    }
+    
+    return shBattleNoDamageHumanMaria();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAttackStart);
+void enAttackStart(struct EnLOCAL_DATA* dp /* r16 */) {
+    shBattleAttackHitCheckInit(dp->scp);
+    SET_BIT(dp->flag, 2);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAttackCheck);
+int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */) {
+    int result; // r16
+    if (!(dp->flag & 0x4)) return 0;
+    result = dp->scp->battle.atk_result;
+    if (result != NULL) {
+        dp->flag &= ~0x4;
+        return result;
+    }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAttackCheckHug);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckHuggedPlayer);
+
+    
+    shBattleAttackHitCheckToHuman(dp->scp, ID);
+    
+    return result;
+}
+
+int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */)  {
+    shBattleAttackHitCheckToHuman(dp->scp, ID);
+    return dp->scp->battle.atk_result;
+}
+
+int enCheckHuggedPlayer(void) {
+    return shBattleHuggedHuman();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSleepIn);
 
@@ -241,7 +305,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSleepIn);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSleepOut);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enKillCountUp);
+void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */) {
+    GameKillEnemyCountUp(dp->last_atk);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerPos);
 
@@ -261,7 +327,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerSound);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerCondition);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerLight);
+int enCheckPlayerLight(void) {
+    return item.light_switch;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerSprayNow);
 
@@ -269,9 +337,13 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSprayPower);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerBulletEmpty);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckDeadPlayer);
+int enCheckDeadPlayer(void) {
+    return sh2jms.dead;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetGameOver);
+void enSetGameOver(void) {
+    sh2jms.dead = 2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetMoved);
 
@@ -371,7 +443,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enWaitRegenerate);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlyingFunc);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enDeleteCharacter);
+void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */) {
+    shCharacter_Manage_Delete(dp->scp, dp->scp->kind, dp->scp->id);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitPath);
 
