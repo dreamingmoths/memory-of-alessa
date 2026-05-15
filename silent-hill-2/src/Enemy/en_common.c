@@ -327,7 +327,29 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetNearOtherEnemy);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckNearPlayer);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetRadioVolume);
+void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
+    if ((dp->kind == 4) && (dp->type == 0)) {
+        dp->radio = 1.0f;
+        return;
+    }
+    if ((dp->kind == 7) || (dp->kind == 9) || (dp->kind == 4) || (dp->kind == 5) || (dp->kind == 0xB) || !(dp->scp->status & 0x10)) {
+        dp->radio = 0;
+        return;
+    }
+    if (dp->scp->battle.status & 1) {
+        if (dp->kind == 3) {
+            dp->radio = 0.5f;
+            return;
+        }
+        if (dp->scp->battle.status & 4) {
+            dp->radio = 0.8;
+            return;
+        }
+        dp->radio = 1.0f;
+        return;
+    }
+    dp->radio = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMoveAngle);
 
@@ -426,7 +448,7 @@ void enSoundStop(int num /* r2 */) {
 }
 
 void enSoundSetQueue(struct SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* r29 */, float time /* r29 */) {
-    struct EnSOUND_QUEUE* que; // r2
+    EnSOUND_QUEUE* que; // r2
     
     if (enLocalWork.SoundQueueNum < 8) {
         que = &enLocalWork.SoundQueue[enLocalWork.SoundQueueNum++];      
