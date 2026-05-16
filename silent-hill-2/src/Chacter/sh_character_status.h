@@ -33,5 +33,6 @@ int shBattleFinishedByHuman(struct SubCharacter* scp /* r2 */);
 int shBattleNoDamageHumanJames(void);
 int shBattleNoDamageHumanMaria(void);
 int shBattleHuggedHuman(void);
+int shBattleListenHumanSound(struct SubCharacter* scp, struct SubCharacter* tgt /* r2 */); // DWARF only shows one arg
 
 #endif
