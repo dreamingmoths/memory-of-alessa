@@ -300,9 +300,16 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSleepIn);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSleepOut);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSleepIn);
+void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */) {
+    dp->mlv = 2;
+    dp->scp->battle.status &= ~1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSleepOut);
+void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */) {
+    dp->mlv = 1;
+    dp->scp->battle.status &= ~0x4C;
+    dp->scp->battle.status |= 1;
+}
 
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */) {
     GameKillEnemyCountUp(dp->last_atk);
@@ -314,17 +321,48 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerDistance);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerDirection);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerWeapon);
+int enGetPlayerWeapon(void) {
+    return (u_char) sh2jms.weapon;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerWeapon);
+int enCheckPlayerWeapon(void) {
+    switch ((u_char)sh2jms.weapon) {
+        case 1:
+        case 2:
+        case 3: return 1;            
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerAngle);
+float enGetPlayerAngle(struct EnLOCAL_DATA* dp /* r2 */) {
+    return dp->scp->battle.target->rot.y;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerSize);
+float enGetPlayerSize(void) {
+    return sh2jms.column_mov.p[1][3];
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerSound);
+int enCheckPlayerSound(struct EnLOCAL_DATA* dp /* r2 */) {
+    return shBattleListenHumanSound(dp->scp, dp->scp->battle.target);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerCondition);
+int enCheckPlayerCondition(struct EnLOCAL_DATA* dp /* r17 */) {
+    int r = 0; // r16
+    int w; // r2
+    float a; // r29+0x30
+    if (sh2jms.lock_on) {
+        r |= 1;
+    }
+    w = enGetPlayerWeapon();
+    if ((u_int)(w - 1) < 3) {
+        r |= 2;
+    }
+    a = enCalcAngleDifference(enGetPlayerAngle(dp) + PI, dp->scp->rot.y);
+    if (a >= QUARTER_TURN) {
+        r |= 4;
+    }
+    return r;
+}
 
 int enCheckPlayerLight(void) {
     return item.light_switch;
@@ -334,7 +372,12 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerSprayNow);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSprayPower);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerBulletEmpty);
+int enCheckPlayerBulletEmpty(void) {
+    if ((item.number[4] != 0) || (item.number[5] != 0) || (item.number[6] != 0) || (item.number[7] != 0) || (item.number[8] != 0) || (item.number[9] != 0)) {
+        return 0;
+    }
+    return 1;
+}
 
 int enCheckDeadPlayer(void) {
     return sh2jms.dead;
