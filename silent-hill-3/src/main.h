@@ -76,7 +76,7 @@ extern int func_00115890(int arg0);
 extern void func_0012BDF0(s_char *arg0);
 extern void func_0012CFE0(int arg0);
 extern void func_0012DCB0(int arg0);
-extern void func_0019A7D0(int);
+extern void shSetDF(int fpi);
 extern void func_0019B450(void);
 extern void func_0019B540(int arg0);
 extern int func_0019B580(int arg0);

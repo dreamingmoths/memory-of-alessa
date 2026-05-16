@@ -472,6 +472,15 @@ LoadAr = 0x001550d0;
 fsAdxfInit = 0x00152f90;
 adxFileOpen = 0x0025d190;
 rebootIop = 0x00155d00;
+iopLoadMod = 0x00151370;
+
+PrintSectionSizes = 0x00156480;
+sh3_InitFilesys = 0x0012BDF0;
+sh3_InitSif = 0x001e4e30;
+sh3_InitAdx = 0x001e2830;
+sh3_AllocIopHeap = 0x001e5050;
+shSetDF = 0x0019a7d0;
+shGetFPS = 0x0019a930;
 
 // hh_class_wrapper
 ViewFrustum_Primitive_ClipMatrix_Create = 0x00142500;
@@ -675,6 +684,7 @@ CreateSema_ = 0x001DC150;
 WaitSema_ = 0x001DC190;
 SignalSema_ = 0x001DC1A0;
 ErrMessage_ = 0x002B7400;
+sceDmaReset_ = 0x0012bc60;
 
 // dbfntprint.c
 _dbfntvsnprintf = 0x001dbd90;

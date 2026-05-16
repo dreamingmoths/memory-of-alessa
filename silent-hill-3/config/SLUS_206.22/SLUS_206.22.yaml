@@ -278,6 +278,7 @@ segments:
       - [0x08ac50, asm,     text_0x08ac50]
       - [0x0905d0, c,       Chacter/m3_play_event]
       - [0x090e00, asm,     text_0x090e00]
+      - [0x09ad50, c,       SH3_common/sh3dt]
       - [0x09afb0, c,       SH3_common/sh_vu0]
       - [0x09b9d0, asm,     text_0x09b9d0]
       - [0x09ec40, c,       Collision/cl_calc]

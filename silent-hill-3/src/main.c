@@ -11,23 +11,23 @@ int main(int argc, s_char* argv[]) {
 
     db_watch_point = (DB_WATCH_POINT *)0x02000000;
 
-    func_00156480();
+    PrintSectionSizes();
     func_001E4E10();
     func_0012BD80();
     func_0012C980();
     func_0012CED0();
     func_001D9350();
     func_00337AB0();
-    func_0012BDF0(*argv);
+    sh3_InitFilesys(*argv);
     func_00172FA0();
     func_0012CEF0();
     func_00156370(0);
     func_00156380();
     temp_s1 = func_00156B50(7);
     func_00281D80(temp_s1, func_00156B80(7));
-    func_001E4E30(0);
-    func_001E2830();
-    func_001E5050();
+    sh3_InitSif(0);
+    sh3_InitAdx();
+    sh3_AllocIopHeap();
     func_00282090(1);
     func_00195A40();
     func_0012DC50();
@@ -61,7 +61,7 @@ int main(int argc, s_char* argv[]) {
             func_00156390();
             func_00156AC0();
             func_00130640(0);
-            func_0019A7D0(func_00130650());
+            shSetDF(func_00130650());
             func_001D91D0();
             func_0013CE70();
             D_003D44A0 = *(int* )T0_COUNT;
