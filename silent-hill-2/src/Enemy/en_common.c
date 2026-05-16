@@ -208,11 +208,9 @@ void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->scp->battle.shock = 0.0f;
 }
 
-int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */) {
-    if (!(dp->scp->battle.hp <= 0.0f)) {
-        return 0;
-    }
-    return 1;
+int enCheckDeath(EnLOCAL_DATA* dp) {
+    if (dp->scp->battle.hp <= 0.0f) return 1;
+    return 0;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetHitBack);
