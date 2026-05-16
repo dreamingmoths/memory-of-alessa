@@ -38,10 +38,37 @@ typedef struct shAttackInfo
     u_char eff;                     // offset 0x23, size 0x1
 } shAttackInfo;
 
+// total size: 0x8
+typedef struct shAttackQueueOne {
+    // Members
+    struct SubCharacter* scp; // offset 0x0, size 0x4
+    u_char wep_no; // offset 0x4, size 0x1
+    u_short atk_no; // offset 0x6, size 0x2
+} shAttackQueueOne;
+
+// total size: 0xA4
+typedef struct shAttackQueue {
+    // Members
+    int rest; // offset 0x0, size 0x4
+    struct shAttackQueueOne queue[20]; // offset 0x4, size 0xA0
+} shAttackQueue;
+
+extern shAttackQueue sh2_attack_queue;
+extern float sh2_battle_wall_hit;
+extern int sh2_battle_attack_check;
 extern shAttackInfo sh2_attack_list[66];
 extern shPlayerWork sh2jms;
 
-void shBattleAttackHitCheckInit(struct SubCharacter* scp /* r2 */);
-void shBattleAttackHitCheckToHuman(struct SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
+void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */);
+void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
+void shBattleAttackHitCheckToEnemy(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
+void shBattleInitAttackQueue(void);
+float shBattleGetJamesHP(void);
+float shBattleGetJamesHP_Rate(void);
+void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */);
+float shBattleEventWallHitCheck(void);
+int shBattleCheckAttackByEnemy(void);
+
+extern void shQzero(void*, int);
 
 #endif
