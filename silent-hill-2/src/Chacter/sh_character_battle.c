@@ -8,12 +8,14 @@
 #include "sound/sh_sound.h"
 #include "Event/item.h"
 
-static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp, CL_BATTLE_RESULT *result);
-static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u_short atk);
-static void shBattleAddEffectAttack(SubCharacter *attacker, float *pos, float *vec);
-static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker , u_short atk);
+static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
+static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
+static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec);
+static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short atk);
+static void shBattleAttackByEnemyBite(void);
+static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
 
-static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp, CL_BATTLE_RESULT *result) {
+static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result) {
     if (scp->battle.status & 0x40) {
         *damage = 0.0f;
     } else {
@@ -30,7 +32,7 @@ static void shBattleDamageRevise(float *damage, float *shock, SubCharacter *scp,
     *shock = sh2_attack_list[(u_char)result->btlid].sp;
 }
 
-static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u_short atk) {
+static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk) {
     float vec_tmp[4];
     int atk_type;
 
@@ -56,7 +58,7 @@ static void shBattleSetEffectDamage(SubCharacter *scp, float *pos, float *vec, u
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetSoundDamage);
 
-static void shBattleAddEffectAttack(SubCharacter *attacker, float *pos, float *vec) {
+static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec) {
     EFCTSetGunFire(pos, vec);
     EFCTSetGunSmoke(pos);
     sh2gfw_Set_JmsGunLight();
@@ -130,7 +132,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnem
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyFog);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyBite);
+static void shBattleAttackByEnemyBite(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyHug);
 
@@ -140,26 +144,50 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnem
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAddAttackQueue);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackHitCheckInit);
+void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */) {
+    scp->battle.se = 0;
+    scp->battle.prev_atk_pos.w = 0;
+    scp->battle.atk_result = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackHitCheckToEnemy);
+void shBattleAttackHitCheckToEnemy(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */) {
+    shBattleAddAttackQueue(scp, wep_no, atk_no);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackHitCheckToHuman);
+void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /* r2 */) {
+    shBattleAddAttackQueue(scp, 0, atk_no);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleRequestNextAttackIsOk);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetResult);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleInitAttackQueue);
+void shBattleInitAttackQueue(void) {
+    shQzero(&sh2_attack_queue, sizeof(shAttackQueue));
+    sh2_attack_queue.rest = 0x14;
+    sh2_battle_wall_hit = 0.0f;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleExecAttackQueue);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetJamesHP);
+float shBattleGetJamesHP(void) {
+    return sh2jms.player->battle.hp;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetJamesHP_Rate);
+float shBattleGetJamesHP_Rate(void) {
+    return sh2jms.player->battle.hp_rate;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetJamesDamage);
+void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */) {
+    sh2jms.player->battle.damage = damage;
+    sh2jms.player->battle.id = id;
+    volatile_vec_copy((float *)&sh2jms.player->battle.vec, vec);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleEventWallHitCheck);
+float shBattleEventWallHitCheck(void) {
+    return sh2_battle_wall_hit;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleCheckAttackByEnemy);
+int shBattleCheckAttackByEnemy(void) {
+    return sh2_battle_attack_check;
+}
