@@ -66,12 +66,23 @@ int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */);
 int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */);
 int enCheckHuggedPlayer(void);
 
+void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */);
+void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
 
+int enGetPlayerWeapon(void);
+int enCheckPlayerWeapon(void);
+float enGetPlayerAngle(struct EnLOCAL_DATA* dp /* r2 */);
+float enGetPlayerSize(void);
+int enCheckPlayerSound(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckPlayerCondition(struct EnLOCAL_DATA* dp /* r17 */);
 int enCheckPlayerLight(void);
 
+int enCheckPlayerBulletEmpty(void);
 int enCheckDeadPlayer(void);
 void enSetGameOver(void);
+
+float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
 
