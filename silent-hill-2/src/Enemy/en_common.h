@@ -1,6 +1,7 @@
 #ifndef EN_COMMON_H
 #define EN_COMMON_H
 
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
 typedef struct EnSOUND_QUEUE {
@@ -44,15 +45,19 @@ void enDummyCtrl(struct EnLOCAL_DATA* dp /* r2 */);
 int enTransID(int id /* r2 */);
 int enGetWorldCondition(void);
 int enGetPlace(void);
+int enGetStage(void);
 int enGetMode(void);
 int enCheckDarkOrBright(struct SubCharacter* scp /* r2 */);
 int enCheckDarkOrBrightPlayer(void);
 void enSetBattleTarget(struct EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */);
 void enSetHP(struct EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endurance /* r20 */);
 float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */);
+float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */);
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */);
+
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */);
+void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */);
 void enSetSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
 void enSetNewSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
@@ -69,6 +74,7 @@ int enCheckHuggedPlayer(void);
 void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */);
 void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
+float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */);
 
 int enGetPlayerWeapon(void);
 int enCheckPlayerWeapon(void);
@@ -77,12 +83,17 @@ float enGetPlayerSize(void);
 int enCheckPlayerSound(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckPlayerCondition(struct EnLOCAL_DATA* dp /* r17 */);
 int enCheckPlayerLight(void);
-
+int enCheckPlayerSprayNow(void);
+int enGetSprayPower(void);
 int enCheckPlayerBulletEmpty(void);
 int enCheckDeadPlayer(void);
 void enSetGameOver(void);
 
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
+
+int enCalcTimer(int t /* r2 */);
+void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */);
+int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */);
 
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
 
