@@ -120,7 +120,33 @@ int enGetPlace(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetStage);
+int enGetStage(void) {
+    int ret = 0;
+    int s = stage->glb_crd; // r2
+    switch (s) { 
+        case 1:
+            ret = 0;
+            break;
+        case 2:
+            if (GET_GAME_FLAG(7, 27)) {
+                ret = 2;
+                break;
+            }
+            ret = 1;
+            break;
+        case 3:
+            if (GET_GAME_FLAG(7, 27)) {
+                ret = 4;
+                break;
+            }
+            ret = 3;
+            break;
+        case 4:
+            ret = 5;
+            break;
+    }
+    return ret;
+}
 
 int enGetMode(void) {
     return playing.battle_level;
@@ -183,7 +209,18 @@ float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */) {
     return dp->endurance;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAddHP); // https://decomp.me/scratch/eoWuF 93%
+float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */) {
+    struct shBattleInfo* bi = &dp->scp->battle; // r16    
+    if ((bi->hp += n) > bi->hp_max) {
+        bi->hp = bi->hp_max;
+    }
+    dp->endurance = dp->endurance_max;
+    if ((dp->endurance > bi->hp)) {
+        dp->endurance = bi->hp;
+    }
+    bi->hp_rate = (100.0f * (bi->hp / bi->hp_max));
+    return bi->hp;
+}
 
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
     struct shBattleInfo* bi = &dp->scp->battle; // r16
@@ -214,7 +251,15 @@ int enCheckDeath(EnLOCAL_DATA* dp) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetHitBack);
+void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */) {
+    Vector4 vec; // r29
+    struct shBattleInfo* bi = &dp->scp->battle; // r3
+    vec_normalize((float*)&bi->vec, (float*)&vec);
+    dp->hb_x = vec.x;
+    dp->hb_z = vec.z;
+    dp->hb_s = (2.0f * bi->shock);
+    bi->shock = 0.0f;
+}
 
 int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */) {
     if ((dp->last_atk >= 0x19) && (dp->last_atk < 0x23)) {
@@ -315,7 +360,12 @@ void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */) {
     GameKillEnemyCountUp(dp->last_atk);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerPos);
+float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */) {
+    if (dp->scp->battle.target == sh2jms.player) {
+        return (float*)&sh2jms.column_mov.p[0];
+    }
+    return (float*)&dp->scp->battle.target->pos;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerDistance);
 
@@ -368,9 +418,18 @@ int enCheckPlayerLight(void) {
     return item.light_switch;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerSprayNow);
+int enCheckPlayerSprayNow(void) {
+    if (((u_char)sh2jms.weapon == 4) && (sh2jms.upper_st_flg & 0x10000000) && ((sh2jms.attack_no == 8) || (sh2jms.attack_no == 9))) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSprayPower);
+int enGetSprayPower(void) {
+    int n = playing.spray_pow; // r2
+    if (n == 1) n = 0;        
+    return n;
+}
 
 int enCheckPlayerBulletEmpty(void) {
     if ((item.number[4] != 0) || (item.number[5] != 0) || (item.number[6] != 0) || (item.number[7] != 0) || (item.number[8] != 0) || (item.number[9] != 0)) {
@@ -431,11 +490,30 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckIntoScreen);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetNearCharacter);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcTimer);
+int enCalcTimer(int t /* r2 */) {
+    return (t * 60) / 60;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTimer);
+void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */) {
+    if ((dp->timer = enCalcTimer(t) - 1) < 0) dp->timer = 0.0f;
+    dp->flag &= ~0x2000;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enReduceTimer);
+int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */) {    
+    int t = dp->timer; // r16
+    int n = t / 60; // r17
+    t -= shGetDF();
+    if (t < 0) {
+        t = 0;
+    }
+    if ((t / 60) < n) {
+        dp->flag |= 0x2000;
+    } else {
+        dp->flag &= ~0x2000;
+    }
+    dp->timer = t;
+    return t;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetNearOtherEnemy);
 
