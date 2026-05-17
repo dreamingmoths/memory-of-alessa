@@ -698,7 +698,7 @@ typedef struct shPlayerWork
     u_char cannot_run;                    // offset 0x525, size 0x1
     u_char fall_type;                     // offset 0x526, size 0x1
     u_char reload;                        // offset 0x527, size 0x1
-    char weapon;                          // offset 0x528, size 0x1
+    u_char weapon;                        // offset 0x528, size 0x1
     u_char shoot_val;                     // offset 0x529, size 0x1
     u_char reload_val;                    // offset 0x52A, size 0x1
     u_char atk_type;                      // offset 0x52B, size 0x1
@@ -717,6 +717,15 @@ typedef struct shPlayerWork
     u_short attack_no;                    // offset 0x53A, size 0x2
 } shPlayerWork;
 
+typedef struct shCharaInfo {
+    Vector4 pos;
+    Vector4 rot;
+    Vector4 pos_spd;
+    Vector4 rot_spd;
+    sceVu0FMATRIX mat;
+    shSkelton* sk_top;
+} shCharaInfo;
+
 typedef struct _Character_Info
 {
     // total size: 0x1430
@@ -732,7 +741,7 @@ typedef struct _Character_Info
 } Character_Info;
 
 
-enum _MARIA_MAIN_STATUS {
+typedef enum _MARIA_MAIN_STATUS {
     MAR_MAIN_ST_STAND = 0,
     MAR_MAIN_ST_CLOSE_TO = 1,
     MAR_MAIN_ST_ALERT = 2,
@@ -740,9 +749,9 @@ enum _MARIA_MAIN_STATUS {
     MAR_MAIN_ST_RECOVER = 4,
     MAR_MAIN_ST_BOREDOM = 5,
     MAR_MAIN_ST_DAMAGED = 6,
-};
+} MARIA_MAIN_STATUS;
 
-enum _MARIA_SUB_STATUS {
+typedef enum _MARIA_SUB_STATUS {
     MAR_SUB_ST_STAND = 0,
     MAR_SUB_ST_RELAX = 1,
     MAR_SUB_ST_RELAX_OFF = 2,
@@ -752,10 +761,10 @@ enum _MARIA_SUB_STATUS {
     MAR_SUB_ST_WALK = 6,
     MAR_SUB_ST_RUN = 7,
     MAR_SUB_ST_DAMAGE = 8,
-};
+} MARIA_SUB_STATUS;
 
 // total size: 0x310
-struct shMariaWork {
+typedef struct shMariaWork {
     // Members
     struct SubCharacter* mar_p; // offset 0x0, size 0x4
     Vector4 dist_rot; // offset 0x10, size 0x10
@@ -808,7 +817,7 @@ struct shMariaWork {
     u_char look_jms; // offset 0x30C, size 0x1
     u_char random_status; // offset 0x30D, size 0x1
     u_char active_type; // offset 0x30E, size 0x1
-};
+} shMariaWork;
 
 extern struct shPlayerWork sh2jms; // size: 0x540, address: 0x3C7EE0
 extern struct shMariaWork sh2mar;
