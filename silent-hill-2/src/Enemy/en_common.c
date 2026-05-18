@@ -19,6 +19,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "Enemy/en_list.h"
 #include "Enemy/en_effect.h"
+#include "Effect2/hh_class_object_execute.h"
 
 extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
 
@@ -667,7 +668,12 @@ void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */) {
     dp->anim_step = (count * (limit * 0x960)) >> 0xC;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enEfctBloodPool);
+void enEfctBloodPool(struct EnLOCAL_DATA* dp /* r2 */) {
+    float pos[4]; // r29+0x10   
+    vec_copy_vu0(pos, (float*)&dp->scp->pos);    
+    pos[1] -= 3.0f;
+    HH_Effect_Object_Blood_Pool_Impact_Post(pos, 0);
+}
 
 void enEfctPoisonFog(float* pos /* r2 */, float* vec /* r2 */) {
     enEfctSetPoisonFog(pos, vec);
