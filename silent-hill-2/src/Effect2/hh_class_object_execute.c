@@ -40,8 +40,7 @@ void HH_Class_Object_Packet_Kick(void) {
     }
 }
 
-#ifdef NON_MATCHING
-void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location) {
+void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location, int idk) {
     ImpactQueue_Element descriptor; // r29+0x20
 
     int room_name  = RoomNameJms();
@@ -82,9 +81,6 @@ void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location) {
     
     ImpactDescriptor_Post(HH_Effect_Object_Infomeation_Get(), &descriptor);
 }
-#else 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_object_execute", HH_Effect_Object_Blood_Pool_Impact_Post);
-#endif
 
 void HH_Effect_Object_Blood_Splash_Impact_Post(float* Location, float* Direction, u_int Scp_Address, u_int Impact_Kind) {
     
