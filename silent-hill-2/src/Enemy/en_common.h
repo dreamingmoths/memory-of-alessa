@@ -71,12 +71,14 @@ void enAttackStart(struct EnLOCAL_DATA* dp /* r16 */);
 int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */);
 int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */);
 int enCheckHuggedPlayer(void);
-
+int enCheckSleepIn(struct EnLOCAL_DATA* dp);
+int enCheckSleepOut(struct EnLOCAL_DATA* dp);
 void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */);
 void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
 float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */);
-
+float enGetPlayerDistance(struct EnLOCAL_DATA * dp /* r2 */);
+float enGetPlayerDirection(struct EnLOCAL_DATA * dp /* r2 */);
 int enGetPlayerWeapon(void);
 int enCheckPlayerWeapon(void);
 float enGetPlayerAngle(struct EnLOCAL_DATA* dp /* r2 */);
@@ -112,7 +114,11 @@ int enCalcTimer(int t /* r2 */);
 void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */);
 int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */);
 
+
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
+void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */);
+void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
+
 
 void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
 
