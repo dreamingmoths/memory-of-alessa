@@ -244,7 +244,12 @@ float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckDamage);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSpray);
+int enCheckSpray(struct EnLOCAL_DATA* dp /* r2 */) {
+    if ((dp->last_atk == 8) || (dp->last_atk == 9)) {
+        return 1;
+    }
+    return 0;
+}
 
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->scp->battle.id = 0;
