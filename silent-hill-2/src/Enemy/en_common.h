@@ -89,6 +89,22 @@ int enGetSprayPower(void);
 int enCheckPlayerBulletEmpty(void);
 int enCheckDeadPlayer(void);
 void enSetGameOver(void);
+void enFlagSetMoved(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetMoved(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetLieDown(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetLieDown(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetCritical(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetCritical(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckCritical(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetNoDamage(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetNoDamage(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetDead(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetDead(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetRotFloor(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetRotFloor(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 
