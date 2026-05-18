@@ -23,6 +23,17 @@
 
 extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
 
+static inline float foo(struct EnPATH_DATA* p, float a0) { // what is the best place for this?
+    float a1 = p->markangle;
+    float temp_f0 = shAngleRegulate(a1 - p->angle);
+    if (temp_f0 < -a0) {
+        a1 = p->angle - a0;
+    } else if (temp_f0 > a0) {
+        a1 = p->angle + a0;
+    }
+    return shAngleRegulate(a1);
+}
+
 void enInitEnemy(void) {
     shQzero(&enLocalWork, sizeof(EnLOCAL_WORK));
     enLocalWork.Max3DSounds = 2;
@@ -353,9 +364,19 @@ int enCheckHuggedPlayer(void) {
     return shBattleHuggedHuman();
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSleepIn);
+int enCheckSleepIn(struct EnLOCAL_DATA* dp) {
+    if ((!(dp->scp->battle.status & 0x400) || ((BgIsOut(0) != 0) && !(dp->p_dist <= 15000.0f))) && !(dp->scp->battle.status & 2)) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckSleepOut);
+int enCheckSleepOut(struct EnLOCAL_DATA* dp) {
+    if ((dp->scp->battle.status & 0x400) && ((BgIsOut(0) == 0) || (dp->p_dist < 7500.0f))) {
+        return 1;
+    }
+    return 0;
+}
 
 void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->mlv = 2;
@@ -594,9 +615,15 @@ void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->radio = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMoveAngle);
+void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
+    p->angle = foo(p, 60.0f * delta * shGetDT());
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMoveAngleToPlayer);
+void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
+    dp->path.markangle = enGetPlayerDirection(dp);
+    enMoveAngle(&dp->path, delta);
+    dp->scp->rot.y = dp->path.angle;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMoveExec);
 
