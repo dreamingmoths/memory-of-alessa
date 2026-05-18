@@ -55,6 +55,7 @@ float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */);
 float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */);
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */);
 
+int enCheckSpray(struct EnLOCAL_DATA* dp /* r2 */);
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */);
 void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */);
