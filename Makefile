@@ -119,7 +119,7 @@ MWCCGAP_FLAGS := \
 	--as-flags=$(MWCCGAP_AS_FLAGS)
 
 ifeq ($(NON_MATCHING),1)
-	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -d NON_MATCHING -c "$<" -o "$@"
+	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@"
 else
 	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS)
 endif
