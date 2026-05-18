@@ -99,6 +99,18 @@ void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
 
 void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
 
+void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
+
+void enAnimePause(struct EnLOCAL_DATA* dp /* r2 */);
+void enAnimeRestart(struct EnLOCAL_DATA* dp /* r2 */);
+void enAnimeFrameSet(struct EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */);
+void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */);
+void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */);
+
+void enEfctPoisonFog(float* pos /* r2 */, float* vec /* r2 */);
+void enSetBlur(void);
+void enSetFadeOut(void);
+void enResetFilter(void);
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundCall3D(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundStop(int num /* r2 */);
@@ -106,6 +118,6 @@ void enSoundSetQueue(struct SubCharacter* scp /* r2 */, int num /* r2 */, float 
 
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
-extern void shQzero(void*, int);
+//extern void shQzero(void*, int);
 
 #endif
