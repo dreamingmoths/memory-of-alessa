@@ -8,13 +8,19 @@
 #include "Event/item.h"
 #include "Event/stg_name.h"
 #include "GFW/sh2gfw_LightSet.h"
+#include "GFW/sh2gfw_2d_filters.h"
 #include "Chacter_Draw/sh2gfw_model_light.h"
 #include "Chacter/sh_character_status.h"
 #include "Chacter/sh_character_battle.h"
 #include "Chacter/player_result.h"
 #include "Chacter/sh2_character_manage.h"
+#include "Chacter/m3_sc.h"
 #include "SH2_common/sh2dt.h"
+#include "SH2_common/sh_vu0.h"
 #include "Enemy/en_list.h"
+#include "Enemy/en_effect.h"
+
+extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
 
 void enInitEnemy(void) {
     shQzero(&enLocalWork, sizeof(EnLOCAL_WORK));
@@ -480,7 +486,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetDisplay);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcDirection);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcAngleDifference);
+float enCalcAngleDifference(float angle1, float angle2) {
+    return float_abs(shAngleRegulate(angle1 - angle2));
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcSpeedRate);
 
@@ -595,7 +603,21 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDownMotion);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetLieDirection);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeSet);
+void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */) {
+    enAnimeRestart(dp);
+    dp->anim = anim;
+    dp->anim_s = 0x1000;
+    dp->anim_n = 0;
+    dp->anim_loop = 0;
+    dp->anim_step = 0;
+    dp->flag &= ~0x4080;
+    if (EnAnimeSetFunc[dp->kind] != NULL) {
+        EnAnimeSetFunc[dp->kind](dp->scp, id, !(dp->flag & 0x8000) ? 1 : 0);
+    }
+    enSetTrans(dp);
+    dp->tx2 = dp->tx;
+    dp->tz2 = dp->tz;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeSetDirectFrame);
 
@@ -609,25 +631,55 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTransWalk);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTransForward);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimePause);
+void enAnimePause(struct EnLOCAL_DATA* dp /* r2 */) {
+    dp->flag |= 1;
+    shCharacterAnimePause(dp->scp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeRestart);
+void enAnimeRestart(struct EnLOCAL_DATA* dp /* r2 */) {
+    dp->flag &= ~1;
+    shCharacterAnimeRestart(dp->scp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeFrameSet);
+void enAnimeFrameSet(struct EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */) {
+    dp->anim_n = frame * 0x960;
+    shCharacterAnimeFrameSet(dp->scp, frame);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeReverse);
+void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */) {
+    AnimeInfo* ai = shCharacterAnimeGetInfo(dp->scp); // r2    
+    if (dp->anim_s > 0) {
+        dp->anim_s = -dp->anim_s;
+        if (dp->anim_n == 0) {
+            dp->anim_n = ai->frame * 0x960;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetAnimeCount);
+void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */) {
+    int limit = shCharacterAnimeGetInfo(dp->scp)->frame; // r2    
+    dp->flag |= 0x80;
+    dp->anim_step = (count * (limit * 0x960)) >> 0xC;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enEfctBloodPool);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enEfctPoisonFog);
+void enEfctPoisonFog(float* pos /* r2 */, float* vec /* r2 */) {
+    enEfctSetPoisonFog(pos, vec);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetBlur);
+void enSetBlur(void) {
+    sh2gfw_Set_FilterBlur(0x60); // 96
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetFadeOut);
+void enSetFadeOut(void) {
+    sh2gfw_Set_FadeOut_Black(2.0f);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enResetFilter);
+void enResetFilter(void) {
+    sh2gfw_Reset_FilterCommand();
+}
+
 
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */) {
     SeCallPos(num, vol, pos, 0);
