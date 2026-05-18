@@ -458,37 +458,74 @@ void enSetGameOver(void) {
     sh2jms.dead = 2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetMoved);
+void enFlagSetMoved(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status |= 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetMoved);
+void enFlagResetMoved(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status &= ~1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetLieDown);
+void enFlagSetLieDown(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status |= 4;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetLieDown);
+void enFlagResetLieDown(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status &= ~4;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetCritical);
+void enFlagSetCritical(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status |= 8;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetCritical);
+void enFlagResetCritical(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status &= ~8;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckCritical);
+int enCheckCritical(struct EnLOCAL_DATA* dp) {
+    return (dp->scp->battle.status & 8) != 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetNoDamage);
+void enFlagSetNoDamage(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status |= 0x40;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetNoDamage);
+void enFlagResetNoDamage(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status &= ~0x40;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetDead);
+void enFlagSetDead(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status |= 2;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetDead);
+void enFlagResetDead(struct EnLOCAL_DATA* dp) {
+    dp->scp->battle.status &= ~2;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetRotFloor);
+void enFlagSetRotFloor(struct EnLOCAL_DATA* dp) {
+    dp->flag |= 0x800;
+    dp->scp->status |= 0x80;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetRotFloor);
+void enFlagResetRotFloor(struct EnLOCAL_DATA* dp) {
+    dp->flag &= ~0x800;
+    dp->trx = dp->trz = 0.0f;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetRotFloorJust);
+void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp) {
+    dp->flag &= ~0x800;
+    dp->trx = dp->trz = 0.0f;
+    dp->scp->rot.x = dp->scp->rot.z = 0.0f;
+    dp->scp->status &= ~0x80;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagSetDisplay);
+void enFlagSetDisplay(struct EnLOCAL_DATA* dp) {
+    dp->scp->status |= 0x410;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlagResetDisplay);
+void enFlagResetDisplay(struct EnLOCAL_DATA* dp) {
+    dp->scp->status &= ~0x410;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcDirection);
 
