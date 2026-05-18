@@ -443,7 +443,200 @@ void PlayerUpdateStatusLower2D(SubCharacter* this) {
     
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerUpdateStatusUpper2D);
+void PlayerUpdateStatusUpper2D(SubCharacter* this) {
+    shPlayerWork* w = &sh2jms; // r16
+    PAD_INFO* p = &w->pad; // r17
+    PAD_INFO* p_pre = &w->pad[1]; // r18
+    PAD_2D* p2d = &w->pad->pad2d; // r18
+    
+    switch (w->lower_now) {
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_READY):
+            if (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_READY))) {
+                upper_st_set(JMS_ST_U_GUARD, w);
+                upper_flg_set(JMS_ST_U_GUARD, w);
+                player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_LROUND);
+            }
+            return;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+            if (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) {
+                upper_st_set(JMS_ST_U_DAMAGE, w);
+                upper_flg_set(JMS_ST_U_DAMAGE, w);
+                player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_LROUND);
+            }
+            return;
+        case (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+            if (w->upper_now != ((1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) {
+                upper_st_set(JMS_ST_U_FALL, w);
+                upper_flg_set(JMS_ST_U_FALL, w);
+                player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_LROUND);
+            }
+            return;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_READY):
+            if (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_READY))) {
+                upper_st_set(JMS_ST_U_WALL_F, w);
+                upper_flg_set(JMS_ST_U_WALL_F, w);
+            }
+            return;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_RELAX) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+            if (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) {
+                upper_st_set(JMS_ST_U_EVENT, w);
+                upper_flg_set(JMS_ST_U_EVENT, w);
+            }
+            return;
+    }
+
+    if ((w->weapon != 0) && (u_anime_flg_on(2) == 0)) {
+        if (p->hold != 0) {
+            if (upper_flg_on(1 << JMS_ST_U_HOLD) != 0) {
+                if (w->upper_now != ((1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) {
+                    upper_st_set(JMS_ST_U_HOLD, w);
+                    upper_flg_set(JMS_ST_U_HOLD, w);
+                    actwithwep_flg_set(w->weapon, w);
+                    if (sh2jms.upper_prev != 0x1C) {
+                        if ((playing.battle_level != 1) && (playing.battle_level != 0)) {
+                            int unknown = 0;
+                        } else {
+                            ItemWeaponReload(PlayerNowItemName(sh2jms.weapon), 1);
+                        }
+                    }
+                    PlayerGetTarget();
+                    PlayerCheckBothArmsAngle(this);
+                } else if (w->target != NULL) {
+                    if (shPadTrigger(0, key_config.right_move) != 0) {
+                        PlayerChangeTarget(1);
+                    }
+                    if (shPadTrigger(0, key_config.left_move) != 0) {
+                        PlayerChangeTarget(-1);
+                    }
+                    PlayerCheckBothArmsAngle(this);
+                }
+                if ((w->weapon == 1) && (w->target == NULL) && (w->lock_on != 0)) {
+                    player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_LROUND);
+                    if (w->lower_now == 0x1A) {
+                        player_flg_on(&w->l_anime_st_flg, 1 << JMS_ST_L_LROUND);
+                    }
+                }
+                if (w->target != NULL) {
+                    w->lock_on = 1;
+                } else {
+                    w->lock_on = 0;
+                }
+                return;
+            }
+        } 
+        else 
+            if (upper_flg_on(1 << JMS_ST_U_RELEASE) != 0) {
+                if (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) {
+                    upper_st_set(JMS_ST_U_RELEASE, w);
+                    upper_flg_set(JMS_ST_U_RELEASE, w);
+                    player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_LROUND);
+                    actwithwep_flg_set(0U, w);
+                    sh2jms.target = NULL;
+                }
+                return;
+            }
+    }
+    switch (w->lower_now) {
+        case JMS_ST_U_STAND:
+            if ((upper_flg_on(1 << JMS_ST_U_STAND) != 0) && (w->upper_now != 0)) {
+                upper_st_set(JMS_ST_U_STAND, w);
+                upper_flg_set(JMS_ST_U_STAND, w);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_STAND):
+            if ((upper_flg_on(1 << JMS_ST_U_RELAX) != 0) && (w->upper_now != 1)) {
+                upper_st_set(JMS_ST_U_RELAX, w);
+                upper_flg_set(JMS_ST_U_RELAX, w);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_RELAX):
+            if ((upper_flg_on(1 << JMS_ST_U_ALERT) != 0) && (w->upper_now != 2)) {
+                upper_st_set(JMS_ST_U_ALERT, w);
+                upper_flg_set(JMS_ST_U_ALERT, w);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_RELAX):
+            if ((upper_flg_on(1 << JMS_ST_U_TIRED) != 0) && (w->upper_now != 3)) {
+                upper_st_set(JMS_ST_U_TIRED, w);
+                upper_flg_set(JMS_ST_U_TIRED, w);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_ALERT):
+            if ((w->u_anime_st_flg == 0) && (upper_flg_on(1 << JMS_ST_U_READY) != 0) && (w->upper_now != 4)) {
+                upper_st_set(JMS_ST_U_READY, w);
+                upper_flg_set(JMS_ST_U_READY, w);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_ALERT):
+            if ((upper_flg_on(1 << JMS_ST_U_READYOFF) != 0) && (w->upper_now != 5)) {
+                upper_st_set(JMS_ST_U_READYOFF, w);
+                upper_flg_set(JMS_ST_U_READYOFF, w);
+                player_flg_on(&w->u_anime_st_flg, 1 << JMS_ST_U_RELAX);
+                player_flg_off(&w->upper_st_flg, 0x4000);
+                break;
+            }
+            break;
+        case (1 << JMS_ST_L_TIRED):
+            if ((upper_flg_on(1 << JMS_ST_U_BACK) != 0) && (w->upper_now != 8)) {
+                upper_st_set(JMS_ST_U_BACK, w);
+                upper_flg_set(JMS_ST_U_BACK, w);
+                if (sh2jms.act_with_wep & 1) {
+                    player_flg_on(&w->upper_st_flg, 1 << JMS_ST_U_HOLD);
+                    break;
+                }
+            }
+            break;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_TIRED):
+            if ((upper_flg_on(1 << JMS_ST_U_WALK) != 0) && (w->upper_now != 9)) {
+                upper_st_set(JMS_ST_U_WALK, w);
+                upper_flg_set(JMS_ST_U_WALK, w);
+                if (sh2jms.act_with_wep & 1) {
+                    player_flg_on(&w->upper_st_flg, 1 << JMS_ST_U_HOLD);
+                    break;
+                }
+            }
+            break;
+        case (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED):
+            if ((upper_flg_on(1 << JMS_ST_U_RUN1) != 0) && (w->upper_now != ((1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED)))) {
+                upper_st_set(JMS_ST_U_RUN1, w);
+                upper_flg_set(JMS_ST_U_RUN1, w);
+                if (sh2jms.act_with_wep & 2) {
+                    player_flg_on(&w->upper_st_flg, 1 << JMS_ST_U_HOLD);
+                    break;
+                }
+            }
+            break;
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED):
+            if ((upper_flg_on(1 << JMS_ST_U_RUN2) != 0) && (w->upper_now != ((1 << JMS_ST_U_STAND) | (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED)))) {
+                upper_st_set(JMS_ST_U_RUN2, w);
+                upper_flg_set(JMS_ST_U_RUN2, w);
+                if (sh2jms.act_with_wep & 2) {
+                    player_flg_on(&w->upper_st_flg, 1 << JMS_ST_U_HOLD);
+                    break;
+                }
+            }
+            break;
+        case (1 << JMS_ST_L_RELAX) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED):
+            if ((upper_flg_on(1 << JMS_ST_U_RUN3) != 0) && (w->upper_now != ((1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED)))) {
+                upper_st_set(JMS_ST_U_RUN3, w);
+                upper_flg_set(JMS_ST_U_RUN3, w);
+                if (sh2jms.act_with_wep & 2) {
+                    player_flg_on(&w->upper_st_flg, 1 << JMS_ST_U_HOLD);
+                }
+            }
+            break;
+        case (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+        case (1 << JMS_ST_L_STAND) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+        case (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+        case (1 << JMS_ST_L_RELAX) | (1 << JMS_ST_L_ALERT) | (1 << JMS_ST_L_TIRED) | (1 << JMS_ST_L_READY):
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerUpdateStatusLower2nd2D);
 
