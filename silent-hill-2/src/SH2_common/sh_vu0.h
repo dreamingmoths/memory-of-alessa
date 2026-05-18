@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-float shAngleRegulate(void);
+float shAngleRegulate(float);
 float shAtanV(void);
 float shAtan2(float y, float x);
 float shAtan_asm(float angle);
