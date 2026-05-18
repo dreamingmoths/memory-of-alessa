@@ -107,7 +107,7 @@ void enAnimeRestart(struct EnLOCAL_DATA* dp /* r2 */);
 void enAnimeFrameSet(struct EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */);
 void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */);
 void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */);
-
+void enEfctBloodPool(struct EnLOCAL_DATA* dp /* r2 */);
 void enEfctPoisonFog(float* pos /* r2 */, float* vec /* r2 */);
 void enSetBlur(void);
 void enSetFadeOut(void);
