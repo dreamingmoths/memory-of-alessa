@@ -23,7 +23,7 @@
 
 extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
 
-static inline float foo(struct EnPATH_DATA* p, float a0) { // what is the best place for this?
+static inline float angle_add(struct EnPATH_DATA* p, float a0) { // what is the best place for this?
     float a1 = p->markangle;
     float temp_f0 = shAngleRegulate(a1 - p->angle);
     if (temp_f0 < -a0) {
@@ -616,7 +616,7 @@ void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
 }
 
 void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
-    p->angle = foo(p, 60.0f * delta * shGetDT());
+    p->angle = angle_add(p, 60.0f * delta * shGetDT());
 }
 
 void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
