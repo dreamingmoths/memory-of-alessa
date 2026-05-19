@@ -395,7 +395,7 @@ void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */) {
 
 float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */) {
     if (dp->scp->battle.target == sh2jms.player) {
-        return (float*)&sh2jms.column_mov.p[0];
+        return &sh2jms.column_mov.p;
     }
     return (float*)&dp->scp->battle.target->pos;
 }
