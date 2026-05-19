@@ -1,6 +1,7 @@
 #ifndef EN_COMMON_H
 #define EN_COMMON_H
 
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
 typedef struct EnSOUND_QUEUE {
@@ -44,15 +45,20 @@ void enDummyCtrl(struct EnLOCAL_DATA* dp /* r2 */);
 int enTransID(int id /* r2 */);
 int enGetWorldCondition(void);
 int enGetPlace(void);
+int enGetStage(void);
 int enGetMode(void);
 int enCheckDarkOrBright(struct SubCharacter* scp /* r2 */);
 int enCheckDarkOrBrightPlayer(void);
 void enSetBattleTarget(struct EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */);
 void enSetHP(struct EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endurance /* r20 */);
 float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */);
+float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */);
 float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */);
+
+int enCheckSpray(struct EnLOCAL_DATA* dp /* r2 */);
 void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckDeath(struct EnLOCAL_DATA* dp /* r2 */);
+void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */);
 void enSetSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
 void enSetNewSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */);
@@ -65,11 +71,14 @@ void enAttackStart(struct EnLOCAL_DATA* dp /* r16 */);
 int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */);
 int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */);
 int enCheckHuggedPlayer(void);
-
+int enCheckSleepIn(struct EnLOCAL_DATA* dp);
+int enCheckSleepOut(struct EnLOCAL_DATA* dp);
 void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */);
 void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
-
+float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */);
+float enGetPlayerDistance(struct EnLOCAL_DATA * dp /* r2 */);
+float enGetPlayerDirection(struct EnLOCAL_DATA * dp /* r2 */);
 int enGetPlayerWeapon(void);
 int enCheckPlayerWeapon(void);
 float enGetPlayerAngle(struct EnLOCAL_DATA* dp /* r2 */);
@@ -77,24 +86,64 @@ float enGetPlayerSize(void);
 int enCheckPlayerSound(struct EnLOCAL_DATA* dp /* r2 */);
 int enCheckPlayerCondition(struct EnLOCAL_DATA* dp /* r17 */);
 int enCheckPlayerLight(void);
-
+int enCheckPlayerSprayNow(void);
+int enGetSprayPower(void);
 int enCheckPlayerBulletEmpty(void);
 int enCheckDeadPlayer(void);
 void enSetGameOver(void);
+void enFlagSetMoved(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetMoved(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetLieDown(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetLieDown(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetCritical(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetCritical(struct EnLOCAL_DATA* dp /* r2 */);
+int enCheckCritical(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetNoDamage(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetNoDamage(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetDead(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetDead(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetRotFloor(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetRotFloor(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagSetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
+void enFlagResetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 
+int enCalcTimer(int t /* r2 */);
+void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */);
+int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */);
+
+
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
+void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */);
+void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
+
 
 void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
 
+void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
+
+void enAnimePause(struct EnLOCAL_DATA* dp /* r2 */);
+void enAnimeRestart(struct EnLOCAL_DATA* dp /* r2 */);
+void enAnimeFrameSet(struct EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */);
+void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */);
+void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */);
+void enEfctBloodPool(struct EnLOCAL_DATA* dp /* r2 */);
+void enEfctPoisonFog(float* pos /* r2 */, float* vec /* r2 */);
+void enSetBlur(void);
+void enSetFadeOut(void);
+void enResetFilter(void);
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundCall3D(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundStop(int num /* r2 */);
 void enSoundSetQueue(struct SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* r29 */, float time /* r29 */);
+struct EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float dist, int time);
+
+void enResetForbiddenArea(void);
 
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
-extern void shQzero(void*, int);
+//extern void shQzero(void*, int);
 
 #endif
