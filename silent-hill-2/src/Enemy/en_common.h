@@ -138,6 +138,9 @@ void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */
 void enSoundCall3D(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */);
 void enSoundStop(int num /* r2 */);
 void enSoundSetQueue(struct SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* r29 */, float time /* r29 */);
+struct EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float dist, int time);
+
+void enResetForbiddenArea(void);
 
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
