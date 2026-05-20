@@ -36,6 +36,13 @@ typedef struct EnLOCAL_WORK {
     int ActiveEnemy; // offset 0x1E04, size 0x4
 } EnLOCAL_WORK;
 
+// total size: 0x4
+typedef struct EnANIME_DATA {
+    // Members
+    u_short Anime; // offset 0x0, size 0x2
+    u_char Loop; // offset 0x2, size 0x1
+} EnANIME_DATA;
+
 struct EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
 void enInitEnemy(void);
