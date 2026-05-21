@@ -3,17 +3,23 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 
-static struct EnANIME_DATA EnREDAnime[11]; 
+extern /* static */ struct EnANIME_DATA EnREDAnime[11]; 
 
 static void enREDCtrlSleep(struct EnLOCAL_DATA* dp /* r16 */);
+static void enREDCtrlGoPlayable(struct EnLOCAL_DATA* dp /* r2 */);
+
+static void enREDCtrlHand(void);
+
+static void enREDCtrlOnlyWalk(struct EnLOCAL_DATA* dp /* r16 */);
+static void enREDCheckPlayerWeapon(struct EnLOCAL_DATA* dp);
 
 static void enREDAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */);
 
 static float enREDGetSpeed(struct EnLOCAL_DATA* dp /* r2 */);
 
-static void enREDSetSlowTime(struct EnLOCAL_DATA * dp /* r16 */);
+static void enREDSetSlowTime(struct EnLOCAL_DATA* dp /* r16 */);
 
-static void enREDSoundLife(struct EnLOCAL_DATA * dp /* r16 */);
+static void enREDSoundLife(struct EnLOCAL_DATA* dp /* r16 */);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData);
 
@@ -24,16 +30,21 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
 static void enREDCtrlSleep(struct EnLOCAL_DATA* dp /* r16 */) {
     if (enCheckSleepOut(dp) != 0) {
         enSleepOut(dp);
-        dp->sslv = dp->slv = 0;
+        SET_DP_STATE_LV(dp, 0, 0);
         dp->type = 0;
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlGoPlayable);
+static void enREDCtrlGoPlayable(struct EnLOCAL_DATA* dp /* r2 */) {
+    dp->mlv = 1;
+    SET_DP_STATE_LV(dp, 1, 0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlEvent);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlHand);
+static void enREDCtrlHand(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlWander);
 
@@ -51,9 +62,27 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlConfuse);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBattleEnd);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlOnlyWalk);
+static void enREDCtrlOnlyWalk(struct EnLOCAL_DATA* dp /* r16 */) {
+    if (dp->sslv == 0) {
+        enREDAnimeSet(dp, TRUE);
+        enREDGetWalkSpeed(dp);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCheckPlayerWeapon);
+static void enREDCheckPlayerWeapon(struct EnLOCAL_DATA* dp) {
+    if (dp->type != 2) {
+        switch (enGetPlayerWeapon()) {
+            case 0:
+            case 1:
+            case 5:
+            case 4:
+                enFlagSetNoDamage(dp);
+                break;            
+            default:
+                enFlagResetNoDamage(dp);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetDamage);
 
@@ -93,7 +122,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetFeelRange);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetRotSpeed);
 
-static void enREDSetSlowTime(struct EnLOCAL_DATA * dp /* r16 */) {
+static void enREDSetSlowTime(struct EnLOCAL_DATA* dp /* r16 */) {
     int timer[5] = { 180, 90, 60, 30, 1 }; // r29+0x20 taken from ghidra @1716
 
 
@@ -106,7 +135,7 @@ static void enREDSetSlowTime(struct EnLOCAL_DATA * dp /* r16 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
 
-static void enREDSoundLife(struct EnLOCAL_DATA * dp /* r16 */) {
+static void enREDSoundLife(struct EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sound_wait < 0x12C) {
         dp->sound_wait++;
         return;
