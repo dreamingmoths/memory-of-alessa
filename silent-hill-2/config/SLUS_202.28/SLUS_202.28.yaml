@@ -41,7 +41,7 @@ segments:
       - [0x006aa0, c,   Chacter/m3_play]
       - [0x011a70, c,   Chacter/m3_play_2d]
       - [0x016180, c,   Chacter/m3_play_3d]
-      - [0x01d080, asm, Chacter/m3_red]
+      - [0x01d080, c,   Chacter/m3_red]
       - [0x01d610, c,   Chacter/m3_sc]
       - [0x01ffc0, asm, Chacter/m3_scu]
       - [0x0206d0, asm, Chacter/m3_wep]
