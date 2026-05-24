@@ -59,7 +59,7 @@ void CharaDataLoadWeapon(void) {
     entry_list[1].model.file = weapon_file[i].weapon_model;
     entry_list[1].shadow.file = weapon_file[i].shadow_model;
     
-    if ((Sh2sys.main_status >> 4) & 1) {
+    if (GET_BIT(Sh2sys.main_status, 4)) {
         entry_list[2].category = 4;
         entry_list[2].kind = weapon_file[i].kind + 0x20;
         entry_list[2].model.file = weapon_file[i].weapon_model_r;
