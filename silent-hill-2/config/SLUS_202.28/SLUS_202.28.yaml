@@ -233,7 +233,7 @@ segments:
       - [0x134ec0, asm, DS_Pad/dss_wrapper]
       - [0x135050, asm, DBG/dbsw_all]
       - [0x1354a0, asm, DBG/dbsw_sys]
-      - [0x136350, asm, Event/chara_data_load]
+      - [0x136350, c,   Event/chara_data_load]
       - [0x1395d0, asm, Chacter/m3_arm]
       - [0x139a00, asm, Chacter/m3_mary]
       - [0x139ca0, asm, Chacter/m3_mxx]
