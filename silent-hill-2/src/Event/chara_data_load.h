@@ -4,6 +4,8 @@
 #include "sh2_common.h"
 #include "FilesList/fileslist_bg.h"
 
+#define Category_null 0
+
 // total size: 0xC
 typedef struct CharaData_MemAdmin_One {
     // Members
@@ -81,11 +83,19 @@ typedef struct CharaData_StandardList {
     union fsFileIndex* shadow; // offset 0xC, size 0x4
 } CharaData_StandardList;
 
+// total size: 0x8
+typedef struct CharaData_Extra {
+    // Members
+    u_long128* adress; // offset 0x0, size 0x4
+    int size; // offset 0x4, size 0x4
+} CharaData_Extra;
+
 struct CharaData_MemAdmin mem_admin[32];
 u_char chara_data_use[1024];
 union fsFileIndex* stage_anim;
 u_long128 CHRDATA[];
 u_long128* chara_adress;
+struct CharaData_Extra chara_data_extra[8];
 
 union fsFileIndex data_chr_wp_jms_weapon_anm[1]; // size: 0x8, address: 0x3A1088
 union fsFileIndex data_chr_jms_hhh_jms_kg1[1]; // size: 0x8, address: 0x3A0D68
@@ -99,5 +109,15 @@ void CharaDataLoadItem(void);
 void CharaDataLoadWeapon(void);
 void CharaDataLoadEnemy(int kind /* r2 */);
 void CharaDataLoadStage(void);
+
+void CharaDataLoadDemo(CharaData_DemoList* dlp, int status);
+void CharaDataLoadCancel(CharaData_DemoList* dlp);
+
+void CharaDataDeleteAll(void);
+void CharaDataDeleteOne(int kind);
+void CharaDataDeleteExtra(void);
+int CharaDataFileSearch(union fsFileIndex** file /* r2 */, int kind /* r2 */);
+void CharaDataBackLoadInit(void);
+void CharaDataBackInit(CharaData_DemoList* dlp /* r18 */);
 
 #endif // CHARA_DATA_LOAD_H
