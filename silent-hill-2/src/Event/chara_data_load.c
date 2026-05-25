@@ -328,7 +328,7 @@ static int SeekMemAdminCtgry(int category /* r16 */) {
     if (31 >= i) return i;
 
     
-    if (category == Category_null) CharaDeleteNoUseOne();
+    if (category == CATEGORY_NULL) CharaDeleteNoUseOne();
 
     
     for (i = 0; i < 32; i++) 
