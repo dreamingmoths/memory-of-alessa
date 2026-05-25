@@ -426,6 +426,8 @@ segments:
       - [0x1d2630, asm,     Enemy/en_shb]        # GOD
       - [0x1d75a0, asm,     Enemy/en_rod]        # SEWER_MONSTER
       - [0x1d7610, asm,     text_0x1d7610]
+      - [0x1d8290, asm,     unknown_0x1d8290]
+      - [0x1dc8e0, asm,     text_0x1dc8e0]
       - [0x1e01c0, asm,     Enemy/en_mry]        # CAROUSEL_HORSE
       - [0x1e0360, asm,     text_0x1e0360]
       - [0x1e0c80, asm,     Enemy/en_bhr]        # MEMORY_OF_ALESSA
@@ -443,6 +445,7 @@ segments:
       - [0x210790, asm,     text_0x210790]
       - [0x218b70, asm,     MC/mc]
       - [0x225cb0, asm,     text_0x225cb0]
+      - [0x225eb0, asm,     Effect2/effect_0x225eb0]
       - [0x230440, asm,     Effect2/hh_class_new]
       - [0x230b00, asm,     text_0x230b00]
       - [0x2345b0, c,       Effect2/hh_class_0x2345b0]
