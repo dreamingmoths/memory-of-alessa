@@ -382,12 +382,12 @@ segments:
       - [0x1133a0, asm,     Effect2/hh_class_5]
       - [0x113cc0, asm,     text_0x113cc0]
       - [0x116520, asm,     Enemy/en_one]        # DOUBLE_HEAD
-      - [0x117770, asm,     text_0x117770]
+      - [0x117770, asm,     Enemy/enemy_0x117770]
       - [0x1261a0, asm,     Enemy/en_smb]        # SPLIT_WORM
       - [0x12ef30, asm,     text_0x12ef30]
       - [0x12f0f0, c,       Enemy/en_common]
       - [0x130590, asm,     Enemy/en_aid]        # CLOSER
-      - [0x1319c0, asm,     text_0x1319c0]
+      - [0x1398d0, asm,     text_0x1398d0]
       - [0x141890, asm,     Chacter/m3_claudia]  # CLAUDIA
       - [0x141b20, asm,     Effect2/hh_class_6]
       - [0x142490, asm,     Effect2/hh_class_7]
@@ -438,7 +438,7 @@ segments:
       - [0x205860, asm,     text_0x205860]
       - [0x20e0d0, c,       Enemy/en_lix]        # SLURPER_X
       - [0x210790, asm,     text_0x210790]
-      - [0x2207b0, asm,     MC/mc]
+      - [0x218b70, asm,     MC/mc]
       - [0x225cb0, asm,     text_0x225cb0]
       - [0x230440, asm,     Effect2/hh_class_new]
       - [0x230b00, asm,     text_0x230b00]
