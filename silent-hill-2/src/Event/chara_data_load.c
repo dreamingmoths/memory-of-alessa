@@ -334,7 +334,7 @@ static int SeekMemAdminCtgry(int category /* r16 */) {
     for (i = 0; i < 32; i++) 
         if (mem_admin[i].category == category) break;            
     
-    ASSERT_ON_LINE(category != Category_null || i < 32, 1791);
+    ASSERT_ON_LINE(category != CATEGORY_NULL || i < 32, 1791);
     return i;
 }
 
