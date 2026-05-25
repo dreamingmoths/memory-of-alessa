@@ -11,7 +11,7 @@ extern /* static */ CharaData_StandardList enemy_list[15];
 extern /* static */ CharaData_WeaponFile weapon_file[10];
 extern /* static */ CharaData_StandardList item_list[168];
 
-static signed int CharaDeleteNoUseOne(void);
+static int CharaDeleteNoUseOne(void);
 static void CharaDataInfoFree(CharaData_MemAdmin* admin_p, int del);
 static void CharaDataInfoFreeSub(CharaData_MemAdmin_One* maop);
 static void CharaDataUseFree(u_long128* adr, int size);
@@ -181,7 +181,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExtra);
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataFreeSearch);
 
-static signed int CharaDeleteNoUseOne(void) { // not line matched
+static int CharaDeleteNoUseOne(void) { // not line matched
     int del_prio; // r3
     int del_no; // r4
     int i; // r5
