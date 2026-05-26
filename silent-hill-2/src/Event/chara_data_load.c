@@ -199,7 +199,17 @@ INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecStandardS
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataWeaponTranslation);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataExtraTranslation);
+u_long128* CharaDataExtraTranslation(union fsFileIndex* file, void* adress) {
+    u_long128* free_adr; // r16
+    int size; // r17
+
+    size = FcGetFileSize(file);
+    free_adr = (u_long128*)CharaDataFreeSearch((size + 0x1FFF) & ~0x1FFF);
+    ASSERT_ON_LINE(free_adr, 1427);
+    shMemCopy(free_adr, adress, (size + 0x3F) & ~0x3F);
+    
+    return free_adr;
+}
 
 u_long128* CharaDataAnimSetExtra(int kind, union fsFileIndex* file, u_long128* adress, int free) { // not line matched
     struct SubCharacter* scp; // r17
