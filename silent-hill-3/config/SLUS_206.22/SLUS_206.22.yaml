@@ -423,7 +423,7 @@ segments:
       - [0x1b9c20, asm,     text_0x1b9c20]
       - [0x1ba6a0, asm,     Enemy/en_ap2]        # SCRAPER
       - [0x1c2760, asm,     text_0x1c2760]
-      - [0x1c4050, asm,     Enemy/en_hbp]        # LEONARD_WOLF
+      - [0x1c4050, asm,     Enemy/en_hpb]        # LEONARD_WOLF
       - [0x1d2630, asm,     Enemy/en_shb]        # GOD
       - [0x1d75a0, asm,     Enemy/en_rod]        # SEWER_MONSTER
       - [0x1d7610, asm,     text_0x1d7610]
