@@ -193,7 +193,7 @@ static u_int InstanceTable_All_Initialize(struct Object_Group_Infomeation * pInf
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", ImpactDescriptor_Post);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141EE0);
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", Object_Group_Manager);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_manager", func_00141F70);
 
