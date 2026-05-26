@@ -54,7 +54,7 @@ struct sh2gfw_ModelDraw_MAN* sh2gfw_Get_pMD(int chara_id);
 
 int sh2gfw_Check_ModelIsOnMemory(int cid);
 
-int sh2gfw_LoadInit_CharaModelData(void);
+int sh2gfw_LoadInit_CharaModelData(chr_mge_files* cdl); // I changed the original DWARF signature 
 
 int sh2gfw_LoadMemorySet_CharaModelData(chr_mge_files* cdl, u_long128** ModelMemBuffer, u_long128** AnimeMemBuffer, u_long128** ClusterMemBuffer, u_long128** Kg1MemBuffer);
 
