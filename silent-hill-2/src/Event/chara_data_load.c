@@ -5,11 +5,17 @@
 #include "Chacter/sh2_character_manage.h"
 #include "LoadBg/loadbg_event.h"
 #include "SH2_common/sh2sys.h"
+#include "Multi_thr/filesys/fcread.h"
+#include "SH2_common/data_load.h"
 
 extern /* static */ CharaData_ItemFile bullet_and_drug_file[6];
 extern /* static */ CharaData_StandardList enemy_list[15];
 extern /* static */ CharaData_WeaponFile weapon_file[10];
 extern /* static */ CharaData_StandardList item_list[168];
+
+static void CharaDataLoadExecItem(CharaData_EntryList* entry_list_p /* r18 */);
+
+static void CharaDataLoadExecWeapon(CharaData_EntryList* entry_list_p);
 
 static int CharaDeleteNoUseOne(void);
 static void CharaDataInfoFree(CharaData_MemAdmin* admin_p, int del);
@@ -159,25 +165,220 @@ void CharaDataLoadCancel(CharaData_DemoList* dlp) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExec);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecItem);
+static void CharaDataLoadExecItem(CharaData_EntryList* entry_list_p /* r18 */) {
+    int size; // r16
+    int i; // r2
+    
+    i = SeekMemAdminKind(entry_list_p->kind);
+    
+    if (i == 32) 
+    {
+        i = SeekMemAdminCtgry(0);
+        
+        mem_admin[i].category = entry_list_p->category;
+        mem_admin[i].priority = 0;
+        mem_admin[i].kind = entry_list_p->kind;
+        
+        size = (FcGetFileSize(entry_list_p->model.file) + 0x1FFF) & ~0x1FFF;
+        entry_list_p->model.adress = (u_long*)CharaDataFreeSearch(size);
+        entry_list_p->model.load = 1;
+        mem_admin[i].model.file = entry_list_p->model.file;
+        mem_admin[i].model.adress = entry_list_p->model.adress;
+        mem_admin[i].model.size = size;
+    } else {
+        entry_list_p->delete = entry_list_p->kind;
+        entry_list_p->model.adress = mem_admin[i].model.adress;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecJames);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecWeapon);
+static void CharaDataLoadExecWeapon(CharaData_EntryList* entry_list_p) {
+    int size; // r2
+    int i; // r2
+    int j; // r2
+    
+    j = SeekMemAdminCtgry(3);
+    if (j == 32) {
+        i = SeekMemAdminCtgry(0);
+        mem_admin[i].category = 3;
+        mem_admin[i].priority = 0;
+        mem_admin[i].kind = entry_list_p->kind;
+
+        entry_list_p->model.adress = (u_long*)CharaDataFreeSearch(0xC000);
+        entry_list_p->model.load = 1;
+        mem_admin[i].model.file = entry_list_p->model.file;
+        mem_admin[i].model.adress = entry_list_p->model.adress;
+        mem_admin[i].model.size = 0xC000;
+
+        entry_list_p->animation.adress = (u_long*)CharaDataFreeSearch(0x2000);
+        entry_list_p->animation.load = 1;
+        mem_admin[i].animation.file = entry_list_p->animation.file;
+        mem_admin[i].animation.adress = entry_list_p->animation.adress;
+        mem_admin[i].animation.size = 0x2000;
+
+        entry_list_p->shadow.adress = (u_long*)CharaDataFreeSearch(0x2000);
+        entry_list_p->shadow.load = 1;
+        mem_admin[i].shadow.file = entry_list_p->shadow.file;
+        mem_admin[i].shadow.adress = entry_list_p->shadow.adress;
+        mem_admin[i].shadow.size = 0x2000;
+    } else {
+        entry_list_p->delete = mem_admin[j].kind;
+        entry_list_p->model.adress = mem_admin[j].model.adress;
+        if (entry_list_p->model.file != NULL && entry_list_p->model.file != mem_admin[j].model.file) {
+            entry_list_p->model.load = 1;
+            mem_admin[j].model.file = entry_list_p->model.file;
+        }
+        entry_list_p->animation.adress = mem_admin[j].animation.adress;
+        entry_list_p->shadow.adress = mem_admin[j].shadow.adress;
+        if (entry_list_p->shadow.file != NULL && entry_list_p->shadow.file != mem_admin[j].shadow.file) {
+            entry_list_p->shadow.load = 1;
+            mem_admin[j].shadow.file = entry_list_p->shadow.file;
+        }
+        mem_admin[j].kind = entry_list_p->kind;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecStandard);
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecStandardSub0);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataWeaponTranslation);
+void CharaDataWeaponTranslation(int kind /* r22 */, union fsFileIndex* file_anm /* r21 */, void* adr_anm /* r20 */, union fsFileIndex* file_mdl /* r19 */, void* adr_mdl /* r23 */) { // not line matched
+    struct SubCharacter* scp; // r16
+    struct chr_mge_files load_files[3]; // r29+0x90
+    int i; // r17                                                                                                                                                                                         
+    int j; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataExtraTranslation);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataAnimSetExtra);
+    i = SeekMemAdminCtgry(2);
+    j = SeekMemAdminCtgry(3);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataAnimAdressExchange);
+    sh2gfw_Delete_Model_from_CharaID(mem_admin[i].kind);
+    mem_admin[i].animation.file = file_anm;    
+    shMemCopy(mem_admin[i].animation.adress, adr_anm,(FcGetFileSize(file_anm) + 0x1FFF) & ~0x1FFF);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExtra);
+    mem_admin[j].kind = kind;
+    mem_admin[j].model.file = file_mdl;
+    shMemCopy(mem_admin[j].model.adress, adr_mdl,
+        (FcGetFileSize(file_mdl) + 0x1FFF) & ~0x1FFF);
+
+    shQzero(&load_files, sizeof(load_files));
+    load_files[0].mid = mem_admin[i].kind;
+    load_files[1].mid = mem_admin[j].kind;
+    load_files[2].mid = -1;
+
+    sh2gfw_LoadInit_CharaModelData(load_files);
+    sh2gfw_LoadMemorySet_CharaModelData( 
+        &load_files[0],
+        &mem_admin[i].model.adress,
+        &mem_admin[i].animation.adress,
+        &mem_admin[i].cluster.adress,
+        &mem_admin[i].shadow.adress);
+    sh2gfw_LoadMemorySet_CharaModelData(
+        &load_files[1],
+        &mem_admin[j].model.adress,
+        &mem_admin[j].animation.adress,
+        &mem_admin[j].cluster.adress,
+        &mem_admin[j].shadow.adress);
+    sh2gfw_LOAD_CharaModelData();
+    sh2gfw_SyncInit_ChacterModelData();
+    for (scp = shCharacter_Manage_GetCharacterList(); scp != NULL; scp = scp->next) {
+        shCharacter_Manage_SetDataAdresss(scp);
+    }
+}
+
+u_long128* CharaDataExtraTranslation(union fsFileIndex* file, void* adress) {
+    u_long128* free_adr; // r16
+    int size; // r17
+
+    size = FcGetFileSize(file);
+    free_adr = (u_long128*)CharaDataFreeSearch((size + 0x1FFF) & ~0x1FFF);
+    ASSERT_ON_LINE(free_adr, 1427);
+    shMemCopy(free_adr, adress, (size + 0x3F) & ~0x3F);
+    
+    return free_adr;
+}
+
+u_long128* CharaDataAnimSetExtra(int kind, union fsFileIndex* file, u_long128* adress, int free) { // not line matched
+    struct SubCharacter* scp; // r17
+    struct chr_mge_files load_files[2]; // r29+0x80
+    u_long128* ret_adr; // r2
+    int i; // r2    
+    int j; // r4
+    i = SeekMemAdminKind(kind);
+    ret_adr = mem_admin[i].animation.adress;
+    
+    if (free != 0) {
+        for (j = 0; j < 8; j++) {
+            if (chara_data_extra[i].adress == ret_adr) {
+                chara_data_extra[i].adress = NULL;
+                chara_data_extra[i].size = 0;
+            }
+        }
+        CharaDataInfoFree(&mem_admin[i], 2);
+    }
+    mem_admin[i].animation.file = file;
+    mem_admin[i].animation.adress = adress;
+    mem_admin[i].animation.size = (FcGetFileSize(file) + 0x1FFF) & ~0x1FFF;
+    
+    shQzero(&load_files, sizeof(load_files));
+    load_files[0].mid = kind;
+    load_files[1].mid = -1;
+    sh2gfw_LoadInit_CharaModelData(&load_files); // idk
+    sh2gfw_LoadMemorySet_CharaModelData(&load_files, &mem_admin[i].model.adress, &mem_admin[i].animation.adress, &mem_admin[i].cluster.adress, &mem_admin[i].shadow.adress);        
+    
+    sh2gfw_LOAD_CharaModelData();    
+    sh2gfw_Delete_Model_from_CharaID(kind);
+    sh2gfw_SyncInit_ChacterModelData();
+    
+    for (scp = shCharacter_Manage_GetCharacterList(); scp != NULL; scp = scp->next) {
+        shCharacter_Manage_SetDataAdresss(scp);
+    }
+    return ret_adr;
+}
+
+
+u_long128* CharaDataAnimAdressExchange(SubCharacter* scp, u_long128* adr) {
+    u_long128* ret; // r18
+    int i; // r2
+    
+    i = SeekMemAdminKind(scp->kind);
+    ret = mem_admin[i].animation.adress;
+    mem_admin[i].animation.adress = adr;
+    shCharacter_Manage_SetJamesAnimeAdresss(scp, (u_int)adr);
+    
+    return ret;
+}
+
+u_long128* CharaDataLoadExtra(union fsFileIndex* file, int status) { // not line matched
+    u_long128* adr; // r16
+    int size; // r17    
+    int del; // r2
+    int i; // r4
+    
+    size = (FcGetFileSize(file) + 0x1FFF) & ~0x1FFF;
+    do {
+        adr = (u_long*)CharaDataFreeSearch(size);
+        if (adr != NULL) break;
+        ASSERT_ON_LINE(CharaDeleteNoUseOne() != 0, 1520);
+    } while (1);
+
+    if (status & 0x4) {
+        LoadBgEventFileLoad(file, adr);
+    } else {
+        FcRead(file, adr);
+    }
+    if (status & 0x100) {
+        CharaDataUseFree(adr, size);        
+    } else if (status & 0x200) {
+        for (i = 0; i < 8; i++) 
+            if (chara_data_extra[i].adress == NULL) break;      
+        ASSERT_ON_LINE(i < 8, 1534);
+        chara_data_extra[i].adress = adr;
+        chara_data_extra[i].size = size;
+    }
+    return adr;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataFreeSearch);
 

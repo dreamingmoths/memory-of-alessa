@@ -110,6 +110,12 @@ void CharaDataLoadWeapon(void);
 void CharaDataLoadEnemy(int kind /* r2 */);
 void CharaDataLoadStage(void);
 
+void CharaDataWeaponTranslation(int kind /* r22 */, union fsFileIndex* file_anm /* r21 */, void* adr_anm /* r20 */, union fsFileIndex* file_mdl /* r19 */, void* adr_mdl /* r23 */);
+u_long128* CharaDataExtraTranslation(union fsFileIndex* file, void* adress);
+u_long128* CharaDataAnimSetExtra(int kind, union fsFileIndex* file, u_long128* adress, int free);
+u_long128* CharaDataAnimAdressExchange(struct SubCharacter* scp, u_long128* adr);
+u_long128* CharaDataLoadExtra(union fsFileIndex* file, int status);
+
 void CharaDataLoadDemo(CharaData_DemoList* dlp, int status);
 void CharaDataLoadCancel(CharaData_DemoList* dlp);
 
