@@ -11,6 +11,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/data_load.h"
 #include "Multi_thr/filesys/fileserv.h"
+#include "SH2_common/pad.h"
 
 extern /* static */ struct Memo_Data data[45];  // size: 0x2D0, address: 0x34CED0
 
@@ -95,7 +96,103 @@ static void MemoInit(void) { // not line matched (need to add macros/inlines)
         }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/memo", MemoSelect);
+static void MemoSelect(void) { // not line matched
+    short list[45][2]; // r29+0x60
+    int list_number; // r16
+    int work; // r17
+    int alpha; // r2
+    int i; // r18
+    int j; // r19
+
+    list_number = 0;
+    for (i = 0; i < 45; i++) {
+        if (GET_FLAG(game_flag.flag, data[i].flag)) {
+            list[list_number][0] = i;
+            list[list_number][1] = data[i].msg_label;
+            list_number++;
+        }
+    }
+    if (shPadTrigger(0, key_config.enter)) {
+        Sh2sys.step[3] = 2;
+        Sh2sys.step[4] = 0;
+        Sh2sys.step[5] = 0;
+        Sh2sys.step[6] = 0;
+        Sh2sys.step[7] = 0;
+    } else if (shPadTrigger(0, key_config.cancel)) {
+        Sh2sys.step[3] = 3;
+        Sh2sys.step[4] = 0;
+        Sh2sys.step[5] = 0;
+        Sh2sys.step[6] = 0;
+        Sh2sys.step[7] = 0;
+    } else if (shPadRepeat(0, PAD_KEY_DPAD_UP)) {
+        list_point--;
+        if (list_point < 0) {
+            list_point = list_number - 1;
+        }
+        disp_point++;
+        if (3 < disp_point) {
+            disp_point = 3;
+        }
+    } else if (shPadRepeat(0, PAD_KEY_DPAD_DOWN)) {
+        list_point++;
+        if (list_point >= list_number) {
+            list_point = 0;
+        }
+        disp_point--;
+        if (disp_point < -3) {
+            disp_point = -3;
+        }
+    }
+    select = list[list_point][0];
+    MemoPictureBaseDraw(0x60);
+    fontClear();
+    if (list_number < 12) {
+        for (i = 0; i < list_number; i++) {
+            work = 0x100 - (list_number << 4) + (i << 5);
+            fontPrintStrNum(msg_buffer, list[i][1], 0x100, work);
+            if (i == list_point) {
+                MemoSelectBarDraw(list[i][1], work);
+            }
+        }
+    } else {
+        for (i = 0; i < 13; i++) {
+            j = list_point + disp_point - 6 + i;
+            if (j < 0) {
+                j += list_number;
+            }
+            if (j >= list_number) {
+                j -= list_number;
+            }
+            work = (i << 5) + 0x30;
+            switch (i) {
+                default:
+                    alpha = 0x80;
+                    break;
+                
+                case 2:
+                case 10:
+                    alpha = 0x40;
+                    break;
+                
+                case 1:
+                case 11:
+                    alpha = 0x20;
+                    break;
+                
+                case 0:
+                case 12:
+                    alpha = 0x10;
+                    break;
+
+            }
+            fontSetAlpha(alpha);
+            fontPrintStrNum(msg_buffer, list[j][1], 0x100, work);
+            if (j == list_point) {
+                MemoSelectBarDraw(list[j][1], work);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/memo", MemoDisplay);
 
