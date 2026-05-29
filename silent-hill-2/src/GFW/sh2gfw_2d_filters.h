@@ -13,5 +13,6 @@ void sh2gfw_Set_FadeOutRetain_White(float ra /* r20 */);
 void sh2gfw_Set_FadeOut_Black(float ra /* r20 */);
 void sh2gfw_Set_FadeOut_White(float ra /* r20 */);
 void sh2gfw_Set_FilterBlur(int rt /* r16 */);
+void sh2gfw_Black_Clear(void);
 
 #endif // SH2GFW_2D_FILTERS_H
