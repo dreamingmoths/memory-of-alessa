@@ -80,6 +80,7 @@ static unsigned long kc2ga(unsigned long kconf_button /* r2 */);
 void shGameKeyGetAssign(struct shGameKeyAssign * assign /* r2 */);
 int shPadTrigger(int port /* r17 */, int key /* r16 */);
 int shSysKeyNormalize(char * paddata /* r2 */);
+int shPadRepeat(int port /* r17 */, int key /* r16 */);
 
 extern struct Pad_KeyConfig key_config;
 extern u_char pad_bak[2][20];
