@@ -12,6 +12,7 @@
 #include "SH2_common/data_load.h"
 #include "Multi_thr/filesys/fileserv.h"
 #include "SH2_common/pad.h"
+#include "SH2_common/sh2dt.h"
 
 extern /* static */ struct Memo_Data data[45];  // size: 0x2D0, address: 0x34CED0
 
@@ -22,7 +23,7 @@ static void MemoEnd(void);
 static void MemoPictureLoad(union fsFileIndex* file0, union fsFileIndex* file1);
 static void MemoPictureBaseDraw(int rgb /* r16 */);
 static void MemoSelectBarDraw(int msg /* r2 */, int y /* r16 */);
-static void MemoPictureLayerDraw(void);
+static void MemoPictureLayerDraw(int rgb); // apperently this takes an argument
 static void MemoPictureLayerDrawSafeLock(void);
 static void MemoPictureLayerDrawGuruguru(void);
 static void MemoPictureLayerDrawAngelRing(void);
@@ -283,7 +284,7 @@ static void MemoSelectBarDraw(int msg /* r2 */, int y /* r16 */) { // not line m
     PictureDraw(&pic);
 }
 
-static void MemoPictureLayerDraw(void) {
+static void MemoPictureLayerDraw(int rgb) { // apperently this takes an argument
     switch (select) {
         case 17:
             if (GET_GAME_FLAG(18, 31)) 
