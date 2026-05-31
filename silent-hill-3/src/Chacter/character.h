@@ -41,8 +41,8 @@ typedef struct _CL_HITPOLY_HEAD
 typedef struct _CL_VHIT_WALL
 {
 
-    float cp[4];
-    float nl[4];
+    sceVu0FVECTOR cp;
+    sceVu0FVECTOR nl;
     struct _CL_HITPOLY_HEAD *pd;
 } CL_VHIT_WALL;
 
