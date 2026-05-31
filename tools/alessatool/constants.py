@@ -14,3 +14,4 @@ ADDR2LINE_PATH = f"{TOOLS}/binutils-mips-ps2-decompals/mips-ps2-decompals-addr2l
 FUNCTION_SYMBOL_LABEL = "glabel"
 END_FUNCTION_SYMBOL_LABEL = "endlabel"
 UNIQUE_TEXT_SECTION_DIRECTIVE = '.section .text,"ax",@progbits,unique,'
+INCLUDE_MACRO_INC_DIRECTIVE = '.include "macro.inc"'
