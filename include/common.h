@@ -111,7 +111,7 @@ typedef struct
     float y;
     float z;
     float w;
-} __attribute__((aligned(16))) Vector4;
+} Vector4 __attribute__((aligned(16)));
 
 static inline void vec_copy(void* dst, void* src) {
     asm ("\

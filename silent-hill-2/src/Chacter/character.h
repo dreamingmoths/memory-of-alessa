@@ -25,8 +25,8 @@ typedef struct _CL_HITPOLY_HEAD
 typedef struct _CL_VHIT_WALL
 {
     // total size: 0x30
-    Vector4 cp;                  // offset 0x0, size 0x10
-    Vector4 nl;                  // offset 0x10, size 0x10
+    sceVu0FVECTOR cp;            // offset 0x0, size 0x10
+    sceVu0FVECTOR nl;            // offset 0x10, size 0x10
     struct _CL_HITPOLY_HEAD *pd; // offset 0x20, size 0x4
 } CL_VHIT_WALL;
 
