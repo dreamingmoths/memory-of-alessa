@@ -171,7 +171,6 @@ def line_has_vram_addr(line: str, addr_str: str) -> bool:
 
     return line.index("*/") > line.index(addr_str)
 
-def append_final_new_line(lines: list[str]) -> str:
+def append_final_new_line(lines: list[str]):
     if lines[-1] != "":
         lines.append("")
-    return lines
