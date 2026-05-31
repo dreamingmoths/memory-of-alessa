@@ -176,6 +176,11 @@ def main():
         type=str,
         default="shift-jis"
     )
+    annotate_parser.add_argument(
+        "--tu",
+        action="store_true",
+        help="arrange each function into its own text section"
+    )
     annotate_parser.set_defaults(func=annotate)
 
     patch_parser = subparsers.add_parser(

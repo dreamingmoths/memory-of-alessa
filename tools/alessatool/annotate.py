@@ -1,7 +1,8 @@
+from sys import stdout
 from pathlib import Path
 from subprocess import run
 from dataclasses import dataclass
-import sys
+from constants import FUNCTION_SYMBOL_LABEL, END_FUNCTION_SYMBOL_LABEL, UNIQUE_TEXT_SECTION_DIRECTIVE
 
 @dataclass
 class AnnotationArgs:
@@ -11,6 +12,7 @@ class AnnotationArgs:
     asm_path: Path | None
     out_path: Path
     addr2line_path: Path
+    tu: bool
     encoding: str
     stdout: bool
     verbose: bool
@@ -29,15 +31,18 @@ def annotate_asm(args: AnnotationArgs):
 
     addresses = (f"0x{v:X}" for v in range(vram_start, vram_end, 0x4))
     proc = run([args.addr2line_path, "-e", args.elf_path, *addresses], capture_output=True, encoding=args.encoding)
-    lines = proc.stdout.splitlines()
+    addr2line_output_lines = proc.stdout.splitlines()
 
     prev_tu_name = ""
     prev_line_number = -1
+    function_count = 0
+    is_in_function_label = False
     current_vram_addr = vram_start
     annotated_asm_lines = []
 
-    for addr_index in range(0, len(lines) - 1):
-        line = lines[addr_index]
+    for addr_index in range(0, len(addr2line_output_lines) - 1):
+        line = addr2line_output_lines[addr_index]
+
         if line.startswith("?"):
             current_vram_addr += 0x4
             continue
@@ -68,7 +73,28 @@ def annotate_asm(args: AnnotationArgs):
             if line_has_vram_addr(asm_line, vram_addr_str):
                 break
 
-            annotated_asm_lines.append(asm_line)
+            should_append_asm_line = True
+            if args.tu:
+                # track when we go in & out of function symbols
+                if asm_line.startswith(FUNCTION_SYMBOL_LABEL):
+                    function_count += 1
+                    is_in_function_label = True
+                    annotated_asm_lines.append(f'{UNIQUE_TEXT_SECTION_DIRECTIVE}{function_count}')
+                    annotated_asm_lines.append("")
+                elif asm_line.startswith(END_FUNCTION_SYMBOL_LABEL):
+                    is_in_function_label = False
+
+                # remove `nop`s
+                if not is_in_function_label and asm_line.strip().endswith("nop"):
+                    should_append_asm_line = False
+                
+                # remove `macro.inc` include directive
+                if asm_line == '.include "macro.inc"':
+                    should_append_asm_line = False
+
+            if should_append_asm_line:
+                annotated_asm_lines.append(asm_line)
+
             asm_line_index += 1
 
         annotated_asm_lines.append(f"\t.loc 1 {current_line_number}")    
@@ -78,7 +104,7 @@ def annotate_asm(args: AnnotationArgs):
         prev_line_number = current_line_number
         current_vram_addr += 0x4
     
-    while asm_line_index < len(asm_lines):
+    while asm_line_index < len(asm_lines) - 1:
         annotated_asm_lines.append(asm_lines[asm_line_index])
         asm_line_index += 1
 
@@ -99,7 +125,7 @@ def annotate_asm(args: AnnotationArgs):
         if args.verbose:
             print(f"alessatool/annotate: wrote asm to {args.out_path}")
     else:
-        sys.stdout.write(annotated_asm_contents)
+        stdout.write(annotated_asm_contents)
 
 
 def find_vram_bounds(asm_lines: list[str]):
