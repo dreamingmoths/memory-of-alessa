@@ -248,7 +248,7 @@ segments:
       - [0x1521e0, asm, LoadBg/loadbg_camdata]
       - [0x1522f0, asm, LoadBg/loadbg_common]
       - [0x152850, asm, DBG/dbsw_map]
-      - [0x152c10, asm, Chacter/chara_saveinfo]
+      - [0x152c10, c,   Chacter/chara_saveinfo]
       - [0x152e70, asm, view/vc_newest]
       - [0x153490, asm, Multi_thr/scf/sh2_scf]
       - [0x153950, asm, DBG/dbalocate]
