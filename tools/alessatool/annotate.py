@@ -91,7 +91,7 @@ def annotate_asm(args: AnnotationArgs):
                     should_append_asm_line = False
                 
                 # remove `macro.inc` include directive
-                if asm_line_trimmed == INCLUDE_MACRO_INC_DIRECTIVE:
+                elif asm_line_trimmed == INCLUDE_MACRO_INC_DIRECTIVE:
                     should_append_asm_line = False
 
             if should_append_asm_line:
