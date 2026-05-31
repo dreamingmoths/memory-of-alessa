@@ -75,21 +75,23 @@ def annotate_asm(args: AnnotationArgs):
 
             should_append_asm_line = True
             if args.tu:
+                asm_line_trimmed = asm_line.strip()
+
                 # track when we go in & out of function symbols
-                if asm_line.startswith(FUNCTION_SYMBOL_LABEL):
+                if asm_line_trimmed.startswith(FUNCTION_SYMBOL_LABEL):
                     function_count += 1
                     is_in_function_label = True
                     annotated_asm_lines.append(f'{UNIQUE_TEXT_SECTION_DIRECTIVE}{function_count}')
                     annotated_asm_lines.append("")
-                elif asm_line.startswith(END_FUNCTION_SYMBOL_LABEL):
+                elif asm_line_trimmed.startswith(END_FUNCTION_SYMBOL_LABEL):
                     is_in_function_label = False
 
                 # remove `nop`s
-                if not is_in_function_label and asm_line.strip().endswith("nop"):
+                if not is_in_function_label and asm_line_trimmed.endswith("nop"):
                     should_append_asm_line = False
                 
                 # remove `macro.inc` include directive
-                if asm_line == INCLUDE_MACRO_INC_DIRECTIVE:
+                if asm_line_trimmed == INCLUDE_MACRO_INC_DIRECTIVE:
                     should_append_asm_line = False
 
             if should_append_asm_line:
@@ -117,6 +119,7 @@ def annotate_asm(args: AnnotationArgs):
         *annotated_asm_lines
     ]
 
+    append_final_new_line(annotated_asm_lines)
     annotated_asm_contents = "\n".join(annotated_asm_lines)
 
     if not args.stdout and args.out_path:
@@ -167,3 +170,8 @@ def line_has_vram_addr(line: str, addr_str: str) -> bool:
         return False
 
     return line.index("*/") > line.index(addr_str)
+
+def append_final_new_line(lines: list[str]) -> str:
+    if lines[-1] != "":
+        lines.append("")
+    return lines
