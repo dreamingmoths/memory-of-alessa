@@ -81,7 +81,7 @@ def annotate_asm(args: AnnotationArgs):
                 if asm_line_trimmed.startswith(FUNCTION_SYMBOL_LABEL):
                     function_count += 1
                     is_in_function_label = True
-                    annotated_asm_lines.append(f'{UNIQUE_TEXT_SECTION_DIRECTIVE}{function_count}')
+                    annotated_asm_lines.append(f"{UNIQUE_TEXT_SECTION_DIRECTIVE}{function_count}")
                     annotated_asm_lines.append("")
                 elif asm_line_trimmed.startswith(END_FUNCTION_SYMBOL_LABEL):
                     is_in_function_label = False
