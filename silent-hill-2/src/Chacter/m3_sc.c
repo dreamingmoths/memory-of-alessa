@@ -1,73 +1,21 @@
-#include "Chacter/character.h"
-#include "m3_sc.h"
+#include "Chacter/m3_sc.h"
+#include "Chacter/m3_play.h"
 
-static void shCharacterCutList(SubCharacter* scp) {
-    SubCharacter* pre = scp->pre;
-    SubCharacter* next  = scp->next;
+static void AddFreeList(SubCharacter* scp);
+static void shCharacterSortList(SubCharacter* scp /* r2 */);
 
-    if (pre != NULL) {
-        pre->next = next;
-        scp->pre = NULL;
-    } else {
-        sh2chara.head = next;
-    }
-    if (next != NULL) {
-        next->pre = pre;
-        scp->next = NULL;
-    }
-}
+static void shCharacterCutList(SubCharacter* scp);
+
+static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetFreeList);
 
 static void AddFreeList(SubCharacter* scp) {
     scp->next = &sh2chara.free->sc;
     sh2chara.free = (SubCharacterDisp*) scp;
 }
 
-
-void shCharacterDelete(SubCharacter* scp) {
-    SubCharacterDisp* scp_d = (SubCharacterDisp*) scp;
-    if (scp_d == NULL) {
-        return;
-    }
-    if (scp == sh2chara.player) {
-        shCharacterSetPlayer(NULL);
-    }
-
-
-
-
-
-    shCharacterFreeSkeltons(scp->sk_top);
-    scp_d->anime.top = NULL;
-
-
-
-    shCh_ASC_Free(scp_d->work);
-
-
-    
-    scp_d->work = NULL;
-    
-    
-    ClusterAnimeDelete(scp_d->cluster_anime, scp->index);
-    
-
-    shCharacterCutList(scp);
-    
-    
-    scp->kind = 0;
-    scp->id = 0;
-    scp->sk_top = NULL;
-    scp->pre = NULL;
-    scp->next = NULL;
-    scp->function = NULL;
-    scp->enemy_p = NULL;
-    
-    AddFreeList(scp);
-    sh2chara.total--;
-
-}
-
-void shCharacterSortList(SubCharacter* scp) {
+static void shCharacterSortList(SubCharacter* scp /* r2 */) {
     SubCharacter* pre;
     SubCharacter* next;
 
@@ -109,6 +57,50 @@ void shCharacterSortList(SubCharacter* scp) {
     scp->next = NULL;
 }
 
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterTopOfList);
+
+static void shCharacterCutList(SubCharacter* scp) {
+    SubCharacter* pre = scp->pre;
+    SubCharacter* next  = scp->next;
+
+    if (pre != NULL) {
+        pre->next = next;
+        scp->pre = NULL;
+    } else {
+        sh2chara.head = next;
+    }
+    if (next != NULL) {
+        next->pre = pre;
+        scp->next = NULL;
+    }
+}
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterInitialize);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", UpdateMatrix);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterNeckAngleExec);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterKneeAngleExec);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddPos);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetRot);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddRot);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetClusterAnimeWork);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterClusterAnimeSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetModel);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForDrama);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForPlay);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetClusterAnimeAdr);
+
 void shCharacterSetPlayer(SubCharacter* scp) {
     if (scp == NULL) {
 
@@ -132,7 +124,17 @@ void shCharacterSetPlayer(SubCharacter* scp) {
 
 }
 
-void shCharacterSetHandler(SubCharacter* scp) {
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetModelID);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetSubCharacter);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetSkeltonNum);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeOneFrameSize);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterInitSubCharacter);
+
+static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
     switch (scp->kind) {
     case 0x100:
     case 0x101:
@@ -257,3 +259,141 @@ void shCharacterSetHandler(SubCharacter* scp) {
         break;
     }
 }
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterCreate);
+
+void shCharacterDelete(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = (SubCharacterDisp*) scp;
+    if (scp_d == NULL) {
+        return;
+    }
+    if (scp == sh2chara.player) {
+        shCharacterSetPlayer(NULL);
+    }
+
+
+
+
+
+    shCharacterFreeSkeltons(scp->sk_top);
+    scp_d->anime.top = NULL;
+
+
+
+    shCh_ASC_Free(scp_d->work);
+
+
+    
+    scp_d->work = NULL;
+    
+    
+    ClusterAnimeDelete(scp_d->cluster_anime, scp->index);
+    
+
+    shCharacterCutList(scp);
+    
+    
+    scp->kind = 0;
+    scp->id = 0;
+    scp->sk_top = NULL;
+    scp->pre = NULL;
+    scp->next = NULL;
+    scp->function = NULL;
+    scp->enemy_p = NULL;
+    
+    AddFreeList(scp);
+    sh2chara.total--;
+
+}
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayingExecAnimeOne);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterDramaExecAnimeOne);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCopyForReverseModel);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCNowDemoEventSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCNowPlayableEventSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCStayModelSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAnimeTypeSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCRotZYXSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCFreefallSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCLightOnNowSwitch);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecAnimeAll);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterUpdateAll);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetFunction);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecFunctionAll);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectScaleSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterItemScreenObjectSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsGet1st);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedGet_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAdd);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAdd_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAddY);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAddY_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimePause);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimePause_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeRestart);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeRestart_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeIsEnd);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeIsEnd_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameGet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameGet_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameSet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameSet_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterGet);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterGet_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterSet_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeGetInfo);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeGetInfo_);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayerModelToDrama);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayerModelToPlayable);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterMariaModelToDrama);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterMariaModelToPlayable);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetPosAfterDemo);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetPartsMatrixForShadow);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetGroundInfoForShadow);
