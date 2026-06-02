@@ -25,6 +25,8 @@ AnimeInfo* shCharacterAnimeGetInfo_(SubCharacter* scp /* r2 */, int ctrl_type /*
 void shCharacterAnimeFrameSet(SubCharacter* scp /* r2 */, u_short frame /* r2 */);
 void shCharacterAnimeRestart(SubCharacter* scp /* r2 */);
 
+void shCharacterDelete(SubCharacter* scp);
+
 short shCharacterGetModelID(SubCharacter* scp /* r2 */);
 void SCAnimeTypeSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
 SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
