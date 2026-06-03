@@ -181,6 +181,25 @@ extra_new_game = 0x01D87FD5; //type:u8
 action_level = 0x01D87FD6; // type:u8
 riddle_level = 0x01D87FD7; // type:u8
 
+PlayerResultCalcRankSplitWormKillTime = 0x191E70;
+PlayerResultCalcRankMissionaryKillTime = 0x191EE0;
+PlayerResultCalcRankLeonardKillTime = 0x191F50;
+PlayerResultCalcRankMemoryOfAlessaKillTime = 0x191FC0;
+PlayerResultCalcRankGodKillTime = 0x192030;
+PlayerResultCalcRankClearTime = 0x191DA0;
+PlayerResultTimerCountUp = 0x1916F0;
+PlayerResultMoveDistanceCountUp = 0x191750;
+PlayerResultHeatherDamagedCountUp = 0x191AA0;
+PlayerResultCalcRankHeatherDamage = 0x1920A0;
+PlayerResultCalcRankBattleLevel = 0x191B90;
+PlayerResultCalcRankRiddleLevel = 0x191BF0;
+PlayerResultCalcRankItemGet = 0x191C50;
+PlayerResultCalcRankHiddenItemGet = 0x191CA0;
+PlayerResultCalcRankKillsByShot = 0x191D00;
+PlayerResultCalcRankKillByFight = 0x191D50;
+PlayerResultCalcRankClearCount = 0x191B30;
+PlayerResultCalcRankTotal = 0x1921B0;
+
 GetItemCount = 0x16D990;
 
 birthday_room_ammo_total = 0x01D31918;
@@ -900,7 +919,7 @@ func_00151150 = 0x151150;
 func_0016ECE0 = 0x16ECE0;
 func_001908A0 = 0x1908A0;
 func_00213AD0 = 0x213AD0;
-func_001916F0 = 0x1916F0;
+
 func_0029F3D0 = 0x29F3D0;
 func_001433A0 = 0x1433A0;
 func_001E08A0 = 0x1E08A0;
