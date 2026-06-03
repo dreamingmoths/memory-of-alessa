@@ -64,7 +64,7 @@ int func_01F6E5E0_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
     int temp_a3_2;
     int a1;
 
-    func_001916F0();
+    PlayerResultTimerCountUp();
     func_0029FA30();
     if (arg0->unk8AC == arg0->unk8A8) {
         SeCall(1.0f, 0.0f, 0x3AFF);
