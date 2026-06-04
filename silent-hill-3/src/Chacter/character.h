@@ -64,26 +64,17 @@ typedef struct _CL_VHIT_RESULT
     } hobj;
 } CL_VHIT_RESULT;
 
+/**
+ * @sh3: this struct appears to have the same size as its sh2 counterpart.
+ * confirmed by function at `0012f030`.
+ */
+
 typedef struct shBattleInfo
 {
-
-    float pos[4];
-    float vec[4];
-    u_short id;
-    u_short kind;
-    float dead_timer;
-    float damage;
-    float shock;
-    int atk_result;
-    float prev_atk_pos[4];
-    struct SubCharacter *target;
-    float hp;
-    float hp_max;
-    float hp_rate;
-    u_int status;
-    struct shBattleArea look;
-    struct shBattleArea feel;
-    u_char se;
+    // total size: 0x80
+    u_char unk0[0x70];
+    int status;
+    u_char unk74[0xC];
 } shBattleInfo;
 
 typedef struct _USXY
@@ -170,10 +161,25 @@ typedef struct shAnime3d
     float scale;                 // offset 0x80, size 0x4
 } shAnime3d;
 
-typedef struct SubCharacter
-{
+/**
+ * size confirmed by `shQzero` call by `func_001691c0`.
+ */
+typedef struct CharaOptions {
+    // total size: 0x40
+    u_short unk0;
+    u_short unk2;
+    u_short kind;
+    u_short id;
+    u_short unk8;
+    Vector4 pos_10;
+    Vector4 rot_20;
+    u_int status_30;
+    u_int unk34[0xC];
+} CharaOptions;
 
-    /* 0x0 */   int index;          
+typedef struct SubCharacter {
+
+    /* 0x0 */   int index;
     /* 0x4 */   u_int status;       
     /* 0x8 */   u_int step;         
     /* 0xC */   u_short kind;       
@@ -194,19 +200,14 @@ typedef struct SubCharacter
     /* 0xA8 */  int unkA8[4];
     /* 0xB8 */  struct SubCharacter *pre;
     /* 0xBC */  struct SubCharacter *next;
-    /* 0xC0 */  int unkC0[18];   
-    /* 0x108 */ int unk108[0x28];
-    /* 0x1A8 */ u_char work[4];
-    /* 0x1AC */ u_int unk1AC;
-    /* 0x1B0 */ u_int unk1B0;
-    /* 0x1B4 */ u_int unk1B4;
-    /* 0x1B8 */ u_int unk1B8;
-    /* 0x1BC */ u_int unk1BC;
-    /* 0x1C0 */ u_int unk1C0;
-    /* 0x1C4 */ u_int unk1C4;
-    /* 0x1C8 */ u_int unk1C8;
-    /* 0x1CC */ u_int unk1CC;
+    /* 0xC0 */  float unkC0[4];
+    /* 0xD0 */  float unkD0[4];
+    /* 0xE0 */  float unkE0[4];
+    /* 0xF0 */  float unkF0[4];
+    /* 0x100 */ u_char unk100[0x50];
+    /* 0x150 */ shBattleInfo battle;
 } SubCharacter;
+
 
 typedef struct sh3gfw_ModelDraw_MAN
 {

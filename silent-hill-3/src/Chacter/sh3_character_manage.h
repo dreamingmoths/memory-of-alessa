@@ -4,7 +4,7 @@
 #include "common.h"
 #include "Chacter/character.h"
 
-extern short id_counter;
+extern u_short id_counter;
 
 int shCharacter_Manage_Init(void);
 

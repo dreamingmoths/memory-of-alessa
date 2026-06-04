@@ -463,6 +463,8 @@ segments:
       - [0x238080, textbin, vutext]
 
       - [0x23aa80, data,    data]
+      - [0x24f4d8, .data,   Chacter/m3_sc]
+      - [0x24f4e0, data,    data_0x24f4e0]
       - [0x257420, .data,   Chacter_Draw/clani]
       - [0x257478, data,    data_0x257478]
       - [0x258cd0, .data,   Font/font]

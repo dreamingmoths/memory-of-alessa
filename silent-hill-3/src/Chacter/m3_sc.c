@@ -3,7 +3,10 @@
 #include "Chacter/character.h"
 #include "Chacter/sh3_character_manage.h"
 
-static SubCharacter* shCharacterGetFreeList() {
+/* not from here */
+extern int func_001DCAD0(short kind);
+
+static SubCharacter* shCharacterGetFreeList(void) {
     struct SubCharacter * scp = (SubCharacter*) D_003DAD50;
     if (D_003DAD50 != NULL) {
         D_003DAD50 = scp->next;
@@ -210,7 +213,39 @@ int shCharacter_Manage_Init() {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacter_Manage_Create);
+int shCharacter_Manage_Create(CharaOptions* options) {
+    SubCharacter* scp = shCharacterCreate(options);
+    u_short id;
+
+    if (scp != NULL) { 
+        func_00140D40(func_001DCAD0(scp->kind));
+
+        vec_copy(&scp->pos, &options->pos_10);
+        vec_copy(&scp->unkF0, &options->pos_10);
+        vec_copy(&scp->unkD0, &options->pos_10);
+        vec_copy(&scp->rot, &options->rot_20);
+        vec_copy(&scp->unkE0, &options->rot_20);
+        scp->battle.status |= 0x2000;
+
+        if (options->id != 0xffff) {
+            scp->id = options->id;
+        } else {
+            scp->id = id_counter;
+            printf("id %d\n", id_counter);
+            id_counter++;
+            if (id_counter == 0x7FFF) {
+                id_counter = 0x1000;
+            }
+        }
+
+        func_001DC9E0(scp, 1);
+        func_0025BE90(scp->kind, scp->id);
+
+        return scp->id;
+    }
+
+    return -1;
+}
 
 int shCharacter_Manage_Delete(u_short kind, u_short id) { 
     SubCharacter * del_scp;
@@ -299,7 +334,7 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
         scp_d->models[2] = pMD;
         scp->function(scp);
         if (scp_d->anime_adr != 0) {
-            if (scp_d->sc.unk1C0 & 0x2000) {
+            if (scp_d->sc.battle.status & 0x2000) {
                 func_001DC700(&scp_d->sc, &scp_d->sc.rot, &scp_d->sc.pos);
                 func_001DCF10(&scp_d->sc);
             }
