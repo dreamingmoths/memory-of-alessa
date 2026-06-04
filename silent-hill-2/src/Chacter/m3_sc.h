@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "Chacter/character.h"
-#include "shared/Chacter_Draw/clani.h"
+#include "Chacter_Draw/clani.h"
 
 #define HHH_JMS_CHARA_ID 0x103 // highest detail james model
 #define EN_RED_CHARA_ID 0x208 // pyramid head
@@ -30,11 +30,19 @@ void shCharacterDelete(SubCharacter* scp);
 short shCharacterGetModelID(SubCharacter* scp /* r2 */);
 void SCAnimeTypeSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
 SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
+int shCharacterAnimeOneFrameSize(u_short id);
+void shCharacterInitSubCharacter(void);
 void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (* func)(SubCharacter *) /* r2 */); 
 void* shCharacterGetAnimeAdrForPlay(SubCharacter * scp /* r2 */);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
 
+void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
+
 void SCNowPlayableEventSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
+
+void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
+
+void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id);
 
 #endif
