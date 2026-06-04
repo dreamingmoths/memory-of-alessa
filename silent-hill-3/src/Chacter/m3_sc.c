@@ -276,7 +276,7 @@ int shCharacter_Manage_Delete(u_short kind, u_short id) {
     return 1;
 }
 
-void func_0012F4E0(void) {
+void shCharacter_0x0012f4e0(void) {
     SubCharacter* del_scp;
     int delete_on = 1;
 
@@ -303,11 +303,11 @@ void func_0012F4E0(void) {
     func_0022E9D0();
 }
 
-SubCharacter* func_0012F570() {
+SubCharacter* shCharacter_Manage_GetCharacterList() {
     return sh3chara.head;
 }
 
-SubCharacter* func_0012F580() {
+SubCharacter* shCharacterGetPlayer() {
     return sh3chara.player;
 }
 
@@ -428,3 +428,25 @@ void shCharacterInitSubCharacter(void) {
         sh3chara.work[i].sc.index = i;
     }
 }
+
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetModel);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_0012FC80);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shBattleAroundTargetEnemy);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetRemainingFreeSlots);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetSubCharacter);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_0012FE20);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_0012FE30);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_001300C0);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_001300F0);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_001301B0);
+

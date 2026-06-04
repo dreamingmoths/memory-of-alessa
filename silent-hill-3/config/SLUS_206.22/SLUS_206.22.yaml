@@ -253,7 +253,7 @@ segments:
       - { start: 0x02cff0, type: c,   name: main, ld_align_segment_start: 0x10 }
       - [0x02d2a0, asm,     text_0x02d2a0]
       - [0x02f3e0, c,       Chacter/m3_sc]
-      - [0x030140, asm,     text_0x030140]
+      - [0x0307a0, asm,     text_0x0307a0]
       - [0x039210, asm,     Fog/spack]
       - [0x03a840, asm,     text_0x03a840]
       - [0x03baa0, c,       DS_Pad/ds_sequencer]

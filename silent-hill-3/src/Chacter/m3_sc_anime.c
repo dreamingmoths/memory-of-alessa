@@ -122,7 +122,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DDA90);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DDAA0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DDAE0);
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeFrameGet);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeFrameGet_);
 
@@ -134,7 +134,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeCounterSet_)
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DDCB0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DDD30);
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeGetInfo1);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeGetInfo1_);
 

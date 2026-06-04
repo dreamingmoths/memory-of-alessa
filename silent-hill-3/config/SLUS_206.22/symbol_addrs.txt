@@ -122,15 +122,20 @@ vbNormalizeRadianAngle = 0x001b6bb0;
 
 // m3_sc.c
 sh3chara = 0x003d4950; // size:0x6410
+shCharacterAnimeFrameGet = 0x001ddae0;
 shCharacterAnimeFrameGet_ = 0x001ddaf0;
 shCharacterInitSubCharacter = 0x0012fb00;
 shCharacterAnimeFrameSet_ = 0x001ddc20;
 shCharacterAnimeCounterSet_ = 0x001ddca0;
 shCharacterAnimeGetInfo1_ = 0x001ddd40;
+shCharacterAnimeGetInfo1 = 0x001ddd30;
 shCharacterAnimeGetInfo2_ = 0x001ddda0;
 shCharacterGetSkeltonNum = 0x001dcad0;
 shCharacterGetModelID = 0x001dcac0;
 shCharacterGetAnimeAdr = 0x001dcab0;
+shCharacter_Manage_GetCharacterList = 0x0012f570;
+shCharacterGetPlayer = 0x0012f580;
+shBattleAroundTargetEnemy = 0x0012fd00;
 
 shCharacterTopOfList = 0x0012ef60;
 shCharacterSortList = 0x0012eeb0;
@@ -138,10 +143,15 @@ shCharacterSetPlayer = 0x0012efd0;
 shCharacterInitialize = 0x0012f030; // ?
 shCharacterGetFreeList = 0x0012ee60;
 shCharacterCutList = 0x0012ef90;
-SCSetModel = 0x0012fbc0;
 AddFreeList = 0x0012ee90;
 shCharacterGetSubCharacter = 0x0012FD80;
 shCharacterAnimeOneFrameSize = 0x001dcc40;
+
+shCharacterGetRemainingFreeSlots = 0x0012fd60;
+SCSetModel = 0x0012fbc0;
+shCharacter_0x0012f4e0 = 0x0012f4e0;
+shCh_ASC_Malloc = 0x001c1a60;
+shCharacterSetSkTop = 0x0013f200;
 
 // sh3_character_manage.c
 shCharacter_Manage_Init = 0x0012f2f0;
@@ -933,7 +943,6 @@ func_00213AD0 = 0x213AD0;
 func_0029F3D0 = 0x29F3D0;
 func_001433A0 = 0x1433A0;
 func_001E08A0 = 0x1E08A0;
-func_0012F580 = 0x12F580;
 func_0016E0F0 = 0x16E0F0;
 func_0019F820 = 0x19F820;
 func_001AED70 = 0x1AED70;
@@ -1001,7 +1010,6 @@ func_00164750 = 0x164750;
 func_001BFCE0 = 0x1BFCE0;
 func_002F2AF0 = 0x2F2AF0;
 func_0016CF80 = 0x16CF80;
-func_001DDAE0 = 0x1DDAE0;
 func_00213810 = 0x213810;
 func_001C2A70 = 0x1C2A70;
 func_0012BB10 = 0x12BB10;

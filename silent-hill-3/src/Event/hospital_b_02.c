@@ -1,4 +1,5 @@
 #include "hospital_b_02.h"
+#include "Chacter/m3_sc_anime.h"
 
 int func_01F6D680_hospital_b_02(void) {
     unk_01F6D680_hospital_b_02_struct* temp_v0;
@@ -295,7 +296,7 @@ void func_01F6FBA0_hospital_b_02(void) {
 
     scp = shCharacterGetSubCharacter(0x101F, 0x14E);
     func_0016D170(0x3B00, &scp->pos, 0, 0, 1.0f, 1000.0f, D_01F74140_hospital_b_02);
-    if ((func_001DDAE0(scp) & 0xFFFF) < 0xF) {
+    if (shCharacterAnimeFrameGet(scp) < 0xF) {
         D_01F74148_hospital_b_02 = 0;
         return;
     }
