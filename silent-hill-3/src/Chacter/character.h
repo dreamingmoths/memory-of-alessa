@@ -238,21 +238,34 @@ typedef struct sh3gfw_ModelDraw_MAN
     void *pTexMAN[6];
 } sh3gfw_ModelDraw_MAN;
 
-typedef struct SubCharacterDisp
-{
-    // total size: 0x340
-    struct SubCharacter sc;               // offset 0x0, size 0x1F0
-    struct shAnime3d anime2;              // offset 0x1F0, size 0x90
-    struct shAnime3d anime;               // offset 0x280, size 0x90
-    struct shClusterAnime *cluster_anime; // offset 0x310, size 0x4
-    void *models[3];                      // offset 0x314, size 0xC
-    void *work;                           // offset 0x320, size 0x4
-    void *data;                           // offset 0x324, size 0x4
-    u_int model_adr;                      // offset 0x328, size 0x4
-    u_int anime_adr;                      // offset 0x32C, size 0x4
-    u_int clani_adr;                      // offset 0x330, size 0x4
-    void *anime_list;                     // offset 0x334, size 0x4
-    void *clani_list;                     // offset 0x338, size 0x4
+typedef struct SubCharacterDisp {
+    // total size: 0x320
+    struct SubCharacter sc;               // offset 0x0, size 0x1D0
+    struct shAnime3d anime2;              // offset 0x1D0, size 0x90
+    struct shAnime3d anime;               // offset 0x260, size 0x90
+    struct shClusterAnime *cluster_anime; // offset 0x2F0, size 0x4
+    void* models[3];                      // offset 0x2F4, size 0xC
+    void* work;                           // offset 0x300, size 0x4
+    void* data;                           // offset 0x304, size 0x4
+    u_int model_adr;                      // offset 0x308, size 0x4
+    u_int anime_adr;                      // offset 0x30C, size 0x4
+    u_int clani_adr;                      // offset 0x310, size 0x4
+    void* anime_list;                     // offset 0x314, size 0x4
+    void* clani_list;                     // offset 0x318, size 0x4
+    u_char pad[0x4];                      // offset 0x31C, size 0x4
 } SubCharacterDisp;
+
+/**
+ * @sh3: mostly same, however `total` was changed from a char to an int, and the
+ * `SubCharacter` struct is 0x20 bytes smaller.
+ */
+typedef struct shCharacterAll {
+    // total size: 0x6410
+    SubCharacterDisp work[32]; // offset 0x0, size 0x6400
+    SubCharacterDisp* free; // offset 0x6400, size 0x4
+    SubCharacter* head; // offset 0x6404, size 0x4
+    SubCharacter* player; // offset 0x6408, size 0x4
+    int total; // offset 0x640C, size 0x1
+} shCharacterAll;
 
 #endif

@@ -3,20 +3,22 @@
 #include "Chacter/character.h"
 #include "Chacter/sh3_character_manage.h"
 
+extern shCharacterAll sh3chara;
+
 /* not from here */
 extern int func_001DCAD0(short kind);
 
 static SubCharacter* shCharacterGetFreeList(void) {
-    struct SubCharacter * scp = (SubCharacter*) D_003DAD50;
-    if (D_003DAD50 != NULL) {
-        D_003DAD50 = scp->next;
+    struct SubCharacter * scp = sh3chara.free;
+    if (sh3chara.free != NULL) {
+        sh3chara.free = scp->next;
     }
     return scp;
 }
 
 static void AddFreeList(SubCharacter* scp) {
-    scp->next = D_003DAD50;
-    D_003DAD50 = (SubCharacterDisp*) scp;
+    scp->next = sh3chara.free;
+    sh3chara.free = scp;
 }
 
 
@@ -24,8 +26,8 @@ void shCharacterSortList(SubCharacter* scp) {
     SubCharacter* pre;
     SubCharacter* next;
 
-    if (!(next = D_003DAD54)) {
-        D_003DAD54 = scp;
+    if (!(next = sh3chara.head)) {
+        sh3chara.head = scp;
         scp->next = NULL;
         scp->pre = NULL;
         return;
@@ -33,7 +35,7 @@ void shCharacterSortList(SubCharacter* scp) {
 
 
 
-    if (D_003DAD58 != NULL) {
+    if (sh3chara.player != NULL) {
         pre = next;
         next = next->next;
     } else {
@@ -47,7 +49,7 @@ void shCharacterSortList(SubCharacter* scp) {
         if (pre != NULL) {
             pre->next = scp;
         } else {
-            D_003DAD54 = scp;
+            sh3chara.head = scp;
         }
         next->pre = scp;
 
@@ -64,12 +66,12 @@ void shCharacterSortList(SubCharacter* scp) {
 
 
 static void shCharacterTopOfList(SubCharacter* scp) {
-    if (D_003DAD54 != NULL) {
-        ((SubCharacter*)D_003DAD54)->pre = scp;
+    if (sh3chara.head != NULL) {
+        ((SubCharacter*)sh3chara.head)->pre = scp;
     }
-    scp->next = D_003DAD54;
+    scp->next = sh3chara.head;
     scp->pre = NULL;
-    D_003DAD54 = scp;
+    sh3chara.head = scp;
 }
 
 static void shCharacterCutList(SubCharacter* scp) {
@@ -80,7 +82,7 @@ static void shCharacterCutList(SubCharacter* scp) {
         pre->next = next;
         scp->pre = NULL;
     } else {
-        D_003DAD54 = next;
+        sh3chara.head = next;
     }
     if (next != NULL) {
         next->pre = pre;
@@ -94,12 +96,12 @@ static void shCharacterSetPlayer(SubCharacter *scp)
 
 {
     if (scp == NULL) {
-        D_003DAD58 = scp;
-        D_003DAD54 = scp;
+        sh3chara.player = scp;
+        sh3chara.head = scp;
         return;
     }
 
-    D_003DAD58 = scp;
+    sh3chara.player = scp;
 
     shCharacterCutList(scp);
     shCharacterTopOfList(scp);    
@@ -251,7 +253,7 @@ int shCharacter_Manage_Delete(u_short kind, u_short id) {
     SubCharacter * del_scp;
     int delete_on = 0;
 
-    del_scp = D_003DAD54;
+    del_scp = sh3chara.head;
     while (del_scp != NULL) {
         if (del_scp->kind == kind && del_scp->id == id) {
             delete_on = 1;
@@ -279,7 +281,7 @@ void func_0012F4E0(void) {
     int delete_on = 1;
 
     do {
-        del_scp = D_003DAD54;
+        del_scp = sh3chara.head;
 
         while (del_scp) {
             if (del_scp->kind >> 8 == 2) {
@@ -302,11 +304,11 @@ void func_0012F4E0(void) {
 }
 
 SubCharacter* func_0012F570() {
-    return D_003DAD54;
+    return sh3chara.head;
 }
 
 SubCharacter* func_0012F580() {
-    return D_003DAD58;
+    return sh3chara.player;
 }
 
 int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
@@ -362,7 +364,7 @@ static void shCharacterDelete(SubCharacter* scp) {
         return;
     }
 
-    if (scp == D_003DAD58) {
+    if (scp == sh3chara.player) {
         shCharacterSetPlayer(NULL);
     }
 
@@ -397,8 +399,32 @@ static void shCharacterDelete(SubCharacter* scp) {
     scp->unkC0[2] = 0;
 
     AddFreeList(scp);
-    D_003DAD5C--;
+    sh3chara.total--;
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", func_0012FB00);
+void shCharacterInitSubCharacter(void) {
+    int i; // r5
+    SubCharacterDisp* scp_d; // r4
+
+    
+    memset(&sh3chara, 0, sizeof(shCharacterAll));
+    
+    scp_d = &sh3chara.work[0];
+    sh3chara.free = sh3chara.work;
+
+
+
+    
+    for (i = 0; i < 31; i++, scp_d++) {
+        scp_d->sc.next = (SubCharacter *)(scp_d + 1);
+    }
+    scp_d->sc.next = NULL;
+
+
+
+    
+    for (i = 0; i < 32; i++) {
+        sh3chara.work[i].sc.index = i;
+    }
+}

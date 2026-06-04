@@ -120,6 +120,11 @@ vbSetWorldScreenMatrix = 0x001b6620;
 vbGetLw = 0x001b6680;
 vbNormalizeRadianAngle = 0x001b6bb0;
 
+// sh3 character code
+sh3chara = 0x003d4950; // size:0x6410
+shCharacterAnimeFrameGet_ = 0x001ddaf0;
+shCharacterInitSubCharacter = 0x0012fb00;
+
 // m3_sc.c
 shCharacterTopOfList = 0x0012ef60;
 shCharacterSortList = 0x0012eeb0;
