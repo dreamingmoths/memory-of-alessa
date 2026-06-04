@@ -6,7 +6,7 @@
 extern shCharacterAll sh3chara;
 
 /* not from here */
-extern int func_001DCAD0(short kind);
+extern int shCharacterGetSkeltonNum(short kind);
 
 static SubCharacter* shCharacterGetFreeList(void) {
     struct SubCharacter * scp = sh3chara.free;
@@ -220,7 +220,7 @@ int shCharacter_Manage_Create(CharaOptions* options) {
     u_short id;
 
     if (scp != NULL) { 
-        func_00140D40(func_001DCAD0(scp->kind));
+        func_00140D40(shCharacterGetSkeltonNum(scp->kind));
 
         vec_copy(&scp->pos, &options->pos_10);
         vec_copy(&scp->unkF0, &options->pos_10);
@@ -326,7 +326,7 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
     }
 
     if (scp_d->model_adr == NULL) {
-        func_00140D60(func_001DCAD0((short) scp->kind));
+        func_00140D60(shCharacterGetSkeltonNum((short) scp->kind));
         SCSetModel(scp_d, (u_long) pMD->sh_Model, (u_long) pMD->pAnime);
         scp_d->model_adr = (u_long) pMD->sh_Model;
         scp_d->anime_adr = (u_long) pMD->pAnime;
@@ -369,7 +369,7 @@ static void shCharacterDelete(SubCharacter* scp) {
     }
 
     if (scp_d->model_adr == 0) {
-        func_00140D60(func_001DCAD0((short) scp->kind));
+        func_00140D60(shCharacterGetSkeltonNum(scp->kind));
     } else {
         func_00140CD0(scp->unk80);
     }

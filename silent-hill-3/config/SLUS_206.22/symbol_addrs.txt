@@ -99,7 +99,6 @@ d2tscSend = 0x001304B0;
 
 // vw
 vwInitViewInfo = 0x001c1830;
-
 // it's possible this function was moved into a header and got included in 
 // multiple places?
 vwGetViewPosition = 0x001b42a0;
@@ -120,12 +119,19 @@ vbSetWorldScreenMatrix = 0x001b6620;
 vbGetLw = 0x001b6680;
 vbNormalizeRadianAngle = 0x001b6bb0;
 
-// sh3 character code
+
+// m3_sc.c
 sh3chara = 0x003d4950; // size:0x6410
 shCharacterAnimeFrameGet_ = 0x001ddaf0;
 shCharacterInitSubCharacter = 0x0012fb00;
+shCharacterAnimeFrameSet_ = 0x001ddc20;
+shCharacterAnimeCounterSet_ = 0x001ddca0;
+shCharacterAnimeGetInfo1_ = 0x001ddd40;
+shCharacterAnimeGetInfo2_ = 0x001ddda0;
+shCharacterGetSkeltonNum = 0x001dcad0;
+shCharacterGetModelID = 0x001dcac0;
+shCharacterGetAnimeAdr = 0x001dcab0;
 
-// m3_sc.c
 shCharacterTopOfList = 0x0012ef60;
 shCharacterSortList = 0x0012eeb0;
 shCharacterSetPlayer = 0x0012efd0;
@@ -135,7 +141,6 @@ shCharacterCutList = 0x0012ef90;
 SCSetModel = 0x0012fbc0;
 AddFreeList = 0x0012ee90;
 shCharacterGetSubCharacter = 0x0012FD80;
-// ?
 shCharacterAnimeOneFrameSize = 0x001dcc40;
 
 // sh3_character_manage.c
