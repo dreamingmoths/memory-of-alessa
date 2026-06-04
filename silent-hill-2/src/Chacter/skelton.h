@@ -3,11 +3,10 @@
 
 #include "sh2_common.h"
 
-typedef struct shSkelton
-{
-    // total size: 0xF0
-    struct shSkelton *next;   // offset 0x0, size 0x4
-    struct shSkelton *parent; // offset 0x4, size 0x4
+// total size: 0xF0
+typedef struct shSkelton {    
+    struct shSkelton* next;   // offset 0x0, size 0x4
+    struct shSkelton* parent; // offset 0x4, size 0x4
     sceVu0FMATRIX src_m;      // offset 0x10, size 0x40
     Vector4 src_t;            // offset 0x50, size 0x10
     sceVu0FMATRIX des_m;      // offset 0x60, size 0x40
@@ -26,7 +25,11 @@ typedef struct shSkelton
     char reserved;            // offset 0xE1, size 0x1
     char is_key;              // offset 0xE2, size 0x1
     char pad;                 // offset 0xE3, size 0x1
-    void *untouchable;        // offset 0xE4, size 0x4
+    void* untouchable;        // offset 0xE4, size 0x4
 } shSkelton;
+
+void shCharacterInitSkeltons(void);
+void shCharacterFreeSkeltons(shSkelton* top /* r2 */);
+shSkelton* shCharacterGetSkeletons(int n /* r7 */, u_char* hrc /* r2 */);
 
 #endif // SKELTON_H
