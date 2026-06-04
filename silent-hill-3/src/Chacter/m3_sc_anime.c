@@ -1,4 +1,5 @@
 #include "common.h"
+#include "Chacter/m3_sc.h"
 
 /* start of split may be slightly off */
 
@@ -52,9 +53,14 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DCA40);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DCA70);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterGetAnimeAdr);
+u_int shCharacterGetAnimeAdr(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = scp;
+    return scp_d->anime_adr;
+};
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterGetModelID);
+u_short shCharacterGetModelID(SubCharacter* scp) {
+    return scp->kind;
+};
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterGetSkeltonNum);
 
