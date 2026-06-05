@@ -106,6 +106,9 @@ vwGetViewPosition = 0x001b42a0;
 // _vwGetViewPosition = 0x001B3E80;
 
 
+// enemy
+enemyWork = 0x01F27760; // size:0x2e50
+
 // cl_main
 rodata_jyun = 0x00361bc0; // size:0x14
 

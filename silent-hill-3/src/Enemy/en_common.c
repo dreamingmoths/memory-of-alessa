@@ -1,9 +1,65 @@
 #include "en_common.h"
 
+
+/* not from here */
+void func_001E22F0(u_short kind, u_short id, int arg2);
+
+void func_0022E9B0(void) {
+    memset(&enemyWork, 0, sizeof(EnemyWork));
+}
+
+void func_0022E9D0(void) {
+    enemyWork.unk2E02 = 0;
+    enemyWork.Status = 0;
+    enemyWork.unk2E08[24] = 0;
+    enemyWork.unk2E08[25] = 0;
+}
+
+
+void func_0022EA00(void) {
+    enemyWork.Status = 0;
+    enemyWork.unk2E08[24] = 0;
+    enemyWork.unk2E08[25] = 0;
+    enemyWork.unk2E40 = 0;
+}
+
+void func_0022EA30(void) {
+    int i;
+    EnemyWork* work = &enemyWork;
+    EnemyData* dp = work->Data;
+
+    switch (work->unk2E00) {
+        case 0:
+            work->unk2E00++;
+
+        case 1:
+            switch (work->unk2E02) {
+                case 0:
+                    work->Status = 0;
+                    work->unk2E02++;
+                    /* fallthrough */
+                case 1:
+                    work->Status &= 0xC0;
+                    work->Status |= func_001E2050() << 2;
+                    work->Status |= func_001E20C0() << 3;
+                    work->Status |= func_001E20E0() << 4;
+                    work->Status |= func_001E2070() << 5;
+                    for (i = 0; i < ENEMY_DATA_COUNT; i++, dp++) {
+                        if (dp->unk_0x160 == 0) continue;
+                        if (!(dp->scp->battle.status & 0x2000)) continue;
+                        dp->function(dp);
+                        func_0022EF40(dp);
+                    }
+                    func_0022F1D0();
+                    break;
+            }
+    }
+}
+
 void func_0022EB70(SubCharacter* scp) {
     int i;
-    EnemyWork* dp = &D_01F27760;
-    for (i = 0; i < 0x20; i++) {
+    EnemyData* dp = &enemyWork;
+    for (i = 0; i < ENEMY_DATA_COUNT; i++) {
         if (dp->unk_0x160 == 0) {
             dp->scp = scp;
             dp->unk_0x160 = i + 1;
@@ -14,17 +70,50 @@ void func_0022EB70(SubCharacter* scp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EBD0);
+#ifdef NON_MATCHING
+void func_0022EBD0(EnemyWork* dp) {
+    int i;
+    SubCharacter* scp;
+    EnemyWork* free = &D_01F27760;
+    int kind;
+    int dp_id;
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EC70);
+    for (i = 0; i < 32; i++, free++) {
+        if (!free->unk_0x160) continue;
+        scp = free->scp;
+        kind = dp->kind;
+        if (scp->kind != kind) continue;
+        
+        dp_id = dp->id;
+        if (scp->id != dp_id) continue;
+        
+        func_0022EE20(kind, dp_id);
+        memset(free, 0, sizeof(EnemyWork));
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EBD0);
+#endif
+
+int func_0022EC70(int kind) {
+    int i;
+    EnemyData* dp;
+    int count = 0;
+
+    for (dp = enemyWork.Data, i = 0; i < ENEMY_DATA_COUNT; i++, dp++) {
+        if ((dp->unk_0x160 != 0) && (dp->scp->kind == kind)) {
+            count++;
+        }
+    }
+
+    return count;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022ECC0);
 
 void func_0022ED30(void) {
     int i;
-    EnemyWork* var_s0;
-
-    var_s0 = &D_01F27760;
+    EnemyData* var_s0 = &enemyWork;
     i = 0;
     do {
         if (var_s0->unk_0x160 != 0) {
@@ -32,12 +121,27 @@ void func_0022ED30(void) {
         }
         i++;
         var_s0++;
-    } while (i < 0x20);
+    } while (i < ENEMY_DATA_COUNT);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022ED90);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EE20);
+void func_0022EE20(int kind, int id) {
+    EnemyData* dp;
+    int i;
+
+    for (i = 0, dp = enemyWork.Data; i < ENEMY_DATA_COUNT; i++, dp++) {
+        SubCharacter* scp;
+        if (dp->unk_0x160 != 0 && (scp = dp->scp, (scp->kind == kind)) && (scp->id == id)) {
+            if (scp->battle.status & 0x2000) {
+                func_001E22F0(kind, id, 0);
+                func_0022FE80(dp);
+            }
+            return;
+        }
+    }
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EEB0);
 
@@ -48,23 +152,23 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EF30);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022EF40);
 
 u_int func_0022EFD0(u_int mask) {
-    return D_01F2A564 & mask;
+    return enemyWork.Status & mask;
 }
 
 void func_0022EFE0(void) {
-    D_01F2A564 |= 0x40;
+    enemyWork.Status |= 0x40;
 }
 
 void func_0022F000(void) {
-    D_01F2A564 &= ~0x40;
+    enemyWork.Status &= ~0x40;
 }
 
 void func_0022F020(void) {
-    D_01F2A564 |= 0x80;
+    enemyWork.Status |= 0x80;
 }
 
 void func_0022F040(void) {
-    D_01F2A564 &= ~0x80;
+    enemyWork.Status &= ~0x80;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022F060);
@@ -80,7 +184,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022F150);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022F170);
 
 void func_0022F1D0(void) {
-    D_01F2A581 = 0;
+    enemyWork.unk2E08[0x19] = 0;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022F1E0);
@@ -105,7 +209,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022FA60);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", func_0022FA90);
 
-void func_0022FAC0(EnemyWork* work) {
+void func_0022FAC0(EnemyData* work) {
     switch (work->scp->kind) {
         case CLOSER_CHARA_ID:
             func_00230010(work);
@@ -163,7 +267,7 @@ void func_0022FAC0(EnemyWork* work) {
     }
 }
 
-void func_0022FC20(EnemyWork* work) {
+void func_0022FC20(EnemyData* work) {
     switch (work->scp->kind) {
         case CLOSER_CHARA_ID:
             func_002308F0(work);
@@ -194,7 +298,7 @@ void func_0022FC20(EnemyWork* work) {
     }
 }
 
-void func_0022FCF0(EnemyWork* work) {
+void func_0022FCF0(EnemyData* work) {
     switch (work->scp->kind) {
         case CLOSER_CHARA_ID:
             func_00230A00(work);
@@ -241,7 +345,7 @@ void func_0022FCF0(EnemyWork* work) {
     }
 }
 
-void func_0022FE80(EnemyWork* work) {
+void func_0022FE80(EnemyData* work) {
     switch (work->scp->kind) {
         case CLOSER_CHARA_ID:
             func_00230A40(work);

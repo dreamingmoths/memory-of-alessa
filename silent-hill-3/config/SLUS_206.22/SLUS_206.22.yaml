@@ -388,8 +388,7 @@ segments:
       - [0x116520, asm,     Enemy/en_one]        # DOUBLE_HEAD
       - [0x117770, asm,     Enemy/enemy_0x117770]
       - [0x1261a0, asm,     Enemy/en_smb]        # SPLIT_WORM
-      - [0x12ef30, asm,     text_0x12ef30]
-      - [0x12f0f0, c,       Enemy/en_common]
+      - [0x12ef30, c,       Enemy/en_common]
       - [0x130590, asm,     Enemy/en_aid]        # CLOSER
       - [0x1398d0, asm,     text_0x1398d0]
       - [0x139f50, asm,     Lens/lens_th_draw]
