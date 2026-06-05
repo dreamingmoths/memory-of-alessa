@@ -338,7 +338,7 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
         if (scp_d->anime_adr != 0) {
             if (scp_d->sc.battle.status & 0x2000) {
                 func_001DC700(&scp_d->sc, &scp_d->sc.rot, &scp_d->sc.pos);
-                func_001DCF10(&scp_d->sc);
+                shCharacterExecAnimeOne(&scp_d->sc);
             }
         }
     } else {

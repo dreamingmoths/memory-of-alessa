@@ -151,7 +151,22 @@ shCharacterGetRemainingFreeSlots = 0x0012fd60;
 SCSetModel = 0x0012fbc0;
 shCharacter_0x0012f4e0 = 0x0012f4e0;
 shCh_ASC_Malloc = 0x001c1a60;
-shCharacterSetSkTop = 0x0013f200;
+
+// m3_sc_anime
+shCharacterExecAnimeOne = 0x001dcf10;
+shCharacterExecAnimeAll = 0x001dd150;
+
+// anime
+GetSF = 0x0013e0b0;
+shExec = 0x0013e120;
+shCharacterAnimeSetSkelton = 0x0013f200;
+shCharacterExecAnimeMain = 0x0013f210;
+shCharacterStayModelExecNthParts = 0x0013fdd0;
+shCharacterAnimePartsControl = 0x0013fe50;
+shCharacterAnimeReconstruct = 0x0013ed00;
+
+// not very similar to ExtGameData, but possibly related
+Sh3GameData = 0x00316d30;
 
 // sh3_character_manage.c
 shCharacter_Manage_Init = 0x0012f2f0;

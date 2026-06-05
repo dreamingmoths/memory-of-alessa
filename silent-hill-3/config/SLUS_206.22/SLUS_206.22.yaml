@@ -258,6 +258,7 @@ segments:
       - [0x03a840, asm,     text_0x03a840]
       - [0x03baa0, c,       DS_Pad/ds_sequencer]
       - [0x03d290, asm,     text_0x03d290]
+      - [0x03e630, c,       Chacter/anime]
       - [0x040950, c,       Chacter_Draw/clani]
       - [0x0410c0, asm,     text_0x0410c0]
       - [0x041640, c,       Effect2/hh_class_manager]

@@ -66,11 +66,11 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterGetSkeltonNum);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeOneFrameSize);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DCF10);
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterExecAnimeOne);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD020);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD150);
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterExecAnimeAll);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD1D0);
 
