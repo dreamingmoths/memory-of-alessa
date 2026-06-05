@@ -51,7 +51,7 @@ void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacte
 void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp /* r2 */);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
-
+void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
 void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
 
 void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale);
@@ -77,7 +77,6 @@ int shCharacterAnimeCounterGet(SubCharacter* scp);
 int shCharacterAnimeCounterGet_(SubCharacter* scp, u_int type);
 
 AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp);
-
 
 void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
 
