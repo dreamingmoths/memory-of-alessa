@@ -120,11 +120,23 @@ void shCharacterClusterAnimeSet(SubCharacter* scp, int anime) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetModel);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForDrama);
+void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp) {
+    SubCharacterDisp* scp_d; // r2
+    scp_d = (SubCharacterDisp*) scp;
+    return (void*)scp_d->anime_adr;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForPlay);
+void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp) {
+    SubCharacterDisp* scp_d; // r2
+    scp_d = (SubCharacterDisp*) scp;
+    return (void*)scp_d->anime_adr;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetClusterAnimeAdr);
+void* shCharacterGetClusterAnimeAdr(SubCharacter* scp) {
+    SubCharacterDisp* scp_d; // r2
+    scp_d = (SubCharacterDisp*) scp;
+    return (void*)scp_d->clani_adr;
+}
 
 void shCharacterSetPlayer(SubCharacter* scp) {
     if (scp == NULL) {
@@ -616,9 +628,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetFunction);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecFunctionAll);
 
-void shCharacterAnimeSet(struct SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, struct _AnimeInfo* anim_info /* r17 */, int anime /* r2 */) { //line matched up to a certain point then I gave up
-    struct SubCharacterDisp* scp_d; // r2
-    struct shAnime3d* anim; // r16
+void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */) { //line matched up to a certain point then I gave up
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anim; // r16
     void* anime_adr; // r2
 
 
@@ -645,7 +657,7 @@ void shCharacterAnimeSet(struct SubCharacter* scp /* r19 */, int ctrl_type /* r2
 
 
     
-    scp_d = (struct SubCharacterDisp *)scp;
+    scp_d = (SubCharacterDisp *)scp;
 
     switch (ctrl_type) {
         case 0:
@@ -1065,8 +1077,8 @@ int shCharacterAnimeCounterGet(SubCharacter* scp) {
 }
 
 int shCharacterAnimeCounterGet_(SubCharacter* scp, u_int type) { // didnt check lines
-    struct SubCharacterDisp* scp_d; // r2
-    struct shAnime3d* anime; // r5
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r5
         
     scp_d = (SubCharacterDisp*) scp;
     
