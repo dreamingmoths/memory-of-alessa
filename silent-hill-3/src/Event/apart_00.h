@@ -40,7 +40,6 @@ int  func_0016D5B0(void);
 void func_00316C50(int);
 void func_001DC9E0(SubCharacter*, int);
 void func_001E22F0(int, int, int);
-SubCharacter* shCharacterGetSubCharacter(int, short);
 
 void func_01F6E050_apart_00(void);
 void func_01F6EB70_apart_00(void);

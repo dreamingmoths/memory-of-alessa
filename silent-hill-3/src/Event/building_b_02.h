@@ -2,6 +2,7 @@
 #define BUILDING_B_02_H
 
 #include "common.h"
+#include "Chacter/m3_sc.h"
 
 #define BUILDING_OTHERWORLD_4F_HALL 0x88
 #define BUILDING_OTHERWORLD_STAIRS_BEHIND_PAINTING 0x89
@@ -13,7 +14,6 @@
 int RoomName(void);
 int SeCall(float, float, int);
 float shGetDT(void);
-int shCharacterGetSubCharacter(int, short);
 void func_0016C1A0(void);
 void func_0016C1B0(void);
 void func_0016CA40(int);
@@ -21,7 +21,7 @@ int func_00190950(void);
 u_char GetActionLevel(void);
 void clAddDynamicWall(void *);
 void func_001C2290(int, float);
-int func_001E2110(int);
+int func_001E2110(SubCharacter* scp);
 
 extern int D_01F6EB80_building_b_02;
 extern int D_01F6EF00_building_b_02;

@@ -24,10 +24,10 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_0013FF50);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_00140060);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_00140100);
+INCLUDE_ASM("asm/nonmatchings/Chacter/anime", sh_HEATHER_SetUntouchUpper);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_001401C0);
+INCLUDE_ASM("asm/nonmatchings/Chacter/anime", sh_HEATHER_SetUntouchUnder);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_00140270);
+INCLUDE_ASM("asm/nonmatchings/Chacter/anime", sh_HEATHER_ResetUntouchUnder);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_00140330);

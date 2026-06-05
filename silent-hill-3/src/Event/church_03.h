@@ -10,7 +10,6 @@ typedef struct
     int unk4;
 } D_01F6DF88_struct;
 
-SubCharacter* shCharacterGetSubCharacter(int, long);
 void func_0013D250(int, int, float);
 void func_0013D280(int);
 void func_001602D0(int, int, int, float);

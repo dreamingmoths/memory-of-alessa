@@ -66,7 +66,43 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterGetSkeltonNum);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterAnimeOneFrameSize);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterExecAnimeOne);
+void shCharacterExecAnimeOne(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = scp;
+    SubCharacter* scp_wp;
+    u_char weapon;
+
+    switch (scp_d->sc.kind) {
+        case HEATHER_CHARA_ID:
+            func_001326B0();
+            sh_HEATHER_SetUntouchUpper(scp_d->anime.top);
+            shCharacterExecAnimeMain(&scp_d->anime, 2);
+            sh_HEATHER_SetUntouchUnder(scp_d->anime2.top);
+            shCharacterExecAnimeMain(&scp_d->anime2, 1);
+            sh_HEATHER_ResetUntouchUnder(scp_d->anime2.top);
+            func_00140060(&scp_d->anime2);
+            func_00140330(scp_d->anime2.top);
+            func_00132620();
+            func_00136D20(scp_d);
+            func_001321B0();
+            break;
+
+        default:
+            shCharacterExecAnimeMain(&scp_d->anime, 0);
+    }
+
+    switch (scp_d->sc.kind) {
+        case HEATHER_CHARA_ID:
+            weapon = PlayerGetHeatherWeapon();
+            if (!(scp_wp = shCharacterGetSubCharacter(WEAPON_ID_START + weapon, -1))) break;
+            shUpdateWeaponMatrixAfterAnime(scp_wp, scp_d->sc.kind);
+            break;
+    }
+
+    switch (scp_d->sc.kind) {
+        case HEATHER_CHARA_ID:
+            func_00191660(scp_d->sc.kind);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD020);
 

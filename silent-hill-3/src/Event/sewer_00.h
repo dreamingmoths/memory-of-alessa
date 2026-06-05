@@ -23,7 +23,6 @@ void func_0016CD00(int *);
 void func_0016D170(int, int (*)[4], int, int, float, float);
 void func_0016D0E0(int, int);
 int func_0016D240(int, int (*)[4], int, int, float, float);
-SubCharacter *shCharacterGetSubCharacter(int, short);
 void func_0016ECE0(int);
 int func_0016E0F0(void);
 void func_0016E400(int, int);

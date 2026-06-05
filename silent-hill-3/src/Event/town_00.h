@@ -36,7 +36,6 @@ extern int D_01F6DF84_town_00;
 extern float D_01F6DF88_town_00;
 extern int D_01F6DF90_town_00;
 
-extern SubCharacter* shCharacterGetSubCharacter(int, long);
 extern int GetActionLevel(int);
 extern int func_001E2110(SubCharacter*);
 extern u_int D_1D31684;

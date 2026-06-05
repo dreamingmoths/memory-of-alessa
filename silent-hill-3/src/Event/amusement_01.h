@@ -119,7 +119,6 @@ extern void func_001C2290(int, float);
 extern void func_0018FE60(u_long128 *);
 extern void func_0016CF70(void);
 extern int func_0016CF80(int, int, int *);
-extern SubCharacter *shCharacterGetSubCharacter(int, short);
 extern u_char GetActionLevel(void);
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;

@@ -27,7 +27,6 @@ void func_01F6D970_hospital_b_01();
 void func_01F6DC60_hospital_b_01();
 int RoomName(void);
 int SeCall(float, float, int);
-SubCharacter* shCharacterGetSubCharacter(int, short);
 float shGetDT(void);
 
 extern Vector4 D_01F6EBB0_hospital_b_01;

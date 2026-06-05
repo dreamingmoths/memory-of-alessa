@@ -41,7 +41,6 @@ void func_00143610(sceVu0FVECTOR *, sceVu0FVECTOR *);
 void func_00281120(sceVu0FVECTOR *, sceVu0FVECTOR *, int);
 void func_0023D820(sceVu0FVECTOR *, sceVu0FVECTOR *, int);
 void func_00280430(sceVu0FVECTOR *, sceVu0FVECTOR *, int, int, int, short, float);
-SubCharacter* shCharacterGetSubCharacter(int, short);
 void func_001DC9E0(SubCharacter *, int);
 void func_0016CBD0(sceVu0FMATRIX *[], sceVu0FMATRIX *[], int);
 void func_0016CC50(int, int, sceVu0FMATRIX *, sceVu0FVECTOR *);

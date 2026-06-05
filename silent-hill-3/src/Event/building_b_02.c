@@ -8,19 +8,19 @@ INCLUDE_ASM("asm/nonmatchings/Event/building_b_02", func_01F6D7B0_building_b_02)
 INCLUDE_ASM("asm/nonmatchings/Event/building_b_02", func_01F6D980_building_b_02);
 
 void func_01F6DB60_building_b_02(void) { //I will debug it later
-    int temp_a0;
+    SubCharacter* scp;
     int var_s0;
     int* var_s1;
 
     var_s0 = 0;
 
     for (var_s1 = D_01F6EE80_building_b_02; *var_s1 != 0; var_s1++) {
-        temp_a0 = shCharacterGetSubCharacter(0x20A, *var_s1);
-        if (temp_a0 == 0) {
+        scp = shCharacterGetSubCharacter(0x20A, *var_s1);
+        if (scp == 0) {
             continue;
         }
         
-        if (func_001E2110(temp_a0) == 0) {
+        if (func_001E2110(scp) == 0) {
             var_s0++;
         }
         if ((*var_s1 == 0xDB || *var_s1 == 0xDC)) {

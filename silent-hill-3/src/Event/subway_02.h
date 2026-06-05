@@ -61,7 +61,6 @@ static inline float vec3_dot_product(void* v, void* w)
     return d;
 }
 
-SubCharacter* shCharacterGetSubCharacter(int, short);
 void func_001C2290(int, float);
 int func_0016C540(int *, int *);
 int func_001646F0(void);

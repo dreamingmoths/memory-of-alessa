@@ -43,7 +43,6 @@ void func_002FE570(void);
 void func_00316C50(int);
 int func_01F6F560_amusement_02(int);
 int SeCall(float, float, int);
-SubCharacter* shCharacterGetSubCharacter(int, short);
 
 extern Entry_01F763C0 D_01F763C0_amusement_02[];
 

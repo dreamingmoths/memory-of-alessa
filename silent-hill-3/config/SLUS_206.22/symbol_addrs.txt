@@ -155,6 +155,10 @@ shCh_ASC_Malloc = 0x001c1a60;
 // m3_sc_anime
 shCharacterExecAnimeOne = 0x001dcf10;
 shCharacterExecAnimeAll = 0x001dd150;
+sh_HEATHER_SetUntouchUpper = 0x00140100;
+sh_HEATHER_SetUntouchUnder = 0x001401C0;
+sh_HEATHER_ResetUntouchUnder = 0x00140270;
+shUpdateWeaponMatrixAfterAnime = 0x001A7B50;
 
 // anime
 GetSF = 0x0013e0b0;
