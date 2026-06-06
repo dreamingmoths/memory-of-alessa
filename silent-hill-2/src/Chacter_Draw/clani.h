@@ -48,4 +48,8 @@ void ClusterAnimeSet(shClusterAnime* cap, void* data);
 
 float* ClusterAnimeGetWeights(shClusterAnime* cap, float* weights);
 
+void ClusterAnimeDelete(shClusterAnime* cap /* r2 */, int index /* r2 */);
+
+shClusterAnime* ClusterAnimeNew(int n_clusters /* r18 */, int index /* r17 */);
+
 #endif // CLANI_H
