@@ -2,7 +2,7 @@
 #define MODEL3_N_H
 
 #include "sh2_common.h"
-#include "model3_vu1_n.h"
+#include "Chacter_Draw/model3_vu1_n.h"
 
 typedef struct sh_Model {
     u_int id;
