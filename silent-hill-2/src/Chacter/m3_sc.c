@@ -5,12 +5,14 @@
 #include "Lens/lens_flare.h"
 #include "Chacter_Draw/clani.h"
 #include "Chacter/anime.h"
+#include "Chacter_Draw/model3_n.h"
 
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
 static void shCharacterSortList(SubCharacter* scp /* r2 */);
 static void shCharacterTopOfList(SubCharacter* scp);
 static void shCharacterCutList(SubCharacter* scp);
+static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index);
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
 
 inline int clamp_12(int value) {
@@ -115,7 +117,17 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetRot);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddRot);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetClusterAnimeWork);
+static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index) {
+    if (scp_d->cluster_anime != NULL) {
+        ClusterAnimeDelete(scp_d->cluster_anime, index);
+        scp_d->cluster_anime = NULL;
+    }
+    if (scp_d->models[0] != NULL) { 
+
+        
+        scp_d->cluster_anime = ClusterAnimeNew(Model3NClusters(scp_d->models[0]), index);
+    }
+}
 
 void shCharacterClusterAnimeSet(SubCharacter* scp, int anime) {
     SubCharacterDisp* scp_d = scp;
@@ -608,19 +620,61 @@ void shCharacterDramaExecAnimeOne(SubCharacter* scp) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCopyForReverseModel);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCNowDemoEventSwitch);
+void SCNowDemoEventSwitch(SubCharacter* scp, int flag) {
+    if (flag) {
+        scp->status |= 0x2000;     
+    } else {
+        scp->status &= ~0x2000;
+    }    
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCNowPlayableEventSwitch);
+void SCNowPlayableEventSwitch(SubCharacter* scp, int flag) {
+    if (flag) {
+        scp->status |= 0x4000;
+    } else {
+        scp->status &= ~0x4000;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCStayModelSwitch);
+void SCStayModelSwitch(SubCharacter* scp, int flag) {
+    if (flag) {
+        scp->status |= 0x100;
+    } else {
+        scp->status &= ~0x100;        
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAnimeTypeSwitch);
+void SCAnimeTypeSwitch(SubCharacter* scp, int flag) {
+    if (flag) {
+        scp->status |= 4;
+    } else {
+        scp->status &= ~4;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCRotZYXSwitch);
+void SCRotZYXSwitch(SubCharacter* scp, int flag) {
+    if (flag) {
+        scp->status |= 0x80;
+    } else {
+        scp->status &= ~0x80;        
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCFreefallSwitch);
+void SCFreefallSwitch(SubCharacter* scp, int sw) {
+    if (sw) {
+        scp->status |= 0x10000;
+    } else {
+        scp->status &= ~0x10000;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCLightOnNowSwitch);
+void SCLightOnNowSwitch(SubCharacter* scp, int sw) {
+    if (sw) {
+        scp->status |= 0x200;
+    } else {
+        scp->status &= ~0x200;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecAnimeAll);
 
