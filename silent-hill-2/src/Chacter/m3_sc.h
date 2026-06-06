@@ -43,7 +43,6 @@ void shCharacterAnimeRestart(SubCharacter* scp /* r2 */);
 void shCharacterDelete(SubCharacter* scp);
 
 short shCharacterGetModelID(SubCharacter* scp /* r2 */);
-void SCAnimeTypeSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
 SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
 int shCharacterAnimeOneFrameSize(u_short id);
 void shCharacterInitSubCharacter(void);
@@ -56,7 +55,13 @@ void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
 
 void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale);
 
+void SCNowDemoEventSwitch(SubCharacter* scp, int flag);
 void SCNowPlayableEventSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
+void SCStayModelSwitch(SubCharacter* scp, int flag);
+void SCAnimeTypeSwitch(SubCharacter* scp, int flag);
+void SCRotZYXSwitch(SubCharacter* scp, int flag);
+void SCFreefallSwitch(SubCharacter* scp, int sw);
+void SCLightOnNowSwitch(SubCharacter* scp, int sw);
 
 short shCharacterAnimeSpeedGet_(SubCharacter* scp, u_int type);
 void shCharacterAnimeSpeedAdd(SubCharacter* scp, short add);
