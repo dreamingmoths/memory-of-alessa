@@ -75,7 +75,7 @@ void shCharacterAnimeFrameSet(SubCharacter* scp, u_short frame);
 void shCharacterAnimeFrameSet_(SubCharacter* scp, u_int type, u_short frame);
 int shCharacterAnimeCounterGet(SubCharacter* scp);
 int shCharacterAnimeCounterGet_(SubCharacter* scp, u_int type);
-
+void shCharacterAnimeCounterSet_(SubCharacter* scp, u_int type, int counter);
 AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp);
 
 void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
