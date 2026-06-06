@@ -20,6 +20,7 @@
 #include "Enemy/en_list.h"
 #include "Enemy/en_effect.h"
 #include "Effect2/hh_class_object_execute.h"
+#include "vec.h"
 
 extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
 
