@@ -4,7 +4,7 @@
 #include "common.h"
 #include "libvifpk.h"
 #include "libdma.h"
-#include "model_common.h"
+#include "Chacter_Draw/model_common.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
 
 typedef struct Model3Junk {
