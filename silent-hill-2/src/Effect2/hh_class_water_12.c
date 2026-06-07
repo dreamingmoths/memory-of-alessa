@@ -362,21 +362,6 @@ u_int HH_Class_Suffix_Water_12(void) {
 }
 
 u_int HH_Class_Water_12(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
-    // float degree; // @ 0x0036F9B0
-    // float base_move; // @ 0x0036F9B8
-    // float center; // @ 0x011EB6A8
-    // float add_move; // @ 0x011EB6A0
-    // float _distance; // @ 0x0036F9C0
-    // float _lost_time; // @ 0x0036F9C8
-    // float _arri; // @ 0x0036F9D0
-    // float _omega; // @ 0x0036F9D8
-    // float _v; // @ 0x0036F9E0
-    // float _interval; // @ 0x0036F9E8
-    // float __distance; // @ 0x0036F9F0
-    // float __lost_time; // @ 0x0036F9F8
-    // float __arri; // @ 0x0036FA00
-    // float __omega; // @ 0x0036FA08
-    // float __v; // @ 0x0036FA10
     static char tmp[80];                // @ 0x011EB6C0
     static u_int i;                     // @ 0x011EB6B0
     u_int result = 1;                   // r16
