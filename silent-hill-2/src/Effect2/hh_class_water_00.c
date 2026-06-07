@@ -435,13 +435,13 @@ u_int HH_Class_Water_00(void* pBlock, ImpactQueue_Element* pElement) {
     HH_Object_Water_00* pThis = pBlock;
 
     switch (pThis->Step) { /* irregular */
-        case HH_STEP_INIT:
+        case HH_WATER_00_STEP_INIT:
             Object_Initialize(pThis);
             Grid_Work_Initialize(pThis);
             pThis->Step = 1;
             break;
 
-        case HH_STEP_MOTION:
+        case HH_WATER_00_STEP_MOTION:
             pThis->CurrentBuffer ^= 1;
             Object_Motion_00(pThis);
             HH_DBG_Wrapper_T0_COUNT_Get();
@@ -450,12 +450,12 @@ u_int HH_Class_Water_00(void* pBlock, ImpactQueue_Element* pElement) {
             pThis->Timer += 1.0f / 30.f;
             break;
 
-        case HH_STEP_DRAW:
+        case HH_WATER_00_STEP_DRAW:
             Object_Draw(pThis, pElement);
             break;
 
         default:
-        case HH_STEP_OFF:
+        case HH_WATER_00_STEP_OFF:
             pThis->Header.Enable = false;
             result = false;
             break;
