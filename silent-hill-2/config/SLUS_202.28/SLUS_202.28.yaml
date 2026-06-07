@@ -271,7 +271,7 @@ segments:
       - [0x15b930, asm, Effect2/hh_class_raise_dust_phenomenon_00]
       - [0x15bee0, c,   Effect2/hh_class_water_00]
       - [0x15ce40, c,   Effect2/hh_class_water_01]
-      - [0x15e140, asm, Effect2/hh_class_water_02]
+      - [0x15e140, c,   Effect2/hh_class_water_02]
       - [0x15f610, asm, Effect2/hh_class_water_10]
       - [0x160640, asm, Effect2/hh_class_water_11]
       - [0x161b00, asm, Effect2/hh_class_water_12]
@@ -374,7 +374,8 @@ segments:
       - [0x26f450, data,    data_0x26f450]
       - [0x26f480, .data,   Effect2/hh_class_water_00]
       - [0x26f530, .data,   Effect2/hh_class_water_01]
-      - [0x26Fa30, data,    data_0x26f530]
+      - [0x26fa30, .data,   Effect2/hh_class_water_02]
+      - [0x26fc10, data,    data_0x26f530]
       - [0x27c230, .data,   Effect2/hh_memory_manage]
       - [0x27c240, data,    data_0x27c240]
       - [0x27e280, databin, vudata]
@@ -437,7 +438,8 @@ segments:
       - [0x29a230, .rodata, Event/stage/stg_tgs_trial]
       - [0x29a280, rodata,  rodata_0x29a280]
       - [0x29a870, .rodata, Effect2/hh_class_manager]
-      - [0x29a8a0, rodata,  rodata_0x29a8a0]
+      - [0x29a8a0, .rodata, Effect2/hh_class_water_02]
+      - [0x29a8c0, rodata,  rodata_0x29a8c0]
       - [0x29a920, .rodata, Effect2/hh_dbg_wrapper]
       - [0x29a960, rodata,  rodata_0x29a960]
       - [0x29c140, .rodata, Chacter/m3_play_event]
@@ -455,7 +457,8 @@ segments:
       - { vram: 0x116e3d0, type: .bss, name: Item/otn_itemmain }
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670}
       - { vram: 0x11eb550, type: .bss, name: Effect2/hh_class_water_01}
-      - { vram: 0x11eb570, type: bss,  name: bss_0x11eb570}
+      - { vram: 0x11eb570, type: .bss, name: Effect2/hh_class_water_02}
+      - { vram: 0x11eb5f0, type: bss,  name: bss_0x11eb5f0}
       - { vram: 0x11eb8f0, type: .bss, name: Effect2/hh_dbg_wrapper }
       - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
