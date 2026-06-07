@@ -123,9 +123,6 @@ static u_int Object_Initialize(HH_Object_Water_00* pThis) {
     return 1;
 }
 
-#define HH_WATER_00_GRID_SIZE 0x30
-#define GET_GRID_INDEX(_x, _z) (_z) * HH_WATER_00_GRID_SIZE + (_x)
-
 static float dev_0; // @ 0x0036ED80
 static float dev_1; // @ 0x0036ED88
 u_int Object_Motion_00(HH_Object_Water_00* pThis) {
@@ -143,12 +140,12 @@ u_int Object_Motion_00(HH_Object_Water_00* pThis) {
 
     for (z_index = 1; z_index < HH_WATER_00_GRID_SIZE - 1; z_index++) {
         for (x_index = 1; x_index < HH_WATER_00_GRID_SIZE - 1; x_index++) {
-            table_index = GET_GRID_INDEX(x_index, z_index);
+            table_index = HH_WATER_00_GRID_INDEX_GET(x_index, z_index);
             depth = pCurr_Grid_Y[table_index - 1];
 
             depth += pCurr_Grid_Y[table_index + 1];
-            depth += pCurr_Grid_Y[GET_GRID_INDEX(x_index, z_index - 1)];
-            depth += pCurr_Grid_Y[GET_GRID_INDEX(x_index, z_index + 1)];
+            depth += pCurr_Grid_Y[HH_WATER_00_GRID_INDEX_GET(x_index, z_index - 1)];
+            depth += pCurr_Grid_Y[HH_WATER_00_GRID_INDEX_GET(x_index, z_index + 1)];
 
             depth /= dev_0_105;
             depth -= pPrev_Grid_Y[table_index];
@@ -314,9 +311,9 @@ u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
             Grid_Vertex0[0] = Grid_Vertex1[0] = 500.0f * x_index;
 
             Grid_Vertex2[0] = (x_index + 1) % 48 * 500.0f;
-            Grid_Vertex0[1] = pGrid_Y[GET_GRID_INDEX(x_index, z_index)];
-            Grid_Vertex1[1] = pGrid_Y[GET_GRID_INDEX(x_index, z_index + 1)];
-            Grid_Vertex2[1] = pGrid_Y[GET_GRID_INDEX((x_index + 1) % 48, z_index)];
+            Grid_Vertex0[1] = pGrid_Y[HH_WATER_00_GRID_INDEX_GET(x_index, z_index)];
+            Grid_Vertex1[1] = pGrid_Y[HH_WATER_00_GRID_INDEX_GET(x_index, z_index + 1)];
+            Grid_Vertex2[1] = pGrid_Y[HH_WATER_00_GRID_INDEX_GET((x_index + 1) % 48, z_index)];
 
             stq0[0] = stq1[0] = Grid_Vertex0[0] / 12000.0f;
             stq0[1] = Grid_Vertex0[2] / 11750.0f;

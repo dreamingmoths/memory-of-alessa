@@ -3,8 +3,11 @@
 
 #include "Effect2/hh_class_manager.h"
 
+#define HH_WATER_00_GRID_INDEX_GET(_x, _z) (_z) * HH_WATER_00_GRID_SIZE + (_x)
+#define HH_WATER_00_GRID_SIZE 0x30
 #define HH_WATER_00_TEX_ID  0xCU
 #define HH_WATER_00_CLUT_ID 0x0
+
 typedef struct Wave_Element {
     // total size: 0x54
     u_int Enable; // offset 0x0, size 0x4
