@@ -195,5 +195,7 @@ static inline void mat_copy_3x3(void* dst, void* src) {
 }
 
 extern void* memcpy(void* __dest, void* __src, u_int __n);
+extern float fmodf(float, float);
+extern u_int fptoui(float);
 
 #endif
