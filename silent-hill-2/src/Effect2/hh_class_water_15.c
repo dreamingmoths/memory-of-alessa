@@ -13,16 +13,14 @@
 
 #pragma divbyzerocheck off
 
-// real
-extern /* static */ u_int _area00_view_list[3];                                  // size: 0xC, address: 0x36FDC8
-extern /* static */ u_int _area01_view_list[4];                                  // size: 0x10, address: 0x36FDE0
-extern /* static */ u_int _area02_view_list[3];                                  // size: 0xC, address: 0x36FDF0
-extern /* static */ u_int _area03_view_list[4];                                  // size: 0x10, address: 0x36FE00
-extern /* static */ WaveArea_Infomeation _Area_Info_List[HH_WATER_15_TABLE_MAX]; // size: 0x240, address: 0x36FE10
-extern /* static */ WaveArea_GridLink_Infomeation _area00_01_grid_link_list[1];  // size: 0x28, address: 0x370050
-extern /* static */ WaveArea_GridLink_Infomeation _area01_02_grid_link_list[1];  // size: 0x28, address: 0x370080
-extern /* static */ WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1];  // size: 0x28, address: 0x3700B0
-
+extern /* static */ u_int _area00_view_list[3];                                             // size: 0xC, address: 0x36FDC8
+extern /* static */ u_int _area01_view_list[4];                                             // size: 0x10, address: 0x36FDE0
+extern /* static */ u_int _area02_view_list[3];                                             // size: 0xC, address: 0x36FDF0
+extern /* static */ u_int _area03_view_list[4];                                             // size: 0x10, address: 0x36FE00
+extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036FE10[HH_WATER_15_TABLE_MAX]; // size: 0x240, address: 0x36FE10
+extern /* static */ WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x00370050[1];  // size: 0x28, address: 0x370050
+extern /* static */ WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00370080[1];  // size: 0x28, address: 0x370080
+extern /* static */ WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1];             // size: 0x28, address: 0x3700B0
 extern /* static */ float __arri_195_0x003701E8;
 extern /* static */ float __distance_193_0x003701D8;
 extern /* static */ float __lost_time_194_0x003701E0;
@@ -32,6 +30,7 @@ extern /* static */ float _arri_181_0x003701B8;
 extern /* static */ float _distance_179_0x003701A8;
 extern /* static */ float _interval_184_0x003701D0;
 extern /* static */ float _lost_time_180_0x003701B0;
+extern /* static */ float _omega_182_0x003701C0;
 extern /* static */ float __omega_196_0x003701F0;
 extern /* static */ float _v_183_0x003701C8;
 extern /* static */ float add_move_170_0x003701A0;
@@ -40,101 +39,6 @@ extern /* static */ float base_move_169_0x00370198;
 extern /* static */ float center_171_0x011EB770;
 extern /* static */ float degree_168_0x00370190;
 extern /* static */ float light_alpha_98_0x00370148;
-
-// end real
-
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036FA20[1];
-extern /* static */ float _arri_185;
-extern /* static */ float __distance_197;
-extern /* static */ float __lost_time_198;
-extern /* static */ float __omega_200;
-extern /* static */ float __v_201;
-extern /* static */ float __arri_199;
-extern /* static */ float _distance_183;
-extern /* static */ float _interval_188;
-extern /* static */ float _lost_time_184;
-extern /* static */ float _omega_186;
-extern /* static */ float _v_187;
-extern /* static */ float add_move_174;
-extern /* static */ float amb_alpha_97_0x0036FB20;
-extern /* static */ float base_move_173;
-extern /* static */ float center_175;
-extern /* static */ float degree_172;
-extern /* static */ float light_alpha_98_0x0036FB28;
-extern /* static */ struct WaveArea_Infomeation _Area_Info_List_0x0036F510[1]; // size: 0x90, address: 0x36F510
-extern /* static */ float __arri_173;
-extern /* static */ float __distance_171;
-extern /* static */ float __lost_time_172;
-extern /* static */ float __omega_174;
-extern /* static */ float __v_175;
-extern /* static */ float _interval_162;
-extern /* static */ float amb_alpha_72;
-extern /* static */ float base_move_156;
-extern /* static */ float degree_155;
-extern /* static */ int i_131;
-extern /* static */ u_int j_132;
-extern /* static */ float light_alpha_73;
-extern /* static */ float sx_87;
-extern f32 Amb_Base_94_0x00370110;
-extern f32 Ambient_Color2_95_0x00370120;
-extern f32 Light_Base_93_0x00370100;
-extern f32 SpecularRgba_96_0x00370130;
-extern WaveArea_Infomeation _Area_Info_List_0x0036FE10[4];
-extern u_long128 _GifTag_91_0x003700E0;
-extern u_long128 _GifTag_Tri_92_0x003700F0;
-extern f32 __arri_195_0x003701E8;
-extern f32 __distance_193_0x003701D8;
-extern f32 __lost_time_194_0x003701E0;
-extern f32 _interval_184_0x003701D0;
-extern f32 __v_197_0x003701F8;
-extern WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x00370050[1];
-extern WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00370080[1];
-extern WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1];
-extern f32 _arri_181_0x003701B8;
-extern f32 _distance_179_0x003701A8;
-extern f32 _interval_184_0x003701D0;
-extern f32 _lost_time_180_0x003701B0;
-extern f32 _omega_182_0x003701C0;
-extern f32 _v_183_0x003701C8;
-extern f32 add_move_170_0x003701A0;
-extern f32 amb_alpha_97_0x00370140;
-extern f32 base_move_169_0x00370198;
-extern f32 center_171_0x011EB770;
-extern f32 cos_beta_min_66_0x003700D8;
-extern f32 degree_168_0x00370190;
-extern s32 i_223_0x011EB778;
-extern f32 light_alpha_98_0x00370148;
-extern f32 sx_112_0x00370180;
-extern s8 tmp_222_0x011EB780;
-extern f32 ty_113_0x00370188;
-extern f32 Amb_Base_94_0x0036F930;
-extern f32 Ambient_Color2_95_0x0036F940;
-extern f32 Light_Base_93_0x0036F920;
-extern f32 SpecularRgba_96_0x0036F950;
-extern u_long128 _GifTag_91_0x0036F900;
-extern u_long128 _GifTag_Tri_92_0x0036F910;
-extern f32 __arri_195_0x0036FA00;
-extern f32 __distance_193_0x0036F9F0;
-extern f32 __lost_time_194_0x0036F9F8;
-extern f32 __omega_196_0x0036FA08;
-extern f32 __v_197_0x0036FA10;
-extern f32 _arri_181_0x0036F9D0;
-extern f32 _distance_179_0x003701A8;
-extern f32 _interval_184_0x003701D0;
-extern f32 _lost_time_180_0x003701B0;
-extern f32 _omega_182_0x0036F9D8;
-extern f32 _v_183_0x0036F9E0;
-extern f32 add_move_170_0x003701A0;
-extern f32 amb_alpha_97_0x0036F960;
-extern f32 base_move_169_0x00370198;
-extern f32 center_171_0x011EB770;
-extern f32 cos_beta_min_66_0x0036F8F0;
-extern f32 degree_168_0x00370190;
-extern s32 i_223_0x011EB6B0;
-extern f32 light_alpha_98_0x0036F968;
-extern f32 sx_112_0x0036F9A0;
-extern s8 tmp_222_0x011EB6C0;
-extern f32 ty_113_0x0036F9A8;
 
 static void Grid_Work_Initialize(HH_Object_Water_15* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
