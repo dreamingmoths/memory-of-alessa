@@ -304,7 +304,7 @@ segments:
       - [0x1753a0, asm, Fog/fog_blow]
       - [0x175fa0, asm, Chacter/chara_bound]
       - [0x176030, asm, Chacter/charaboundtbl]
-      - [0x176040, asm, Effect2/hh_class_water_03]
+      - [0x176040, c,   Effect2/hh_class_water_03]
       - [0x1773a0, asm, Effect2/hh_class_water_04]
       - [0x1787c0, asm, Effect2/hh_class_water_06]
       - [0x179c50, asm, Effect2/hh_class_water_07]
