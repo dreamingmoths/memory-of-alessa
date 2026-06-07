@@ -622,57 +622,57 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCopyForReverseMode
 
 void SCNowDemoEventSwitch(SubCharacter* scp, int flag) {
     if (flag) {
-        scp->status |= 0x2000;     
+        scp->status |= (1 << SCP_STATUS_BIT_NOW_DEMO_EVENT);     
     } else {
-        scp->status &= ~0x2000;
+        scp->status &= ~(1 << SCP_STATUS_BIT_NOW_DEMO_EVENT);
     }    
 }
 
 void SCNowPlayableEventSwitch(SubCharacter* scp, int flag) {
     if (flag) {
-        scp->status |= 0x4000;
+        scp->status |= (1 << SCP_STATUS_BIT_NOW_PLAYABLE_EVENT);
     } else {
-        scp->status &= ~0x4000;
+        scp->status &= ~(1 << SCP_STATUS_BIT_NOW_PLAYABLE_EVENT);
     }
 }
 
 void SCStayModelSwitch(SubCharacter* scp, int flag) {
     if (flag) {
-        scp->status |= 0x100;
+        scp->status |= (1 << SCP_STATUS_BIT_STAY_MODEL);
     } else {
-        scp->status &= ~0x100;        
+        scp->status &= ~(1 << SCP_STATUS_BIT_STAY_MODEL);        
     }
 }
 
 void SCAnimeTypeSwitch(SubCharacter* scp, int flag) {
     if (flag) {
-        scp->status |= 4;
+        scp->status |= (1 << SCP_STATUS_BIT_ANIME_TYPE);
     } else {
-        scp->status &= ~4;
+        scp->status &= ~(1 << SCP_STATUS_BIT_ANIME_TYPE);
     }
 }
 
 void SCRotZYXSwitch(SubCharacter* scp, int flag) {
     if (flag) {
-        scp->status |= 0x80;
+        scp->status |= (1 << SCP_STATUS_BIT_ROT_ZYX);
     } else {
-        scp->status &= ~0x80;        
+        scp->status &= ~(1 << SCP_STATUS_BIT_ROT_ZYX);        
     }
 }
 
 void SCFreefallSwitch(SubCharacter* scp, int sw) {
     if (sw) {
-        scp->status |= 0x10000;
+        scp->status |= (1 << SCP_STATUS_BIT_FREEFALL);
     } else {
-        scp->status &= ~0x10000;
+        scp->status &= ~(1 << SCP_STATUS_BIT_FREEFALL);
     }
 }
 
 void SCLightOnNowSwitch(SubCharacter* scp, int sw) {
     if (sw) {
-        scp->status |= 0x200;
+        scp->status |= (1 << SCP_STATUS_BIT_LIGHT_ON_NOW);
     } else {
-        scp->status &= ~0x200;
+        scp->status &= ~(1 << SCP_STATUS_BIT_LIGHT_ON_NOW);
     }
 }
 
