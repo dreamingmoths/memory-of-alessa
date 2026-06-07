@@ -20,6 +20,11 @@ typedef float f32;
 
 typedef signed char s_char;
 
+typedef enum bool {
+    false,
+    true,
+} bool;
+
 #define NULL 0
 #define PI 3.1415927f
 #define TAU 6.2831855f

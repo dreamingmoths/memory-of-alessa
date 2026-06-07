@@ -5,6 +5,11 @@
 
 #define CLASS_DESCRIPTOR_MAX 0x30
 
+#define HH_STEP_INIT    0
+#define HH_STEP_MOTION  1
+#define HH_STEP_DRAW    2
+#define HH_STEP_OFF     3
+
 typedef struct ImpactQueue_ElementOption {
     float Vector[2][4] __attribute__((aligned(16))); // offset 0x0, size 0x20
     float Float_Value[2];                            // offset 0x20, size 0x8
