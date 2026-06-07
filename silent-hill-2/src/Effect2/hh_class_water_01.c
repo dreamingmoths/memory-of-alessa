@@ -252,8 +252,7 @@ static u_int Object_Draw(HH_Object_Water_01* pThis /* r22 */, float* pGrid_Y_Val
             float stq0[4];        // r29+0x270
             float stq1[4];        // r29+0x280
             float base;           // r2
-            // float color_scale; // r29+0x290
-            float color_scale; // r29+0x290
+            float color_scale;    // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 
@@ -361,20 +360,16 @@ static u_int Object_Draw(HH_Object_Water_01* pThis /* r22 */, float* pGrid_Y_Val
 }
 
 u_int HH_Class_Prefix_Water_01() {
-    // Blocks
-    /* anonymous block */ {
-        // Range: 0x25D360 -> 0x25D404
-        unsigned long tex0;                               // r2
-        sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
-        u_int result = 1;                                 // r2
-        HH_Vif1PacketBuffer_GifTag_Open();
-        tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_01_TEX_ID, HH_WATER_01_CLUT_ID);
-        sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0);
-        sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, SCE_GS_SET_CLAMP(3, 3, 0x1ff, 0, 0x1ff, 0)); // 0x1ff001fff
-        sceVif1PkAddGsAD(pPk, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0x80));
-        HH_Vif1PacketBuffer_GifTag_Close();
-        return result;
-    }
+    u_long tex0;                                      // r2
+    sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
+    u_int result = 1;                                 // r2
+    HH_Vif1PacketBuffer_GifTag_Open();
+    tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_01_TEX_ID, HH_WATER_01_CLUT_ID);
+    sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0);
+    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, SCE_GS_SET_CLAMP(3, 3, 0x1ff, 0, 0x1ff, 0)); // 0x1ff001fff
+    sceVif1PkAddGsAD(pPk, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0x80));
+    HH_Vif1PacketBuffer_GifTag_Close();
+    return result;
 }
 
 u_int HH_Class_Suffix_Water_01() {
