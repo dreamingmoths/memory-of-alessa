@@ -26,4 +26,8 @@ typedef struct HH_Object_Water_10 {
     u_int Area_Enable_Table[1];            // offset 0x143C, size 0x4
 } HH_Object_Water_10;
 
+u_int HH_Class_Prefix_Water_10(void);
+u_int HH_Class_Suffix_Water_10(void);
+u_int HH_Class_Water_10(void* pBlock, ImpactQueue_Element* pElement);
+
 #endif // HH_CLASS_WATER_10_H
