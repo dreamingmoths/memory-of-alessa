@@ -13,36 +13,6 @@
 
 #pragma divbyzerocheck off
 
-extern f32 Amb_Base_94_0x0036F770;
-extern f32 Ambient_Color2_95_0x0036F780;
-extern f32 Light_Base_93_0x0036F760;
-extern f32 SpecularRgba_96_0x0036F790;
-extern WaveArea_Infomeation _Area_Info_List_0x0036FA20[1];
-extern u_long128 _GifTag_91_0x0036F740;
-extern u_long128 _GifTag_Tri_92_0x0036F750;
-extern f32 __arri_195_0x0036F840;
-extern f32 __distance_197;
-extern f32 __lost_time_198;
-extern f32 __omega_200;
-extern f32 __v_201;
-extern f32 __arri_199;
-extern f32 _distance_183;
-extern f32 _interval_188;
-extern f32 _lost_time_184;
-extern f32 _omega_186;
-extern f32 _v_187;
-extern f32 add_move_174;
-extern f32 amb_alpha_97_0x0036F7A0;
-extern f32 base_move_173;
-extern f32 center_175;
-extern f32 cos_beta_min_66_0x0036F730;
-extern f32 degree_172;
-extern s32 i_223_0x011EB630;
-extern f32 light_alpha_98_0x0036F7A8;
-extern f32 sx_112_0x0036F7E0;
-extern s8 tmp_222_0x011EB640;
-extern f32 ty_113_0x0036F7E8;
-
 extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036FA20[1];
 extern /* static */ float _arri_185;
 extern /* static */ float __distance_197;
@@ -62,18 +32,9 @@ extern /* static */ float center_175;
 extern /* static */ float degree_172;
 extern /* static */ float light_alpha_98_0x0036FB28;
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x002628F0 -> 0x0026291C
-*/
-// Range: 0x2628F0 -> 0x26291C
 static void Grid_Work_Initialize(HH_Object_Water_13* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 }
-
 
 /*
     Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
@@ -82,7 +43,7 @@ static void Grid_Work_Initialize(HH_Object_Water_13* pThis /* r2 */) {
     Code range: 0x00262920 -> 0x00262984
 */
 // Range: 0x262920 -> 0x262984
-static unsigned int Object_Initialize(HH_Object_Water_13* pThis /* r16 */) {
+static u_int Object_Initialize(HH_Object_Water_13* pThis /* r16 */) {
     u_int result = 1; // r2
     pThis->Timer = 0.0f;
     pThis->Motion_Step = 0;
@@ -93,29 +54,13 @@ static unsigned int Object_Initialize(HH_Object_Water_13* pThis /* r16 */) {
     return result;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00262990 -> 0x00262A2C
-*/
-// Range: 0x262990 -> 0x262A2C
-static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, unsigned int* pX_Index /* r17 */, unsigned int* pZ_Index /* r16 */) {
+static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, u_int* pX_Index /* r17 */, u_int* pZ_Index /* r16 */) {
     float check_pos[4]; // r29+0x30
     sceVu0SubVector(check_pos, pElement->Option.Vector[0], pInfo->World_Location);
     *pX_Index = (u_int)(check_pos[0] / 100.0f);
     *pZ_Index = (u_int)(check_pos[2] / 100.0f);
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00262A30 -> 0x00262B58
-*/
-// Range: 0x262A30 -> 0x262B58
 static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_Direction /* r17 */, float* Normal_Vector /* r16 */) {
     static float cos_beta_min = 0.99144399f; // @ 0x0036FAB0
     float result;                            // r29+0x60
@@ -149,14 +94,6 @@ static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_D
     return result * specular_coefficient;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00262B60 -> 0x00262BA0
-*/
-// Range: 0x262B60 -> 0x262BA0
 static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
     float brightness = 255.0f;
 
@@ -176,51 +113,43 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
 }
 
 static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036FAE0
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f}; // @ 0x0036FAF0
-static float amb_alpha = 32.0f; // @ 0x0036FB20
-static float light_alpha = 128.0f; // @ 0x0036FB28
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036FAF0
+static float amb_alpha = 32.0f;                           // @ 0x0036FB20
+static float light_alpha = 128.0f;                        // @ 0x0036FB28
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
-}; // @ 0x0036FAD0
-static float ty = 2.5f; // @ 0x0036FB68
-static float sx = 2.5f; // @ 0x0036FB60
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036FAD0
+static float ty = 2.5f;                                         // @ 0x0036FB68
+static float sx = 2.5f;                                         // @ 0x0036FB60
 static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036FB00
 static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036FB10
 static u_long _GifTag[2] = {
     SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
     GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036FAC0
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00262BA0 -> 0x00263400
-*/
-// Range: 0x262BA0 -> 0x263400
 static u_int Object_Draw(HH_Object_Water_13* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    u_int result = 0; // r2
-    sceVif1Packet* pPk; // r16
-    u_int vertex_num; // r2
-    u_int x_grid_max; // r2
-    u_int z_grid_max; // r29+0xB0
-    u_int x_index; // r17
-    u_int z_index; // r18
-    u_int prim_type; // r2
-    sceVu0FMATRIX lwm; // r29+0xC0
-    sceVu0FMATRIX lsm; // r29+0x100
-    sceVu0FMATRIX clip_mat; // r29+0x140
+    u_int result = 0;               // r2
+    sceVif1Packet* pPk;             // r16
+    u_int vertex_num;               // r2
+    u_int x_grid_max;               // r2
+    u_int z_grid_max;               // r29+0xB0
+    u_int x_index;                  // r17
+    u_int z_index;                  // r18
+    u_int prim_type;                // r2
+    sceVu0FMATRIX lwm;              // r29+0xC0
+    sceVu0FMATRIX lsm;              // r29+0x100
+    sceVu0FMATRIX clip_mat;         // r29+0x140
     float* pGrid_Y = pGrid_Y_Value; // r2
-    float Ambient_Color[4]; // r29+0x180
-    float view_dir[4]; // r29+0x190
-    float pos[4]; // r29+0x1A0
-    float dir[4]; // r29+0x1B0
-    float Light_Color[4]; // r29+0x1C0
-    float Parameter[4]; // r29+0x1D0
-    float far_z; // r20
-    float cos_theta; // r21
-    u_int* pPk_Current; // r19
-    u_int* pPk_End; // r2
+    float Ambient_Color[4];         // r29+0x180
+    float view_dir[4];              // r29+0x190
+    float pos[4];                   // r29+0x1A0
+    float dir[4];                   // r29+0x1B0
+    float Light_Color[4];           // r29+0x1C0
+    float Parameter[4];             // r29+0x1D0
+    float far_z;                    // r20
+    float cos_theta;                // r21
+    u_int* pPk_Current;             // r19
+    u_int* pPk_End;                 // r2
 
     pPk = HH_Vif1Packet_Current_Get();
     x_grid_max = Grid_X_Max;
@@ -271,18 +200,18 @@ static u_int Object_Draw(HH_Object_Water_13* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4]; // r29+0x210
-            int xyzf[4]; // r29+0x220
-            int rgba[4]; // r29+0x230
-            u_int addr; // r2
-            float vec0[4]; // r29+0x240
-            float vec1[4]; // r29+0x250
-            float n0[4]; // r29+0x260
+            float Rgba[4];        // r29+0x210
+            int xyzf[4];          // r29+0x220
+            int rgba[4];          // r29+0x230
+            u_int addr;           // r2
+            float vec0[4];        // r29+0x240
+            float vec1[4];        // r29+0x250
+            float n0[4];          // r29+0x260
             float specular_ratio; // r22
-            float stq0[4]; // r29+0x270
-            float stq1[4]; // r29+0x280
-            float base; // r2
-            float color_scale; // r29+0x290
+            float stq0[4];        // r29+0x270
+            float stq1[4];        // r29+0x280
+            float base;           // r2
+            float color_scale;    // r29+0x290
             // float color_scale; // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
@@ -390,15 +319,7 @@ static u_int Object_Draw(HH_Object_Water_13* pThis /* r22 */, float* pGrid_Y_Val
     return result;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00263400 -> 0x002634A4
-*/
-// Range: 0x263400 -> 0x2634A4
-unsigned int HH_Class_Prefix_Water_13() {
+u_int HH_Class_Prefix_Water_13(void) {
     u_long tex0;                                      // r2
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     u_int result = 1;                                 // r2
@@ -411,15 +332,7 @@ unsigned int HH_Class_Prefix_Water_13() {
     return result;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x002634B0 -> 0x00263504
-*/
-// Range: 0x2634B0 -> 0x263504
-unsigned int HH_Class_Suffix_Water_13() {
+u_int HH_Class_Suffix_Water_13(void) {
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     u_int result = 1;                                 // r2
     HH_Vif1PacketBuffer_GifTag_Open();
@@ -428,15 +341,7 @@ unsigned int HH_Class_Suffix_Water_13() {
     return result;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00263510 -> 0x00263B38
-*/
-// Range: 0x263510 -> 0x263B38
-unsigned int HH_Class_Water_13(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
+u_int HH_Class_Water_13(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     u_int result = 1;                   // r16
     HH_Object_Water_13* pThis = pBlock; // r17
 
