@@ -140,43 +140,42 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
     " ::"f"(brightness) : "t0", "t1", "memory");
 }
 
-static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x00370100
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00370110
-static float amb_alpha = 32.0f;                           // @ 0x00370140
-static float light_alpha = 128.0f;                        // @ 0x00370148
-static u_long _GifTag_Tri[2] = {
-    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003700F0
-static float ty = 2.5f;                                                                                     // @ 0x00370188
-static float sx = 2.5f;                                                                                     // @ 0x00370180
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00370120
-static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x00370130
-static u_long _GifTag[2] = {
-    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003700E0
-
 static u_int Object_Draw(HH_Object_Water_15* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    u_int result = 0;               // r2
-    sceVif1Packet* pPk;             // r16
-    u_int vertex_num;               // r2
-    u_int x_grid_max;               // r2
-    u_int z_grid_max;               // r29+0xB0
-    u_int x_index;                  // r17
-    u_int z_index;                  // r18
-    sceVu0FMATRIX lwm;              // r29+0xC0
-    sceVu0FMATRIX lsm;              // r29+0x100
-    sceVu0FMATRIX clip_mat;         // r29+0x140
-    float* pGrid_Y = pGrid_Y_Value; // r2
-    float Ambient_Color[4];         // r29+0x180
-    float view_dir[4];              // r29+0x190
-    float pos[4];                   // r29+0x1A0
-    float dir[4];                   // r29+0x1B0
-    float Light_Color[4];           // r29+0x1C0
-    float Parameter[4];             // r29+0x1D0
-    float far_z;                    // r20
-    float cos_theta;                // r21
-    u_int* pPk_Current;             // r19
-    u_int* pPk_End;                 // r2
+    static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x00370100
+    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00370110
+    static float amb_alpha = 32.0f;                           // @ 0x00370140
+    static float light_alpha = 128.0f;                        // @ 0x00370148
+    static u_long _GifTag_Tri[2] = {
+        SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+        GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003700F0
+    static float ty = 2.5f;                                                                                     // @ 0x00370188
+    static float sx = 2.5f;                                                                                     // @ 0x00370180
+    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00370120
+    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x00370130
+    static u_long _GifTag[2] = {
+        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003700E0
+    u_int result = 0;                                                                                                 // r2
+    sceVif1Packet* pPk;                                                                                               // r16
+    u_int vertex_num;                                                                                                 // r2
+    u_int x_grid_max;                                                                                                 // r2
+    u_int z_grid_max;                                                                                                 // r29+0xB0
+    u_int x_index;                                                                                                    // r17
+    u_int z_index;                                                                                                    // r18
+    sceVu0FMATRIX lwm;                                                                                                // r29+0xC0
+    sceVu0FMATRIX lsm;                                                                                                // r29+0x100
+    sceVu0FMATRIX clip_mat;                                                                                           // r29+0x140
+    float* pGrid_Y = pGrid_Y_Value;                                                                                   // r2
+    float Ambient_Color[4];                                                                                           // r29+0x180
+    float view_dir[4];                                                                                                // r29+0x190
+    float pos[4];                                                                                                     // r29+0x1A0
+    float dir[4];                                                                                                     // r29+0x1B0
+    float Light_Color[4];                                                                                             // r29+0x1C0
+    float Parameter[4];                                                                                               // r29+0x1D0
+    float far_z;                                                                                                      // r20
+    float cos_theta;                                                                                                  // r21
+    u_int* pPk_Current;                                                                                               // r19
+    u_int* pPk_End;                                                                                                   // r2
 
     pPk = HH_Vif1Packet_Current_Get();
     x_grid_max = Grid_X_Max;
