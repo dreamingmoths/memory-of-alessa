@@ -259,7 +259,7 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
     return result;
 }
 
-u_int HH_Class_Prefix_Water_10() {
+u_int HH_Class_Prefix_Water_10(void) {
     static u_int interval = 0x40800000; /* 4.0f */    // @ 0x0036F650
     static int i = 0;                                 // @ 0x011EB600
     static int j = 0;                                 // @ 0x011EB608
@@ -280,7 +280,7 @@ u_int HH_Class_Prefix_Water_10() {
     return result;
 }
 
-u_int HH_Class_Suffix_Water_10() {
+u_int HH_Class_Suffix_Water_10(void) {
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     u_int result = 1;                                 // r2
     HH_Vif1PacketBuffer_GifTag_Open();
