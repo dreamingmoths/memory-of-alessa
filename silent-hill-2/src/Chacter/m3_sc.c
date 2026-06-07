@@ -16,9 +16,10 @@ static int shCharacterNeckAngleExec(shAnime3d* ap);
 static int shCharacterKneeAngleExec(shAnime3d* ap /* r17 */);
 static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index);
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
+static void UpdateMatrix(SubCharacter* scp /* r18 */, Vector4* rot /* r17 */, Vector4 * trans /* r16 */);
 
 inline int clamp_12(int value) {
-    int result = value & 0xfff;
+    int result = value & 0xFFF;
     if (value < 0 && result != 0)
         result -= (1 << 12);
     return result;
@@ -707,15 +708,60 @@ void SCLightOnNowSwitch(SubCharacter* scp, int sw) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecAnimeAll);
+void shCharacterExecAnimeAll(void) { // not line matched
+    SubCharacter* scp; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterUpdateAll);
+    for (scp = sh2chara.head; scp != NULL; scp = scp->next) {
+        if (!(scp->status & 0x100) && (scp->status & 0x10)) {
+            if (scp->model_type != 0) {
+                shCharacterAnimeCopyForReverseModel(scp);
+            } else if (scp->status & 4) {
+                shCharacterPlayingExecAnimeOne(scp);
+            } else {
+                shCharacterDramaExecAnimeOne(scp);
+            }
+        }
+    }
+    demo_status &= ~0x40;
+}
+
+void shCharacterUpdateAll(void) {
+    SubCharacter* scp; // r16
+    
+    for (scp = sh2chara.head; scp != NULL; scp = scp->next) {
+        if (scp->status & 1) {
+            scp->status &= ~1;
+        }
+        UpdateMatrix(scp, &scp->rot, &scp->pos);        
+    }
+    
+}
 
 void shCharacterSetFunction(SubCharacter* scp, void (*func)(SubCharacter*)) {
     scp->function = func;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecFunctionAll);
+void shCharacterExecFunctionAll(void) {
+    SubCharacter* scp; // r2
+    SubCharacter* next; // r16
+
+    
+    scp = sh2chara.head;
+
+
+
+    
+    while (scp != NULL) {
+        next = scp->next;
+        
+        if (scp->function != NULL)
+            scp->function(scp);        
+        scp = next;
+    }
+
+    
+    shCharacterUpdateAll();
+}
 
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */) { //line matched up to a certain point then I gave up
     SubCharacterDisp* scp_d; // r2
@@ -1227,7 +1273,26 @@ void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty) {
     scp->spd = scp->spd_org = 0.0f;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetPartsMatrixForShadow);
+void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short id, u_int parts_name) {
+    int i1; // r4
+    SubCharacter* p; // r2
+    shSkelton* sk; // r6
+
+    
+    p = shCharacterGetSubCharacter(kind, id);
+    if (p != NULL) {
+        
+        sk = p->sk_top;        
+        for (i1 = 0; i1 < parts_name; i1++) {
+            sk = sk->next;
+
+
+            
+        }
+        
+        sceVu0MulMatrix(mat, p->mat[0], sk->src_m[0]);
+    }
+}
 
 void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id) {
     SubCharacter* p; // r2
