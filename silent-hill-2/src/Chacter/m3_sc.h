@@ -59,6 +59,9 @@ void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp /* r2 */);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
 void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
+void SCAddPos(SubCharacter* scp, Vector4* pos);
+void SCSetRot(SubCharacter* scp, Vector4* rot);
+void SCAddRot(SubCharacter* scp, Vector4* rot);
 void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
 
 void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale);
