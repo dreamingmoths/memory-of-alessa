@@ -36,13 +36,6 @@ static void Grid_Work_Initialize(HH_Object_Water_13* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_13.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00262920 -> 0x00262984
-*/
-// Range: 0x262920 -> 0x262984
 static u_int Object_Initialize(HH_Object_Water_13* pThis /* r16 */) {
     u_int result = 1; // r2
     pThis->Timer = 0.0f;
@@ -119,10 +112,10 @@ static float light_alpha = 128.0f;                        // @ 0x0036FB28
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036FAD0
-static float ty = 2.5f;                                         // @ 0x0036FB68
-static float sx = 2.5f;                                         // @ 0x0036FB60
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036FB00
-static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036FB10
+static float ty = 2.5f;                                                                                     // @ 0x0036FB68
+static float sx = 2.5f;                                                                                     // @ 0x0036FB60
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036FB00
+static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036FB10
 static u_long _GifTag[2] = {
     SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
     GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036FAC0
