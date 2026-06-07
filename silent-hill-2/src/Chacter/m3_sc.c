@@ -4,27 +4,33 @@
 #include "Heap/sh2_ch_malloc.h"
 #include "Lens/lens_flare.h"
 #include "Chacter_Draw/clani.h"
+#include "Chacter/anime.h"
 
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
 static void shCharacterSortList(SubCharacter* scp /* r2 */);
 static void shCharacterTopOfList(SubCharacter* scp);
 static void shCharacterCutList(SubCharacter* scp);
-
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
 
+inline int clamp_12(int value) {
+    int result = value & 0xfff;
+    if (value < 0 && result != 0)
+        result -= (1 << 12);
+    return result;
+}
+
 static SubCharacter* shCharacterGetFreeList(void) {
-    SubCharacter* scp; // r2
-    scp = (SubCharacter*)sh2chara.free;
+    SubCharacter* scp = sh2chara.free; // r2
     if (scp != NULL) {
-        sh2chara.free = (SubCharacterDisp*)scp->next;
+        sh2chara.free = scp->next;
     }
     return scp;
 }
 
 static void AddFreeList(SubCharacter* scp) {
     scp->next = &sh2chara.free->sc;
-    sh2chara.free = (SubCharacterDisp*) scp;
+    sh2chara.free = scp;
 }
 
 static void shCharacterSortList(SubCharacter* scp /* r2 */) {
@@ -112,18 +118,27 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddRot);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetClusterAnimeWork);
 
 void shCharacterClusterAnimeSet(SubCharacter* scp, int anime) {
-    SubCharacterDisp* scp_d = (SubCharacterDisp *) scp;
+    SubCharacterDisp* scp_d = scp;
 
     ClusterAnimeSet(scp_d->cluster_anime, (void *)anime);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetModel);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForDrama);
+void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = scp; // r2
+    return (void*) scp_d->anime_adr;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetAnimeAdrForPlay);
+void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = scp; // r2
+    return (void*) scp_d->anime_adr;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetClusterAnimeAdr);
+void* shCharacterGetClusterAnimeAdr(SubCharacter* scp) {
+    SubCharacterDisp* scp_d = scp; // r2
+    return (void*) scp_d->clani_adr;
+}
 
 void shCharacterSetPlayer(SubCharacter* scp) {
     if (scp == NULL) {
@@ -306,7 +321,7 @@ void shCharacterInitSubCharacter(void) {
 
     
     for (i = 0; i < 31; i++, scp_d++) {
-        scp_d->sc.next = (SubCharacter *)(scp_d + 1);
+        scp_d->sc.next = (scp_d + 1);
     }
     scp_d->sc.next = NULL;
 
@@ -447,7 +462,7 @@ static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterCreate);
 
 void shCharacterDelete(SubCharacter* scp) { // but this is not matched lol
-    SubCharacterDisp* scp_d = (SubCharacterDisp*) scp;
+    SubCharacterDisp* scp_d = scp;
     if (scp_d == NULL) {
         return;
     }
@@ -615,9 +630,208 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetFunction);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecFunctionAll);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSet);
+void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */) { //line matched up to a certain point then I gave up
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anim; // r16
+    void* anime_adr; // r2
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectScaleSet);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    scp_d = scp;
+
+    switch (ctrl_type) {
+        case 0:
+        case 2:
+            anim = &scp_d->anime;
+            break;
+        case 1:
+            anim = &scp_d->anime2;
+            break;
+    }    
+
+    
+    scp_d->anime.scale  = 1.0f;
+    scp_d->anime2.scale = 1.0f;
+
+
+
+    
+    anim->p_anime = anim->anime;
+    anim->p_frame_top = anim->frame_top;
+    
+    anim->anime = (void*)anime;
+
+
+
+
+    
+    anim->frame_size = shCharacterAnimeOneFrameSize(scp->kind);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    if ((scp->kind >> 8) == 8) {
+        anim->first_bone_type = 1;
+    } else {
+        anim->first_bone_type = 0;
+    }
+
+
+
+    
+
+    switch (anim->comp_type = inter_type) {
+
+
+
+        
+        case 0:
+        case 2:
+            anim->total_count = 0;
+            if (anim_info->speed < 0) 
+                anim->cur_frame.x = anim->cur_frame.y = anim_info->end;
+            else 
+                anim->cur_frame.x = anim->cur_frame.y = anim_info->start;
+
+            
+            anim->frame_top = (void*)((u_char*)anim->anime + (anim->frame_size * anim->cur_frame.y));
+            
+            anim->c_count.x = anim->c_count.y = 0;           
+            anim->c_speed.x = anim->c_speed.y = 0;            
+            anim->anim_a = anim_info;
+            anim->anim_b = anim_info;
+            
+            break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+        
+        case 4:
+        case 6:
+        case 8:
+    
+
+            switch (inter_type) {
+                    case 4:
+                    if (anim_info->speed < 0) {
+                        anim->cur_frame.y = anim_info->end;
+                    } else {
+                        anim->cur_frame.y = anim_info->start;
+                    }
+                    break;
+                case 8:
+                    anim->cur_frame.y = scp_d->anime.cur_frame.y;
+                    break;        
+            }
+            
+
+            anim->frame_top = (void*)((u_char*)anim->anime + (anim->frame_size * anim->cur_frame.y));
+            
+            anim->c_count.y = 0;
+            anim->c_speed.y = 0;
+            anim->total_speed.y = 0;
+
+
+            if (anim->anim_a == NULL) {
+
+                
+                anim->anim_a = anim_info;
+                
+            } else {                
+                anim->anim_a = anim->anim_b;
+            }
+            anim->anim_b = anim_info;
+            break;        
+        case 10:
+
+
+
+
+
+            
+            
+
+            
+            anim->cur_frame.y = anim->cur_frame.x;
+
+
+            anim->c_count.y = 0;
+            
+            anim->c_speed.y = 128;
+            
+            anim->total_speed.y = 0;
+
+            ASSERT_ON_LINE(anim->anim_a != NULL, 2374);
+
+            anim->anim_a = anim->anim_b;
+            anim->anim_b = anim_info;
+            break;
+    }
+}
+
+void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale) {
+    SubCharacterDisp* scp_d = scp; // r2
+    
+    scp_d->anime.scale = scale;
+    shCharacterStayModelScale(&scp_d->anime);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterItemScreenObjectSet);
 
@@ -625,43 +839,284 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsGet1s
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsSet);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedGet_);
+short shCharacterAnimeSpeedGet_(SubCharacter* scp, u_int type) {
+    SubCharacterDisp* scp_d;
+    shAnime3d* anime;   
+    scp_d = scp;
+    switch (type) {
+        case 0:
+        case 2:
+            anime = &scp_d->anime;
+            break;
+        case 1:
+            anime = &scp_d->anime2;
+            break;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAdd);
+    }
+    return anime->total_speed.x;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAdd_);
+void shCharacterAnimeSpeedAdd(SubCharacter* scp, short add) {
+    shCharacterAnimeSpeedAdd_(scp, 0, add);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAddY);
+void shCharacterAnimeSpeedAdd_(SubCharacter* scp, u_int type, short add) {
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r7
+    shAnime3d* anime2; // r4    
+    scp_d = scp;
+    anime = &scp_d->anime;
+    anime2 = &scp_d->anime2;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeSpeedAddY_);
+    switch (type) {
+        case 0:
+            anime->c_speed.x = add;
+            anime2->c_speed.x = add;
+            break;
+        case 2:
+            anime->c_speed.x = add;
+            break;
+        case 1:
+            anime2->c_speed.x = add;
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimePause);
+void shCharacterAnimeSpeedAddY(SubCharacter* scp, short add) {
+    shCharacterAnimeSpeedAddY_(scp, 0, add);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimePause_);
+void shCharacterAnimeSpeedAddY_(SubCharacter* scp /* r2 */, u_int type /* r2 */, short add /* r2 */) {
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r7
+    shAnime3d* anime2; // r4    
+    scp_d = scp;
+    anime = &scp_d->anime;
+    anime2 = &scp_d->anime2;        
+    switch (type) {
+        case 0:
+            anime->c_speed.y = add;
+            anime2->c_speed.y = add;
+            break;
+        case 2:
+            anime->c_speed.y = add;
+            break;
+        case 1:
+            anime2->c_speed.y = add;
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeRestart);
+void shCharacterAnimePause(SubCharacter* scp) {
+    shCharacterAnimePause_(scp, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeRestart_);
+void shCharacterAnimePause_(SubCharacter* scp, u_int type) {
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r6
+    shAnime3d* anime2; // r4
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeIsEnd);
+    scp_d = scp;
+    anime = &scp_d->anime;
+    anime2 = &scp_d->anime2;        
+    switch (type) {
+        case 0:
+            anime->comp_type = -1;
+            anime2->comp_type = -1;
+            break;
+        case 2:
+            anime->comp_type = -1;
+            break;
+        case 1:
+            anime2->comp_type = -1;
+            break;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeIsEnd_);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameGet);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameGet_);
+        
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameSet);
+void shCharacterAnimeRestart(SubCharacter* scp) {
+    shCharacterAnimeRestart_(scp, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeFrameSet_);
+void shCharacterAnimeRestart_(SubCharacter* scp, u_int type) {
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r6
+    shAnime3d* anime2; // r8
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterGet);
+    scp_d = scp;
+    anime = &scp_d->anime;
+    anime2 = &scp_d->anime2;  
+    
+    switch (type) {
+        case 0:
+            if (anime->comp_type == -1) {
+                anime->comp_type = 2; 
+            }        
+            if (anime2->comp_type == -1) {
+                anime2->comp_type = 2;    
+            }
+            break;
+        case 2:
+            if (anime->comp_type == -1) {
+                anime->comp_type = 2;
+            }
+            break;
+        case 1:
+            if (anime2->comp_type == -1) {
+                anime2->comp_type = 2;
+            }
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterGet_);
+int shCharacterAnimeIsEnd(SubCharacter* scp) {
+    return shCharacterAnimeIsEnd_(scp, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCounterSet_);
+int shCharacterAnimeIsEnd_(SubCharacter* scp, u_int type) {
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r4
+    scp_d = scp;
+    
+    switch (type) {
+            case 0: case 2:            
+                anime = &scp_d->anime;
+                break;
+            case 1:
+                anime = &scp_d->anime2;
+                break;
+        }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeGetInfo);
+
+    
+    if (anime->anim_b->loop != 0) return 0;
+    
+
+
+
+
+
+
+
+    
+    if (anime->total_speed.x < 0) 
+        return anime->total_count == 0;
+    
+    return anime->total_count == ((anime->anim_b->end - anime->anim_b->start) << 12);
+
+    
+}
+
+short shCharacterAnimeFrameGet(SubCharacter* scp) {
+    return shCharacterAnimeFrameGet_(scp, 0);
+}
+
+short shCharacterAnimeFrameGet_(SubCharacter* scp /* r2 */, u_int type /* r2 */) { // not line matched
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r6
+    
+    scp_d = scp;
+    
+    switch (type) {
+        case 0: case 2:        
+            anime = &scp_d->anime;
+            break;
+        case 1:
+            anime = &scp_d->anime2;
+            break;
+    }
+
+    switch (anime->comp_type) {
+        case 10:
+            if ((anime->cur_frame.y - anime->cur_frame.x) == 1) {
+                return (anime->cur_frame.x - anime->anim_a->start);
+            }
+            return (anime->cur_frame.y - anime->anim_a->start);
+
+        default:
+            if ((anime->cur_frame.y - anime->cur_frame.x) == 1) {
+                return (anime->cur_frame.x - anime->anim_b->start);
+            }
+            return (anime->cur_frame.y - anime->anim_b->start);
+    }    
+}
+
+void shCharacterAnimeFrameSet(SubCharacter* scp, u_short frame) {
+    shCharacterAnimeFrameSet_(scp, 0, frame);
+}
+
+void shCharacterAnimeFrameSet_(SubCharacter* scp, u_int type, u_short frame) { // not line matched
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r5
+        
+    scp_d = scp;
+    
+    switch (type) {
+            case 0:
+            case 2:
+                anime = &scp_d->anime;
+                break;
+            case 1:
+                anime = &scp_d->anime2;
+                break;
+
+        }    
+        anime->cur_frame.x = frame;
+        anime->cur_frame.y = frame;
+    
+        anime->total_count = frame << 12;
+    
+        anime->c_count.x = 0;
+    
+        anime->frame_top = (void*)((u_char*)anime->anime + (anime->frame_size * anime->cur_frame.x));
+}
+
+int shCharacterAnimeCounterGet(SubCharacter* scp) {
+    return shCharacterAnimeCounterGet_(scp, 0);
+}
+
+int shCharacterAnimeCounterGet_(SubCharacter* scp, u_int type) { // didnt check lines
+    SubCharacterDisp* scp_d; // r2
+    shAnime3d* anime; // r5
+        
+    scp_d = scp;
+    
+    switch (type) { 
+        case 0:
+        case 2:
+            anime = &scp_d->anime;
+            break;
+        case 1:
+            anime = &scp_d->anime2;
+            break;
+    }
+    return anime->total_count;
+}
+
+void shCharacterAnimeCounterSet_(SubCharacter* scp, u_int type, int counter) {
+    SubCharacterDisp* scp_d = scp; // r2
+    shAnime3d* anime; // r5
+    
+    switch (type) {
+        case 0: case 2:
+            anime = &scp_d->anime;
+            break;
+        case 1:
+            anime = &scp_d->anime2;
+    }
+    
+    anime->total_count = counter;
+    anime->cur_frame.x = anime->cur_frame.y = (counter >> 12);
+    anime->c_count.x = clamp_12(counter);
+    anime->frame_top = (void*)((u_char*)anime->anime + (anime->frame_size * anime->cur_frame.x));
+}
+
+AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp) {
+    return shCharacterAnimeGetInfo_(scp, 0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeGetInfo_);
 

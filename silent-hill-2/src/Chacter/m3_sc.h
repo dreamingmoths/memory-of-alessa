@@ -51,10 +51,32 @@ void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacte
 void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp /* r2 */);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
-
+void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
 void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
 
+void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale);
+
 void SCNowPlayableEventSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
+
+short shCharacterAnimeSpeedGet_(SubCharacter* scp, u_int type);
+void shCharacterAnimeSpeedAdd(SubCharacter* scp, short add);
+void shCharacterAnimeSpeedAdd_(SubCharacter* scp, u_int type, short add);
+void shCharacterAnimeSpeedAddY(SubCharacter* scp, short add);
+void shCharacterAnimeSpeedAddY_(SubCharacter* scp /* r2 */, u_int type /* r2 */, short add /* r2 */);
+void shCharacterAnimePause(SubCharacter* scp);
+void shCharacterAnimePause_(SubCharacter* scp, u_int type);
+void shCharacterAnimeRestart(SubCharacter* scp);
+void shCharacterAnimeRestart_(SubCharacter* scp, u_int type);
+int shCharacterAnimeIsEnd(SubCharacter* scp);
+int shCharacterAnimeIsEnd_(SubCharacter* scp, u_int type);
+short shCharacterAnimeFrameGet(SubCharacter* scp);
+short shCharacterAnimeFrameGet_(SubCharacter* scp /* r2 */, u_int type /* r2 */);
+void shCharacterAnimeFrameSet(SubCharacter* scp, u_short frame);
+void shCharacterAnimeFrameSet_(SubCharacter* scp, u_int type, u_short frame);
+int shCharacterAnimeCounterGet(SubCharacter* scp);
+int shCharacterAnimeCounterGet_(SubCharacter* scp, u_int type);
+void shCharacterAnimeCounterSet_(SubCharacter* scp, u_int type, int counter);
+AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp);
 
 void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
 
