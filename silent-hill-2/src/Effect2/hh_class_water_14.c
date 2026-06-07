@@ -207,7 +207,6 @@ static u_int Object_Draw(HH_Object_Water_14* pThis /* r22 */, float* pGrid_Y_Val
             float stq1[4];        // r29+0x280
             float base;           // r2
             float color_scale;    // r29+0x290
-            // float color_scale; // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
 
@@ -337,7 +336,6 @@ u_int HH_Class_Suffix_Water_14(void) {
 }
 
 u_int HH_Class_Water_14(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
-    // Range: 0x264760 -> 0x264E24
     u_int result = 1;                   // r16
     HH_Object_Water_14* pThis = pBlock; // r17
 
