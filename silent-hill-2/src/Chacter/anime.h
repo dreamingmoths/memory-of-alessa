@@ -10,7 +10,7 @@ void shCharacterStayModelExecItem(shSkelton* stp, float* rot);
 
 void shCharacterStayModelExecNthParts(shSkelton* stp, float* pos, float* rot);
 
-// void shCharacterAnimePartsControl
+void shCharacterAnimePartsControl(shAnime3d* ap, shSkelton* stp /* r16 */, Vector4* rot /* r2 */); // first arg not present in dwarf
 
 void shCharacterAnimeSetSkelton(shAnime3d* ap, shSkelton* stp);
 
