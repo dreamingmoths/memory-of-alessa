@@ -1,7 +1,7 @@
 #ifndef HH_CLASS_WATER_COMMON_H
 #define HH_CLASS_WATER_COMMON_H
 
-#include "eetypes.h"
+#include "eestruct.h"
 
 typedef struct Wave_Element {
     // total size: 0x54
@@ -45,5 +45,12 @@ typedef struct WaveArea_GridLink_Infomeation {
     u_int X_Index_Start[2];         // offset 0x18, size 0x8
     u_int Z_Index_Start[2];         // offset 0x20, size 0x8
 } WaveArea_GridLink_Infomeation;
+
+static inline u_long hh_class_water_clamp(int i) {
+    u_long umax = clamp_n_reverse(i, 2) << 7;
+    u_long c = SCE_GS_SET_CLAMP(3, 3, 127, umax, 127, 0);
+    u_long vmax = clamp_n(i, 2) << 7;
+    return c | (vmax << 0x22);
+}
 
 #endif // HH_CLASS_WATER_COMMON_H

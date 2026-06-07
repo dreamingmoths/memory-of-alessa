@@ -72,7 +72,7 @@ static u_int Object_Initialize(HH_Object_Water_01* pThis /* r16 */) {
     pThis->pArea_Grid_Y_Value_Table[3] = pThis->Area03_Grid_Y_Value;
     pThis->pArea_Grid_Y_Value_Table[4] = pThis->Area04_Grid_Y_Value;
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < HH_WATER_01_TABLE_MAX; i++) {
         pThis->Area_WavePostTime[i] = 0.0f;
         _Area_Info_List_0x0036EE80[i].pGrid_Y_Value = pThis->pArea_Grid_Y_Value_Table[i];
     }
@@ -373,16 +373,12 @@ u_int HH_Class_Prefix_Water_01() {
 }
 
 u_int HH_Class_Suffix_Water_01() {
-    // Blocks
-    /* anonymous block */ {
-        // Range: 0x25D410 -> 0x25D464
-        sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
-        u_int result = 1;                                 // r2
-        HH_Vif1PacketBuffer_GifTag_Open();
-        sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, SCE_GS_SET_CLAMP(1 /* CLAMP (horizontal) */, 1 /* CLAMP (vertical) */, 0, 0, 0, 0));
-        HH_Vif1PacketBuffer_GifTag_Close();
-        return result;
-    }
+    sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
+    u_int result = 1;                                 // r2
+    HH_Vif1PacketBuffer_GifTag_Open();
+    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, SCE_GS_SET_CLAMP(1 /* CLAMP (horizontal) */, 1 /* CLAMP (vertical) */, 0, 0, 0, 0));
+    HH_Vif1PacketBuffer_GifTag_Close();
+    return result;
 }
 
 u_int HH_Class_Water_01(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
@@ -449,7 +445,7 @@ u_int HH_Class_Water_01(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             }
             {
                 u_int i;
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < HH_WATER_01_TABLE_MAX; i++) {
                     if (!((pThis->Timer - pThis->Area_WavePostTime[i]) <= _interval_194_0x0036F300)) {
                         WaveArea_Infomeation* pInfo = &_Area_Info_List_0x0036EE80[i];
                         Wave_Element wave_element; // r29+0xF0
@@ -469,7 +465,7 @@ u_int HH_Class_Water_01(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                         pThis->Area_WavePostTime[i] = pThis->Timer;
                     }
                 }
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < HH_WATER_01_TABLE_MAX; i++) {
                     if (pThis->Area_Enable_Table[i] != 0) {
                         HH_Class_WaterCommon_WaveArea_Calculator(&_Area_Info_List_0x0036EE80[i], pThis->Wave_Info, 0x14U, i);
                     }
@@ -481,7 +477,7 @@ u_int HH_Class_Water_01(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             HH_Class_WaterCommon_WaveArea_GridLink_Y_Value_Calculator(_area03_04_grid_link_list_0x0036F1E0);
             {
                 u_int i;
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < HH_WATER_01_TABLE_MAX; i++) {
                     if (pThis->Area_Enable_Table[i] != 0) {
                         WaveArea_Infomeation* pInfo = _Area_Info_List_0x0036EE80; // r21
                         WaveArea_Infomeation* pArea_Info = &pInfo[i];             // r2

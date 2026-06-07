@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "Chacter/character.h"
 #include "Event/item.h"
 

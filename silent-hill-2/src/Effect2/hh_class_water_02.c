@@ -50,40 +50,36 @@ static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /
 }
 
 static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_Direction /* r17 */, float* Normal_Vector /* r16 */) {
-    // Blocks
-    /* anonymous block */ {
-        // Range: 0x25DB80 -> 0x25DCA8
-        float result;                      // r29+0x60
-        float specular_coefficient = 1.0f; // r29+0x60
-        float input_light_power;           // r29+0x60
-        float reverse_light_dir[4];        // r29+0x40
-        float tmp_vec[4];                  // r29+0x50
-        float cos_theta;                   // r29+0x60
-        float cos_beta;                    // r29+0x60
-        // float cos_beta_min; // @ 0x0036F3D0
+    float result;                      // r29+0x60
+    float specular_coefficient = 1.0f; // r29+0x60
+    float input_light_power;           // r29+0x60
+    float reverse_light_dir[4];        // r29+0x40
+    float tmp_vec[4];                  // r29+0x50
+    float cos_theta;                   // r29+0x60
+    float cos_beta;                    // r29+0x60
+    // float cos_beta_min; // @ 0x0036F3D0
 
-        /* phong model specular reflection model */
-        /* R = 2n(dot(n, L)) - L */
-        cos_theta = sceVu0InnerProduct(Light_Direction, Normal_Vector);
-        if (cos_theta < 0.0f) {
-            cos_theta = -cos_theta;
-        }
-        sceVu0ScaleVectorXYZ(tmp_vec, Normal_Vector, 2.0f * cos_theta);
-        sceVu0SubVector(reverse_light_dir, tmp_vec, Light_Direction);
-        sceVu0Normalize(reverse_light_dir, reverse_light_dir);
-
-        cos_beta = sceVu0InnerProduct(reverse_light_dir, View_Direction);
-        if (cos_beta < 0.0f) {
-            cos_beta = -cos_beta;
-        }
-        if (cos_beta < cos_beta_min_66_0x0036F3D0) {
-            result = 0.0f;
-        } else {
-
-            result = 1.0f - ((1.0f - cos_beta) / (1 - cos_beta_min_66_0x0036F3D0));
-        }
-        return result * specular_coefficient;
+    /* phong model specular reflection model */
+    /* R = 2n(dot(n, L)) - L */
+    cos_theta = sceVu0InnerProduct(Light_Direction, Normal_Vector);
+    if (cos_theta < 0.0f) {
+        cos_theta = -cos_theta;
     }
+    sceVu0ScaleVectorXYZ(tmp_vec, Normal_Vector, 2.0f * cos_theta);
+    sceVu0SubVector(reverse_light_dir, tmp_vec, Light_Direction);
+    sceVu0Normalize(reverse_light_dir, reverse_light_dir);
+
+    cos_beta = sceVu0InnerProduct(reverse_light_dir, View_Direction);
+    if (cos_beta < 0.0f) {
+        cos_beta = -cos_beta;
+    }
+    if (cos_beta < cos_beta_min_66_0x0036F3D0) {
+        result = 0.0f;
+    } else {
+
+        result = 1.0f - ((1.0f - cos_beta) / (1 - cos_beta_min_66_0x0036F3D0));
+    }
+    return result * specular_coefficient;
 }
 
 static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
@@ -324,13 +320,6 @@ static u_int Object_Draw(HH_Object_Water_02* pThis /* r22 */, float* pGrid_Y_Val
     return result;
 }
 
-static inline u_long hh_class_water_02_clamp(int i) {
-    u_long umax = clamp_n_reverse(i, 2) << 7;
-    u_long c = SCE_GS_SET_CLAMP(3, 3, 127, umax, 127, 0);
-    u_long vmax = clamp_n(i, 2) << 7;
-    return c | (vmax << 0x22);
-}
-
 unsigned int HH_Class_Prefix_Water_02() {
     static u_int interval = 1;                        // @ 0x0036F490
     static int i = 0;                                 // @ 0x011EB580
@@ -341,7 +330,7 @@ unsigned int HH_Class_Prefix_Water_02() {
     HH_Vif1PacketBuffer_GifTag_Open();
     tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_02_TEX_ID, HH_WATER_02_CLUT_ID);
     sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0);
-    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_02_clamp(i));
+    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_clamp(i));
     if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j % interval == 0) {
         i++;
         i = clamp_n(i, 4);

@@ -31,5 +31,6 @@ typedef struct HH_Object_Water_01 {
 
 u_int HH_Class_Prefix_Water_01(void);
 u_int HH_Class_Suffix_Water_01(void);
+u_int HH_Class_Water_01(void* pBlock, ImpactQueue_Element* pElement);
 
 #endif // HH_CLASS_WATER_01_H
