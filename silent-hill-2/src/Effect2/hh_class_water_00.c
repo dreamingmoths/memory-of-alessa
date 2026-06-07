@@ -64,7 +64,7 @@ static inline void word_struct_copy(u_int* dst, u_int* src, u_int size) {
 static u_int WaveElement_Addition(HH_Object_Water_00* pThis, Wave_Element* pElement) {
     u_int result;                                                 // r2
     Wave_Element* pFree_Element = Free_WaveElement_Search(pThis); // r2
-    int i;                                                        /* not in symbols */
+
 
     if (pFree_Element == NULL) {
         pFree_Element = Oldest_WaveElement_Search(pThis);
