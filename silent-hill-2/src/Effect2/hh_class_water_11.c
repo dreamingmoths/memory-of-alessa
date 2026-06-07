@@ -89,13 +89,6 @@ static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_D
     return result * specular_coefficient;
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_11.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x002601B0 -> 0x002601F0
-*/
-// Range: 0x2601B0 -> 0x2601F0
 static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
     float brightness = 255.0f;
 
