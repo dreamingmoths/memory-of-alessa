@@ -29,6 +29,14 @@
 #define IS_PLAYER_KIND(_kind) ((_kind) >= 0x100 && (_kind) <= 0x103)
 #define IS_ENEMY_KIND(_kind) ((_kind) >= 0x200 && (_kind) < 0x300)
 
+#define SCP_STATUS_BIT_ANIME_TYPE          2
+#define SCP_STATUS_BIT_ROT_ZYX             7
+#define SCP_STATUS_BIT_STAY_MODEL          8
+#define SCP_STATUS_BIT_LIGHT_ON_NOW        9
+#define SCP_STATUS_BIT_NOW_DEMO_EVENT      13
+#define SCP_STATUS_BIT_NOW_PLAYABLE_EVENT  14
+#define SCP_STATUS_BIT_FREEFALL            16
+
 // E:\work\sh2(CVS全取得)\src\Chacter\m3_sc.c
 extern struct shCharacterAll sh2chara; // size: 0x6810, address: 0x3C84D0
 
