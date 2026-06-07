@@ -49,13 +49,18 @@ void shCharacterAnimeFrameSet(SubCharacter* scp /* r2 */, u_short frame /* r2 */
 void shCharacterAnimeRestart(SubCharacter* scp /* r2 */);
 
 void shCharacterDelete(SubCharacter* scp);
+void shCharacterPlayingExecAnimeOne(SubCharacter * scp /* r16 */);
+void shCharacterDramaExecAnimeOne(SubCharacter * scp /* r16 */);
 
 short shCharacterGetModelID(SubCharacter* scp /* r2 */);
 SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
 int shCharacterAnimeOneFrameSize(u_short id);
 void shCharacterInitSubCharacter(void);
-void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacter*) /* r2 */);
 void* shCharacterGetAnimeAdrForPlay(SubCharacter* scp /* r2 */);
+void shCharacterExecAnimeAll(void);
+void shCharacterUpdateAll(void);
+void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacter*) /* r2 */);
+void shCharacterExecFunctionAll(void);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
 void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
@@ -66,6 +71,7 @@ void shCharacterClusterAnimeSet(SubCharacter* scp, int anime);
 
 void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale);
 
+void shCharacterAnimeCopyForReverseModel(SubCharacter * scp /* r16 */);
 void SCNowDemoEventSwitch(SubCharacter* scp, int flag);
 void SCNowPlayableEventSwitch(SubCharacter* scp /* r2 */, int flag /* r2 */);
 void SCStayModelSwitch(SubCharacter* scp, int flag);
@@ -95,7 +101,9 @@ void shCharacterAnimeCounterSet_(SubCharacter* scp, u_int type, int counter);
 AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp);
 
 void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
-
+void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short id, u_int parts_name);
 void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id);
+
+extern int demo_status; // correct home for this?
 
 #endif
