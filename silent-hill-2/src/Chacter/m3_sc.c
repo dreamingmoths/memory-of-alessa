@@ -12,6 +12,8 @@ static void AddFreeList(SubCharacter* scp);
 static void shCharacterSortList(SubCharacter* scp /* r2 */);
 static void shCharacterTopOfList(SubCharacter* scp);
 static void shCharacterCutList(SubCharacter* scp);
+static int shCharacterNeckAngleExec(shAnime3d* ap);
+static int shCharacterKneeAngleExec(shAnime3d* ap /* r17 */);
 static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index);
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
 
@@ -107,15 +109,44 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterInitialize);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", UpdateMatrix);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterNeckAngleExec);
+static int shCharacterNeckAngleExec(shAnime3d* ap) {
+    shSkelton* stp; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterKneeAngleExec);
+    for (stp = ap->top; stp != NULL; stp = stp->next) {
+        if (stp->untouchable == NULL) {
+            shCharacterAnimePartsControl(ap, stp, &ap->rot_neck);
+        }     
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddPos);
+static int shCharacterKneeAngleExec(shAnime3d* ap /* r17 */) {
+    shSkelton* stp; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetRot);
+    for (stp = ap->top; stp != NULL; stp = stp->next) {
+        if (stp->untouchable == NULL) {
+            shCharacterAnimePartsControl(ap, stp, &ap->rot_body_neck);
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCAddRot);
+void SCAddPos(SubCharacter* scp, Vector4* pos) {
+    scp->pos.x += pos->x;
+    scp->pos.y += pos->y;
+    scp->pos.z += pos->z;
+    scp->pos.w = 1.0f;
+}
+
+void SCSetRot(SubCharacter* scp, Vector4* rot) {
+    scp->rot = *rot;
+}
+
+void SCAddRot(SubCharacter* scp, Vector4* rot) {
+    scp->rot.x += rot->x;
+    scp->rot.y += rot->y;
+    scp->rot.z += rot->z;
+}
 
 static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index) {
     if (scp_d->cluster_anime != NULL) {
@@ -680,7 +711,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecAnimeAll);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterUpdateAll);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterSetFunction);
+void shCharacterSetFunction(SubCharacter* scp, void (*func)(SubCharacter*)) {
+    scp->function = func;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterExecFunctionAll);
 
