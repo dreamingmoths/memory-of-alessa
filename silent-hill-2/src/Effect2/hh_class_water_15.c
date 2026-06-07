@@ -237,7 +237,6 @@ static u_int Object_Draw(HH_Object_Water_15* pThis /* r22 */, float* pGrid_Y_Val
             float stq0[4];        // r29+0x270
             float stq1[4];        // r29+0x280
             float base;           // r2
-            // float color_scale; // r29+0x290
             float color_scale; // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
