@@ -276,7 +276,7 @@ segments:
       - [0x160640, c,   Effect2/hh_class_water_11]
       - [0x161b00, c,   Effect2/hh_class_water_12]
       - [0x162ff0, c,   Effect2/hh_class_water_13]
-      - [0x164240, asm, Effect2/hh_class_water_14]
+      - [0x164240, c,   Effect2/hh_class_water_14]
       - [0x165530, asm, Effect2/hh_class_water_15]
       - [0x166b00, asm, Effect2/hh_class_water_20]
       - [0x167360, asm, Effect2/hh_class_water_30]
