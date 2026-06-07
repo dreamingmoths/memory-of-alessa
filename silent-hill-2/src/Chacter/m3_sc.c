@@ -1251,7 +1251,26 @@ AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp) {
     return shCharacterAnimeGetInfo_(scp, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeGetInfo_);
+AnimeInfo* shCharacterAnimeGetInfo_(SubCharacter* scp, int ctrl_type) {
+    shAnime3d* ap; // r2
+    SubCharacterDisp* scp_d = scp; // r2
+
+    switch (ctrl_type) {
+        case 0:
+        case 2:
+            ap = &scp_d->anime;
+            break;
+        case 1:
+            ap = &scp_d->anime2;
+            break;
+        
+        default:
+            printf("error\n");
+            return NULL;
+    }
+    
+    return ap->anim_b;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayerModelToDrama);
 
