@@ -154,10 +154,10 @@ static float light_alpha = 80.0f;                         // @ 0x003741F8
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003741A0
-static float ty = 2.5f;                                         // @ 0x00374238
-static float sx = 2.5f;                                         // @ 0x00374230
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x003741D0
-static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 32.0f};    // @ 0x003741E0
+static float ty = 2.5f;                                                                                     // @ 0x00374238
+static float sx = 2.5f;                                                                                     // @ 0x00374230
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x003741D0
+static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 32.0f};                                                // @ 0x003741E0
 static u_long _GifTag[2] = {
     SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
     GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00374190
@@ -366,13 +366,6 @@ u_int HH_Class_Prefix_Water_04() {
     return result;
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_04.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x002779D0 -> 0x00277A24
-*/
-// Range: 0x2779D0 -> 0x277A24
 u_int HH_Class_Suffix_Water_04() {
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     u_int result = 1;                                 // r2
