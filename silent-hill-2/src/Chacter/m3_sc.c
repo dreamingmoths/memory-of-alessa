@@ -1025,8 +1025,8 @@ void shCharacterItemScreenObjectSet(SubCharacter* scp, shItemScreenObjectSetting
 
 void shCharacterStayObjectNthPartsGet1st(SubCharacter* scp, int n, float* pos, float* rot) {
     int i; // r4
-    struct SubCharacterDisp* scp_d = scp; // r2
-    struct shSkelton* sp = scp_d->anime.top; // r8
+    SubCharacterDisp* scp_d = scp; // r2
+    shSkelton* sp = scp_d->anime.top; // r8
 
     for (i = 0; i < n; i++) 
         sp = sp->next; 
@@ -1043,8 +1043,8 @@ void shCharacterStayObjectNthPartsGet1st(SubCharacter* scp, int n, float* pos, f
 
 void shCharacterStayObjectNthPartsSet(SubCharacter* scp, s32 n, f32* pos, f32* rot) {
     int i; // r3
-    struct SubCharacterDisp* scp_d = scp; // r2
-    struct shSkelton* sp; // r16
+    SubCharacterDisp* scp_d = scp; // r2
+    shSkelton* sp; // r16
 
 
 
