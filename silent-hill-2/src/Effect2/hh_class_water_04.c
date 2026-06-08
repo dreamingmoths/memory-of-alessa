@@ -245,7 +245,6 @@ static u_int Object_Draw(HH_Object_Water_04* pThis /* r22 */, float* pGrid_Y_Val
             float stq0[4];        // r29+0x270
             float stq1[4];        // r29+0x280
             float base;           // r2
-            // float color_scale; // r29+0x290
             float color_scale; // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
@@ -428,7 +427,6 @@ u_int HH_Class_Water_04(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                     wave_element.Arrival = _arri_186_0x00374260;
                     wave_element.Omega = TO_RAD(_omega_187_0x00374268);
                     wave_element.Verocity = _v_188_0x00374270;
-                    ;
                     wave_element.Timer = 0;
                     HH_Class_WaterCommon_WaveElement_Addition(pThis->Wave_Info, 0x28, &wave_element);
                 }
