@@ -34,13 +34,6 @@ extern /* static */ float center_181_0x01202F60;
 extern /* static */ float degree_178_0x00375790;
 extern /* static */ float light_alpha_104_0x00375748;
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_08.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0027A970 -> 0x0027AA20
-*/
-// Range: 0x27A970 -> 0x27AA20
 static void Grid_Work_Initialize(HH_Object_Water_08* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
     memset(pThis->Area01_Grid_Y_Value, 0, sizeof(pThis->Area01_Grid_Y_Value));
@@ -51,13 +44,6 @@ static void Grid_Work_Initialize(HH_Object_Water_08* pThis /* r16 */) {
     memset(pThis->Area06_Grid_Y_Value, 0, sizeof(pThis->Area06_Grid_Y_Value));
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect2\hh_class_water_08.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0027AA20 -> 0x0027AB80
-*/
-// Range: 0x27AA20 -> 0x27AB80
 static u_int Object_Initialize(HH_Object_Water_08* pThis /* r16 */) {
     u_int result = 1;
     u_int i;
@@ -160,18 +146,17 @@ static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 
 static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x00375700
 static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00375710
 
-static float amb_alpha = 40.0f;                           // @ 0x00375740
-static float light_alpha = 80.0f;                         // @ 0x00375748
+static float amb_alpha = 40.0f;   // @ 0x00375740
+static float light_alpha = 80.0f; // @ 0x00375748
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)
-}; // @ 0x003756F0
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003756F0
 
 static u_int Object_Draw(HH_Object_Water_08* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    static float ty = 2.5f;                                                                                     // @ 0x00375788
-    static float sx = 2.5f;                                                                                     // @ 0x00375780
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00375720
-    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x00375730
+    static float ty = 2.5f;                                         // @ 0x00375788
+    static float sx = 2.5f;                                         // @ 0x00375780
+    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x00375720
+    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};    // @ 0x00375730
     static u_long _GifTag[2] = {
         SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
         GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003756E0
