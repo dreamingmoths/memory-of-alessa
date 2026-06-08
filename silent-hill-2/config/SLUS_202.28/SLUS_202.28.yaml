@@ -384,7 +384,8 @@ segments:
       - [0x270a88, data,    data_0x270a88]
       - [0x273ed0, .data,   Effect2/hh_class_water_03]
       - [0x2742f8, .data,   Effect2/hh_class_water_04]
-      - [0x2749a8, .data,   data_0x2749a8]
+      - [0x2749a8, .data,   Effect2/hh_class_water_06]
+      - [0x275180, data,    data_0x275180]
       - [0x27c230, .data,   Effect2/hh_memory_manage]
       - [0x27c240, data,    data_0x27c240]
       - [0x27e280, databin, vudata]
@@ -480,7 +481,8 @@ segments:
       - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
       - { vram: 0x1202ed0, type: .bss, name: Effect2/hh_class_water_03 }
       - { vram: 0x1202ef0, type: bss,  name: Effect2/hh_class_water_04 }
-      - { vram: 0x1202f10, type: bss,  name: bss_0x1202f10 }
+      - { vram: 0x1202f10, type: bss,  name: Effect2/hh_class_water_06 }
+      - { vram: 0x1202f30, type: bss,  name: bss_0x1202f30 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
       - { vram: 0x126fbc0, type: bss,  name: bss_0x126fbc0 }
   - [0x2c8480]
