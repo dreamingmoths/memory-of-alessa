@@ -6,6 +6,8 @@
 #include "Chacter_Draw/clani.h"
 #include "Chacter/anime.h"
 #include "Chacter_Draw/model3_n.h"
+#include "Chacter/m3_wep.h"
+#include "Chacter/m3_play_event.h"
 
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
@@ -650,7 +652,43 @@ void shCharacterDramaExecAnimeOne(SubCharacter* scp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterAnimeCopyForReverseModel);
+void shCharacterAnimeCopyForReverseModel(SubCharacter* scp) { // not line matched 
+    SubCharacter* org; // r2
+    SubCharacterDisp* org_d; // r2
+    SubCharacterDisp* scp_d; // r2    
+    SubCharacter* scp_wp; // r2
+    u_char weapon; // r2
+    
+    org = shCharacterGetSubCharacter(scp->kind - 0x20, -1);
+    
+    ASSERT_ON_LINE(org, 1657);
+
+    scp_d = scp;
+    org_d = org;
+
+    scp_d->anime.top = org_d->anime.top;
+
+    scp_d->cluster_anime = org_d->cluster_anime;
+
+    switch (scp->kind) {
+            case 0x121:
+            case 0x120:
+                weapon = PlayerGetJamesWeapon();
+                    
+                if ((scp_wp = shCharacterGetSubCharacter((weapon + 0x820), -1)) != NULL) {
+                    shUpdateWeaponMatrixAfterAnime(scp_wp, scp->kind);
+                }
+                break;
+        }
+
+    switch (scp->kind) {
+        case 0x121:
+        case 0x120:
+        case 0x123:
+        case 0x122:
+            break;
+    }
+}
 
 void SCNowDemoEventSwitch(SubCharacter* scp, int flag) {
     if (flag) {
@@ -966,11 +1004,64 @@ void shCharacterStayObjectScaleSet(SubCharacter* scp, float scale) {
     shCharacterStayModelScale(&scp_d->anime);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterItemScreenObjectSet);
+void shCharacterItemScreenObjectSet(SubCharacter* scp, shItemScreenObjectSettingData* data) {    
+    SubCharacterDisp* scp_d = scp; // r2
+    
+    Vector4 rot_tmp = { 0.0f, 0.0f, 0.0f, 1.0f }; // r29+0x30 took these from ghidra
+    shSkelton* sp; // r2
+    
+    sp = scp_d->anime.top;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsGet1st);
+    
+    shCharacterStayModelExecItem(sp, &data->rot);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterStayObjectNthPartsSet);
+
+    
+    scp_d->anime.scale = data->scale;
+    shCharacterStayModelScale(&scp_d->anime);
+    
+    SCSetRot(scp, &rot_tmp);
+}
+
+void shCharacterStayObjectNthPartsGet1st(SubCharacter* scp, int n, float* pos, float* rot) {
+    int i; // r4
+    struct SubCharacterDisp* scp_d = scp; // r2
+    struct shSkelton* sp = scp_d->anime.top; // r8
+
+    for (i = 0; i < n; i++) 
+        sp = sp->next; 
+    
+    pos[0] = sp->des_t.x;
+    pos[1] = sp->des_t.y;
+    pos[2] = sp->des_t.z;
+    rot[0] = rot[1] = rot[2] = 0.0f;
+
+
+    
+}
+
+
+void shCharacterStayObjectNthPartsSet(SubCharacter* scp, s32 n, f32* pos, f32* rot) {
+    int i; // r3
+    struct SubCharacterDisp* scp_d = scp; // r2
+    struct shSkelton* sp; // r16
+
+
+
+    sp = scp_d->anime.top;
+    scp_d->anime.scale = 1.0f;
+
+    for (i = 0; i < n; i++) 
+        sp = sp->next; 
+
+
+    
+    shCharacterStayModelExecNthParts(sp, pos, rot);
+
+    sp->xx = rot[0];
+    sp->yy = rot[1];
+    sp->zz = rot[2];
+}
 
 short shCharacterAnimeSpeedGet_(SubCharacter* scp, u_int type) {
     SubCharacterDisp* scp_d;
@@ -1272,13 +1363,60 @@ AnimeInfo* shCharacterAnimeGetInfo_(SubCharacter* scp, int ctrl_type) {
     return ap->anim_b;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayerModelToDrama);
+void shCharacterPlayerModelToDrama(void) {
+    SubCharacter* p; // r2
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterPlayerModelToPlayable);
+    p = shCharacterGetSubCharacter(LLL_JMS_CHARA_ID, -1);
+    if (p == NULL) 
+        p = shCharacterGetSubCharacter(HLL_JMS_CHARA_ID, -1);    
+    if (p != NULL)
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterMariaModelToDrama);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterMariaModelToPlayable);
+        
+        SCAnimeTypeSwitch(p, 0);    
+}
+
+void shCharacterPlayerModelToPlayable(void) { // not line matched 
+    SubCharacter* p; // r2
+
+    p = shCharacterGetSubCharacter(LLL_JMS_CHARA_ID, -1);
+    if (p == NULL)
+        p = shCharacterGetSubCharacter(HLL_JMS_CHARA_ID, -1);
+    if (p != NULL) {
+
+
+        
+        p->step = 0;
+
+        
+        SCAnimeTypeSwitch(p, 1);
+    }
+}
+
+void shCharacterMariaModelToDrama(void) {
+    SubCharacter* p; // r2
+
+    p = shCharacterGetSubCharacter(LLL_MAR_CHARA_ID, -1);
+    if (p != NULL)
+
+
+        
+        SCAnimeTypeSwitch(p, 0);       
+}
+
+void shCharacterMariaModelToPlayable(void) { // not line matched
+    SubCharacter* p; // r2
+
+    p = shCharacterGetSubCharacter(LLL_MAR_CHARA_ID, -1);
+    if (p != NULL) {
+
+
+        
+        p->step = 0;
+        
+        SCAnimeTypeSwitch(p, 1);
+    }
+}
 
 void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty) {
     scp->pos.x = scp->b_pos.x = pos[0];
