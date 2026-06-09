@@ -1,20 +1,65 @@
-#include "common.h"
+#include "sh2_common.h"
+#include "eeregs.h"
+#include "movie/pss_disp.h"
+#include "movie/pss_vobuf.h"
+#include "movie/pss_videodec.h"
+
+volatile int isCountVblank = 0;
+volatile int vblankCount = 0;
+volatile int isFrameEnd = 0;
+volatile int isUp = 0;
+volatile int handler_error = 0;
+
+extern int frd;
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssInitDisplay);
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDispClear);
 
-INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", clearFinish);
+
+
+// /////////////////////////////////////////////////////////////////////
+//
+// vblank handler
+//
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", vblankHandler);
 
-INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDrawSubTitle);
+// ///////////////////////////////////////////////////////////////
+// 
+//  Handler to check the end of image transfer
+// 
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", handler_endimage);
 
-INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", startDisplay);
+// ///////////////////////////////////////////////////////////////////
+// 
+//  Wait until even/odd field
+//  Start to count vblank
+// 
+void startDisplay(int waitEven)
+{
+    // wait untill even field
+    while (sceGsSyncV(0) == waitEven)
+    	;
 
-INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", endDisplay);
+    frd = 0;
+    isCountVblank = 1;
+    vblankCount = 0;
+}
+
+// ///////////////////////////////////////////////////////////////////
+// 
+//  Stop to count vblank
+// 
+void endDisplay()
+{
+    sceGsSyncPath(0, 0);
+    isCountVblank =  0;
+    frd = 0;
+}
+
+
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", MovePicture);
 

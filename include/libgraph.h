@@ -1,6 +1,8 @@
 #ifndef LIBGRAPH_H
 #define LIBGRAPH_H
 
+#include "eeregs.h"
+
 #define SCE_GS_FALSE (0)
 #define SCE_GS_TRUE  (1)
 
@@ -64,5 +66,13 @@
 #define SCE_GS_ALPHA_AS			(0)
 #define SCE_GS_ALPHA_AD			(1)
 #define SCE_GS_ALPHA_FIX		(2)
+
+typedef struct {
+	tGS_PMODE	pmode;
+	tGS_SMODE2	smode2;
+	tGS_DISPFB2	dispfb;
+	tGS_DISPLAY2	display;
+	tGS_BGCOLOR	bgcolor;
+} sceGsDispEnv;
 
 #endif

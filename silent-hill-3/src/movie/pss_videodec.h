@@ -21,7 +21,6 @@ typedef struct
 extern sceMpeg sys_mpeg;
 
 extern VideoDec videoDec;
-extern VoBuf voBuf;
 
 int videoDecCreate(VideoDec* vd, u_char* mpegWork, int mpegWorkSize, u_long128* data, u_long128* tag, int tagSize, TimeStamp* pts, int n_pts);
 void videoDecSetDecodeMode(VideoDec* vd, int ni, int np, int nb);

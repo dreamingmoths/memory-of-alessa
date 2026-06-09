@@ -3,6 +3,9 @@
 
 #include "mpeg/vobuf.h"
 
+extern VoBuf voBuf;
+
+VoTag *voBufGetTag(VoBuf *f);
 VoData* voBufGetData(VoBuf* f);
 
 #endif
