@@ -671,8 +671,8 @@ void shCharacterAnimeCopyForReverseModel(SubCharacter* scp) { // not line matche
     scp_d->cluster_anime = org_d->cluster_anime;
 
     switch (scp->kind) {
-            case 0x121:
-            case 0x120:
+            case CHR_RHLL_JMS_CHARA_ID:
+            case CHR_RLLL_JMS_CHARA_ID:
                 weapon = PlayerGetJamesWeapon();
                     
                 if ((scp_wp = shCharacterGetSubCharacter((weapon + 0x820), -1)) != NULL) {
@@ -682,10 +682,10 @@ void shCharacterAnimeCopyForReverseModel(SubCharacter* scp) { // not line matche
         }
 
     switch (scp->kind) {
-        case 0x121:
-        case 0x120:
-        case 0x123:
-        case 0x122:
+        case CHR_RHLL_JMS_CHARA_ID:
+        case CHR_RLLL_JMS_CHARA_ID:
+        case CHR_RHHH_JMS_CHARA_ID:
+        case CHR_RHHL_JMS_CHARA_ID:
             break;
     }
 }

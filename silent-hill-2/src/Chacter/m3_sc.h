@@ -6,24 +6,29 @@
 #include "Chacter_Draw/clani.h"
 #include "Chacter/item_screen_obj.h"
 
-#define LLL_JMS_CHARA_ID 0x100 // lowest detail james model
-#define HLL_JMS_CHARA_ID 0x101
-#define HHL_JMS_CHARA_ID 0x102
-#define HHH_JMS_CHARA_ID 0x103 // highest detail james model
+#define LLL_JMS_CHARA_ID      0x100 // lowest detail james model
+#define HLL_JMS_CHARA_ID      0x101
+#define HHL_JMS_CHARA_ID      0x102
+#define HHH_JMS_CHARA_ID      0x103 // highest detail james model
 
-#define LAU_CHARA_ID     0x104 // laura
+#define CHR_RLLL_JMS_CHARA_ID 0x120 // lowest detail mirror james model
+#define CHR_RHLL_JMS_CHARA_ID 0x121
+#define CHR_RHHL_JMS_CHARA_ID 0x122
+#define CHR_RHHH_JMS_CHARA_ID 0x123 // highest detail mirror james model
 
-#define LLL_MAR_CHARA_ID 0x105 // low detail maria model
-#define HHH_MAR_CHARA_ID 0x106 // high detail maria model
+#define LAU_CHARA_ID          0x104 // laura
 
-#define AGL_CHARA_ID     0x107 // angela
+#define LLL_MAR_CHARA_ID      0x105 // low detail maria model
+#define HHH_MAR_CHARA_ID      0x106 // high detail maria model
 
-#define BOAT_CHARA_ID    0x10B
+#define AGL_CHARA_ID          0x107 // angela
 
-#define EN_IKE_CHARA_ID  0x203
-#define EN_PAP_CHARA_ID  0x204 // abstract daddy
-#define EN_RED_CHARA_ID  0x208 // pyramid head
-#define EN_ARM_CHARA_ID  0x20A
+#define BOAT_CHARA_ID         0x10B
+
+#define EN_IKE_CHARA_ID       0x203
+#define EN_PAP_CHARA_ID       0x204 // abstract daddy
+#define EN_RED_CHARA_ID       0x208 // pyramid head
+#define EN_ARM_CHARA_ID       0x20A
 
 #define WEAPON_ID_START 0x800
 
