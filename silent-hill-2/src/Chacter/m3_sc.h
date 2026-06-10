@@ -117,5 +117,6 @@ void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short i
 void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id);
 
 extern int demo_status; // correct home for this?
+extern sceVu0FMATRIX kt_unit_matrix; // correct home for this?
 
 #endif
