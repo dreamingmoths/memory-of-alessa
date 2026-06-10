@@ -4,56 +4,56 @@
 #include "common.h"
 
 // total size: 0x10
-struct fsMgcFile {
+typedef struct fsMgcFile {
     // Members
     int type : 8;         // offset 0x0, size 0x4
     int padding : 24;     // offset 0x0, size 0x4
     union fsFile* parent; // offset 0x4, size 0x4
     char* start;          // offset 0x8, size 0x4
     char* end;            // offset 0xC, size 0x4
-};
+} fsMgcFile;
 
 // total size: 0x10
-struct fsCdFile {
+typedef struct fsCdFile {
     // Members
     int type : 8;    // offset 0x0, size 0x4
     int number : 24; // offset 0x0, size 0x4
     char* name;      // offset 0x4, size 0x4
     int lsn;         // offset 0x8, size 0x4
     int size;        // offset 0xC, size 0x4
-};
+} fsCdFile;
 
 // total size: 0x10
-struct fsHdFile {
+typedef struct fsHdFile {
     // Members
     int type : 8;     // offset 0x0, size 0x4
     int padding : 24; // offset 0x0, size 0x4
     char* name;       // offset 0x4, size 0x4
     int offset;       // offset 0x8, size 0x4
     int size;         // offset 0xC, size 0x4
-};
+} fsHdFile;
 
 // total size: 0x10
-struct fsMgpFile {
+typedef struct fsMgpFile {
     // Members
     int type : 8;            // offset 0x0, size 0x4
     int padding : 24;        // offset 0x0, size 0x4
     union fsFile* file;      // offset 0x4, size 0x4
     struct fsMgcFile* start; // offset 0x8, size 0x4
     struct fsMgcFile* end;   // offset 0xC, size 0x4
-};
+} fsMgpFile;
 
 // total size: 0x10
-struct fsMgfFile {
+typedef struct fsMgfFile {
     // Members
     int type : 8;         // offset 0x0, size 0x4
     int padding : 24;     // offset 0x0, size 0x4
     union fsFile* parent; // offset 0x4, size 0x4
     int offset;           // offset 0x8, size 0x4
     int size;             // offset 0xC, size 0x4
-};
+} fsMgfFile;
 
-union fsFile {
+typedef union fsFile {
     // total size: 0x10
     struct /* @anon5 */ {
         // Members
@@ -69,7 +69,7 @@ union fsFile {
     struct fsMgcFile mgc; // offset 0x0, size 0x10
     struct fsMgfFile mgf; // offset 0x0, size 0x10
     struct fsMgpFile mgp; // offset 0x0, size 0x10
-};
+} fsFile;
 
 typedef union fsFileIndex {
     // total size: 0x8

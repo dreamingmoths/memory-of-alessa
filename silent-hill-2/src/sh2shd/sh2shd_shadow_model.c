@@ -6,7 +6,6 @@
 #include "sh2shd/sh2shd_char_jms.h"
 #include "Event/demoview.h"
 #include "Chacter/m3_sc.h"
-#include "Enemy/en_list.h"
 #include "SH2_common/map_ids.h"
 #include "vec.h"
 

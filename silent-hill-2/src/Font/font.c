@@ -84,7 +84,19 @@ FONT_DATA* fontInit(void) {
     return &font;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontClear);
+void fontClear(void) {
+    font.w_st_num = 0;
+    font.st_num = 0;
+    fontSetColor(0);
+    font.rgb_s[0] = 0;
+    font.shadow_max = 1;
+    font.shadow_now = 0;
+    font.alpha_base = 0x80;
+    font.alpha = 0x80;
+    font.fonttype = 0;
+    font.flag = font.flag & 0x38F8 | 1;
+    fontSetStreamMax(0x200, 0x40, 0x200);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetStreamMax);
 
@@ -192,15 +204,6 @@ void fontSetColorDirect(u_char r /* r2 */, u_char g /* r2 */, u_char b /* r2 */,
 
 void fontSetAlpha(u_char alp /* r2 */) {
     font.alpha = alp;
-}
-
-
-void* fontTexLoad(int texadr, int clutadr) {
-    font_dma_data[0x04] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, texadr, 512 / 64, SCE_GS_PSMT4);
-    font_dma_data[0x14] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, clutadr, 64 / 64, SCE_GS_PSMCT32);
-    font.tex0 = SCE_GS_SET_TEX0(texadr, 512 / 64, SCE_GS_PSMT4, 9 /* 512 */, 9 /* 512 */, SCE_GS_TRUE, SCE_GS_MODULATE, clutadr, SCE_GS_PSMCT32, SCE_GS_FALSE, 0, 1);
-
-    return font_dma_data;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontFlush);
@@ -312,7 +315,13 @@ void fontPutYesNoSelectBar(void) {
     font.pCur = pCur;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontTexLoad);
+void* fontTexLoad(int texadr, int clutadr) {
+    font_dma_data[0x04] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, texadr, 512 / 64, SCE_GS_PSMT4);
+    font_dma_data[0x14] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, clutadr, 64 / 64, SCE_GS_PSMCT32);
+    font.tex0 = SCE_GS_SET_TEX0(texadr, 512 / 64, SCE_GS_PSMT4, 9 /* 512 */, 9 /* 512 */, SCE_GS_TRUE, SCE_GS_MODULATE, clutadr, SCE_GS_PSMCT32, SCE_GS_FALSE, 0, 1);
+
+    return font_dma_data;
+}
 
 void* fontAfterEnv(void) {
     return &font_after_env;
@@ -483,20 +492,6 @@ void fontCrushOn(void) {
 
 void fontCrushOff(void) {
     font.fonttype = 0;
-}
-
-void fontClear(void) {
-    font.w_st_num = 0;
-    font.st_num = 0;
-    fontSetColor(0);
-    font.rgb_s[0] = 0;
-    font.shadow_max = 1;
-    font.shadow_now = 0;
-    font.alpha_base = 0x80;
-    font.alpha = 0x80;
-    font.fonttype = 0;
-    font.flag = font.flag & 0x38F8 | 1;
-    fontSetStreamMax(0x200, 0x40, 0x200);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontFlush);

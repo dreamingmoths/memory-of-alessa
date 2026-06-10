@@ -17,7 +17,6 @@
 #include "Chacter/m3_sc.h"
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/sh_vu0.h"
-#include "Enemy/en_list.h"
 #include "Enemy/en_effect.h"
 #include "Effect2/hh_class_object_execute.h"
 #include "vec.h"
