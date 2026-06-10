@@ -27,6 +27,26 @@ inline int clamp_12(int value) {
     return result;
 }
 
+static inline subchar_rot(SubCharacter* scp, Vector4* rot)
+{
+    sceVu0FVECTOR stack_rot;
+    stack_rot[0] = rot->x;
+    stack_rot[1] = 0.0f;
+    stack_rot[2] = rot->z;
+    stack_rot[3] = 1.0f; 
+
+    sceVu0RotMatrix(scp->mat, kt_unit_matrix, stack_rot);
+    sceVu0RotMatrixY(scp->mat, scp->mat, rot->y);
+}
+
+static inline subchar_trans(SubCharacter* scp, Vector4* trans)
+{
+    scp->mat[3][0] = trans->x;
+    scp->mat[3][1] = trans->y;
+    scp->mat[3][2] = trans->z;
+    scp->mat[3][3] = 1.0f;
+}
+
 static SubCharacter* shCharacterGetFreeList(void) {
     SubCharacter* scp = sh2chara.free; // r2
     if (scp != NULL) {
@@ -110,7 +130,17 @@ static void shCharacterCutList(SubCharacter* scp) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterInitialize);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", UpdateMatrix);
+static void UpdateMatrix(SubCharacter* scp, Vector4* rot, Vector4* trans) {
+    if (scp->status & 0x80) {
+
+
+        
+        subchar_rot(scp, rot);
+    } else {
+        sceVu0RotMatrix(scp->mat, kt_unit_matrix, rot);
+    }
+    subchar_trans(scp, trans);
+}
 
 static int shCharacterNeckAngleExec(shAnime3d* ap) {
     shSkelton* stp; // r16
