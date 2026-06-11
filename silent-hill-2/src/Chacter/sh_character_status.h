@@ -5,34 +5,32 @@
 #include "Chacter/character.h"
 
 // total size: 0x1
-struct shInArea {
+typedef struct shInArea {
     // Members
     u_char look_on : 2;  // offset 0x0, size 0x1
     u_char feel_on : 2;  // offset 0x0, size 0x1
     u_char light_on : 4; // offset 0x0, size 0x1
-};
+} shInArea;
 
 // total size: 0xC
-struct shInAreaTgtInfo {
+typedef struct shInAreaTgtInfo {
     // Members
     union /* @anon4 */ {
         struct SubCharacter* scp; // offset 0x0, size 0x4
     } adr;                        // offset 0x0, size 0x4
     float distance;               // offset 0x4, size 0x4
     struct shInArea in_area;      // offset 0x8, size 0x1
-};
+} shInAreaTgtInfo;
 
-void clCheckHitEyes(struct _CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /* r2 */, float* ed /* r2 */, int thru /* r2 */);
-struct shInAreaTgtInfo sh2_target_info[20];
-static float _shLength(float* v0 /* r2 */, float* v1 /* r2 */);
-int sh2gfw_Check_CharaDarkOrBright(void* SubChara /* r2 */);
-struct SubCharacter* shBattleGetTargetHuman(struct SubCharacter* scp /* r17 */, u_int type /* r2 */);
-int shBattleSeeHumanLight(struct SubCharacter* scp /* r16 */);
-int shBattleAimedByHuman(struct SubCharacter* scp /* r2 */);
-int shBattleFinishedByHuman(struct SubCharacter* scp /* r2 */);
+shInAreaTgtInfo sh2_target_info[20];
+
+SubCharacter* shBattleGetTargetHuman(SubCharacter* scp /* r17 */, u_int type /* r2 */);
+int shBattleSeeHumanLight(SubCharacter* scp /* r16 */);
+int shBattleAimedByHuman(SubCharacter* scp /* r2 */);
+int shBattleFinishedByHuman(SubCharacter* scp /* r2 */);
 int shBattleNoDamageHumanJames(void);
 int shBattleNoDamageHumanMaria(void);
 int shBattleHuggedHuman(void);
-int shBattleListenHumanSound(struct SubCharacter* scp, struct SubCharacter* tgt /* r2 */); // DWARF only shows one arg
+int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt /* r2 */); // DWARF only shows one arg
 
 #endif
