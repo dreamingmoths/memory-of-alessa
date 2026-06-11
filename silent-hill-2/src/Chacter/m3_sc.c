@@ -9,6 +9,7 @@
 #include "Chacter/m3_wep.h"
 #include "Chacter/m3_play_event.h"
 
+
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
 static void shCharacterSortList(SubCharacter* scp /* r2 */);
@@ -18,7 +19,7 @@ static int shCharacterNeckAngleExec(shAnime3d* ap);
 static int shCharacterKneeAngleExec(shAnime3d* ap /* r17 */);
 static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index);
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
-static void UpdateMatrix(SubCharacter* scp /* r18 */, Vector4* rot /* r17 */, Vector4 * trans /* r16 */);
+static void UpdateMatrix(SubCharacter* scp /* r18 */, Vector4* rot /* r17 */, Vector4* trans /* r16 */);
 
 inline int clamp_12(int value) {
     int result = value & 0xFFF;
@@ -199,7 +200,31 @@ void shCharacterClusterAnimeSet(SubCharacter* scp, int anime) {
     ClusterAnimeSet(scp_d->cluster_anime, (void *)anime);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", SCSetModel);
+void SCSetModel(SubCharacter* scp, int model) { // not line matched
+    void* model_adr; // r17
+    SubCharacterDisp* scp_d = scp; // r2
+
+    model_adr = (void*) model;
+    
+    ASSERT_ON_LINE(scp_d, 581);
+    
+    if (model_adr) {
+        if (!scp_d->anime.top) {
+            shCharacterAnimeSetSkelton(&scp_d->anime, shCharacterGetSkeletons(Model3NSkeletons(model_adr), (u_char*)Model3SkeletonStructure(model_adr)));
+            scp_d->sc.sk_top = scp_d->anime.top;
+        }
+        scp_d->work = shCh_ASC_Malloc(Model3WorkSize(model_adr));
+        Model3InitWork(model_adr, scp_d->work);
+    }
+
+    scp_d->models[0] = model_adr;
+    scp_d->models[1] = model_adr;
+    scp_d->models[2] = model_adr;
+
+    shCharacterSetClusterAnimeWork(scp_d, scp->index);
+
+    sh2chara.total++;
+}
 
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp) {
     SubCharacterDisp* scp_d = scp; // r2
