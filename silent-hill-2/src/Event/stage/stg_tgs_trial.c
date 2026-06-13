@@ -13,8 +13,8 @@ static int EvProgBoxWithKeyLayer(void);
 static int EvProgBoxWithKeyOpen(int alp /* r16 */);
 
 extern /* static */ float cyl_alp; // size: 0x4, address: 0x11EA360
-extern /* static */ short tex[9][4][4]; // @ 0x00355FD0
-extern /* static */ short pos[9][4][2]; // @ 0x003560F0
+extern /* static */ short tex_1051[9][4][4]; // @ 0x00355FD0
+extern /* static */ short pos_1052[9][4][2]; // @ 0x003560F0
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgTrialStartSet);
 
@@ -100,9 +100,9 @@ static int EvProgGuruguruNumber(void) {
                 
                 
                 picture_set_bounds(&pic,
-                                   pos[no][i],
-                                   tex[no][i]);
-                picture_set_tex_coords(&pic, tex[no][i]);
+                                   pos_1052[no][i],
+                                   tex_1051[no][i]);
+                picture_set_tex_coords(&pic, tex_1051[no][i]);
                 PictureDraw(&pic);
             }
             if (ev_p_step == 7) EvSubPictureFilter();
