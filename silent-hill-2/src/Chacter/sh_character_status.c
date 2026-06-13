@@ -67,3 +67,47 @@ void shBattleCheckTargetMyArea(struct shInArea *in_area, struct SubCharacter *sc
             break;
     }
 }
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", _shLength);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleAroundTargetEnemy);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleCheckTargetChara);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetEnemy);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleChangeTargetEnemy);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetChara);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shCameraGetNearTarget);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetNearDeadlyTargetEnemy);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetHuman);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleListenHumanSound);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSeeHumanLight);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleAimedByHuman);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleFinishedByHuman);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHuman);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHumanJames);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHumanMaria);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleHuggedHuman);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSetLookArea);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSetFeelArea);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleInitEnemyCheckWork);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleInit);
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleExec);
