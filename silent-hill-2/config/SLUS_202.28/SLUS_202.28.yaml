@@ -473,6 +473,7 @@ segments:
       - [0x29ca80, .rodata, Chacter/player_result]
       - [0x29cb00, .rodata, Effect2/hh_memory_manage]
       - [0x29cb80, rodata,  rodata_0x29cb80]
+      - [0x2c8400, sdata,   sdata_0x2c8400]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
       - { vram: 0x0418780, type: .bss, name: Chacter_Draw/clani }
       - { vram: 0x0419380, type: bss,  name: bss_0x0419380 }
