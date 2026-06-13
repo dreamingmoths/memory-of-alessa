@@ -15,11 +15,11 @@ typedef struct Memo_Data { // this was anon
     union fsFileIndex* file1; // offset 0xC, size 0x4
 } Memo_Data;
 
-int select;
-int list_point;
-int disp_point;
+extern int select;
+extern int list_point;
+extern int disp_point;
 
-union fsFileIndex data_pic_etc_p_memo_tex[1];
+extern fsFileIndex data_pic_etc_p_memo_tex[1];
 
 extern char* layer_adr;
 

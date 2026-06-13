@@ -14,7 +14,7 @@ MWLD := $(TOOLS)/mwcps2/2.4/mwldps2.exe
 MWLD_TAR := mwcps2-2.4-001213.tar.gz
 MWLD_OVERLAY_FLAGS := 
 MWLD_FLAGS := \
-	-main "entry" -map -sym on,elf \
+	-main "entry" -map -sym on,elf -v \
 	-noinhibit-exec $(MWLD_OVERLAY_FLAGS)
 
 CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge

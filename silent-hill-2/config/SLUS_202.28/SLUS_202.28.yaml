@@ -416,7 +416,7 @@ segments:
       - [0x28f010, .rodata, Fog/fog]
       - [0x28f0d0, rodata,  rodata_0x28f0d0]
       - [0x290830, .rodata, sound/sh_sound]
-      - [0x290c10, .rodata, rodata_0x290c10]
+      - [0x290c10, rodata,  rodata_0x290c10]
       - [0x291290, .rodata, sh2shd/sh2shd_shadow_model]
       - [0x2915c0, .rodata, Event/event]
       - [0x2917cf, rodata,  rodata_0x2917cf]
