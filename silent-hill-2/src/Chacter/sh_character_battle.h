@@ -59,11 +59,13 @@ void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */);
 void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
 void shBattleAttackHitCheckToEnemy(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
 void shBattleInitAttackQueue(void);
+void shBattleExecAttackQueue(void);
 float shBattleGetJamesHP(void);
 float shBattleGetJamesHP_Rate(void);
 void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */);
 float shBattleEventWallHitCheck(void);
 int shBattleCheckAttackByEnemy(void);
+
 
 extern void shQzero(void*, int);
 
