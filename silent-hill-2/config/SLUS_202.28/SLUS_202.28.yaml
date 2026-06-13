@@ -428,7 +428,7 @@ segments:
       - [0x291f80, .rodata, Multi_thr/intc/syncv]
       - [0x2920a0, rodata,  Multi_thr/pad/th_pad]
       - [0x292130, .rodata, Multi_thr/sys/init_mt_sys]
-      - [0x2929b8, rodata,  Multi_thr/boot/bootoptitem]
+      - [0x292500, rodata,  Multi_thr/boot/bootoptitem]
       - [0x292a10, rodata,  Event/title]
       - [0x292d60, .rodata, SH2_common/pad]
       - [0x292d80, rodata,  rodata_0x292d80]

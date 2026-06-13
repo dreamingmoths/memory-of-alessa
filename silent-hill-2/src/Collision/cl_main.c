@@ -1,5 +1,6 @@
 #include "cl_main.h"
 #include "LoadBg/loadbg_cld.h"
+#include "SH2_common/sh_vu0.h"
 
 static void clCheckColumn2WallHit(CL_HITRESULT* cres /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, CL_HITPOLY_COLUMN* col /* r16 */);
 static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */);
@@ -210,6 +211,26 @@ CL_BATTLE_RESULT* clBattleGetResult(u_int id, CL_BATTLE_RESULT* before) {
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clBattleGetResult);
 #endif
 
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1021_0x0038DC80);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1022_0x0038DCA0);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @43);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @44);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", D_0038DD00);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1589);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1614_0x0038DD40);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1615_0x0038DD60);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1691);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1692);
+
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clBattleCheckExec);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clModifiedBattleData);
@@ -370,3 +391,7 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyeVectorDynamicFloo
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyeVectorCharacter);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clPermitColumnExpansion);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1813);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1814);

@@ -3,7 +3,7 @@
 #include "Effect2/hh_effect_object_texture.h"
 #include "SH2_common/mem_share.h"
 
-static u_long128 _texture_buffer_always[1][17536];
+u_long128 _texture_buffer_always[1][17536];
 
 static void* _pMemroyBlock_Table[4] = {
     0, // MEMORY_BLOCK_PACKET

@@ -8,7 +8,7 @@
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
 
-static int bgm_list[43][2] = {
+extern /* static */ int bgm_list[43][2] = {
     { 0x0000, 0x0000 },
     { 0x13C9, 0xC3C2 },
     { 0x13B9, 0xC365 },
