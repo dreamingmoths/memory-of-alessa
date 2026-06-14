@@ -49,5 +49,24 @@ rom:0x16FD58 reloc:MIPS_LO16           addend:-0x4C90  symbol:dinu_anime_adr_lis
 rom:0x1846F0 reloc:MIPS_HI16           addend:-0xED8   symbol:pjames_anime_adr_list
 rom:0x1846F4 reloc:MIPS_LO16           addend:-0xED8   symbol:pjames_anime_adr_list
 
+rom:0x01C318 reloc:MIPS_HI16                           symbol:@2631
+rom:0x01C31C reloc:MIPS_LO16                           symbol:@2631
+rom:0x01DEA4 reloc:MIPS_HI16           addend:-0x100   symbol:human_skelton
+rom:0x01DEA8 reloc:MIPS_LO16           addend:-0x100   symbol:human_skelton
+rom:0x01DEBC reloc:MIPS_HI16           addend:-0x200   symbol:enemy_skelton
+rom:0x01DEC0 reloc:MIPS_LO16           addend:-0x200   symbol:enemy_skelton
+rom:0x01DED4 reloc:MIPS_HI16           addend:-0x300   symbol:obj_outdoor_skelton
+rom:0x01DED8 reloc:MIPS_LO16           addend:-0x300   symbol:obj_outdoor_skelton
+rom:0x01DEF8 reloc:MIPS_HI16           addend:-0x400   symbol:obj_anime_skelton
+rom:0x01DEFC reloc:MIPS_LO16           addend:-0x400   symbol:obj_anime_skelton
+rom:0x01DF10 reloc:MIPS_HI16           addend:-0x500   symbol:obj_stay_skelton
+rom:0x01DF14 reloc:MIPS_LO16           addend:-0x500   symbol:obj_stay_skelton
+
 rom:0x1B16A8 reloc:MIPS_NONE                           symbol:_texture_buffer_always
 rom:0x206A34 reloc:MIPS_NONE                           symbol:"@947_0x0039C3A0"
+rom:0x2B0B58 reloc:MIPS_NONE                           symbol:_Area_Info_List_0x0037D7B0
+rom:0x2B0178 reloc:MIPS_NONE                           symbol:_square_stq_lr_l_11_0x003787D0
+rom:0x2AA468 reloc:MIPS_NONE                           symbol:rodata
+rom:0x2AA458 reloc:MIPS_NONE                           symbol:rodata
+rom:0x2AA448 reloc:MIPS_NONE                           symbol:rodata
+rom:0x2AAF68 reloc:MIPS_NONE                           symbol:rodata

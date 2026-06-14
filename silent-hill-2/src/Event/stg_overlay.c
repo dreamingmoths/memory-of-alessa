@@ -1,5 +1,6 @@
 #include "stg_overlay.h"
 #include "SH2_common/playing_info.h"
+#include "debug.h"
 
 static fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
     switch ((u_char) stg_name) {
@@ -229,7 +230,7 @@ void StgOverlay(void) {
     if (last_stage_bin != stage_bin) {
         last_stage_bin = stage_bin;
         if (stage_bin != 0) {
-            void* overlay_load_addr = D_1F01E00;
+            void* overlay_load_addr = OVERLAY_LOAD_ADDRESS;
             int fid;
             mwOverlayHeader* ovl = overlay_load_addr;
         
@@ -254,7 +255,7 @@ void StgOverlay(void) {
             MWNotifyOverlayLoaded(overlay_load_addr);
         }        
     } else {
-        verbose(3, "stg_overlay.c:352> stage data is already loaded.\n");
+        VERBOSE_ON_LINE(3, 352, "stage data is already loaded.\n");
     }
 
     stage = StgOverlayGetStageData(playing.stage);

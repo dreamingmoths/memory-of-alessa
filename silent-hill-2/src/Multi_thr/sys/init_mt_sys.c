@@ -66,3 +66,45 @@ INCLUDE_ASM("asm/nonmatchings/Multi_thr/sys/init_mt_sys", init_sh2_filesys);
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/sys/init_mt_sys", init_sh2_dmac);
 
 INCLUDE_ASM("asm/nonmatchings/Multi_thr/sys/init_mt_sys", init_sh2_devsys);
+
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @34_0x00391A30);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @35_0x00391A50);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @36_0x00391A80);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @37_0x00391AA0);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @79_0x00391AD0);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @80_0x00391AE0);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @81);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @148);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @149_0x00391C80);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @150);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @151);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @152);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @153_0x00391D00);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @154_0x00391D20);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @155);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @156);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @157);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @158_0x00391DA0);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @159);
+
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @160_0x00391DE0);
+

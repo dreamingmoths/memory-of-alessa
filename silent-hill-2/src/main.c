@@ -103,3 +103,5 @@ int main(int argc, char** argv) {
         dbFlowSetCheckPoint("`after SE vsync'(main.c:192)");
     }
 }
+
+INCLUDE_ASM("asm/nonmatchings/main", GameKeyCheck);

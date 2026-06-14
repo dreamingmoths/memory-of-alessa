@@ -3,6 +3,8 @@
 
 #include "sh2_common.h"
 
+#define OVERLAY_LOAD_ADDRESS (void*) 0x1F01E00
+
 // total size: 0x10
 struct fsMgcFile {
     // Members
@@ -264,7 +266,6 @@ void UtilMemSet(void* addr, int val, int size);
 int fsSync(int mode, int fid);
 void shSyncVEnd(int mode);
 void verbose(int, const char*);
-extern u_char D_1F01E00[];
 extern union fsFileIndex* last_stage_bin;
 extern struct Stage_Data* stage;
 
