@@ -6,6 +6,7 @@ from extract import ExtractionArgs, extract_mfa
 from annotate import AnnotationArgs, annotate_asm
 from patch import PatchArgs, patch_relocations
 from merge import MergeArgs, merge_objdiff_units
+from create import CreationArgs, create_overlay_yamls
 
 def extract(args: ExtractionArgs):
     extract_mfa(args)
@@ -21,6 +22,9 @@ def patch(args: PatchArgs):
 
 def merge(args: MergeArgs):
     merge_objdiff_units(args)
+
+def create(args: CreationArgs):
+    create_overlay_yamls(args)
 
 def main():
     parser = argparse.ArgumentParser(  
@@ -233,6 +237,29 @@ def main():
         help="list of json files to merge"
     )
     merge_parser.set_defaults(func=merge)
+
+    create_parser = subparsers.add_parser(
+        "create",
+        help="create yamls by parsing overlay headers"
+    )
+    create_parser.add_argument(
+        "--output-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--input-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--template-yaml-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--filename-mapping-path",
+        type=Path,
+        help="a json map of overlay filename to c file name"
+    )
+    create_parser.set_defaults(func=create)
 
     args = parser.parse_args()
     if hasattr(args, "func"):

@@ -1,6 +1,6 @@
 from mfa import Mfa
-from mw_overlay_header import MwOverlayHeader
 from utils import get_file_size
+from mw_overlay import parse_overlay_header, pretty_print_overlay_header
 
 from pathlib import Path
 from os.path import isdir
@@ -27,33 +27,10 @@ def _write_mfa_file(args: ExtractionArgs, mfa_file: Mfa.File, output_dir: Path):
         if verbose:
             print(path)
         if args.overlay:
-            _parse_overlay_header(args, mfa_file, path)
+            mw_header = parse_overlay_header(mfa_file.data)
+            pretty_print_overlay_header(mw_header)
 
         f.write(mfa_file.data)
-
-def _parse_overlay_header(args: ExtractionArgs, overlay: Mfa.File, path: Path):
-    header = MwOverlayHeader.from_bytes(overlay.data)
-    magical = header.identifier == b"MWo"
-
-    if args.verbose:
-        if not magical:
-            print(f"alessatool/extract: {path}'s identifier string is empty.")
-
-        for key in [
-            "identifier",
-            "version",
-            "id",
-            "address",
-            "sz_text",
-            "sz_data",
-            "sz_bss",
-            "static_init",
-            "static_init_end",
-            "name",
-        ]:
-            value = getattr(header, key)
-            value = type(value) == int and f"0x{value:X}" or value;
-            print(f"{key.ljust(0x10)}: {value}")
 
 def _extract_archive(args: ExtractionArgs, archive_path: Path, stem_prefix=False):
     base_output_dir = args.output_dir
