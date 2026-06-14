@@ -147,7 +147,23 @@ u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shCameraGetNearTarget);
+SubCharacter* shCameraGetNearTarget(int i, int type) {
+    int kind; // r4
+    
+    if (rest_tgt_buf == 0x14) {
+        return NULL;
+    }
+    if (sh2_target_info_buf[i].adr.scp != NULL) {
+        kind = sh2_target_info_buf[i].adr.scp->kind >> 8;
+        
+        if ((type == 0 && kind == 2) || (type == 1 && kind == 7)) {
+            
+            return sh2_target_info_buf[i].adr.scp;            
+        }        
+    }
+    return NULL;
+    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetNearDeadlyTargetEnemy);
 
