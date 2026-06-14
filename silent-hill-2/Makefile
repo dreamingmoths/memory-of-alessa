@@ -1,8 +1,9 @@
 SERIAL := SLUS_202.28
-OVERLAYS := 
+OVERLAYS ?=
 LINK ?= 1
 
 TOOLS := tools
+SOURCE_OVERLAY_ARCHIVE := 
 
 MWCC := $(TOOLS)/mwcps2/2.4/mwccps2.exe
 MWCC_TAR := mwcps2-2.4-001213.tar.gz
