@@ -53,6 +53,8 @@ extern /* static */ AnimeInfo pjames_na_anim[17]; // size: 0xCC, address: 0x0
 extern /* static */ AnimeInfo pjames_cs_anim[24]; // size: 0x120, address: 0x0
 extern /* static */ AnimeInfo pjames_demo_anim[30]; // size: 0x168, address: 0x0
 
+const char* rodata_assertion = "0"; // @todo: temporary introduced for partial rodata migration
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", player_flg_on);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", player_flg_off);
@@ -1073,7 +1075,7 @@ void PlayerCheckAnimeUpper(void) {
                             anime = 0x82;
                             break;
                         default:
-                            ASSERT_ON_LINE(0, 3888);
+                            ASSERT_ON_LINE(rodata_assertion, 3888);
                     }
                     player_flg_on(&sh2jms.u_anime_st_flg, 2);
                     aip = &pjames_anim[anime - 0x64];
@@ -2223,7 +2225,7 @@ void PlayerCheckAnimeLower(void) {
                         anime = 0x82;
                         break;
                     default:
-                        ASSERT_ON_LINE(0, 5241);
+                        ASSERT_ON_LINE(rodata_assertion, 5241);
                     }
                 }
                 player_flg_on(&sh2jms.l_anime_st_flg, 2);
@@ -2463,3 +2465,8 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", close_to_value);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerReverseLightCalcIsOn);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerWaterRoadIsOn);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3326);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3350);
+
