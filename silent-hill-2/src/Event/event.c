@@ -33,7 +33,15 @@ void EventProgInit(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventMain);
 
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @1419_0x00390EC0);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @1420_0x00390EE0);
+
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventMainStandard);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @1583_0x00390F50);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @1584);
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventCheck);
 
@@ -342,3 +350,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/event", EventProgressCheck);
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventItemConditionCheck);
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", RadioNoise);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @2408);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/event", @2409);

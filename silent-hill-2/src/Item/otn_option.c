@@ -4,7 +4,7 @@
 #include "sound/sh_sound.h"
 #include "Item/otn_option.h"
 
-extern struct /* @anon2 */ {
+static struct /* @anon2 */ {
     // total size: 0x7C
     unsigned char option_step; // offset 0x0, size 0x1
     unsigned char extra_mode; // offset 0x1, size 0x1

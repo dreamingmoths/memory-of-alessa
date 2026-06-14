@@ -174,6 +174,18 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStr);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrNum);
 
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @565);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @566);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @631);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @632);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @954);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @955);
+
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrMain);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintDec);
@@ -499,3 +511,9 @@ void fontCrushOff(void) {
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontClear);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontFlush);
+
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @1377_0x003914C0);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @1810);
+

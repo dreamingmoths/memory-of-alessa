@@ -16,6 +16,8 @@ INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssInitDisplay);
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDispClear);
 
+INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", clearFinish);
+
 
 
 // /////////////////////////////////////////////////////////////////////
