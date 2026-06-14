@@ -206,6 +206,8 @@ void fontSetAlpha(u_char alp /* r2 */) {
     font.alpha = alp;
 }
 
+INCLUDE_ASM("asm/nonmatchings/Font/font", fontBarBlink);
+
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontFlush);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontFlushNoSPR);
@@ -493,5 +495,7 @@ void fontCrushOn(void) {
 void fontCrushOff(void) {
     font.fonttype = 0;
 }
+
+INCLUDE_ASM("asm/nonmatchings/Font/font", mfontClear);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontFlush);
