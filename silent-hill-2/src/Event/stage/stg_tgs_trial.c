@@ -25,7 +25,7 @@ int EvProgGetHospitalMap(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
 
 #line 329
-static int EvProgGuruguruNumber(void) {
+/* static */ int EvProgGuruguruNumber(void) {
     PicDraw_Data pic; // r29+0x30
     int no; // r2
     int i; // r16

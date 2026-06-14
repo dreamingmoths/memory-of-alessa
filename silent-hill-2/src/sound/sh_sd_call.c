@@ -9,7 +9,7 @@ static int sd_stat_now_cd_using(void);
 static int shSdCallCheck(int i0 /* r16 */);
 static int shSdCallCheck(int i0);
 
-extern /* static */ int excl_sid; // size: 0x4, address: 0x37B8D8
+static int excl_sid; // size: 0x4, address: 0x37B8D8
 extern /* static */ int cd_sd_now_access; // size: 0x4, address: 0x122B308
 
 static int shSdWaitExcl(void) {

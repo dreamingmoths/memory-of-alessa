@@ -251,3 +251,8 @@ static int cpy2area(u_char *pd0, int d0, u_char *pd1, int d1, u_char *ps0, int s
 
     return s0 + s1;
 }
+
+
+INCLUDE_RODATA("asm/nonmatchings/movie/pss_videodec", @525_0x0039BF60);
+
+INCLUDE_RODATA("asm/nonmatchings/movie/pss_videodec", @526_0x0039BF80);

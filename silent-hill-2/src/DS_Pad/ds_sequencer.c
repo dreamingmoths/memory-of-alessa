@@ -52,7 +52,9 @@ static u_int EventMessageQueue_Length_Get(void);
 static void DSR_MUD_Initialize(void);
 
 extern DSR_MUD* pMUD;
-extern DSR_MU_EventDescriptor _EventQueue[100];
+
+#define DSR_MU_EVENT_QUEUE_LENGTH 100
+extern DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
 
 void SequencerManager(void) {
     u_int i;
@@ -300,9 +302,8 @@ static float Sequence_Different_Time_Get(void) {
     return pMUD->Different_Time;
 }
 
-static u_int EventMessageQueue_Length_Get(void) {
-    return 0x64; // 100
-}
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", Sequence_Different_Time_Set);
 
 
 static u_int EntryRecord_Handle_Create(void) {
@@ -596,7 +597,9 @@ static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_Initialize);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_Length_Get);
+static u_int EventMessageQueue_Length_Get(void) {
+    return DSR_MU_EVENT_QUEUE_LENGTH;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_MUD_Initialize);
 

@@ -7,11 +7,11 @@
 
 extern /* static */ EnANIME_DATA EnREDAnime[11]; 
 
-static void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
-static void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
-static void enREDCtrlHand(void);
-static void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
-static void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
+/* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
+/* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
+/* static */ void enREDCtrlHand(void);
+/* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
+/* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
 
 static void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */);
 
@@ -27,7 +27,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlMain);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
 
-static void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
+/* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
     if (enCheckSleepOut(dp) != 0) {
         enSleepOut(dp);
         SET_DP_STATE_LV(dp, 0, 0);
@@ -35,14 +35,14 @@ static void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
     }
 }
 
-static void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */) {
+/* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */) {
     dp->mlv = 1;
     SET_DP_STATE_LV(dp, 1, 0);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlEvent);
 
-static void enREDCtrlHand(void) {
+/* static */ void enREDCtrlHand(void) {
     return;
 }
 
@@ -62,14 +62,14 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlConfuse);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBattleEnd);
 
-static void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */) {
+/* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sslv == 0) {
         enREDAnimeSet(dp, TRUE);
         enREDGetWalkSpeed(dp);
     }
 }
 
-static void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp) {
+/* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp) {
     if (dp->type != 2) {
         switch (enGetPlayerWeapon()) {
             case 0:
@@ -114,7 +114,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeReset);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeExec);
 
-static float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */) {
+/* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */) {
     return 0.25f + (0.75f * (dp->endurance / dp->endurance_max));
 }
 
@@ -126,7 +126,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetFeelRange);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetRotSpeed);
 
-static void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */) {
+/* static */ void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */) {
     int timer[5] = { 180, 90, 60, 30, 1 }; // r29+0x20 taken from ghidra @1716
 
 
@@ -139,7 +139,7 @@ static void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
 
-static void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */) {
+/* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sound_wait < 0x12C) {
         dp->sound_wait++;
         return;

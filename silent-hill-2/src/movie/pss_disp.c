@@ -27,6 +27,8 @@ INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", clearFinish);
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", vblankHandler);
 
+INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDrawSubTitle);
+
 // ///////////////////////////////////////////////////////////////
 // 
 //  Handler to check the end of image transfer
