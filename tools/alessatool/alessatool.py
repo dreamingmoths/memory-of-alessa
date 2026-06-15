@@ -257,7 +257,14 @@ def main():
     create_parser.add_argument(
         "--filename-mapping-path",
         type=Path,
+        default=None,
         help="a json map of overlay filename to c file name"
+    )
+    create_parser.add_argument(
+        "--template-symbol-addrs-path",
+        type=Path,
+        default=None,
+        help="a symbol_addrs template (see overlay_symbol_addrs.txt)"
     )
     create_parser.set_defaults(func=create)
 

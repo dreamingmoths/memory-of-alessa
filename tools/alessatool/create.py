@@ -14,7 +14,8 @@ class CreationArgs:
     input_path: Path
     output_path: Path
     template_yaml_path: Path
-    filename_mapping_path: Path
+    filename_mapping_path: Path | None
+    template_symbol_addrs_path: Path | None
 
 @dataclass
 class CreationInfo:
@@ -22,19 +23,18 @@ class CreationInfo:
     mw_header: MwOverlayHeader
     overlay_contents: bytes
     template: str
-    stages_by_overlay: dict[str, str]
+    map_filename: function
+    symbol_addrs_lines: list[str]
 
 def _create_from_template(info: CreationInfo) -> str:
     MW_OVERLAY_START = 0x80
-    MW_OVERLAY_HEADER_SIZE = 0x40
-
 
     mw_header = info.mw_header
     overlay_contents = info.overlay_contents
 
     data = {
         "name": info.name,
-        "filename": info.stages_by_overlay[mw_header.name],
+        "filename": info.map_filename(mw_header.name),
         "sha1": sha1(overlay_contents).hexdigest(),
         "vram_start": hex_format(mw_header.address),
         "stage_name": mw_header.name,
@@ -54,29 +54,71 @@ def _create_from_template(info: CreationInfo) -> str:
 
     return result
 
+def _parse_template_symbol_addrs(info: CreationInfo):
+    symbol_addrs_lines = info.symbol_addrs_lines
+    if len(symbol_addrs_lines) == 0:
+        return ""
+    mapped_filename = info.map_filename(info.mw_header.name)
+
+    output_lines = []
+    should_append = False
+    for line in symbol_addrs_lines:
+        line = line.strip()
+        if line == f"// {mapped_filename}":
+            should_append = True
+            continue
+        if should_append:
+            output_lines.append(line)
+            if line == "":
+                break;
+    
+    return "\n".join(output_lines)
+
 def create_overlay_yamls(args: CreationArgs):
     with open(args.template_yaml_path) as template_yaml_file:
         yaml_contents = template_yaml_file.read()
 
-    for overlay_path in args.input_path.glob("*"):
+    for overlay_path in args.input_path.glob("*.bin"):
         name = overlay_path.stem
 
         with open(overlay_path, "rb") as overlay_file:
             overlay_contents = overlay_file.read()
         
-        with open(args.filename_mapping_path) as filename_mapping_file:
-            filename_mapping = load(filename_mapping_file)
+        if args.filename_mapping_path:
+            with open(args.filename_mapping_path) as filename_mapping_file:
+                filename_mapping = load(filename_mapping_file)
+                map_filename = lambda key : filename_mapping[key]
+        else:
+            map_filename = lambda key : key
 
-        mw_header = parse_overlay_header(overlay_contents)
-        pretty_print_overlay_header(mw_header)
-        result = _create_from_template(
-            CreationInfo(
+        if args.template_symbol_addrs_path:
+            with open(args.template_symbol_addrs_path) as symbol_addrs_file:
+                symbol_addrs_lines = symbol_addrs_file.readlines()
+        else:
+            symbol_addrs_lines = []
+
+        try:
+            mw_header = parse_overlay_header(overlay_contents)
+            pretty_print_overlay_header(mw_header)
+
+            creation_info = CreationInfo(
                 name=name,
                 mw_header=mw_header,
                 overlay_contents=overlay_contents,
                 template=yaml_contents,
-                stages_by_overlay=filename_mapping
+                map_filename=map_filename,
+                symbol_addrs_lines=symbol_addrs_lines
             )
-        )
+            result = _create_from_template(creation_info)
+        except Exception as exception:
+            print(f"failed on {overlay_path}:")
+            raise exception
 
         ensure_path_and_write(args.output_path / f"{name}.yaml", result)
+        ensure_path_and_write(
+            args.output_path / f"{name}_symbol_addrs.txt",
+            "\n".join([
+                f"//* {name} === {map_filename(mw_header.name)} *//",
+                _parse_template_symbol_addrs(creation_info)
+            ])
+        )
