@@ -2,6 +2,7 @@
 #include "Collision/cl_main.h"
 #include "Chacter_Draw/sh2gfw_model_light.h"
 #include "Chacter/sh_character_battle.h"
+#include "SH2_common/sh_vu0.h"
 
 static void shBattleCheckHitEyes(CL_VHIT_RESULT* eye, SubCharacter* scp, int i, int net);
 static float _shLength(float* v0 /* r2 */, float* v1 /* r2 */);
@@ -112,13 +113,72 @@ int shBattleAroundTargetEnemy(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleCheckTargetChara);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetEnemy);
+SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp) { // not line matched
+    int i; // r16
+    SubCharacter * kari_target = NULL; // r17
+    CL_VHIT_RESULT eye; // r29+0x50
+    if (rest_tgt == 0x14) {
+        return NULL;
+    }
+    
+    for (i = 0; i < 0x14 - rest_tgt; i++) {
+        
+        if ((sh2_target_info[i].adr.scp->kind >> 8) != 2)
+            continue;
+        if (sh2_target_info[i].adr.scp->battle.status & 0x2)
+            continue;    
+        shBattleCheckHitEyes(&eye, scp, i, 1);
+        if (eye.kind != 3 || eye.hobj.chara.sc != sh2_target_info[i].adr.scp)
+            continue;                
+        if (sh2_target_info[i].adr.scp->battle.status & 0x4) {
+            
+            if (kari_target == NULL) {
+                kari_target = sh2_target_info[i].adr.scp;
+            }
+        } else {
+            return sh2_target_info[i].adr.scp;
+        }
+    }
+    return kari_target;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleChangeTargetEnemy);
+
+SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key) { // not line matched
+    int i; // r16
+    float to_target; // r29+0x90    
+    float rot_tmp; // r29+0x90
+    CL_VHIT_RESULT eye; // r29+0x50
+    if (rest_tgt == 0x14) {
+        return NULL;
+    }
+    
+    for (i = 0; i < 0x14 - rest_tgt; i++) {
+        
+        if (sh2jms.target == sh2_target_info[i].adr.scp)
+            continue;        
+        if ((sh2_target_info[i].adr.scp->kind >> 8) != 2)
+            continue;        
+        if (sh2_target_info[i].adr.scp->battle.status & 0x2)
+            continue;
+        
+        to_target = shAtan2(sh2_target_info[i].adr.scp->pos.z - scp->pos.z, sh2_target_info[i].adr.scp->pos.x - scp->pos.x);
+        rot_tmp = shAngleRegulate(to_target - scp->rot.y);     
+        
+        if ((key == 1 && rot_tmp > 0.0f) || (key == -1 && rot_tmp < 0.0f)) {
+            
+            shBattleCheckHitEyes(&eye, scp, i, 1);
+            if (eye.kind != 3) {
+                continue;
+            }
+            return sh2_target_info[i].adr.scp;
+        }
+    }
+    return NULL;
+}
 
 u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
     int i; // r16
-    struct _CL_VHIT_RESULT eye; // r29+0x30
+    CL_VHIT_RESULT eye; // r29+0x30
     
     switch (kind) {
         case 0:
@@ -165,7 +225,31 @@ SubCharacter* shCameraGetNearTarget(int i, int type) {
     
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetNearDeadlyTargetEnemy);
+SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp) {
+    int i; // r16
+    CL_VHIT_RESULT eye; // r29+0x50
+    
+    if (rest_tgt == 0x14)
+        return NULL;        
+    
+    
+    for (i = 0; i < 0x14 - rest_tgt; i++) {
+        
+        if ((sh2_target_info[i].adr.scp->kind >> 8) != 2) continue;
+        
+        if ((sh2_target_info[i].adr.scp->battle.status & 0x2) || !(sh2_target_info[i].adr.scp->battle.status & 0x4)) continue;
+
+        shBattleCheckHitEyes(&eye, scp, i, 0);
+        if (eye.kind != 3 || eye.hobj.chara.sc != sh2_target_info[i].adr.scp) continue;
+        
+        if (sh2_target_info[i].distance > 600.0f) continue;        
+        return sh2_target_info[i].adr.scp;
+
+        
+    }
+    
+    return NULL;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetHuman);
 
