@@ -40,7 +40,7 @@ def _create_from_template(info: CreationInfo) -> str:
         "stage_name": mw_header.name,
         "text_start": hex_format(MW_OVERLAY_START),
         "data_start": hex_format(MW_OVERLAY_START + mw_header.sz_text),
-        "bss_size": hex_format(mw_header.sz_bss),
+        "bss_size": hex_format(mw_header.sz_bss + MW_OVERLAY_START),
         "bss_start": hex_format(mw_header.address + mw_header.sz_text + mw_header.sz_data),
         "file_size": hex_format(len(overlay_contents))  
     }
