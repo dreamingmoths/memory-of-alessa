@@ -1,0 +1,14 @@
+//* awx === stg_apart_w1f *//
+EvProgLookThreeCoin                              = 0x01F01E80; // type:func visibility:local
+EvProgSetThreeCoin                               = 0x01F023E0; // type:func visibility:local
+EvProgSubDrawCoin                                = 0x01F02CB0; // type:func visibility:local
+EvProgSubCoinCursor                              = 0x01F02F80; // type:func visibility:local
+EvProgAngelaWithKnife                            = 0x01F032A0; // type:func visibility:local
+EvProgGetCoinOfPrisoner                          = 0x01F03680; // type:func visibility:local
+EvProgGetWhiteChrism                             = 0x01F036B0; // type:func visibility:local
+EvProgGetLyneKey                                 = 0x01F036E0; // type:func visibility:local
+EvProgLookFamilyPicture                          = 0x01F03710; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F03B30; // type:func visibility:local
+TrimColorFilter                                  = 0x01F03B90; // type:func visibility:local

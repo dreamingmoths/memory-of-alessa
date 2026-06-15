@@ -1,0 +1,13 @@
+//* fst === stg_forest *//
+EvProgFirstSaveWell                              = 0x01F01E80; // type:func visibility:local
+EvProgAngelaInGrave                              = 0x01F02140; // type:func visibility:local
+EvProgGraveSureQuiet                             = 0x01F02540; // type:func visibility:local
+EvProgGraveLookingFor                            = 0x01F02720; // type:func visibility:local
+EvProgLastScene                                  = 0x01F02900; // type:func visibility:local
+EvProgGetChainsaw                                = 0x01F02C30; // type:func visibility:local
+EvStageInit                                      = 0x01F02C60; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F02DB0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+Ca10_Hakaba_Angela_SetDrawEnv                    = 0x01F030E0; // type:func visibility:local

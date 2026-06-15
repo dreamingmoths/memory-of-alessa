@@ -1,0 +1,8 @@
+//* aot === stg_apart_out *//
+EvProgGetCoinOfSnake                             = 0x01F01E80; // type:func visibility:local
+EvProgGetCoinOfOldman                            = 0x01F01EB0; // type:func visibility:local
+EvProgMurderNewsRead                             = 0x01F022C0; // type:func visibility:local
+EvProgApartEastToWest                            = 0x01F022F0; // type:func visibility:local
+EvProgApartWestToEast                            = 0x01F025A0; // type:func visibility:local
+EvStageInit                                      = 0x01F02740; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local

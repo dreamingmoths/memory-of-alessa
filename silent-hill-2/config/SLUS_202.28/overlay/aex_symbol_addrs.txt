@@ -1,0 +1,7 @@
+//* aex === stg_apart_e1f *//
+EvProgVomitEddie                                 = 0x01F01E80; // type:func visibility:local
+EvProgVomitEddieAfter                            = 0x01F02100; // type:func visibility:local
+EvProgTouristGuideRead                           = 0x01F022E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F025B0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local

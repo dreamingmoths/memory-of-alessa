@@ -1,0 +1,9 @@
+//* aee === stg_apart_e3fe *//
+EvProgFirstMeetTrihead                           = 0x01F01E80; // type:func visibility:local
+EvProgGetYardKey                                 = 0x01F021C0; // type:func visibility:local
+EvProgGetEmergencyKey                            = 0x01F021F0; // type:func visibility:local
+EvStageInit                                      = 0x01F02220; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02230; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+ap18_ap21_Closet                                 = 0x01F02410; // type:func visibility:local
+ap18_ap21_HighLight                              = 0x01F02610; // type:func visibility:local

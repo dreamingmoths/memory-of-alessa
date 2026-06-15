@@ -11,7 +11,9 @@ options:
   ld_script_path: linkers/SLUS_202.28.ld
   undefined_funcs_auto_path: linkers/sh2_undefined_funcs_auto.main.txt
   undefined_syms_auto_path: linkers/sh2_undefined_syms_auto.main.txt
-  symbol_addrs_path: symbol_addrs.txt
+  symbol_addrs_path:
+    - symbol_addrs.txt
+    - shim_addrs.txt
   reloc_addrs_path: reloc_addrs.txt
   migrate_rodata_to_functions: True
   pair_rodata_to_text: True

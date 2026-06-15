@@ -1,0 +1,610 @@
+// stg_tgs_trial
+EvProgTrialStartSet                              = 0x00248090; // type:func visibility:local
+EvProgGetHospitalMap                             = 0x01F01E80; // type:func visibility:local
+EvProgGetNeedle                                  = 0x002486E0; // type:func visibility:local
+EvProgGuruguruNumber                             = 0x01F02380; // type:func visibility:local
+EvProgLouiseTakecare                             = 0x01F04F40; // type:func visibility:local
+EvProgBoxWithKey                                 = 0x01F02F90; // type:func visibility:local
+EvProgBoxWithKeyLayer                            = 0x00249460; // type:func visibility:local
+EvProgBoxWithKeyCursor                           = 0x002496E0; // type:func visibility:local
+EvProgBoxWithKeyOpen                             = 0x00249B30; // type:func visibility:local
+EvProgEmptyBox                                   = 0x01F04830; // type:func visibility:local
+EvProgOnlyNeedle                                 = 0x01F02870; // type:func visibility:local
+EvProgOnlyHair                                   = 0x01F029C0; // type:func visibility:local
+EvProgInShowerDrain                              = 0x01F02B10; // type:func visibility:local
+EvProgFishKey                                    = 0x01F02DF0; // type:func visibility:local
+EvProgDoctorMemo1st                              = 0x01F01EB0; // type:func visibility:local
+EvProgDoctorMemo2nd                              = 0x01F02280; // type:func visibility:local
+EvProgUseElevatorKey                             = 0x01F050B0; // type:func visibility:local
+EvProgElevatorButton                             = 0x01F024C0; // type:func visibility:local
+EvProgElevatorButtonCheck                        = 0x01F02FF0; // type:func visibility:local
+EvProgElevatorButtonLight                        = 0x01F03290; // type:func visibility:local
+EvProgTrialEnd                                   = 0x0024B440; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_toilet
+EvProgPrologueInToilet                           = 0x01F01E80; // type:func visibility:local
+EvStageInit                                      = 0x01F02190; // type:func visibility:local
+EvBgmControl                                     = 0x01F021A0; // type:func visibility:local
+Kari_hisyakai                                    = 0x01F021E0; // type:func
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+Toilet_Dof_Filter                                = 0x01F02460; // type:func visibility:local
+
+// stg_ovservation
+EvProgLetterFromMary                             = 0x01F01E80; // type:func visibility:local
+EvProgItemInCar                                  = 0x01F02080; // type:func visibility:local
+EvProgNothingTakeInCar                           = 0x01F02420; // type:func visibility:local
+EvProgHadBetterGetMap                            = 0x01F02450; // type:func visibility:local
+EvProgCantGoBack                                 = 0x01F025D0; // type:func visibility:local
+EvProgLastScene                                  = 0x01F02750; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F02970; // type:func visibility:local
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+OB_DemoBlur                                      = 0x01F02A00; // type:func visibility:local
+
+// stg_forest
+EvProgFirstSaveWell                              = 0x01F01E80; // type:func visibility:local
+EvProgAngelaInGrave                              = 0x01F02140; // type:func visibility:local
+EvProgGraveSureQuiet                             = 0x01F02540; // type:func visibility:local
+EvProgGraveLookingFor                            = 0x01F02720; // type:func visibility:local
+EvProgLastScene                                  = 0x01F02900; // type:func visibility:local
+EvProgGetChainsaw                                = 0x01F02C30; // type:func visibility:local
+EvStageInit                                      = 0x01F02C60; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F02DB0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+Ca10_Hakaba_Angela_SetDrawEnv                    = 0x01F030E0; // type:func visibility:local
+
+// stg_town_east
+EvProgShadowOfSomenthing                         = 0x01F01E80; // type:func visibility:local
+EvProgSandersBack                                = 0x01F02260; // type:func visibility:local
+EvProgFirstMonsterStart                          = 0x01F023E0; // type:func visibility:local
+EvProgFirstMonsterCorpse                         = 0x01F02650; // type:func visibility:local
+EvProgFirstMonsterEnd                            = 0x01F02860; // type:func visibility:local
+EvProgBloodSwamp                                 = 0x01F029C0; // type:func visibility:local
+EvProgGetApartGateKey                            = 0x01F02A20; // type:func visibility:local
+EvProgUseApartGateKey                            = 0x01F02A50; // type:func visibility:local
+EvProgLookMemoFalled                             = 0x01F02AA0; // type:func visibility:local
+EvStageInit                                      = 0x01F02EF0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02F90; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F03410; // type:func visibility:local
+EvLockSetCb46                                    = 0x01F03450; // type:func visibility:local
+EvCorpseSetCb18                                  = 0x01F034B0; // type:func visibility:local
+EvCorpseSetCb26                                  = 0x01F03530; // type:func visibility:local
+EvWallSetCb19                                    = 0x01F03540; // type:func visibility:local
+EvWallSetCb20                                    = 0x01F035B0; // type:func visibility:local
+EvWallSetCb21                                    = 0x01F03620; // type:func visibility:local
+EvWallSetCb49                                    = 0x01F036C0; // type:func visibility:local
+EvWallSetCb52                                    = 0x01F03740; // type:func visibility:local
+EvSignalControlCb27                              = 0x01F037F0; // type:func visibility:local
+EvSignalControlCb28                              = 0x01F03A20; // type:func visibility:local
+EvSignalControlCb29                              = 0x01F03C50; // type:func visibility:local
+EvSignalControlCb35                              = 0x01F03E20; // type:func visibility:local
+EvSignalControlCb36                              = 0x01F04050; // type:func visibility:local
+EvSignalControlCb37                              = 0x01F04220; // type:func visibility:local
+EvTapeSetCb11                                    = 0x01F04480; // type:func visibility:local
+EvTapeSetCb12                                    = 0x01F044F0; // type:func visibility:local
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+CB_1stMoster_FogHosei                            = 0x01F04590; // type:func visibility:local
+CB_1stMonster_Filter                             = 0x01F048D0; // type:func visibility:local
+Draw_CB_Tonnel                                   = 0x01F049E0; // type:func visibility:local
+Monster1st_Look                                  = 0x01F04CC0; // type:func visibility:local
+
+// stg_apart_e1f
+EvProgVomitEddie                                 = 0x01F01E80; // type:func visibility:local
+EvProgVomitEddieAfter                            = 0x01F02100; // type:func visibility:local
+EvProgTouristGuideRead                           = 0x01F022E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F025B0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_apart_e2f
+EvProgThreeNameOnWall                            = 0x01F01E80; // type:func visibility:local
+EvProgHintOfClockSet                             = 0x01F02150; // type:func visibility:local
+EvProgClockTime                                  = 0x01F02480; // type:func visibility:local
+EvProgClockNeedleMove                            = 0x01F028A0; // type:func visibility:local
+EvProgSubClockNeedleDraw                         = 0x01F03130; // type:func visibility:local
+EvProgUseClockKey                                = 0x01F035D0; // type:func visibility:local
+EvProgTryMoveClock                               = 0x01F035E0; // type:func visibility:local
+EvProgUseEmergencyKey                            = 0x01F03B30; // type:func visibility:local
+EvProgAnyoneInHole                               = 0x01F03B70; // type:func visibility:local
+EvProgNooneInHole                                = 0x01F04000; // type:func visibility:local
+EvProgLookDustChute                              = 0x01F04320; // type:func visibility:local
+EvProgUseCannedJuice                             = 0x01F04630; // type:func visibility:local
+EvProgNoFaceCorpse                               = 0x01F047F0; // type:func visibility:local
+EvProgAnyoneCry                                  = 0x01F04920; // type:func visibility:local
+EvProgGetLight                                   = 0x01F04AA0; // type:func visibility:local
+EvProgGetApart202Key                             = 0x01F04B40; // type:func visibility:local
+EvProgEndHintRecoveryRead                        = 0x01F04B70; // type:func visibility:local
+EvProgEndHintMariaRead                           = 0x01F04E30; // type:func visibility:local
+EvProgEndHintSuicideRead                         = 0x01F050F0; // type:func visibility:local
+EvProgUseApart202Key                             = 0x01F053B0; // type:func visibility:local
+EvProgMonkeyKick206                              = 0x01F05400; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F05460; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F05590; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+Delete_RedPointLight                             = 0x01F05AA0; // type:func visibility:local
+
+// stg_apart_e3fw
+EvProgLauraKickKey                               = 0x01F01E80; // type:func visibility:local
+EvProgGetHandgun                                 = 0x01F021B0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvProgSubScreamOn                                = 0x01F02220; // type:func visibility:local
+
+// stg_apart_e3fe
+EvProgFirstMeetTrihead                           = 0x01F01E80; // type:func visibility:local
+EvProgGetYardKey                                 = 0x01F021C0; // type:func visibility:local
+EvProgGetEmergencyKey                            = 0x01F021F0; // type:func visibility:local
+EvStageInit                                      = 0x01F02220; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02230; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+ap18_ap21_Closet                                 = 0x01F02410; // type:func visibility:local
+ap18_ap21_HighLight                              = 0x01F02610; // type:func visibility:local
+
+// stg_apart_w1f
+EvProgLookThreeCoin                              = 0x01F01E80; // type:func visibility:local
+EvProgSetThreeCoin                               = 0x01F023E0; // type:func visibility:local
+EvProgSubDrawCoin                                = 0x01F02CB0; // type:func visibility:local
+EvProgSubCoinCursor                              = 0x01F02F80; // type:func visibility:local
+EvProgAngelaWithKnife                            = 0x01F032A0; // type:func visibility:local
+EvProgGetCoinOfPrisoner                          = 0x01F03680; // type:func visibility:local
+EvProgGetWhiteChrism                             = 0x01F036B0; // type:func visibility:local
+EvProgGetLyneKey                                 = 0x01F036E0; // type:func visibility:local
+EvProgLookFamilyPicture                          = 0x01F03710; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F03B30; // type:func visibility:local
+TrimColorFilter                                  = 0x01F03B90; // type:func visibility:local
+
+// stg_apart_w2f
+EvProgReadDearTim                                = 0x01F020A0; // type:func visibility:local
+EvProgUseLyneKey                                 = 0x01F02280; // type:func visibility:local
+EvProgGetApartStairKey                           = 0x01F022D0; // type:func visibility:local
+EvProgUseApartStairKey                           = 0x01F02300; // type:func visibility:local
+EvProgWalletInToilet                             = 0x01F02350; // type:func visibility:local
+EvProgWalletOutToilet                            = 0x01F026D0; // type:func visibility:local
+EvProgSubWalletMemo                              = 0x01F028A0; // type:func visibility:local
+EvProgOpenSafe                                   = 0x01F02C80; // type:func visibility:local
+EvProgSubSafaLockDraw                            = 0x01F02F50; // type:func visibility:local
+EvProgSubSafeLockRotate                          = 0x01F032F0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_apart_stair
+EvProgUseYardKey                                 = 0x01F02100; // type:func visibility:local
+EvProgGetApartMap                                = 0x01F02150; // type:func visibility:local
+EvProgGetApartWestMap                            = 0x01F02180; // type:func visibility:local
+EvProgGetCannedJuice                             = 0x01F021B0; // type:func visibility:local
+EvProgApartBoss                                  = 0x01F021E0; // type:func visibility:local
+EvProgApartBossSiren                             = 0x01F02510; // type:func visibility:local
+EvProgApartBossEnd                               = 0x01F02550; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_apart_out
+EvProgGetCoinOfSnake                             = 0x01F01E80; // type:func visibility:local
+EvProgGetCoinOfOldman                            = 0x01F01EB0; // type:func visibility:local
+EvProgMurderNewsRead                             = 0x01F022C0; // type:func visibility:local
+EvProgApartEastToWest                            = 0x01F022F0; // type:func visibility:local
+EvProgApartWestToEast                            = 0x01F025A0; // type:func visibility:local
+EvStageInit                                      = 0x01F02740; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_town_west
+EvProgLauraOnWall                                = 0x01F01E80; // type:func visibility:local
+EvProgMariaMeetingStandby                        = 0x01F02170; // type:func visibility:local
+EvProgMariaMeeting                               = 0x01F02230; // type:func visibility:local
+EvProgMariaNotHotel                              = 0x01F025A0; // type:func visibility:local
+EvProgBowlDemoDataLoad                           = 0x01F027B0; // type:func visibility:local
+EvProgMariaFrontBowling1st                       = 0x01F02810; // type:func visibility:local
+EvProgMariaFrontBowling2nd                       = 0x01F02A00; // type:func visibility:local
+EvProgLauraCantGo                                = 0x01F02BD0; // type:func visibility:local
+EvProgEnemyLoadWestTownStart                     = 0x01F02EC0; // type:func visibility:local
+EvProgEnemyLoadWestTownInit                      = 0x01F02F10; // type:func visibility:local
+EvProgLadyHoleMake                               = 0x01F02F20; // type:func visibility:local
+EvProgUseOldBronzeKey                            = 0x01F03250; // type:func visibility:local
+EvProgGetWrench                                  = 0x01F03290; // type:func visibility:local
+EvProgUseWrench                                  = 0x01F032C0; // type:func visibility:local
+EvProgSubCaseDraw                                = 0x01F03750; // type:func visibility:local
+EvProgLookMetalBox                               = 0x01F03B00; // type:func visibility:local
+EvProgLauraGoHospital                            = 0x01F03B90; // type:func visibility:local
+EvProgGetSteelPipe                               = 0x01F03CE0; // type:func visibility:local
+EvProgGetLostMemory                              = 0x01F03D10; // type:func visibility:local
+EvProgGetDogKey                                  = 0x01F03FE0; // type:func visibility:local
+EvProgEndMaria                                   = 0x01F04010; // type:func visibility:local
+EvStageInit                                      = 0x01F04140; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F04250; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F04790; // type:func visibility:local
+EvMariaInParkSet                                 = 0x01F047D0; // type:func visibility:local
+EvLadyBackDisplay                                = 0x01F04870; // type:func visibility:local
+EvSignalControlCc10                              = 0x01F04930; // type:func visibility:local
+EvSignalControlCc20                              = 0x01F04B00; // type:func visibility:local
+EvCharaDataLoadAfterWall                         = 0x01F04CC0; // type:func visibility:local
+EvCamaraLostMemory                               = 0x01F04D70; // type:func visibility:local
+LinearTrim2                                      = 0x01F04F00; // type:func visibility:local
+CC_Demo_Fog_Hosei                                = 0x01F04F30; // type:func visibility:local
+
+// stg_bowling
+EvProgEddieAndLaura                              = 0x01F01E80; // type:func visibility:local
+EvProgEddieEatPizza                              = 0x01F02030; // type:func visibility:local
+EvProgEddieEatPizzaAfter                         = 0x01F022B0; // type:func visibility:local
+EvStageInit                                      = 0x01F024E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02510; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvBgmControl                                     = 0x01F026A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_to_heaven
+EvProgLauraWentSideRoad                          = 0x01F01E80; // type:func visibility:local
+EvProgMariaUnlockHeaven                          = 0x01F02070; // type:func visibility:local
+EvProgJamesCantGo                                = 0x01F02260; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F024E0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+
+// stg_hospital_1f_f
+EvProgGetHospitalMap                             = 0x01F01E80; // type:func visibility:local
+EvProgDoctorMemo1st                              = 0x01F01EB0; // type:func visibility:local
+EvProgDoctorMemo2nd                              = 0x01F02280; // type:func visibility:local
+EvProgUseExamKey                                 = 0x01F02480; // type:func visibility:local
+EvProgReadWhiteBoard                             = 0x01F024D0; // type:func visibility:local
+EvProgCardsOfPatient                             = 0x01F02500; // type:func visibility:local
+EvProgHospitalExit                               = 0x01F02750; // type:func visibility:local
+EvProgLauraDeceive1st                            = 0x01F029D0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02B00; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F02D90; // type:func visibility:local
+
+// stg_hospital_2f_f
+EvProgGetLapisEyeKey                             = 0x01F01E80; // type:func visibility:local
+EvProgReadCarbonNumber                           = 0x01F01EB0; // type:func visibility:local
+EvProgGetExamKey                                 = 0x01F02280; // type:func visibility:local
+EvProgNeedleInAnimal                             = 0x01F023B0; // type:func visibility:local
+EvProgUseElevatorKey                             = 0x01F050B0; // type:func visibility:local
+EvProgGetShotgun                                 = 0x01F02700; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02730; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+
+// stg_hospital_3f_f
+EvProgLostMaria                                  = 0x01F01E80; // type:func visibility:local
+EvProgLostMariaAfter                             = 0x01F02110; // type:func visibility:local
+EvProgGetRoofKey                                 = 0x01F02350; // type:func visibility:local
+EvProgGuruguruNumber                             = 0x01F02380; // type:func visibility:local
+EvProgSubGuruguruDraw                            = 0x01F02690; // type:func visibility:local
+EvProgOnlyNeedle                                 = 0x01F02870; // type:func visibility:local
+EvProgOnlyHair                                   = 0x01F029C0; // type:func visibility:local
+EvProgInShowerDrain                              = 0x01F02B10; // type:func visibility:local
+EvProgFishKey                                    = 0x01F02DF0; // type:func visibility:local
+EvProgBoxWithKey                                 = 0x01F02F90; // type:func visibility:local
+EvProgSubKeyLayer                                = 0x01F03C10; // type:func visibility:local
+EvProgSubKeyCursor                               = 0x01F041F0; // type:func visibility:local
+EvProgSubHairInBox                               = 0x01F04740; // type:func visibility:local
+EvProgEmptyBox                                   = 0x01F04830; // type:func visibility:local
+EvProgSetPassNumberT                             = 0x01F04860; // type:func visibility:local
+EvProgSubSetNumberPicDisp                        = 0x01F04A90; // type:func visibility:local
+EvProgSubSetNumberButton                         = 0x01F04CD0; // type:func visibility:local
+EvProgLouiseTakecare                             = 0x01F04F40; // type:func visibility:local
+EvProgUseElevatorKey                             = 0x01F050B0; // type:func visibility:local
+EvProgFromRoof                                   = 0x01F05100; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F052D0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hospital_rf_f
+EvProgElevatorButton                             = 0x01F024C0; // type:func visibility:local
+EvProgElevatorButtonCheck                        = 0x01F02FF0; // type:func visibility:local
+EvProgElevatorButtonLight                        = 0x01F03290; // type:func visibility:local
+EvProgUseRoofKey                                 = 0x01F028E0; // type:func visibility:local
+EvProgTriheadOnRoof                              = 0x01F02930; // type:func visibility:local
+EvProgTriheadEntry                               = 0x01F02C40; // type:func visibility:local
+EvProgReadDiary                                  = 0x01F02CA0; // type:func visibility:local
+EvProgMetalNetRusty                              = 0x01F03070; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F030D0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hospital_1fw_b
+EvProgLauraDeceive2nd                            = 0x01F01E80; // type:func visibility:local
+EvProgLauraDeceive3rd                            = 0x01F01FC0; // type:func visibility:local
+EvProgHospitalBack1st                            = 0x01F02230; // type:func visibility:local
+EvProgHospitalBack2nd                            = 0x01F02400; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F02680; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F028B0; // type:func visibility:local
+
+// stg_hospital_1fe_b
+EvProgMariaKilledAfter                           = 0x01F01E80; // type:func visibility:local
+EvProgUseHospitalEnterKey                        = 0x01F02010; // type:func visibility:local
+EvProgGetHospitalEnterKey                        = 0x01F02060; // type:func visibility:local
+EvProgLookDirectorMap                            = 0x01F02670; // type:func visibility:local
+
+// stg_hospital_2f_b
+EvProgRefrigeratorOpen                           = 0x01F01E80; // type:func visibility:local
+EvProgRefrigeratorNotOpen                        = 0x01F02270; // type:func visibility:local
+EvProgGetDryCell                                 = 0x01F025D0; // type:func visibility:local
+EvProgGetStoreroomKey                            = 0x01F02600; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hospital_3f_b
+EvProgPictureOfAngel                             = 0x01F01E80; // type:func visibility:local
+EvSubAngelRingDraw                               = 0x01F02570; // type:func visibility:local
+EvProgAngelNoOneKnows                            = 0x01F02770; // type:func visibility:local
+EvProgTryQuizAnswer                              = 0x01F02900; // type:func visibility:local
+EvProgSubAnswer                                  = 0x01F02B40; // type:func visibility:local
+EvProgIncorrectQuizAnswer                        = 0x01F03780; // type:func visibility:local
+EvStageInit                                      = 0x01F037B0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hospital_bf_b
+EvProgMariaMeetAgain                             = 0x01F01E80; // type:func visibility:local
+EvProgMoveEmptyShelf                             = 0x01F02170; // type:func visibility:local
+EvProgGetCopperRing                              = 0x01F02440; // type:func visibility:local
+EvProgUseStoreroomKey                            = 0x01F02470; // type:func visibility:local
+EvProgElevatorButton                             = 0x01F024C0; // type:func visibility:local
+EvProgElevatorButtonCheck                        = 0x01F02FF0; // type:func visibility:local
+EvProgElevatorButtonLight                        = 0x01F03290; // type:func visibility:local
+EvProgDirectorBronzeKey                          = 0x01F03560; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F036F0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hospital_pass
+EvProgChaseInHospital1st                         = 0x01F01E80; // type:func visibility:local
+EvProgChaseInHospital2nd                         = 0x01F01EE0; // type:func visibility:local
+EvProgChaseInHospital3rd                         = 0x01F01F40; // type:func visibility:local
+EvProgChaseInHospital4th                         = 0x01F01FC0; // type:func visibility:local
+EvProgChaseInHospital5th                         = 0x01F02060; // type:func visibility:local
+EvProgMariaKilled                                = 0x01F020C0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F022B0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvBgmControl                                     = 0x01F02350; // type:func visibility:local
+Maria_Killed_Hosei                               = 0x01F02370; // type:func visibility:local
+
+// stg_society
+EvProgTriheadPicture                             = 0x01F01E80; // type:func visibility:local
+EvProgGetGoblet                                  = 0x01F01EB0; // type:func visibility:local
+
+// stg_delusion_2
+EvProgHoleTo3rdLayer                             = 0x01F01E80; // type:func visibility:local
+EvBgmControl                                     = 0x01F02130; // type:func visibility:local
+
+// stg_delusion_3
+EvProgStartBottomOfWell                          = 0x01F01E80; // type:func visibility:local
+EvProgBreakWellWall                              = 0x01F02020; // type:func visibility:local
+EvProgGetSpiralKey                               = 0x01F02120; // type:func visibility:local
+EvProgCocRoomLock                                = 0x01F022B0; // type:func visibility:local
+EvProgSubLockLayer                               = 0x01F02570; // type:func visibility:local
+EvProgSubLockCheck                               = 0x01F03130; // type:func visibility:local
+EvProgUseSpiralKey                               = 0x01F03290; // type:func visibility:local
+EvProgHoleTo4thLayer                             = 0x01F034F0; // type:func visibility:local
+EvProgUseDryCell                                 = 0x01F037D0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_prison_n
+EvProgEddieKillHuman                             = 0x01F01E80; // type:func visibility:local
+EvProgGetPrisonMap                               = 0x01F023A0; // type:func visibility:local
+EvProgGetTabletPig                               = 0x01F023F0; // type:func visibility:local
+EvProgGetTabletSeduct                            = 0x01F02420; // type:func visibility:local
+EvProgGetRifle                                   = 0x01F02450; // type:func visibility:local
+EvProgGetLighter                                 = 0x01F02480; // type:func visibility:local
+EvProgReadLakeMagazine                           = 0x01F024B0; // type:func visibility:local
+EvProgTryOpenFloor                               = 0x01F027A0; // type:func visibility:local
+EvProgSuccessOpenFloor                           = 0x01F02BF0; // type:func visibility:local
+EvProgSubPullDraw                                = 0x01F03060; // type:func visibility:local
+EvProgHoleTo5thLayer                             = 0x01F031A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_prison_s
+EvProgGetTabletOppressor                         = 0x01F01E80; // type:func visibility:local
+EvProgGetWaxDoll                                 = 0x01F01ED0; // type:func visibility:local
+EvProgGetHorseshoe                               = 0x01F01F00; // type:func visibility:local
+EvProgTabletSetScaffold                          = 0x01F01F40; // type:func visibility:local
+EvProgSubDrawTabletAndScaffold                   = 0x01F02890; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_prison_bf
+EvProg5thLayerStart                              = 0x01F01E80; // type:func visibility:local
+EvProgHoleTo6thLayer                             = 0x01F02080; // type:func visibility:local
+EvProg6thLayerStart                              = 0x01F02370; // type:func visibility:local
+EvProgDoorOpen6Layer                             = 0x01F02570; // type:func visibility:local
+EvProgHoleTo7thLayer                             = 0x01F02690; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_labyrinth_w
+EvProg7thLayerStart                              = 0x01F02090; // type:func visibility:local
+EvProgGetGreatKnife                              = 0x01F02290; // type:func visibility:local
+EvProgControlCube                                = 0x01F022C0; // type:func visibility:local
+EvProgMariaIsAlive                               = 0x01F03120; // type:func visibility:local
+EvProgAfterMariaIsAlive                          = 0x01F03450; // type:func visibility:local
+EvProgGetWireCutter                              = 0x01F03460; // type:func visibility:local
+EvProgUseWireCutter                              = 0x01F03490; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F03C20; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvElevatorModelMove                              = 0x01F040B0; // type:func visibility:local
+
+// stg_labyrinth_e
+EvProgScreamOfAngela                             = 0x01F020B0; // type:func visibility:local
+EvProgPapaAttackAngela                           = 0x01F022A0; // type:func visibility:local
+EvProgAngelaAttackPapa                           = 0x01F02580; // type:func visibility:local
+EvProgNewsOfPapa                                 = 0x01F02820; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02B80; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F02F00; // type:func visibility:local
+
+// stg_labyrinth_n
+EvProgHangingCorpse                              = 0x01F02090; // type:func visibility:local
+EvProgHangRope                                   = 0x01F02420; // type:func visibility:local
+EvProgReadHangHint                               = 0x01F028D0; // type:func visibility:local
+EvProgReadPullOnce                               = 0x01F02A00; // type:func visibility:local
+EvProgGetFalseChargeKey                          = 0x01F02A30; // type:func visibility:local
+EvProgCanNotRotate                               = 0x01F02A60; // type:func visibility:local
+EvProgUseFalseChargeKey                          = 0x01F02A90; // type:func visibility:local
+EvProgMariaRedeath                               = 0x01F03030; // type:func visibility:local
+EvProgHoleTo9thLayer                             = 0x01F03190; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F03820; // type:func visibility:local
+
+// stg_eddie_boss
+EvProgEddieMurderer1st                           = 0x01F01E80; // type:func visibility:local
+EvProgEddieMurderer2nd                           = 0x01F02080; // type:func visibility:local
+EvProgEddieMurderer3rd                           = 0x01F021F0; // type:func visibility:local
+EvProgEddieMurderer4th                           = 0x01F02470; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02670; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+
+// stg_lake
+EvProgEmbarkBoat                                 = 0x01F01E80; // type:func visibility:local
+EvProgDisembarkBoat                              = 0x01F01FC0; // type:func visibility:local
+EvProgGetLittleMermaid                           = 0x01F02120; // type:func visibility:local
+EvProgEndRebirth                                 = 0x01F02130; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02260; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hotel_bf_f
+EvProgGetThinner                                 = 0x01F01E80; // type:func visibility:local
+EvProgGetBarKey                                  = 0x01F01EB0; // type:func visibility:local
+EvProgNoLabelCan                                 = 0x01F01EE0; // type:func visibility:local
+EvProgGetLightbulb                               = 0x01F01F30; // type:func visibility:local
+EvProgUseLightbulb                               = 0x01F02630; // type:func visibility:local
+EvProgUseBarKey                                  = 0x01F02690; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F026F0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hotel_1f_f
+EvProgGetHotelGuestMap                           = 0x01F020F0; // type:func visibility:local
+EvProgGetHotelEmployeeMap                        = 0x01F02120; // type:func visibility:local
+EvProgGetHotel312Key                             = 0x01F02150; // type:func visibility:local
+EvProgReadReceptionMemo                          = 0x01F02180; // type:func visibility:local
+EvProgOrgel                                      = 0x01F021B0; // type:func visibility:local
+EvProgSubOrgelPlay                               = 0x01F03590; // type:func visibility:local
+EvProgGetHotelStairKey                           = 0x01F04110; // type:func visibility:local
+EvProgGetVideoTape                               = 0x01F04150; // type:func visibility:local
+EvProgSubVideoDraw                               = 0x01F045D0; // type:func visibility:local
+EvProgNothingInSafe                              = 0x01F04B60; // type:func visibility:local
+EvProgGetSnowWhite                               = 0x01F04B90; // type:func visibility:local
+EvProgGetFishKey                                 = 0x01F04BC0; // type:func visibility:local
+EvProgLauraPlayPiano                             = 0x01F04BF0; // type:func visibility:local
+EvStageInit                                      = 0x01F05050; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F05060; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvBgmControl                                     = 0x01F05350; // type:func visibility:local
+
+// stg_hotel_2f_f
+EvProgItemPutForShelf                            = 0x01F01E80; // type:func visibility:local
+EvProgUseHotel204Key                             = 0x01F02000; // type:func visibility:local
+EvProgUseHotelElevatorKey                        = 0x01F02050; // type:func visibility:local
+EvProgElvatorButton                              = 0x01F020A0; // type:func visibility:local
+EvProgSubElevatorButton                          = 0x01F02810; // type:func visibility:local
+EvProgGetBaggageInShelf                          = 0x01F02950; // type:func visibility:local
+EvProgPutBaggageForShelf                         = 0x01F02B00; // type:func visibility:local
+EvProgUseFishKey                                 = 0x01F02DB0; // type:func visibility:local
+EvProgSubCaseDraw                                = 0x01F031F0; // type:func visibility:local
+EvProgFishCaseClose                              = 0x01F03400; // type:func visibility:local
+EvProgFishCaseOpen                               = 0x01F03430; // type:func visibility:local
+EvProgTrunkUnlockChallenge                       = 0x01F03460; // type:func visibility:local
+EvProgSubTrunkDrumDraw                           = 0x01F03720; // type:func visibility:local
+EvProgSubTrunkDrumCheck                          = 0x01F03AA0; // type:func visibility:local
+EvProgPictureWithMarker                          = 0x01F03D70; // type:func visibility:local
+EvProgSubDrawMarkerAndWork                       = 0x01F04300; // type:func visibility:local
+EvAlphabetToNumber                               = 0x01F04810; // type:func visibility:local
+EvProgGetElvHallKey                              = 0x01F04860; // type:func visibility:local
+EvProgGetCinderella                              = 0x01F04890; // type:func visibility:local
+EvStageInit                                      = 0x01F048F0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hotel_3f_f
+EvProgUseHotelStairKey                           = 0x01F020F0; // type:func visibility:local
+EvProgUseHotel312Key                             = 0x01F02250; // type:func visibility:local
+EvProgMemoryOfMurder                             = 0x01F022A0; // type:func visibility:local
+EvProgVideoReplay                                = 0x01F02740; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+RR91_Filter                                      = 0x01F02910; // type:func visibility:local
+
+// stg_hotel_bf_b
+EvProgOpenElevatorWater                          = 0x01F01E80; // type:func visibility:local
+EvProgSubElevatorButton                          = 0x01F02550; // type:func visibility:local
+EvProgElevatorOutCamChange                       = 0x01F026A0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hotel_1f_b
+EvProgTriheadBattle                              = 0x01F01E80; // type:func visibility:local
+EvProgTriheadDead                                = 0x01F020E0; // type:func visibility:local
+EvProgGetEggRustColored                          = 0x01F022A0; // type:func visibility:local
+EvProgGetEggScarlet                              = 0x01F022D0; // type:func visibility:local
+EvProgEggHoleOnDoor                              = 0x01F02300; // type:func visibility:local
+EvProgSubDrawEgg                                 = 0x01F02BC0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02E10; // type:func visibility:local
+
+// stg_hotel_2f_b
+EvProgNotifyDeath                                = 0x01F01E80; // type:func visibility:local
+EvProgGetCrimsonCeremony                         = 0x01F01F90; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02270; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+
+// stg_hotel_3f_b
+EvProgUseDogKey                                  = 0x01F01E80; // type:func visibility:local
+
+// stg_hotel_fire
+EvProgAngelaInFire                               = 0x01F021D0; // type:func visibility:local
+EvProgFireDamage                                 = 0x01F02360; // type:func visibility:local
+
+// stg_end_recovery
+EvProgMaryBeforeBattle                           = 0x01F01E80; // type:func visibility:local
+EvProgMaryFall                                   = 0x01F021D0; // type:func visibility:local
+EvProgChangeMaryRoom                             = 0x01F02360; // type:func visibility:local
+EvProgMaryAfterBattle                            = 0x01F02380; // type:func visibility:local
+EvStageInit                                      = 0x01F024B0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F024D0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvProgKaidanFall                                 = 0x01F02850; // type:func visibility:local
+
+// stg_end_maria
+EvProgMaryBeforeBattle                           = 0x01F01E80; // type:func visibility:local
+EvProgMaryFall                                   = 0x01F021E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02390; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvProgKaidanFall                                 = 0x01F02710; // type:func visibility:local
+
+// stg_end_suicide
+EvProgMaryBeforeBattle                           = 0x01F01E80; // type:func visibility:local
+EvProgMaryFall                                   = 0x01F021E0; // type:func visibility:local
+EvProgChangeMaryRoom                             = 0x01F02390; // type:func visibility:local
+EvProgMaryAfterBattle                            = 0x01F023B0; // type:func visibility:local
+EvStageInit                                      = 0x01F024E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02500; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvProgKaidanFall                                 = 0x01F02880; // type:func visibility:local
+
+// stg_end_rebirth
+EvProgMaryBeforeBattle                           = 0x01F01E80; // type:func visibility:local
+EvProgMaryFall                                   = 0x01F021E0; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F02390; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+EvProgKaidanFall                                 = 0x01F02710; // type:func visibility:local
+
+// stg_end_dog
+EvProgEndingDog                                  = 0x01F01E80; // type:func visibility:local

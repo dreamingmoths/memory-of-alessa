@@ -1,0 +1,10 @@
+//* ast === stg_apart_stair *//
+EvProgUseYardKey                                 = 0x01F02100; // type:func visibility:local
+EvProgGetApartMap                                = 0x01F02150; // type:func visibility:local
+EvProgGetApartWestMap                            = 0x01F02180; // type:func visibility:local
+EvProgGetCannedJuice                             = 0x01F021B0; // type:func visibility:local
+EvProgApartBoss                                  = 0x01F021E0; // type:func visibility:local
+EvProgApartBossSiren                             = 0x01F02510; // type:func visibility:local
+EvProgApartBossEnd                               = 0x01F02550; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local

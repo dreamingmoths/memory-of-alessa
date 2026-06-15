@@ -1,0 +1,27 @@
+//* aey === stg_apart_e2f *//
+EvProgThreeNameOnWall                            = 0x01F01E80; // type:func visibility:local
+EvProgHintOfClockSet                             = 0x01F02150; // type:func visibility:local
+EvProgClockTime                                  = 0x01F02480; // type:func visibility:local
+EvProgClockNeedleMove                            = 0x01F028A0; // type:func visibility:local
+EvProgSubClockNeedleDraw                         = 0x01F03130; // type:func visibility:local
+EvProgUseClockKey                                = 0x01F035D0; // type:func visibility:local
+EvProgTryMoveClock                               = 0x01F035E0; // type:func visibility:local
+EvProgUseEmergencyKey                            = 0x01F03B30; // type:func visibility:local
+EvProgAnyoneInHole                               = 0x01F03B70; // type:func visibility:local
+EvProgNooneInHole                                = 0x01F04000; // type:func visibility:local
+EvProgLookDustChute                              = 0x01F04320; // type:func visibility:local
+EvProgUseCannedJuice                             = 0x01F04630; // type:func visibility:local
+EvProgNoFaceCorpse                               = 0x01F047F0; // type:func visibility:local
+EvProgAnyoneCry                                  = 0x01F04920; // type:func visibility:local
+EvProgGetLight                                   = 0x01F04AA0; // type:func visibility:local
+EvProgGetApart202Key                             = 0x01F04B40; // type:func visibility:local
+EvProgEndHintRecoveryRead                        = 0x01F04B70; // type:func visibility:local
+EvProgEndHintMariaRead                           = 0x01F04E30; // type:func visibility:local
+EvProgEndHintSuicideRead                         = 0x01F050F0; // type:func visibility:local
+EvProgUseApart202Key                             = 0x01F053B0; // type:func visibility:local
+EvProgMonkeyKick206                              = 0x01F05400; // type:func visibility:local
+EvCharaDataClear                                 = 0x01F05460; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvSoundCallAfterLoad                             = 0x01F05590; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local
+Delete_RedPointLight                             = 0x01F05AA0; // type:func visibility:local

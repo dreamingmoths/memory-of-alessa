@@ -1,0 +1,5 @@
+//* aew === stg_apart_e3fw *//
+EvProgLauraKickKey                               = 0x01F01E80; // type:func visibility:local
+EvProgGetHandgun                                 = 0x01F021B0; // type:func visibility:local
+EvRoomInit                                       = 0x01F023A0; // type:func visibility:local
+EvProgSubScreamOn                                = 0x01F02220; // type:func visibility:local

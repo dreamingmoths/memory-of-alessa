@@ -1,0 +1,12 @@
+//* awy === stg_apart_w2f *//
+EvProgReadDearTim                                = 0x01F020A0; // type:func visibility:local
+EvProgUseLyneKey                                 = 0x01F02280; // type:func visibility:local
+EvProgGetApartStairKey                           = 0x01F022D0; // type:func visibility:local
+EvProgUseApartStairKey                           = 0x01F02300; // type:func visibility:local
+EvProgWalletInToilet                             = 0x01F02350; // type:func visibility:local
+EvProgWalletOutToilet                            = 0x01F026D0; // type:func visibility:local
+EvProgSubWalletMemo                              = 0x01F028A0; // type:func visibility:local
+EvProgOpenSafe                                   = 0x01F02C80; // type:func visibility:local
+EvProgSubSafaLockDraw                            = 0x01F02F50; // type:func visibility:local
+EvProgSubSafeLockRotate                          = 0x01F032F0; // type:func visibility:local
+EvAllTimeFunc                                    = 0x01F024B0; // type:func visibility:local

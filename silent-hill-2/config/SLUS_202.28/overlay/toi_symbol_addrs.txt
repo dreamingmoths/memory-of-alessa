@@ -1,0 +1,7 @@
+//* toi === stg_toilet *//
+EvProgPrologueInToilet                           = 0x01F01E80; // type:func visibility:local
+EvStageInit                                      = 0x01F02190; // type:func visibility:local
+EvBgmControl                                     = 0x01F021A0; // type:func visibility:local
+Kari_hisyakai                                    = 0x01F021E0; // type:func
+LinearTrim                                       = 0x01F01E80; // type:func visibility:local
+Toilet_Dof_Filter                                = 0x01F02460; // type:func visibility:local
