@@ -21,7 +21,7 @@ segments:
     type: code
     vram: 0x1F01E00
     start: 0x80
-    bss_size: 0x800
+    bss_size: 0x880
     subsegments:
       - [0x80, asm, Event/stage/stg_town_east]
       - [0x3040, data, Event/stage/stg_town_east_data ]

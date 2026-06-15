@@ -21,7 +21,7 @@ segments:
     type: code
     vram: 0x1F01E00
     start: 0x80
-    bss_size: 0x280
+    bss_size: 0x300
     subsegments:
       - [0x80, asm, Event/stage/stg_toilet]
       - [0x840, data, Event/stage/stg_toilet_data ]

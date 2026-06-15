@@ -21,7 +21,7 @@ segments:
     type: code
     vram: 0x1F01E00
     start: 0x80
-    bss_size: 0x780
+    bss_size: 0x800
     subsegments:
       - [0x80, asm, Event/stage/stg_apart_e3fe]
       - [0x940, data, Event/stage/stg_apart_e3fe_data ]
