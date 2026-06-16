@@ -1,19 +1,102 @@
-#include "common.h"
-#include "Chacter/character.h"
+#include "Chacter/m3_play_3d.h"
 #include "Chacter/m3_sc.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/pad.h"
 #include "Chacter/m3_play.h"
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckLturn180);
+static int PlayerCheckLturn180(void);
+static int PlayerCheckRturn180(void);
+static int PlayerCheckTurn180(void);
+static void lower_lround_3d_nata(SubCharacter* p, float* spd);
+static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckRturn180);
+static int PlayerCheckLturn180(void) {
+    PAD_INFO* pad = &sh2jms.pad[0]; // r2
+    PAD_3D* p3d = &pad->pad3d; // r4
+    
+    if (p3d->lslide != 0) {
+        if ((p3d->lturn180 > 0) && (p3d->rturn180 == 2)) {
+            return 1;
+        }
+    } else if ((p3d->lturn180 == 2) && (p3d->rturn180 == 2)) {
+        return 2;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckTurn180);
+static int PlayerCheckRturn180(void) {
+    PAD_INFO* pad = &sh2jms.pad[0]; // r2
+    PAD_3D* p3d = &pad->pad3d; // r4
+   
+    if (p3d->rslide != 0) {
+        if ((p3d->rturn180 > 0) && (p3d->lturn180 == 2)) {
+            return 1;
+        }
+    } else if ((p3d->rturn180 == 2) && (p3d->lturn180 == 2)) {
+        return 2;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lround_3d_nata);
+static int PlayerCheckTurn180(void) { // not line matched
+    PAD_3D* p3d = &sh2jms.pad[0].pad3d; // r5
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rround_3d_nata);
+    
+    int l = PlayerCheckLturn180(); // r6
+    int r = PlayerCheckRturn180(); // r2
+
+    if (l == 0 && r == 0) return 0;
+    
+    switch (p3d->round_way) {
+        case -1:
+            return -1;
+        case 1:
+            return 1;
+        default:
+            if (l < r) {
+                break;
+            }
+        return -1;
+    }
+    return 1;
+
+}
+
+static void lower_lround_3d_nata(SubCharacter* p, float* spd) {
+    
+    switch (sh2jms.ctrl_unit) {
+        
+        case 1:
+            *spd = sh2jms.lstick_x;
+
+
+            
+            break;
+        case 0:
+            *spd = -1.0f;
+            break;
+    }
+    shCharacterAnimeSpeedAdd_(p, 2, -0x180); // do we write these in decimal?
+    shCharacterAnimeSpeedAdd_(p, 1, -0x180);
+}
+
+static void lower_rround_3d_nata(SubCharacter* p, float* spd) {
+    
+    switch (sh2jms.ctrl_unit) {
+        
+        case 1:
+            *spd = sh2jms.lstick_x;
+
+
+            
+            break;
+        case 0:
+            *spd = 1.0f;
+            break;
+    }
+    shCharacterAnimeSpeedAdd_(p, 2, -0x180); // do we write these in decimal?
+    shCharacterAnimeSpeedAdd_(p, 1, -0x180);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_walk_3d_nata);
 
