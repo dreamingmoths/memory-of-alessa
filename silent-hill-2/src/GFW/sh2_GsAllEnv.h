@@ -4,6 +4,7 @@
 /* this header is not found in the symbols */
 
 #include "sh2_common.h"
+#include "libgraph.h"
 
 typedef struct shGsLoopEnv {
     // total size: 0xB0
@@ -609,58 +610,7 @@ typedef struct shGsAllEnv {
     u_int loop;                 // offset 0x8, size 0x4
     u_int loop3;                // offset 0xC, size 0x4
     struct shGsLoopEnv LoopEnv; // offset 0x10, size 0xB0
-    struct /* @anon22 */ {
-        // total size: 0x28
-        struct /* @anon18 */ {
-            // total size: 0x8
-            u_int EN1 : 1;   // offset 0x0, size 0x4
-            u_int EN2 : 1;   // offset 0x0, size 0x4
-            u_int CRTMD : 3; // offset 0x0, size 0x4
-            u_int MMOD : 1;  // offset 0x0, size 0x4
-            u_int AMOD : 1;  // offset 0x0, size 0x4
-            u_int SLBG : 1;  // offset 0x0, size 0x4
-            u_int ALP : 8;   // offset 0x0, size 0x4
-            u_int p0 : 16;   // offset 0x0, size 0x4
-            u_int p1;        // offset 0x4, size 0x4
-        } pmode;             // offset 0x0, size 0x8
-        struct /* @anon2 */ {
-            // total size: 0x8
-            u_int INT : 1;  // offset 0x0, size 0x4
-            u_int FFMD : 1; // offset 0x0, size 0x4
-            u_int DPMS : 2; // offset 0x0, size 0x4
-            u_int p0 : 28;  // offset 0x0, size 0x4
-            u_int p1;       // offset 0x4, size 0x4
-        } smode2;           // offset 0x8, size 0x8
-        struct /* @anon21 */ {
-            // total size: 0x8
-            u_int FBP : 9;  // offset 0x0, size 0x4
-            u_int FBW : 6;  // offset 0x0, size 0x4
-            u_int PSM : 5;  // offset 0x0, size 0x4
-            u_int p0 : 12;  // offset 0x0, size 0x4
-            u_int DBX : 11; // offset 0x4, size 0x4
-            u_int DBY : 11; // offset 0x4, size 0x4
-            u_int p1 : 10;  // offset 0x4, size 0x4
-        } dispfb;           // offset 0x10, size 0x8
-        struct /* @anon6 */ {
-            // total size: 0x8
-            u_int DX : 12;  // offset 0x0, size 0x4
-            u_int DY : 11;  // offset 0x0, size 0x4
-            u_int MAGH : 4; // offset 0x0, size 0x4
-            u_int MAGV : 2; // offset 0x0, size 0x4
-            u_int p0 : 3;   // offset 0x0, size 0x4
-            u_int DW : 12;  // offset 0x4, size 0x4
-            u_int DH : 11;  // offset 0x4, size 0x4
-            u_int p1 : 9;   // offset 0x4, size 0x4
-        } display;          // offset 0x18, size 0x8
-        struct /* @anon7 */ {
-            // total size: 0x8
-            u_int R : 8;                      // offset 0x0, size 0x4
-            u_int G : 8;                      // offset 0x0, size 0x4
-            u_int B : 8;                      // offset 0x0, size 0x4
-            u_int p0 : 8;                     // offset 0x0, size 0x4
-            u_int p1;                         // offset 0x4, size 0x4
-        } bgcolor;                            // offset 0x20, size 0x8
-    } DispEnv[3];                             // offset 0xC0, size 0x78
+    sceGsDispEnv DispEnv[3];                  // offset 0xC0, size 0x78
     struct shGsDrawEnv DrawEnv[3];            // offset 0x140, size 0x7E0
     struct shGsStencilDrawEnv StencilBuf[3];  // offset 0x920, size 0x870
     struct shGsTinyDrawEnv StencilWork[6];    // offset 0x1190, size 0x480
