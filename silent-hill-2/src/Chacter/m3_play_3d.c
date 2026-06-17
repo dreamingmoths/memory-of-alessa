@@ -1,19 +1,116 @@
-#include "common.h"
-#include "Chacter/character.h"
+#include "Chacter/m3_play_3d.h"
 #include "Chacter/m3_sc.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/pad.h"
 #include "Chacter/m3_play.h"
+#include "Chacter/m3_play_common.h"
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckLturn180);
+static int PlayerCheckLturn180(void);
+static int PlayerCheckRturn180(void);
+static int PlayerCheckTurn180(void);
+static void lower_lround_3d_nata(SubCharacter* p, float* spd);
+static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckRturn180);
+static void lower_stand_3d(SubCharacter* p);
+static void upper_stand_3d(SubCharacter* p);
+static void lower_relax_3d(SubCharacter* p);
+static void upper_relax_3d(SubCharacter* p);
+static void lower_alert_3d(SubCharacter* p);
+static void upper_alert_3d(SubCharacter* p);
+static void lower_tired_3d(SubCharacter* p);
+static void upper_tired_3d(SubCharacter* p);
+static void lower_ready_3d(SubCharacter* p);
+static void upper_ready_3d(SubCharacter* p);
+static void lower_readyoff_3d(SubCharacter* p);
+static void upper_readyoff_3d(SubCharacter* p);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckTurn180);
+static int PlayerCheckLturn180(void) {
+    PAD_INFO* pad = &sh2jms.pad[0]; // r2
+    PAD_3D* p3d = &pad->pad3d; // r4
+    
+    if (p3d->lslide != 0) {
+        if ((p3d->lturn180 > 0) && (p3d->rturn180 == 2)) {
+            return 1;
+        }
+    } else if ((p3d->lturn180 == 2) && (p3d->rturn180 == 2)) {
+        return 2;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lround_3d_nata);
+static int PlayerCheckRturn180(void) {
+    PAD_INFO* pad = &sh2jms.pad[0]; // r2
+    PAD_3D* p3d = &pad->pad3d; // r4
+   
+    if (p3d->rslide != 0) {
+        if ((p3d->rturn180 > 0) && (p3d->lturn180 == 2)) {
+            return 1;
+        }
+    } else if ((p3d->rturn180 == 2) && (p3d->lturn180 == 2)) {
+        return 2;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rround_3d_nata);
+static int PlayerCheckTurn180(void) { // not line matched
+    PAD_3D* p3d = &sh2jms.pad[0].pad3d; // r5
+
+    
+    int l = PlayerCheckLturn180(); // r6
+    int r = PlayerCheckRturn180(); // r2
+
+    if (l == 0 && r == 0) return 0;
+    
+    switch (p3d->round_way) {
+        case -1:
+            return -1;
+        case 1:
+            return 1;
+        default:
+            if (l < r) {
+                break;
+            }
+        return -1;
+    }
+    return 1;
+
+}
+
+static void lower_lround_3d_nata(SubCharacter* p, float* spd) {
+    
+    switch (sh2jms.ctrl_unit) {
+        
+        case 1:
+            *spd = sh2jms.lstick_x;
+
+
+            
+            break;
+        case 0:
+            *spd = -1.0f;
+            break;
+    }
+    shCharacterAnimeSpeedAdd_(p, 2, -384);
+    shCharacterAnimeSpeedAdd_(p, 1, -384);
+}
+
+static void lower_rround_3d_nata(SubCharacter* p, float* spd) {
+    
+    switch (sh2jms.ctrl_unit) {
+        
+        case 1:
+            *spd = sh2jms.lstick_x;
+
+
+            
+            break;
+        case 0:
+            *spd = 1.0f;
+            break;
+    }
+    shCharacterAnimeSpeedAdd_(p, 2, -384); 
+    shCharacterAnimeSpeedAdd_(p, 1, -384);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_walk_3d_nata);
 
@@ -23,29 +120,53 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lswalk_3d_nata);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rswalk_3d_nata);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_stand_3d);
+static void lower_stand_3d(SubCharacter* p) {
+    lower_stand(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_stand_3d);
+static void upper_stand_3d(SubCharacter* p) {
+    upper_stand(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_relax_3d);
+static void lower_relax_3d(SubCharacter* p) {
+    lower_relax(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_relax_3d);
+static void upper_relax_3d(SubCharacter* p) {
+    upper_relax(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_alert_3d);
+static void lower_alert_3d(SubCharacter* p) {
+    lower_alert(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_alert_3d);
+static void upper_alert_3d(SubCharacter* p) {
+    upper_alert(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_tired_3d);
+static void lower_tired_3d(SubCharacter* p) {
+    lower_tired(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_tired_3d);
+static void upper_tired_3d(SubCharacter* p) {
+    upper_tired(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_ready_3d);
+static void lower_ready_3d(SubCharacter* p) {
+    lower_ready(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_ready_3d);
+static void upper_ready_3d(SubCharacter* p) {
+    upper_ready(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_readyoff_3d);
+static void lower_readyoff_3d(SubCharacter* p) {
+    lower_readyoff(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_readyoff_3d);
+static void upper_readyoff_3d(SubCharacter* p) {
+    upper_readyoff(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lround_3d);
 
