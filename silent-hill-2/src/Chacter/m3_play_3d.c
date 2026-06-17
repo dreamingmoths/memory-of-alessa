@@ -90,8 +90,8 @@ static void lower_lround_3d_nata(SubCharacter* p, float* spd) {
             *spd = -1.0f;
             break;
     }
-    shCharacterAnimeSpeedAdd_(p, 2, -0x180); // do we write these in decimal?
-    shCharacterAnimeSpeedAdd_(p, 1, -0x180);
+    shCharacterAnimeSpeedAdd_(p, 2, -384);
+    shCharacterAnimeSpeedAdd_(p, 1, -384);
 }
 
 static void lower_rround_3d_nata(SubCharacter* p, float* spd) {
@@ -108,8 +108,8 @@ static void lower_rround_3d_nata(SubCharacter* p, float* spd) {
             *spd = 1.0f;
             break;
     }
-    shCharacterAnimeSpeedAdd_(p, 2, -0x180); // do we write these in decimal?
-    shCharacterAnimeSpeedAdd_(p, 1, -0x180);
+    shCharacterAnimeSpeedAdd_(p, 2, -384); 
+    shCharacterAnimeSpeedAdd_(p, 1, -384);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_walk_3d_nata);
