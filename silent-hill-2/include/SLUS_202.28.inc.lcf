@@ -19,6 +19,48 @@ SECTIONS
 	.main	:
 	{
 		_gp = 0x3cfc70;
+
+		## linker symbols for overlays deleted from the prototype ##
+		stage_town_west      = 0x01F07060;
+		stage_bowling        = 0x01F02A80;
+		stage_to_heaven      = 0x01F02700;
+		stage_heaven_night   = 0x01F020A0;
+		stage_hospital_1f_f  = 0x01F03830;
+		stage_hospital_2f_f  = 0x01F030A0;
+		stage_hospital_3f_f  = 0x01F05DF0;
+		stage_hospital_rf_f  = 0x01F036E0;
+		stage_hospital_1fw_b = 0x01F02DC0;
+		stage_hospital_1fe_b = 0x01F02B00;
+		stage_hospital_2f_b  = 0x01F02BA0;
+		stage_hospital_3f_b  = 0x01F04310;
+		stage_hospital_bf_b  = 0x01F04330;
+		stage_hospital_pass  = 0x01F02630;
+		stage_society        = 0x01F02150;
+		stage_delusion_2     = 0x01F02470;
+		stage_delusion_3     = 0x01F04850;
+		stage_prison_n       = 0x01F04210;
+		stage_prison_s       = 0x01F037F0;
+		stage_prison_bf      = 0x01F02E30;
+		stage_labyrinth_w    = 0x01F05AE0;
+		stage_labyrinth_e    = 0x01F03A50;
+		stage_labyrinth_n    = 0x01F05580;
+		stage_eddie_boss     = 0x01F02CD0;
+		stage_lake           = 0x01F02530;
+		stage_hotel_bf_f     = 0x01F02F60;
+		stage_hotel_1f_f     = 0x01F065F0;
+		stage_hotel_2f_f     = 0x01F05B00;
+		stage_hotel_3f_f     = 0x01F02F90;
+		stage_hotel_bf_b     = 0x01F02EE0;
+		stage_hotel_1f_b     = 0x01F035F0;
+		stage_hotel_2f_b     = 0x01F02AC0;
+		stage_hotel_3f_b     = 0x01F02190;
+		stage_hotel_fire     = 0x01F024D0;
+		stage_end_recovery   = 0x01F03500;
+		stage_end_maria      = 0x01F033F0;
+		stage_end_suicide    = 0x01F035A0;
+		stage_end_rebirth    = 0x01F033F0;
+		stage_end_dog        = 0x01F02050;
+
 		.	= ALIGN(0x80);
 
 		### 🔴 code 🔴 ###

@@ -218,6 +218,9 @@ extern struct Stage_Data stage_apart_w1f;
 extern struct Stage_Data stage_apart_w2f;
 extern struct Stage_Data stage_apart_stair;
 extern struct Stage_Data stage_apart_out;
+
+/*         not present in the prototype!         */
+/* these are hardcoded as linker symbols for now */
 extern struct Stage_Data stage_town_west;
 extern struct Stage_Data stage_bowling;
 extern struct Stage_Data stage_to_heaven;
