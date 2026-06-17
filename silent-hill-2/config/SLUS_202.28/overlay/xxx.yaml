@@ -16,12 +16,12 @@ options:
   undefined_syms_auto_path: linkers/xxx_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, xxx_overlay_header]
   - name: xxx
     type: code
     vram: 0x1E08700
-    start: 0x80
+    start: 0x0
     subsegments:
+      - [0x0, databin, xxx_overlay_header]
       - [0x80, asm, Event/stage/stg_xxx]
-      - [0x140, data, Event/stage/stg_xxx_data ]
+      - [0x100, data, Event/stage/stg_xxx_data]
   - [0x200]

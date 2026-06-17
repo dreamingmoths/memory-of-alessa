@@ -16,12 +16,12 @@ options:
   undefined_syms_auto_path: linkers/aot_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, aot_overlay_header]
   - name: aot
     type: code
     vram: 0x1F01E00
-    start: 0x80
+    start: 0x0
     subsegments:
+      - [0x0, databin, aot_overlay_header]
       - [0x80, asm, Event/stage/stg_apart_out]
-      - [0xA40, data, Event/stage/stg_apart_out_data ]
+      - [0xA00, data, Event/stage/stg_apart_out_data]
   - [0xF80]

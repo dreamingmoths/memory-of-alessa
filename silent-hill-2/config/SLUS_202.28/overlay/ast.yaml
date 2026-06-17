@@ -16,14 +16,14 @@ options:
   undefined_syms_auto_path: linkers/ast_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, ast_overlay_header]
   - name: ast
     type: code
     vram: 0x1F01E00
-    start: 0x80
-    bss_size: 0x100
+    start: 0x0
+    bss_size: 0x80
     subsegments:
+      - [0x0, databin, ast_overlay_header]
       - [0x80, asm, Event/stage/stg_apart_stair]
-      - [0xCC0, data, Event/stage/stg_apart_stair_data ]
-      - { vram: 0x1F033C0, type: bss, name: Event/stage/stg_apart_stair_bss }
+      - [0xC80, data, Event/stage/stg_apart_stair_data]
+      - { vram: 0x1F03400, type: bss, name: Event/stage/stg_apart_stair_bss }
   - [0x1600]

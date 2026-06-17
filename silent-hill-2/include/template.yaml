@@ -16,14 +16,14 @@ options:
   undefined_syms_auto_path: linkers/${{ name }}_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, ${{ name }}_overlay_header]
   - name: ${{ name }}
     type: code
     vram: ${{ vram_start }}
-    start: ${{ text_start }}
+    start: 0x0
     bss_size: ${{ bss_size }}
     subsegments:
+      - [0x0, databin, ${{ name }}_overlay_header]
       - [${{ text_start }}, asm, Event/stage/${{ filename }}]
-      - [${{ data_start }}, data, Event/stage/${{ filename }}_data ]
+      - [${{ data_start }}, data, Event/stage/${{ filename }}_data]
       - { vram: ${{ bss_start }}, type: bss, name: Event/stage/${{ filename }}_bss }
   - [${{ file_size }}]

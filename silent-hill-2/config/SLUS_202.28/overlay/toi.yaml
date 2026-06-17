@@ -16,14 +16,14 @@ options:
   undefined_syms_auto_path: linkers/toi_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, toi_overlay_header]
   - name: toi
     type: code
     vram: 0x1F01E00
-    start: 0x80
-    bss_size: 0x300
+    start: 0x0
+    bss_size: 0x280
     subsegments:
+      - [0x0, databin, toi_overlay_header]
       - [0x80, asm, Event/stage/stg_toilet]
-      - [0x840, data, Event/stage/stg_toilet_data ]
-      - { vram: 0x1F02840, type: bss, name: Event/stage/stg_toilet_bss }
+      - [0x800, data, Event/stage/stg_toilet_data]
+      - { vram: 0x1F02880, type: bss, name: Event/stage/stg_toilet_bss }
   - [0xA80]

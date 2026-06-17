@@ -16,12 +16,12 @@ options:
   undefined_syms_auto_path: linkers/aew_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-  - [0, databin, aew_overlay_header]
   - name: aew
     type: code
     vram: 0x1F01E00
-    start: 0x80
+    start: 0x0
     subsegments:
+      - [0x0, databin, aew_overlay_header]
       - [0x80, asm, Event/stage/stg_apart_e3fw]
-      - [0x5C0, data, Event/stage/stg_apart_e3fw_data ]
+      - [0x580, data, Event/stage/stg_apart_e3fw_data]
   - [0xA80]
