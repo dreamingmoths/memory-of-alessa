@@ -21977,7 +21977,7 @@ playing                                                               = 0x0122B3
 _texture_buffer_always                                                = 0x0122B3C0; // allow_duplicated:True size:280576
 
 
-MemShare_gp_data_buf = 0x126FBC0; // type:s8
+MemShare_gp_data_buf = 0x126FBC0; // type:s8 size:0xC92000
 D_1F01E00 = 0x1F01E00; // ignore:true
 
 D_8 = 0x8; // ignore:true
