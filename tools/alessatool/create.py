@@ -26,8 +26,12 @@ class CreationInfo:
     map_filename: function
     symbol_addrs_lines: list[str]
 
+def align_next(value: int, alignment: int):
+    return ((value + (alignment - 1)) // alignment) * alignment;
+
 def _create_from_template(info: CreationInfo) -> str:
     MW_OVERLAY_START = 0x80
+    MW_OVERLAY_HEADER_SIZE = 0x40
 
     mw_header = info.mw_header
     overlay_contents = info.overlay_contents
@@ -39,9 +43,9 @@ def _create_from_template(info: CreationInfo) -> str:
         "vram_start": hex_format(mw_header.address),
         "stage_name": mw_header.name,
         "text_start": hex_format(MW_OVERLAY_START),
-        "data_start": hex_format(MW_OVERLAY_START + mw_header.sz_text),
-        "bss_size": hex_format(mw_header.sz_bss + MW_OVERLAY_START),
-        "bss_start": hex_format(mw_header.address + mw_header.sz_text + mw_header.sz_data),
+        "data_start": hex_format(MW_OVERLAY_HEADER_SIZE + mw_header.sz_text),
+        "bss_size": hex_format(mw_header.sz_bss),
+        "bss_start": hex_format(align_next(mw_header.address + mw_header.sz_text + mw_header.sz_data, 0x80)),
         "file_size": hex_format(len(overlay_contents))  
     }
 
