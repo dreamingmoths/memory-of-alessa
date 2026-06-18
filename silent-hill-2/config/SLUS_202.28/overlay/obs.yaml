@@ -23,7 +23,7 @@ segments:
     bss_size: 0x80
     subsegments:
       - [0x0, databin, obs_overlay_header]
-      - [0x80, asm, Event/stage/stg_observation]
-      - [0xD00, data, Event/stage/stg_observation_data]
-      - { vram: 0x1F02E80, type: bss, name: Event/stage/stg_observation_bss }
+      - [0x80, asm, Event/stage/stg_ovservation]
+      - [0xD00, data, Event/stage/stg_ovservation_data]
+      - { vram: 0x1F02E80, type: bss, name: Event/stage/stg_ovservation_bss }
   - [0x1080]

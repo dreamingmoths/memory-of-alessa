@@ -4,7 +4,7 @@
 #include "Chacter/m3_play.h"
 #include "shared/Chacter_Draw/clani.h"
 
-static void event_jms_stand(void);
+/* static */ void event_jms_stand(void);
 
 int PlayerNowDemoEventMode(void) {
     return sh2jms.player->status & 0x2000 ? 1 : 0;
@@ -78,7 +78,7 @@ void PlayerEventAnimeSetDirect(int anime /* r16 */)  {
     SET_BIT(sh2jms.event_anime, 31);
 }
 
-static void event_jms_stand(void) {
+/* static */ void event_jms_stand(void) {
     PlayerSpeedDownToStand(sh2jms.player);
 }
 

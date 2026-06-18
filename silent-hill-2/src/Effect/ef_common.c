@@ -18,7 +18,7 @@ static int EFCTDeleteOldBloodDropTask(void);
 static void InitEffectTexEnv(int EffectKind /* r2 */);
 static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */);
 static int EFCTAutoNextFrame(EFCTObject* pObj /* r2 */);
-static void EFCTDoCtrlDummy(void* ptr /* r2 */);
+/* static */ void EFCTDoCtrlDummy(void* ptr /* r2 */);
 
 extern /* static */ void (* EFCTControlFunc[9])(void *);
 
@@ -332,7 +332,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTDeleteOldBloodDropTask);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTDeleteOldTask);
 
-static void EFCTDoCtrlDummy(void* ptr /* r2 */) {
+/* static */ void EFCTDoCtrlDummy(void* ptr /* r2 */) {
     EFCTCutEffectTask(ptr);
 }
 
