@@ -19,4 +19,6 @@ void upper_ready(SubCharacter* p); // arg not present in DWARF
 void lower_readyoff(SubCharacter* p); // arg not present in DWARF
 void upper_readyoff(SubCharacter* p); // arg not present in DWARF
 
+void PlayerCheckAttack(SubCharacter* this);
+
 #endif // M3_PLAY_COMMON_H
