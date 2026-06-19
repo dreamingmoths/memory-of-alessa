@@ -24,6 +24,9 @@ static void upper_ready_3d(SubCharacter* p);
 static void lower_readyoff_3d(SubCharacter* p);
 static void upper_readyoff_3d(SubCharacter* p);
 
+static void PlayerUpdateStatusLower2nd3D(SubCharacter* this);
+static void PlayerCheckAttack3D(SubCharacter* this);
+
 static int PlayerCheckLturn180(void) {
     PAD_INFO* pad = &sh2jms.pad[0]; // r2
     PAD_3D* p3d = &pad->pad3d; // r4
@@ -90,7 +93,7 @@ static void lower_lround_3d_nata(SubCharacter* p, float* spd) {
             *spd = -1.0f;
             break;
     }
-    shCharacterAnimeSpeedAdd_(p, 2, -384);
+    shCharacterAnimeSpeedAdd_(p, 2, -384); 
     shCharacterAnimeSpeedAdd_(p, 1, -384);
 }
 
@@ -108,7 +111,7 @@ static void lower_rround_3d_nata(SubCharacter* p, float* spd) {
             *spd = 1.0f;
             break;
     }
-    shCharacterAnimeSpeedAdd_(p, 2, -384); 
+    shCharacterAnimeSpeedAdd_(p, 2, -384);
     shCharacterAnimeSpeedAdd_(p, 1, -384);
 }
 
@@ -1090,8 +1093,79 @@ void PlayerUpdateStatusUpper3D(SubCharacter* this) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerUpdatePosition3D);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerUpdateStatusLower2nd3D);
+static void PlayerUpdateStatusLower2nd3D(SubCharacter* this) { // not line matched
+    shPlayerWork* w = &sh2jms; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckAttack3D);
+    
+    switch (w->upper_now) {
+        case JMS_ST_U_HOLD:
+            if (lower_flg_on(0x4000000)) {
+                if (w->lower_now != JMS_ST_L_HOLD) {
+                    lower_st_set(JMS_ST_L_HOLD, w);
+                    lower_flg_set(JMS_ST_L_HOLD, w);
+                }
+            }
+            break;
+        case JMS_ST_U_RELEASE:
+            if (lower_flg_on(0x8000000)) {
+                if (w->lower_now != JMS_ST_L_RELEASE) {
+                    lower_st_set(JMS_ST_L_RELEASE, w);
+                    lower_flg_set(JMS_ST_L_RELEASE, w);
+                    player_flg_on(&w->l_anime_st_flg, 0x40);
+                }
+            }
+            break;
+        case JMS_ST_U_ATTACK:
+            if (lower_flg_on(0x10000000)) {
+                if (w->lower_now != JMS_ST_L_ATTACK || w->lower_prev == JMS_ST_L_ATTACK) {
+                    lower_st_set(JMS_ST_L_ATTACK, w);
+                    lower_flg_set(JMS_ST_L_ATTACK, w);
+                }
+            } else {
+                if (lower_flg_on(0x4000000)) {
+                    if (w->lower_now != JMS_ST_L_HOLD) {
+                        lower_st_set(JMS_ST_L_HOLD, w);
+                        lower_flg_set(JMS_ST_L_HOLD, w);
+                        player_flg_off(&w->lower_st_flg, 0x1000);
+                        player_flg_off(&w->lower_st_flg, 0x2000);
+                        player_flg_off(&w->lower_st_flg, 0x4000);
+                        player_flg_off(&w->lower_st_flg, 0x10000);
+                        player_flg_off(&w->lower_st_flg, 0x8000);
+                        player_flg_off(&w->lower_st_flg, 0x100);
+                        player_flg_off(&w->lower_st_flg, 0x200);
+                        player_flg_off(&w->lower_st_flg, 0x800);
+                        player_flg_off(&w->lower_st_flg, 0x400);
+                    }
+                }
+            }
+            break;        
+        case JMS_ST_U_KICK:
+            break;
+    }
+    
+    switch (w->lower_now) {
+        case JMS_ST_L_RUN1:
+        case JMS_ST_L_RUN2:
+        case JMS_ST_L_RUN3:
+        case JMS_ST_L_RSRUN:
+        case JMS_ST_L_LSRUN:
+            w->running = 1;
+            break;
+        default:
+            w->running = 0;
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckControl3D);
+
+static void PlayerCheckAttack3D(SubCharacter* this) {
+    PlayerCheckAttack(this);
+}
+
+void PlayerCheckControl3D(SubCharacter* this) {
+    PlayerUpdateStatus3D(this);
+    PlayerUpdateStatusLower3D(this);
+    PlayerUpdateStatusUpper3D(this);
+    PlayerCheckAttack3D(this);
+    PlayerUpdateStatusLower2nd3D(this);
+}
