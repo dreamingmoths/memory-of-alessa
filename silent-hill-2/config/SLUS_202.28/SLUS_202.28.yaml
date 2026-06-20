@@ -90,7 +90,7 @@ segments:
       - [0x053b10, asm, Enemy/en_mkn]
       - [0x057eb0, asm, Enemy/en_nse]
       - [0x05a760, asm, Enemy/en_pap]
-      - [0x05db10, c,   Enemy/en_red]
+      - [0x05db10, asm, Enemy/en_red]
       - [0x060ab0, asm, Enemy/en_scu]
       - [0x065700, asm, Enemy/en_tyu]
       - [0x068ed0, asm, Fog/fog]
