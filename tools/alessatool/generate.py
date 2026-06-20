@@ -139,6 +139,7 @@ def generate_lcf(args: GenerationArgs):
 
         block = [
             f"\t\t# {section_type}",
+            f"\t\t__{section_type[1:]}_start = .;",
             f"\t\tALIGNALL(0x{alignment:X});",
         ]
         for entry in objects:
