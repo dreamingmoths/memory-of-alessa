@@ -539,7 +539,7 @@ segments:
       - { vram: 0x11eb8f0, type: .bss, name: Effect2/hh_dbg_wrapper }
       - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
       - { vram: 0x1202ed0, type: .bss, name: Effect2/hh_class_water_03 }
-      - { vram: 0x1202ef0, type: bss,  name: Effect2/hh_class_water_04 }
+      - { vram: 0x1202ef0, type: .bss, name: Effect2/hh_class_water_04 }
       - { vram: 0x1202f10, type: .bss, name: Effect2/hh_class_water_06 }
       - { vram: 0x1202f30, type: .bss, name: Effect2/hh_class_water_07 }
       - { vram: 0x1202f50, type: .bss, name: Effect2/hh_class_water_08 }
