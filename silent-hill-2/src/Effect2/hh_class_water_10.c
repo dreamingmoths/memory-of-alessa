@@ -17,7 +17,7 @@ static void Grid_Work_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Draw(struct HH_Object_Water_10* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max);
 
-extern /* static */ struct WaveArea_Infomeation _Area_Info_List_0x0036F510[1]; // size: 0x90, address: 0x36F510
+extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036F510[1]; // size: 0x90, address: 0x36F510
 extern /* static */ float __arri_173;
 extern /* static */ float __distance_171;
 extern /* static */ float __lost_time_172;
