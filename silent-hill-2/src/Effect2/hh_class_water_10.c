@@ -17,21 +17,34 @@ static void Grid_Work_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Draw(struct HH_Object_Water_10* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max);
 
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036F510[1]; // size: 0x90, address: 0x36F510
-extern /* static */ float __arri_173;
-extern /* static */ float __distance_171;
-extern /* static */ float __lost_time_172;
-extern /* static */ float __omega_174;
-extern /* static */ float __v_175;
-extern /* static */ float _interval_162;
-extern /* static */ float amb_alpha_72;
-extern /* static */ float base_move_156;
-extern /* static */ float degree_155;
-extern /* static */ int i_131;
-extern /* static */ u_int j_132;
-extern /* static */ float light_alpha_73;
-extern /* static */ float sx_87;
-extern /* static */ float ty_88;
+static u_int _area00_view_list_0x0036F500[1] = {0};
+static WaveArea_Infomeation _Area_Info_List_0x0036F510[1] = {
+    {/* .World_Location = */ {58000.0f, 160.0f, 56000.0f, 1.0f},
+     /* .Grid_WH = */ {4200.0f, 0.0f, 8200.0f, 200.0f},
+     /* .Grid_Index = */ {21, 41},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036F500,
+     /* .ViewArea_List_Max = */ 1,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {255.0f, 255.0f, 255.0f, 64.0f},
+     /* .Ambient0_BaseRGBA = */ {64.0f, 64.0f, 64.0f, 32.0f},
+     /* .Ambient1_BaseRGBA = */ {19.0f, 19.0f, 19.0f, 255.0f},
+     /* .Light_BaseRGBA = */ {16.0f, 16.0f, 16.0f, 128.0f},
+     /* .pST_Defference = */ NULL}};
+
+static float __arri_173 = 40.0f;
+static float __distance_171 = 3200.0f;
+static float __lost_time_172 = 10.0f;
+static float __omega_174 = 612.0f;
+static float __v_175 = 1200.0f;
+static float _interval_162 = 4.0f;
+static float amb_alpha_72 = 32.0f;
+static float base_move_156 = 128.0f;
+static float degree_155 = 10.0f;
+static int i_131 = 0;
+static u_int j_132 = 0;
+static float light_alpha_73 = 128.0f;
+static float sx_87 = 7.0f;
+static float ty_88 = 7.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_10* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));

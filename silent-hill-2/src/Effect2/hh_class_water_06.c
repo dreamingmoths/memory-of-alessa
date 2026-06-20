@@ -442,7 +442,7 @@ u_int HH_Class_Water_06(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                     wave_element.Arrival = _arri_190;
                     wave_element.Omega = TO_RAD(_omega_191);
                     wave_element.Verocity = _v_192;
-                
+
                     wave_element.Timer = 0;
                     HH_Class_WaterCommon_WaveElement_Addition(pThis->Wave_Info, 0x14, &wave_element);
                 }

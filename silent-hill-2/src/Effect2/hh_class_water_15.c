@@ -13,32 +13,98 @@
 
 #pragma divbyzerocheck off
 
-extern /* static */ u_int _area00_view_list[3];                                             // size: 0xC, address: 0x36FDC8
-extern /* static */ u_int _area01_view_list[4];                                             // size: 0x10, address: 0x36FDE0
-extern /* static */ u_int _area02_view_list[3];                                             // size: 0xC, address: 0x36FDF0
-extern /* static */ u_int _area03_view_list[4];                                             // size: 0x10, address: 0x36FE00
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036FE10[HH_WATER_15_TABLE_MAX]; // size: 0x240, address: 0x36FE10
-extern /* static */ WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x00370050[1];  // size: 0x28, address: 0x370050
-extern /* static */ WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00370080[1];  // size: 0x28, address: 0x370080
-extern /* static */ WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1];             // size: 0x28, address: 0x3700B0
-extern /* static */ float __arri_195_0x003701E8;
-extern /* static */ float __distance_193_0x003701D8;
-extern /* static */ float __lost_time_194_0x003701E0;
-extern /* static */ float _interval_184_0x003701D0;
-extern /* static */ float __v_197_0x003701F8;
-extern /* static */ float _arri_181_0x003701B8;
-extern /* static */ float _distance_179_0x003701A8;
-extern /* static */ float _interval_184_0x003701D0;
-extern /* static */ float _lost_time_180_0x003701B0;
-extern /* static */ float _omega_182_0x003701C0;
-extern /* static */ float __omega_196_0x003701F0;
-extern /* static */ float _v_183_0x003701C8;
-extern /* static */ float add_move_170_0x003701A0;
-extern /* static */ float amb_alpha_97_0x00370140;
-extern /* static */ float base_move_169_0x00370198;
-extern /* static */ float center_171_0x011EB770;
-extern /* static */ float degree_168_0x00370190;
-extern /* static */ float light_alpha_98_0x00370148;
+static u_int _area00_view_list_0x0036FDC8[3] = {0, 1, 3};
+static u_int _area01_view_list_0x0036FDE0[4] = {0, 1, 2, 3};
+static u_int _area02_view_list_0x0036FDF0[3] = {1, 2, 3};
+static u_int _area03_view_list_0x0036FE00[4] = {0, 1, 2, 3};
+
+static WaveArea_Infomeation _Area_Info_List_0x0036FE10[HH_WATER_15_TABLE_MAX] = {
+    {/* .World_Location = */ {-63200.0f, -350.0f, -64800.0f, 1.0f},
+     /* .Grid_WH = */ {2900.0f, 0.0f, 900.0f, 100.0f},
+     /* .Grid_Index = */ {29, 9},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036FDC8,
+     /* .ViewArea_List_Max = */ 3,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-60400.0f, -350.0f, -64800.0f, 1.0f},
+     /* .Grid_WH = */ {900.0f, 0.0f, 5300.0f, 100.0f},
+     /* .Grid_Index = */ {9, 53},
+     /* .pViewArea_List = */ &_area01_view_list_0x0036FDE0,
+     /* .ViewArea_List_Max = */ 4,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-62400.0f, -350.0f, -62800.0f, 1.0f},
+     /* .Grid_WH = */ {2100.0f, 0.0f, 1300.0f, 100.0f},
+     /* .Grid_Index = */ {21, 13},
+     /* .pViewArea_List = */ &_area02_view_list_0x0036FDF0,
+     /* .ViewArea_List_Max = */ 3,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-59600.0f, -350.0f, -63600.0f, 1.0f},
+     /* .Grid_WH = */ {1700.0f, 0.0f, 800.0f, 100.0f},
+     /* .Grid_Index = */ {17, 8},
+     /* .pViewArea_List = */ &_area03_view_list_0x0036FE00,
+     /* .ViewArea_List_Max = */ 4,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL}};
+
+static WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x00370050[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 9,
+     /* .X_Index_Max = */ {29, 9},
+     /* .X_Index_Start = */ {28, 0},
+     /* .Z_Index_Start = */ {0, 0}}};
+
+static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00370080[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 13,
+     /* .X_Index_Max = */ {9, 21},
+     /* .X_Index_Start = */ {0, 20},
+     /* .Z_Index_Start = */ {20, 0}}};
+
+static WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 8,
+     /* .X_Index_Max = */ {9, 17},
+     /* .X_Index_Start = */ {8, 0},
+     /* .Z_Index_Start = */ {12, 0}}};
+
+static float __arri_195_0x003701E8 = 40.0f;
+static float __distance_193_0x003701D8 = 3200.0f;
+static float __lost_time_194_0x003701E0 = 10.0f;
+static float _interval_184_0x003701D0 = 4.0f;
+static float __v_197_0x003701F8 = 1200.0f;
+static float _arri_181_0x003701B8 = 40.0f;
+static float _distance_179_0x003701A8 = 1200.0f;
+static float _lost_time_180_0x003701B0 = 12.0f;
+static float _omega_182_0x003701C0 = 540.0f;
+static float __omega_196_0x003701F0 = 612.0f;
+static float _v_183_0x003701C8 = 500.0f;
+static float add_move_170_0x003701A0 = -1.0f;
+static float amb_alpha_97_0x00370140 = 32.0f;
+static float base_move_169_0x00370198 = 8.0f;
+static float center_171_0x011EB770 = 0.0f;
+static float degree_168_0x00370190 = 40.0f;
+static float light_alpha_98_0x00370148 = 128.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_15* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -237,7 +303,7 @@ static u_int Object_Draw(HH_Object_Water_15* pThis /* r22 */, float* pGrid_Y_Val
             float stq0[4];        // r29+0x270
             float stq1[4];        // r29+0x280
             float base;           // r2
-            float color_scale; // r29+0x290
+            float color_scale;    // r29+0x290
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
 

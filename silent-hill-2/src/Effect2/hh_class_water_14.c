@@ -13,25 +13,38 @@
 
 #pragma divbyzerocheck off
 
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036FBF0[HH_WATER_14_TABLE_MAX];
-extern /* static */ float __arri_209;
-extern /* static */ float __distance_207;
-extern /* static */ float __lost_time_208;
-extern /* static */ float __omega_210;
-extern /* static */ float __v_211;
-extern /* static */ float _arri_195;
-extern /* static */ float _distance_193;
-extern /* static */ float _interval_198;
-extern /* static */ float _lost_time_194;
-extern /* static */ float _omega_196;
-extern /* static */ float _v_197;
-extern /* static */ float add_move_184;
-extern /* static */ float amb_alpha_107;
-extern /* static */ float base_move_183;
-extern /* static */ float center_185;
-extern /* static */ float degree_182;
-extern /* static */ float light_alpha_108;
-extern /* static */ float time_233;
+static u_int _area00_view_list_0x0036FBE0[1] = {0};
+static WaveArea_Infomeation _Area_Info_List_0x0036FBF0[HH_WATER_14_TABLE_MAX] = {
+    {/* .World_Location = */ {-18800.0f, -360.0f, -57200.0f, 1.0f},
+     /* .Grid_WH = */ {4200.0f, 0.0f, 1500.0f, 100.0f},
+     /* .Grid_Index = */ {42, 15},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036FBE0,
+     /* .ViewArea_List_Max = */ 1,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL}};
+
+static float __arri_209 = 40.0f;
+static float __distance_207 = 3200.0f;
+static float __lost_time_208 = 10.0f;
+static float __omega_210 = 612.0f;
+static float __v_211 = 1200.0f;
+static float _arri_195 = 40.0f;
+static float _distance_193 = 1200.0f;
+static float _interval_198 = 4.0f;
+static float _lost_time_194 = 12.0f;
+static float _omega_196 = 540.0f;
+static float _v_197 = 500.0f;
+static float add_move_184 = -1.0f;
+static float amb_alpha_107 = 128.0f;
+static float base_move_183 = 8.0f;
+static float center_185 = 0.0f;
+static float degree_182 = 40.0f;
+static float light_alpha_108 = 128.0f;
+static float time_233 = 5.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_14* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));

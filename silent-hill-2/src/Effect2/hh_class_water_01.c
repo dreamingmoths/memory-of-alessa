@@ -17,35 +17,119 @@ static float Specular_Calculator(float* View_Direction, float* Light_Direction, 
 static void SpecularRGBA_Calculator(int* iRGBA, float* RGBA_Base, float* RGBA_Specular_Base, float Specular_Ratio);
 static u_int Object_Draw(HH_Object_Water_01* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max);
 
-extern /* static */ u_int _area00_view_list[3];                                            // size: 0xC, address: 0x36EE30
-extern /* static */ u_int _area01_view_list[4];                                            // size: 0x10, address: 0x36EE40
-extern /* static */ u_int _area02_view_list[4];                                            // size: 0x10, address: 0x36EE50
-extern /* static */ u_int _area03_view_list[3];                                            // size: 0xC, address: 0x36EE60
-extern /* static */ u_int _area04_view_list[3];                                            // size: 0xC, address: 0x36EE70
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036EE80[5];                    // size: 0x2D0, address: 0x36EE80
-extern /* static */ WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x0036F150[1]; // size: 0x28, address: 0x36F150
-extern /* static */ WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x0036F180[1]; // size: 0x28, address: 0x36F180
-extern /* static */ WaveArea_GridLink_Infomeation _area02_03_grid_link_list_0x0036F1B0[1]; // size: 0x28, address: 0x36F1B0
-extern /* static */ WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x0036F1E0[1]; // size: 0x28, address: 0x36F1E0
+static u_int _area00_view_list_0x0036EE30[3] = {0, 1, 2};
+static u_int _area01_view_list_0x0036EE40[4] = {0, 1, 2, 3};
+static u_int _area02_view_list_0x0036EE50[4] = {1, 2, 3, 4};
+static u_int _area03_view_list_0x0036EE60[3] = {2, 3, 4};
+static u_int _area04_view_list_0x0036EE70[3] = {2, 3, 4};
 
-extern /* static */ float __arri_203_0x0036F318;
-extern /* static */ float __distance_201_0x0036F308;
-extern /* static */ float __lost_time_202_0x0036F310;
-extern /* static */ float __omega_204_0x0036F320;
-extern /* static */ float __v_205_0x0036F328;
-extern /* static */ float _arri_191_0x0036F2E8;
-extern /* static */ float _distance_189_0x0036F2D8;
-extern /* static */ float _interval_194_0x0036F300;
-extern /* static */ float _lost_time_190_0x0036F2E0;
-extern /* static */ float _omega_192_0x0036F2F0;
-extern /* static */ float _v_193_0x0036F2F8;
-extern /* static */ float add_move_180_0x0036F2D0;
-extern /* static */ float amb_alpha_103_0x0036F270;
-extern /* static */ float base_move_179_0x0036F2C8;
-extern /* static */ float center_181_0x011EB560;
-extern /* static */ float cos_beta_min_72_0x0036F208;
-extern /* static */ float degree_178_0x0036F2C0;
-extern /* static */ float light_alpha_104_0x0036F278;
+static WaveArea_Infomeation _Area_Info_List_0x0036EE80[5] = {
+    {/* .World_Location = */ {-142800.0f, -200.0f, 43400.0f, 1.0f},
+     /* .Grid_WH = */ {6200.0f, 0.0f, 1400.0f, 200.0f},
+     /* .Grid_Index = */ {31, 7},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036EE30,
+     /* .ViewArea_List_Max = */ 3,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-138000.0f, -200.0f, 44600.0f, 1.0f},
+     /* .Grid_WH = */ {1400.0f, 0.0f, 5000.0f, 200.0f},
+     /* .Grid_Index = */ {7, 25},
+     /* .pViewArea_List = */ &_area01_view_list_0x0036EE40,
+     /* .ViewArea_List_Max = */ 4,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-140000.0f, -200.0f, 49400.0f, 1.0f},
+     /* .Grid_WH = */ {3400.0f, 0.0f, 1400.0f, 200.0f},
+     /* .Grid_Index = */ {17, 7},
+     /* .pViewArea_List = */ &_area02_view_list_0x0036EE50,
+     /* .ViewArea_List_Max = */ 4,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-141200.0f, -200.0f, 49400.0f, 1.0f},
+     /* .Grid_WH = */ {1400.0f, 0.0f, 2600.0f, 200.0f},
+     /* .Grid_Index = */ {7, 13},
+     /* .pViewArea_List = */ &_area03_view_list_0x0036EE60,
+     /* .ViewArea_List_Max = */ 3,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL},
+    {/* .World_Location = */ {-142400.0f, -200.0f, 50600.0f, 1.0f},
+     /* .Grid_WH = */ {1400.0f, 0.0f, 6200.0f, 200.0f},
+     /* .Grid_Index = */ {7, 31},
+     /* .pViewArea_List = */ &_area04_view_list_0x0036EE70,
+     /* .ViewArea_List_Max = */ 3,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL}};
+
+static WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x0036F150[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 1,
+     /* .Length = */ 7,
+     /* .X_Index_Max = */ {31, 7},
+     /* .X_Index_Start = */ {24, 0},
+     /* .Z_Index_Start = */ {6, 0}}};
+
+static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x0036F180[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 1,
+     /* .Length = */ 7,
+     /* .X_Index_Max = */ {7, 17},
+     /* .X_Index_Start = */ {0, 10},
+     /* .Z_Index_Start = */ {24, 0}}};
+
+static WaveArea_GridLink_Infomeation _area02_03_grid_link_list_0x0036F1B0[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 7,
+     /* .X_Index_Max = */ {17, 7},
+     /* .X_Index_Start = */ {0, 6},
+     /* .Z_Index_Start = */ {0, 0}}};
+
+static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x0036F1E0[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 7,
+     /* .X_Index_Max = */ {7, 7},
+     /* .X_Index_Start = */ {0, 6},
+     /* .Z_Index_Start = */ {6, 0}}};
+
+static float __arri_203_0x0036F318 = 40.0f;
+static float __distance_201_0x0036F308 = 3200.0f;
+static float __lost_time_202_0x0036F310 = 10.0f;
+static float __omega_204_0x0036F320 = 612.0f;
+static float __v_205_0x0036F328 = 1200.0f;
+static float _arri_191_0x0036F2E8 = 40.0f;
+static float _distance_189_0x0036F2D8 = 1200.0f;
+static float _interval_194_0x0036F300 = 4.0f;
+static float _lost_time_190_0x0036F2E0 = 12.0f;
+static float _omega_192_0x0036F2F0 = 540.0f;
+static float _v_193_0x0036F2F8 = 500.0f;
+static float add_move_180_0x0036F2D0 = -1.0f;
+static float amb_alpha_0x0036F270 = 60.0f;
+static float base_move_179_0x0036F2C8 = 24.0f;
+static float center_181_0x011EB560 = 0.0f;
+static float cos_beta_min_72_0x0036F208 = 0.9659249782562256;
+static float degree_178_0x0036F2C0 = 40.0f;
+static float light_alpha_0x0036F278 = 120.0f;
 
 void Grid_Work_Initialize(HH_Object_Water_01* pThis) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));

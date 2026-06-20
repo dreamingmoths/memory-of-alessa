@@ -102,7 +102,6 @@ static u_int WaveArea_GridLink_Y_Value_Calculator(WaveArea_GridLink_Infomeation*
     return result;
 }
 
-
 static int WaveArea_CurrentArea_Search(float* Position /* r20 */, WaveArea_Infomeation* pInfo_Table /* r19 */, u_int Table_Max /* r18 */) {
     int result = -1; // r16
     u_int i;         // r17
