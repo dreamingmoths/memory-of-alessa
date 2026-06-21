@@ -55,6 +55,16 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rround_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rround_3d);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @947_0x0038C3B0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @948_0x0038C3D0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @968_0x0038C3F0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @988_0x0038C410);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @1008_0x0038C430);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_walk_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_walk_3d);
@@ -974,3 +984,11 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerUpdateStatusLower2nd3D)
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckAttack3D);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerCheckControl3D);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2681);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2682);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2683);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2684);

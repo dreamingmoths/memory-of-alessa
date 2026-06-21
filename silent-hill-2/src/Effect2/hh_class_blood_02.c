@@ -11,8 +11,6 @@ static u_int Object_Draw(struct HH_Object_Blood_02 * pThis , struct ImpactQueue_
 extern int rand(void);
 extern float fmodf(float, float);
 
-// ToDo Migrate data
-static shAttackInfo sh2_attack_list[66];
 static sceVu0FMATRIX _square_00_vertex;
 static sceVu0FMATRIX _square_00_stq;
 static sceVu0FVECTOR _circle_00_vertex[10];

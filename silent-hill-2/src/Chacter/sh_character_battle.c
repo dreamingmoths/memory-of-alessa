@@ -56,6 +56,8 @@ static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u
 
 }
 
+// INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", sh2_attack_list);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetSoundDamage);
 
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec) {
@@ -124,6 +126,10 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHuma
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHumanFinish);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1229);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1230_0x0038D578);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shGetEnemyAttackStartPos);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemySlash);
@@ -158,6 +164,9 @@ void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /*
     shBattleAddAttackQueue(scp, 0, atk_no);
 }
 
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1453);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleRequestNextAttackIsOk);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetResult);
@@ -167,6 +176,8 @@ void shBattleInitAttackQueue(void) {
     sh2_attack_queue.rest = 0x14;
     sh2_battle_wall_hit = 0.0f;
 }
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1654);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleExecAttackQueue);
 

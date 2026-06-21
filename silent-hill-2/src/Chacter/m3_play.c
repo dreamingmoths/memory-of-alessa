@@ -53,7 +53,7 @@ extern /* static */ AnimeInfo pjames_na_anim[17]; // size: 0xCC, address: 0x0
 extern /* static */ AnimeInfo pjames_cs_anim[24]; // size: 0x120, address: 0x0
 extern /* static */ AnimeInfo pjames_demo_anim[30]; // size: 0x168, address: 0x0
 
-const char* rodata_assertion = "0"; // @todo: temporary introduced for partial rodata migration
+const char* rodata_assertion; // @todo: temporary introduced for partial rodata migration
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", player_flg_on);
 
@@ -131,6 +131,16 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckNeckAngle);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckBothArmsAngle);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_act_with_wep_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_upper_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_lower_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @1248);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @1249);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckBodyAngle);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckSetParameterPhase1);
@@ -144,6 +154,17 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set_all);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetStageAnime);
+
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2356_0x0038BEB0);
+
+const char* rodata_assertion = "0"; // @todo: temporary introduced for partial rodata migration
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2358);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2359);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2360);
 
 
 /*
@@ -2434,6 +2455,14 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckHuggingAttack);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerChectGuardSuccess);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3326);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3350);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3351);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3495);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttack);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttackFinish);
@@ -2466,7 +2495,14 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerReverseLightCalcIsOn);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerWaterRoadIsOn);
 
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3326);
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @905_0x0038C2D0);
 
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3350);
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @906_0x0038C2F0);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2145);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2146_0x0038C330);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2147);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2148);

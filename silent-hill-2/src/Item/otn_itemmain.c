@@ -88,8 +88,6 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", itemmainmain);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", cur_step);
 
-// 100% line number matching!
-#line 796
 void command_main(int command_step) {
 
     
