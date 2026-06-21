@@ -5132,7 +5132,17 @@ NowLoadingEnable                                                      = 0x00298F
 NowLoadingCheck                                                       = 0x00298FC0; // allow_duplicated:True type:func size:432
 NowLoadingDraw                                                        = 0x00299170; // allow_duplicated:True type:func size:312
 
-// data labels
+
+
+
+
+
+
+
+
+
+
+
 
 VU0_MIC_CAL_UTIL_DMAHEAD                                              = 0x00299300; // allow_duplicated:True size:4
 VU0_MIC_CAL_UTIL_HEAD                                                 = 0x00299308; // allow_duplicated:True size:1
@@ -5525,6 +5535,16 @@ __START0_1                                                            = 0x002A6B
 __LOOPY_1                                                             = 0x002A6CB0; // allow_duplicated:True size:1 visibility:local can_be_referenced:False
 .vif.26_0x002A7328                                                    = 0x002A7328; // allow_duplicated:True size:1 can_be_referenced:False
 _vu_29_0x002A7330                                                     = 0x002A7330; // allow_duplicated:True size:1 can_be_referenced:False
+
+
+
+
+
+
+
+
+
+
 @861                                                                  = 0x002A7400; // allow_duplicated:True size:4 can_be_referenced:False
 __data_start                                                          = 0x002A7400; // allow_duplicated:True size:4
 item_screen_obj_data                                                  = 0x002A7410; // allow_duplicated:True size:1856
@@ -7331,8 +7351,8 @@ suicide_point                                                         = 0x0034C7
 @1855                                                                 = 0x0034C8A0; // allow_duplicated:True size:4 can_be_referenced:False
 @1862                                                                 = 0x0034C8C0; // allow_duplicated:True size:4 can_be_referenced:False
 @1867                                                                 = 0x0034C8E0; // allow_duplicated:True size:4 can_be_referenced:False
-ps2ScfDefault                                                         = 0x0034C8F8; // allow_duplicated:True size:8
-excl_sid_0x0034C900                                                   = 0x0034C900; // allow_duplicated:True size:4 can_be_referenced:False
+ps2ScfDefault                                                         = 0x0034C8F8; // allow_duplicated:True size:8 visibility:local
+excl_sid                                                              = 0x0034C900; // allow_duplicated:True size:4 can_be_referenced:False visibility:local
 file_common_438                                                       = 0x0034C910; // allow_duplicated:True size:24
 file_item_439                                                         = 0x0034C930; // allow_duplicated:True size:24
 file_option_440                                                       = 0x0034C950; // allow_duplicated:True size:24
@@ -7475,7 +7495,7 @@ _scale_end_list_0x0036DE18                                            = 0x0036DE
 _motion_info_0_0x0036DE20                                             = 0x0036DE20; // allow_duplicated:True size:24 can_be_referenced:False
 _motion_info_1_0x0036DE40                                             = 0x0036DE40; // allow_duplicated:True size:24 can_be_referenced:False
 _motion_info_list_0x0036DE58                                          = 0x0036DE58; // allow_duplicated:True size:8 can_be_referenced:False
-@83_0x0036DE60                                                        = 0x0036DE60; // allow_duplicated:True size:4 can_be_referenced:False
+@83_0x0036DE60                                                        = 0x0036DE60; // allow_duplicated:True size:16 can_be_referenced:False
 _square_00_vertex_0x0036DE70                                          = 0x0036DE70; // allow_duplicated:True size:64 can_be_referenced:False
 _square_00_stq_0x0036DEB0                                             = 0x0036DEB0; // allow_duplicated:True size:64 can_be_referenced:False
 _circle_00_vertex                                                     = 0x0036DEF0; // allow_duplicated:True size:160
@@ -7555,7 +7575,7 @@ _vertex_info_list_0x0036ECC0                                          = 0x0036EC
 Specular_Rgba_57                                                      = 0x0036ECE0; // allow_duplicated:True size:16
 Base_Rgba_58                                                          = 0x0036ECF0; // allow_duplicated:True size:16
 cos_beta_min_102                                                      = 0x0036ED00; // allow_duplicated:True size:4
-@974_0x0036ED10                                                       = 0x0036ED10; // allow_duplicated:True size:4 can_be_referenced:False
+@974_0x0036ED10                                                       = 0x0036ED10; // allow_duplicated:True size:16 can_be_referenced:False
 @1015_0x0036ED20                                                      = 0x0036ED20; // allow_duplicated:True size:4 can_be_referenced:False
 direction_1045                                                        = 0x0036ED30; // allow_duplicated:True size:16
 hoge_1046                                                             = 0x0036ED40; // allow_duplicated:True size:4

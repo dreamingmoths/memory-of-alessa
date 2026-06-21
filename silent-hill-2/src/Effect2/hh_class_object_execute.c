@@ -63,7 +63,7 @@ void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location, int idk) {
         case 0x21: {
 
             
-            float dir[4] /* = {0.0f, 0.0f, 0.0f, 0.0f} */; // r29+0x60
+            float dir[4] = {0.0f, 2000.0f, 0.0f, 0.0f}; // r29+0x60
             
             descriptor.Class_Descriptor = 4;
             sceVu0CopyVector(&descriptor.Option.Vector[1], &dir);

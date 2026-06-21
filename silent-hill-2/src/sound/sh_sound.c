@@ -5,6 +5,8 @@
 #include "SH2_common/playing_info.h"
 #include "debug.h"
 
+#pragma fast_fptosi on
+
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
 
