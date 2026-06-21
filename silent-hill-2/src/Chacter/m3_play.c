@@ -154,15 +154,6 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetStageAnime);
 
 
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2356_0x0038BEB0);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2358);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2359);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2360);
-
-
 /*
 @todo: add lots of macros & clean this up!
 */

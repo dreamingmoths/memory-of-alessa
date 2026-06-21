@@ -310,11 +310,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTMakePacket);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetVertexPkData);
 
-INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1158);
-
-INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1159);
-
-INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1193_0x0038DF30);
+const char __at_1193_0x0038DF30[] = "ef_common.c:1118> assert:(%s)\n";
 
 INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1279_0x0038DF50);
 
