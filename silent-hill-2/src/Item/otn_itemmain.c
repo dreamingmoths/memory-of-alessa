@@ -62,6 +62,7 @@ static struct /* @anon8 */ {
     short examine_msg; // offset 0x290, size 0x2
     u_char pad_292[2];
     int seed; // offset 0x294, size 0x4
+    u_char pad_298[2];
 } t; // size: 0x2A0, address: 0x116E3D0
 
 

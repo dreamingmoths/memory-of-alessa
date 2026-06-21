@@ -18,7 +18,6 @@ extern /* static */ float _radius;
 extern /* static */ float _suppress_coff_0x0036DB40;
 extern /* static */ float _square_00_vertex[4][4];
 extern /* static */ float _square_00_normal[4][4];
-extern /* static */ float _square_00_stq[4][4];
 extern /* static */ float _square_01_stq[4][4];
 extern /* static */ float _square_02_stq[4][4];
 extern /* static */ float _square_03_stq[4][4];

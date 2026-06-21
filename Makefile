@@ -87,7 +87,6 @@ BINUTILS_FLAVOR := mips-ps2-decompals
 BINUTILS := $(TOOLS)/binutils-$(BINUTILS_FLAVOR)
 
 AS := $(BINUTILS)/$(BINUTILS_FLAVOR)-as
-MWCCGAP_AS_FLAGS := -mno-branch-relocs
 AS_FLAGS := \
 	-EL -march=r5900 -mabi=eabi -G=0 -mno-branch-relocs \
 	$(MWCCGAP_AS_FLAGS) -I$(INCLUDE) -I$(CONFIG) \

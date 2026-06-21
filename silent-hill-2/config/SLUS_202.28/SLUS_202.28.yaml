@@ -395,6 +395,10 @@ segments:
       - [0x24d010, data,    data_0x24d010]
       - [0x26e560, .data,   Effect2/hh_class_blood_01]
       - [0x26e570, data,    data_0x26e570]
+      - [0x26eb70, .data,   Effect2/hh_class_blood_03]
+      - [0x26eb80, data,    data_0x26eb80]
+      - [0x26ed90, .data,   Effect2/hh_class_blood_pool_phenomenon_00]
+      - [0x26eda0, data,    data_0x26eda0]
       - [0x26f410, .data,   Effect2/hh_class_object_execute]
       - [0x26f448, data,    data_0x26f448]
       - [0x26f480, .data,   Effect2/hh_class_water_00]
@@ -549,6 +553,8 @@ segments:
       - { vram: 0x0438588, type: bss,  name: bss_0x0438588 }
       - { vram: 0x116e3d0, type: .bss, name: Item/otn_itemmain }
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670 }
+      - { vram: 0x11b6a70, type: .bss, name: Item/otn_option }
+      - { vram: 0x11b6af0, type: bss,  name: bss_0x11b6af0 }
       - { vram: 0x11eb550, type: .bss, name: Effect2/hh_class_water_01 }
       - { vram: 0x11eb570, type: .bss, name: Effect2/hh_class_water_02 }
       - { vram: 0x11eb5f0, type: .bss, name: Effect2/hh_class_water_10 }

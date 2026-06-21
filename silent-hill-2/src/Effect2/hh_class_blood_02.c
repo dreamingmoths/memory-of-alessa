@@ -11,18 +11,17 @@ static u_int Object_Draw(struct HH_Object_Blood_02 * pThis , struct ImpactQueue_
 extern int rand(void);
 extern float fmodf(float, float);
 
-static sceVu0FMATRIX _square_00_vertex;
-static sceVu0FMATRIX _square_00_stq;
-static sceVu0FVECTOR _circle_00_vertex[10];
-static sceVu0FVECTOR _circle_00_stq[10];
-static sceVu0FVECTOR _circle_01_vertex[10];
-static sceVu0FVECTOR _circle_02_vertex[10];
-static Vertex_Infomeation_List _vertex_info_list[4];
-static float _rgba_start_list[4][4];
-static float _rgba_end_list[4][4];
-static float _scale_start_list[5][4];
-static float _scale_end_list[5][4];
-static Motion_Table_Infomeation _motion_info[4];
+extern /* static */ sceVu0FMATRIX _square_00_vertex;
+extern /* static */ sceVu0FVECTOR _circle_00_vertex[10];
+extern /* static */ sceVu0FVECTOR _circle_00_stq[10];
+extern /* static */ sceVu0FVECTOR _circle_01_vertex[10];
+extern /* static */ sceVu0FVECTOR _circle_02_vertex[10];
+extern /* static */ Vertex_Infomeation_List _vertex_info_list[4];
+extern /* static */ float _rgba_start_list_0x0036D9C0[4][4];
+extern /* static */ float _rgba_end_list_0x0036DA00[4][4];
+extern /* static */ float _scale_start_list_0x0036DA40[5][4];
+extern /* static */ float _scale_end_list_0x0036DA90[5][4];
+extern /* static */ Motion_Table_Infomeation _motion_info_0x0036DB10[4];
 
 static u_int Object_Initialize(HH_Object_Blood_02* pThis, ImpactQueue_Element* pElement){
     float radian;
@@ -78,15 +77,15 @@ static u_int Object_Motion_00(HH_Object_Blood_02* pThis) {
     float scale_ratio;
     float rgba_ratio;
 
-    pRgba_s = _rgba_start_list[pThis->Rgba_Kind];
-    pRgba_e = _rgba_end_list[pThis->Rgba_Kind];
-    pScale_s = _scale_start_list[pThis->Scale_Kind];
-    pScale_e = _scale_end_list[pThis->Scale_Kind];
+    pRgba_s = _rgba_start_list_0x0036D9C0[pThis->Rgba_Kind];
+    pRgba_e = _rgba_end_list_0x0036DA00[pThis->Rgba_Kind];
+    pScale_s = _scale_start_list_0x0036DA40[pThis->Scale_Kind];
+    pScale_e = _scale_end_list_0x0036DA90[pThis->Scale_Kind];
 
     local_time_start = 0.0f;
     local_scale_start = 0.0f;
     local_rgba_start = 0.0f;
-    pMotion_Info = _motion_info;
+    pMotion_Info = _motion_info_0x0036DB10;
     current_step = pThis->Motion_Step;
     
     if(2 < current_step){
