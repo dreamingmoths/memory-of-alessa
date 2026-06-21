@@ -44,7 +44,7 @@ static void lower_damage_3d(SubCharacter* p);
 static void upper_damage_3d(SubCharacter* p);
 static void lower_to_stand_3d(SubCharacter* p);
 static void upper_to_stand_3d(SubCharacter* p);
-
+static void lower_wall_f_3d(SubCharacter* p);
 static void upper_wall_f_3d(SubCharacter* p);
 static void lower_event_3d(SubCharacter* p);
 static void upper_event_3d(SubCharacter* p);
@@ -359,7 +359,38 @@ static void upper_to_stand_3d(SubCharacter* p) {
     upper_to_stand(p);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_wall_f_3d);
+static void lower_wall_f_3d(SubCharacter* p) {
+    u_short frame; // r2
+    
+    frame = shCharacterAnimeFrameGet_(p, 2);
+    
+    if ((frame == 4) || (9 < frame)) {
+        p->spd = 0.0f;
+    } else if ((4 < frame) && (frame < 10)) {
+        
+        switch (sh2jms.lower_prev) {
+            case JMS_ST_L_RUN1:
+            case JMS_ST_L_RUN2:
+            case JMS_ST_L_RUN3:
+                p->spd_roty = -PI;
+                break;
+            case JMS_ST_L_RSRUN:
+                p->spd_roty = -QUARTER_TURN;
+                break;
+            case JMS_ST_L_LSRUN:
+                p->spd_roty = QUARTER_TURN;
+                break;
+        }
+        
+        p->spd += (5.0f * dtf_0x003C8488);
+        p->spd = (p->spd > 1.2f) ? 1.2f : p->spd;
+    }
+    p->spd_org = p->spd;
+    
+    if (sh2jms.anime_pause & 1) {
+        player_flg_on(&sh2jms.lower_st_flg, 1);
+    }
+}
 
 static void upper_wall_f_3d(SubCharacter* p) {
     upper_wall_f(p);
