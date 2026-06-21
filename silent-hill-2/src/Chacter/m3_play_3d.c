@@ -4,6 +4,7 @@
 #include "SH2_common/pad.h"
 #include "Chacter/m3_play.h"
 #include "Chacter/m3_play_common.h"
+#include "SH2_common/sh2dt.h"
 
 static int PlayerCheckLturn180(void);
 static int PlayerCheckRturn180(void);
@@ -24,8 +25,36 @@ static void upper_ready_3d(SubCharacter* p);
 static void lower_readyoff_3d(SubCharacter* p);
 static void upper_readyoff_3d(SubCharacter* p);
 
+static void lower_jump_3d(void);
+static void upper_jump_3d(void);
+static void lower_guard_3d(SubCharacter* p);
+static void upper_guard_3d(void);
+static void lower_lstep_3d(void);
+static void upper_lstep_3d(void);
+static void lower_rstep_3d(void);
+static void upper_rstep_3d(void);
+
+static void lower_attack_3d(SubCharacter* p);
+static void upper_attack_3d(SubCharacter* p);
+static void lower_kick_3d(SubCharacter* p);
+static void upper_kick_3d(SubCharacter* p);
+static void lower_fall_3d(SubCharacter* p);
+static void upper_fall_3d(SubCharacter* p);
+static void lower_damage_3d(SubCharacter* p);
+static void upper_damage_3d(SubCharacter* p);
+static void lower_to_stand_3d(SubCharacter* p);
+static void upper_to_stand_3d(SubCharacter* p);
+
+static void upper_wall_f_3d(SubCharacter* p);
+static void lower_event_3d(SubCharacter* p);
+static void upper_event_3d(SubCharacter* p);
+static void PlayerUpdateStatus3D(SubCharacter* this);
+static void PlayerUpdateStatusStand3D(void);
 static void PlayerUpdateStatusLower2nd3D(SubCharacter* this);
 static void PlayerCheckAttack3D(SubCharacter* this);
+
+extern float dtf_0x003C8488;
+extern int dt_0x003C8490;
 
 static int PlayerCheckLturn180(void) {
     PAD_INFO* pad = &sh2jms.pad[0]; // r2
@@ -223,21 +252,64 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rturn180_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rturn180_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_jump_3d);
+static void lower_jump_3d(void) {
+    return;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_jump_3d);
+static void upper_jump_3d(void) {
+    return;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_guard_3d);
+static void lower_guard_3d(SubCharacter* p) {
+    u_short frame; // r2
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_guard_3d);
+    frame = shCharacterAnimeFrameGet_(p, 2U);
+    if (sh2jms.lower_prev != 21) {
+        sh2jms.lower_prev = 21;
+        p->spd_y = 0.0f;
+        p->spd = 0.0f;
+        p->spd_org = 0.0f;
+        p->spd_roty = -PI;
+        return;
+    }
+    if (frame < 10) {
+        p->spd_org = p->spd = sh2jms.shock * dtf_0x003C8488;
+    } else {        
+        p->spd_org = p->spd = 0.0f;
+    }
+    
+    if (sh2jms.anime_pause & 1) {
+        sh2jms.no_damage = 0;
+        player_flg_on(&sh2jms.lower_st_flg, 1);
+        player_flg_off(&sh2jms.lower_st_flg, 0x200000U);
+        player_flg_off(&sh2jms.l_anime_st_flg, 1);
+    }
+    
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lstep_3d);
+static void upper_guard_3d(void) {
+    if (sh2jms.anime_pause & 2) {
+        player_flg_on(&sh2jms.upper_st_flg, 1);
+        player_flg_off(&sh2jms.upper_st_flg, 0x200000);
+        player_flg_off(&sh2jms.u_anime_st_flg, 1);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lstep_3d);
+static void lower_lstep_3d(void) {
+    return;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rstep_3d);
+static void upper_lstep_3d(void) {
+    return;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rstep_3d);
+static void lower_rstep_3d(void) {
+    return;
+}
+
+static void upper_rstep_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_hold_3d);
 
@@ -247,39 +319,80 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_release_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_release_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_attack_3d);
+static void lower_attack_3d(SubCharacter* p) {
+    lower_attack(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_attack_3d);
+static void upper_attack_3d(SubCharacter* p) {
+    upper_attack(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_kick_3d);
+static void lower_kick_3d(SubCharacter* p) {
+    lower_kick(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_kick_3d);
+static void upper_kick_3d(SubCharacter* p) {
+    upper_kick(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_fall_3d);
+static void lower_fall_3d(SubCharacter* p) {
+    lower_fall(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_fall_3d);
+static void upper_fall_3d(SubCharacter* p) {
+    upper_fall(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_damage_3d);
+static void lower_damage_3d(SubCharacter* p) {
+    lower_damage(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_damage_3d);
+static void upper_damage_3d(SubCharacter* p) {
+    upper_damage(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_to_stand_3d);
+static void lower_to_stand_3d(SubCharacter* p) {
+    lower_to_stand(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_to_stand_3d);
+static void upper_to_stand_3d(SubCharacter* p) {
+    upper_to_stand(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_wall_f_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_wall_f_3d);
+static void upper_wall_f_3d(SubCharacter* p) {
+    upper_wall_f(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_event_3d);
+static void lower_event_3d(SubCharacter* p) {
+    lower_event(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_event_3d);
+static void upper_event_3d(SubCharacter* p) {
+    upper_event(p);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerUpdateStatus3D);
+static void PlayerUpdateStatus3D(SubCharacter* this) {
+    dt_0x003C8490 = shGetDF();
+    dtf_0x003C8488 = shGetDT();
+    
+    PlayerSetDT();
+    
+    PlayerUpdateStatus(this);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", PlayerUpdateStatusStand3D);
+static void PlayerUpdateStatusStand3D(void) {
 
-extern float dtf_0x003C8488;
+    
+    lower_st_set(0, &sh2jms);
+    lower_flg_set(0, &sh2jms);
+    upper_st_set(0, &sh2jms);
+    upper_flg_set(0, &sh2jms);
+    player_flg_on(&sh2jms.lower_st_flg, 1);
+    player_flg_on(&sh2jms.upper_st_flg, 1);
+}
+
 void PlayerUpdateStatusLower3D(SubCharacter* this) {
     
     shPlayerWork* w = &sh2jms;                // r16
@@ -1156,7 +1269,6 @@ static void PlayerUpdateStatusLower2nd3D(SubCharacter* this) { // not line match
             break;
     }
 }
-
 
 static void PlayerCheckAttack3D(SubCharacter* this) {
     PlayerCheckAttack(this);
