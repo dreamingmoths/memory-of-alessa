@@ -25,20 +25,7 @@ static WaveArea_Infomeation _Area_Info_List_0x0036F340[1] = {
      /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
      /* .pST_Defference = */ NULL}};
 
-static float __arri_203_0x0036F4E8 = 40.0f;
-static float __distance_201_0x0036F4D8 = 3200.0f;
-static float __lost_time_202_0x0036F4E0 = 10.0f;
-static float __omega_204_0x0036F4F0 = 612.0f;
-static float __v_205_0x0036F4F8 = 1200.0f;
-static float _arri_191_0x0036F4B8 = 40.0f;
-static float _distance_189_0x0036F4A8 = 1200.0f;
-static float _interval_194_0x0036F4D0 = 4.0f;
-static float _lost_time_190_0x0036F4B0 = 12.0f;
-static float _omega_192_0x0036F4C0 = 540.0f;
-static float _v_193_0x0036F4C8 = 500.0f;
-static float base_move_181 = 128.0f;
-static float cos_beta_min_66_0x0036F3D0 = 0.9914439916610718;
-static float degree_180 = 10.0f;
+static float cos_beta_min_66_0x0036F3D0 = 0.99144399f;
 
 static void Grid_Work_Initialize(HH_Object_Water_02* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -115,22 +102,22 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
 
 // @todo: data partially moved out, required for match due to float args
 
-static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036F400
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036F410
-static float amb_alpha = 32.0f;                           // @ 0x0036F440
-static float light_alpha = 128.0f;                        // @ 0x0036F448
+static u_long _GifTag[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F3E0
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F3F0
+static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036F400
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036F410
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036F420
+static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036F430
+static float amb_alpha = 32.0f;                           // @ 0x0036F440
+static float light_alpha = 128.0f;                        // @ 0x0036F448
 static float ty = 2.5f;                                                                                     // @ 0x0036F488
+static float sx = 2.5f;                                         // @ 0x0036F480
 
 static u_int Object_Draw(HH_Object_Water_02* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    static float sx = 2.5f;                                         // @ 0x0036F480
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036F420
-    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036F430
-    static u_long _GifTag[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F3E0
     u_int result = 0;                                                                                                 // r2
     sceVif1Packet* pPk;                                                                                               // r16
     u_int vertex_num;                                                                                                 // r2
@@ -337,7 +324,7 @@ static u_int Object_Draw(HH_Object_Water_02* pThis /* r22 */, float* pGrid_Y_Val
 }
 
 unsigned int HH_Class_Prefix_Water_02() {
-    static u_int interval = 1;                        // @ 0x0036F490
+    static u_int _interval_194_0x0036F4D0 = 1;                        // @ 0x0036F490
     static int i = 0;                                 // @ 0x011EB580
     static u_int j = 0;                               // @ 0x011EB588
     u_int result = 1;                                 // r2
@@ -347,7 +334,7 @@ unsigned int HH_Class_Prefix_Water_02() {
     tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_02_TEX_ID, HH_WATER_02_CLUT_ID);
     sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0);
     sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_clamp(i));
-    if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j % interval == 0) {
+    if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j % _interval_194_0x0036F4D0 == 0) {
         i++;
         i = clamp_n(i, 4);
     }
@@ -365,6 +352,20 @@ unsigned int HH_Class_Suffix_Water_02() {
     HH_Vif1PacketBuffer_GifTag_Close();
     return result;
 }
+
+static float degree_180 = 10.0f;
+static float base_move_181 = 128.0f;
+static float _distance_189_0x0036F4A8 = 1200.0f;
+static float _lost_time_190_0x0036F4B0 = 12.0f;
+static float _arri_191_0x0036F4B8 = 40.0f;
+static float _omega_192_0x0036F4C0 = 540.0f;
+static float _v_193_0x0036F4C8 = 500.0f;
+static float __interval_194_0x0036F4D0_194_0x0036F4D0 = 4.0f;
+static float __distance_201_0x0036F4D8 = 3200.0f;
+static float __lost_time_202_0x0036F4E0 = 10.0f;
+static float __arri_203_0x0036F4E8 = 40.0f;
+static float __omega_204_0x0036F4F0 = 612.0f;
+static float __v_205_0x0036F4F8 = 1200.0f;
 
 unsigned int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     static char tmp[80];                // @ 0x011EB5A0
@@ -430,7 +431,7 @@ unsigned int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElem
             {
                 u_int i;
                 for (i = 0; i < HH_WATER_02_TABLE_MAX; i++) {
-                    if (pThis->Timer - pThis->Area_WavePostTime[i] > _interval_194_0x0036F4D0) {
+                    if (pThis->Timer - pThis->Area_WavePostTime[i] > __interval_194_0x0036F4D0_194_0x0036F4D0) {
                         WaveArea_Infomeation* pInfo = &_Area_Info_List_0x0036F340[i];
                         Wave_Element wave_element; // r29+0xF0
                         int x = rand() % pInfo->Grid_Index[0];

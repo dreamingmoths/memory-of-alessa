@@ -396,7 +396,7 @@ segments:
       - [0x26e560, .data,   Effect2/hh_class_blood_01]
       - [0x26e570, data,    data_0x26e570]
       - [0x26f410, .data,   Effect2/hh_class_object_execute]
-      - [0x26f450, data,    data_0x26f450]
+      - [0x26f448, data,    data_0x26f448]
       - [0x26f480, .data,   Effect2/hh_class_water_00]
       - [0x26f530, .data,   Effect2/hh_class_water_01]
       - [0x26fa30, .data,   Effect2/hh_class_water_02]
