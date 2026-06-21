@@ -98,6 +98,10 @@ void fontClear(void) {
     fontSetStreamMax(0x200, 0x40, 0x200);
 }
 
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @565);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @566);
+
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetStreamMax);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontLoad);
@@ -174,19 +178,15 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStr);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrNum);
 
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @565);
+const char __at_954[] = "font: double stack!\n";
 
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @566);
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @631);
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @632);
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @954);
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @955);
+const char __at_955[] = "x >= (4096-SCREEN_WIDTH)/2";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrMain);
+
+const char __at_1377[] = "num >= 0 && num <= 16";
+
+const char __at_1810[] = "fontSetMes: Illegal number!\n";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintDec);
 
@@ -511,9 +511,3 @@ void fontCrushOff(void) {
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontClear);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontFlush);
-
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @1377_0x003914C0);
-
-INCLUDE_RODATA("asm/nonmatchings/Font/font", @1810);
-

@@ -151,7 +151,7 @@ int decBs0(VideoDec *vd) {
         if (picture_structure == SCE_MPEG_FRAME) {
             csct = (mp->flags & 0x180) ? CSCVU1_PROG_FRAME : CSCVU1_INTER_FRAME;
         } else {
-            debugPrintf("pss_videodec.c:342> assert:(%s)\n", "@576_0x0039C028");
+            debugPrintf("pss_videodec.c:342> assert:(%s)\n", "0");
             do {} while (1);
         }
 

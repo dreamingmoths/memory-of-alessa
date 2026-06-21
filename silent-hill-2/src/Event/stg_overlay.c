@@ -255,7 +255,7 @@ void StgOverlay(void) {
             MWNotifyOverlayLoaded(overlay_load_addr);
         }        
     } else {
-        VERBOSE_ON_LINE(3, 352, "stage data is already loaded.\n");
+        VERBOSE_ON_LINE(352, 3, "stage data is already loaded.\n");
     }
 
     stage = StgOverlayGetStageData(playing.stage);

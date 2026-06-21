@@ -680,6 +680,8 @@ void set_position(int step) {
     }
 }
 
+const char __pad_0x00392f28[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
+
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_turn);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_position);
