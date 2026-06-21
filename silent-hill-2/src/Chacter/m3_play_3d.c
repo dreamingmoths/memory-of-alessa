@@ -383,15 +383,16 @@ static void PlayerUpdateStatus3D(SubCharacter* this) {
 }
 
 static void PlayerUpdateStatusStand3D(void) {
-
+    shPlayerWork* w = &sh2jms;  // r2
     
-    lower_st_set(0, &sh2jms);
-    lower_flg_set(0, &sh2jms);
-    upper_st_set(0, &sh2jms);
-    upper_flg_set(0, &sh2jms);
-    player_flg_on(&sh2jms.lower_st_flg, 1);
-    player_flg_on(&sh2jms.upper_st_flg, 1);
+    lower_st_set(0, w);
+    lower_flg_set(0, w);
+    upper_st_set(0, w);
+    upper_flg_set(0, w);
+    player_flg_on(&w->lower_st_flg, 1);
+    player_flg_on(&w->upper_st_flg, 1);
 }
+
 
 void PlayerUpdateStatusLower3D(SubCharacter* this) {
     
@@ -1269,6 +1270,7 @@ static void PlayerUpdateStatusLower2nd3D(SubCharacter* this) { // not line match
             break;
     }
 }
+
 
 static void PlayerCheckAttack3D(SubCharacter* this) {
     PlayerCheckAttack(this);
