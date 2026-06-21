@@ -19,6 +19,28 @@ void upper_ready(SubCharacter* p); // arg not present in DWARF
 void lower_readyoff(SubCharacter* p); // arg not present in DWARF
 void upper_readyoff(SubCharacter* p); // arg not present in DWARF
 
+void lower_attack(SubCharacter* p /* r18 */);
+void upper_attack(SubCharacter* p /* r18 */);
+void lower_kick(SubCharacter* p /* r16 */);
+void upper_kick(SubCharacter* p /* r2 */);
+
+void lower_damage(SubCharacter* p /* r17 */);
+void upper_damage(SubCharacter* p); // arg not present in DWARF
+
+void lower_fall(SubCharacter* p /* r16 */);
+void upper_fall(SubCharacter* p); // arg not present in DWARF
+
+void lower_event(SubCharacter* p /* r16 */);
+void upper_event(SubCharacter* p /* r2 */);
+
+void lower_to_stand(SubCharacter* p); // arg not present in DWARF
+void upper_to_stand(SubCharacter* p); // arg not present in DWARF
+
+void upper_wall_f(SubCharacter* p); // arg not present in DWARF
+
+void PlayerSetDT(void);
+
+void PlayerUpdateStatus(SubCharacter* this);
 void PlayerCheckAttack(SubCharacter* this);
 
 #endif // M3_PLAY_COMMON_H
