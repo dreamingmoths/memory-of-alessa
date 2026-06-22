@@ -55,7 +55,6 @@ static u_int WaveElement_Addition(HH_Object_Water_00* pThis, Wave_Element* pElem
     u_int result;                                                 // r2
     Wave_Element* pFree_Element = Free_WaveElement_Search(pThis); // r2
 
-
     if (pFree_Element == NULL) {
         pFree_Element = Oldest_WaveElement_Search(pThis);
     }
@@ -204,8 +203,8 @@ u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
     static u_long _GifTag_Tri_153[2] = {
         SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
         GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036EDA0
-    static float Ambient_Color2_156[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036EDD0
-    static float SpecularRgba_157[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036EDE0
+    static float Ambient_Color2_156[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                         // @ 0x0036EDD0
+    static float SpecularRgba_157[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                         // @ 0x0036EDE0
     static u_long _GifTag_152[2] = {
         SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
         GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036ED90

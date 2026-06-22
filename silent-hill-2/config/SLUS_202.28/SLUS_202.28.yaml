@@ -63,7 +63,7 @@ segments:
       - [0x0287e0, asm, Chacter_Draw/model3_n]
       - [0x029000, asm, Chacter_Draw/model3_sub_n]
       - [0x0295f0, asm, Chacter_Draw/model3_vu0_n]
-      - [0x02c4e0, c,   Chacter_Draw/model3_vu1_n]
+      - [0x02c4e0, asm, Chacter_Draw/model3_vu1_n]
       - [0x02e4c0, c,   Chacter_Draw/model_common]
       - [0x02e540, asm, Chacter_Draw/model_n]
       - [0x02e580, asm, Chacter_Draw/sh2gfw_CharacterOT]
@@ -90,7 +90,7 @@ segments:
       - [0x053b10, asm, Enemy/en_mkn]
       - [0x057eb0, asm, Enemy/en_nse]
       - [0x05a760, asm, Enemy/en_pap]
-      - [0x05db10, c,   Enemy/en_red]
+      - [0x05db10, asm, Enemy/en_red]
       - [0x060ab0, asm, Enemy/en_scu]
       - [0x065700, asm, Enemy/en_tyu]
       - [0x068ed0, asm, Fog/fog]
@@ -403,6 +403,7 @@ segments:
       - [0x270118, .data,   Effect2/hh_class_water_13]
       - [0x2702e0, .data,   Effect2/hh_class_water_14]
       - [0x2704c8, .data,   Effect2/hh_class_water_15]
+      - [0x270900, data,    Effect2/hh_class_water_20]
       - [0x270a88, .data,   Effect2/hh_class_water_30]
       - [0x270c30, .data,   Effect2/hh_class_water_splash_phenomenon_00]
       - [0x270c50, data,    data_0x270c50]
@@ -449,7 +450,7 @@ segments:
       - [0x28cfd0, rodata,  rodata_0x28cfd0]
       - [0x28de10, .rodata, Chacter_Draw/clani]
       - [0x28dee0, rodata,  rodata_0x28dee0]
-      - [0x28e0b0, .rodata, Chacter_Draw/model3_vu1_n]
+      - [0x28e0b0, rodata,  Chacter_Draw/model3_vu1_n]
       - [0x28e2c0, rodata,  rodata_0x28e2c0]
       - [0x28e380, .rodata, Collision/cl_main]
       - [0x28e510, rodata,  rodata_0x28e510]
@@ -502,7 +503,7 @@ segments:
       - [0x29a8a0, .rodata, Effect2/hh_class_water_02]
       - [0x29a8c0, .rodata, Effect2/hh_class_water_11]
       - [0x29a8e0, .rodata, Effect2/hh_class_water_12]
-      - [0x29a900, .rodata, Effect2/hh_class_water_15]
+      - [0x29a900, rodata,  Effect2/hh_class_water_15_0x29a900]
       - [0x29a920, .rodata, Effect2/hh_dbg_wrapper]
       - [0x29a960, rodata,  rodata_0x29a960]
       - [0x29c140, .rodata, Chacter/m3_play_event]
@@ -532,17 +533,17 @@ segments:
       - { vram: 0x11eb690, type: .bss, name: Effect2/hh_class_water_12 }
       - { vram: 0x11eb710, type: .bss, name: Effect2/hh_class_water_13 }
       - { vram: 0x11eb730, type: .bss, name: Effect2/hh_class_water_14 }
-      - { vram: 0x11eb760, type: .bss, name: Effect2/hh_class_water_15 }
+      - { vram: 0x11eb760, type: bss,  name: Effect2/hh_class_water_15_0x11eb760 }
       - { vram: 0x11eb7d0, type: .bss, name: Effect2/hh_class_water_30 }
       - { vram: 0x11eb830, type: bss,  name: Effect2/hh_class_wrapper}
       - { vram: 0x11eb8f0, type: .bss, name: Effect2/hh_dbg_wrapper }
       - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
       - { vram: 0x1202ed0, type: .bss, name: Effect2/hh_class_water_03 }
-      - { vram: 0x1202ef0, type: bss,  name: Effect2/hh_class_water_04 }
-      - { vram: 0x1202f10, type: bss,  name: Effect2/hh_class_water_06 }
+      - { vram: 0x1202ef0, type: .bss, name: Effect2/hh_class_water_04 }
+      - { vram: 0x1202f10, type: .bss, name: Effect2/hh_class_water_06 }
       - { vram: 0x1202f30, type: .bss, name: Effect2/hh_class_water_07 }
       - { vram: 0x1202f50, type: .bss, name: Effect2/hh_class_water_08 }
-      - { vram: 0x1202f70, type: bss,  name: Effect2/hh_class_water_09 }
+      - { vram: 0x1202f70, type: .bss, name: Effect2/hh_class_water_09 }
       - { vram: 0x1202f90, type: bss,  name: bss_0x1202f00 }
       - { vram: 0x122b3c0, type: .bss, name: Effect2/hh_memory_manage }
       - { vram: 0x126fbc0, type: bss,  name: bss_0x126fbc0 }

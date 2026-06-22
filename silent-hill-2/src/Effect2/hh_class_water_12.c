@@ -13,25 +13,38 @@
 
 #pragma divbyzerocheck off
 
-extern /* static */ WaveArea_Infomeation _Area_Info_List_0x0036F860[HH_WATER_12_TABLE_MAX];
-extern /* static */ float __arri_195_0x0036FA00;
-extern /* static */ float __distance_193_0x0036F9F0;
-extern /* static */ float __lost_time_194_0x0036F9F8;
-extern /* static */ float __omega_196_0x0036FA08;
-extern /* static */ float __v_197_0x0036FA10;
-extern /* static */ float _arri_181_0x0036F9D0;
-extern /* static */ float _distance_179_0x0036F9C0;
-extern /* static */ float _interval_184_0x0036F9E8;
-extern /* static */ float _lost_time_180_0x0036F9C8;
-extern /* static */ float _omega_182_0x0036F9D8;
-extern /* static */ float _v_183_0x0036F9E0;
-extern /* static */ float add_move_170_0x011EB6A0;
-extern /* static */ float amb_alpha_97_0x0036F7A0;
-extern /* static */ float base_move_169_0x0036F9B8;
-extern /* static */ float center_171_0x011EB6A8;
-extern /* static */ float cos_beta_min_66_0x0036F730;
-extern /* static */ float degree_168_0x0036F9B0;
-extern /* static */ float light_alpha_98_0x0036F7A8;
+static u_int _area00_view_list_0x0036F858[1] = {0};
+static WaveArea_Infomeation _Area_Info_List_0x0036F860[HH_WATER_12_TABLE_MAX] = {
+    {/* .World_Location = */ {-60800.0f, -310.0f, -21200.0f, 1.0f},
+     /* .Grid_WH = */ {1700.0f, 0.0f, 2900.0f, 100.0f},
+     /* .Grid_Index = */ {17, 29},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036F858,
+     /* .ViewArea_List_Max = */ 1,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
+     /* .pST_Defference = */ NULL}};
+
+static float __arri_195_0x0036FA00 = 40.0f;
+static float __distance_193_0x0036F9F0 = 3200.0f;
+static float __lost_time_194_0x0036F9F8 = 10.0f;
+static float __omega_196_0x0036FA08 = 612.0f;
+static float __v_197_0x0036FA10 = 1200.0f;
+static float _arri_181_0x0036F9D0 = 40.0f;
+static float _distance_179_0x0036F9C0 = 1200.0f;
+static float _interval_184_0x0036F9E8 = 4.0f;
+static float _lost_time_180_0x0036F9C8 = 12.0f;
+static float _omega_182_0x0036F9D8 = 540.0f;
+static float _v_183_0x0036F9E0 = 500.0f;
+static float add_move_170_0x011EB6A0 = 0.0f;
+static float amb_alpha_97_0x0036F7A0 = 32.0f;
+static float base_move_169_0x0036F9B8 = 8.0f;
+static float center_171_0x011EB6A8 = 0.0f;
+static float cos_beta_min_66_0x0036F730 = 0.9914439916610718;
+static float degree_168_0x0036F9B0 = 40.0f;
+static float light_alpha_98_0x0036F7A8 = 128.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_12* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
