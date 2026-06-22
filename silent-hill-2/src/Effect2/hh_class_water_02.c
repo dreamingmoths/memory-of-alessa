@@ -25,20 +25,7 @@ static WaveArea_Infomeation _Area_Info_List_0x0036F340[1] = {
      /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
      /* .pST_Defference = */ NULL}};
 
-static float __arri_203_0x0036F4E8 = 40.0f;
-static float __distance_201_0x0036F4D8 = 3200.0f;
-static float __lost_time_202_0x0036F4E0 = 10.0f;
-static float __omega_204_0x0036F4F0 = 612.0f;
-static float __v_205_0x0036F4F8 = 1200.0f;
-static float _arri_191_0x0036F4B8 = 40.0f;
-static float _distance_189_0x0036F4A8 = 1200.0f;
-static float _interval_194_0x0036F4D0 = 4.0f;
-static float _lost_time_190_0x0036F4B0 = 12.0f;
-static float _omega_192_0x0036F4C0 = 540.0f;
-static float _v_193_0x0036F4C8 = 500.0f;
-static float base_move_181 = 128.0f;
-static float cos_beta_min_66_0x0036F3D0 = 0.9914439916610718;
-static float degree_180 = 10.0f;
+static float cos_beta_min_66_0x0036F3D0 = 0.99144399f;
 
 static void Grid_Work_Initialize(HH_Object_Water_02* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -120,52 +107,51 @@ static u_long _GifTag[2] = {
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F3F0
-static float ty = 2.5f;                                                                                     // @ 0x0036F488
+static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f};                                                   // @ 0x0036F400
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x0036F410
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F420
+static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F430
 
 static u_int Object_Draw(HH_Object_Water_02* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    static float sx = 2.5f;                                         // @ 0x0036F480
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036F420
-    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036F430
-    static u_long _GifTag[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F3E0
-    u_int result = 0;                                                                                                 // r2
-    sceVif1Packet* pPk;                                                                                               // r16
-    u_int vertex_num;                                                                                                 // r2
-    u_int x_grid_max;                                                                                                 // r2
-    u_int z_grid_max;                                                                                                 // r29+0xB0
-    u_int x_index;                                                                                                    // r17
-    u_int z_index;                                                                                                    // r18
-    u_int prim_type;                                                                                                  // r2
-    float lwm[4][4];                                                                                                  // r29+0xC0
-    float lsm[4][4];                                                                                                  // r29+0x100
-    float clip_mat[4][4];                                                                                             // r29+0x140
-    float* pGrid_Y = pGrid_Y_Value;                                                                                   // r2
-    float Ambient_Color[4];                                                                                           // r29+0x180
-    float view_dir[4];                                                                                                // r29+0x190
-    float pos[4];                                                                                                     // r29+0x1A0
-    float dir[4];                                                                                                     // r29+0x1B0
-    float Light_Color[4];                                                                                             // r29+0x1C0
-    float Parameter[4];                                                                                               // r29+0x1D0
-    float far_z;                                                                                                      // r20
-    float cos_theta;                                                                                                  // r21
-    u_int* pPk_Current;                                                                                               // r19
-    u_int* pPk_End;                                                                                                   // r2
-    float Grid_Vertex0[4];                                                                                            // r29+0x1E0
-    float Grid_Vertex1[4];                                                                                            // r29+0x1F0
-    float Grid_Vertex2[4];                                                                                            // r29+0x200
-    float Rgba[4];                                                                                                    // r29+0x210
-    int xyzf[4];                                                                                                      // r29+0x220
-    int rgba[4];                                                                                                      // r29+0x230
-    u_int addr;                                                                                                       // r2
-    float vec0[4];                                                                                                    // r29+0x240
-    float vec1[4];                                                                                                    // r29+0x250
-    float n0[4];                                                                                                      // r29+0x260
-    float specular_ratio;                                                                                             // r22
-    float stq0[4];                                                                                                    // r29+0x270
-    float stq1[4];                                                                                                    // r29+0x280
-    float base;                                                                                                       // r2
-    float color_scale;                                                                                                // r29+0x290
+    static float amb_alpha = 32.0f;    // @ 0x0036F440
+    static float light_alpha = 128.0f; // @ 0x0036F448
+    u_int result = 0;                  // r2
+    sceVif1Packet* pPk;                // r16
+    u_int vertex_num;                  // r2
+    u_int x_grid_max;                  // r2
+    u_int z_grid_max;                  // r29+0xB0
+    u_int x_index;                     // r17
+    u_int z_index;                     // r18
+    u_int prim_type;                   // r2
+    float lwm[4][4];                   // r29+0xC0
+    float lsm[4][4];                   // r29+0x100
+    float clip_mat[4][4];              // r29+0x140
+    float* pGrid_Y = pGrid_Y_Value;    // r2
+    float Ambient_Color[4];            // r29+0x180
+    float view_dir[4];                 // r29+0x190
+    float pos[4];                      // r29+0x1A0
+    float dir[4];                      // r29+0x1B0
+    float Light_Color[4];              // r29+0x1C0
+    float Parameter[4];                // r29+0x1D0
+    float far_z;                       // r20
+    float cos_theta;                   // r21
+    u_int* pPk_Current;                // r19
+    u_int* pPk_End;                    // r2
+    float Grid_Vertex0[4];             // r29+0x1E0
+    float Grid_Vertex1[4];             // r29+0x1F0
+    float Grid_Vertex2[4];             // r29+0x200
+    float Rgba[4];                     // r29+0x210
+    int xyzf[4];                       // r29+0x220
+    int rgba[4];                       // r29+0x230
+    u_int addr;                        // r2
+    float vec0[4];                     // r29+0x240
+    float vec1[4];                     // r29+0x250
+    float n0[4];                       // r29+0x260
+    float specular_ratio;              // r22
+    float stq0[4];                     // r29+0x270
+    float stq1[4];                     // r29+0x280
+    float base;                        // r2
+    float color_scale;                 // r29+0x290
 
     pPk = HH_Vif1Packet_Current_Get();
     x_grid_max = Grid_X_Max;

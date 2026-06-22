@@ -11,13 +11,13 @@
 
 #pragma divbyzerocheck off
 
-static u_int _area01_view_list_0x00373C10[5] = {0, 1, 2, 3, 4};
-static u_int _area04_view_list_0x00373C50[3] = {1, 4, 5};
 static u_int _area00_view_list_0x00373BF8[3] = {0, 1, 2};
-static u_int _area03_view_list_0x00373C40[3] = {1, 2, 3};
-static u_int _area06_view_list_0x00373C70[2] = {5, 6};
-static u_int _area05_view_list_0x00373C60[3] = {4, 5, 6};
+static u_int _area01_view_list_0x00373C10[5] = {0, 1, 2, 3, 4};
 static u_int _area02_view_list_0x00373C30[4] = {0, 1, 2, 3};
+static u_int _area03_view_list_0x00373C40[3] = {1, 2, 3};
+static u_int _area04_view_list_0x00373C50[3] = {1, 4, 5};
+static u_int _area05_view_list_0x00373C60[3] = {4, 5, 6};
+static u_int _area06_view_list_0x00373C70[2] = {5, 6};
 static WaveArea_Infomeation _Area_Info_List_0x00373C80[7] = {
     {/* .World_Location = */ {96300.0f, -180.0f, 19100.0f, 1.0f},
      /* .Grid_WH = */ {3800.0f, 0.0f, 1600.0f, 200.0f},
@@ -113,6 +113,14 @@ static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x003740A0[1] = {
      /* .X_Index_Start = */ {5, 0},
      /* .Z_Index_Start = */ {0, 0}}};
 
+static WaveArea_GridLink_Infomeation _area02_03_grid_link_list_0x003740D0[1] = {
+{/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+/* .Vertical_Horizontal_Flag = */ 0,
+/* .Length = */ 8,
+/* .X_Index_Max = */ {19, 20},
+/* .X_Index_Start = */ {18, 0},
+/* .Z_Index_Start = */ {0, 0}}};
+
 static WaveArea_GridLink_Infomeation _area01_04_grid_link_list[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 1,
@@ -121,13 +129,6 @@ static WaveArea_GridLink_Infomeation _area01_04_grid_link_list[1] = {
      /* .X_Index_Start = */ {0, 0},
      /* .Z_Index_Start = */ {13, 0}}};
 
-static WaveArea_GridLink_Infomeation _area02_03_grid_link_list_0x003740D0[1] = {
-    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
-     /* .Vertical_Horizontal_Flag = */ 0,
-     /* .Length = */ 8,
-     /* .X_Index_Max = */ {19, 20},
-     /* .X_Index_Start = */ {18, 0},
-     /* .Z_Index_Start = */ {0, 0}}};
 
 static WaveArea_GridLink_Infomeation _area04_05_grid_link_list_0x00374130[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
@@ -144,24 +145,6 @@ static WaveArea_GridLink_Infomeation _area05_06_grid_link_list_0x00374160[1] = {
      /* .X_Index_Max = */ {20, 6},
      /* .X_Index_Start = */ {0, 5},
      /* .Z_Index_Start = */ {0, 4}}};
-
-static float __arri_200_0x00374290 = 40.0f;
-static float __distance_198_0x00374280 = 3200.0f;
-static float __lost_time_199_0x00374288 = 10.0f;
-static float __omega_201_0x00374298 = 612.0f;
-static float __v_202_0x003742A0 = 1200.0f;
-static float _arri_186_0x00374260 = 40.0f;
-static float _distance_184_0x00374250 = 1200.0f;
-static float _interval_189_0x00374278 = 4.0f;
-static float _lost_time_185_0x00374258 = 12.0f;
-static float _omega_187_0x00374268 = 540.0f;
-static float _v_188_0x00374270 = 500.0f;
-static float add_move_175_0x01202F00 = 0.0f;
-static float amb_alpha_102_0x003741F0 = 40.0f;
-static float base_move_174_0x00374248 = 8.0f;
-static float center_176_0x01202F08 = 0.0f;
-static float degree_173_0x00374240 = 40.0f;
-static float light_alpha_103_0x003741F8 = 80.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_04* pThis);
 static u_int Object_Initialize(HH_Object_Water_04* pThis);
@@ -359,18 +342,20 @@ static u_int Object_Draw(HH_Object_Water_04* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4];        // r29+0x210
-            int xyzf[4];          // r29+0x220
-            int rgba[4];          // r29+0x230
-            u_int addr;           // r2
-            float vec0[4];        // r29+0x240
-            float vec1[4];        // r29+0x250
-            float n0[4];          // r29+0x260
-            float specular_ratio; // r22
-            float stq0[4];        // r29+0x270
-            float stq1[4];        // r29+0x280
-            float base;           // r2
-            float color_scale;    // r29+0x290
+            float Rgba[4];          // r29+0x210
+            int xyzf[4];            // r29+0x220
+            int rgba[4];            // r29+0x230
+            u_int addr;             // r2
+            float vec0[4];          // r29+0x240
+            float vec1[4];          // r29+0x250
+            float n0[4];            // r29+0x260
+            float specular_ratio;   // r22
+            float stq0[4];          // r29+0x270
+            float stq1[4];          // r29+0x280
+            float base;             // r2
+            float color_scale;      // r29+0x290
+            static float sx = 2.5f; // @ 0x00374230
+            static float ty = 2.5f; // @ 0x00374238
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 

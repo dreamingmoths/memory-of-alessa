@@ -18,14 +18,14 @@ static float Specular_Calculator(float* View_Direction, float* Light_Direction, 
 static void SpecularRGBA_Calculator(int* iRGBA, float* RGBA_Base, float* RGBA_Specular_Base, float Specular_Ratio);
 static u_int Object_Draw(HH_Object_Water_06* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max);
 
-static u_int _area06_view_list_0x00374340[4] = {2, 5, 6, 7};
-static u_int _area03_view_list_0x003742F0[6] = {0, 1, 2, 3, 4, 5};
 static u_int _area00_view_list_0x003742A8[3] = {0, 1, 3};
-static u_int _area07_view_list[2] = {6, 7};
-static u_int _area02_view_list_0x003742D0[6] = {0, 1, 2, 3, 4, 5};
-static u_int _area04_view_list_0x00374310[4] = {2, 3, 4, 5};
 static u_int _area01_view_list_0x003742C0[4] = {0, 1, 2, 3};
+static u_int _area02_view_list_0x003742D0[6] = {0, 1, 2, 3, 4, 5};
+static u_int _area03_view_list_0x003742F0[6] = {0, 1, 2, 3, 4, 5};
+static u_int _area04_view_list_0x00374310[4] = {2, 3, 4, 5};
 static u_int _area05_view_list_0x00374320[5] = {2, 4, 5, 6, 7};
+static u_int _area06_view_list_0x00374340[4] = {2, 5, 6, 7};
+static u_int _area07_view_list[2] = {6, 7};
 static WaveArea_Infomeation _Area_Info_List_0x00374360[8] = {
     {/* .World_Location = */ {136300.0f, -165.0f, 53300.0f, 1.0f},
      /* .Grid_WH = */ {3200.0f, 0.0f, 3200.0f, 200.0f},
@@ -124,6 +124,14 @@ static WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x003747E0[1] = {
      /* .X_Index_Start = */ {4, 0},
      /* .Z_Index_Start = */ {15, 0}}};
 
+static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00374810[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 1,
+     /* .Length = */ 8,
+     /* .X_Index_Max = */ {16, 24},
+     /* .X_Index_Start = */ {8, 0},
+     /* .Z_Index_Start = */ {17, 0}}};
+
 static WaveArea_GridLink_Infomeation _area00_03_grid_link_list[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 0,
@@ -132,13 +140,13 @@ static WaveArea_GridLink_Infomeation _area00_03_grid_link_list[1] = {
      /* .X_Index_Start = */ {15, 0},
      /* .Z_Index_Start = */ {4, 0}}};
 
-static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00374810[1] = {
+static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x00374870[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 1,
      /* .Length = */ 8,
-     /* .X_Index_Max = */ {16, 24},
-     /* .X_Index_Start = */ {8, 0},
-     /* .Z_Index_Start = */ {17, 0}}};
+     /* .X_Index_Max = */ {21, 8},
+     /* .X_Index_Start = */ {13, 0},
+     /* .Z_Index_Start = */ {7, 0}}};
 
 static WaveArea_GridLink_Infomeation _area02_04_grid_link_list_0x003748A0[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
@@ -156,14 +164,6 @@ static WaveArea_GridLink_Infomeation _area02_05_grid_link_list[1] = {
      /* .X_Index_Start = */ {16, 0},
      /* .Z_Index_Start = */ {7, 0}}};
 
-static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x00374870[1] = {
-    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
-     /* .Vertical_Horizontal_Flag = */ 1,
-     /* .Length = */ 8,
-     /* .X_Index_Max = */ {21, 8},
-     /* .X_Index_Start = */ {13, 0},
-     /* .Z_Index_Start = */ {7, 0}}};
-
 static WaveArea_GridLink_Infomeation _area05_06_grid_link_list_0x00374900[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 0,
@@ -179,24 +179,6 @@ static WaveArea_GridLink_Infomeation _area06_07_grid_link_list[1] = {
      /* .X_Index_Max = */ {21, 8},
      /* .X_Index_Start = */ {8, 0},
      /* .Z_Index_Start = */ {7, 0}}};
-
-static float __arri_204 = 40.0f;
-static float __distance_202 = 3200.0f;
-static float __lost_time_203 = 10.0f;
-static float __omega_205 = 612.0f;
-static float __v_206 = 1200.0f;
-static float _arri_190 = 40.0f;
-static float _distance_188 = 1200.0f;
-static float _interval_193 = 4.0f;
-static float _lost_time_189 = 12.0f;
-static float _omega_191 = 540.0f;
-static float _v_192 = 500.0f;
-static float add_move_179 = -1.0f;
-static float amb_alpha_102_0x003749C0 = 40.0f;
-static float base_move_178 = 8.0f;
-static float center_180 = 0.0f;
-static float degree_177 = 40.0f;
-static float light_alpha_103_0x003749C8 = 80.0f;
 
 static void Grid_Work_Initialize(HH_Object_Water_06* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));

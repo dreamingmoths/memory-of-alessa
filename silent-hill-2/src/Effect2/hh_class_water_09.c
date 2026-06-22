@@ -10,9 +10,10 @@
 
 #pragma divbyzerocheck off
 
-static u_int _area02_view_list_0x00375820[3] = {0, 1, 2};
 static u_int _area00_view_list_0x00375800[3] = {0, 1, 2};
 static u_int _area01_view_list_0x00375810[3] = {0, 1, 2};
+static u_int _area02_view_list_0x00375820[3] = {0, 1, 2};
+
 static WaveArea_Infomeation _Area_Info_List_0x00375830[3] = {
     {/* .World_Location = */ {19500.0f, -180.0f, -58700.0f, 1.0f},
      /* .Grid_WH = */ {1600.0f, 0.0f, 5000.0f, 200.0f},
@@ -63,27 +64,6 @@ static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00375A10[1] = {
      /* .X_Index_Max = */ {20, 8},
      /* .X_Index_Start = */ {12, 0},
      /* .Z_Index_Start = */ {0, 14}}};
-
-static float __arri_201 = 40.0f;
-static float __distance_199 = 3200.0f;
-static float __lost_time_200 = 10.0f;
-static float __omega_202 = 612.0f;
-static float __v_203 = 1200.0f;
-static float _arri_187 = 40.0f;
-static float _distance_185 = 1200.0f;
-static float _interval_190_0x00375B28 = 4.0f;
-static float _lost_time_186 = 12.0f;
-static float _omega_188 = 540.0f;
-static float _v_189 = 500.0f;
-static float add_move_176 = 0.0f;
-static float amb_alpha_103_0x00375AA0 = 40.0f;
-static float base_move_175 = 8.0f;
-static float center_177 = 0.0f;
-static float cos_beta_min_72_0x00375A38 = 0.9914439916610718;
-static float degree_174 = 40.0f;
-static float light_alpha_104_0x00375AA8 = 80.0f;
-static float sx_118_0x00375AE0 = 2.5;
-static float ty_119_0x00375AE8 = 2.5;
 
 static void Grid_Work_Initialize(HH_Object_Water_09* pThis);
 static u_int Object_Initialize(HH_Object_Water_09* pThis);

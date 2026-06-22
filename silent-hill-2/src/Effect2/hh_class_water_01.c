@@ -112,24 +112,7 @@ static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x0036F1E0[1] = {
      /* .X_Index_Start = */ {0, 6},
      /* .Z_Index_Start = */ {6, 0}}};
 
-static float __arri_203_0x0036F318 = 40.0f;
-static float __distance_201_0x0036F308 = 3200.0f;
-static float __lost_time_202_0x0036F310 = 10.0f;
-static float __omega_204_0x0036F320 = 612.0f;
-static float __v_205_0x0036F328 = 1200.0f;
-static float _arri_191_0x0036F2E8 = 40.0f;
-static float _distance_189_0x0036F2D8 = 1200.0f;
-static float _interval_194_0x0036F300 = 4.0f;
-static float _lost_time_190_0x0036F2E0 = 12.0f;
-static float _omega_192_0x0036F2F0 = 540.0f;
-static float _v_193_0x0036F2F8 = 500.0f;
-static float add_move_180_0x0036F2D0 = -1.0f;
-static float amb_alpha_0x0036F270 = 60.0f;
-static float base_move_179_0x0036F2C8 = 24.0f;
-static float center_181_0x011EB560 = 0.0f;
-static float cos_beta_min_72_0x0036F208 = 0.9659249782562256;
-static float degree_178_0x0036F2C0 = 40.0f;
-static float light_alpha_0x0036F278 = 120.0f;
+static float cos_beta_min_72_0x0036F208 = 0.96592498f;
 
 void Grid_Work_Initialize(HH_Object_Water_01* pThis) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));

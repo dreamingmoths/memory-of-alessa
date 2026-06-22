@@ -11,12 +11,12 @@
 #pragma divbyzerocheck off
 
 static u_int _area00_view_list_0x00374A80[2] = {0, 1};
-static u_int _area05_view_list_0x00374AD8[3] = {3, 4, 5};
-static u_int _area04_view_list_0x00374AC8[3] = {3, 4, 5};
-static u_int _area06_view_list_0x00374AE8[2] = {3, 6};
 static u_int _area01_view_list_0x00374A90[4] = {0, 1, 2, 3};
 static u_int _area02_view_list_0x00374AA0[3] = {1, 2, 3};
 static u_int _area03_view_list_0x00374AB0[6] = {1, 2, 3, 4, 5, 6};
+static u_int _area04_view_list_0x00374AC8[3] = {3, 4, 5};
+static u_int _area05_view_list_0x00374AD8[3] = {3, 4, 5};
+static u_int _area06_view_list_0x00374AE8[2] = {3, 6};
 static WaveArea_Infomeation _Area_Info_List_0x00374AF0[HH_WATER_07_TABLE_MAX] = {
     {/* .World_Location = */ {139900.0f, -165.0f, 9500.0f, 1.0f},
      /* .Grid_WH = */ {4000.0f, 0.0f, 4000.0f, 200.0f},
@@ -128,14 +128,6 @@ static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x00374F70[1] = {
      /* .X_Index_Start = */ {7, 0},
      /* .Z_Index_Start = */ {7, 0}}};
 
-static WaveArea_GridLink_Infomeation _area03_06_grid_link_list[1] = {
-    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
-     /* .Vertical_Horizontal_Flag = */ 0,
-     /* .Length = */ 8,
-     /* .X_Index_Max = */ {8, 15},
-     /* .X_Index_Start = */ {7, 0},
-     /* .Z_Index_Start = */ {20, 0}}};
-
 static WaveArea_GridLink_Infomeation _area04_05_grid_link_list_0x00374FA0[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 0,
@@ -144,27 +136,13 @@ static WaveArea_GridLink_Infomeation _area04_05_grid_link_list_0x00374FA0[1] = {
      /* .X_Index_Start = */ {11, 0},
      /* .Z_Index_Start = */ {0, 0}}};
 
-static float __arri_202 = 40.0f;
-static float __distance_200 = 3200.0f;
-static float __lost_time_201 = 10.0f;
-static float __omega_203 = 612.0f;
-static float __v_204 = 1200.0f;
-static float _a_max_104 = 1.0f;
-static float _arri_188 = 40.0f;
-static float _c_max_105 = 255.0f;
-static float _distance_186 = 1200.0f;
-static float _interval_191 = 4.0f;
-static float _lost_time_187 = 12.0f;
-static float _omega_189 = 540.0f;
-static float _v_190 = 500.0f;
-static float add_move_177 = 0.0f;
-static float amb_alpha_102_0x00375060 = 40.0f;
-static float base_move_176 = 8.0f;
-static float center_178 = 0.0f;
-static float degree_175 = 40.0f;
-static float light_alpha_103_0x00375068 = 80.0f;
-extern /* static */ float _c_max;
-extern /* static */ float _a_max;
+static WaveArea_GridLink_Infomeation _area03_06_grid_link_list[1] = {
+    {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
+     /* .Vertical_Horizontal_Flag = */ 0,
+     /* .Length = */ 8,
+     /* .X_Index_Max = */ {8, 15},
+     /* .X_Index_Start = */ {7, 0},
+     /* .Z_Index_Start = */ {20, 0}}};
 
 static void Grid_Work_Initialize(HH_Object_Water_07* pThis);
 static u_int Object_Initialize(HH_Object_Water_07* pThis);

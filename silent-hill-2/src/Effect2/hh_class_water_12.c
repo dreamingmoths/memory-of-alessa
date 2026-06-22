@@ -27,25 +27,6 @@ static WaveArea_Infomeation _Area_Info_List_0x0036F860[HH_WATER_12_TABLE_MAX] = 
      /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
      /* .pST_Defference = */ NULL}};
 
-static float __arri_195_0x0036FA00 = 40.0f;
-static float __distance_193_0x0036F9F0 = 3200.0f;
-static float __lost_time_194_0x0036F9F8 = 10.0f;
-static float __omega_196_0x0036FA08 = 612.0f;
-static float __v_197_0x0036FA10 = 1200.0f;
-static float _arri_181_0x0036F9D0 = 40.0f;
-static float _distance_179_0x0036F9C0 = 1200.0f;
-static float _interval_184_0x0036F9E8 = 4.0f;
-static float _lost_time_180_0x0036F9C8 = 12.0f;
-static float _omega_182_0x0036F9D8 = 540.0f;
-static float _v_183_0x0036F9E0 = 500.0f;
-static float add_move_170_0x011EB6A0 = 0.0f;
-static float amb_alpha_97_0x0036F7A0 = 32.0f;
-static float base_move_169_0x0036F9B8 = 8.0f;
-static float center_171_0x011EB6A8 = 0.0f;
-static float cos_beta_min_66_0x0036F730 = 0.9914439916610718;
-static float degree_168_0x0036F9B0 = 40.0f;
-static float light_alpha_98_0x0036F7A8 = 128.0f;
-
 static void Grid_Work_Initialize(HH_Object_Water_12* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 }

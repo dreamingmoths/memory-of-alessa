@@ -88,24 +88,6 @@ static WaveArea_GridLink_Infomeation _area01_03_grid_link_list[1] = {
      /* .X_Index_Start = */ {8, 0},
      /* .Z_Index_Start = */ {12, 0}}};
 
-static float __arri_195_0x003701E8 = 40.0f;
-static float __distance_193_0x003701D8 = 3200.0f;
-static float __lost_time_194_0x003701E0 = 10.0f;
-static float _interval_184_0x003701D0 = 4.0f;
-static float __v_197_0x003701F8 = 1200.0f;
-static float _arri_181_0x003701B8 = 40.0f;
-static float _distance_179_0x003701A8 = 1200.0f;
-static float _lost_time_180_0x003701B0 = 12.0f;
-static float _omega_182_0x003701C0 = 540.0f;
-static float __omega_196_0x003701F0 = 612.0f;
-static float _v_183_0x003701C8 = 500.0f;
-static float add_move_170_0x003701A0 = -1.0f;
-static float amb_alpha_97_0x00370140 = 32.0f;
-static float base_move_169_0x00370198 = 8.0f;
-static float center_171_0x011EB770 = 0.0f;
-static float degree_168_0x00370190 = 40.0f;
-static float light_alpha_98_0x00370148 = 128.0f;
-
 static void Grid_Work_Initialize(HH_Object_Water_15* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 
@@ -290,18 +272,20 @@ static u_int Object_Draw(HH_Object_Water_15* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4];        // r29+0x210
-            int xyzf[4];          // r29+0x220
-            int rgba[4];          // r29+0x230
-            u_int addr;           // r2
-            float vec0[4];        // r29+0x240
-            float vec1[4];        // r29+0x250
-            float n0[4];          // r29+0x260
-            float specular_ratio; // r22
-            float stq0[4];        // r29+0x270
-            float stq1[4];        // r29+0x280
-            float base;           // r2
-            float color_scale;    // r29+0x290
+            float Rgba[4];          // r29+0x210
+            int xyzf[4];            // r29+0x220
+            int rgba[4];            // r29+0x230
+            u_int addr;             // r2
+            float vec0[4];          // r29+0x240
+            float vec1[4];          // r29+0x250
+            float n0[4];            // r29+0x260
+            float specular_ratio;   // r22
+            float stq0[4];          // r29+0x270
+            float stq1[4];          // r29+0x280
+            float base;             // r2
+            float color_scale;      // r29+0x290
+            static float sx = 2.5f; // @ 0x00370180
+            static float ty = 2.5f; // @ 0x00370188
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
 

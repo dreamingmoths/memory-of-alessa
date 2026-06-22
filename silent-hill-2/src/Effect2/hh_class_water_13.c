@@ -27,24 +27,6 @@ static WaveArea_Infomeation _Area_Info_List_0x0036FA20[1] = {
      /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
      /* .pST_Defference = */ NULL}};
 
-static float _arri_185 = 40.0f;
-static float __distance_197 = 3200.0f;
-static float __lost_time_198 = 10.0f;
-static float __omega_200 = 612.0f;
-static float __v_201 = 1200.0f;
-static float __arri_199 = 40.0f;
-static float _distance_183 = 1200.0f;
-static float _interval_188 = 4.0f;
-static float _lost_time_184 = 12.0f;
-static float _omega_186 = 540.0f;
-static float _v_187 = 500.0f;
-static float add_move_174 = -1.0f;
-static float amb_alpha_97_0x0036FB20 = 32.0f;
-static float base_move_173 = 8.0f;
-static float center_175 = 0.0f;
-static float degree_172 = 40.0f;
-static float light_alpha_98_0x0036FB28 = 128.0f;
-
 static void Grid_Work_Initialize(HH_Object_Water_13* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 }
