@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ci/test
     paths-ignore:
       - '**.md'
 

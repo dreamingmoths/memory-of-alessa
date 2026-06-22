@@ -117,7 +117,7 @@ MWCCGAP_FLAGS := \
     --as-march=r5900 \
     --as-mabi=eabi \
 	--as-flags=$(MWCCGAP_AS_FLAGS)
-MWCCGAP_PATCH_VERSION_FILE := $(TOOLS)/mwccgap.version
+MWCCGAP_PATCH_VERSION_FILE := $(TOOLS)/mwccgap/mwccgap.patch
 
 ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@"
@@ -318,12 +318,11 @@ $(BINUTILS_VERSION_FILE): $(AS)
 $(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
 	git submodule sync
 	git submodule update --init --recursive
-	@touch $(MWCCGAP_PATCH_VERSION_FILE)
 
 $(ALESSATOOL_OVERLAY_LOCK): $(SOURCE_OVERLAY_ARCHIVE)
 	@mkdir -p "$(@D)"
 	touch $(ALESSATOOL_OVERLAY_LOCK)
-	$(MAKE) extract
+	$(if $(SOURCE_OVERLAY_ARCHIVE),$(MAKE) extract,)
 
 $(OVERLAY_SOURCES): $(ALESSATOOL_OVERLAY_LOCK)
 
