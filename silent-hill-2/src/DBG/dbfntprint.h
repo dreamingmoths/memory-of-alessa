@@ -29,7 +29,7 @@ typedef struct DebugPrintInfo {
 #endif
 extern void _shDBG_print_string(char* st /* r2 */, int ix /* r2 */, int iy /* r2 */);
 
-extern DebugPrintInfo d;
+extern DebugPrintInfo d_0x0033BEC0;
 
 void dbfntlocate(int x, int y);
 

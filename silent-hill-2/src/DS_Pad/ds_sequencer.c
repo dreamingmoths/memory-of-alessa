@@ -566,11 +566,11 @@ static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
     return result;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @268_0x00398730);
+const char rodata_268_0x00398730[] = "ds_sequencer.c:594> assert:(%s)\n";
 
-INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @269);
+const char rodata_269[] = "(EntryTable_Index < DSR_EntryTable_Max)";
 
-INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @441);
+const char rodata_441[] = "ds_sequencer.c:906> assert:(%s)\n";
 
 INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @442);
 

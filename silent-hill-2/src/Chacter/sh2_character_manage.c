@@ -143,7 +143,7 @@ int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
     sh2jms.spirit = chara->spirit;
     sh2jms.weapon = chara->weapon;
     sh2jms.spray_set = chara->spray_set;
-    sh2jms.room_name_prev = -1;
+    sh2jms.room_name_now = -1;
 
     return (int) scp;
 }

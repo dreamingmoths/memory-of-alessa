@@ -546,135 +546,135 @@ typedef struct PAD_INFO {
 
 typedef struct shPlayerWork {
     // total size: 0x540
-    struct SubCharacter* player;          // offset 0x0, size 0x4
-    Vector4 dist_rot;                     // offset 0x10, size 0x10
-    Vector4 dist_pos;                     // offset 0x20, size 0x10
-    Vector4 pos;                          // offset 0x30, size 0x10
-    Vector4 rot;                          // offset 0x40, size 0x10
-    float rot_y;                          // offset 0x50, size 0x4
-    float inner_to_wall;                  // offset 0x54, size 0x4
-    float dist_to_wall;                   // offset 0x58, size 0x4
-    float dir_tgt_2d;                     // offset 0x5C, size 0x4
-    float dir_now_2d;                     // offset 0x60, size 0x4
-    u_char map_mode;                      // offset 0x64, size 0x1
-    u_char reserve0;                      // offset 0x65, size 0x1
-    u_char step;                          // offset 0x66, size 0x1
-    u_char sub_step;                      // offset 0x67, size 0x1
-    u_short timer;                        // offset 0x68, size 0x2
-    u_short timer2;                       // offset 0x6A, size 0x2
-    u_int allbody_now;                    // offset 0x6C, size 0x4
-    enum _JAMES_UPPER_STATUS upper_now;   // offset 0x70, size 0x1
-    enum _JAMES_LOWER_STATUS lower_now;   // offset 0x71, size 0x1
-    u_int allbody_prev;                   // offset 0x74, size 0x4
-    enum _JAMES_UPPER_STATUS upper_prev;  // offset 0x78, size 0x1
-    enum _JAMES_LOWER_STATUS lower_prev;  // offset 0x79, size 0x1
-    u_char event_status_now;              // offset 0x7A, size 0x1
-    u_char event_status_prev;             // offset 0x7B, size 0x1
-    u_char event_move_mode;               // offset 0x7C, size 0x1
-    u_char reserve1;                      // offset 0x7D, size 0x1
-    u_int upper_st_flg;                   // offset 0x80, size 0x4
-    u_int lower_st_flg;                   // offset 0x84, size 0x4
-    u_int u_anime_st_flg;                 // offset 0x88, size 0x4
-    u_int l_anime_st_flg;                 // offset 0x8C, size 0x4
-    u_int anime_pause;                    // offset 0x90, size 0x4
-    u_int act_with_wep;                   // offset 0x94, size 0x4
-    float light_vec_inner_rate;           // offset 0x98, size 0x4
-    float light_pos_revise[4];            // offset 0xA0, size 0x10
-    float light_vec_revise[4];            // offset 0xB0, size 0x10
-    float light_pos[4];                   // offset 0xC0, size 0x10
-    float light_vec[4];                   // offset 0xD0, size 0x10
-    float light_pos_revise_reverse[4];    // offset 0xE0, size 0x10
-    float light_vec_revise_reverse[4];    // offset 0xF0, size 0x10
-    float light_pos_reverse[4];           // offset 0x100, size 0x10
-    float light_vec_reverse[4];           // offset 0x110, size 0x10
-    float light_vec_neck[4];              // offset 0x120, size 0x10
-    int room_name_prev;                   // offset 0x130, size 0x4
-    int room_name_now;                    // offset 0x134, size 0x4
-    struct _CL_VHIT_RESULT r_side;        // offset 0x140, size 0x40
-    struct _CL_VHIT_RESULT l_side;        // offset 0x180, size 0x40
-    struct _CL_VHIT_RESULT foot;          // offset 0x1C0, size 0x40
-    struct _CL_VHIT_RESULT ft_floor;      // offset 0x200, size 0x40
-    struct _CL_VHIT_RESULT r_foot;        // offset 0x240, size 0x40
-    struct _CL_VHIT_RESULT l_foot;        // offset 0x280, size 0x40
-    struct _CL_HITPOLY_COLUMN column_mov; // offset 0x2C0, size 0x30
-    struct _CL_HITPOLY_COLUMN column_atk; // offset 0x2F0, size 0x30
-    float col_mov_z_hosei;                // offset 0x320, size 0x4
-    float col_atk_z_hosei;                // offset 0x324, size 0x4
-    u_char wep_no_hit_floor;              // offset 0x328, size 0x1
-    u_char efct_upper;                    // offset 0x329, size 0x1
-    u_char light_reverse;                 // offset 0x32A, size 0x1
-    u_char water_road;                    // offset 0x32B, size 0x1
-    struct PAD_INFO pad[10];              // offset 0x32C, size 0x140
-    float rstick_x;                       // offset 0x46C, size 0x4
-    float rstick_y;                       // offset 0x470, size 0x4
-    float lstick_x;                       // offset 0x474, size 0x4
-    float lstick_y;                       // offset 0x478, size 0x4
-    float lstick_p;                       // offset 0x47C, size 0x4
-    float cam_rot_y[2];                   // offset 0x480, size 0x8
-    u_char now_cam_no;                    // offset 0x488, size 0x1
-    u_char cam_chg_flg;                   // offset 0x489, size 0x1
-    u_char ctrl_unit;                     // offset 0x48A, size 0x1
-    u_char ctrl_inputing;                 // offset 0x48B, size 0x1
-    u_char se_upper[4];                   // offset 0x48C, size 0x4
-    u_char se_foot[4];                    // offset 0x490, size 0x4
-    float csaw_se_vol;                    // offset 0x494, size 0x4
-    u_char csaw_se_flg;                   // offset 0x498, size 0x1
-    u_char d_shock;                       // offset 0x499, size 0x1
-    u_char reserve2;                      // offset 0x49A, size 0x1
-    u_char strike_splash_flg;             // offset 0x49B, size 0x1
-    int event_anime;                      // offset 0x49C, size 0x4
-    Vector4 tgt_body_angle;               // offset 0x4A0, size 0x10
-    Vector4 tgt_neck_angle;               // offset 0x4B0, size 0x10
-    Vector4 tgt_arms_angle;               // offset 0x4C0, size 0x10
-    u_char hold_chg[2];                   // offset 0x4D0, size 0x2
-    u_char hold_loop[2];                  // offset 0x4D2, size 0x2
-    u_char motion_no;                     // offset 0x4D4, size 0x1
-    u_char shotgun_dir;                   // offset 0x4D5, size 0x1
-    u_char shotgun_prev;                  // offset 0x4D6, size 0x1
-    u_char guard_check;                   // offset 0x4D7, size 0x1
-    int parts_light;                      // offset 0x4D8, size 0x4
-    int parts_rhand;                      // offset 0x4DC, size 0x4
-    int parts_lhand;                      // offset 0x4E0, size 0x4
-    struct SubCharacter* target;          // offset 0x4E4, size 0x4
-    struct SubCharacter* look_tgt;        // offset 0x4E8, size 0x4
-    float non_input;                      // offset 0x4EC, size 0x4
-    float hugging_gauge;                  // offset 0x4F0, size 0x4
-    float running_time;                   // offset 0x4F4, size 0x4
-    float muteki_time;                    // offset 0x4F8, size 0x4
-    float hp;                             // offset 0x4FC, size 0x4
-    float hp_max;                         // offset 0x500, size 0x4
-    float hp_recover;                     // offset 0x504, size 0x4
-    float shock;                          // offset 0x508, size 0x4
-    float spray_time;                     // offset 0x50C, size 0x4
-    int tired;                            // offset 0x510, size 0x4
-    int tired_max;                        // offset 0x514, size 0x4
-    int spirit;                           // offset 0x518, size 0x4
-    struct SubCharacter* enemy_liedown;   // offset 0x51C, size 0x4
-    u_char enemy_around;                  // offset 0x520, size 0x1
-    u_char enemy_atk_area;                // offset 0x521, size 0x1
-    u_char enemy_near;                    // offset 0x522, size 0x1
-    u_char lock_on;                       // offset 0x523, size 0x1
-    u_char running;                       // offset 0x524, size 0x1
-    u_char cannot_run;                    // offset 0x525, size 0x1
-    u_char fall_type;                     // offset 0x526, size 0x1
-    u_char reload;                        // offset 0x527, size 0x1
-    u_char weapon;                        // offset 0x528, size 0x1
-    u_char shoot_val;                     // offset 0x529, size 0x1
-    u_char reload_val;                    // offset 0x52A, size 0x1
-    u_char atk_type;                      // offset 0x52B, size 0x1
-    u_char atk_reserve[2];                // offset 0x52C, size 0x2
-    u_char attack_ok;                     // offset 0x52E, size 0x1
-    s_char hold_type;                     // offset 0x52F, size 0x1
-    u_char dead;                          // offset 0x530, size 0x1
-    u_char no_damage;                     // offset 0x531, size 0x1
-    u_char atk_count;                     // offset 0x532, size 0x1
-    u_char hug_status;                    // offset 0x533, size 0x1
-    u_char hug_dir;                       // offset 0x534, size 0x1
-    u_char se_on;                         // offset 0x535, size 0x1
-    u_char spray_set;                     // offset 0x536, size 0x1
-    s_char spray_pow;                     // offset 0x537, size 0x1
-    u_short damage_no;                    // offset 0x538, size 0x2
-    u_short attack_no;                    // offset 0x53A, size 0x2
+    struct SubCharacter* player;            // offset 0x0, size 0x4
+    Vector4 dist_rot;                       // offset 0x10, size 0x10
+    Vector4 dist_pos;                       // offset 0x20, size 0x10
+    Vector4 pos;                            // offset 0x30, size 0x10
+    Vector4 rot;                            // offset 0x40, size 0x10
+    float rot_y;                            // offset 0x50, size 0x4
+    float inner_to_wall;                    // offset 0x54, size 0x4
+    float dist_to_wall;                     // offset 0x58, size 0x4
+    float dir_tgt_2d;                       // offset 0x5C, size 0x4
+    float dir_now_2d;                       // offset 0x60, size 0x4
+    u_char map_mode;                        // offset 0x64, size 0x1
+    u_char reserve0;                        // offset 0x65, size 0x1
+    u_char step;                            // offset 0x66, size 0x1
+    u_char sub_step;                        // offset 0x67, size 0x1
+    u_short timer;                          // offset 0x68, size 0x2
+    u_short timer2;                         // offset 0x6A, size 0x2
+    u_int allbody_now;                      // offset 0x6C, size 0x4
+    enum _JAMES_UPPER_STATUS upper_now;     // offset 0x70, size 0x1
+    enum _JAMES_LOWER_STATUS lower_now;     // offset 0x71, size 0x1
+    u_int allbody_prev;                     // offset 0x74, size 0x4
+    enum _JAMES_UPPER_STATUS upper_prev;    // offset 0x78, size 0x1
+    enum _JAMES_LOWER_STATUS lower_prev;    // offset 0x79, size 0x1
+    u_char event_status_now;                // offset 0x7A, size 0x1
+    u_char event_status_prev;               // offset 0x7B, size 0x1
+    u_char event_move_mode;                 // offset 0x7C, size 0x1
+    u_char reserve1;                        // offset 0x7D, size 0x1
+    u_int upper_st_flg;                     // offset 0x80, size 0x4
+    u_int lower_st_flg;                     // offset 0x84, size 0x4
+    u_int u_anime_st_flg;                   // offset 0x88, size 0x4
+    u_int l_anime_st_flg;                   // offset 0x8C, size 0x4
+    u_int anime_pause;                      // offset 0x90, size 0x4
+    u_int act_with_wep;                     // offset 0x94, size 0x4
+    float light_vec_inner_rate;             // offset 0x98, size 0x4
+    sceVu0FVECTOR light_pos_revise;         // offset 0xA0, size 0x10
+    sceVu0FVECTOR light_vec_revise;         // offset 0xB0, size 0x10
+    sceVu0FVECTOR light_pos;                // offset 0xC0, size 0x10
+    sceVu0FVECTOR light_vec;                // offset 0xD0, size 0x10
+    sceVu0FVECTOR light_pos_revise_reverse; // offset 0xE0, size 0x10
+    sceVu0FVECTOR light_vec_revise_reverse; // offset 0xF0, size 0x10
+    sceVu0FVECTOR light_pos_reverse;        // offset 0x100, size 0x10
+    sceVu0FVECTOR light_vec_reverse;        // offset 0x110, size 0x10
+    sceVu0FVECTOR light_vec_neck;           // offset 0x120, size 0x10
+    int room_name_prev;                     // offset 0x130, size 0x4
+    int room_name_now;                      // offset 0x134, size 0x4
+    struct _CL_VHIT_RESULT r_side;          // offset 0x140, size 0x40
+    struct _CL_VHIT_RESULT l_side;          // offset 0x180, size 0x40
+    struct _CL_VHIT_RESULT foot;            // offset 0x1C0, size 0x40
+    struct _CL_VHIT_RESULT ft_floor;        // offset 0x200, size 0x40
+    struct _CL_VHIT_RESULT r_foot;          // offset 0x240, size 0x40
+    struct _CL_VHIT_RESULT l_foot;          // offset 0x280, size 0x40
+    struct _CL_HITPOLY_COLUMN column_mov;   // offset 0x2C0, size 0x30
+    struct _CL_HITPOLY_COLUMN column_atk;   // offset 0x2F0, size 0x30
+    float col_mov_z_hosei;                  // offset 0x320, size 0x4
+    float col_atk_z_hosei;                  // offset 0x324, size 0x4
+    u_char wep_no_hit_floor;                // offset 0x328, size 0x1
+    u_char efct_upper;                      // offset 0x329, size 0x1
+    u_char light_reverse;                   // offset 0x32A, size 0x1
+    u_char water_road;                      // offset 0x32B, size 0x1
+    struct PAD_INFO pad[10];                // offset 0x32C, size 0x140
+    float rstick_x;                         // offset 0x46C, size 0x4
+    float rstick_y;                         // offset 0x470, size 0x4
+    float lstick_x;                         // offset 0x474, size 0x4
+    float lstick_y;                         // offset 0x478, size 0x4
+    float lstick_p;                         // offset 0x47C, size 0x4
+    float cam_rot_y[2];                     // offset 0x480, size 0x8
+    u_char now_cam_no;                      // offset 0x488, size 0x1
+    u_char cam_chg_flg;                     // offset 0x489, size 0x1
+    u_char ctrl_unit;                       // offset 0x48A, size 0x1
+    u_char ctrl_inputing;                   // offset 0x48B, size 0x1
+    u_char se_upper[4];                     // offset 0x48C, size 0x4
+    u_char se_foot[4];                      // offset 0x490, size 0x4
+    float csaw_se_vol;                      // offset 0x494, size 0x4
+    u_char csaw_se_flg;                     // offset 0x498, size 0x1
+    u_char d_shock;                         // offset 0x499, size 0x1
+    u_char reserve2;                        // offset 0x49A, size 0x1
+    u_char strike_splash_flg;               // offset 0x49B, size 0x1
+    int event_anime;                        // offset 0x49C, size 0x4
+    Vector4 tgt_body_angle;                 // offset 0x4A0, size 0x10
+    Vector4 tgt_neck_angle;                 // offset 0x4B0, size 0x10
+    Vector4 tgt_arms_angle;                 // offset 0x4C0, size 0x10
+    u_char hold_chg[2];                     // offset 0x4D0, size 0x2
+    u_char hold_loop[2];                    // offset 0x4D2, size 0x2
+    u_char motion_no;                       // offset 0x4D4, size 0x1
+    u_char shotgun_dir;                     // offset 0x4D5, size 0x1
+    u_char shotgun_prev;                    // offset 0x4D6, size 0x1
+    u_char guard_check;                     // offset 0x4D7, size 0x1
+    int parts_light;                        // offset 0x4D8, size 0x4
+    int parts_rhand;                        // offset 0x4DC, size 0x4
+    int parts_lhand;                        // offset 0x4E0, size 0x4
+    struct SubCharacter* target;            // offset 0x4E4, size 0x4
+    struct SubCharacter* look_tgt;          // offset 0x4E8, size 0x4
+    float non_input;                        // offset 0x4EC, size 0x4
+    float hugging_gauge;                    // offset 0x4F0, size 0x4
+    float running_time;                     // offset 0x4F4, size 0x4
+    float muteki_time;                      // offset 0x4F8, size 0x4
+    float hp;                               // offset 0x4FC, size 0x4
+    float hp_max;                           // offset 0x500, size 0x4
+    float hp_recover;                       // offset 0x504, size 0x4
+    float shock;                            // offset 0x508, size 0x4
+    float spray_time;                       // offset 0x50C, size 0x4
+    int tired;                              // offset 0x510, size 0x4
+    int tired_max;                          // offset 0x514, size 0x4
+    int spirit;                             // offset 0x518, size 0x4
+    struct SubCharacter* enemy_liedown;     // offset 0x51C, size 0x4
+    u_char enemy_around;                    // offset 0x520, size 0x1
+    u_char enemy_atk_area;                  // offset 0x521, size 0x1
+    u_char enemy_near;                      // offset 0x522, size 0x1
+    u_char lock_on;                         // offset 0x523, size 0x1
+    u_char running;                         // offset 0x524, size 0x1
+    u_char cannot_run;                      // offset 0x525, size 0x1
+    u_char fall_type;                       // offset 0x526, size 0x1
+    u_char reload;                          // offset 0x527, size 0x1
+    u_char weapon;                          // offset 0x528, size 0x1
+    u_char shoot_val;                       // offset 0x529, size 0x1
+    u_char reload_val;                      // offset 0x52A, size 0x1
+    u_char atk_type;                        // offset 0x52B, size 0x1
+    u_char atk_reserve[2];                  // offset 0x52C, size 0x2
+    u_char attack_ok;                       // offset 0x52E, size 0x1
+    s_char hold_type;                       // offset 0x52F, size 0x1
+    u_char dead;                            // offset 0x530, size 0x1
+    u_char no_damage;                       // offset 0x531, size 0x1
+    u_char atk_count;                       // offset 0x532, size 0x1
+    u_char hug_status;                      // offset 0x533, size 0x1
+    u_char hug_dir;                         // offset 0x534, size 0x1
+    u_char se_on;                           // offset 0x535, size 0x1
+    u_char spray_set;                       // offset 0x536, size 0x1
+    s_char spray_pow;                       // offset 0x537, size 0x1
+    u_short damage_no;                      // offset 0x538, size 0x2
+    u_short attack_no;                      // offset 0x53A, size 0x2
 } shPlayerWork;
 
 typedef struct shCharaInfo {

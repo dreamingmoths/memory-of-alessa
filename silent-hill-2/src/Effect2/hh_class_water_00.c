@@ -400,9 +400,9 @@ u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
     return result;
 }
 #else
-static sceVu0FVECTOR Grid_Vertex0 = {500.0f, 0.0f, 0.0f, 1.0f};
-static sceVu0FVECTOR Grid_Vertex1 = {500.0f, 0.0f, 0.0f, 1.0f};
-static sceVu0FVECTOR Grid_Vertex2 = {500.0f, 0.0f, 0.0f, 1.0f};
+sceVu0FVECTOR GridVertex0 = {500.0f, 0.0f, 0.0f, 1.0f};
+sceVu0FVECTOR GridVertex1 = {500.0f, 0.0f, 0.0f, 1.0f};
+sceVu0FVECTOR GridVertex2 = {500.0f, 0.0f, 0.0f, 1.0f};
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_water_00", Object_Draw);
 #endif
 

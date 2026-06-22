@@ -479,7 +479,7 @@ segments:
       - [0x291180, rodata,  rodata_0x291180]
       - [0x291290, .rodata, sh2shd/sh2shd_shadow_model]
       - [0x2915c0, .rodata, Event/event]
-      - [0x2917cf, rodata,  rodata_0x2917cf]
+      - [0x2917c8, rodata,  rodata_0x2917c8]
       - [0x291810, .rodata, Event/item]
       - [0x2918e0, rodata,  rodata_0x2918e0]
       - [0x291980, .rodata, Event/demoview]

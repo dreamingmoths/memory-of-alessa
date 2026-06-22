@@ -11,10 +11,10 @@
 
 #pragma divbyzerocheck off
 
-static u_int _area03_view_list_0x00373800[3] = {1, 2, 3};
-static u_int _area02_view_list_0x003737F0[3] = {1, 2, 3};
 static u_int _area00_view_list_0x003737D0[3] = {0, 1, 2};
 static u_int _area01_view_list_0x003737E0[4] = {0, 1, 2, 3};
+static u_int _area02_view_list_0x003737F0[3] = {1, 2, 3};
+static u_int _area03_view_list_0x00373800[3] = {1, 2, 3};
 static WaveArea_Infomeation _Area_Info_List_0x00373810[4] = {
     {/* .World_Location = */ {56700.0f, -180.0f, 17100.0f, 1.0f},
      /* .Grid_WH = */ {2600.0f, 0.0f, 1600.0f, 200.0f},

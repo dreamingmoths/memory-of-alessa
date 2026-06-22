@@ -51,7 +51,7 @@ void sh2shd_init_shadow(void) {
         shadow_man.outdoor_man[i] = NULL;
 
     shadow_calcheap = utilHeapInit(&Shadow_Calcwork[1], 0x19000U);
-    ASSERT_ON_LINE(shadow_calcheap, 2343);
+    ASSERT_ON_LINE(shadow_calcheap, 129);
 
 
     
@@ -177,10 +177,10 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
     }
     shadow_man.char_man[i] = utilHeapMalloc(shadow_calcheap, SHADOW_CALC_HEAP_SIZE);
     if (shadow_man.char_man[i] == 0)
-       ASSERT(shadow_man.char_man[i] != 0);
+       ASSERT_ON_LINE(shadow_man.char_man[i] != 0, 386);
 
     shadow_man.char_man[i]->shape = utilHeapMalloc(shadow_calcheap, char_head.obj_num * 0x70);
-    ASSERT(shadow_man.char_man[i]->shape != 0);
+    ASSERT_ON_LINE(shadow_man.char_man[i]->shape != 0, 400);
     shadow_man.char_man_num++;
 
     if (IS_PLAYER_KIND(scp->kind) && (jms_shadow_env.light_kind >= 0)) {

@@ -18,7 +18,7 @@ options:
 segments:
   - name: xxx
     type: code
-    vram: 0x1E08700
+    vram: 0x1F01E00
     start: 0x0
     subsegments:
       - [0x0, databin, xxx_overlay_header]

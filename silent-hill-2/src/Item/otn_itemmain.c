@@ -682,10 +682,9 @@ void set_position(int step) {
     }
 }
 #else
+const char __pad_0x00392ee8[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", set_position);
 #endif
-
-const char __pad_0x00392f28[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_turn);
 
