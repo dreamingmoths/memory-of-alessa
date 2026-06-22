@@ -235,6 +235,8 @@ clean-project:
 extract: $(SOURCE_OVERLAY_ARCHIVE)
 	$(ALESSATOOL) $(EXTRACT)
 
+binutils: $(AS)
+
 sh3:
 	$(MAKE) PROJECT="silent-hill-3"
 
@@ -311,7 +313,7 @@ $(BINUTILS_VERSION_FILE):
 	@rm -rf $(BINUTILS)
 	@mkdir -p $(BINUTILS)
 	@touch $(BINUTILS_VERSION_FILE)
-	@make $(AS)
+	@make binutils
 
 $(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
 	git submodule sync
@@ -343,9 +345,9 @@ $(patsubst $(ASM)/%.s,$(BUILD)/asm/%.s.o, \
 endef
 ###############################################################
 PHONY_TARGETS := \
-	alessatool clean clean-project compiler-info death debug \
-	deep-clean diff expected extract heaven hell progress \
-	rebuild report setup sh2 sh3 sh2-clean sh3-clean \
+	alessatool binutils clean clean-project compiler-info \
+	death debug deep-clean diff expected extract heaven hell \
+	progress rebuild report setup sh2 sh3 sh2-clean sh3-clean \
 	sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)
 ifeq ($(filter $(PHONY_TARGETS) $(OBJDIFF_CONFIG),$(MAKECMDGOALS)),)
