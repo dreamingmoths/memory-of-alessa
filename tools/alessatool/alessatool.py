@@ -123,6 +123,12 @@ def main():
         help="(see splat documentation on this option)"
     )
     generate_parser.add_argument(
+        "--bss-alignment",
+        type=int,
+        default=8,
+        help="alignment value for the bss section (must be in decimal)"
+    )
+    generate_parser.add_argument(
         "yamls",
         type=Path,
         nargs="+",

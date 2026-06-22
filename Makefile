@@ -138,7 +138,8 @@ GENERATE := $(ALESSATOOL) generate \
 	--template-path $(LINKER_TEMPLATE) \
 	--lcf-output-path $(LINKERS)/$(SERIAL).lcf \
 	--build-path $(BUILD) \
-	--config-path $(CONFIG)
+	--config-path $(CONFIG) \
+	--bss-alignment $(BSS_ALIGNMENT)
 EXTRACT := extract \
 	--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
 	--output-dir $(ROM) \
