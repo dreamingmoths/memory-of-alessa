@@ -22,6 +22,8 @@ typedef struct shInAreaTgtInfo {
     struct shInArea in_area;      // offset 0x8, size 0x1
 } shInAreaTgtInfo;
 
+extern shInAreaTgtInfo sh2_target_info[20];
+
 void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel);
 int shBattleAroundTargetEnemy(void);
 SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp);
