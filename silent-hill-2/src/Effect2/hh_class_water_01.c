@@ -113,8 +113,6 @@ static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x0036F1E0[1] = {
      /* .Z_Index_Start = */ {6, 0}}};
 
 static float cos_beta_min_72_0x0036F208 = 0.96592498f;
-// static float amb_alpha_0x0036F270_0x0036F270 = 60.0f;
-// static float light_alpha_0x0036F278_0x0036F278 = 120.0f;
 
 void Grid_Work_Initialize(HH_Object_Water_01* pThis) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -231,8 +229,6 @@ static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                 
 static float SpecularRgba[4] = {96.0f, 96.0f, 96.0f, 96.0f};                                                // @ 0x0036F260
 static float amb_alpha_0x0036F270 = 60.0f;                                                                  // @ 0x0036F270
 static float light_alpha_0x0036F278 = 120.0f;                                                               // @ 0x0036F278
-static float ty = 2.5f;                                                                                     // @ 0x0036F2B8
-static float sx = 2.5f;                                                                                     // @ 0x0036F2B0
 
 static u_int Object_Draw(HH_Object_Water_01* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     // Range: 0x25CB00 -> 0x25D360
@@ -322,6 +318,9 @@ static u_int Object_Draw(HH_Object_Water_01* pThis /* r22 */, float* pGrid_Y_Val
             float stq1[4];        // r29+0x280
             float base;           // r2
             float color_scale;    // r29+0x290
+            static float sx_0x0036F2B0 = 2.5f;                                                                                     // @ 0x0036F2B0
+            static float ty_0x0036F2B8 = 2.5f;                                                                                     // @ 0x0036F2B8
+
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 
@@ -330,8 +329,8 @@ static u_int Object_Draw(HH_Object_Water_01* pThis /* r22 */, float* pGrid_Y_Val
             Grid_Vertex1[1] = pGrid_Y[HH_WATER_01_GRID_INDEX_GET(x_index, z_index + 1)];
             Grid_Vertex2[1] = pGrid_Y[HH_WATER_01_GRID_INDEX_GET((x_index + 1) % x_grid_max, z_index)];
 
-            base = 0.25f * (1.0f / (200.0f * ty));
-            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx));
+            base = 0.25f * (1.0f / (200.0f * ty_0x0036F2B8));
+            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx_0x0036F2B0));
             stq0[1] = Grid_Vertex0[2] * base;
             stq1[1] = Grid_Vertex1[2] * base;
             sceVu0AddVector(stq0, stq0, pThis->ST_Defference);

@@ -328,21 +328,21 @@ u_int HH_Class_Suffix_Water_13(void) {
     return result;
 }
 
-static float _arri_185 = 40.0f;
-static float __distance_197 = 3200.0f;
-static float __lost_time_198 = 10.0f;
-static float __omega_200 = 612.0f;
-static float __v_201 = 1200.0f;
-static float __arri_199 = 40.0f;
+static float degree_172 = 40.0f;
+static float base_move_173 = 8.0f;
+static float add_move_174 = -1.0f;
+static float center_175 = 0.0f;
 static float _distance_183 = 1200.0f;
-static float _interval_188 = 4.0f;
 static float _lost_time_184 = 12.0f;
+static float _arri_185 = 40.0f;
 static float _omega_186 = 540.0f;
 static float _v_187 = 500.0f;
-static float add_move_174 = -1.0f;
-static float base_move_173 = 8.0f;
-static float center_175 = 0.0f;
-static float degree_172 = 40.0f;
+static float _interval_188 = 4.0f;
+static float __distance_197 = 3200.0f;
+static float __lost_time_198 = 10.0f;
+static float __arri_199 = 40.0f;
+static float __omega_200 = 612.0f;
+static float __v_201 = 1200.0f;
 
 u_int HH_Class_Water_13(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     u_int result = 1;                   // r16

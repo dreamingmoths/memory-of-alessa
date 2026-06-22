@@ -113,7 +113,7 @@ static u_int Object_Draw(HH_Object_Water_14* pThis /* r22 */, float* pGrid_Y_Val
     static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};         // @ 0x0036FCC0
     static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036FCD0
     static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036FCE0
-    static float amb_alpha = 32.0f;                                 // @ 0x0036FCF0
+    static float amb_alpha = 128.0f;                                 // @ 0x0036FCF0
     static float light_alpha = 128.0f;                              // @ 0x0036FCF8
     u_int result = 0;                                               // r2
     sceVif1Packet* pPk;                                             // r16
@@ -337,7 +337,7 @@ u_int HH_Class_Water_14(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
         case HH_WATER_14_STEP_INIT:
             Object_Initialize(pThis);
             if (!GET_GAME_FLAG(15, 22)) {
-                sceVu0CopyVector(pThis->Location_Defference, (sceVu0FVECTOR){0.0f, 0.0f, 460.0f, 0.0f});
+                sceVu0CopyVector(pThis->Location_Defference, (sceVu0FVECTOR){0.0f, 460.0f, 0.0f, 0.0f});
             }
             pThis->Step = 1;
             break;
