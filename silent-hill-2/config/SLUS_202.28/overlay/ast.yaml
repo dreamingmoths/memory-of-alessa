@@ -1,0 +1,29 @@
+name: ast
+sha1: 4054ca0d501328bd595a28384603b34257004c8f
+options:
+  basename: ast
+  elf_path: ast.bin
+  target_path: rom/overlay/ast.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/ast_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: ast_reloc_addrs.txt
+  ld_script_path: linkers/ast.ld
+  undefined_funcs_auto_path: linkers/ast_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/ast_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: ast
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, ast_overlay_header]
+      - [0x80, asm, Event/stage/stg_apart_stair]
+      - [0xC80, data, Event/stage/stg_apart_stair_data]
+      - { vram: 0x1F03400, type: bss, name: Event/stage/stg_apart_stair_bss }
+  - [0x1600]

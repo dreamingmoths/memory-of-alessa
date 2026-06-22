@@ -1,0 +1,15 @@
+//* aot === stg_apart_out *//
+stg_apart_out_EvProgGetCoinOfSnake                               = 0x01F01E80; // type:func
+stg_apart_out_EvProgGetCoinOfOldman                              = 0x01F01EB0; // type:func
+stg_apart_out_EvProgMurderNewsRead                               = 0x01F022C0; // type:func
+stg_apart_out_EvProgApartEastToWest                              = 0x01F022F0; // type:func
+stg_apart_out_EvProgApartWestToEast                              = 0x01F025A0; // type:func
+stg_apart_out_EvStageInit                                        = 0x01F02740; // type:func
+stg_apart_out_EvAllTimeFunc                                      = 0x01F02770; // type:func
+stg_apart_out_pjames_stage_anim                                  = 0x01F02800; // size:0xFC
+stg_apart_out_ev_pos                                             = 0x01F02900; // size:0xC2
+stg_apart_out_ev_list                                            = 0x01F029D0; // size:0x100
+stg_apart_out_ev_prog                                            = 0x01F02AD0; // size:0x18
+stg_apart_out_mdl_list                                           = 0x01F02AF0; // size:0xC0
+stg_apart_out_en_list                                            = 0x01F02BB0; // size:0x50
+stage_apart_out                                                  = 0x01F02C00; // size:0x44

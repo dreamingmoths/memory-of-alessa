@@ -1,0 +1,27 @@
+name: awy
+sha1: 5d7853013882a9cc610c32f13c2bf93f986ac993
+options:
+  basename: awy
+  elf_path: awy.bin
+  target_path: rom/overlay/awy.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/awy_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: awy_reloc_addrs.txt
+  ld_script_path: linkers/awy.ld
+  undefined_funcs_auto_path: linkers/awy_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/awy_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: awy
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    subsegments:
+      - [0x0, databin, awy_overlay_header]
+      - [0x80, asm, Event/stage/stg_apart_w2f]
+      - [0x1980, data, Event/stage/stg_apart_w2f_data]
+  - [0x2100]

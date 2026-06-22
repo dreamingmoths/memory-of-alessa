@@ -1,0 +1,29 @@
+name: aee
+sha1: 3bfa8ef006f02c616262327a9ff3f8b6c9d97192
+options:
+  basename: aee
+  elf_path: aee.bin
+  target_path: rom/overlay/aee.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/aee_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: aee_reloc_addrs.txt
+  ld_script_path: linkers/aee.ld
+  undefined_funcs_auto_path: linkers/aee_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/aee_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: aee
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    bss_size: 0x780
+    subsegments:
+      - [0x0, databin, aee_overlay_header]
+      - [0x80, asm, Event/stage/stg_apart_e3fe]
+      - [0x900, data, Event/stage/stg_apart_e3fe_data]
+      - { vram: 0x1F03080, type: bss, name: Event/stage/stg_apart_e3fe_bss }
+  - [0x1280]

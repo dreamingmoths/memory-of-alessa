@@ -1,0 +1,13 @@
+//* aew === stg_apart_e3fw *//
+stg_apart_e3fw_EvProgLauraKickKey                                = 0x01F01E80; // type:func
+stg_apart_e3fw_EvProgGetHandgun                                  = 0x01F021B0; // type:func
+stg_apart_e3fw_EvRoomInit                                        = 0x01F02210; // type:func
+stg_apart_e3fw_EvProgSubScreamOn                                 = 0x01F02220; // type:func
+stg_apart_e3fw_pjames_stage_anim                                 = 0x01F02380; // size:0xFC
+stg_apart_e3fw_ev_pos                                            = 0x01F02480; // size:0x90
+stg_apart_e3fw_ev_list                                           = 0x01F02510; // size:0xE0
+stg_apart_e3fw_gi_list                                           = 0x01F025F0; // size:0x40
+stg_apart_e3fw_ev_prog                                           = 0x01F02630; // size:0xC
+stg_apart_e3fw_mdl_list                                          = 0x01F02640; // size:0xC0
+stg_apart_e3fw_en_list                                           = 0x01F02700; // size:0x64
+stage_apart_e3fw                                                 = 0x01F02770; // size:0x44
