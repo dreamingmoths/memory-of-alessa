@@ -251,6 +251,10 @@ def main():
         type=Path
     )
     create_parser.add_argument(
+        "--executable-path",
+        type=Path
+    )
+    create_parser.add_argument(
         "--template-yaml-path",
         type=Path
     )
