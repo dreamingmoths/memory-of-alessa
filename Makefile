@@ -298,6 +298,7 @@ $(MWLD): | $(MWCC)
 
 $(AS):
 	@mkdir -p "$(@D)"
+	@touch $(BINUTILS_VERSION_FILE)
 	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
 	@chmod +x $(@D)/*
 
@@ -309,10 +310,8 @@ $(OBJDIFF):
 $(MWCCGAP_ENTRYPOINT):
 	$(GIT) submodule update --init --recursive
 
-$(BINUTILS_VERSION_FILE):
+$(BINUTILS_VERSION_FILE): $(AS)
 	@rm -rf $(BINUTILS)
-	@mkdir -p $(BINUTILS)
-	@touch $(BINUTILS_VERSION_FILE)
 	@make binutils
 
 $(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
