@@ -315,7 +315,7 @@ $(BINUTILS_VERSION_FILE):
 
 $(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
 	git submodule sync
-	git submodule update --init --remote
+	git submodule update --init --recursive
 	@touch $(MWCCGAP_PATCH_VERSION_FILE)
 
 $(ALESSATOOL_OVERLAY_LOCK): $(SOURCE_OVERLAY_ARCHIVE)
