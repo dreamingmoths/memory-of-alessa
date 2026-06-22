@@ -1,6 +1,8 @@
 #include "DS_Pad/ds_sequencer.h"
 #include "Chacter/m3_sc.h"
 
+#pragma divbyzerocheck off
+
 static void SequencerManager(void);
 static void Sequencer_Type_Hispeed(EntryRecord* pER);
 static void Sequencer_Type_Lowspeed(EntryRecord* pER);

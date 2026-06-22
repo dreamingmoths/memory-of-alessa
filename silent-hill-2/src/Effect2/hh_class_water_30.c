@@ -27,8 +27,6 @@ static WaveArea_Infomeation _Area_Info_List_0x00370390[1] = {
      /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
      /* .pST_Defference = */ NULL}};
 
-
-
 static void Grid_Work_Initialize(HH_Object_Water_30* pThis);
 static u_int Object_Initialize(HH_Object_Water_30* pThis, ImpactQueue_Element* pElement);
 static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement, WaveArea_Infomeation* pInfo, u_int* pX_Index, u_int* pZ_Index);

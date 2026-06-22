@@ -151,7 +151,6 @@ static WaveArea_GridLink_Infomeation _area05_06_grid_link_list_0x003756B0[1] = {
      /* .X_Index_Start = */ {5, 0},
      /* .Z_Index_Start = */ {25, 0}}};
 
-
 static void Grid_Work_Initialize(HH_Object_Water_08* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
     memset(pThis->Area01_Grid_Y_Value, 0, sizeof(pThis->Area01_Grid_Y_Value));
@@ -260,23 +259,22 @@ static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 
 }
 
 // @note: data partially moved out, required for match
-
+static u_long _GifTag[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003756E0
 
 static u_int Object_Draw(HH_Object_Water_08* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    static u_long _GifTag[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003756E0
     static u_long _GifTag_Tri[2] = {
         SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
         GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003756F0
+    static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f};                                                   // @ 0x00375700
+    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x00375710
+    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00375720
+    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x00375730
+    static float amb_alpha = 40.0f;                                                                             // @ 0x00375740
+    static float light_alpha = 80.0f;                                                                           // @ 0x00375748
+
     u_int result = 0;
-    static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x00375700
-    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00375710
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x00375720
-    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};    // @ 0x00375730
-    
-    static float amb_alpha = 40.0f;   // @ 0x00375740
-    static float light_alpha = 80.0f; // @ 0x00375748
     sceVif1Packet* pPk;
     u_int vertex_num;
     u_int x_grid_max;
@@ -359,8 +357,8 @@ static u_int Object_Draw(HH_Object_Water_08* pThis /* r22 */, float* pGrid_Y_Val
             float stq1[4];
             float base;
             float color_scale;
-            static float sx = 2.5f;                                         // @ 0x00375780
-            static float ty = 2.5f;                                         // @ 0x00375788
+            static float sx_118_0x00375780 = 2.5f; // @ 0x00375780
+            static float ty_119_0x00375788 = 2.5f; // @ 0x00375788
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 
@@ -369,8 +367,8 @@ static u_int Object_Draw(HH_Object_Water_08* pThis /* r22 */, float* pGrid_Y_Val
             Grid_Vertex1[1] = pGrid_Y[HH_WATER_08_GRID_INDEX_GET(x_index, z_index + 1)];
             Grid_Vertex2[1] = pGrid_Y[HH_WATER_08_GRID_INDEX_GET((x_index + 1) % x_grid_max, z_index)];
 
-            base = 0.25f * (1.0f / (200.0f * ty));
-            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx));
+            base = 0.25f * (1.0f / (200.0f * ty_119_0x00375788));
+            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx_118_0x00375780));
             stq0[1] = Grid_Vertex0[2] * base;
             stq1[1] = Grid_Vertex1[2] * base;
             sceVu0AddVector(stq0, stq0, pThis->ST_Defference);

@@ -7,6 +7,7 @@
 #include "Event/picture.h"
 #include "Event/event_sub.h"
 #include "SH2_common/sh2sys.h"
+#include "FilesList/fileslist_bg.h"
 
 static int EvProgBoxWithKeyCursor(void);
 static int EvProgBoxWithKeyLayer(void);

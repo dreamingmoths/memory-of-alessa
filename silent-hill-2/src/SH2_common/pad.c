@@ -4,7 +4,7 @@
 void shPadInit(void) {
     shQzero(&pad, sizeof pad);
     shQzero(&pad_bak, sizeof pad_bak);
-    shQzero(&padf, sizeof padf);
+    shQzero(&padf, sizeof pad_bak);
     pad_x = 1;
     key_config.item = PAD_KEY_SELECT;
     key_config.front_move = PAD_KEY_DPAD_UP;
@@ -20,7 +20,7 @@ void shPadInit(void) {
     key_config.skip = PAD_KEY_SELECT;
     key_config.enter = PAD_KEY_CROSS;
     key_config.action = PAD_KEY_CROSS;
-    key_config.cancel = PAD_KEY_CIRCLE;
+    key_config.cancel = PAD_KEY_SQUARE;
     key_config.light = PAD_KEY_CIRCLE;
     key_config.dash = PAD_KEY_SQUARE;
     key_config.attack = PAD_KEY_CROSS;

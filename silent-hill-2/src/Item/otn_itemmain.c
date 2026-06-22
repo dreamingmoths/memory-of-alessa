@@ -561,6 +561,7 @@ void item_main_setup(void) {
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_main_setup);
 #endif
 
+#ifdef NON_MATCHING
 void set_position(int step) {
     switch (step) {
         case 0:
@@ -680,6 +681,9 @@ void set_position(int step) {
             t.box[3][1] = move_near(2.0f, 1.0f, t.box[3][1], -52.0f);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", set_position);
+#endif
 
 const char __pad_0x00392f28[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
 

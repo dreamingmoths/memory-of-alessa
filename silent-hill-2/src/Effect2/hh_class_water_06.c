@@ -126,11 +126,11 @@ static WaveArea_GridLink_Infomeation _area00_01_grid_link_list_0x003747E0[1] = {
 
 static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00374810[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
-    /* .Vertical_Horizontal_Flag = */ 1,
-    /* .Length = */ 8,
-    /* .X_Index_Max = */ {16, 24},
-    /* .X_Index_Start = */ {8, 0},
-    /* .Z_Index_Start = */ {17, 0}}};
+     /* .Vertical_Horizontal_Flag = */ 1,
+     /* .Length = */ 8,
+     /* .X_Index_Max = */ {16, 24},
+     /* .X_Index_Start = */ {8, 0},
+     /* .Z_Index_Start = */ {17, 0}}};
 
 static WaveArea_GridLink_Infomeation _area00_03_grid_link_list[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
@@ -140,7 +140,6 @@ static WaveArea_GridLink_Infomeation _area00_03_grid_link_list[1] = {
      /* .X_Index_Start = */ {15, 0},
      /* .Z_Index_Start = */ {4, 0}}};
 
-
 static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x00374870[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
      /* .Vertical_Horizontal_Flag = */ 1,
@@ -148,7 +147,6 @@ static WaveArea_GridLink_Infomeation _area03_04_grid_link_list_0x00374870[1] = {
      /* .X_Index_Max = */ {21, 8},
      /* .X_Index_Start = */ {13, 0},
      /* .Z_Index_Start = */ {7, 0}}};
-
 
 static WaveArea_GridLink_Infomeation _area02_04_grid_link_list_0x003748A0[1] = {
     {/* .pGrid_Y_Value_Link = */ {NULL, NULL},
@@ -181,8 +179,6 @@ static WaveArea_GridLink_Infomeation _area06_07_grid_link_list[1] = {
      /* .X_Index_Max = */ {21, 8},
      /* .X_Index_Start = */ {8, 0},
      /* .Z_Index_Start = */ {7, 0}}};
-
-
 
 static void Grid_Work_Initialize(HH_Object_Water_06* pThis /* r16 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -307,12 +303,12 @@ static u_long _GifTag[2] = {
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00374970
-static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x00374980
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00374990
+static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f};                                                   // @ 0x00374980
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x00374990
 static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x003749A0
 static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x003749B0
-static float amb_alpha = 40.0f;                           // @ 0x003749C0
-static float light_alpha = 80.0f;                         // @ 0x003749C8
+static float amb_alpha = 40.0f;                                                                             // @ 0x003749C0
+static float light_alpha = 80.0f;                                                                           // @ 0x003749C8
 
 static u_int Object_Draw(HH_Object_Water_06* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     u_int result = 0;
@@ -336,55 +332,55 @@ static u_int Object_Draw(HH_Object_Water_06* pThis /* r22 */, float* pGrid_Y_Val
     float cos_theta;
     u_int* pPk_Current;
     u_int* pPk_End;
-    
+
     pPk = HH_Vif1Packet_Current_Get();
     x_grid_max = Grid_X_Max;
     z_grid_max = Grid_Z_Max - 1;
     pPk_Current = NULL;
-    
+
     HH_ClassWrapper_ViewDirection_Get(view_dir);
     HH_ClassWrapper_AmbientColor_Get(Ambient_Color);
     HH_ClassWrapper_SpotLight_EnvironmentParameter_Get(pos, dir, Light_Color, Parameter);
     sceVu0MulVector(Light_Color, Light_Color, Light_Base);
-    
+
     sceVu0MulVector(Ambient_Color, Ambient_Color, Amb_Base);
-    
+
     Ambient_Color[3] = amb_alpha;
     Light_Color[3] = light_alpha;
-    
+
     cos_theta = Parameter[0];
     far_z = Parameter[2];
-    
+
     sceVu0Normalize(dir, dir);
-    
+
     sceVu0SubVector(pos, pos, WorldLocation);
-    
+
     HH_ClassWrapper_WorldScreenMatrix_Get(lsm);
-    
+
     sceVu0UnitMatrix(lwm);
-    
+
     sceVu0TransMatrix(lwm, lwm, WorldLocation);
     sceVu0MulMatrix(lsm, lsm, lwm);
-    
+
     HH_ClassWrapper_ViewFrustum_ClipMatrix_Get(clip_mat);
     sceVu0MulMatrix(clip_mat, clip_mat, lwm);
-    
+
     HH_Vif1PacketBuffer_GifTag_Open();
-    
+
     sceVif1PkCloseGifTag(pPk);
-    
+
     for (z_index = 0; z_index < z_grid_max; z_index++) {
         sceVu0FVECTOR Grid_Vertex0 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};
         sceVu0FVECTOR Grid_Vertex1 = {200.0f, 0.0f, 200.0f * (z_index + 1), 1.0f};
         sceVu0FVECTOR Grid_Vertex2 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};
-        
+
         sceVif1PkOpenGifTag(pPk, *(u_long128*)_GifTag_Tri);
-        
+
         if (pPk_Current) {
-            
+
             HH_ClassWrapper_MemoryCopy128Align_DesignateCycle(pPk->pCurrent, pPk_Current, Grid_X_Max, 3, 3);
         }
-        
+
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
             float Rgba[4];
             int xyzf[4];
@@ -398,8 +394,8 @@ static u_int Object_Draw(HH_Object_Water_06* pThis /* r22 */, float* pGrid_Y_Val
             float stq1[4];
             float base;
             float color_scale;
-            static float sx = 2.5f;                                                                                     // @ 0x00374A00
-            static float ty = 2.5f;                                                                                     // @ 0x00374A08
+            static float sx = 2.5f; // @ 0x00374A00
+            static float ty = 2.5f; // @ 0x00374A08
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 

@@ -65,8 +65,6 @@ static WaveArea_GridLink_Infomeation _area01_02_grid_link_list_0x00375A10[1] = {
      /* .X_Index_Start = */ {12, 0},
      /* .Z_Index_Start = */ {0, 14}}};
 
-
-
 static void Grid_Work_Initialize(HH_Object_Water_09* pThis);
 static u_int Object_Initialize(HH_Object_Water_09* pThis);
 static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement, WaveArea_Infomeation* pInfo, u_int* pX_Index, u_int* pZ_Index);
@@ -165,7 +163,6 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
     " ::"f"(brightness) : "t0", "t1", "memory");
 }
 
-
 static u_int Object_Draw(HH_Object_Water_09* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     static u_long _GifTag[2] = {
         SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
@@ -173,12 +170,12 @@ static u_int Object_Draw(HH_Object_Water_09* pThis /* r22 */, float* pGrid_Y_Val
     static u_long _GifTag_Tri[2] = {
         SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
         GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00375A50
-    static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x00375A60
-    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00375A70
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x00375A80
-    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};    // @ 0x00375A90
-    static float amb_alpha = 40.0f;   // @ 0x00375AA0
-    static float light_alpha = 80.0f; // @ 0x00375AA8
+    static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f};                                                   // @ 0x00375A60
+    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x00375A70
+    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00375A80
+    static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x00375A90
+    static float amb_alpha = 40.0f;                                                                             // @ 0x00375AA0
+    static float light_alpha = 80.0f;                                                                           // @ 0x00375AA8
     u_int result = 0;
     sceVif1Packet* pPk;
     u_int vertex_num;

@@ -33,6 +33,7 @@ SECTIONS
 	{
 		_gp = 0x3cfc70;
 
+		_ovl_start_addr      = 0x01F01E00;
 		## linker symbols for overlays deleted from the prototype ##
 		stage_town_west      = 0x01F07060;
 		stage_bowling        = 0x01F02A80;

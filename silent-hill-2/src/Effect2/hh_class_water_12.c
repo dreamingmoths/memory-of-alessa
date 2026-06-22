@@ -107,12 +107,12 @@ static u_long _GifTag[2] = {
 static u_long _GifTag_Tri[2] = {
     SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
     GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F910
-static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036F920
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036F930
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036F940
-static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036F950
-static float amb_alpha = 32.0f;                           // @ 0x0036F960
-static float light_alpha = 128.0f;                        // @ 0x0036F968
+static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f};                                                   // @ 0x0036F920
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x0036F930
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F940
+static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F950
+static float amb_alpha = 32.0f;                                                                             // @ 0x0036F960
+static float light_alpha = 128.0f;                                                                          // @ 0x0036F968
 
 static u_int Object_Draw(HH_Object_Water_12* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     u_int result = 0;               // r2
@@ -203,20 +203,20 @@ static u_int Object_Draw(HH_Object_Water_12* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4];        // r29+0x210
-            int xyzf[4];          // r29+0x220
-            int rgba[4];          // r29+0x230
-            u_int addr;           // r2
-            float vec0[4];        // r29+0x240
-            float vec1[4];        // r29+0x250
-            float n0[4];          // r29+0x260
-            float specular_ratio; // r22
-            float stq0[4];        // r29+0x270
-            float stq1[4];        // r29+0x280
-            float base;           // r2
-            float color_scale;    // r29+0x290
-            static float sx = 2.5f;                                                                                     // @ 0x0036F9A0
-            static float ty = 2.5f;                                                                                     // @ 0x0036F9A8
+            float Rgba[4];          // r29+0x210
+            int xyzf[4];            // r29+0x220
+            int rgba[4];            // r29+0x230
+            u_int addr;             // r2
+            float vec0[4];          // r29+0x240
+            float vec1[4];          // r29+0x250
+            float n0[4];            // r29+0x260
+            float specular_ratio;   // r22
+            float stq0[4];          // r29+0x270
+            float stq1[4];          // r29+0x280
+            float base;             // r2
+            float color_scale;      // r29+0x290
+            static float sx = 2.5f; // @ 0x0036F9A0
+            static float ty = 2.5f; // @ 0x0036F9A8
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
 

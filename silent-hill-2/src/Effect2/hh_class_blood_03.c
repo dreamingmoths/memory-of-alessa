@@ -37,15 +37,15 @@ static u_int Object_Initialize(HH_Object_Blood_03* pThis, ImpactQueue_Element* p
     resist_ya = 0.5494505f;
     src_direction = pElement->Option.Vector[1];
     
-    pThis->Verocity_0[1] = src_direction[0] * resist_ya;
+    pThis->Verocity_0[0] = src_direction[0] * resist_ya;
      
     resist_y0 = 0.5494505f;
-    pThis->Verocity_0[2] = src_direction[1] * resist_y0;
+    pThis->Verocity_0[1] = src_direction[1] * resist_y0;
     
     resist_xz = 0.5494505f;
-    pThis->Verocity_0[3] = src_direction[2] * resist_xz;
+    pThis->Verocity_0[2] = src_direction[2] * resist_xz;
     
-    pThis->Scale = 4038.4612f;
+    pThis->Verocity_0[3] = 4038.4612f;
     
     return result;
 }
