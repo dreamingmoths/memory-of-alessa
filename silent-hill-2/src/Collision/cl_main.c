@@ -205,7 +205,7 @@ CL_BATTLE_RESULT* clBattleGetResult(u_int id, CL_BATTLE_RESULT* before) {
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clBattleGetResult);
 #endif
 
-const char __at_1691[] = "cl_main.c:1869> assert:(%s)\n";
+const char rodata_1691[] = "cl_main.c:1869> assert:(%s)\n";
 
 INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1692);
 

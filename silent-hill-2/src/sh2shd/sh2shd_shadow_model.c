@@ -511,7 +511,7 @@ INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_del_jms_upper_
 
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_del_jms_head);
 
-const char _at_1230_0x00390CB0[] = "sh2shd_shadow_model.c:495> assert:(%s)\n";
+const char rodata_1230_0x00390CB0[] = "sh2shd_shadow_model.c:495> assert:(%s)\n";
 
 INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1231_0x00390CD8);
 

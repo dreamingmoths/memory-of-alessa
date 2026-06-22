@@ -108,6 +108,9 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontLoad);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetData);
 
+const char rodata_631[] = "wfont over.\n";
+const char rodata_632[] = "font over.\n";
+
 void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {        
     int num; // r2   
     struct WFONT_STREAM_DATA* fstream_w; // r3 I changed name here
@@ -115,7 +118,7 @@ void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {
 
     if (font.flag & 0x400) {
         if (font.w_st_num >= font.w_stream_max) {
-            printf("wfont over.\n");
+            printf(rodata_631);
         } else {
             num = fontLoad(code);
             fstream_w = &font.w_stream[font.w_st_num];
@@ -132,7 +135,7 @@ void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {
             font.w_st_num++;
         }
     } else if (font.st_num >= font.stream_max) {
-        printf("font over.\n");
+        printf(rodata_632);
     } else {
         num = fontLoad(code);
         fstream = &font.stream[font.st_num];
@@ -154,7 +157,7 @@ void fontSetBlankBox(int x0, int x1, int y) {
     FONT_STREAM_DATA* fstream;
 
     if (font.st_num >= font.stream_max) {
-        debugPrintf("font over.\n");
+        debugPrintf(rodata_632);
         return;
     }
     
@@ -178,15 +181,15 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStr);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrNum);
 
-const char __at_954[] = "font: double stack!\n";
+const char rodata_954[] = "font: double stack!\n";
 
-const char __at_955[] = "x >= (4096-SCREEN_WIDTH)/2";
+const char rodata_955[] = "x >= (4096-SCREEN_WIDTH)/2";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrMain);
 
-const char __at_1377[] = "num >= 0 && num <= 16";
+const char rodata_1377_0x003914C0[] = "num >= 0 && num <= 16";
 
-const char __at_1810[] = "fontSetMes: Illegal number!\n";
+const char rodata_1810[] = "fontSetMes: Illegal number!\n";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintDec);
 

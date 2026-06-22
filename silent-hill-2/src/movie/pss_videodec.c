@@ -108,6 +108,11 @@ int videoDecFlush(VideoDec *vd) {
     return 1;
 }
 
+
+const char rodata_525_0x0039BF60[] = "decBs0() failed\n";
+
+const char rodata_526_0x0039BF80[] = "video dec main abort.\n";
+
 INCLUDE_ASM("asm/nonmatchings/movie/pss_videodec", videoDecMain);
 
 int decBs0(VideoDec *vd) {
@@ -252,7 +257,3 @@ static int cpy2area(u_char *pd0, int d0, u_char *pd1, int d1, u_char *ps0, int s
     return s0 + s1;
 }
 
-
-INCLUDE_RODATA("asm/nonmatchings/movie/pss_videodec", @525_0x0039BF60);
-
-INCLUDE_RODATA("asm/nonmatchings/movie/pss_videodec", @526_0x0039BF80);

@@ -154,6 +154,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetStageAnime);
 
 
+const char rodata_2356_0x0038BEB0[] = "m3_play.c:3888> assert:(%s)\n";
+const char rodata_assertion[] = "0";
+
 /*
 @todo: add lots of macros & clean this up!
 */
@@ -1083,7 +1086,13 @@ void PlayerCheckAnimeUpper(void) {
                             anime = 0x82;
                             break;
                         default:
-                            ASSERT_ON_LINE(0, 3888);
+                            // @todo: un-comment when all rodata migrated
+                            // mwcc won't deduplicate the strings here for some reason
+                            if (!0) {
+                                printf(rodata_2356_0x0038BEB0, rodata_assertion);
+                                do { } while (1);
+                            }
+                            /* ASSERT_ON_LINE(0, 3888); */
                     }
                     player_flg_on(&sh2jms.u_anime_st_flg, 2);
                     aip = &pjames_anim[anime - 0x64];
@@ -2233,7 +2242,13 @@ void PlayerCheckAnimeLower(void) {
                         anime = 0x82;
                         break;
                     default:
-                        ASSERT_ON_LINE(0, 5241);
+                        // @todo: un-comment when all rodata migrated
+                        // mwcc won't deduplicate the strings here for some reason
+                        if (!0) {
+                            printf("m3_play.c:5241> assert:(%s)\n", rodata_assertion);
+                            do { } while (1);
+                        }
+                        // ASSERT_ON_LINE(0, 5241);
                     }
                 }
                 player_flg_on(&sh2jms.l_anime_st_flg, 2);

@@ -486,6 +486,7 @@ segments:
       - [0x291ac0, .rodata, Font/font]
       - [0x291c20, rodata,  rodata_0x291c20]
       - [0x291db0, .rodata, Multi_thr/filesys/fileserv]
+      - [0x291de0, rodata,  Multi_thr/filesys/iopload]
       - [0x291df0, .rodata, Multi_thr/filesys/sh_cdvd]
       - [0x291f80, .rodata, Multi_thr/intc/syncv]
       - [0x2920a0, rodata,  Multi_thr/pad/th_pad]
