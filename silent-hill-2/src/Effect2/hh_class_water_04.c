@@ -274,20 +274,18 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
     " ::"f"(brightness) : "t0", "t1", "memory");
 }
 
-static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x003741B0
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x003741C0
-static float amb_alpha = 40.0f;                           // @ 0x003741F0
-static float light_alpha = 80.0f;                         // @ 0x003741F8
-static u_long _GifTag_Tri[2] = {
-    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003741A0
-static float ty = 2.5f;                                                                                     // @ 0x00374238
-static float sx = 2.5f;                                                                                     // @ 0x00374230
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x003741D0
-static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 32.0f};                                                // @ 0x003741E0
 static u_long _GifTag[2] = {
     SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
     GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00374190
+static u_long _GifTag_Tri[2] = {
+    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x003741A0
+static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f};                                                   // @ 0x003741B0
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x003741C0
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x003741D0
+static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 32.0f};                                                // @ 0x003741E0
+static float amb_alpha = 40.0f;                                                                             // @ 0x003741F0
+static float light_alpha = 80.0f;                                                                           // @ 0x003741F8
 
 static u_int Object_Draw(HH_Object_Water_04* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     u_int result = 0;               // r2
@@ -516,6 +514,21 @@ u_int HH_Class_Water_04(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             float rad;         // r29+0x100
             int area;          // r18
             sceVu0FVECTOR pos; // r29+0x90
+            static float degree_173_0x00374240 = 40.0f;
+            static float base_move_174_0x00374248 = 8.0f;
+            static float _distance_184_0x00374250 = 1200.0f;
+            static float _lost_time_185_0x00374258 = 12.0f;
+            static float _arri_186_0x00374260 = 40.0f;
+            static float _omega_187_0x00374268 = 540.0f;
+            static float _v_188_0x00374270 = 500.0f;
+            static float _interval_189_0x00374278 = 4.0f;
+            static float __distance_198_0x00374280 = 3200.0f;
+            static float __lost_time_199_0x00374288 = 10.0f;
+            static float __arri_200_0x00374290 = 40.0f;
+            static float __omega_201_0x00374298 = 612.0f;
+            static float __v_202_0x003742A0 = 1200.0f;
+            static float add_move_175_0x01202F00 = 0.0f;
+            static float center_176_0x01202F08 = 0.0f;
 
             Grid_Work_Initialize(pThis);
             rad_omega = TO_RAD(degree_173_0x00374240) * pThis->Timer;

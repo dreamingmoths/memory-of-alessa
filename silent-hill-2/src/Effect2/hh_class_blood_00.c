@@ -8,18 +8,18 @@ extern int rand(void);
 extern float fmodf(float, float);
 
 // ToDo Migrate data
-static float _square_00_vertex[4][4];
-static float _square_01_vertex[4][4];
-static float _square_02_vertex[4][4];
-static float _square_03_vertex[4][4];
-static float _square_04_vertex[4][4];
-static float (*_square_vertex_list[5])[4];
-static float _square_00_stq[4][4];
-static float _rgba_start_list[4][4];
-static float _rgba_end_list[4][4];
-static float _scale_start_list[5][4];
-static float _scale_end_list[8][4];
-static Motion_Table_Infomeation _motion_info[4];
+extern /* static */ float _square_00_vertex[4][4];
+extern /* static */ float _square_01_vertex[4][4];
+extern /* static */ float _square_02_vertex[4][4];
+extern /* static */ float _square_03_vertex[4][4];
+extern /* static */ float _square_04_vertex[4][4];
+extern /* static */ float (*_square_vertex_list[5])[4];
+extern /* static */ float _square_00_stq_0x0036D980[4][4];
+extern /* static */ float _rgba_start_list_0x0036D9C0[4][4];
+extern /* static */ float _rgba_end_list_0x0036DA00[4][4];
+extern /* static */ float _scale_start_list_0x0036DA40[5][4];
+extern /* static */ float _scale_end_list_0x0036DA90[8][4];
+extern /* static */ Motion_Table_Infomeation _motion_info_0x0036DB10[4];
 
 static u_int Object_Initialize(HH_Object_Blood_00* pThis) {
     float radian;
@@ -72,15 +72,15 @@ static u_int Object_Motion_00(HH_Object_Blood_00* pThis) {
     float scale_ratio;
     float rgba_ratio;
 
-    pRgba_s = _rgba_start_list[pThis->Rgba_Kind];
-    pRgba_e = _rgba_end_list[pThis->Rgba_Kind];
-    pScale_s = _scale_start_list[pThis->Scale_Kind];
-    pScale_e = _scale_end_list[pThis->Scale_Kind];
+    pRgba_s = _rgba_start_list_0x0036D9C0[pThis->Rgba_Kind];
+    pRgba_e = _rgba_end_list_0x0036DA00[pThis->Rgba_Kind];
+    pScale_s = _scale_start_list_0x0036DA40[pThis->Scale_Kind];
+    pScale_e = _scale_end_list_0x0036DA90[pThis->Scale_Kind];
     
     local_time_start = 0.0f;
     local_scale_start = 0.0f;
     local_rgba_start = 0.0f;
-    pMotion_Info = _motion_info;
+    pMotion_Info = _motion_info_0x0036DB10;
     current_step = pThis->Motion_Step;
     motion_num = 2;
     
@@ -153,7 +153,7 @@ static u_int Object_Draw(HH_Object_Blood_00* pThis, ImpactQueue_Element* pElemen
     
     pPk = HH_Vif1Packet_Current_Get();
     pVertex = _square_vertex_list[pThis->Vertex_Kind];
-    pStq = _square_00_stq;
+    pStq = _square_00_stq_0x0036D980;
     HH_ClassWrapper_WorldScreenMatrix_Get(lsm);    
     sceVu0UnitMatrix(lwm);
     lwm[0][0] *= pThis->Scale[0];

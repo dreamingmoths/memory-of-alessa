@@ -87,9 +87,8 @@ BINUTILS_FLAVOR := mips-ps2-decompals
 BINUTILS := $(TOOLS)/binutils-$(BINUTILS_FLAVOR)
 
 AS := $(BINUTILS)/$(BINUTILS_FLAVOR)-as
-MWCCGAP_AS_FLAGS := -mno-pdr
 AS_FLAGS := \
-	-EL -march=r5900 -mabi=eabi -G=0 \
+	-EL -march=r5900 -mabi=eabi -G=0 -mno-branch-relocs \
 	$(MWCCGAP_AS_FLAGS) -I$(INCLUDE) -I$(CONFIG) \
 	-I$(COMMON_INCLUDE)
 
@@ -121,7 +120,8 @@ MWCCGAP_FLAGS := \
 ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@"
 else
-	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS)
+	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS) \
+		 -u __FILE__ -d __FILE__=\"$(<F)\"
 endif
 
 BINUTILS_TAR := binutils-$(BINUTILS_FLAVOR)-$(OS).tar.gz

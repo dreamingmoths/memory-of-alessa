@@ -16,9 +16,11 @@ static void ApplyCluster(Model* model, Cluster* cluster, float weight);
 
 extern u_long128 model3_mpg0_cluster_load[];
 
+typedef u_long PacketBuffer[4] __attribute__((aligned(32)));
+
 static void LoadProgram(void) {
-    static int initialized;
-    static u_long packet_buffer[4];
+    static int initialized = 0;
+    static PacketBuffer packet_buffer;
     if (initialized == 0) {
         sceVif0Packet packet;
         sceVif0Packet* pk = &packet;

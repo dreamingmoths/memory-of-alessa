@@ -2,6 +2,7 @@
 #define STG_TGS_TRIAL_H
 
 #include "Event/stg_overlay.h"
+#include "FilesList/fileslist_bg.h"
 
 int EvProgGetHospitalMap(void);
 

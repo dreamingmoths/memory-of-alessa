@@ -13,28 +13,27 @@ static u_int Object_Motion_00(HH_Object_Blood_01* pThis, ImpactQueue_Element* pE
 static u_int Object_Draw(HH_Object_Blood_01* pThis, ImpactQueue_Element* pElement, float* Current_Position);
 
 // ToDo Migrate data
-static float _mass;
-static float _radius;
-static float _suppress_coff;
-static float _square_00_vertex[4][4];
-static float _square_00_normal[4][4];
-static float _square_00_stq[4][4];
-static float _square_01_stq[4][4];
-static float _square_02_stq[4][4];
-static float _square_03_stq[4][4];
-static float _square_10_stq[4][4];
-static float _square_11_stq[4][4];
-static float _square_12_stq[4][4]; 
-static float _square_13_stq[4][4];
-static Vertex_Infomeation_List _vertex_info_list[1];
-static float (* _stq_list[8])[4];
-static float _rgba_start_list[2];
-static float _rgba_end_list[2];
-static float _scale_start_list[2];
-static float _scale_end_list[2];
-static Motion_Table_Infomeation _motion_info_0[2];
-static Motion_Table_Infomeation _motion_info_1[2];
-static Motion_Table_Infomeation * _motion_info_list[2];
+extern /* static */ float _mass;
+extern /* static */ float _radius;
+extern /* static */ float _suppress_coff_0x0036DB40;
+extern /* static */ float _square_00_vertex[4][4];
+extern /* static */ float _square_00_normal[4][4];
+extern /* static */ float _square_01_stq[4][4];
+extern /* static */ float _square_02_stq[4][4];
+extern /* static */ float _square_03_stq[4][4];
+extern /* static */ float _square_10_stq[4][4];
+extern /* static */ float _square_11_stq[4][4];
+extern /* static */ float _square_12_stq[4][4]; 
+extern /* static */ float _square_13_stq[4][4];
+extern /* static */ Vertex_Infomeation_List _vertex_info_list_0x0036DDD0[1];
+extern /* static */ float (* _stq_list_0x0036DDE0[8])[4];
+extern /* static */ float _rgba_start_list_0x0036DE00[2];
+extern /* static */ float _rgba_end_list_0x0036DE08[2];
+extern /* static */ float _scale_start_list_0x0036DE10[2];
+extern /* static */ float _scale_end_list_0x0036DE18[2];
+extern /* static */ Motion_Table_Infomeation _motion_info_0[2];
+extern /* static */ Motion_Table_Infomeation _motion_info_1[2];
+extern /* static */ Motion_Table_Infomeation* _motion_info_list_0x0036DE58[2];
 
 static u_int Object_Initialize(HH_Object_Blood_01* pThis, ImpactQueue_Element* pElement ) {
     u_int result = 0;
@@ -56,7 +55,7 @@ static u_int Object_Initialize(HH_Object_Blood_01* pThis, ImpactQueue_Element* p
     resist_ya = 0.5494505f;
     pThis->Verocity_0[2] = src_direction[2] * resist_ya;
 
-    resist_xz = 2450.0f *  _suppress_coff;
+    resist_xz = 2450.0f *  _suppress_coff_0x0036DB40;
     pThis->Verocity_0[3] = resist_xz * resist_y0;
     
     pElement->Option.Int_Value[1] = rand() % 8U;
@@ -102,16 +101,16 @@ static u_int Object_Motion_00(HH_Object_Blood_01* pThis, ImpactQueue_Element* pE
 
     kind = pElement->Option.Int_Value[0];
     
-    Rgba_s = _rgba_start_list[kind];
-    Rgba_e = _rgba_end_list[kind];
-    Scale_s = _scale_start_list[kind];
-    Scale_e = _scale_end_list[kind];
+    Rgba_s = _rgba_start_list_0x0036DE00[kind];
+    Rgba_e = _rgba_end_list_0x0036DE08[kind];
+    Scale_s = _scale_start_list_0x0036DE10[kind];
+    Scale_e = _scale_end_list_0x0036DE18[kind];
     
     local_time_start = 0.0f;
     local_scale_start = 0.0f;
     local_rgba_start = 0.0f;
     
-    pMotion_Info = _motion_info_list[kind];
+    pMotion_Info = _motion_info_list_0x0036DE58[kind];
     
     current_step = pThis->Motion_Step;
     motion_num = 1;
@@ -164,13 +163,13 @@ static u_int Object_Motion_00(HH_Object_Blood_01* pThis, ImpactQueue_Element* pE
 static u_int Object_Draw(HH_Object_Blood_01* pThis, ImpactQueue_Element* pElement, float* Current_Position) {
     u_int result = 0;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
-    Vertex_Infomeation_List* pInfo = pInfo = &_vertex_info_list[pThis->Vertex_Kind];
+    Vertex_Infomeation_List* pInfo = pInfo = &_vertex_info_list_0x0036DDD0[pThis->Vertex_Kind];
     float (* pVertex)[4] = pInfo->pVertex_List;
-    float (* pStq)[4] = pStq = _stq_list[pElement->Option.Int_Value[1]];
+    float (* pStq)[4] = pStq = _stq_list_0x0036DDE0[pElement->Option.Int_Value[1]];
     sceVu0FMATRIX lwm;
     sceVu0FMATRIX lsm;
     sceVu0FMATRIX clip_mat;
-    float Base_Rgba[4] = {40.0f};
+    float Base_Rgba[4] = {40.0f, 255.0f, 230.0f, 0.0f};
     sceVu0IVECTOR xyzf;
     sceVu0IVECTOR rgba;
     float stq_dummy[4];

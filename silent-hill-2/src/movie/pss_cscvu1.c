@@ -38,11 +38,11 @@ static void mkrefpacket(
 );
 static void mkcntpacket(sceVif1Packet *pkt, u_int code1, u_int code2);
 
-static u_int vu1_base_adr[3]={
+extern /* static */ u_int vu1_base_adr[3]; /*={
     VUMEM1_BASE0,
     VUMEM1_BASE1,
     VUMEM1_BASE2
-};
+};*/
 
 void cscVu1Init(CscVu1 *csc)
 {

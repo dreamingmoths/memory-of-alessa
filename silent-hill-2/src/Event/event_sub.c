@@ -7,6 +7,7 @@
 #include "Multi_thr/filesys/fileserv.h"
 #include "Effect/screen_effect.h"
 #include "GFW/sh2_GsAllEnv.h"
+#include "Chacter/sh2_character_manage.h"
 
 static int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */);
 
@@ -107,6 +108,7 @@ static int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */) {
     return 1;
 }
 
+#ifdef NON_MATCHING
 int EvSubItemGet(int kind /* r16 */, int message /* r2 */)  {
     switch (ev_s_step) {
         case 0:
@@ -126,6 +128,9 @@ int EvSubItemGet(int kind /* r16 */, int message /* r2 */)  {
     }
     return 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/event_sub", EvSubItemGet)
+#endif
 
 int EvSubItemGetAndAnim(int kind /* r16 */, int message /* r2 */)  {
     struct SubCharacter* scp; 

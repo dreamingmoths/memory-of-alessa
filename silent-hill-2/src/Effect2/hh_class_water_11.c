@@ -210,18 +210,20 @@ static u_int Object_Draw(HH_Object_Water_11* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4];        // r29+0x210
-            int xyzf[4];          // r29+0x220
-            int rgba[4];          // r29+0x230
-            u_int addr;           // r2
-            float vec0[4];        // r29+0x240
-            float vec1[4];        // r29+0x250
-            float n0[4];          // r29+0x260
-            float specular_ratio; // r22
-            float stq0[4];        // r29+0x270
-            float stq1[4];        // r29+0x280
-            float base;           // r2
-            float color_scale;    // r29+0x290
+            float Rgba[4];                         // r29+0x210
+            int xyzf[4];                           // r29+0x220
+            int rgba[4];                           // r29+0x230
+            u_int addr;                            // r2
+            float vec0[4];                         // r29+0x240
+            float vec1[4];                         // r29+0x250
+            float n0[4];                           // r29+0x260
+            float specular_ratio;                  // r22
+            float stq0[4];                         // r29+0x270
+            float stq1[4];                         // r29+0x280
+            float base;                            // r2
+            float color_scale;                     // r29+0x290
+            static float sx_112_0x0036F7E0 = 2.5f; // @ 0x0036F7E0
+            static float ty_113_0x0036F7E8 = 2.5f; // @ 0x0036F7E8
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 100.0f * x_index;
 
@@ -230,8 +232,8 @@ static u_int Object_Draw(HH_Object_Water_11* pThis /* r22 */, float* pGrid_Y_Val
             Grid_Vertex1[1] = pGrid_Y[HH_WATER_11_GRID_INDEX_GET(x_index, z_index + 1)];
             Grid_Vertex2[1] = pGrid_Y[HH_WATER_11_GRID_INDEX_GET((x_index + 1) % x_grid_max, z_index)];
 
-            base = 0.25f * (1.0f / (100.0f * ty));
-            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (100.0f * sx));
+            base = 0.25f * (1.0f / (100.0f * ty_113_0x0036F7E8));
+            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (100.0f * sx_112_0x0036F7E0));
             stq0[1] = Grid_Vertex0[2] * base;
             stq1[1] = Grid_Vertex1[2] * base;
             sceVu0AddVector(stq0, stq0, pThis->ST_Defference);
@@ -349,6 +351,22 @@ u_int HH_Class_Suffix_Water_11(void) {
     HH_Vif1PacketBuffer_GifTag_Close();
     return result;
 }
+
+static float degree_168_0x0036F7F0 = 40.0f;
+static float base_move_169_0x0036F7F8 = 8.0f;
+static float _distance_179_0x0036F800 = 1200.0f;
+static float _lost_time_180_0x0036F808 = 12.0f;
+static float _arri_181_0x0036F810 = 40.0f;
+static float _omega_182_0x0036F818 = 540.0f;
+static float _v_183_0x0036F820 = 500.0f;
+static float _interval_184_0x0036F828 = 4.0f;
+static float __distance_193_0x0036F830 = 3200.0f;
+static float __lost_time_194_0x0036F838 = 10.0f;
+static float __arri_195_0x0036F840 = 40.0f;
+static float __omega_196_0x0036F848 = 612.0f;
+static float __v_197_0x0036F850 = 1200.0f;
+static float add_move_170_0x011EB620 = 0.0f;
+static float center_171_0x011EB628 = 0.0f;
 
 u_int HH_Class_Water_11(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     static char tmp[80];                // @ 0x011EB640

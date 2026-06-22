@@ -277,20 +277,21 @@ static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base
     " ::"f"(brightness) : "t0", "t1", "memory");
 }
 
-static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f}; // @ 0x00375020
-static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x00375030
-static float amb_alpha = 40.0f;                           // @ 0x00375060
-static float light_alpha = 80.0f;                         // @ 0x00375068
-static u_long _GifTag_Tri[2] = {
-    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00375010
-static float ty = 2.5f;                                                                                     // @ 0x003750B8
-static float sx = 2.5f;                                                                                     // @ 0x003750B0
-static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00375040
-static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x00375050
 static u_long _GifTag[2] = {
     SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
     GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00375000
+static u_long _GifTag_Tri[2] = {
+    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x00375010
+static float Light_Base[4] = {20.0f, 20.0f, 20.0f, 0.0f};                                                   // @ 0x00375020
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x00375030
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x00375040
+static float SpecularRgba[4] = {48.0f, 48.0f, 48.0f, 64.0f};                                                // @ 0x00375050
+static float amb_alpha = 40.0f;                                                                             // @ 0x00375060
+static float light_alpha = 80.0f;                                                                           // @ 0x00375068
+
+static float _a_max_104 = 1.0f;
+static float _c_max_105 = 255.0f;
 
 // @note: makes use of `c_max`/`a_max` variables to control the clamp, rather than the usual 255.0f
 static u_int Object_Draw(HH_Object_Water_07* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
@@ -377,6 +378,8 @@ static u_int Object_Draw(HH_Object_Water_07* pThis /* r22 */, float* pGrid_Y_Val
             float stq1[4];
             float base;
             float color_scale;
+            static float sx = 2.5f; // @ 0x003750B0
+            static float ty = 2.5f; // @ 0x003750B8
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 
@@ -504,6 +507,22 @@ u_int HH_Class_Suffix_Water_07(void) {
     HH_Vif1PacketBuffer_GifTag_Close();
     return result;
 }
+
+static float degree_175 = 40.0f;
+static float base_move_176 = 8.0f;
+static float add_move_177 = 0.0f;
+static float center_178 = 0.0f;
+static float _distance_186 = 1200.0f;
+static float _lost_time_187 = 12.0f;
+static float _arri_188 = 40.0f;
+static float _omega_189 = 540.0f;
+static float _v_190 = 500.0f;
+static float _interval_191 = 4.0f;
+static float __distance_200 = 3200.0f;
+static float __lost_time_201 = 10.0f;
+static float __arri_202 = 40.0f;
+static float __omega_203 = 612.0f;
+static float __v_204 = 1200.0f;
 
 u_int HH_Class_Water_07(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     u_int result = 1;
