@@ -1,5 +1,7 @@
 #include "sh_character_status.h"
 
+static float _shLength(float*, float*);
+
 static void shBattleCheckHitEyes(struct _CL_VHIT_RESULT *eye, struct SubCharacter *scp, int i, int net) {
     float sp[4];
     float ep[4];
