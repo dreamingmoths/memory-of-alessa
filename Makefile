@@ -85,6 +85,7 @@ LINKER_TEMPLATE := $(INCLUDE)/$(SERIAL).inc.lcf
 
 BINUTILS_FLAVOR := mips-ps2-decompals
 BINUTILS := $(TOOLS)/binutils-$(BINUTILS_FLAVOR)
+BINUTILS_VERSION_FILE := $(BINUTILS)/version-0-10
 
 AS := $(BINUTILS)/$(BINUTILS_FLAVOR)-as
 AS_FLAGS := \
@@ -166,12 +167,12 @@ ifneq ($(LINK),0)
 endif
 endif
 
-TOOLCHAIN := $(WIBO) $(MWCCGAP_ENTRYPOINT) $(MWCC) $(MWLD) $(AS)
+TOOLCHAIN := $(WIBO) $(MWCCGAP_ENTRYPOINT) $(MWCC) $(MWLD) $(AS) $(BINUTILS_VERSION_FILE)
 SETUP := $(SOURCE_PREREQS) $(TOOLCHAIN)
 
 WIBO_HOST := https://github.com/decompals/wibo/releases/download/1.0.1
 COMPILERS_HOST := https://github.com/decompme/compilers/releases/download/compilers
-BINUTILS_HOST := https://github.com/dreamingmoths/binutils-mips-ps2-decompals/releases/download/v0.8-aarch64
+BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releases/download/v0.10
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
 ###############################################################
 all: $(TARGETS)
@@ -295,6 +296,12 @@ $(AS):
 	@mkdir -p "$(@D)"
 	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
 	@chmod +x $(@D)/*
+
+$(BINUTILS_VERSION_FILE):
+	@rm -rf $(BINUTILS)
+	@mkdir -p $(BINUTILS)
+	@touch $(BINUTILS_VERSION_FILE)
+	@make $(AS)
 
 $(OBJDIFF):
 	@mkdir -p "$(@D)"
