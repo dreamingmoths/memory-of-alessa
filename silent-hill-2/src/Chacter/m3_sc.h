@@ -40,6 +40,7 @@ void shCharacterUpdateAll(void);
 void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacter*) /* r2 */);
 void shCharacterExecFunctionAll(void);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
+void SCSetModel(SubCharacter* scp /* r18 */, int model /* r2 */);
 void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */);
 void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
 void SCAddPos(SubCharacter* scp, Vector4* pos);
@@ -89,5 +90,6 @@ void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short i
 void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id);
 
 extern int demo_status; // correct home for this?
+extern sceVu0FMATRIX kt_unit_matrix; // correct home for this?
 
 #endif

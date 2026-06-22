@@ -345,6 +345,7 @@ utilHeapInit                                                                    
 // dbfntprint.c
 d = 0x00366D60; // size:0x28
 printline = 0x01DBB80;
+dbfntprint = 0x001dbe90;
 
 // clani.c
 DataId = 0x1403D0;

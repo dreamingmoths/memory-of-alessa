@@ -22,17 +22,29 @@ typedef struct shInAreaTgtInfo {
     struct shInArea in_area;      // offset 0x8, size 0x1
 } shInAreaTgtInfo;
 
-void clCheckHitEyes(struct _CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /* r2 */, float* ed /* r2 */, int thru /* r2 */);
-extern shInAreaTgtInfo sh2_target_info[20];
-static float _shLength(float* v0 /* r2 */, float* v1 /* r2 */);
-int sh2gfw_Check_CharaDarkOrBright(void* SubChara /* r2 */);
-struct SubCharacter* shBattleGetTargetHuman(struct SubCharacter* scp /* r17 */, u_int type /* r2 */);
-int shBattleSeeHumanLight(struct SubCharacter* scp /* r16 */);
-int shBattleAimedByHuman(struct SubCharacter* scp /* r2 */);
-int shBattleFinishedByHuman(struct SubCharacter* scp /* r2 */);
+void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel);
+int shBattleAroundTargetEnemy(void);
+SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp);
+SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key);
+u_int shBattleGetTargetChara(SubCharacter* scp, int kind);
+SubCharacter* shCameraGetNearTarget(int i, int type);
+SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp);
+SubCharacter* shBattleGetTargetHuman(SubCharacter* scp /* r17 */, u_int type /* r2 */);
+int shBattleSeeHumanLight(SubCharacter* scp /* r16 */);
+int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt /* r2 */); // @note DWARF only shows one arg
+
+int shBattleAimedByHuman(SubCharacter* scp /* r2 */);
+int shBattleFinishedByHuman(SubCharacter* scp /* r2 */);
+int shBattleNoDamageHuman(void);
+
 int shBattleNoDamageHumanJames(void);
 int shBattleNoDamageHumanMaria(void);
 int shBattleHuggedHuman(void);
-int shBattleListenHumanSound(struct SubCharacter* scp, struct SubCharacter* tgt /* r2 */); // DWARF only shows one arg
+void shBattleSetLookArea(SubCharacter* scp, float center, float radius);
+void shBattleSetFeelArea(SubCharacter* scp, float center, float radius);
+void shBattleInitEnemyCheckWork(void);
+void shBattleInit(void);
+void shBattleExec(void);
+
 
 #endif

@@ -1,3 +1,4 @@
+//* references from main executable to overlays. filename is from mh1j repo, thank you :> *//
 func_01F6D680_subway_02 = 0x1F6D680; // allow_duplicated:True
 func_01F6D680_amusement_01 = 0x1F6D680; // allow_duplicated:True
 func_01F6D680_building_b_00 = 0x1F6D680; // allow_duplicated:True

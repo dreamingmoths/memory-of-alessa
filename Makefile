@@ -201,10 +201,10 @@ death:
 	$(GIT) submodule foreach --recursive $(GIT) reset --hard
 
 debug:
-	@echo $(YAMLS)
-	@echo $(SOURCE_PREREQS)
-	@echo $(TARGETS)
-	@echo $(BINARIES:%=$(LINKERS)/%.d)
+	@echo "$(YAMLS)"
+	@echo "$(SOURCE_PREREQS)"
+	@echo "$(TARGETS)"
+	@echo "$(BINARIES:%=$(LINKERS)/%.d)"
 	@echo '---'
 
 diff:
