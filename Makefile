@@ -117,6 +117,7 @@ MWCCGAP_FLAGS := \
     --as-march=r5900 \
     --as-mabi=eabi \
 	--as-flags=$(MWCCGAP_AS_FLAGS)
+MWCCGAP_PATCH_VERSION_FILE := $(TOOLS)/mwccgap.version
 
 ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@"
@@ -167,7 +168,8 @@ ifneq ($(LINK),0)
 endif
 endif
 
-TOOLCHAIN := $(WIBO) $(MWCCGAP_ENTRYPOINT) $(MWCC) $(MWLD) $(AS) $(BINUTILS_VERSION_FILE)
+TOOLCHAIN := $(WIBO) $(MWCCGAP_ENTRYPOINT) $(MWCC) $(MWLD) $(AS) \
+	$(BINUTILS_VERSION_FILE) $(MWCCGAP_PATCH_VERSION_FILE)
 SETUP := $(SOURCE_PREREQS) $(TOOLCHAIN)
 
 WIBO_HOST := https://github.com/decompals/wibo/releases/download/1.0.1
@@ -297,12 +299,6 @@ $(AS):
 	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
 	@chmod +x $(@D)/*
 
-$(BINUTILS_VERSION_FILE):
-	@rm -rf $(BINUTILS)
-	@mkdir -p $(BINUTILS)
-	@touch $(BINUTILS_VERSION_FILE)
-	@make $(AS)
-
 $(OBJDIFF):
 	@mkdir -p "$(@D)"
 	wget -O $@ $(OBJDIFF_HOST)/$(OBJDIFF_BINARY)
@@ -310,6 +306,17 @@ $(OBJDIFF):
 
 $(MWCCGAP_ENTRYPOINT):
 	$(GIT) submodule update --init --recursive
+
+$(BINUTILS_VERSION_FILE):
+	@rm -rf $(BINUTILS)
+	@mkdir -p $(BINUTILS)
+	@touch $(BINUTILS_VERSION_FILE)
+	@make $(AS)
+
+$(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
+	git submodule sync
+	git submodule update --init --remote
+	@touch $(MWCCGAP_PATCH_VERSION_FILE)
 
 $(ALESSATOOL_OVERLAY_LOCK): $(SOURCE_OVERLAY_ARCHIVE)
 	@mkdir -p "$(@D)"
