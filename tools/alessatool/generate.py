@@ -34,6 +34,7 @@ class GenerationArgs:
     use_cache: bool
     yamls: list[str]
     make_full_disasm_for_code: bool
+    bss_alignment: int
 
 @dataclass
 class UnitMetadata:
@@ -136,6 +137,8 @@ def generate_lcf(args: GenerationArgs):
         objects = entries_by_section_type[section_type]
         if not objects:
             continue
+        if section_type == ".bss":
+            alignment = args.bss_alignment
 
         block = [
             f"\t\t# {section_type}",

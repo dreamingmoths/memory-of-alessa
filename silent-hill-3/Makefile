@@ -54,6 +54,7 @@ MWCC_TAR := mwcps2-3.0.3-020716.tar.gz
 MWCC_FLAGS = $(OPT_LEVEL) -sym=off,noelf -sdatathreshold 0 \
 	-cwd source -i "$(SRC)" -i "$(INCLUDE)" -i "$(COMMON_INCLUDE)"
 MWCCGAP_AS_FLAGS := -mbranch-relocs
+BSS_ALIGNMENT := 16
 
 MWLD := $(TOOLS)/mwcps2/2.4/mwldps2.exe
 MWLD_TAR := mwcps2-2.4-001213.tar.gz
