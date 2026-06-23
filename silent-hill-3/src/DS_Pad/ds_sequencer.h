@@ -1,3 +1,6 @@
+#ifndef DS_SEQUENCER_H
+#define DS_SEQUENCER_H
+
 #include "common.h"
 
 typedef struct DS_Object_Info {
@@ -65,3 +68,5 @@ float ActuaterLV_Complement(DS_Record* pDSR /* r2 */, float Time /* r29 */);
 
 DS_Record_Edit* EditNode_Current_Search(Record_Info* pInfo /* r2 */, float Time /* r29 */);
 static float ActuaterLV_Complement_Edit(DS_Record_Edit* pDSR /* r2 */, float Time /* r29 */);
+
+#endif // DS_SEQUENCER_H
