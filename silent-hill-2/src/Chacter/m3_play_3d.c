@@ -25,33 +25,34 @@ static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 /* static */ void lower_readyoff_3d(SubCharacter* p);
 /* static */ void upper_readyoff_3d(SubCharacter* p);
 
-static void lower_jump_3d(void);
-static void upper_jump_3d(void);
-static void lower_guard_3d(SubCharacter* p);
-static void upper_guard_3d(void);
-static void lower_lstep_3d(void);
-static void upper_lstep_3d(void);
-static void lower_rstep_3d(void);
-static void upper_rstep_3d(void);
+/* static */ void lower_jump_3d(void);
+/* static */ void upper_jump_3d(void);
+/* static */ void lower_guard_3d(SubCharacter* p);
+/* static */ void upper_guard_3d(void);
+/* static */ void lower_lstep_3d(void);
+/* static */ void upper_lstep_3d(void);
+/* static */ void lower_rstep_3d(void);
+/* static */ void upper_rstep_3d(void);
 
-static void lower_attack_3d(SubCharacter* p);
-static void upper_attack_3d(SubCharacter* p);
-static void lower_kick_3d(SubCharacter* p);
-static void upper_kick_3d(SubCharacter* p);
-static void lower_fall_3d(SubCharacter* p);
-static void upper_fall_3d(SubCharacter* p);
-static void lower_damage_3d(SubCharacter* p);
-static void upper_damage_3d(SubCharacter* p);
-static void lower_to_stand_3d(SubCharacter* p);
-static void upper_to_stand_3d(SubCharacter* p);
-static void lower_wall_f_3d(SubCharacter* p);
-static void upper_wall_f_3d(SubCharacter* p);
-static void lower_event_3d(SubCharacter* p);
-static void upper_event_3d(SubCharacter* p);
-static void PlayerUpdateStatus3D(SubCharacter* this);
-static void PlayerUpdateStatusStand3D(void);
-static void PlayerUpdateStatusLower2nd3D(SubCharacter* this);
-static void PlayerCheckAttack3D(SubCharacter* this);
+/* static */ void lower_attack_3d(SubCharacter* p);
+/* static */ void upper_attack_3d(SubCharacter* p);
+/* static */ void lower_kick_3d(SubCharacter* p);
+/* static */ void upper_kick_3d(SubCharacter* p);
+/* static */ void lower_fall_3d(SubCharacter* p);
+/* static */ void upper_fall_3d(SubCharacter* p);
+/* static */ void lower_damage_3d(SubCharacter* p);
+/* static */ void upper_damage_3d(SubCharacter* p);
+/* static */ void lower_to_stand_3d(SubCharacter* p);
+/* static */ void upper_to_stand_3d(SubCharacter* p);
+/* static */ void lower_wall_f_3d(SubCharacter* p);
+/* static */ void upper_wall_f_3d(SubCharacter* p);
+/* static */ void lower_event_3d(SubCharacter* p);
+/* static */ void upper_event_3d(SubCharacter* p);
+
+/* static */ void PlayerUpdateStatus3D(SubCharacter* this);
+/* static */ void PlayerUpdateStatusStand3D(void);
+/* static */ void PlayerUpdateStatusLower2nd3D(SubCharacter* this);
+/* static */ void PlayerCheckAttack3D(SubCharacter* this);
 
 extern float dtf_0x003C8488;
 extern int dt_0x003C8490;
@@ -262,15 +263,15 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rturn180_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rturn180_3d);
 
-static void lower_jump_3d(void) {
+/* static */ void lower_jump_3d(void) {
     return;
 }
 
-static void upper_jump_3d(void) {
+/* static */ void upper_jump_3d(void) {
     return;
 }
 
-static void lower_guard_3d(SubCharacter* p) {
+/* static */ void lower_guard_3d(SubCharacter* p) {
     u_short frame; // r2
 
     frame = shCharacterAnimeFrameGet_(p, 2U);
@@ -297,7 +298,7 @@ static void lower_guard_3d(SubCharacter* p) {
     
 }
 
-static void upper_guard_3d(void) {
+/* static */ void upper_guard_3d(void) {
     if (sh2jms.anime_pause & 2) {
         player_flg_on(&sh2jms.upper_st_flg, 1);
         player_flg_off(&sh2jms.upper_st_flg, 0x200000);
@@ -305,19 +306,19 @@ static void upper_guard_3d(void) {
     }
 }
 
-static void lower_lstep_3d(void) {
+/* static */ void lower_lstep_3d(void) {
     return;
 }
 
-static void upper_lstep_3d(void) {
+/* static */ void upper_lstep_3d(void) {
     return;
 }
 
-static void lower_rstep_3d(void) {
+/* static */ void lower_rstep_3d(void) {
     return;
 }
 
-static void upper_rstep_3d(void) {
+/* static */ void upper_rstep_3d(void) {
     return;
 }
 
@@ -329,47 +330,47 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_release_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_release_3d);
 
-static void lower_attack_3d(SubCharacter* p) {
+/* static */ void lower_attack_3d(SubCharacter* p) {
     lower_attack(p);
 }
 
-static void upper_attack_3d(SubCharacter* p) {
+/* static */ void upper_attack_3d(SubCharacter* p) {
     upper_attack(p);
 }
 
-static void lower_kick_3d(SubCharacter* p) {
+/* static */ void lower_kick_3d(SubCharacter* p) {
     lower_kick(p);
 }
 
-static void upper_kick_3d(SubCharacter* p) {
+/* static */ void upper_kick_3d(SubCharacter* p) {
     upper_kick(p);
 }
 
-static void lower_fall_3d(SubCharacter* p) {
+/* static */ void lower_fall_3d(SubCharacter* p) {
     lower_fall(p);
 }
 
-static void upper_fall_3d(SubCharacter* p) {
+/* static */ void upper_fall_3d(SubCharacter* p) {
     upper_fall(p);
 }
 
-static void lower_damage_3d(SubCharacter* p) {
+/* static */ void lower_damage_3d(SubCharacter* p) {
     lower_damage(p);
 }
 
-static void upper_damage_3d(SubCharacter* p) {
+/* static */ void upper_damage_3d(SubCharacter* p) {
     upper_damage(p);
 }
 
-static void lower_to_stand_3d(SubCharacter* p) {
+/* static */ void lower_to_stand_3d(SubCharacter* p) {
     lower_to_stand(p);
 }
 
-static void upper_to_stand_3d(SubCharacter* p) {
+/* static */ void upper_to_stand_3d(SubCharacter* p) {
     upper_to_stand(p);
 }
 
-static void lower_wall_f_3d(SubCharacter* p) {
+/* static */ void lower_wall_f_3d(SubCharacter* p) {
     u_short frame; // r2
     
     frame = shCharacterAnimeFrameGet_(p, 2);
@@ -402,19 +403,19 @@ static void lower_wall_f_3d(SubCharacter* p) {
     }
 }
 
-static void upper_wall_f_3d(SubCharacter* p) {
+/* static */ void upper_wall_f_3d(SubCharacter* p) {
     upper_wall_f(p);
 }
 
-static void lower_event_3d(SubCharacter* p) {
+/* static */ void lower_event_3d(SubCharacter* p) {
     lower_event(p);
 }
 
-static void upper_event_3d(SubCharacter* p) {
+/* static */ void upper_event_3d(SubCharacter* p) {
     upper_event(p);
 }
 
-static void PlayerUpdateStatus3D(SubCharacter* this) {
+/* static */ void PlayerUpdateStatus3D(SubCharacter* this) {
     dt_0x003C8490 = shGetDF();
     dtf_0x003C8488 = shGetDT();
     
