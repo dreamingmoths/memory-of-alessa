@@ -40,7 +40,7 @@ extern /* static */ CharaData_DemoList stg_apart_e3fw_kagikeri_data[4]; // @ 0x0
         case 10:
             if (EvSubQuestion(3)) {
                 if (!fontGetStatus()) {
-                    SET_EV_STEP(2, 0);
+                    EV_PROG_STEP(2);
                 } else {
                     CharaDataLoadCancel(stg_apart_e3fw_kagikeri_data);
                     EV_PROG_STEP(13);
@@ -54,7 +54,7 @@ extern /* static */ CharaData_DemoList stg_apart_e3fw_kagikeri_data[4]; // @ 0x0
                 CharaAdminPlayableDisplay(0);
                 shCharacter_Manage_Delete(NULL, X_KEYCOURT_CHARA_ID, 0);
                 SCNowDemoEventSwitch(sh2jms.player, 1);
-                SET_EV_STEP(22, 0);
+                EV_PROG_STEP(22);
             case 22:
                 if (DramaDemoMain(&stg_apart_e3fw_kick)) {
                     EV_PROG_STEP(6);
