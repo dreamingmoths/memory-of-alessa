@@ -75,4 +75,6 @@ typedef struct {
 	tGS_BGCOLOR	bgcolor;
 } sceGsDispEnv;
 
+extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
+
 #endif

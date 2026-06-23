@@ -3,8 +3,6 @@
 
 #include "GFW/sh2_GsAllEnv.h"
 
-extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
-
 void sh2gfw_setREF_gsctl(Q_WORDDATA* gt);
 void sh2gfw_setREF_TEXFLUSH(void);
 
