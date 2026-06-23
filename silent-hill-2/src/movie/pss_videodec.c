@@ -108,6 +108,11 @@ int videoDecFlush(VideoDec *vd) {
     return 1;
 }
 
+
+const char rodata_525_0x0039BF60[] = "decBs0() failed\n";
+
+const char rodata_526_0x0039BF80[] = "video dec main abort.\n";
+
 INCLUDE_ASM("asm/nonmatchings/movie/pss_videodec", videoDecMain);
 
 int decBs0(VideoDec *vd) {
@@ -151,7 +156,7 @@ int decBs0(VideoDec *vd) {
         if (picture_structure == SCE_MPEG_FRAME) {
             csct = (mp->flags & 0x180) ? CSCVU1_PROG_FRAME : CSCVU1_INTER_FRAME;
         } else {
-            debugPrintf("pss_videodec.c:342> assert:(%s)\n", "@576_0x0039C028");
+            debugPrintf("pss_videodec.c:342> assert:(%s)\n", "0");
             do {} while (1);
         }
 
@@ -251,3 +256,4 @@ static int cpy2area(u_char *pd0, int d0, u_char *pd1, int d1, u_char *ps0, int s
 
     return s0 + s1;
 }
+

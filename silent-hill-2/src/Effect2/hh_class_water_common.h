@@ -22,8 +22,8 @@ typedef struct Wave_Element {
 
 typedef struct WaveArea_Infomeation {
     // total size: 0x90
-    float World_Location[4];         // offset 0x0, size 0x10
-    float Grid_WH[4];                // offset 0x10, size 0x10
+    sceVu0FVECTOR World_Location;    // offset 0x0, size 0x10
+    sceVu0FVECTOR Grid_WH;           // offset 0x10, size 0x10
     u_int Grid_Index[2];             // offset 0x20, size 0x8
     u_int* pViewArea_List;           // offset 0x28, size 0x4
     u_int ViewArea_List_Max;         // offset 0x2C, size 0x4

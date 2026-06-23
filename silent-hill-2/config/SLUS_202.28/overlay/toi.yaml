@@ -1,0 +1,29 @@
+name: toi
+sha1: 52ff0a97c6b240db7ca01575826b64ceddfd314a
+options:
+  basename: toi
+  elf_path: toi.bin
+  target_path: rom/overlay/toi.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/toi_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: toi_reloc_addrs.txt
+  ld_script_path: linkers/toi.ld
+  undefined_funcs_auto_path: linkers/toi_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/toi_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: toi
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    bss_size: 0x280
+    subsegments:
+      - [0x0, databin, toi_overlay_header]
+      - [0x80, asm, Event/stage/stg_toilet]
+      - [0x800, data, Event/stage/stg_toilet_data]
+      - { vram: 0x1F02880, type: bss, name: Event/stage/stg_toilet_bss }
+  - [0xA80]

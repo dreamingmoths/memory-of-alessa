@@ -1,15 +1,13 @@
 #include "fileslist_bg.h"
 
-struct FilesBgBlock * FilesGetBgBlock(enum STAGE_ID stg_id /* r2 */, int blk_id /* r2 */) {
+#ifdef NON_MATCHING
+FilesBgBlock* FilesGetBgBlock(STAGE_ID stg_id /* r2 */, int blk_id /* r2 */) {
 
-    struct FilesBgStage * stg; // r4
-    int tmp;
-    int max_id; // r2
+    FilesBgStage* stg; // r4
+    int tmp = FilesBgStageMax[0];
+    int max_id = stg_id & 0xFF; // r2
 
-    tmp = *FilesBgStageMax;
-    max_id = stg_id & 0xFF;
-
-    if (max_id <= 0 || !(tmp > max_id)) {
+    if (max_id <= 0 || tmp <= max_id) {
         return 0;
     }
 
@@ -22,3 +20,6 @@ struct FilesBgBlock * FilesGetBgBlock(enum STAGE_ID stg_id /* r2 */, int blk_id 
 
     return stg->block_list[blk_id];
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/FilesList/fileslist_bg", FilesGetBgBlock)
+#endif

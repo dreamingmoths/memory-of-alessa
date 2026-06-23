@@ -63,7 +63,7 @@ void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location, int idk) {
         case 0x21: {
 
             
-            float dir[4] /* = {0.0f, 0.0f, 0.0f, 0.0f} */; // r29+0x60
+            float dir[4] = {0.0f, 2000.0f, 0.0f, 0.0f}; // r29+0x60
             
             descriptor.Class_Descriptor = 4;
             sceVu0CopyVector(&descriptor.Option.Vector[1], &dir);
@@ -126,6 +126,7 @@ void HH_Effect_Object_Blood_Splash_Impact_Post(float* Location, float* Direction
     ImpactDescriptor_Post(HH_Effect_Object_Infomeation_Get(), &descriptor);
 }
 
+float data_0x0036ED20[4] = {0.0f, 100.0f, 0.0f, 0.0f}; 
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_object_execute", HH_Effect_Object_Ground_Impact_Post);
 

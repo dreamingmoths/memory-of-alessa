@@ -9,20 +9,20 @@ static int sd_stat_now_cd_using(void);
 static int shSdCallCheck(int i0 /* r16 */);
 static int shSdCallCheck(int i0);
 
-extern /* static */ int excl_sid; // size: 0x4, address: 0x37B8D8
+static int excl_sid_0x0037B8D8 = -1; // size: 0x4, address: 0x37B8D8
 extern /* static */ int cd_sd_now_access; // size: 0x4, address: 0x122B308
 
 static int shSdWaitExcl(void) {
-    return WaitSema(excl_sid);
+    return WaitSema(excl_sid_0x0037B8D8);
 }
 
 static int shSdSignalExcl(void) {
-    return SignalSema(excl_sid);
+    return SignalSema(excl_sid_0x0037B8D8);
 }
 
 int shSdInit(void) {
-    if (excl_sid == -1) {
-        excl_sid = CreateSema2(0, 1, 0);
+    if (excl_sid_0x0037B8D8 == -1) {
+        excl_sid_0x0037B8D8 = CreateSema2(0, 1, 0);
     }
     shSdSignalExcl();
     return 1;

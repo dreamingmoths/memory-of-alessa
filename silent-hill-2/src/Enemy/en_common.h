@@ -43,7 +43,7 @@ typedef struct EnANIME_DATA {
     u_char Loop;   // offset 0x2, size 0x1
 } EnANIME_DATA;
 
-struct EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
+extern EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
 void enInitEnemy(void);
 struct EnLOCAL_DATA* enEntryEnemy(int kind /* r2 */);

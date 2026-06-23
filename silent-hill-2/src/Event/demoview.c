@@ -24,6 +24,22 @@ INCLUDE_ASM("asm/nonmatchings/Event/demoview", DdsPlay);
 
 INCLUDE_ASM("asm/nonmatchings/Event/demoview", DdsPlayKey);
 
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @921_0x00391280);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @989_0x003912A0);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @990_0x003912B0);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @991);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @992_0x003912F0);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @993_0x00391310);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @994_0x00391320);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/demoview", @995_0x00391340);
+
 INCLUDE_ASM("asm/nonmatchings/Event/demoview", DdsPlayCamera);
 
 INCLUDE_ASM("asm/nonmatchings/Event/demoview", DdsPlayLight);

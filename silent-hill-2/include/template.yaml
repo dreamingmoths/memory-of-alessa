@@ -1,0 +1,29 @@
+name: ${{ name }}
+sha1: ${{ sha1 }}
+options:
+  basename: ${{ name }}
+  elf_path: ${{ name }}.bin
+  target_path: rom/overlay/${{ name }}.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/${{ name }}_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: ${{ name }}_reloc_addrs.txt
+  ld_script_path: linkers/${{ name }}.ld
+  undefined_funcs_auto_path: linkers/${{ name }}_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/${{ name }}_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: ${{ name }}
+    type: code
+    vram: ${{ vram_start }}
+    start: 0x0
+    bss_size: ${{ bss_size }}
+    subsegments:
+      - [0x0, databin, ${{ name }}_overlay_header]
+      - [${{ text_start }}, asm, Event/stage/${{ filename }}]
+      - [${{ data_start }}, data, Event/stage/${{ filename }}_data]
+      - { vram: ${{ bss_start }}, type: bss, name: Event/stage/${{ filename }}_bss }
+  - [${{ file_size }}]

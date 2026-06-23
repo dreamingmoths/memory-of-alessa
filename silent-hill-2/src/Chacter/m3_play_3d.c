@@ -12,18 +12,18 @@ static int PlayerCheckTurn180(void);
 static void lower_lround_3d_nata(SubCharacter* p, float* spd);
 static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 
-static void lower_stand_3d(SubCharacter* p);
-static void upper_stand_3d(SubCharacter* p);
-static void lower_relax_3d(SubCharacter* p);
-static void upper_relax_3d(SubCharacter* p);
-static void lower_alert_3d(SubCharacter* p);
-static void upper_alert_3d(SubCharacter* p);
-static void lower_tired_3d(SubCharacter* p);
-static void upper_tired_3d(SubCharacter* p);
-static void lower_ready_3d(SubCharacter* p);
-static void upper_ready_3d(SubCharacter* p);
-static void lower_readyoff_3d(SubCharacter* p);
-static void upper_readyoff_3d(SubCharacter* p);
+/* static */ void lower_stand_3d(SubCharacter* p);
+/* static */ void upper_stand_3d(SubCharacter* p);
+/* static */ void lower_relax_3d(SubCharacter* p);
+/* static */ void upper_relax_3d(SubCharacter* p);
+/* static */ void lower_alert_3d(SubCharacter* p);
+/* static */ void upper_alert_3d(SubCharacter* p);
+/* static */ void lower_tired_3d(SubCharacter* p);
+/* static */ void upper_tired_3d(SubCharacter* p);
+/* static */ void lower_ready_3d(SubCharacter* p);
+/* static */ void upper_ready_3d(SubCharacter* p);
+/* static */ void lower_readyoff_3d(SubCharacter* p);
+/* static */ void upper_readyoff_3d(SubCharacter* p);
 
 static void lower_jump_3d(void);
 static void upper_jump_3d(void);
@@ -152,51 +152,51 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lswalk_3d_nata);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rswalk_3d_nata);
 
-static void lower_stand_3d(SubCharacter* p) {
+/* static */ void lower_stand_3d(SubCharacter* p) {
     lower_stand(p);
 }
 
-static void upper_stand_3d(SubCharacter* p) {
+/* static */ void upper_stand_3d(SubCharacter* p) {
     upper_stand(p);
 }
 
-static void lower_relax_3d(SubCharacter* p) {
+/* static */ void lower_relax_3d(SubCharacter* p) {
     lower_relax(p);
 }
 
-static void upper_relax_3d(SubCharacter* p) {
+/* static */ void upper_relax_3d(SubCharacter* p) {
     upper_relax(p);
 }
 
-static void lower_alert_3d(SubCharacter* p) {
+/* static */ void lower_alert_3d(SubCharacter* p) {
     lower_alert(p);
 }
 
-static void upper_alert_3d(SubCharacter* p) {
+/* static */ void upper_alert_3d(SubCharacter* p) {
     upper_alert(p);
 }
 
-static void lower_tired_3d(SubCharacter* p) {
+/* static */ void lower_tired_3d(SubCharacter* p) {
     lower_tired(p);
 }
 
-static void upper_tired_3d(SubCharacter* p) {
+/* static */ void upper_tired_3d(SubCharacter* p) {
     upper_tired(p);
 }
 
-static void lower_ready_3d(SubCharacter* p) {
+/* static */ void lower_ready_3d(SubCharacter* p) {
     lower_ready(p);
 }
 
-static void upper_ready_3d(SubCharacter* p) {
+/* static */ void upper_ready_3d(SubCharacter* p) {
     upper_ready(p);
 }
 
-static void lower_readyoff_3d(SubCharacter* p) {
+/* static */ void lower_readyoff_3d(SubCharacter* p) {
     lower_readyoff(p);
 }
 
-static void upper_readyoff_3d(SubCharacter* p) {
+/* static */ void upper_readyoff_3d(SubCharacter* p) {
     upper_readyoff(p);
 }
 
@@ -207,6 +207,16 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lround_3d);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rround_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rround_3d);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @947_0x0038C3B0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @948_0x0038C3D0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @968_0x0038C3F0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @988_0x0038C410);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @1008_0x0038C430);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_walk_3d);
 
@@ -1302,7 +1312,6 @@ static void PlayerUpdateStatusLower2nd3D(SubCharacter* this) { // not line match
     }
 }
 
-
 static void PlayerCheckAttack3D(SubCharacter* this) {
     PlayerCheckAttack(this);
 }
@@ -1314,3 +1323,11 @@ void PlayerCheckControl3D(SubCharacter* this) {
     PlayerCheckAttack3D(this);
     PlayerUpdateStatusLower2nd3D(this);
 }
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2681);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2682);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2683);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @2684);

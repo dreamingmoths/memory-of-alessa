@@ -1,0 +1,14 @@
+//* toi === stg_toilet *//
+stg_toilet_EvProgPrologueInToilet                                = 0x01F01E80; // type:func
+stg_toilet_EvStageInit                                           = 0x01F02190; // type:func
+stg_toilet_EvBgmControl                                          = 0x01F021A0; // type:func
+stg_toilet_Kari_hisyakai                                         = 0x01F021E0; // type:func
+stg_toilet_LinearTrim                                            = 0x01F02430; // type:func
+stg_toilet_Toilet_Dof_Filter                                     = 0x01F02460; // type:func
+stg_toilet_pjames_stage_anim                                     = 0x01F02600; // size:0x18
+stg_toilet_ev_pos                                                = 0x01F02620; // size:0x88
+stg_toilet_ev_list                                               = 0x01F026B0; // size:0xA0
+stg_toilet_ev_prog                                               = 0x01F02750; // size:0x8
+stg_toilet_gfw_func                                              = 0x01F02760; // size:0x10
+stage_toilet                                                     = 0x01F02770; // size:0x44
+stg_toilet_wvp                                                   = 0x01F02850; // size:0x10

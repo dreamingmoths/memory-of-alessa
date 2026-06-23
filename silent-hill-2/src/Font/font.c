@@ -84,13 +84,32 @@ FONT_DATA* fontInit(void) {
     return &font;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontClear);
+void fontClear(void) {
+    font.w_st_num = 0;
+    font.st_num = 0;
+    fontSetColor(0);
+    font.rgb_s[0] = 0;
+    font.shadow_max = 1;
+    font.shadow_now = 0;
+    font.alpha_base = 0x80;
+    font.alpha = 0x80;
+    font.fonttype = 0;
+    font.flag = font.flag & 0x38F8 | 1;
+    fontSetStreamMax(0x200, 0x40, 0x200);
+}
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @565);
+
+INCLUDE_RODATA("asm/nonmatchings/Font/font", @566);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetStreamMax);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontLoad);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetData);
+
+const char rodata_631[] = "wfont over.\n";
+const char rodata_632[] = "font over.\n";
 
 void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {        
     int num; // r2   
@@ -99,7 +118,7 @@ void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {
 
     if (font.flag & 0x400) {
         if (font.w_st_num >= font.w_stream_max) {
-            printf("wfont over.\n");
+            printf(rodata_631);
         } else {
             num = fontLoad(code);
             fstream_w = &font.w_stream[font.w_st_num];
@@ -116,7 +135,7 @@ void fontSet(u_short code /* r2 */, u_short x /* r17 */, u_short y /* r16 */) {
             font.w_st_num++;
         }
     } else if (font.st_num >= font.stream_max) {
-        printf("font over.\n");
+        printf(rodata_632);
     } else {
         num = fontLoad(code);
         fstream = &font.stream[font.st_num];
@@ -138,7 +157,7 @@ void fontSetBlankBox(int x0, int x1, int y) {
     FONT_STREAM_DATA* fstream;
 
     if (font.st_num >= font.stream_max) {
-        debugPrintf("font over.\n");
+        debugPrintf(rodata_632);
         return;
     }
     
@@ -162,7 +181,15 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStr);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrNum);
 
+const char rodata_954[] = "font: double stack!\n";
+
+const char rodata_955[] = "x >= (4096-SCREEN_WIDTH)/2";
+
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrMain);
+
+const char rodata_1377_0x003914C0[] = "num >= 0 && num <= 16";
+
+const char rodata_1810[] = "fontSetMes: Illegal number!\n";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintDec);
 
@@ -194,14 +221,7 @@ void fontSetAlpha(u_char alp /* r2 */) {
     font.alpha = alp;
 }
 
-
-void* fontTexLoad(int texadr, int clutadr) {
-    font_dma_data[0x04] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, texadr, 512 / 64, SCE_GS_PSMT4);
-    font_dma_data[0x14] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, clutadr, 64 / 64, SCE_GS_PSMCT32);
-    font.tex0 = SCE_GS_SET_TEX0(texadr, 512 / 64, SCE_GS_PSMT4, 9 /* 512 */, 9 /* 512 */, SCE_GS_TRUE, SCE_GS_MODULATE, clutadr, SCE_GS_PSMCT32, SCE_GS_FALSE, 0, 1);
-
-    return font_dma_data;
-}
+INCLUDE_ASM("asm/nonmatchings/Font/font", fontBarBlink);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontFlush);
 
@@ -312,7 +332,13 @@ void fontPutYesNoSelectBar(void) {
     font.pCur = pCur;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontTexLoad);
+void* fontTexLoad(int texadr, int clutadr) {
+    font_dma_data[0x04] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, texadr, 512 / 64, SCE_GS_PSMT4);
+    font_dma_data[0x14] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, clutadr, 64 / 64, SCE_GS_PSMCT32);
+    font.tex0 = SCE_GS_SET_TEX0(texadr, 512 / 64, SCE_GS_PSMT4, 9 /* 512 */, 9 /* 512 */, SCE_GS_TRUE, SCE_GS_MODULATE, clutadr, SCE_GS_PSMCT32, SCE_GS_FALSE, 0, 1);
+
+    return font_dma_data;
+}
 
 void* fontAfterEnv(void) {
     return &font_after_env;
@@ -485,18 +511,6 @@ void fontCrushOff(void) {
     font.fonttype = 0;
 }
 
-void fontClear(void) {
-    font.w_st_num = 0;
-    font.st_num = 0;
-    fontSetColor(0);
-    font.rgb_s[0] = 0;
-    font.shadow_max = 1;
-    font.shadow_now = 0;
-    font.alpha_base = 0x80;
-    font.alpha = 0x80;
-    font.fonttype = 0;
-    font.flag = font.flag & 0x38F8 | 1;
-    fontSetStreamMax(0x200, 0x40, 0x200);
-}
+INCLUDE_ASM("asm/nonmatchings/Font/font", mfontClear);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", mfontFlush);

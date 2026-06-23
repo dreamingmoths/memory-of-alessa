@@ -1,0 +1,17 @@
+//* obs === stg_ovservation *//
+stg_ovservation_EvProgLetterFromMary                             = 0x01F01E80; // type:func
+stg_ovservation_EvProgItemInCar                                  = 0x01F02080; // type:func
+stg_ovservation_EvProgNothingTakeInCar                           = 0x01F02420; // type:func
+stg_ovservation_EvProgHadBetterGetMap                            = 0x01F02450; // type:func
+stg_ovservation_EvProgCantGoBack                                 = 0x01F025D0; // type:func
+stg_ovservation_EvProgLastScene                                  = 0x01F02750; // type:func
+stg_ovservation_EvAllTimeFunc                                    = 0x01F02920; // type:func
+stg_ovservation_EvBgmControl                                     = 0x01F02970; // type:func
+stg_ovservation_LinearTrim                                       = 0x01F029D0; // type:func
+stg_ovservation_OB_DemoBlur                                      = 0x01F02A00; // type:func
+stg_ovservation_pjames_stage_anim                                = 0x01F02B00; // size:0x18
+stg_ovservation_ev_pos                                           = 0x01F02B20; // size:0x7C
+stg_ovservation_ev_list                                          = 0x01F02BA0; // size:0xD0
+stg_ovservation_ev_prog                                          = 0x01F02C70; // size:0x1C
+stg_ovservation_SpecialDrawFunctions                             = 0x01F02C90; // size:0x10
+stage_observation                                                = 0x01F02CA0; // size:0x44

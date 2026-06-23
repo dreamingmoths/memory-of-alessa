@@ -1,5 +1,6 @@
 #include "cl_main.h"
 #include "LoadBg/loadbg_cld.h"
+#include "SH2_common/sh_vu0.h"
 
 static void clCheckColumn2WallHit(CL_HITRESULT* cres /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, CL_HITPOLY_COLUMN* col /* r16 */);
 static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */);
@@ -36,6 +37,10 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCollectCharaPosition);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetCharaHitColumn);
 
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1021_0x0038DC80);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1022_0x0038DCA0);
+
 void clAddDynamicWall(CL_HITPOLY_PLANE* pl /* r2 */) {
     clDynamicWallList[clDynamicWallListAct].dw[clDynamicWallList[clDynamicWallListAct].use] = pl;
     clDynamicWallList[clDynamicWallListAct].use++;
@@ -59,12 +64,7 @@ static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
         // check if column intersects wall
         clCheckColumn2WallHit(&cres, &pl[*ptr], col);
         if (cres.chk != 0) {
-#ifdef DEBUG
-            if (!(*whnum < 32)) {
-                printf("cl_main.c:1194> assert:(%s)\n", "*whnum < 32");
-                while (1) {};
-            }
-#endif
+            ASSERT_ON_LINE(*whnum < 32, 1194);
             // store result in clWallHitData
             clWallHitData[*whnum].kind = cres.chk;
             clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
@@ -91,12 +91,7 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum) {
             clCheckColumn2WallHit(&cres, &clDynamicWallList[ac].dw[i][j], col);
 
             if (cres.chk != 0) {
-#ifdef DEBUG
-                if (!(*whnum < 32)) {
-                    printf("cl_main.c:1194> assert:(%s)\n", "*whnum < 32");
-                    while (1) {};
-                }
-#endif
+                ASSERT_ON_LINE(*whnum < 32, 1237);
 
                 // store result in clWallHitData
                 clWallHitData[*whnum].kind = cres.chk;
@@ -148,7 +143,7 @@ static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
         hitchk = clCheckSubColumnToColumn(&cres, &cl[*cur].p, &col->p);
         
         if (hitchk == 1) {
-            ASSERT(*whnum < 32);
+            ASSERT_ON_LINE(*whnum < 32, 1658);
             
             clWallHitData[*whnum].kind = 3;
             cres.cv[1] = 0.0f;
@@ -185,7 +180,7 @@ static void clCollectCharaHeightNormal(SubCharacter* sc) {
 }
 
 void clBattleAddQue(CL_BATTLE_QUE* que) {
-    ASSERT(clUseBattleQue < 64);
+    ASSERT_ON_LINE(clUseBattleQue < 64, 1729);
     memcpy(&clBattleQue[clUseBattleQue], que, sizeof(CL_BATTLE_QUE));
     clUseBattleQue += 1;
 }
@@ -210,11 +205,19 @@ CL_BATTLE_RESULT* clBattleGetResult(u_int id, CL_BATTLE_RESULT* before) {
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clBattleGetResult);
 #endif
 
+const char rodata_1691[] = "cl_main.c:1869> assert:(%s)\n";
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1692);
+
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clBattleCheckExec);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clModifiedBattleData);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetOneBattleResult);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1813);
+
+INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1814);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetThrustBattleResult);
 

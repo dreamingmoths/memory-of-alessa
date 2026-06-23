@@ -57,12 +57,12 @@ int main(int argc, char** argv) {
 
     while (1) {
         step = Sh2sys.step[0];
-        dbFlowSetCheckPoint("`main loop.'(main.c:149)");
+        dbFlowSetCheckPointOnLine("main loop.", 149);
         switch (step) {
         case 0:
         case 1:
         case 2:
-            dbFlowSetCheckPoint("`before hot init'(main.c:154)");
+            dbFlowSetCheckPointOnLine("before hot init", 154);
             if (systemHotInit() != 0) {
                 dbSwitchDispEnable(db_test_dvd);
                 Sh2sys.step[0] = 3, Sh2sys.step[1] = 0,
@@ -85,21 +85,23 @@ int main(int argc, char** argv) {
                     break;
                 }
             }
-            dbFlowSetCheckPoint("`after hot init'(main.c:173)");
+            dbFlowSetCheckPointOnLine("after hot init", 173);
             break;
         case 3:
             DrawLopp_Pre();
             dbFreeze();
-            dbFlowSetCheckPoint("`before game main'(main.c:180)");
+            dbFlowSetCheckPointOnLine("before game main", 180);
             GameMain();
-            dbFlowSetCheckPoint("`after game main'(main.c:182)");
+            dbFlowSetCheckPointOnLine("after game main", 182);
             dbSwitchAllPrint();
             DrawLopp_Post();
             GameKeyCheck();
             break;
         }
-        dbFlowSetCheckPoint("`before SE vsync'(main.c:189)");
+        dbFlowSetCheckPointOnLine("before SE vsync", 189);
         Sh2sys.frame_cnt = Sh2sys.frame_cnt + 1;
-        dbFlowSetCheckPoint("`after SE vsync'(main.c:192)");
+        dbFlowSetCheckPointOnLine("after SE vsync", 192);
     }
 }
+
+INCLUDE_ASM("asm/nonmatchings/main", GameKeyCheck);

@@ -1,11 +1,15 @@
 import argparse
 from pathlib import Path
 from constants import *
-from generate import GenerationArgs, split_yaml
-from extract import ExtractionArgs, extract_mfa
-from annotate import AnnotationArgs, annotate_asm
-from patch import PatchArgs, patch_relocations
-from merge import MergeArgs, merge_objdiff_units
+
+from commands.generate import GenerationArgs, split_yaml
+from commands.extract import ExtractionArgs, extract_mfa
+from commands.annotate import AnnotationArgs, annotate_asm
+from commands.patch import PatchArgs, patch_relocations
+from commands.merge import MergeArgs, merge_objdiff_units
+from commands.create import CreationArgs, create_overlay_yamls
+
+from commands.util import configure_util_parser
 
 def extract(args: ExtractionArgs):
     extract_mfa(args)
@@ -21,6 +25,9 @@ def patch(args: PatchArgs):
 
 def merge(args: MergeArgs):
     merge_objdiff_units(args)
+
+def create(args: CreationArgs):
+    create_overlay_yamls(args)
 
 def main():
     parser = argparse.ArgumentParser(  
@@ -117,6 +124,12 @@ def main():
         default=False,
         action="store_true",
         help="(see splat documentation on this option)"
+    )
+    generate_parser.add_argument(
+        "--bss-alignment",
+        type=int,
+        default=8,
+        help="alignment value for the bss section (must be in decimal)"
     )
     generate_parser.add_argument(
         "yamls",
@@ -233,6 +246,46 @@ def main():
         help="list of json files to merge"
     )
     merge_parser.set_defaults(func=merge)
+
+    create_parser = subparsers.add_parser(
+        "create",
+        help="create yamls by parsing overlay headers"
+    )
+    create_parser.add_argument(
+        "--output-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--input-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--executable-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--template-yaml-path",
+        type=Path
+    )
+    create_parser.add_argument(
+        "--filename-mapping-path",
+        type=Path,
+        default=None,
+        help="a json map of overlay filename to c file name"
+    )
+    create_parser.add_argument(
+        "--template-symbol-addrs-path",
+        type=Path,
+        default=None,
+        help="a symbol_addrs template (see overlay_symbol_addrs.txt)"
+    )
+    create_parser.set_defaults(func=create)
+
+    util_parser = subparsers.add_parser(
+        "util",
+        help="run general utilities"
+    )
+    configure_util_parser(util_parser)
 
     args = parser.parse_args()
     if hasattr(args, "func"):

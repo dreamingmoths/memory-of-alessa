@@ -7,7 +7,6 @@ static void SetSparksStartPos(int kind, float* trans);
 static void SetSparksSpeed(int kind, float* speed);
 static void SetSparksRGBA(int* rgba);
 static void RenewSparksPos(EFCTSparksPlane* sparks);
-static void DrawSparks(EFCTSparksObject* sparks);
 static void CountSparksLifeTimer(EFCTSparksObject* sparks);
 static void RenewSparksRGBA(EFCTSparksObject* sparks);
 static void MoveSparks(EFCTSparksObject* sparks);

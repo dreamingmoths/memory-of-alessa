@@ -55,7 +55,6 @@ static u_int WaveElement_Addition(HH_Object_Water_00* pThis, Wave_Element* pElem
     u_int result;                                                 // r2
     Wave_Element* pFree_Element = Free_WaveElement_Search(pThis); // r2
 
-
     if (pFree_Element == NULL) {
         pFree_Element = Oldest_WaveElement_Search(pThis);
     }
@@ -196,19 +195,20 @@ void SpecularRGBA_Calculator(int* iRGBA, float* RGBA_Base, float* RGBA_Specular_
     " ::"f"(brightness) : "t0", "t1", "memory");
 }
 
-u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
-    static float Light_Base_154[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036EDB0
-    static float Amb_Base_155[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036EDC0
-    static float amb_alpha_158 = 32.0f;                           // @ 0x0036EDF0
-    static float light_alpha_159 = 128.0f;                        // @ 0x0036EDF8
+static u_long _GifTag_152[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036ED90
     static u_long _GifTag_Tri_153[2] = {
         SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
         GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036EDA0
-    static float Ambient_Color2_156[4] = {19.0f, 19.0f, 19.0f, 255.0f}; // @ 0x0036EDD0
-    static float SpecularRgba_157[4] = {255.0f, 255.0f, 255.0f, 64.0f}; // @ 0x0036EDE0
-    static u_long _GifTag_152[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036ED90
+static float Light_Base_154[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036EDB0
+static float Amb_Base_155[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036EDC0
+static float Ambient_Color2_156[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                         // @ 0x0036EDD0
+static float SpecularRgba_157[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                         // @ 0x0036EDE0
+static float amb_alpha_158 = 32.0f;                           // @ 0x0036EDF0
+static float light_alpha_159 = 128.0f;                        // @ 0x0036EDF8
+#ifdef NON_MATCHING
+u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
 
     u_int result = 0;                             // r2
     sceVif1Packet* pPk;                           // r16
@@ -399,6 +399,12 @@ u_int Object_Draw(HH_Object_Water_00* pThis, ImpactQueue_Element* pElement) {
 
     return result;
 }
+#else
+sceVu0FVECTOR GridVertex0 = {500.0f, 0.0f, 0.0f, 1.0f};
+sceVu0FVECTOR GridVertex1 = {500.0f, 0.0f, 0.0f, 1.0f};
+sceVu0FVECTOR GridVertex2 = {500.0f, 0.0f, 0.0f, 1.0f};
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_water_00", Object_Draw);
+#endif
 
 u_int HH_Class_Prefix_Water_00(void) {
     u_int result = 1;

@@ -1,6 +1,19 @@
 MEMORY
 {
-	main	(RWX)	: ORIGIN = 0x100000,	LENGTH = 0x0
+	main	(RWX) : ORIGIN = 0x0100000,	LENGTH = 0x0
+	aee.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aee.bin
+	aew.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aew.bin
+	aex.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aex.bin
+	aey.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aey.bin
+	aot.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aot.bin
+	ast.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > ast.bin
+	awx.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > awx.bin
+	awy.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > awy.bin
+	fst.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > fst.bin
+	obs.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > obs.bin
+	toi.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > toi.bin
+	twe.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > twe.bin
+	xxx.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > xxx.bin
 }
 
 KEEP_SECTION
@@ -19,6 +32,49 @@ SECTIONS
 	.main	:
 	{
 		_gp = 0x3cfc70;
+
+		_ovl_start_addr      = 0x01F01E00;
+		## linker symbols for overlays deleted from the prototype ##
+		stage_town_west      = 0x01F07060;
+		stage_bowling        = 0x01F02A80;
+		stage_to_heaven      = 0x01F02700;
+		stage_heaven_night   = 0x01F020A0;
+		stage_hospital_1f_f  = 0x01F03830;
+		stage_hospital_2f_f  = 0x01F030A0;
+		stage_hospital_3f_f  = 0x01F05DF0;
+		stage_hospital_rf_f  = 0x01F036E0;
+		stage_hospital_1fw_b = 0x01F02DC0;
+		stage_hospital_1fe_b = 0x01F02B00;
+		stage_hospital_2f_b  = 0x01F02BA0;
+		stage_hospital_3f_b  = 0x01F04310;
+		stage_hospital_bf_b  = 0x01F04330;
+		stage_hospital_pass  = 0x01F02630;
+		stage_society        = 0x01F02150;
+		stage_delusion_2     = 0x01F02470;
+		stage_delusion_3     = 0x01F04850;
+		stage_prison_n       = 0x01F04210;
+		stage_prison_s       = 0x01F037F0;
+		stage_prison_bf      = 0x01F02E30;
+		stage_labyrinth_w    = 0x01F05AE0;
+		stage_labyrinth_e    = 0x01F03A50;
+		stage_labyrinth_n    = 0x01F05580;
+		stage_eddie_boss     = 0x01F02CD0;
+		stage_lake           = 0x01F02530;
+		stage_hotel_bf_f     = 0x01F02F60;
+		stage_hotel_1f_f     = 0x01F065F0;
+		stage_hotel_2f_f     = 0x01F05B00;
+		stage_hotel_3f_f     = 0x01F02F90;
+		stage_hotel_bf_b     = 0x01F02EE0;
+		stage_hotel_1f_b     = 0x01F035F0;
+		stage_hotel_2f_b     = 0x01F02AC0;
+		stage_hotel_3f_b     = 0x01F02190;
+		stage_hotel_fire     = 0x01F024D0;
+		stage_end_recovery   = 0x01F03500;
+		stage_end_maria      = 0x01F033F0;
+		stage_end_suicide    = 0x01F035A0;
+		stage_end_rebirth    = 0x01F033F0;
+		stage_end_dog        = 0x01F02050;
+
 		.	= ALIGN(0x80);
 
 		### 🔴 code 🔴 ###
@@ -26,4 +82,244 @@ SECTIONS
 		. = ALIGN(0x80);
 	}	>	main
 
+
+	.aot.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_aot_start = .;
+
+		. = ALIGN(0x80);
+		aot_overlay_header.s.o (.data)
+		stg_apart_out.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_out_data.data.s.o (.data)
+	}	>	aot.bin
+
+	.toi.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_toi_start = .;
+
+		. = ALIGN(0x80);
+		toi_overlay_header.s.o (.data)
+		stg_toilet.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_toilet_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_toilet_bss.bss.s.o (.bss)
+	}	>	toi.bin
+
+	.xxx.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_xxx_start = .;
+
+		. = ALIGN(0x80);
+		xxx_overlay_header.s.o (.data)
+		stg_xxx.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_xxx_data.data.s.o (.data)
+	}	>	xxx.bin
+
+	.aew.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_aew_start = .;
+
+		. = ALIGN(0x80);
+		aew_overlay_header.s.o (.data)
+		stg_apart_e3fw.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_e3fw_data.data.s.o (.data)
+	}	>	aew.bin
+
+	.aee.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_aee_start = .;
+
+		. = ALIGN(0x80);
+		aee_overlay_header.s.o (.data)
+		stg_apart_e3fe.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_e3fe_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_apart_e3fe_bss.bss.s.o (.bss)
+	}	>	aee.bin
+
+	.ast.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_ast_start = .;
+
+		. = ALIGN(0x80);
+		ast_overlay_header.s.o (.data)
+		stg_apart_stair.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_stair_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_apart_stair_bss.bss.s.o (.bss)
+	}	>	ast.bin
+
+	.aey.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_aey_start = .;
+
+		. = ALIGN(0x80);
+		aey_overlay_header.s.o (.data)
+		stg_apart_e2f.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_e2f_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_apart_e2f_bss.bss.s.o (.bss)
+	}	>	aey.bin
+
+	.aex.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_aex_start = .;
+
+		. = ALIGN(0x80);
+		aex_overlay_header.s.o (.data)
+		stg_apart_e1f.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_e1f_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_apart_e1f_bss.bss.s.o (.bss)
+	}	>	aex.bin
+
+	.awy.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_awy_start = .;
+
+		. = ALIGN(0x80);
+		awy_overlay_header.s.o (.data)
+		stg_apart_w2f.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_w2f_data.data.s.o (.data)
+	}	>	awy.bin
+
+	.awx.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_awx_start = .;
+
+		. = ALIGN(0x80);
+		awx_overlay_header.s.o (.data)
+		stg_apart_w1f.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_apart_w1f_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_apart_w1f_bss.bss.s.o (.bss)
+	}	>	awx.bin
+
+	.fst.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_fst_start = .;
+
+		. = ALIGN(0x80);
+		fst_overlay_header.s.o (.data)
+		stg_forest.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_forest_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_forest_bss.bss.s.o (.bss)
+	}	>	fst.bin
+
+	.twe.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_twe_start = .;
+
+		. = ALIGN(0x80);
+		twe_overlay_header.s.o (.data)
+		stg_town_east.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_town_east_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_town_east_bss.bss.s.o (.bss)
+	}	>	twe.bin
+
+	.obs.bin :
+	{
+		_gp = 0x3cfc70;
+		__gx_obs_start = .;
+
+		. = ALIGN(0x80);
+		obs_overlay_header.s.o (.data)
+		stg_ovservation.s.o (.text)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x4);
+
+		stg_ovservation_data.data.s.o (.data)
+
+		. = ALIGN(0x80);
+		ALIGNALL(0x8);
+
+		stg_ovservation_bss.bss.s.o (.bss)
+	}	>	obs.bin
 }

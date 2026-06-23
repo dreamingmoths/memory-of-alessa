@@ -9,15 +9,14 @@ extern int rand(void);
 static u_int Object_Initialize(HH_Object_Blood_FootMark_00* pThis);
 static u_int Object_Draw(HH_Object_Blood_FootMark_00* pThis, ImpactQueue_Element* pElement);
 
-static sceVu0FMATRIX _square_00_vertex;
-static sceVu0FMATRIX _square_00_stq;
-static sceVu0FMATRIX _square_01_stq;
-static sceVu0FMATRIX _square_10_stq;
-static sceVu0FMATRIX _square_11_stq;
-static float (* _square_0x_stq_list[2])[4];
-static float (* _square_1x_stq_list[2])[4];
-static sceVu0FMATRIX _square_00_rgba;
-static Vertex_Infomeation_List _vertex_info_list[2];
+extern /* static */ sceVu0FMATRIX _square_00_vertex_0x0036E480;
+extern /* static */ sceVu0FMATRIX _square_01_stq_0x0036E500;
+extern /* static */ sceVu0FMATRIX _square_10_stq_0x0036E540;
+extern /* static */ sceVu0FMATRIX _square_11_stq_0x0036E580;
+extern /* static */ float (* _square_0x_stq_list[2])[4];
+extern /* static */ float (* _square_1x_stq_list[2])[4];
+extern /* static */ sceVu0FMATRIX _square_00_rgba;
+extern /* static */ Vertex_Infomeation_List _vertex_info_list_0x0036E620[2];
 
 static u_int Object_Initialize(HH_Object_Blood_FootMark_00* pThis) {
     u_int result = 1;
@@ -31,7 +30,7 @@ static u_int Object_Initialize(HH_Object_Blood_FootMark_00* pThis) {
 static u_int Object_Draw(HH_Object_Blood_FootMark_00* pThis, ImpactQueue_Element* pElement) {
     u_int result = 0;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
-    Vertex_Infomeation_List* pInfo = &_vertex_info_list[pElement->Option.Int_Value[0]];
+    Vertex_Infomeation_List* pInfo = &_vertex_info_list_0x0036E620[pElement->Option.Int_Value[0]];
     float (* pVertex)[4];
     float (* pRgba)[4];
     float (* pStq)[4];

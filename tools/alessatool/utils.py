@@ -44,3 +44,6 @@ def ensure_path_and_write(output_path: Path, contents: str):
 
 def get_file_size(file_path: Path):
     return stat(file_path).st_size
+
+def hex_format(number: int) -> str:
+    return f"0x{number:X}"

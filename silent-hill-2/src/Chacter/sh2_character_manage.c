@@ -1,8 +1,53 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
-
 #include "m3_sc.h"
+
+extern void shBattleInitEnemyCheckWork();
+extern int id_counter; // size: 0x4, address: 0x116DB70
+
+void shCharacter_Manage_Init() {
+    id_counter = 0x1000;
+    shBattleInitEnemyCheckWork();
+}
+
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh2_character_manage", shCharacter_Manage_Create);
+
+int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */) {
+    SubCharacter * del_scp; // r16
+
+    int delete_on = 0; // r7
+
+    if (scp != NULL) {
+        del_scp = scp;
+    } else {
+        for (del_scp = sh2chara.head; del_scp != NULL; del_scp = del_scp->next) {
+            if (del_scp->kind == kind && del_scp->id == id) {
+                delete_on = 1;
+                break;
+            }
+        }
+        if (delete_on == 0) {
+            del_scp = NULL;
+        }
+    }
+
+    if (del_scp == NULL) {
+        return 0;
+    }
+
+    if (del_scp->kind >> 8 == 2 || del_scp->kind == 0x421) {
+        enDeleteEnemy(del_scp->enemy_p);
+    }
+
+    shCharacterDelete(del_scp);
+
+    return 1;
+}
+
+SubCharacter* shCharacter_Manage_GetCharacterList() {
+    return sh2chara.head;
+}
 
 #ifdef NON_MATCHING
 int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
@@ -43,57 +88,12 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
 
     return 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh2_character_manage", shCharacter_Manage_SetDataAdresss);
 #endif
 
-// E:\work\sh2(CVS全取得)\src\Chacter\sh_character_status.c
-extern void shBattleInitEnemyCheckWork();
-// E:\work\sh2(CVS全取得)\src\Chacter\sh2_character_manage.c
-extern int id_counter; // size: 0x4, address: 0x116DB70
 
-void shCharacter_Manage_Init() {
-    id_counter = 0x1000;
-    shBattleInitEnemyCheckWork();
-}
-
-// E:\work\sh2(CVS全取得)\src\Enemy\en_common.c
-extern void enDeleteEnemy(EnLOCAL_DATA * dp /* r2 */);
-
-int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */) {
-    SubCharacter * del_scp; // r16
-
-    int delete_on = 0; // r7
-
-    if (scp != NULL) {
-        del_scp = scp;
-    } else {
-        for (del_scp = sh2chara.head; del_scp != NULL; del_scp = del_scp->next) {
-            if (del_scp->kind == kind && del_scp->id == id) {
-                delete_on = 1;
-                break;
-            }
-        }
-        if (delete_on == 0) {
-            del_scp = NULL;
-        }
-    }
-
-    if (del_scp == NULL) {
-        return 0;
-    }
-
-    if (del_scp->kind >> 8 == 2 || del_scp->kind == 0x421) {
-        enDeleteEnemy(del_scp->enemy_p);
-    }
-
-    shCharacterDelete(del_scp);
-
-    return 1;
-}
-
-struct SubCharacter* shCharacter_Manage_GetCharacterList() {
-    return sh2chara.head;
-}
-
+INCLUDE_ASM("asm/nonmatchings/Chacter/sh2_character_manage", shCharacter_Manage_SetJamesAnimeAdresss);
 int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
     SubCharacter * scp; // r2
     int i; // r16
@@ -143,7 +143,7 @@ int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
     sh2jms.spirit = chara->spirit;
     sh2jms.weapon = chara->weapon;
     sh2jms.spray_set = chara->spray_set;
-    sh2jms.room_name_prev = -1;
+    sh2jms.room_name_now = -1;
 
     return (int) scp;
 }

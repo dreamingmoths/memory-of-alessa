@@ -3,7 +3,6 @@
 #include "Chacter_Draw/model3_equip_n.h"
 #include "Enemy/en_common.h"
 #include "Enemy/en_red.h"
-#include "Enemy/en_list.h"
 #include "libvu0.h"
 
 extern /* static */ AnimeInfo red_anim[12]; // size: 0x90, address: 0x0

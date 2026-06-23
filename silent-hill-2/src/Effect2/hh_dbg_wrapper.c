@@ -2,8 +2,8 @@
 #include "eeregs.h"
 
 int _t0_count;
+static char tmp[40];
 int _t0_count_max;
-char* tmp;
 
 u_int HH_DBG_Wrapper_Controller_KeyAssign_Check(u_int ControllerID, u_int Mode, u_int Check_Assign) {
     int result = 0;
