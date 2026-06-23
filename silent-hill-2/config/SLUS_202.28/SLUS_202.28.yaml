@@ -148,7 +148,7 @@ segments:
       - [0x0960e0, asm, view/vc_main]
       - [0x09e490, asm, view/vc_util]
       - [0x09ed40, asm, view/vw_calc]
-      - [0x09f720, asm, view/vw_main]
+      - [0x09f720, c,   view/vw_main]
       - [0x09f9f0, c,   main]
       - [0x09fe30, asm, sh2gfw_all_sysinit]
       - [0x0a0280, asm, sh2gfw_drawloop_main]

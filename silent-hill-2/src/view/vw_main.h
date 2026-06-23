@@ -23,16 +23,38 @@ typedef struct _VbCOORDINATE {
     sceVu0FVECTOR rot; // offset 0x130, size 0x10
 } VbCOORDINATE;
 
+typedef struct _VbRVIEW {
+    /* 0x00 */ sceVu0FVECTOR vp;
+    /* 0x10 */ sceVu0FVECTOR vr;
+    /* 0x20 */ float rz;
+    /* 0x24 */ VbCOORDINATE* super;
+} VbRVIEW;
+
+typedef struct _VW_VIEW_WORK {
+    /* 0x000 */ VbRVIEW rview;
+    /* 0x030 */ VbCOORDINATE vwcoord;
+    /* 0x170 */ sceVu0FVECTOR worldpos;
+    /* 0x180 */ sceVu0FVECTOR worldang;
+} VW_VIEW_WORK;
+
+extern VW_VIEW_WORK vwViewPointInfo;
+
 void vwInitViewInfo(void);
 
-void vwGetViewPosition(float* pos);
+void vwGetViewPosition(sceVu0FVECTOR pos);
 
-void vwGetViewAngle(float* ang);
+void vwGetViewAngle(sceVu0FVECTOR ang);
 
-void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, float* ref, float cam_ang_y, float cam_ang_z, float cam_y, float cam_xz_r);
+void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, sceVu0FVECTOR ref, float cam_ang_y, float cam_ang_z, float cam_y, float cam_xz_r);
 
 void vwSetViewInfo(void);
 
-void vwSetViewInfoDirectMatrix(VbCOORDINATE* pcoord, float (*cammat)[4]);
+void vwSetViewInfoDirectMatrix(VbCOORDINATE* pcoord, sceVu0FMATRIX cammat);
+
+// @todo: should just include sh_vu0.h? (lives in src/ atm)
+extern float shAngleRegulate(float);
+extern float shAtan2(float, float);
+extern float shSinF(float);
+extern float shCosF(float);
 
 #endif // VW_MAIN_H

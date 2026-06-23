@@ -101,4 +101,19 @@ static inline float vec3_dot_product(void* v, void* w) {
     return d;
 }
 
+/* build 4x4 identity matrix using VU0 */
+static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
+    asm("\
+        vsub.xyzw vf5, vf0, vf0\n\
+        vsub.xyzw vf6, vf0, vf0\n\
+        vmr32.xyzw vf4, vf0\n\
+        vaddw.y vf5, vf0, vf0\n\
+        vaddw.x vf6, vf0, vf0\n\
+        sqc2 vf0, 0x30(%0)\n\
+        sqc2 vf4, 0x20(%0)\n\
+        sqc2 vf5, 0x10(%0)\n\
+        sqc2 vf6, 0(%0)"
+        : "+r"(out));
+}
+
 #endif // SILENT_VEC_H
