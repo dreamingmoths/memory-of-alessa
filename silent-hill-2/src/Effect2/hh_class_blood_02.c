@@ -11,20 +11,17 @@ static u_int Object_Draw(struct HH_Object_Blood_02 * pThis , struct ImpactQueue_
 extern int rand(void);
 extern float fmodf(float, float);
 
-// ToDo Migrate data
-static shAttackInfo sh2_attack_list[66];
-static sceVu0FMATRIX _square_00_vertex;
-static sceVu0FMATRIX _square_00_stq;
-static sceVu0FVECTOR _circle_00_vertex[10];
-static sceVu0FVECTOR _circle_00_stq[10];
-static sceVu0FVECTOR _circle_01_vertex[10];
-static sceVu0FVECTOR _circle_02_vertex[10];
-static Vertex_Infomeation_List _vertex_info_list[4];
-static float _rgba_start_list[4][4];
-static float _rgba_end_list[4][4];
-static float _scale_start_list[5][4];
-static float _scale_end_list[5][4];
-static Motion_Table_Infomeation _motion_info[4];
+extern /* static */ sceVu0FMATRIX _square_00_vertex;
+extern /* static */ sceVu0FVECTOR _circle_00_vertex[10];
+extern /* static */ sceVu0FVECTOR _circle_00_stq[10];
+extern /* static */ sceVu0FVECTOR _circle_01_vertex[10];
+extern /* static */ sceVu0FVECTOR _circle_02_vertex[10];
+extern /* static */ Vertex_Infomeation_List _vertex_info_list_0x0036E170[4];
+extern /* static */ float _rgba_start_list_0x0036E1B0[4][4];
+extern /* static */ float _rgba_end_list_0x0036E1F0[4][4];
+extern /* static */ float _scale_start_list_0x0036E230[5][4];
+extern /* static */ float _scale_end_list_0x0036E280[5][4];
+extern /* static */ Motion_Table_Infomeation _motion_info_0x0036E2D0[4];
 
 static u_int Object_Initialize(HH_Object_Blood_02* pThis, ImpactQueue_Element* pElement){
     float radian;
@@ -80,15 +77,15 @@ static u_int Object_Motion_00(HH_Object_Blood_02* pThis) {
     float scale_ratio;
     float rgba_ratio;
 
-    pRgba_s = _rgba_start_list[pThis->Rgba_Kind];
-    pRgba_e = _rgba_end_list[pThis->Rgba_Kind];
-    pScale_s = _scale_start_list[pThis->Scale_Kind];
-    pScale_e = _scale_end_list[pThis->Scale_Kind];
+    pRgba_s = _rgba_start_list_0x0036E1B0[pThis->Rgba_Kind];
+    pRgba_e = _rgba_end_list_0x0036E1F0[pThis->Rgba_Kind];
+    pScale_s = _scale_start_list_0x0036E230[pThis->Scale_Kind];
+    pScale_e = _scale_end_list_0x0036E280[pThis->Scale_Kind];
 
     local_time_start = 0.0f;
     local_scale_start = 0.0f;
     local_rgba_start = 0.0f;
-    pMotion_Info = _motion_info;
+    pMotion_Info = _motion_info_0x0036E2D0;
     current_step = pThis->Motion_Step;
     
     if(2 < current_step){
@@ -161,7 +158,7 @@ static u_int Object_Draw(struct HH_Object_Blood_02* pThis, struct ImpactQueue_El
     
     pPk = HH_Vif1Packet_Current_Get();
     
-    pInfo = &_vertex_info_list[pThis->Vertex_Kind];
+    pInfo = &_vertex_info_list_0x0036E170[pThis->Vertex_Kind];
     pVertex = pInfo->pVertex_List;
     pStq = pInfo->pStq_List;
     vertex_num = pInfo->Vertex_Max;
@@ -275,7 +272,7 @@ u_int HH_Class_Blood_02_DesignateLocation_CollisionCheck(void* pBlock, ImpactQue
     float target_volume;
     float inner;
 
-    pInfo = &_vertex_info_list[pThis->Vertex_Kind];
+    pInfo = &_vertex_info_list_0x0036E170[pThis->Vertex_Kind];
     pVertex = pInfo->pVertex_List;
     vertex_num = pInfo->Vertex_Max;
     

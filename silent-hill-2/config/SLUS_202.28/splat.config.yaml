@@ -7,6 +7,7 @@ options:
   src_path: ../../src
   generated_asm_macros_directory: ../../include
   build_path: build
+  rodata_string_guesser_level: 0
   asm_nonmatching_label_macro: ""
   global_vram_start: 0x0100000
   asm_inc_header: |

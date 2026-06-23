@@ -22,11 +22,8 @@ typedef struct shInAreaTgtInfo {
     struct shInArea in_area;      // offset 0x8, size 0x1
 } shInAreaTgtInfo;
 
-shInAreaTgtInfo sh2_target_info[20];
-shInAreaTgtInfo sh2_target_info_buf[20]; // size: 0xF0, address: 0x3CEDE0
-int rest_tgt; // size: 0x4, address: 0x3CEDD0
-int rest_tgt_buf; // size: 0x4, address: 0x3CEDC8
-extern struct shCharacterAll sh2chara;
+extern shInAreaTgtInfo sh2_target_info[20];
+
 void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel);
 int shBattleAroundTargetEnemy(void);
 SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp);
@@ -36,11 +33,12 @@ SubCharacter* shCameraGetNearTarget(int i, int type);
 SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp);
 SubCharacter* shBattleGetTargetHuman(SubCharacter* scp /* r17 */, u_int type /* r2 */);
 int shBattleSeeHumanLight(SubCharacter* scp /* r16 */);
-int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt /* r2 */); // DWARF only shows one arg
+int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt /* r2 */); // @note DWARF only shows one arg
 
 int shBattleAimedByHuman(SubCharacter* scp /* r2 */);
 int shBattleFinishedByHuman(SubCharacter* scp /* r2 */);
 int shBattleNoDamageHuman(void);
+
 int shBattleNoDamageHumanJames(void);
 int shBattleNoDamageHumanMaria(void);
 int shBattleHuggedHuman(void);

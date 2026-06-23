@@ -45,18 +45,25 @@ but we do have symbols for Silent Hill 2 from the 0.10 VW047-U1 prototype
 released on July 13th, 2001. This means we have the original names of functions,
 structs, data, etc. as they were written. Second, there is significant overlap
 in the engine code of the two games. These two facts combined mean referencing
-Silent Hill 2 adds crucial missing context when decompiling Silent Hill 3.
+Silent Hill 2 adds crucial missing context when decompiling Silent Hill 3. And
+of course, Silent Hill 2 is a lovely game in and of itself.  The prototype is
+full of interesting secrets.
 
-If you own a copy of this prototype executable, you may place it as
-`SLUS_202.28` in the `rom/SLUS_202.28` folder and run the following command.
+If you own a copy of this prototype disc, you may do the following:
+
+1. Place `SLUS_202.28` in the `rom/SLUS_202.28` folder.
+2. Copy the contents of the `gx` folder into `rom/overlay`.
+3. Make sure all `.bin` files are lowercase. To do this automatically, run `make
+   PROJECT=silent-hill-2 overlays-lowercase`.
+4. Finally, run the command below.
 
 ```sh
 make sh2
 ```
 
-This will create assembly files at `silent-hill-2/config/SLUS_202.28/asm`. It
-will also create build files, but the Silent Hill 2 build does not link at this
-time.
+As of June 21st, 2026, this command should also properly link back into a
+matching build of Silent Hill 2. It will create assembly files at
+`silent-hill-2/config/SLUS_202.28/asm`.
 
 ### ghidra bsim workflow
 
@@ -129,5 +136,5 @@ file located in `silent-hill-3/config/SLUS_206.22/asm`
 #### sh2 compiler flags
 
 ```sh
--O2,p -sym=on -str readonly -sdatathreshold 0
+-O2,p -sym=on -str readonly -sdatathreshold 0 -enum min
 ```

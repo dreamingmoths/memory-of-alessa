@@ -1,4 +1,3 @@
-// E:\work\sh2(CVS全取得)\src\DS_Pad\ds_sequencer.c
 #ifndef DS_SEQUENCER_H
 #define DS_SEQUENCER_H
 
@@ -76,60 +75,12 @@ typedef struct DSR_MU_EventDescriptor {
     float Value;   // offset 0x8, size 0x4
 } DSR_MU_EventDescriptor;
 
-sh2gfw_ModelDraw_MAN* sh2gfw_Get_pMD(int chara_id);
-void SCSetModel(SubCharacter* scp, int model, int anime);
-int shCharacter_Manage_SetDataAdresss(SubCharacter* scp);
+u_int DSR_Entry0(void* pAddress, u_int ControllerID, float Ratio);
 
-extern int Node_Current_Search(Record_Info* pInfo /* r2 */, float Time /* r29+0x10 */);
+void DSR_Sequencer_Initialize(void);
 
-extern int Node_Next_Search(Record_Info* pInfo /* r2 */, float Time /* r29 */);
-extern float Sequence_Different_Time_Get(void);
-extern void TotalActuaterLV_Keeper(u_int ControllerID /* r2 */, u_int ActuaterType /* r2 */, float ActuaterLV /* r29 */);
-extern void Sequencer_Type_Hispeed(EntryRecord* pER /* r16 */);
+void DSR_Sequencer(void);
 
-static u_int EntryRecord_EntryFreeCount_Get(void);
-static u_int EntryRecord_EntryCount_Increment(void);
-static u_int EntryRecord_Handle_Create(void);
-static u_int EntryRecord_ID_Search(u_int ID /* r18 */);
-static u_int EntryRecord_Attribute_Search(u_int Attribute /* r18 */);
-static EntryRecord* EntryRecordTable_FreeSpace_Search(void);
-static u_int DSR_FileFormat_ErrorChecker(DS_Record_Header* pHeader /* r16 */);
-static u_int EntryRecord_Entry(u_int* pHandleArray /* r21 */, DS_Record_Header* pHeader /* r20 */, u_int ControllerID /* r19 */, float Ratio /* r20 */);
-
-static void Sequencer_Type_Hispeed(EntryRecord* pER /* r16 */);
-static void Sequencer_Type_Lowspeed(EntryRecord* pER /* r18 */);
-static void Sequencer_Type_Hispeed_Edit(EntryRecord* pER /* r16 */);
-static void Sequencer_Type_Lowspeed_Edit(EntryRecord* pER /* r16 */);
-static u_int EntryRecord_Enable_Check(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_TimeOver_Check(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_Type_Get(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_Condition_Get(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_Handle_Get(EntryRecord* pER /* r2 */);
-static EntryRecord* EntryRecord_Get_fromTableIndex(u_int EntryTable_Index /* r2 */);
-static u_int EventMessage_Post(u_int Handle /* r2 */, u_int EventID /* r2 */, float Value /* r29+0x30 */);
-
-static float ActuaterLV_Complement(DS_Record* pDSR /* r2 */, float Time /* r29 */);
-
-static DS_Record_Edit* EditNode_Current_Search(Record_Info* pInfo /* r2 */, float Time /* r29 */);
-static float ActuaterLV_Complement_Edit(DS_Record_Edit* pDSR /* r2 */, float Time /* r29 */);
-
-static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */);
-extern DSR_MUD* pMUD;
-
-static void Sequence_Different_Time_Set(float Time /* r29 */);
-
-static u_int EventMessageQueue_Length_Get(void);
-static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor* pDescriptor);
-extern DSR_MU_EventDescriptor _EventQueue[100];
-
-static void EntryRecord_Condition_Set(EntryRecord* pER /* r2 */, u_int Condition /* r2 */);
-
-static void EntryRecordTable_All_Initialize(void);
-static void EntryRecord_Initialize(EntryRecord* pER /* r2 */);
-
-static u_int EntryRecord_ID_Get(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_Attribute_Get(EntryRecord* pER /* r2 */);
-static u_int EntryRecord_EntryCount_Get(void);
-static u_int EntryRecord_EntryCount_Decrement(void);
+void DSR_Sequence_Different_Time_Set(float Different_Time);
 
 #endif

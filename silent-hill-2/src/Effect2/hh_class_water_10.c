@@ -17,21 +17,19 @@ static void Grid_Work_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Initialize(struct HH_Object_Water_10* pThis);
 static u_int Object_Draw(struct HH_Object_Water_10* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max);
 
-extern /* static */ struct WaveArea_Infomeation _Area_Info_List_0x0036F510[1]; // size: 0x90, address: 0x36F510
-extern /* static */ float __arri_173;
-extern /* static */ float __distance_171;
-extern /* static */ float __lost_time_172;
-extern /* static */ float __omega_174;
-extern /* static */ float __v_175;
-extern /* static */ float _interval_162;
-extern /* static */ float amb_alpha_72;
-extern /* static */ float base_move_156;
-extern /* static */ float degree_155;
-extern /* static */ int i_131;
-extern /* static */ u_int j_132;
-extern /* static */ float light_alpha_73;
-extern /* static */ float sx_87;
-extern /* static */ float ty_88;
+static u_int _area00_view_list_0x0036F500[1] = {0};
+static WaveArea_Infomeation _Area_Info_List_0x0036F510[1] = {
+    {/* .World_Location = */ {58000.0f, 160.0f, 56000.0f, 1.0f},
+     /* .Grid_WH = */ {4200.0f, 0.0f, 8200.0f, 200.0f},
+     /* .Grid_Index = */ {21, 41},
+     /* .pViewArea_List = */ &_area00_view_list_0x0036F500,
+     /* .ViewArea_List_Max = */ 1,
+     /* .pGrid_Y_Value = */ NULL,
+     /* .Specular_BaseRGBA = */ {255.0f, 255.0f, 255.0f, 64.0f},
+     /* .Ambient0_BaseRGBA = */ {64.0f, 64.0f, 64.0f, 32.0f},
+     /* .Ambient1_BaseRGBA = */ {19.0f, 19.0f, 19.0f, 255.0f},
+     /* .Light_BaseRGBA = */ {16.0f, 16.0f, 16.0f, 128.0f},
+     /* .pST_Defference = */ NULL}};
 
 static void Grid_Work_Initialize(HH_Object_Water_10* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
@@ -51,20 +49,18 @@ static u_int Object_Initialize(HH_Object_Water_10* pThis /* r16 */) {
 
 static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
     // Range: 0x25EFB0 -> 0x25F820
-    static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0036F5C0
-    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};   // @ 0x0036F5D0
-    static float amb_alpha = 32.0f;                           // @ 0x0036F600
-    static float light_alpha = 128.0f;                        // @ 0x0036F608
-    static u_long _GifTag_Tri[2] = {
-        SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-        GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5B0
-    static float ty = 7.0f;                                                                                     // @ 0x0036F648
-    static float sx = 7.0f;                                                                                     // @ 0x0036F640
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F5E0
-    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F5F0
     static u_long _GifTag[2] = {
         SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
         GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5A0
+    static u_long _GifTag_Tri[2] = {
+        SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+        GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5B0
+    static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f};                                                   // @ 0x0036F5C0
+    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x0036F5D0
+    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F5E0
+    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F5F0
+    static float amb_alpha_72 = 32.0f;                                                                          // @ 0x0036F600
+    static float light_alpha_73 = 128.0f;                                                                       // @ 0x0036F608                                                                               // @ 0x0036F640
 
     u_int result = 0;               // r2
     sceVif1Packet* pPk;             // r16
@@ -88,9 +84,6 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
     float cos_theta;                // r21
     u_int* pPk_Current;             // r19
     u_int* pPk_End;                 // r2
-    float Grid_Vertex0[4];          // r29+0x1E0
-    float Grid_Vertex1[4];          // r29+0x1F0
-    float Grid_Vertex2[4];          // r29+0x200
 
     pPk = HH_Vif1Packet_Current_Get();
     x_grid_max = Grid_X_Max;
@@ -104,8 +97,8 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
 
     sceVu0MulVector(Ambient_Color, Ambient_Color, Amb_Base);
 
-    Ambient_Color[3] = amb_alpha;
-    Light_Color[3] = light_alpha;
+    Ambient_Color[3] = amb_alpha_72;
+    Light_Color[3] = light_alpha_73;
 
     cos_theta = Parameter[0]; // r21
     far_z = Parameter[2];     // r20
@@ -129,9 +122,9 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
     sceVif1PkCloseGifTag(pPk);
 
     for (z_index = 0; z_index < z_grid_max; z_index++) {
-        sceVu0FVECTOR Grid_Vertex0 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};       // r29+0x1B0
-        sceVu0FVECTOR Grid_Vertex1 = {200.0f, 0.0f, 200.0f * (z_index + 1), 1.0f}; // r29+0x1C0
-        sceVu0FVECTOR Grid_Vertex2 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};       // r29+0x1D0
+        sceVu0FVECTOR Grid_Vertex0 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};       // r29+0x1E0
+        sceVu0FVECTOR Grid_Vertex1 = {200.0f, 0.0f, 200.0f * (z_index + 1), 1.0f}; // r29+0x1F0
+        sceVu0FVECTOR Grid_Vertex2 = {200.0f, 0.0f, 200.0f * z_index, 1.0f};       // r29+0x200
 
         sceVif1PkOpenGifTag(pPk, *(u_long128*)_GifTag_Tri);
 
@@ -141,18 +134,20 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
         }
 
         for (x_index = 0; x_index < Grid_X_Max; x_index++) {
-            float Rgba[4];        // r29+0x210
-            int xyzf[4];          // r29+0x220
-            int rgba[4];          // r29+0x230
-            u_int addr;           // r2
-            float vec0[4];        // r29+0x240
-            float vec1[4];        // r29+0x250
-            float n0[4];          // r29+0x260
-            float specular_ratio; // r22
-            float stq0[4];        // r29+0x270
-            float stq1[4];        // r29+0x280
-            float base;           // r2
-            float color_scale;    // r29+0x290
+            float Rgba[4];             // r29+0x210
+            int xyzf[4];               // r29+0x220
+            int rgba[4];               // r29+0x230
+            u_int addr;                // r2
+            float vec0[4];             // r29+0x240
+            float vec1[4];             // r29+0x250
+            float n0[4];               // r29+0x260
+            float specular_ratio;      // r22
+            float stq0[4];             // r29+0x270
+            float stq1[4];             // r29+0x280
+            float base;                // r2
+            float color_scale;         // r29+0x290
+            static float sx_87 = 7.0f; // @ 0x0036F480
+            static float ty_88 = 7.0f; // @ 0x0036F488
 
             Grid_Vertex0[0] = Grid_Vertex1[0] = 200.0f * x_index;
 
@@ -161,8 +156,8 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
             Grid_Vertex1[1] = pGrid_Y[HH_WATER_10_GRID_INDEX_GET(x_index, z_index + 1)];
             Grid_Vertex2[1] = pGrid_Y[HH_WATER_10_GRID_INDEX_GET((x_index + 1) % x_grid_max, z_index)];
 
-            base = 0.25f * (1.0f / (200.0f * ty));
-            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx));
+            base = 0.25f * (1.0f / (200.0f * ty_88));
+            stq0[0] = stq1[0] = 0.25f * (Grid_Vertex0[0] / (200.0f * sx_87));
             stq0[1] = Grid_Vertex0[2] * base;
             stq1[1] = Grid_Vertex1[2] * base;
             sceVu0AddVector(stq0, stq0, pThis->ST_Defference);
@@ -260,21 +255,21 @@ static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Val
 }
 
 u_int HH_Class_Prefix_Water_10(void) {
-    static u_int interval = 0x40800000; /* 4.0f */    // @ 0x0036F650
-    static int i = 0;                                 // @ 0x011EB600
-    static int j = 0;                                 // @ 0x011EB608
+    static u_int interval_133 = 1;
+    static int i_131 = 0;                             // @ 0x011EB600
+    static int j_132 = 0;                             // @ 0x011EB608
     u_int result = 1;                                 // r2
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     u_long tex0;                                      // r2
     HH_Vif1PacketBuffer_GifTag_Open();
     tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_10_TEX_ID, HH_WATER_10_CLUT_ID);
     sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0);
-    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_clamp(i));
-    if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j % interval == 0) {
-        i++;
-        i = clamp_n(i, 4);
+    sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_clamp(i_131));
+    if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j_132 % interval_133 == 0) {
+        i_131++;
+        i_131 = clamp_n(i_131, 4);
     }
-    j++;
+    j_132++;
     sceVif1PkAddGsAD(pPk, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0x80));
     HH_Vif1PacketBuffer_GifTag_Close();
     return result;
@@ -288,6 +283,15 @@ u_int HH_Class_Suffix_Water_10(void) {
     HH_Vif1PacketBuffer_GifTag_Close();
     return result;
 }
+
+static float degree_155 = 10.0f;
+static float base_move_156 = 128.0f;
+static float _interval_162 = 4.0f; // @ 0x0036F650
+static float __distance_171 = 3200.0f;
+static float __lost_time_172 = 10.0f;
+static float __arri_173 = 40.0f;
+static float __omega_174 = 612.0f;
+static float __v_175 = 1200.0f;
 
 u_int HH_Class_Water_10(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r18 */) {
     u_int result = 1;                   // r16

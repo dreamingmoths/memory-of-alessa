@@ -4,7 +4,7 @@
 
 static void checkReadAlign(void* buffer /* r2 */);
 
-static u_long128* fsCmdWork;
+extern /* static */ u_long128* fsCmdWork;
 
 int fsInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */) {
     int ret = 0; // r2

@@ -6,7 +6,7 @@ extern float fmodf(float, float);
 
 static u_int Object_Initialize(HH_Object_Blood_Pool_Phenomenon_00* pThis);
 
-static TimeTable_Infomeation _Time_Table[5];
+extern /* static */ TimeTable_Infomeation _Time_Table[5];
 
 static u_int Object_Initialize(HH_Object_Blood_Pool_Phenomenon_00* pThis) {
     u_int result = 1;
@@ -50,7 +50,7 @@ u_int HH_Class_Blood_Pool_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElem
 
                 var_f0 = 50.0f + (rand() % 150);
                 {
-                    sceVu0FVECTOR vec = {0};
+                    sceVu0FVECTOR vec = {0.0f, 0.0f, 0.0f, 1.0f};
                     sceVu0FMATRIX lwm;
                     ImpactQueue_Element descriptor;
                  

@@ -5,10 +5,12 @@
 #include "SH2_common/playing_info.h"
 #include "debug.h"
 
+#pragma fast_fptosi on
+
 static int SeChange2Dto3D(int se /* r2 */);
 static int SeChange3Dto2D(int se /* r2 */);
 
-static int bgm_list[43][2] = {
+extern /* static */ int bgm_list[43][2] /* = {
     { 0x0000, 0x0000 },
     { 0x13C9, 0xC3C2 },
     { 0x13B9, 0xC365 },
@@ -52,7 +54,7 @@ static int bgm_list[43][2] = {
     { 0x13D1, 0xC3CA },
     { 0x13C8, 0xC3C1 },
     { 0x13A5, 0xC351 }
-};
+} */;
 
 void SeWait(int wait /* r17 */) {
     int c; // r16
@@ -165,6 +167,10 @@ void SeSoundLoad(void) {
     SeSoundEffect3dLoad(0);
     SeBgmChange();
 }
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1052_0x003901F0);
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1053_0x00390210);
 
 INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeSoundEffectLoad);
 
@@ -345,3 +351,12 @@ static int SeChange3Dto2D(int se /* r2 */) {
     }
     return 0;
 }
+
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1849);
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1850);
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1851);
+
+INCLUDE_RODATA("asm/nonmatchings/sound/sh_sound", @1852_0x003904E0);

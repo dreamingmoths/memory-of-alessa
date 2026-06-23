@@ -5,10 +5,6 @@
 #include "Font/fj_man.h"
 #include "Effect/screen_effect.h"
 
-INCLUDE_RODATA("asm/nonmatchings/MC/mc_menu", @1275);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc_menu", @1276_0x00399960);
-
 
 int mcSaveMenu(void) {
     int i;
@@ -397,6 +393,8 @@ int mcSaveMenu(void) {
     mcDrawMenu();
     return 0;
 }
+
+const char __pad_0x003999c8[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcLoadMenu);
 

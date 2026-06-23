@@ -4,7 +4,7 @@
 #include "sound/sh_sound.h"
 #include "Item/otn_option.h"
 
-extern /* static */ struct /* @anon2 */ {
+static struct /* @anon2 */ {
     // total size: 0x7C
     unsigned char option_step; // offset 0x0, size 0x1
     unsigned char extra_mode; // offset 0x1, size 0x1
@@ -329,6 +329,12 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_option", key_conf_check);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", key_color);
 
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1735);
+
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1736);
+
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1737);
+
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", config_main);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", position_main);
@@ -366,3 +372,9 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_option", option_font);
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_scr);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", zs);
+
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @2788);
+
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @2789);
+
+INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @2790);

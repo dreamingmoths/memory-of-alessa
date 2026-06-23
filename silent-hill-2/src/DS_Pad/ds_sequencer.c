@@ -1,7 +1,64 @@
-// E:\work\sh2(CVS全取得)\src\DS_Pad\ds_sequencer.c
-#include "ds_sequencer.h"
+#include "DS_Pad/ds_sequencer.h"
+#include "Chacter/m3_sc.h"
 
-void SequencerManager() {
+#pragma divbyzerocheck off
+
+static void SequencerManager(void);
+static void Sequencer_Type_Hispeed(EntryRecord* pER);
+static void Sequencer_Type_Lowspeed(EntryRecord* pER);
+static void Sequencer_Type_Hispeed_Edit(EntryRecord* pER);
+static void Sequencer_Type_Lowspeed_Edit(EntryRecord* pER);
+static u_int EntryRecord_Enable_Check(EntryRecord* pER);
+static u_int EntryRecord_TimeOver_Check(EntryRecord* pER);
+static u_int EntryRecord_Type_Get(EntryRecord* pER);
+static u_int EntryRecord_ID_Get(EntryRecord* pER);
+static u_int EntryRecord_Attribute_Get(EntryRecord* pER);
+static u_int EntryRecord_Condition_Get(EntryRecord* pER);
+static void EntryRecord_Condition_Set(EntryRecord* pER, u_int Condition);
+static u_int EntryRecord_Handle_Get(EntryRecord* pER);
+static void EntryRecord_Initialize(EntryRecord* pER);
+static u_int EntryRecord_EntryCount_Get(void);
+static u_int EntryRecord_EntryFreeCount_Get(void);
+static u_int EntryRecord_EntryCount_Increment(void);
+static u_int EntryRecord_EntryCount_Decrement(void);
+static float Sequence_Different_Time_Get(void);
+static void Sequence_Different_Time_Set(float Time);
+static u_int EntryRecord_Handle_Create(void);
+static EntryRecord* EntryRecord_Get_fromTableIndex(u_int EntryTable_Index);
+static EntryRecord* EntryRecord_Get_fromHandle(u_int Handle);
+static u_int EntryRecord_Handle_Search(u_int Handle);
+static u_int EntryRecord_ID_Search(u_int ID);
+static u_int EntryRecord_Attribute_Search(u_int Attribute);
+static void EntryRecord_Time_Count(EntryRecord* pER);
+static void EntryRecord_Time_Set(EntryRecord* pER, float Time);
+static void EntryRecord_Ratio_Set(EntryRecord* pER, float Ratio);
+static EntryRecord* EntryRecordTable_FreeSpace_Search(void);
+static void EntryRecordTable_All_Initialize(void);
+static u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int ControllerID, float Ratio);
+static u_int DSR_FileFormat_ErrorChecker(DS_Record_Header* pHeader);
+static u_int DSR_FF_Header_ErrorChecker(DS_Record_Header* pHeader);
+static void TotalActuaterLV_Keeper(u_int ControllerID, u_int ActuaterType, float ActuaterLV);
+static void TotalActuaterLV_Send(u_int ControllerID, u_int ActuaterType);
+static void TotalActuaterLV_Initialize(u_int ControllerID, u_int ActuaterType);
+static float ActuaterLV_Complement(DS_Record* pDSR, float Time);
+static float ActuaterLV_Complement_Edit(DS_Record_Edit* pDSR, float Time);
+static int Node_Next_Search(Record_Info* pInfo, float Time);
+static int Node_Current_Search(Record_Info* pInfo, float Time);
+static DS_Record_Edit* EditNode_Current_Search(Record_Info* pInfo, float Time);
+static void EventManager(void);
+static u_int EventMessage_Post(u_int Handle, u_int EventID, float Value);
+static u_int EventMessageQueue_enQueue(DSR_MU_EventDescriptor* pDescriptor);
+static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor* pDescriptor);
+static void EventMessageQueue_Initialize(void);
+static u_int EventMessageQueue_Length_Get(void);
+static void DSR_MUD_Initialize(void);
+
+extern DSR_MUD* pMUD;
+
+#define DSR_MU_EVENT_QUEUE_LENGTH 100
+extern DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
+
+void SequencerManager(void) {
     u_int i;
     EntryRecord *pER;
     u_int Handle;
@@ -178,86 +235,128 @@ static void Sequencer_Type_Lowspeed_Edit(EntryRecord * pER /* r16 */)  {
     }
 }
 
-static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
+static u_int EntryRecord_Enable_Check(EntryRecord * pER /* r2 */) {
+    return pER->Enable;
+}
 
-    float result; // r29
-    float time_current; // r29    
-    float time_next; // r29
-    float comp_ratio; // r3
-    float act_lv_current; // r29    
-    float act_lv_next; // r29
+
+
+static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
+
+    u_int result; // r2
+
+    result = 0;
+    if (pER->Time_Count > pER->Time_Max) {
+        result = 1;
+    }
+    return result;
+}
+
+static u_int EntryRecord_Type_Get(EntryRecord * pER /* r2 */)  {
+    return pER->Info.pObject->Type;
+}
+
+static u_int EntryRecord_ID_Get(EntryRecord * pER /* r2 */) {
+    return pER->Info.pObject->ID;
+}
+
+static u_int EntryRecord_Attribute_Get(EntryRecord * pER /* r2 */) {
+    return pER->Info.pObject->Attribute;
+}
+
+static u_int EntryRecord_Condition_Get(EntryRecord * pER /* r2 */) {
+    return pER->Condition;
+}
+
+static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */) {
+    pER->Condition = Condition;
+}
+
+static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */) {
+    return pER->Handle;
+}
+
+
+static void EntryRecord_Initialize(EntryRecord * pER /* r2 */) {
+    memset(pER, 0, sizeof(EntryRecord));
+}
+
+static u_int EntryRecord_EntryCount_Get(void) {
+    return pMUD->EntryRecord_Count;
+}
+
+static u_int EntryRecord_EntryFreeCount_Get(void)  {
+    return 0x14 - pMUD->EntryRecord_Count;
+}
+
+static u_int EntryRecord_EntryCount_Increment(void) {
+    return pMUD->EntryRecord_Count++;
+}
+
+static u_int EntryRecord_EntryCount_Decrement(void) {
+    if (pMUD->EntryRecord_Count != 0) {
+        pMUD->EntryRecord_Count--;
+    }
+    return pMUD->EntryRecord_Count;
+}
+
+static float Sequence_Different_Time_Get(void) {
+    return pMUD->Different_Time;
+}
+
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", Sequence_Different_Time_Set);
+
+
+static u_int EntryRecord_Handle_Create(void) {
+    u_int result; // r16
+
+    result = pMUD->Handle_History + 1;
+
+    while (EntryRecord_Handle_Search(result) != 0) {
+        result += 1;
+    }
+    pMUD->Handle_History = result;
+    return result;
+}
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Get_fromTableIndex);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Get_fromHandle);
+
+static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
     
-    time_current = pDSR->Time;
-    time_next = pDSR[1].Time;
-    comp_ratio = (Time - time_current) / (time_next - time_current);
-    act_lv_current = pDSR->Actuater_LV;
-    act_lv_next = pDSR[1].Actuater_LV;
-    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    u_int result;
+
+    result = 0;
+    if (EntryRecord_Get_fromHandle(Handle) != 0) {
+        result = 1;
+    }
+    return result;
+}
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_ID_Search);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Attribute_Search);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Time_Count);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Time_Set);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Ratio_Set);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecordTable_FreeSpace_Search);
+
+static void EntryRecordTable_All_Initialize(void) {
     
-    return result;
-}
+    u_int i; // r16
 
-static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */) {
+    i = 0;
 
-    float result; // r29
-    float time_current; // r29
-    float time_next; // r29
-    float comp_ratio; // r3  
-    float act_lv_current; // r29
-    float act_lv_next; // r29
-
-    time_current = pDSR->Record.Time;
-    time_next = pDSR->pNext->Record.Time;
-    comp_ratio = (Time - time_current) / (time_next - time_current);
-    act_lv_current = pDSR->Record.Actuater_LV;
-    act_lv_next = pDSR->pNext->Record.Actuater_LV;
-    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
-    return result;
-        
-}
-
-
-static int Node_Next_Search(Record_Info* pInfo, float Time) {
-    u_int node_num = pInfo->pObject->DataNode_num;
-    DS_Record * pDSR = pInfo->pAddress;
-
-    int result = -1;
-    u_int i;
-    for (i = 0; i < node_num; i++, pDSR++) {
-        if (Time < pDSR->Time) {
-            result = i;
-            break;
-        }
+    while (i < 0x14) {
+        EntryRecord_Initialize(EntryRecord_Get_fromTableIndex(i));
+        i++;
     }
-
-    return result;
-}
-
-static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0x10 */) {
-    int result = -1; // r7
-    int num = Node_Next_Search(pInfo, Time); // r2
-
-    if (num > 0) {
-        result = num - 1;
-    }
-
-    return result;
-}
-
-static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
-    DS_Record_Edit * result;
-    DS_Record_Edit * pDSR;
-
-    result = NULL;
-    pDSR = (DS_Record_Edit *)pInfo->pAddress;
-    while (pDSR != NULL) {
-        if (Time < pDSR->Record.Time) {
-            result = pDSR->pPrev;
-            break;
-        }
-        pDSR = pDSR->pNext;
-    }
-    return result;
 }
 
 // | Permission | Meaning                            |
@@ -373,40 +472,114 @@ u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int Co
     return result;
 }
 
-static u_int EntryRecord_Handle_Create() {
-    u_int result; // r16
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_FileFormat_ErrorChecker);
 
-    result = pMUD->Handle_History + 1;
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_FF_Header_ErrorChecker);
 
-    while (EntryRecord_Handle_Search(result) != 0) {
-        result += 1;
-    }
-    pMUD->Handle_History = result;
-    return result;
-}
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Keeper);
 
-static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Send);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Initialize);
+
+static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29    
+    float time_next; // r29
+    float comp_ratio; // r3
+    float act_lv_current; // r29    
+    float act_lv_next; // r29
     
-    u_int result;
+    time_current = pDSR->Time;
+    time_next = pDSR[1].Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Actuater_LV;
+    act_lv_next = pDSR[1].Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    
+    return result;
+}
 
-    result = 0;
-    if (EntryRecord_Get_fromHandle(Handle) != 0) {
-        result = 1;
+
+static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */) {
+
+    float result; // r29
+    float time_current; // r29
+    float time_next; // r29
+    float comp_ratio; // r3  
+    float act_lv_current; // r29
+    float act_lv_next; // r29
+
+    time_current = pDSR->Record.Time;
+    time_next = pDSR->pNext->Record.Time;
+    comp_ratio = (Time - time_current) / (time_next - time_current);
+    act_lv_current = pDSR->Record.Actuater_LV;
+    act_lv_next = pDSR->pNext->Record.Actuater_LV;
+    result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
+    return result;
+        
+}
+
+
+static int Node_Next_Search(Record_Info* pInfo, float Time) {
+    u_int node_num = pInfo->pObject->DataNode_num;
+    DS_Record * pDSR = pInfo->pAddress;
+
+    int result = -1;
+    u_int i;
+    for (i = 0; i < node_num; i++, pDSR++) {
+        if (Time < pDSR->Time) {
+            result = i;
+            break;
+        }
+    }
+
+    return result;
+}
+
+static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0x10 */) {
+    int result = -1; // r7
+    int num = Node_Next_Search(pInfo, Time); // r2
+
+    if (num > 0) {
+        result = num - 1;
+    }
+
+    return result;
+}
+
+
+static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
+    DS_Record_Edit * result;
+    DS_Record_Edit * pDSR;
+
+    result = NULL;
+    pDSR = (DS_Record_Edit *)pInfo->pAddress;
+    while (pDSR != NULL) {
+        if (Time < pDSR->Record.Time) {
+            result = pDSR->pPrev;
+            break;
+        }
+        pDSR = pDSR->pNext;
     }
     return result;
 }
 
-static void Sequence_Different_Time_Set(float Time /* r29 */) {
-    pMUD->Different_Time = Time;
-}
+const char rodata_268_0x00398730[] = "ds_sequencer.c:594> assert:(%s)\n";
 
-static float Sequence_Different_Time_Get(void) {
-    return pMUD->Different_Time;
-}
+const char rodata_269[] = "(EntryTable_Index < DSR_EntryTable_Max)";
 
-static u_int EventMessageQueue_Length_Get(void) {
-    return 0x64; // 100
-}
+const char rodata_441[] = "ds_sequencer.c:906> assert:(%s)\n";
+
+INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @442);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventManager);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessage_Post);
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_enQueue);
+
 
 static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
     u_int result;
@@ -423,76 +596,19 @@ static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
     return result;
 }
 
-static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */) {
-    return pER->Handle;
+
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_Initialize);
+
+static u_int EventMessageQueue_Length_Get(void) {
+    return DSR_MU_EVENT_QUEUE_LENGTH;
 }
 
-static u_int EntryRecord_Enable_Check(EntryRecord * pER /* r2 */) {
-    return pER->Enable;
-}
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_MUD_Initialize);
 
-static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Entry0);
 
-    u_int result; // r2
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequencer_Initialize);
 
-    result = 0;
-    if (!(pER->Time_Count <= pER->Time_Max)) {
-        result = 1;
-    }
-    return result;
-}
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequencer);
 
-static u_int EntryRecord_Type_Get(EntryRecord * pER /* r2 */)  {
-    return pER->Info.pObject->Type;
-}
-
-static u_int EntryRecord_Condition_Get(EntryRecord * pER /* r2 */) {
-    return pER->Condition;
-}
-
-static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */) {
-    pER->Condition = Condition;
-}
-
-static void EntryRecordTable_All_Initialize(void) {
-    
-    u_int i; // r16
-
-    i = 0;
-
-    while (i < 0x14) {
-        EntryRecord_Initialize(EntryRecord_Get_fromTableIndex(i));
-        i++;
-    }
-}
-
-static u_int EntryRecord_ID_Get(EntryRecord * pER /* r2 */) {
-    return pER->Info.pObject->ID;
-}
-
-static u_int EntryRecord_Attribute_Get(EntryRecord * pER /* r2 */) {
-    return pER->Info.pObject->Attribute;
-}
-
-static u_int EntryRecord_EntryCount_Get(void) {
-    return pMUD->EntryRecord_Count;
-}
-
-static u_int EntryRecord_EntryFreeCount_Get(void)  {
-    return 0x14 - pMUD->EntryRecord_Count;
-}
-
-static u_int EntryRecord_EntryCount_Increment(void) {
-    return pMUD->EntryRecord_Count++;
-}
-
-static u_int EntryRecord_EntryCount_Decrement(void) {
-    if (pMUD->EntryRecord_Count != 0) {
-        pMUD->EntryRecord_Count--;
-    }
-    return pMUD->EntryRecord_Count;
-}
-
-static void EntryRecord_Initialize(EntryRecord * pER /* r2 */) {
-    memset(pER, 0, sizeof(EntryRecord));
-}
+INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequence_Different_Time_Set);

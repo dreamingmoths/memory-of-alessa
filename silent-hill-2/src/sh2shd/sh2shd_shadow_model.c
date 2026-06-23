@@ -6,7 +6,6 @@
 #include "sh2shd/sh2shd_char_jms.h"
 #include "Event/demoview.h"
 #include "Chacter/m3_sc.h"
-#include "Enemy/en_list.h"
 #include "SH2_common/map_ids.h"
 #include "vec.h"
 
@@ -52,7 +51,7 @@ void sh2shd_init_shadow(void) {
         shadow_man.outdoor_man[i] = NULL;
 
     shadow_calcheap = utilHeapInit(&Shadow_Calcwork[1], 0x19000U);
-    ASSERT_ON_LINE(shadow_calcheap, 2343);
+    ASSERT_ON_LINE(shadow_calcheap, 129);
 
 
     
@@ -178,10 +177,10 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
     }
     shadow_man.char_man[i] = utilHeapMalloc(shadow_calcheap, SHADOW_CALC_HEAP_SIZE);
     if (shadow_man.char_man[i] == 0)
-       ASSERT(shadow_man.char_man[i] != 0);
+       ASSERT_ON_LINE(shadow_man.char_man[i] != 0, 386);
 
     shadow_man.char_man[i]->shape = utilHeapMalloc(shadow_calcheap, char_head.obj_num * 0x70);
-    ASSERT(shadow_man.char_man[i]->shape != 0);
+    ASSERT_ON_LINE(shadow_man.char_man[i]->shape != 0, 400);
     shadow_man.char_man_num++;
 
     if (IS_PLAYER_KIND(scp->kind) && (jms_shadow_env.light_kind >= 0)) {
@@ -511,3 +510,29 @@ INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", check_self_para);
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_del_jms_upper_body);
 
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_del_jms_head);
+
+const char rodata_1230_0x00390CB0[] = "sh2shd_shadow_model.c:495> assert:(%s)\n";
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1231_0x00390CD8);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1276_0x00390CE0);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1277_0x00390D10);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1278_0x00390D30);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @1279_0x00390D60);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @2077_0x00390D90);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @2078);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @2079);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @2080);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @883);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @884);
+
+INCLUDE_RODATA("asm/nonmatchings/sh2shd/sh2shd_shadow_model", @926);

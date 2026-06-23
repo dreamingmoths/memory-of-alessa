@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-// E:\work\sh2(CVS全取得)\src\SH2_common\sh_vu0.c
 float shAngleRegulate(float);
 float shAtanV(void*);
 float shAtan2(float y, float x);

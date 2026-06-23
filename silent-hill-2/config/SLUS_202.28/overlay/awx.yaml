@@ -1,0 +1,29 @@
+name: awx
+sha1: 4c1f71ff4519f701202f251fa7233a51c176c7c1
+options:
+  basename: awx
+  elf_path: awx.bin
+  target_path: rom/overlay/awx.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/awx_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: awx_reloc_addrs.txt
+  ld_script_path: linkers/awx.ld
+  undefined_funcs_auto_path: linkers/awx_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/awx_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: awx
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, awx_overlay_header]
+      - [0x80, asm, Event/stage/stg_apart_w1f]
+      - [0x1E00, data, Event/stage/stg_apart_w1f_data]
+      - { vram: 0x1F04A00, type: bss, name: Event/stage/stg_apart_w1f_bss }
+  - [0x2C00]

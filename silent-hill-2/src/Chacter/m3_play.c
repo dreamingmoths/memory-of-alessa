@@ -129,6 +129,16 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckNeckAngle);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckBothArmsAngle);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_act_with_wep_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_upper_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", pjames_lower_flag);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @1248);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @1249);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckBodyAngle);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckSetParameterPhase1);
@@ -143,6 +153,9 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetStageAnime);
 
+
+const char rodata_2356_0x0038BEB0[] = "m3_play.c:3888> assert:(%s)\n";
+const char rodata_assertion[] = "0";
 
 /*
 @todo: add lots of macros & clean this up!
@@ -1073,7 +1086,13 @@ void PlayerCheckAnimeUpper(void) {
                             anime = 0x82;
                             break;
                         default:
-                            ASSERT_ON_LINE(0, 3888);
+                            // @todo: un-comment when all rodata migrated
+                            // mwcc won't deduplicate the strings here for some reason
+                            if (!0) {
+                                printf(rodata_2356_0x0038BEB0, rodata_assertion);
+                                do { } while (1);
+                            }
+                            /* ASSERT_ON_LINE(0, 3888); */
                     }
                     player_flg_on(&sh2jms.u_anime_st_flg, 2);
                     aip = &pjames_anim[anime - 0x64];
@@ -2223,7 +2242,13 @@ void PlayerCheckAnimeLower(void) {
                         anime = 0x82;
                         break;
                     default:
-                        ASSERT_ON_LINE(0, 5241);
+                        // @todo: un-comment when all rodata migrated
+                        // mwcc won't deduplicate the strings here for some reason
+                        if (!0) {
+                            printf("m3_play.c:5241> assert:(%s)\n", rodata_assertion);
+                            do { } while (1);
+                        }
+                        // ASSERT_ON_LINE(0, 5241);
                     }
                 }
                 player_flg_on(&sh2jms.l_anime_st_flg, 2);
@@ -2432,6 +2457,14 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckHuggingAttack);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerChectGuardSuccess);
 
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3326);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3350);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3351);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3495);
+
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttack);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttackFinish);
@@ -2463,3 +2496,15 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", close_to_value);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerReverseLightCalcIsOn);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerWaterRoadIsOn);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @905_0x0038C2D0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @906_0x0038C2F0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2145);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2146_0x0038C330);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2147);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2148);

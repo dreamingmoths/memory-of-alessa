@@ -4,17 +4,19 @@
 #include "movie/pss_vobuf.h"
 #include "movie/pss_videodec.h"
 
-volatile int isCountVblank = 0;
-volatile int vblankCount = 0;
-volatile int isFrameEnd = 0;
-volatile int isUp = 0;
-volatile int handler_error = 0;
+extern volatile int isCountVblank;
+extern volatile int vblankCount;
+extern volatile int isFrameEnd;
+extern volatile int isUp;
+extern volatile int handler_error;
 
 extern int frd;
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssInitDisplay);
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDispClear);
+
+INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", clearFinish);
 
 
 
@@ -24,6 +26,8 @@ INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDispClear);
 //
 
 INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", vblankHandler);
+
+INCLUDE_ASM("asm/nonmatchings/movie/pss_disp", pssDrawSubTitle);
 
 // ///////////////////////////////////////////////////////////////
 // 

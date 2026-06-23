@@ -12,17 +12,17 @@ static void ParabolaMotion_Calculator(HH_Object_Blood_03* pThis, ImpactQueue_Ele
 static u_int Object_Motion_00(HH_Object_Blood_03* pThis, ImpactQueue_Element* pElement);
 static u_int Object_Draw(HH_Object_Blood_03* pThis, ImpactQueue_Element* pElement, float* Current_Position);
 
-static sceVu0FMATRIX _square_00_vertex;
-static sceVu0FMATRIX _square_00_normal;
-static sceVu0FMATRIX _square_00_stq;
-static sceVu0FMATRIX _square_01_stq;
-static float (* _square_0x_stq_list[2])[4];
-static Vertex_Infomeation_List _vertex_info_list[1];
-static float _rgba_start_list[1];
-static float _rgba_end_list[1];
-static float _scale_start_list[1];
-static float _scale_end_list[1];
-static struct Motion_Table_Infomeation _motion_info[3];
+extern /* static */ sceVu0FMATRIX _square_00_vertex;
+extern /* static */ sceVu0FMATRIX _square_00_normal;
+extern /* static */ sceVu0FMATRIX _square_00_stq_0x0036E380;
+extern /* static */ sceVu0FMATRIX _square_01_stq_0x0036E3C0;
+extern /* static */ float (* _square_0x_stq_list_0x0036E400[2])[4];
+extern /* static */ Vertex_Infomeation_List _vertex_info_list_0x0036E410[1];
+extern /* static */ float _rgba_start_list_0x0036E420[1];
+extern /* static */ float _rgba_end_list_0x0036E428[1];
+extern /* static */ float _scale_start_list_0x0036E430[1];
+extern /* static */ float _scale_end_list_0x0036E438[1];
+extern /* static */ struct Motion_Table_Infomeation _motion_info_0x0036E440[3];
 
 static u_int Object_Initialize(HH_Object_Blood_03* pThis, ImpactQueue_Element* pElement) {
     u_int result = 0;
@@ -37,15 +37,15 @@ static u_int Object_Initialize(HH_Object_Blood_03* pThis, ImpactQueue_Element* p
     resist_ya = 0.5494505f;
     src_direction = pElement->Option.Vector[1];
     
-    pThis->Verocity_0[1] = src_direction[0] * resist_ya;
+    pThis->Verocity_0[0] = src_direction[0] * resist_ya;
      
     resist_y0 = 0.5494505f;
-    pThis->Verocity_0[2] = src_direction[1] * resist_y0;
+    pThis->Verocity_0[1] = src_direction[1] * resist_y0;
     
     resist_xz = 0.5494505f;
-    pThis->Verocity_0[3] = src_direction[2] * resist_xz;
+    pThis->Verocity_0[2] = src_direction[2] * resist_xz;
     
-    pThis->Scale = 4038.4612f;
+    pThis->Verocity_0[3] = 4038.4612f;
     
     return result;
 }
@@ -87,16 +87,16 @@ static u_int Object_Motion_00(HH_Object_Blood_03* pThis, ImpactQueue_Element* pE
     float rgba_ratio;
 
     
-    Rgba_s = _rgba_start_list[0];
-    Rgba_e = _rgba_end_list[0];
-    Scale_s = _scale_start_list[0];
-    Scale_e = _scale_end_list[0];
+    Rgba_s = _rgba_start_list_0x0036E420[0];
+    Rgba_e = _rgba_end_list_0x0036E428[0];
+    Scale_s = _scale_start_list_0x0036E430[0];
+    Scale_e = _scale_end_list_0x0036E438[0];
     
     local_time_start = 0.0f;
     local_scale_start = 0.0f;
     local_rgba_start = 0.0f;
     
-    pMotion_Info = _motion_info;
+    pMotion_Info = _motion_info_0x0036E440;
     kind = pThis->Motion_Step;
     
     current_step = pThis->Motion_Step;
@@ -155,13 +155,13 @@ static u_int Object_Motion_00(HH_Object_Blood_03* pThis, ImpactQueue_Element* pE
 static u_int Object_Draw(HH_Object_Blood_03* pThis, ImpactQueue_Element* pElement,float* Current_Position){
     u_int result = 0;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
-    Vertex_Infomeation_List* pInfo = _vertex_info_list;
+    Vertex_Infomeation_List* pInfo = _vertex_info_list_0x0036E410;
     float (* pVertex)[4] = pInfo->pVertex_List;
-    float (* pStq)[4] = pStq = _square_0x_stq_list[pThis->Vertex_Kind];
+    float (* pStq)[4] = pStq = _square_0x_stq_list_0x0036E400[pThis->Vertex_Kind];
     sceVu0FMATRIX lwm;
     sceVu0FMATRIX lsm;
     sceVu0FMATRIX clip_mat;
-    sceVu0FVECTOR Base_Rgba = {0.0f};
+    sceVu0FVECTOR Base_Rgba = {40.0f, 255.0f, 230.0f, 0.0f};
     sceVu0IVECTOR xyzf;
     sceVu0IVECTOR rgba;
     sceVu0FVECTOR stq_dummy;
@@ -202,7 +202,7 @@ static u_int Object_Draw(HH_Object_Blood_03* pThis, ImpactQueue_Element* pElemen
     return result;
 }
 
-u_int HH_Class_Prefix_Blood_01() {
+u_int HH_Class_Prefix_Blood_03(void) {
     u_long tex0; 
     sceVif1Packet* pPk;
     u_int result = 1;

@@ -159,7 +159,7 @@ void utilHeapFree(void *obj)
         return;
     if ((u_int) obj & 0xF) {
         do {
-            printf("utilheap.c:201> illegal address error in utilHeapFree().");
+            printf("utilheap.c:191> illegal address error in utilHeapFree().\n");
         } while (0);
         return;
     }
@@ -169,7 +169,7 @@ void utilHeapFree(void *obj)
 
     if ((u_int) heapctrl < 0x100000) {
         do {
-            printf("utilheap.c:201> illegal address error in utilHeapFree().");
+            printf("utilheap.c:201> illegal address error in utilHeapFree().\n");
         } while (0);
         return;
     }

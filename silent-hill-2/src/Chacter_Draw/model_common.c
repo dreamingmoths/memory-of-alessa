@@ -1,10 +1,10 @@
 #include "model_common.h"
 
 static int initialized = 0;
-static ModelCommonWork model_common_work_db[2];
-static int model_common_work_page;
+int model_common_work_page = 0;
+ModelCommonWork* model_common_work __attribute__((aligned(128)));
+ModelCommonWork model_common_work_db[2] __attribute__((aligned(128)));
 
-ModelCommonWork* model_common_work;
 
 void ModelCommonWorkInit(void) {
     if (initialized == 0) {

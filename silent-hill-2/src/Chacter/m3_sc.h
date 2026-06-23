@@ -5,35 +5,7 @@
 #include "Chacter/character.h"
 #include "Chacter_Draw/clani.h"
 #include "Chacter/item_screen_obj.h"
-
-#define LLL_JMS_CHARA_ID      0x100 // lowest detail james model
-#define HLL_JMS_CHARA_ID      0x101
-#define HHL_JMS_CHARA_ID      0x102
-#define HHH_JMS_CHARA_ID      0x103 // highest detail james model
-
-#define CHR_RLLL_JMS_CHARA_ID 0x120 // lowest detail mirror james model
-#define CHR_RHLL_JMS_CHARA_ID 0x121
-#define CHR_RHHL_JMS_CHARA_ID 0x122
-#define CHR_RHHH_JMS_CHARA_ID 0x123 // highest detail mirror james model
-
-#define LAU_CHARA_ID          0x104 // laura
-
-#define LLL_MAR_CHARA_ID      0x105 // low detail maria model
-#define HHH_MAR_CHARA_ID      0x106 // high detail maria model
-
-#define AGL_CHARA_ID          0x107 // angela
-
-#define BOAT_CHARA_ID         0x10B
-
-#define EN_IKE_CHARA_ID       0x203
-#define EN_PAP_CHARA_ID       0x204 // abstract daddy
-#define EN_RED_CHARA_ID       0x208 // pyramid head
-#define EN_ARM_CHARA_ID       0x20A
-
-#define WEAPON_ID_START 0x800
-
-#define IS_PLAYER_KIND(_kind) ((_kind) >= 0x100 && (_kind) <= 0x103)
-#define IS_ENEMY_KIND(_kind) ((_kind) >= 0x200 && (_kind) < 0x300)
+#include "Chacter/chara_list.h"
 
 #define SCP_STATUS_BIT_ANIME_TYPE          2
 #define SCP_STATUS_BIT_ROT_ZYX             7

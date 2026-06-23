@@ -3,83 +3,7 @@
 
 #include "sh2_common.h"
 
-// total size: 0x10
-struct fsMgcFile {
-    // Members
-    int type : 8;         // offset 0x0, size 0x4
-    int padding : 24;     // offset 0x0, size 0x4
-    union fsFile* parent; // offset 0x4, size 0x4
-    char* start;          // offset 0x8, size 0x4
-    char* end;            // offset 0xC, size 0x4
-};
-
-// total size: 0x10
-struct fsCdFile {
-    // Members
-    int type : 8;    // offset 0x0, size 0x4
-    int number : 24; // offset 0x0, size 0x4
-    char* name;      // offset 0x4, size 0x4
-    int lsn;         // offset 0x8, size 0x4
-    int size;        // offset 0xC, size 0x4
-};
-
-// total size: 0x10
-struct fsHdFile {
-    // Members
-    int type : 8;     // offset 0x0, size 0x4
-    int padding : 24; // offset 0x0, size 0x4
-    char* name;       // offset 0x4, size 0x4
-    int offset;       // offset 0x8, size 0x4
-    int size;         // offset 0xC, size 0x4
-};
-
-// total size: 0x10
-struct fsMgpFile {
-    // Members
-    int type : 8;            // offset 0x0, size 0x4
-    int padding : 24;        // offset 0x0, size 0x4
-    union fsFile* file;      // offset 0x4, size 0x4
-    struct fsMgcFile* start; // offset 0x8, size 0x4
-    struct fsMgcFile* end;   // offset 0xC, size 0x4
-};
-
-// total size: 0x10
-struct fsMgfFile {
-    // Members
-    int type : 8;         // offset 0x0, size 0x4
-    int padding : 24;     // offset 0x0, size 0x4
-    union fsFile* parent; // offset 0x4, size 0x4
-    int offset;           // offset 0x8, size 0x4
-    int size;             // offset 0xC, size 0x4
-};
-
-union fsFile {
-    // total size: 0x10
-    struct /* @anon5 */ {
-        // Members
-        int type : 8;     // offset 0x0, size 0x4
-        int number : 24;  // offset 0x0, size 0x4
-        int pad0;         // offset 0x4, size 0x4
-        int pad1;         // offset 0x8, size 0x4
-        int pad2;         // offset 0xC, size 0x4
-    } check;              // offset 0x0, size 0x10
-    __int128 pack;        // offset 0x0, size 0x10
-    struct fsCdFile cd;   // offset 0x0, size 0x10
-    struct fsHdFile hd;   // offset 0x0, size 0x10
-    struct fsMgcFile mgc; // offset 0x0, size 0x10
-    struct fsMgfFile mgf; // offset 0x0, size 0x10
-    struct fsMgpFile mgp; // offset 0x0, size 0x10
-};
-
-typedef union fsFileIndex {
-    // total size: 0x8
-    struct /* @anon0 */ {
-        // Members
-        union fsFile* fp; // offset 0x0, size 0x4
-        char* name;       // offset 0x4, size 0x4
-    } index;              // offset 0x0, size 0x8
-    unsigned long pack;   // offset 0x0, size 0x4
-} fsFileIndex;
+extern void* _ovl_start_addr;
 
 typedef struct mwOverlayHeader {
     // total size: 0x40
@@ -216,6 +140,9 @@ extern struct Stage_Data stage_apart_w1f;
 extern struct Stage_Data stage_apart_w2f;
 extern struct Stage_Data stage_apart_stair;
 extern struct Stage_Data stage_apart_out;
+
+/*         not present in the prototype!         */
+/* these are hardcoded as linker symbols for now */
 extern struct Stage_Data stage_town_west;
 extern struct Stage_Data stage_bowling;
 extern struct Stage_Data stage_to_heaven;
@@ -264,7 +191,6 @@ void UtilMemSet(void* addr, int val, int size);
 int fsSync(int mode, int fid);
 void shSyncVEnd(int mode);
 void verbose(int, const char*);
-extern u_char D_1F01E00[];
 extern union fsFileIndex* last_stage_bin;
 extern struct Stage_Data* stage;
 

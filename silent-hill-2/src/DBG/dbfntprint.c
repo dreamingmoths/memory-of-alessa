@@ -1,16 +1,16 @@
 #include "dbfntprint.h"
 
 void dbfntlocate(int x, int y) {
-    d.x = x;
-    d.xofs = x;
-    d.y = y;
-    d.yofs = y;
+    d_0x0033BEC0.x = x;
+    d_0x0033BEC0.xofs = x;
+    d_0x0033BEC0.y = y;
+    d_0x0033BEC0.yofs = y;
 }
 
 void dbfntlocateR(int x, int y) {
-    d.xofsR = x;
-    d.yR = y;
-    d.yofsR = y;
+    d_0x0033BEC0.xofsR = x;
+    d_0x0033BEC0.yR = y;
+    d_0x0033BEC0.yofsR = y;
 }
 
 int printline(char* cp, char* top) {
@@ -22,7 +22,7 @@ int printline(char* cp, char* top) {
         if (l >= 0x80u) l = 0x7F;
         memcpy(line, top, l);
         line[l] = 0;
-        _shDBG_print_string((char* ) &line, d.x, d.y);
+        _shDBG_print_string((char* ) &line, d_0x0033BEC0.x, d_0x0033BEC0.y);
     } else {
         l = 0;
     }
@@ -64,24 +64,24 @@ void _dbfntprint(char* buf) {
             case '\n':
                 printline(cp, t);
                 t = cp + 1;
-                d.x = d.xofs;
-                d.y += d.h;
+                d_0x0033BEC0.x = d_0x0033BEC0.xofs;
+                d_0x0033BEC0.y += d_0x0033BEC0.h;
             default:
                 break;
             case '\t':
-                d.x += d.w * printline(cp, t);
+                d_0x0033BEC0.x += d_0x0033BEC0.w * printline(cp, t);
                 t = cp + 1;
-                d.x += d.w * d.tab;
+                d_0x0033BEC0.x += d_0x0033BEC0.w * d_0x0033BEC0.tab;
                 break;
             case '\r':
                 printline(cp, t);
                 t = cp + 1;
-                d.x = d.xofs;
+                d_0x0033BEC0.x = d_0x0033BEC0.xofs;
                 break;
             case '\b':
-                d.x += d.w * printline(cp, t);
+                d_0x0033BEC0.x += d_0x0033BEC0.w * printline(cp, t);
                 t = cp + 1;
-                d.x -= d.w;
+                d_0x0033BEC0.x -= d_0x0033BEC0.w;
                 break;
             }
         cp++;

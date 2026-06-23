@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ci/test
     paths-ignore:
       - '**.md'
 
@@ -18,46 +19,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: read
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v6
-        with:
-          submodules: recursive
-          lfs: true
-
-      - name: install python dependencies
-        run: python3 -m pip install --break-system-packages -r requirements.txt
-
-      - name: copy files
-        run: cp -r /home/* .
-
-      - name: make
-        run: make -j $(nproc)
-
-  progress:
-    if: github.repository == 'dreamingmoths/memory-of-alessa'
-    container:
-      image: ghcr.io/dreamingmoths/alessa:latest
-      credentials:
-        username: dreamingmoths
-        password: ${{ secrets.GHCR_TOKEN }}
-
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         TARGET:
           - {
               GAME: "Silent Hill 3",
-              SERIAL: "SLUS_206.22"
+              SERIAL: "SLUS_206.22",
+              ALIAS: "sh3"
             }
           - {
               GAME: "Silent Hill 2",
-              SERIAL: "SLUS_202.28"
+              SERIAL: "SLUS_202.28",
+              ALIAS: "sh2"
             }
 
     permissions:
@@ -77,13 +50,14 @@ jobs:
       - name: copy files
         run: cp -r /home/* .
 
+      - name: build matching executable
+        run: make -j $(nproc) ${{ matrix.TARGET.ALIAS }}
+      
+      - name: clean build files
+        run: make ${{ matrix.TARGET.ALIAS }}-clean
+
       - name: make report
-        run: |
-          if [ "${{ matrix.TARGET.GAME }}" = "Silent Hill 3" ]; then
-            make -j $(nproc) sh3-report
-          else
-            make -j $(nproc) sh2-report
-          fi
+        run: make -j $(nproc) ${{ matrix.TARGET.ALIAS }}-report
 
       - name: upload to silenthillmuseum.org
         env:

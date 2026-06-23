@@ -1,0 +1,27 @@
+name: aot
+sha1: 5c4942e4276abb1d10cc28e750682ab65aedd8dc
+options:
+  basename: aot
+  elf_path: aot.bin
+  target_path: rom/overlay/aot.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/aot_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: aot_reloc_addrs.txt
+  ld_script_path: linkers/aot.ld
+  undefined_funcs_auto_path: linkers/aot_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/aot_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: aot
+    type: code
+    vram: 0x1F01E00
+    start: 0x0
+    subsegments:
+      - [0x0, databin, aot_overlay_header]
+      - [0x80, asm, Event/stage/stg_apart_out]
+      - [0xA00, data, Event/stage/stg_apart_out_data]
+  - [0xF80]

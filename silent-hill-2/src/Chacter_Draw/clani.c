@@ -340,6 +340,8 @@ void ClusterAnimeExec(shClusterAnime* cap, shAnime3d* ap, void* scp_d) {
     
 }
 
+// @todo: rodata is out of order?
+#ifdef NON_MATCHING
 #line 644
 float* ClusterAnimeGetWeights(shClusterAnime* cap, float* weights) {
     int n_clusters;
@@ -357,4 +359,10 @@ float* ClusterAnimeGetWeights(shClusterAnime* cap, float* weights) {
     
     return weights;
 }
-
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/clani", ClusterAnimeGetWeights)
+INCLUDE_RODATA("asm/nonmatchings/Chacter_Draw/clani", @595_0x0038D788)
+INCLUDE_RODATA("asm/nonmatchings/Chacter_Draw/clani", @597)
+INCLUDE_RODATA("asm/nonmatchings/Chacter_Draw/clani", @661_0x0038D7A0)
+INCLUDE_RODATA("asm/nonmatchings/Chacter_Draw/clani", @662_0x0038D7C0)
+#endif

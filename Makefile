@@ -85,11 +85,11 @@ LINKER_TEMPLATE := $(INCLUDE)/$(SERIAL).inc.lcf
 
 BINUTILS_FLAVOR := mips-ps2-decompals
 BINUTILS := $(TOOLS)/binutils-$(BINUTILS_FLAVOR)
+BINUTILS_VERSION_FILE := $(BINUTILS)/version-0-10
 
 AS := $(BINUTILS)/$(BINUTILS_FLAVOR)-as
-MWCCGAP_AS_FLAGS := -mno-pdr
 AS_FLAGS := \
-	-EL -march=r5900 -mabi=eabi -G=0 \
+	-EL -march=r5900 -mabi=eabi -G=0 -mno-branch-relocs \
 	$(MWCCGAP_AS_FLAGS) -I$(INCLUDE) -I$(CONFIG) \
 	-I$(COMMON_INCLUDE)
 
@@ -117,11 +117,13 @@ MWCCGAP_FLAGS := \
     --as-march=r5900 \
     --as-mabi=eabi \
 	--as-flags=$(MWCCGAP_AS_FLAGS)
+MWCCGAP_PATCH_VERSION_FILE := $(TOOLS)/mwccgap/mwccgap.patch
 
 ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@"
 else
-	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS)
+	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS) \
+		 -u __FILE__ -d __FILE__=\"$(<F)\"
 endif
 
 BINUTILS_TAR := binutils-$(BINUTILS_FLAVOR)-$(OS).tar.gz
@@ -138,7 +140,8 @@ GENERATE := $(ALESSATOOL) generate \
 	--template-path $(LINKER_TEMPLATE) \
 	--lcf-output-path $(LINKERS)/$(SERIAL).lcf \
 	--build-path $(BUILD) \
-	--config-path $(CONFIG)
+	--config-path $(CONFIG) \
+	--bss-alignment $(BSS_ALIGNMENT)
 EXTRACT := extract \
 	--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
 	--output-dir $(ROM) \
@@ -165,12 +168,13 @@ ifneq ($(LINK),0)
 endif
 endif
 
-TOOLCHAIN := $(WIBO) $(MWCCGAP_ENTRYPOINT) $(MWCC) $(MWLD) $(AS)
+TOOLCHAIN := $(WIBO) $(MWCC) $(MWLD) $(AS) \
+	$(BINUTILS_VERSION_FILE) $(MWCCGAP_PATCH_VERSION_FILE)
 SETUP := $(SOURCE_PREREQS) $(TOOLCHAIN)
 
 WIBO_HOST := https://github.com/decompals/wibo/releases/download/1.0.1
 COMPILERS_HOST := https://github.com/decompme/compilers/releases/download/compilers
-BINUTILS_HOST := https://github.com/dreamingmoths/binutils-mips-ps2-decompals/releases/download/v0.8-aarch64
+BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releases/download/v0.10
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
 ###############################################################
 all: $(TARGETS)
@@ -218,6 +222,8 @@ compiler-info:
 alessatool:
 	$(ALESSATOOL)
 
+binutils: $(AS)
+
 clean:
 	@$(MAKE) PROJECT=silent-hill-3 clean-project
 	@$(MAKE) PROJECT=silent-hill-2 clean-project
@@ -230,6 +236,9 @@ clean-project:
 
 extract: $(SOURCE_OVERLAY_ARCHIVE)
 	$(ALESSATOOL) $(EXTRACT)
+
+overlays-lowercase:
+	$(ALESSATOOL) util lowercase --folder-path $(ROM)/overlay
 
 sh3:
 	$(MAKE) PROJECT="silent-hill-3"
@@ -292,6 +301,7 @@ $(MWLD): | $(MWCC)
 
 $(AS):
 	@mkdir -p "$(@D)"
+	@touch $(BINUTILS_VERSION_FILE)
 	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
 	@chmod +x $(@D)/*
 
@@ -301,12 +311,21 @@ $(OBJDIFF):
 	@chmod +x $@
 
 $(MWCCGAP_ENTRYPOINT):
+	@touch $(MWCCGAP_PATCH_VERSION_FILE)
 	$(GIT) submodule update --init --recursive
+
+$(BINUTILS_VERSION_FILE): $(AS)
+	@rm -rf $(BINUTILS)
+	@make binutils
+
+$(MWCCGAP_PATCH_VERSION_FILE): $(MWCCGAP_ENTRYPOINT)
+	git submodule sync
+	git submodule update --init --recursive
 
 $(ALESSATOOL_OVERLAY_LOCK): $(SOURCE_OVERLAY_ARCHIVE)
 	@mkdir -p "$(@D)"
 	touch $(ALESSATOOL_OVERLAY_LOCK)
-	$(MAKE) extract
+	$(if $(SOURCE_OVERLAY_ARCHIVE),$(MAKE) extract,)
 
 $(OVERLAY_SOURCES): $(ALESSATOOL_OVERLAY_LOCK)
 
@@ -328,10 +347,10 @@ $(patsubst $(ASM)/%.s,$(BUILD)/asm/%.s.o, \
 endef
 ###############################################################
 PHONY_TARGETS := \
-	alessatool clean clean-project compiler-info death debug \
-	deep-clean diff expected extract heaven hell progress \
-	rebuild report setup sh2 sh3 sh2-clean sh3-clean \
-	sh2-report sh3-report split
+	alessatool binutils clean clean-project compiler-info \
+	death debug deep-clean diff expected extract heaven hell \
+	progress overlays-lowercase rebuild report setup sh2 sh3 \
+	sh2-clean sh3-clean sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)
 ifeq ($(filter $(PHONY_TARGETS) $(OBJDIFF_CONFIG),$(MAKECMDGOALS)),)
 -include $(BINARIES:%=$(LINKERS)/%.d)

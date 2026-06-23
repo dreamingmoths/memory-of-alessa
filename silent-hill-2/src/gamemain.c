@@ -10,9 +10,53 @@ extern Stage_Data* stage; // size: 0x4, address: 0x1126420
 
 INCLUDE_ASM("asm/nonmatchings/gamemain", get_gp_data_buf_addr);
 
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1030_0x00395CC0);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1031);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1032);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1033);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1034);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1035_0x00395D70);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1036_0x00395D90);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1037_0x00395DB0);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1038_0x00395DD0);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1039_0x00395DF0);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1040_0x00395E10);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1041);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1042);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1043);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1044);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1045);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1046);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1047_0x00395EF0);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1048);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1049_0x00395F30);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1050);
+
 INCLUDE_ASM("asm/nonmatchings/gamemain", GameMain);
 
 INCLUDE_ASM("asm/nonmatchings/gamemain", LoadBgSync);
+
+INCLUDE_RODATA("asm/nonmatchings/gamemain", @1084_0x00395FE0);
 
 #define SH2_PLAYABLE_MAIN_START        0
 #define SH2_PLAYABLE_MAIN_CONNECT      1

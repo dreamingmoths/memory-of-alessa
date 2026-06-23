@@ -90,19 +90,19 @@ typedef struct CharaData_Extra {
     int size;          // offset 0x4, size 0x4
 } CharaData_Extra;
 
-struct CharaData_MemAdmin mem_admin[32];
-u_char chara_data_use[1024];
-union fsFileIndex* stage_anim;
-u_long128 CHRDATA[];
-u_long128* chara_adress;
-struct CharaData_Extra chara_data_extra[8];
+extern CharaData_MemAdmin mem_admin[32];
+extern u_char chara_data_use[1024];
+extern fsFileIndex* stage_anim;
+extern u_long128 CHRDATA[];
+extern u_long128* chara_adress;
+extern CharaData_Extra chara_data_extra[8];
 
-union fsFileIndex data_chr_wp_jms_weapon_anm[1]; // size: 0x8, address: 0x3A1088
-union fsFileIndex data_chr_jms_hhh_jms_kg1[1];   // size: 0x8, address: 0x3A0D68
-union fsFileIndex data_chr_jms_lll_jms_mdl[1];   // size: 0x8, address: 0x3A0F80
-union fsFileIndex data_chr_jms_hll_jms_mdl[1];   // size: 0x8, address: 0x3A0D90
-union fsFileIndex data_chr_jms_rlll_jms_mdl[1];  // size: 0x8, address: 0x3A0F98
-union fsFileIndex data_chr_jms_rhll_jms_mdl[1];  // size: 0x8, address: 0x3A0F90
+extern fsFileIndex data_chr_wp_jms_weapon_anm[1]; // size: 0x8, address: 0x3A1088
+extern fsFileIndex data_chr_jms_hhh_jms_kg1[1];   // size: 0x8, address: 0x3A0D68
+extern fsFileIndex data_chr_jms_lll_jms_mdl[1];   // size: 0x8, address: 0x3A0F80
+extern fsFileIndex data_chr_jms_hll_jms_mdl[1];   // size: 0x8, address: 0x3A0D90
+extern fsFileIndex data_chr_jms_rlll_jms_mdl[1];  // size: 0x8, address: 0x3A0F98
+extern fsFileIndex data_chr_jms_rhll_jms_mdl[1];  // size: 0x8, address: 0x3A0F90
 
 void CharaDataLoadInit(void);
 void CharaDataLoadItem(void);

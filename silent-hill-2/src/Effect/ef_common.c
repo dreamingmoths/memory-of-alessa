@@ -18,7 +18,7 @@ static int EFCTDeleteOldBloodDropTask(void);
 static void InitEffectTexEnv(int EffectKind /* r2 */);
 static EFCTTask* EFCTEntryEffectTask(short Kind /* r17 */);
 static int EFCTAutoNextFrame(EFCTObject* pObj /* r2 */);
-static void EFCTDoCtrlDummy(void* ptr /* r2 */);
+/* static */ void EFCTDoCtrlDummy(void* ptr /* r2 */);
 
 extern /* static */ void (* EFCTControlFunc[9])(void *);
 
@@ -127,18 +127,10 @@ static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char lig
     InitEffectTexEnv(5);
 }
 
-void EFCTSetDramaDemoAngelaPapa(void) {   
-    float tv_pos[4] = { 19799.402f, -290.5385f, 61208.95f, 1.0f };
-    float tv_dir[4] = { 0.491818f, -0.790657f, -0.36466f, 0.0f };
-    float chara_pos[2][4] = {
-        { 0.0f, 0.0f, 0.0f, 1.0f },
-        { 0.0f, 0.0f, 0.0f, 0.0f }
-    };
-
-    EFCTSetBrokenGlass(tv_pos, tv_dir, chara_pos);
-    tv_pos[1] += 50.0f;
-    EFCTSetSmoke(tv_pos, 2);
-}
+extern float data_angela_papa_tv_pos[4];
+extern float data_angela_papa_tv_dir[4];
+extern float data_angela_papa_chara_pos[2][4];
+INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetDramaDemoAngelaPapa);
 
 void EFCTSetBrokenGlass(float* parent_pos /* r20 */, float* parent_direction /* r19 */, float (* chara_pos)[4] /* r18 */) {   
     EFCTTask* pTask; // r21    
@@ -180,6 +172,10 @@ void EFCTSetSmoke(float* pos /* r19 */, u_char kind /* r18 */) {
 }
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", GetEffectLayerNum);
+
+INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1103_0x0038DE90);
+
+INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1104_0x0038DEB0);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", InitEffectTexEnv);
 
@@ -314,7 +310,15 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTMakePacket);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetVertexPkData);
 
+const char rodata_1193_0x0038DF30[] = "ef_common.c:1118> assert:(%s)\n";
+
+INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1279_0x0038DF50);
+
+INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1424_0x0038DF70);
+
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTGetGiftag);
+
+INCLUDE_RODATA("asm/nonmatchings/Effect/ef_common", @1455);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTSetAlphaEnvironment);
 
@@ -324,7 +328,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTDeleteOldBloodDropTask);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTDeleteOldTask);
 
-static void EFCTDoCtrlDummy(void* ptr /* r2 */) {
+/* static */ void EFCTDoCtrlDummy(void* ptr /* r2 */) {
     EFCTCutEffectTask(ptr);
 }
 
