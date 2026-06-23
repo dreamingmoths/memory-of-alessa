@@ -386,7 +386,7 @@ segments:
       - [0x1ab0a0, data,    Enemy/en_red]
       - [0x1ab2a0, data,    data_0x1ab2a0]
       - [0x1b6c20, .data,   shGs/sh2gfw_GS_NewLoopEnv]
-      - [0x1b6c2c, data,    data_0x1b6c2c]
+      - [0x1b6c30, data,    data_0x1b6c30]
       # - [0x1b87c0, .data,   sound/sh_sound]
       - [0x1b9ae0, data,    data_0x1b9ae0]
       - [0x1bb580, .data,   Font/font]
