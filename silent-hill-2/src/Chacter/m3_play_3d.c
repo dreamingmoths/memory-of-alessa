@@ -25,6 +25,28 @@ static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 /* static */ void lower_readyoff_3d(SubCharacter* p);
 /* static */ void upper_readyoff_3d(SubCharacter* p);
 
+/* static */ void upper_lround_3d(void);
+
+/* static */ void upper_rround_3d(void);
+
+/* static */ void upper_lswalk_3d(void);
+
+/* static */ void upper_rswalk_3d(void);
+
+/* static */ void upper_run1_3d(SubCharacter* p);
+
+/* static */ void upper_run2_3d(SubCharacter* p);
+
+/* static */ void upper_run3_3d(SubCharacter* p);
+
+/* static */ void upper_lsrun_3d(void);
+
+/* static */ void upper_rsrun_3d(void);
+
+/* static */ void upper_lturn180_3d(void);
+
+/* static */ void upper_rturn180_3d(void);
+
 /* static */ void lower_jump_3d(void);
 /* static */ void upper_jump_3d(void);
 /* static */ void lower_guard_3d(SubCharacter* p);
@@ -33,6 +55,10 @@ static void lower_rround_3d_nata(SubCharacter* p, float* spd);
 /* static */ void upper_lstep_3d(void);
 /* static */ void lower_rstep_3d(void);
 /* static */ void upper_rstep_3d(void);
+
+/* static */ void upper_hold_3d(SubCharacter* p);
+
+/* static */ void upper_release_3d(SubCharacter* p);
 
 /* static */ void lower_attack_3d(SubCharacter* p);
 /* static */ void upper_attack_3d(SubCharacter* p);
@@ -203,11 +229,16 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rswalk_3d_nata);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lround_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lround_3d);
+/* static */ void upper_lround_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rround_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rround_3d);
+/* static */ void upper_rround_3d(void) {
+    return;
+}
+
 
 INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_3d", @947_0x0038C3B0);
 
@@ -229,39 +260,57 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_back_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lswalk_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lswalk_3d);
+/* static */ void upper_lswalk_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rswalk_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rswalk_3d);
+/* static */ void upper_rswalk_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_run1_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_run1_3d);
+/* static */ void upper_run1_3d(SubCharacter* p) {
+    upper_run1(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_run2_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_run2_3d);
+/* static */ void upper_run2_3d(SubCharacter* p) {
+    upper_run2(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_run3_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_run3_3d);
+/* static */ void upper_run3_3d(SubCharacter* p) {
+    upper_run3(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lsrun_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lsrun_3d);
+/* static */ void upper_lsrun_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rsrun_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rsrun_3d);
+/* static */ void upper_rsrun_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_lturn180_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_lturn180_3d);
+/* static */ void upper_lturn180_3d(void) {
+    return;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_rturn180_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rturn180_3d);
+/* static */ void upper_rturn180_3d(void) {
+    return;
+}
 
 /* static */ void lower_jump_3d(void) {
     return;
@@ -324,11 +373,15 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_rturn180_3d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_hold_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_hold_3d);
+/* static */ void upper_hold_3d(SubCharacter* p)  {
+    upper_hold(p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", lower_release_3d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_3d", upper_release_3d);
+/* static */ void upper_release_3d(SubCharacter* p) {
+    upper_release(p);
+}
 
 /* static */ void lower_attack_3d(SubCharacter* p) {
     lower_attack(p);
