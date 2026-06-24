@@ -19,6 +19,16 @@ void upper_ready(SubCharacter* p); // arg not present in DWARF
 void lower_readyoff(SubCharacter* p); // arg not present in DWARF
 void upper_readyoff(SubCharacter* p); // arg not present in DWARF
 
+void upper_run1(SubCharacter* p /* r2 */);
+void upper_run2(SubCharacter* p /* r16 */);
+void upper_run3(SubCharacter* p /* r2 */);
+
+void lower_hold(SubCharacter* p /* r18 */);
+void upper_hold(SubCharacter* p /* r17 */);
+
+void lower_release(SubCharacter* p /* r17 */);
+void upper_release(SubCharacter* p); // arg not present in DWARF
+
 void lower_attack(SubCharacter* p /* r18 */);
 void upper_attack(SubCharacter* p /* r18 */);
 void lower_kick(SubCharacter* p /* r16 */);
