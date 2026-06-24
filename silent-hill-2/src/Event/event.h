@@ -5,6 +5,19 @@
 #include "Chacter/character.h"
 #include "Event/item.h"
 
+// Flag bit indexes used with `GET_GAME_FLAG2`
+#define GAME_FLAG_43  43
+#define GAME_FLAG_47  47
+#define GAME_FLAG_62  62
+#define GAME_FLAG_66  66
+#define GAME_FLAG_67  67
+#define GAME_FLAG_72  72
+#define GAME_FLAG_88  88
+#define GAME_FLAG_95  95
+#define GAME_FLAG_117 117
+#define GAME_FLAG_146 146
+#define GAME_FLAG_168 168
+
 #define SET_EV_STEP(p_step, s_step) \
 do {                                \
     ev_p_step = p_step;             \
@@ -14,6 +27,8 @@ do {                                \
 #define GET_GAME_FLAG(index, bit) ((game_flag.flag[index] >> (bit)) & 1)
 #define SET_GAME_FLAG(index, bit) ((game_flag.flag[index] |= (1 << (bit))))
 #define UNSET_GAME_FLAG(index, bit) ((game_flag.flag[index] &= ~(1 << (bit))))
+
+#define GET_GAME_FLAG2(index) ((game_flag.flag[(index) / 32] >> ((index) % 32)) & 1)
 
 // total size: 0x10
 typedef struct Event_List {

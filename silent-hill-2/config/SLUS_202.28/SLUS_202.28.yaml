@@ -348,7 +348,7 @@ segments:
       - [0x192f50, asm, SH2_common/mem_share]
       - [0x1937c0, asm, Effect2/hh_class_flame_03]
       - [0x194300, asm, SH2_common/result]
-      - [0x1951b0, asm, view/vc_prio]
+      - [0x1951b0, c,   view/vc_prio]
       - [0x195480, asm, Effect2/hh_class_blood_05]
       - [0x195cc0, asm, Effect2/hh_class_blood_splash_phenomenon_02]
       - [0x196800, asm, Effect2/hh_class_water_80]
