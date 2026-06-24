@@ -5,18 +5,41 @@
 #include "Chacter/character.h"
 #include "Event/item.h"
 
-// Flag bit indexes used with `GET_GAME_FLAG2`
+// Flag bit indexes used with `GET_GAME_FLAG`/`SET_GAME_FLAG`/`UNSET_GAME_FLAG`.
+#define GAME_FLAG_15  15
+#define GAME_FLAG_16  16
+#define GAME_FLAG_17  17
+#define GAME_FLAG_18  18
+#define GAME_FLAG_19  19
+#define GAME_FLAG_25  25
+#define GAME_FLAG_26  26
 #define GAME_FLAG_43  43
 #define GAME_FLAG_47  47
 #define GAME_FLAG_62  62
 #define GAME_FLAG_66  66
 #define GAME_FLAG_67  67
+#define GAME_FLAG_68  68
 #define GAME_FLAG_72  72
 #define GAME_FLAG_88  88
 #define GAME_FLAG_95  95
 #define GAME_FLAG_117 117
 #define GAME_FLAG_146 146
+#define GAME_FLAG_147 147
+#define GAME_FLAG_148 148
 #define GAME_FLAG_168 168
+#define GAME_FLAG_171 171
+#define GAME_FLAG_192 192
+#define GAME_FLAG_193 193
+#define GAME_FLAG_194 194
+#define GAME_FLAG_197 197
+#define GAME_FLAG_227 227
+#define GAME_FLAG_228 228
+#define GAME_FLAG_251 251
+#define GAME_FLAG_272 272
+#define GAME_FLAG_501 501
+#define GAME_FLAG_502 502
+#define GAME_FLAG_503 503
+#define GAME_FLAG_607 607
 
 #define SET_EV_STEP(p_step, s_step) \
 do {                                \
@@ -24,11 +47,9 @@ do {                                \
     ev_s_step = s_step;             \
 } while (0);
 
-#define GET_GAME_FLAG(index, bit) ((game_flag.flag[index] >> (bit)) & 1)
-#define SET_GAME_FLAG(index, bit) ((game_flag.flag[index] |= (1 << (bit))))
-#define UNSET_GAME_FLAG(index, bit) ((game_flag.flag[index] &= ~(1 << (bit))))
-
-#define GET_GAME_FLAG2(index) ((game_flag.flag[(index) / 32] >> ((index) % 32)) & 1)
+#define GET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] >> ((index) & 0x1F)) & 1)
+#define SET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] |= (1 << ((index) & 0x1F))))
+#define UNSET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] &= ~(1 << ((index) & 0x1F))))
 
 // total size: 0x10
 typedef struct Event_List {

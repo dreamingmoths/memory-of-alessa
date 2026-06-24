@@ -328,7 +328,7 @@ u_int HH_Class_Water_30(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
 
     switch (pThis->Step) { /* irregular */
         case HH_WATER_30_STEP_INIT:
-            if (GET_GAME_FLAG(4, 20)) {
+            if (GET_GAME_FLAG(GAME_FLAG_148)) {
                 // @bug this is overwritten to 1 below
                 pThis->Step = 2;
             }
@@ -451,15 +451,15 @@ u_int HH_Class_Water_30(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                 }
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x14);
-            if (GET_GAME_FLAG(4, 19)) {
+            if (GET_GAME_FLAG(GAME_FLAG_147)) {
                 // @todo: is there a cleaner way to write this float?
                 float add_vec[4] = {0.0f, 50.000004f / time_234, 0.0f, 0.0f};
                 sceVu0AddVector(pThis->Location_Defference, pThis->Location_Defference, add_vec);
                 if (pThis->Location_Defference[1] > 1700.0f) {
-                    SET_GAME_FLAG(4, 20);
+                    SET_GAME_FLAG(GAME_FLAG_148);
                 }
             }
-            if (GET_GAME_FLAG(4, 20)) {
+            if (GET_GAME_FLAG(GAME_FLAG_148)) {
                 pThis->Step = HH_WATER_30_STEP_OFF;
             } else {
                 pThis->Timer += 1.0f / 30.0f;

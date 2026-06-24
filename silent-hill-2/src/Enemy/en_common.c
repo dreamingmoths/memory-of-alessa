@@ -146,14 +146,14 @@ int enGetStage(void) {
             ret = 0;
             break;
         case 2:
-            if (GET_GAME_FLAG(7, 27)) {
+            if (GET_GAME_FLAG(GAME_FLAG_251)) {
                 ret = 2;
                 break;
             }
             ret = 1;
             break;
         case 3:
-            if (GET_GAME_FLAG(7, 27)) {
+            if (GET_GAME_FLAG(GAME_FLAG_251)) {
                 ret = 4;
                 break;
             }

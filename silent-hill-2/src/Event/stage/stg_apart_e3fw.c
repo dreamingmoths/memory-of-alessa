@@ -70,12 +70,12 @@ extern /* static */ CharaData_DemoList stg_apart_e3fw_kagikeri_data[4]; // @ 0x0
             CharaAdminPlayableDisplay(1);
             SCNowDemoEventSwitch(sh2jms.player, false);
             vcReturnPreAutoCamWork(1);
-            SET_GAME_FLAG(2, 3);
+            SET_GAME_FLAG(GAME_FLAG_67);
             EV_PROG_STEP(13);
             /* fallthrough */
 
         case 13:
-            if (GET_GAME_FLAG(2, 2))
+            if (GET_GAME_FLAG(GAME_FLAG_66))
                 stg_apart_e3fw_EvProgSubScreamOn();
 
             SCNowPlayableEventSwitch(sh2jms.player, false);
@@ -88,7 +88,7 @@ extern /* static */ CharaData_DemoList stg_apart_e3fw_kagikeri_data[4]; // @ 0x0
 /* static */ int stg_apart_e3fw_EvProgGetHandgun(void) {
     int ret = EvSubItemGetAndAnim(4, 0); // r16
 
-    if (ret && GET_GAME_FLAG(2, 3)) {
+    if (ret && GET_GAME_FLAG(GAME_FLAG_67)) {
         stg_apart_e3fw_EvProgSubScreamOn();
     }
 
@@ -102,7 +102,7 @@ extern /* static */ CharaData_DemoList stg_apart_e3fw_kagikeri_data[4]; // @ 0x0
 /* static */ void stg_apart_e3fw_EvProgSubScreamOn(void) {
     SubCharacter* scp; // r16
 
-    SET_GAME_FLAG(2, 4);
+    SET_GAME_FLAG(GAME_FLAG_68);
     scp = shCharacter_Manage_GetCharacterList();
 
     while (scp != NULL) {

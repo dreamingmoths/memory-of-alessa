@@ -175,11 +175,9 @@ static int EventExecFlag(void) {
     st = EventListElement(el, 0xD);
     fl = EventListElement(el, 0x16);
     if (st == 1) {
-        SET_GAME_FLAG(fl >> 5, fl & 0x1F);
-        // SET_FLAG(game_flag.flag, fl); 
+        SET_GAME_FLAG(fl);
     } else {
-        UNSET_GAME_FLAG(fl >> 5, fl & 0x1F);
-        // UNSET_FLAG(game_flag.flag, fl);
+        UNSET_GAME_FLAG(fl);
     }
     EventExecSubFlagSet(el);
     return 1;
@@ -230,8 +228,7 @@ static int EventExecProgram(void) {
         if (ev_prog_flag_set != 0) {
             flg = EventListElement(el, 0x16);
             if (flg != 0) {
-                SET_GAME_FLAG(flg >> 5, flg & 0x1F);
-                //SET_FLAG(game_flag.flag, flg);
+                SET_GAME_FLAG(flg);
             }
         }
         return 1;
@@ -282,7 +279,7 @@ static int EventExecDoor(void) {
         }
         fl = EventListElement(el, 0x16);
         if (fl != 0) {
-            SET_GAME_FLAG(fl >> 5, fl & 0x1F);
+            SET_GAME_FLAG(fl);
         }
         EventExecSubFlagSet(el);
         SCNowPlayableEventSwitch(sh2jms.player, 1);
@@ -312,7 +309,7 @@ int LightSpotOnOffCheck(void) {
     if (!item.light_switch) {
         return 0;
     }
-    if (GET_GAME_FLAG(8, 16)) {
+    if (GET_GAME_FLAG(GAME_FLAG_272)) {
         return 0;
     }
     return 1;

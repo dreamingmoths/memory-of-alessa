@@ -29,11 +29,11 @@ int vcRetPrioCbEvnt(void) {
 
     switch (blk_no[0] & 0xFFFF) {
         case 54:
-            return GET_GAME_FLAG2(GAME_FLAG_43);
+            return GET_GAME_FLAG(GAME_FLAG_43);
         case 18:
-            return GET_GAME_FLAG2(GAME_FLAG_47);
+            return GET_GAME_FLAG(GAME_FLAG_47);
         case 67:
-            return GET_GAME_FLAG2(GAME_FLAG_117);
+            return GET_GAME_FLAG(GAME_FLAG_117);
     }
 
     return 0;
@@ -47,19 +47,19 @@ int vcRetPrioApEvnt(void) {
 
     switch (room) {
         case 23:
-            return GET_GAME_FLAG2(GAME_FLAG_62);
+            return GET_GAME_FLAG(GAME_FLAG_62);
         case 27:
-            return GET_GAME_FLAG2(GAME_FLAG_66);
+            return GET_GAME_FLAG(GAME_FLAG_66);
         case 31:
-            return GET_GAME_FLAG2(GAME_FLAG_67);
+            return GET_GAME_FLAG(GAME_FLAG_67);
         case 24:
-            return GET_GAME_FLAG2(GAME_FLAG_72);
+            return GET_GAME_FLAG(GAME_FLAG_72);
         case 30:
-            return GET_GAME_FLAG2(GAME_FLAG_88);
+            return GET_GAME_FLAG(GAME_FLAG_88);
         case 21:
-            return GET_GAME_FLAG2(GAME_FLAG_95);
+            return GET_GAME_FLAG(GAME_FLAG_95);
         case 33:
-            return GET_GAME_FLAG2(GAME_FLAG_146);
+            return GET_GAME_FLAG(GAME_FLAG_146);
     }
 
     return 0;
@@ -73,7 +73,7 @@ int vcRetPrioCcEvnt(void) {
 
     switch (blk_no[0] & 0xFFFF) {
         case 41:
-            return GET_GAME_FLAG2(GAME_FLAG_168);
+            return GET_GAME_FLAG(GAME_FLAG_168);
     }
 
     return 0;

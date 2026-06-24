@@ -150,7 +150,7 @@ void ChizuCurrentPositionCheck(float* px, float* py) {
         case 0x27:                                      /* switch 1 */
         case 0x28:                                      /* switch 1 */
             SET_MAP_POSITION(0.0087f, 0.0096f);
-            if (!(GET_GAME_FLAG(0, 0x19)) && ((GET_GAME_FLAG(0, 0x1A)) == 1)) {
+            if (!(GET_GAME_FLAG(GAME_FLAG_25)) && ((GET_GAME_FLAG(GAME_FLAG_26)) == 1)) {
                 switch (chizu_crnt) {                   /* switch 2; irregular */
                 case 7:                                 /* switch 2 */
                     *px += 24.965286f;
@@ -164,7 +164,7 @@ void ChizuCurrentPositionCheck(float* px, float* py) {
         case 0x25:                                      /* switch 1 */
         case 0x26:                                      /* switch 1 */
             SET_MAP_POSITION(0.00801f, 0.01037f);
-            if (!(GET_GAME_FLAG(0, 0x19)) && ((GET_GAME_FLAG(0, 0x1A)) == 1)) {
+            if (!(GET_GAME_FLAG(GAME_FLAG_25)) && ((GET_GAME_FLAG(GAME_FLAG_26)) == 1)) {
                 switch (chizu_crnt) {                   /* switch 3; irregular */
                 case 7:                                 /* switch 3 */
                     *px += 16.965286f;
@@ -307,34 +307,34 @@ void ChizuCurrentPositionCheck(float* px, float* py) {
             *py = -1956.7996f - (0.019375f * jms->pos.z);
             return;
         case 0x2A:                                      /* switch 1 */
-            if (GET_GAME_FLAG(0, 0x13)) {
+            if (GET_GAME_FLAG(GAME_FLAG_19)) {
                 *px = 1421.101f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 531.00037f;
                 return;
             }
-            if (GET_GAME_FLAG(0, 0x12)) {
+            if (GET_GAME_FLAG(GAME_FLAG_18)) {
                 *px = 1421.101f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 289.90015f;
                 return;
             }
-            if (GET_GAME_FLAG(0, 0x11)) {
+            if (GET_GAME_FLAG(GAME_FLAG_17)) {
                 *px = 1385.2999f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 426.99988f;
                 return;
             }
             break;
         case 0x46:                                      /* switch 1 */
-            if (GET_GAME_FLAG(0, 0x13)) {
+            if (GET_GAME_FLAG(GAME_FLAG_19)) {
                 *px = 240.9f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 6029.8965f;
                 return;
             }
-            if (GET_GAME_FLAG(0, 0x12)) {
+            if (GET_GAME_FLAG(GAME_FLAG_18)) {
                 *px = 238.69986f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 5789.196f;
                 return;
             }
-            if (GET_GAME_FLAG(0, 0x11)) {
+            if (GET_GAME_FLAG(GAME_FLAG_17)) {
                 *px = 203.69986f + (0.01477f * sh2jms.player->pos.x);
                 *py = (0.019658f * -sh2jms.player->pos.z) - 5931.196f;
                 return;

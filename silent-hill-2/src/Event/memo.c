@@ -214,15 +214,15 @@ static void MemoPictureLoad(union fsFileIndex* file0, union fsFileIndex* file1) 
     switch (select) {
         
         case 17:
-            if (!GET_GAME_FLAG(18, 31)) file0 = file1 = NULL;            
+            if (!GET_GAME_FLAG(GAME_FLAG_607)) file0 = file1 = NULL;            
             break;
         
         case 31:
-            if (!GET_GAME_FLAG(5, 11)) file0 = file1 = NULL;            
+            if (!GET_GAME_FLAG(GAME_FLAG_171)) file0 = file1 = NULL;            
             break;
         
         case 32:    
-            if (!GET_GAME_FLAG(7, 3) && !GET_GAME_FLAG(7, 4))
+            if (!GET_GAME_FLAG(GAME_FLAG_227) && !GET_GAME_FLAG(GAME_FLAG_228))
                 file0 = file1 = NULL;            
             break;
     }
@@ -287,12 +287,12 @@ static void MemoSelectBarDraw(int msg /* r2 */, int y /* r16 */) { // not line m
 static void MemoPictureLayerDraw(int rgb) { // apperently this takes an argument
     switch (select) {
         case 17:
-            if (GET_GAME_FLAG(18, 31)) 
+            if (GET_GAME_FLAG(GAME_FLAG_607)) 
                 MemoPictureLayerDrawSafeLock();
             break;
         case 30: MemoPictureLayerDrawGuruguru(); break;
         case 32:
-            if (GET_GAME_FLAG(7, 3) || GET_GAME_FLAG(7, 4))
+            if (GET_GAME_FLAG(GAME_FLAG_227) || GET_GAME_FLAG(GAME_FLAG_228))
                 
                 MemoPictureLayerDrawAngelRing();            
             break;
@@ -314,7 +314,7 @@ static void MemoPictureLayerDrawAngelRing(void) { // not line matched (need to a
     pic.tex = -1;
     pic.clut = -1;
     pic.status |= 1;
-    if (GET_GAME_FLAG(7, 3)) {
+    if (GET_GAME_FLAG(GAME_FLAG_227)) {
         pic.x0 = 0x939;
         pic.y0 = 0x635;
         pic.x1 = 0xA39;
@@ -335,7 +335,7 @@ static void MemoPictureLayerDrawAngelRing(void) { // not line matched (need to a
         pic.status |= 0x20;
         PictureDraw((struct PicDraw_Data*) &pic);
     }
-    if (GET_GAME_FLAG(7, 4)) {
+    if (GET_GAME_FLAG(GAME_FLAG_228)) {
         pic.x0 = 0x472;
         pic.y0 = 6;
         pic.x1 = 0x572;

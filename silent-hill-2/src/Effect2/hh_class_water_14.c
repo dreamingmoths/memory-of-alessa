@@ -336,7 +336,7 @@ u_int HH_Class_Water_14(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
     switch (pThis->Step) { /* irregular */
         case HH_WATER_14_STEP_INIT:
             Object_Initialize(pThis);
-            if (!GET_GAME_FLAG(15, 22)) {
+            if (!GET_GAME_FLAG(GAME_FLAG_502)) {
                 sceVu0CopyVector(pThis->Location_Defference, (sceVu0FVECTOR){0.0f, 460.0f, 0.0f, 0.0f});
             }
             pThis->Step = 1;
@@ -458,11 +458,11 @@ u_int HH_Class_Water_14(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                 }
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x14);
-            if (!GET_GAME_FLAG(15, 22) && GET_GAME_FLAG(15, 21)) {
+            if (!GET_GAME_FLAG(GAME_FLAG_502) && GET_GAME_FLAG(GAME_FLAG_501)) {
                 float add_vec[4] = {0.0f, 15.333334f / time_233, 0.0f, 0.0f}; // r29+0x160
                 sceVu0SubVector(pThis->Location_Defference, pThis->Location_Defference, add_vec);
                 if (pThis->Location_Defference[1] <= 0.0f) {
-                    SET_GAME_FLAG(15, 22);
+                    SET_GAME_FLAG(GAME_FLAG_502);
                 }
             }
             pThis->Timer += 1.0f / 30.0f;

@@ -112,7 +112,7 @@ int PlayableMain(void) {
             } else if (!halt) {
                 JumpMenuPosNormal();
                 PlayerSetHeightConnectWait();
-                if (GET_GAME_FLAG(0, 15)) {
+                if (GET_GAME_FLAG(GAME_FLAG_15)) {
                     MariaSetHeightConnectWait();
                 }
                 sh2sys_step_2();

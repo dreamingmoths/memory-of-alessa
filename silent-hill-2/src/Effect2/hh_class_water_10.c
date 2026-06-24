@@ -384,7 +384,7 @@ u_int HH_Class_Water_10(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x14);
             HH_DBG_Wrapper_T0_COUNT_Delta();
-            if (GET_GAME_FLAG(15, 23)) {
+            if (GET_GAME_FLAG(GAME_FLAG_503)) {
                 pThis->Step = 2;
             }
             pThis->Timer += 1.0f / 30.0f;
