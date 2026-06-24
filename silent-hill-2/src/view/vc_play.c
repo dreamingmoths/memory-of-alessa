@@ -1,4 +1,6 @@
 #include "vc_play.h"
+#include "SH2_common/sh_vu0.h"
+#include "SH2_common/sh2dt.h"
 
 static inline float vec2_length(float* a, float* b) {
     float result;

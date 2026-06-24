@@ -51,10 +51,4 @@ void vwSetViewInfo(void);
 
 void vwSetViewInfoDirectMatrix(VbCOORDINATE* pcoord, sceVu0FMATRIX cammat);
 
-// @todo: should just include sh_vu0.h? (lives in src/ atm)
-extern float shAngleRegulate(float);
-extern float shAtan2(float, float);
-extern float shSinF(float);
-extern float shCosF(float);
-
 #endif // VW_MAIN_H

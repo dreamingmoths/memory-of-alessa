@@ -1,5 +1,6 @@
 #include "vw_main.h"
 #include "vec.h"
+#include "SH2_common/sh_vu0.h"
 
 #line 52
 void vwInitViewInfo(void) {
@@ -27,7 +28,7 @@ void vwGetViewAngle(sceVu0FVECTOR pos) {
 }
 
 #line 184
-void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, sceVu0FVECTOR ref, f32 cam_ang_y, f32 cam_ang_z, f32 cam_y, f32 cam_xz_r) {
+void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, sceVu0FVECTOR ref, float cam_ang_y, float cam_ang_z, float cam_y, float cam_xz_r) {
     sceVu0FVECTOR view_ang;
 
     vwViewPointInfo.vwcoord.flg = 0;
@@ -40,7 +41,7 @@ void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, sceVu0FVECTOR ref, f32 cam_an
 
 
     view_ang[0] *= -1.0f;
-    view_ang[1] += 3.1415927f;
+    view_ang[1] += PI;
 
     view_ang[0] = shAngleRegulate(view_ang[0]);
     view_ang[1] = shAngleRegulate(view_ang[1]);

@@ -41,9 +41,6 @@ extern void GetPlayerPartsLocalMatrix(float (*mat)[4] /* r2 */, u_int parts_name
 extern void GetPlayerPartsWorldMatrix(float (*mat)[4] /* r2 */, u_int parts_name /* r2 */);
 extern float PlayerGetNeckAngleX(void);
 extern float PlayerGetNeckAngleY(void);
-extern float shAtan2(float, float);
-extern void shMulMatrix(float (*m0)[4] /* r2 */, float (*m1)[4] /* r2 */, float (*m2)[4] /* r2 */);
-extern float shGetFPS(void);
 
 extern struct shPlayerWork sh2jms;
 extern SYS_W sys;
