@@ -18,6 +18,7 @@ from pathlib import Path
 from subprocess import run
 from dataclasses import dataclass
 from constants import *
+from struct import unpack
 
 @dataclass
 class AnnotationArgs:
@@ -27,13 +28,15 @@ class AnnotationArgs:
     asm_path: Path | None
     out_path: Path
     addr2line_path: Path
+    line_file_path: Path | None
     tu: bool
     encoding: str
     stdout: bool
     verbose: bool
 
 def annotate_asm(args: AnnotationArgs):
-    asm_contents = args.asm_path.read()
+    with open(args.asm_path, "r") as asm_file:
+        asm_contents = asm_file.read()
 
     asm_lines = asm_contents.splitlines()
     asm_line_index = 0
@@ -44,9 +47,25 @@ def annotate_asm(args: AnnotationArgs):
     if vram_start is None or vram_end is None:
         vram_start, vram_end = find_vram_bounds(asm_lines)
 
-    addresses = (f"0x{v:X}" for v in range(vram_start, vram_end, 0x4))
-    proc = run([args.addr2line_path, "-e", args.elf_path, *addresses], capture_output=True, encoding=args.encoding)
-    addr2line_output_lines = proc.stdout.splitlines()
+    line_file_path = get_line_file_path(args)
+
+    if line_file_path is None or not line_file_path.exists():
+        addresses = (f"0x{v:X}" for v in range(vram_start, vram_end, 0x4))
+        proc = run([args.addr2line_path, "-e", args.elf_path, *addresses], capture_output=True, encoding=args.encoding)
+        addr2line_output_lines = proc.stdout.splitlines()
+    else:
+        # parse the binary line number file.
+
+        # the format is a list of u_shorts, one per line number.
+        # there should be one line number per vram address, and each vram
+        # address should be exactly 4 bytes apart, mirroring how the addr2line
+        # output is formatted
+
+        with open(line_file_path, "rb") as line_file:
+            line_data = line_file.read()
+            line_numbers = unpack(f"<{len(line_data) // 2}H", line_data)
+            compile_unit = args.asm_path.with_suffix(".c").name
+            addr2line_output_lines = list(map(lambda n : to_addr2line_format(compile_unit, n), line_numbers))
 
     main_tu_name = None
     prev_tu_name = None
@@ -148,6 +167,17 @@ def annotate_asm(args: AnnotationArgs):
     else:
         stdout.write(annotated_asm_contents)
 
+def get_line_file_path(args: AnnotationArgs):
+    if args.line_file_path is not None:
+        return args.line_file_path
+
+    if args.elf_path.name == SH2_SERIAL and "Event/stage" in args.asm_path.as_posix():
+        return Path(f"{TOOLS}/alessatool/dwarf") / Path(args.asm_path.name).with_suffix(".line")
+
+    return None
+
+def to_addr2line_format(compile_unit: str, line_number: int):
+    return f"{compile_unit}:{line_number}"
 
 def find_vram_bounds(asm_lines: list[str]):
     start = None
