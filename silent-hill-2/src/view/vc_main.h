@@ -15,7 +15,7 @@ typedef enum _VC_ROAD_TYPE { // : u_char
 } VC_ROAD_TYPE;
 
 // @note: guessed name, enum was unnamed in symbols?
-typedef enum _VC_CHK_TYPE { // : u_char
+typedef enum { // : u_char
     VC_CHK_NEAREST_ROAD_TYPE,
     VC_CHK_NEAREST_SWITCH_TYPE
 } VC_CHK_TYPE;
