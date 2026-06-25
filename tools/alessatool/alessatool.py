@@ -163,7 +163,7 @@ def main():
     )
     annotate_parser.add_argument(
         "--asm-path",
-        type=argparse.FileType("r"),
+        type=Path,
         default="-",
         help="path to the asm file to annotate"
     )
@@ -183,6 +183,12 @@ def main():
         type=Path,
         default=ADDR2LINE_PATH,
         help="path to addr2line"
+    )
+    annotate_parser.add_argument(
+        "--line-file-path",
+        type=Path,
+        default=None,
+        help="path to file containing line numbers, packed into unsigned shorts"
     )
     annotate_parser.add_argument(
         "--encoding",
