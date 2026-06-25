@@ -4,8 +4,7 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
-typedef enum _VC_ROAD_TYPE // : u_char
-{
+typedef enum _VC_ROAD_TYPE { // : u_char
     VC_RD_TYPE_ROAD,
     VC_RD_TYPE_EFFECT,
     VC_RD_TYPE_EVENT,
@@ -16,8 +15,7 @@ typedef enum _VC_ROAD_TYPE // : u_char
 } VC_ROAD_TYPE;
 
 // @note: guessed name, enum was unnamed in symbols?
-typedef enum _VC_CHK_TYPE // : u_char
-{
+typedef enum _VC_CHK_TYPE { // : u_char
     VC_CHK_NEAREST_ROAD_TYPE,
     VC_CHK_NEAREST_SWITCH_TYPE
 } VC_CHK_TYPE;
@@ -85,8 +83,7 @@ typedef struct _VC_LIMIT_AREA {
     /* 0x14 */ float max_hy;
 } VC_LIMIT_AREA;
 
-typedef enum _THROUGH_DOOR_SET_CMD_TYPE // : u_char
-{
+typedef enum _THROUGH_DOOR_SET_CMD_TYPE { // : u_char
     VC_TDSC_START,
     VC_TDSC_END,
     VC_TDSC_MAIN
@@ -131,8 +128,7 @@ typedef struct _VC_LOCUS_CIRCLE_CAM_PARAM {
     /* 0xc */ float radius;
 } VC_LOCUS_CIRCLE_CAM_PARAM;
 
-typedef enum _VC_AREA_SIZE_TYPE // : u_char
-{
+typedef enum _VC_AREA_SIZE_TYPE { // : u_char
     VC_AREA_TINY,
     VC_AREA_SMALL,
     VC_AREA_WIDE,
@@ -140,8 +136,7 @@ typedef enum _VC_AREA_SIZE_TYPE // : u_char
     VC_AREA_SUU
 } VC_AREA_SIZE_TYPE;
 
-typedef enum _VC_CAM_MV_TYPE // : u_char
-{
+typedef enum _VC_CAM_MV_TYPE { // : u_char
     VC_MV_CHASE,
     VC_MV_SETTLE,
     VC_MV_FIX_ANG,
@@ -151,8 +146,7 @@ typedef enum _VC_CAM_MV_TYPE // : u_char
     VC_MV_SUU
 } VC_CAM_MV_TYPE;
 
-typedef enum _VC_ROAD_FLAGS // : u_short
-{
+typedef enum _VC_ROAD_FLAGS { // : u_short
     VC_RD_NOFLAG = 0x0,
     VC_RD_END_DATA_F = 0x1,
     VC_RD_WARP_IN_F = 0x2,
@@ -169,7 +163,7 @@ typedef enum _VC_ROAD_FLAGS // : u_short
     VC_RD_INVALID_SV_F = 0x800
 } VC_ROAD_FLAGS;
 
-// @note Not defined in SH2 symbols. Values taken from the `vrDispMsgVC_ROAD_DIR_TYPE` debug func (may 2001 proto only?).
+// @note Not included in symbols. Values taken from the `vrDispMsgVC_ROAD_DIR_TYPE` debug func (may 2001 proto only?).
 typedef enum _VC_ROAD_DIR_TYPE {
     VC_RD_DIR_Z = 0,
     VC_RD_DIR_X = 1
