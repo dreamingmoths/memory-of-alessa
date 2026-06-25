@@ -1,5 +1,6 @@
 #include "sh2_common.h"
 #include "SH2_common/pad.h"
+#include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2sys.h"
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/playing_info.h"
@@ -8,6 +9,8 @@
 #include "Event/event_sub.h"
 #include "Event/chara_admin.h"
 #include "Event/demoview.h"
+#include "Event/item.h"
+#include "Event/chara_data_load.h"
 
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_angela.h"
@@ -21,11 +24,26 @@
 #include "Effect/screen_effect.h"
 #include "data/daily.thu/data_pic_out.h"
 
-/* static */ char* stg_forest_dds_adr; // size: 0x4, address: 0x0
-/* static */ float stg_forest_agl_pos_0[2][4]; // size: 0x20, address: 0x1F03A90
-/* static */ float stg_forest_agl_pos_1[2][4]; // size: 0x20, address: 0x1F03AB0
-/* static */ DramaDemo_PlayInfo stg_forest_grave; // @ 0x01F03B90
-/* static */ DramaDemo_MessageTime stg_forest_movie_msg[6]; // @ 0x01F03AF0
+extern /* static */ char* stg_forest_dds_adr; // size: 0x4, address: 0x0
+extern /* static */ float stg_forest_agl_pos_0[2][4]; // size: 0x20, address: 0x1F03A90
+extern /* static */ float stg_forest_agl_pos_1[2][4]; // size: 0x20, address: 0x1F03AB0
+extern /* static */ DramaDemo_PlayInfo stg_forest_grave; // @ 0x01F03B90
+extern /* static */ DramaDemo_MessageTime stg_forest_movie_msg[6]; // @ 0x01F03AF0
+
+extern /* static */ float stg_forest_forest_se_x; // size: 0x4, address: 0x1F03E18
+extern /* static */ float stg_forest_forest_se_y; // size: 0x4, address: 0x1F03E20
+extern /* static */ float stg_forest_forest_se_r; // size: 0x4, address: 0x1F03E28
+
+extern /* static */ char* stg_forest_dds_adr_h; // size: 0x4, address: 0x1F02F80
+extern /* static */ char* stg_forest_dds_adr_i; // size: 0x4, address: 0x1F02F88
+extern /* static */ CharaData_DemoList stg_forest_chara_data[3]; // @ 0x01F03D10
+extern /* static */ CharaData_DemoList D_01F03D10_fst[3]; // @ 0x01F03D10
+
+
+extern fsFileIndex data_movie_hakaba_pss;
+extern fsFileIndex data_demo_haka_agl_haka_agl_i_dds[1]; // size: 0x8, address: 0x3A12B8
+extern fsFileIndex data_demo_haka_agl_haka_agl_h_dds[1]; // size: 0x8, address: 0x3A12B0
+extern fsFileIndex data_demo_haka_agl_haka_agl_dds[1]; // size: 0x8, address: 0x3A12A8
 
 #line 131
 int stg_forest_EvProgFirstSaveWell(void) {
@@ -175,13 +193,55 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvProgGraveLoo
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvProgLastScene);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvProgGetChainsaw);
+void stg_forest_EvProgGetChainsaw(void) {
+    EvSubItemGetAndAnim(CHAINSAW, 4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvStageInit);
+void stg_forest_EvStageInit(void) {
+    CharaDataDeleteAll();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvRoomInit);
+#line 529
+void stg_forest_EvRoomInit(void) {
+    SubCharacter* scp; // r2
+    float vec0[4]; // r29+0x10
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvSoundCallAfterLoad);
+
+
+
+
+
+
+
+
+
+    if (GET_GAME_FLAG(512)) return;
+    CharaDataLoadDemo(stg_forest_chara_data, 0);
+    stg_forest_dds_adr = CharaDataLoadExtra(data_demo_haka_agl_haka_agl_dds, 0x200);
+
+    stg_forest_dds_adr_h = CharaDataLoadExtra(data_demo_haka_agl_haka_agl_h_dds, 0x200);
+    
+    stg_forest_dds_adr_i = CharaDataLoadExtra(data_demo_haka_agl_haka_agl_i_dds, 0x200);
+    
+    fsSync(0, -1);
+    *(u_long128*) &vec0 = 0;
+    vec0[1] = PI;
+    if (GET_GAME_FLAG(36)) {
+        scp = CharaWorkCreate(AGL_CHARA_KIND, 0, stg_forest_agl_pos_1[0], vec0, 0);
+        shCharacterHumanAGLAnimeSetP(scp, 3902);
+    } else {
+        scp = CharaWorkCreate(AGL_CHARA_KIND, 0, stg_forest_agl_pos_0[0], vec0, 0);
+        shCharacterHumanAGLAnimeSetP(scp, 3901);
+    }
+}
+
+#line 565
+void stg_forest_EvSoundCallAfterLoad(void) {
+    SeCallPos(10050, 1.0f, NULL, 8);
+    stg_forest_forest_se_x = shRandF();
+    stg_forest_forest_se_y = shRandF();
+    stg_forest_forest_se_r = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_forest", stg_forest_EvAllTimeFunc);
 
