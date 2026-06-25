@@ -1,6 +1,33 @@
 #ifndef VB_MAIN_H
 #define VB_MAIN_H
 
+typedef struct _VbCOORDINATE {
+    // total size: 0x140
+    u_int flg;                   // offset 0x0, size 0x4
+    sceVu0FMATRIX coord;         // offset 0x10, size 0x40
+    sceVu0FMATRIX work;          // offset 0x50, size 0x40
+    u_int* param;                // offset 0x90, size 0x4
+    struct _VbCOORDINATE* super; // offset 0x94, size 0x4
+    struct _VbCOORDINATE* sub;   // offset 0x98, size 0x4
+    struct /* @anon0 */ {
+        // total size: 0x8
+        short vx;      // offset 0x0, size 0x2
+        short vy;      // offset 0x2, size 0x2
+        short vz;      // offset 0x4, size 0x2
+        short pad;     // offset 0x6, size 0x2
+    } r;               // offset 0x9C, size 0x8
+    sceVu0FMATRIX lw;  // offset 0xB0, size 0x40
+    sceVu0FMATRIX ls;  // offset 0xF0, size 0x40
+    sceVu0FVECTOR rot; // offset 0x130, size 0x10
+} VbCOORDINATE;
+
+typedef struct _VbRVIEW {
+    /* 0x00 */ sceVu0FVECTOR vp;
+    /* 0x10 */ sceVu0FVECTOR vr;
+    /* 0x20 */ float rz;
+    /* 0x24 */ VbCOORDINATE* super;
+} VbRVIEW;
+
 typedef struct _VbWVSMATRIX {
     // total size: 0xC0
     float wvm[4][4]; // offset 0x0, size 0x40
@@ -43,5 +70,14 @@ typedef struct _VbSCREENINFO {
 
 extern VbSCREENINFO VbScreenInfo; // size: 0x24, address: 0x10E5910
 extern VbWVSMATRIX VbWvsMatrix;   // size: 0xC0, address: 0x10E59D0
+
+void vbCalcViewScreenMatrix(void);
+void vbInitCoordinate(VbCOORDINATE* super, VbCOORDINATE* coord);
+void vbSetWorldScreenMatrix(void);
+void vbGetLw(VbCOORDINATE* coord, int fflip);
+int vbSetRefView(VbRVIEW* rview);
+float vbNormalizeRadianAngle(float ang);
+void vbTransposeMatrixWithoutTr(float m0[4], float m1[4]);      // @todo: check types
+void vbApplyMatrixWithoutTr(float* v0, float m0[4], float* v1); // @todo: check types
 
 #endif // VB_MAIN_H

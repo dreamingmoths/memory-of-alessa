@@ -1,4 +1,5 @@
 #include "vc_play.h"
+#include "Chacter/m3_play.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 

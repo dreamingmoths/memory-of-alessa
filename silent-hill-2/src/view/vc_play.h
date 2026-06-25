@@ -37,13 +37,10 @@ typedef struct _SYS_W {
     struct _KANRI hero; // offset 0x10, size 0x40
 } SYS_W;
 
-extern void GetPlayerPartsLocalMatrix(float (*mat)[4] /* r2 */, u_int parts_name /* r17 */);
-extern void GetPlayerPartsWorldMatrix(float (*mat)[4] /* r2 */, u_int parts_name /* r2 */);
-extern float PlayerGetNeckAngleX(void);
-extern float PlayerGetNeckAngleY(void);
-
 extern struct shPlayerWork sh2jms;
 extern SYS_W sys;
 extern VC_PRE_INFO vcPreInfo;
+
+void vcPreSetCharaDataForCamera(void);
 
 #endif
