@@ -8,8 +8,28 @@
 
 extern float angle;
 extern float dtf_0x003C8450;
+extern int dt_0x003C8458;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerChangeAngleToCameraY);
+void PlayerChangeAngleToCameraY(SubCharacter* this) {
+    f32 diff;
+    f32 step;
+
+    diff = shAngleRegulate(this->rot.y - this->spd_roty);
+    step = (diff / 3.0915927410125734) * (20.0f * dtf_0x003C8450);
+
+    if (diff >= 0.0f) {
+        if ((diff - step) <= 0.0f) {
+            this->rot.y = this->spd_roty;
+        } else {
+            this->rot.y -= step;
+        }
+    } else if ((diff - step) >= 0.0f) {
+        this->rot.y = this->spd_roty;
+    } else {
+        this->rot.y -= step;
+    }
+    this->rot.y = shAngleRegulate(this->rot.y);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", lower_walk_2d_nata);
 
@@ -115,8 +135,12 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", lower_event_2d);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", upper_event_2d);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerUpdateStatus2D);
-
+void PlayerUpdateStatus2D(SubCharacter* this) {
+    dt_0x003C8458 = shGetDF();
+    dtf_0x003C8450 = shGetDT();
+    PlayerSetDT();
+    PlayerUpdateStatus(this);
+}
 
 void PlayerUpdateStatusLower2D(SubCharacter* this) {
     shPlayerWork* w = &sh2jms; // r16
@@ -638,10 +662,71 @@ void PlayerUpdateStatusUpper2D(SubCharacter* this) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerUpdateStatusLower2nd2D);
+void PlayerUpdateStatusLower2nd2D(SubCharacter* this) {
+    shPlayerWork* w = &sh2jms;
+
+    switch (w->upper_now) {
+        case JMS_ST_U_HOLD:
+            if ((lower_flg_on(1 << JMS_ST_L_HOLD)) && (w->lower_now != JMS_ST_L_HOLD)) {
+                lower_st_set(JMS_ST_L_HOLD, w);
+                lower_flg_set(JMS_ST_L_HOLD, w);
+            }
+            break;
+        case JMS_ST_U_RELEASE:
+            if ((lower_flg_on(1 << JMS_ST_L_RELEASE) != 0) && (w->lower_now != JMS_ST_L_RELEASE)) {
+                lower_st_set(JMS_ST_L_RELEASE, w);
+                lower_flg_set(JMS_ST_L_RELEASE, w);
+                player_flg_on(&w->l_anime_st_flg, 0x40);
+            }
+            break;
+        case JMS_ST_U_ATTACK:
+            if (lower_flg_on(1 << JMS_ST_L_ATTACK)) {
+                if ((w->lower_now != JMS_ST_L_ATTACK) || (w->lower_prev == JMS_ST_L_ATTACK)) {
+                    lower_st_set(JMS_ST_L_ATTACK, w);
+                    lower_flg_set(JMS_ST_L_ATTACK, w);
+                }
+            } else if ((lower_flg_on(0x04000000) != 0) && (w->lower_now != JMS_ST_L_HOLD)) {
+                lower_st_set(JMS_ST_L_HOLD, w);
+                lower_flg_set(JMS_ST_L_HOLD, w);
+                player_flg_off(&w->lower_st_flg, 0x1000);
+                player_flg_off(&w->lower_st_flg, 0x2000);
+                player_flg_off(&w->lower_st_flg, 0x4000);
+                player_flg_off(&w->lower_st_flg, 0x10000);
+                player_flg_off(&w->lower_st_flg, 0x8000);
+                player_flg_off(&w->lower_st_flg, 0x100);
+                player_flg_off(&w->lower_st_flg, 0x200);
+                player_flg_off(&w->lower_st_flg, 0x800);
+                player_flg_off(&w->lower_st_flg, 0x400);
+            }
+            break;
+        case JMS_ST_U_KICK:
+            break;
+    }
+
+    switch (w->lower_now) {
+        case JMS_ST_L_RUN1:
+        case JMS_ST_L_RUN2:
+        case JMS_ST_L_RUN3:
+        case JMS_ST_L_RSRUN:
+        case JMS_ST_L_LSRUN:
+            w->running = 1;
+            break;
+        default:
+            w->running = 0;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerUpdatePosition2D);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerCheckAttack2D);
+void PlayerCheckAttack2D(SubCharacter* this) {
+    PlayerCheckAttack(this);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_2d", PlayerCheckControl2D);
+void PlayerCheckControl2D(SubCharacter* this) {
+    PlayerUpdateStatus2D(this);
+    PlayerUpdateStatusLower2D(this);
+    PlayerUpdateStatusUpper2D(this);
+    PlayerCheckAttack2D(this);
+    PlayerUpdateStatusLower2nd2D(this);
+}
