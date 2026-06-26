@@ -33,6 +33,9 @@
 #include "data/daily.thu/data_pic_out.h"
 #include "data/daily.thu/data_movie.h"
 #include "data/daily.thu/data_demo_haka_agl.h"
+#include "data/daily.thu/data_chr_agl.h"
+#include "data/daily.thu/data_chr_jms.h"
+#include "data/daily.thu/data_chr_lau.h"
 
 #define FOREST_SOUND_EFFECT_RADIUS 20000.0f
 
@@ -429,12 +432,6 @@ static float stg_forest_forest_se_r = 0.0f; // size: 0x4, address: 0x1F03E28
     
     return 0;
 }
-
-extern fsFileIndex data_chr_lau_lau_mdl[1]; // size: 0x8, address: 0x3A0FA8
-extern fsFileIndex data_chr_jms_hhh_jms_notex_mdl[1]; // size: 0x8, address: 0x3A0D78
-extern fsFileIndex data_chr_jms_hhh_jms_kg1[1]; // size: 0x8, address: 0x3A0D68
-extern fsFileIndex data_chr_agl_agl_mdl[1]; // size: 0x8, address: 0x3A0588
-extern fsFileIndex data_chr_agl_agl_kg1[1]; // size: 0x8, address: 0x3A0580
 
 /* static */ int stg_forest_EvProgLastScene(void) {
     static short stg_forest_forest_anim_01F03CA0[2] = {0x3CF, 0x9EC}; // @ 01F03CA0 @note: not present in dwarf
