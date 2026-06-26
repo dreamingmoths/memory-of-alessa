@@ -9,10 +9,10 @@
     { 0x1B59, 1,     0,     0,     0,   0,    0 }, // [1] handgun
     { 0x1B5A, 1,     0,     1,     1,   0,    0 }, // [2] shotgun
     { 0x1B5B, 1,     0,     2,     2,   0,    0 }, // [3] rifle
-    { 0x1B5C, 1,     0,     3,     3,   0,    0 }, // [4] WEAPON_SP_CHARA_KIND? no idea
-    { 0x1B5D, 1,     0,     4,     4,   0,    0 }, // [5] kazukai? tf is this
+    { 0x1B5C, 1,     0,     3,     3,   0,    0 }, // [4] spray
+    { 0x1B5D, 1,     0,     4,     4,   0,    0 }, // [5] stick
     { 0x1B5E, 1,     0,     5,     5,   0,    0 }, // [6] pipe
-    { 0x1B5F, 1,     0,     6,     6,   0,    0 }, // [7] WEAPON_NATA_CHARA_KIND? no idea
+    { 0x1B5F, 1,     0,     6,     6,   0,    0 }, // [7] great knife
     { 0x1B60, 1,     0,     7,     7,   0,    0 }  // [8] chainsaw
 };
 
