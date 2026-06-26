@@ -5,6 +5,24 @@
 
 #pragma fast_fptosi off
 
+// @todo: move to vec.h if possible, but arg order is different from the one we
+// have for sh3 `amusement_01`
+static inline float vec3_dist_xz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
+    float d;
+    asm("lwc1 %2, 0(%0)\n\
+         lwc1 f8, 0(%1)\n\
+         lwc1 f9, 8(%0)\n\
+         lwc1 f10, 8(%1)\n\
+         sub.s %2, %2, f8\n\
+         sub.s f9, f9, f10\n\
+         mula.s %2, %2;\
+         madd.s %2, f9, f9\n\
+         sqrt.s %2, %2"
+        : "+r"(v), "+r"(w), "+f"(d)::"f8", "f9", "f10");
+    return d;
+}
+
+
 static inline float reflex_angle(float x) {
     float result;
     if (x > 0.0f) {

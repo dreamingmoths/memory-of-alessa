@@ -278,11 +278,12 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		stg_forest_data.data.s.o (.data)
+		stg_forest.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_forest_bss.bss.s.o (.bss)
+		stg_forest.c.o (.bss)
 	}	>	fst.bin
 
 	.twe.bin :

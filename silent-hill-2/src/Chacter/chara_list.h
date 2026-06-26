@@ -64,7 +64,7 @@
 /**
  * Mary's model.
  */
-#define HHH_MAR_CHARA_KIND                                                            0x109
+#define MRY_CHARA_KIND                                                                0x109
 
 /**
  * Ill Mary's model.

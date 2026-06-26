@@ -25,5 +25,6 @@ segments:
       - [0x0, databin, fst_overlay_header]
       - [0x80, c, Event/stage/stg_forest]
       - [0x1580, data, Event/stage/stg_forest_data]
-      - { vram: 0x1F03E00, type: bss, name: Event/stage/stg_forest_bss }
+      - [0x1C90, .data, Event/stage/stg_forest]
+      - { vram: 0x1F03E00, type: .bss, name: Event/stage/stg_forest }
   - [0x2000]

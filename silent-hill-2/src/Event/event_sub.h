@@ -4,6 +4,7 @@
 #include "common.h"
 #include "Chacter/character.h"
 #include "SH2_common/sh2sys.h"
+#include "SH2_common/pad.h"
 
 #define EV_PROG_STEP(p_step) \
 do {                                 \
@@ -12,29 +13,6 @@ do {                                 \
 } while (0)
 
 #define EV_SUB_STEP(s_step) do { ev_s_step = s_step; } while (0)
-
-struct Pad_KeyConfig {
-    // Members
-    int enter;       // offset 0x0, size 0x4
-    int cancel;      // offset 0x4, size 0x4
-    int skip;        // offset 0x8, size 0x4
-    int front_move;  // offset 0xC, size 0x4
-    int back_move;   // offset 0x10, size 0x4
-    int right_turn;  // offset 0x14, size 0x4
-    int left_turn;   // offset 0x18, size 0x4
-    int right_move;  // offset 0x1C, size 0x4
-    int left_move;   // offset 0x20, size 0x4
-    int action;      // offset 0x24, size 0x4
-    int attack;      // offset 0x28, size 0x4
-    int dash;        // offset 0x2C, size 0x4
-    int light;       // offset 0x30, size 0x4
-    int item;        // offset 0x34, size 0x4
-    int search_view; // offset 0x38, size 0x4
-    int ready;       // offset 0x3C, size 0x4
-    int pause;       // offset 0x40, size 0x4
-    int map;         // offset 0x44, size 0x4
-    int padding[6];  // offset 0x48, size 0x18
-};
 
 // movie/movie_main.c
 extern int MovieWaitReady(void);
