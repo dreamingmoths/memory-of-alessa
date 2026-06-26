@@ -109,6 +109,7 @@ void SeCallInit(int sect /* r18 */, int mmode /* r17 */, char* path /* r16 */);
 void SeCallReset(void);
 int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */);
 int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float* pos /* r19 */, int status /* r18 */);
+void SeCallPosChange(int sd_no, float volume, float* pos, int status);
 int Se3dPlayCheck(int sd_no /* r2 */);
 void SeStop(int sd_no /* r18 */);
 void SeBgmChange(void);

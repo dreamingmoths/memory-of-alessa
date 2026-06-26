@@ -1,5 +1,7 @@
 #include "sh2_common.h"
 #include "SH2_common/sh2sys.h"
+#include "SH2_common/pad.h"
+#include "GFW/sh2_DrawEnvData.h"
 #include "DBG/dbflow.h"
 #include "main.h"
 
@@ -104,4 +106,21 @@ int main(int argc, char** argv) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main", GameKeyCheck);
+void GameKeyCheck(void) {
+    if (Sh2sys.soft_reset &&
+        shPadPress(0, PAD_KEY_START) && shPadPress(0, PAD_KEY_SELECT) &&
+        shPadPress(0, PAD_KEY_L1) && shPadPress(0, PAD_KEY_R1)) {
+        fsSync(0, -1);
+        lisSync(0, -1);
+        Sh2sys.step[0] = 2;
+        Sh2sys.step[1] = 0;
+        Sh2sys.step[2] = 0;
+        Sh2sys.step[3] = 0;
+        Sh2sys.step[4] = 0;
+        Sh2sys.step[5] = 0;
+        Sh2sys.step[6] = 0;
+        Sh2sys.step[7] = 0;
+        Env_ctl.stat_ctl_1.ui32[0] <<= 8; // Is this right?
+        Env_ctl.stat_ctl_1.uc8[0] = 0;
+    }
+}
