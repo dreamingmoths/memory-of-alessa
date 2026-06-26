@@ -3,7 +3,7 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_play.h"
 
-/* static */ AnimeInfo weapon_anim[9] = { // but does this belong here?
+/* static */ const AnimeInfo weapon_anim[9] = { // but does this belong here?
     // name,  frame, speed, start, end, loop, pad
     { 0x0000, 0,     0,     0,     0,   0,    0 }, // [0]
     { 0x1B59, 1,     0,     0,     0,   0,    0 }, // [1] handgun
@@ -27,28 +27,28 @@
             SCAnimeTypeSwitch(this, 0);
             switch (shCharacterGetModelID(this)) {
                 case WEAPON_HANDGUN_CHARA_KIND:
-                    aip = &weapon_anim[1];
+                    aip = (AnimeInfo*)&weapon_anim[1];
                     break;
                 case WEAPON_SHOTGUN_CHARA_KIND:
-                    aip = &weapon_anim[2];
+                    aip = (AnimeInfo*)&weapon_anim[2];
                     break;
                 case WEAPON_RIFLGUN_CHARA_KIND:
-                    aip = &weapon_anim[3];
+                    aip = (AnimeInfo*)&weapon_anim[3];
                     break;
                 case WEAPON_KAKUZAI_CHARA_KIND:
-                    aip = &weapon_anim[5];
+                    aip = (AnimeInfo*)&weapon_anim[5];
                     break;
                 case WEAPON_PIPE_CHARA_KIND:
-                    aip = &weapon_anim[6];
+                    aip = (AnimeInfo*)&weapon_anim[6];
                     break;
                 case WEAPON_SP_CHARA_KIND:
-                    aip = &weapon_anim[4];
+                    aip = (AnimeInfo*)&weapon_anim[4];
                     break;
                 case WEAPON_CSAW_CHARA_KIND:
-                    aip = &weapon_anim[8];
+                    aip = (AnimeInfo*)&weapon_anim[8];
                     break;
                 case WEAPON_NATA_CHARA_KIND:
-                    aip = &weapon_anim[7];
+                    aip = (AnimeInfo*)&weapon_anim[7];
                     break;
                 }
         
