@@ -120,7 +120,7 @@ void GameKeyCheck(void) {
         Sh2sys.step[5] = 0;
         Sh2sys.step[6] = 0;
         Sh2sys.step[7] = 0;
-        Env_ctl.stat_ctl_1.ui32[0] <<= 8; // Is this right?
+        Env_ctl.stat_ctl_1.ui32[0] <<= 8;
         Env_ctl.stat_ctl_1.uc8[0] = 0;
     }
 }

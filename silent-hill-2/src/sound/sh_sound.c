@@ -11,6 +11,8 @@
 #include "Chacter/sh_character_battle.h"
 #include "FilesList/fileslist_bg.h"
 #include "SH2_common/sh2dt.h"
+#include "Multi_thr/filesys/fcread.h"
+#include "Chacter/chara_list.h"
 
 #pragma fast_fptosi on
 
@@ -187,106 +189,106 @@ void SeSoundEffectLoad(int data) {
         if (data == 0) {
             switch (playing.stage) { // Is this StgName?
                 case 0x0:
-                    data = 0x139F;
+                    data = 5023;
                     break;
                 case 0x5:
-                    if (((u32)game_flag.flag[7] >> 0x1B) & 1) {
-                        data = 0x13A1;
+                    if (GET_GAME_FLAG(GAME_FLAG_251)) {
+                        data = 5025;
                     } else {
-                        data = 0x13A0;
+                        data = 5024;
                     }
                     break;
                 case 0xE:
-                    if (((u32)game_flag.flag[7] >> 0x1B) & 1) {
-                        data = 0x13A3;
+                    if (GET_GAME_FLAG(GAME_FLAG_251)) {
+                        data = 5027;
                     } else {
-                        data = 0x13A2;
+                        data = 5026;
                     }
                     break;
                 case 0x4:
-                    data = 0x138F;
+                    data = 5007;
                     break;
                 case 0x6:
                 case 0x7:
                 case 0x8:
                 case 0x9:
                 case 0xD:
-                    data = 0x1388;
+                    data = 5000;
                     break;
                 case 0xA:
                 case 0xB:
-                    data = 0x138A;
+                    data = 5002;
                     break;
                 case 0xC:
-                    data = 0x1389;
+                    data = 5001;
                     break;
                 case 0x12:
                 case 0x13:
                 case 0x14:
                 case 0x15:
-                    data = 0x1391;
+                    data = 5009;
                     break;
                 case 0x17:
                 case 0x18:
                 case 0x19:
                 case 0x1A:
                 case 0x1B:
-                    data = 0x1390;
+                    data = 5008;
                     break;
                 case 0x16:
                     if (room == 0x30) {
-                        data = 0x1397;
+                        data = 5015;
                     } else {
-                        data = 0x1390;
+                        data = 5008;
                     }
                     break;
                 case 0x1D:
                 case 0x1E:
-                    data = 0x138C;
+                    data = 5004;
                     break;
                 case 0x1F:
-                    data = 0x139C;
+                    data = 5020;
                     break;
                 case 0x20:
-                    data = 0x139D;
+                    data = 5021;
                     break;
                 case 0x22:
-                    data = 0x139A;
+                    data = 5018;
                     break;
                 case 0x23:
                 case 0x24:
-                    data = 0x1398;
+                    data = 5016;
                     break;
                 case 0x25:
-                    data = 0x138D;
+                    data = 5005;
                     break;
                 case 0x26:
-                    data = 0x139B;
+                    data = 5019;
                     break;
                 case 0x27:
                 case 0x2B:
                 case 0x2F:
-                    data = 0x1396;
+                    data = 5014;
                     break;
                 case 0x28:
-                    data = 0x1393;
+                    data = 5011;
                     break;
                 case 0x2C:
-                    data = 0x1392;
+                    data = 5010;
                     break;
                 case 0x29:
                 case 0x2D:
-                    data = 0x1394;
+                    data = 5012;
                     break;
                 case 0x2A:
                 case 0x2E:
-                    data = 0x1395;
+                    data = 5013;
                     break;
                 case 0x30:
                 case 0x31:
                 case 0x32:
                 case 0x33:
-                    data = 0x138E;
+                    data = 5006;
                     break;
             }
         }
@@ -298,10 +300,10 @@ void SeSoundEffectLoad(int data) {
     }
 }
 
-extern fsFileIndex* se_file_list_1329[35]; // Is this supposed to be inside the function? https://github.com/Palm-Studios/sh2_source/blob/7c701e7067edacb685412e331b1632422c8cda03/work/sh2(CVS%E5%85%A8%E5%8F%96%E5%BE%97)/src/sound/sh_sound.c#L1537
+extern fsFileIndex* se_file_list_1329[35]; // @todo: Move this inside as a local variable https://github.com/dreamingmoths/memory-of-alessa/pull/212#discussion_r3482739416
 void SeSoundEffect3dLoad(int data) {
-    int i;
     int room;
+    int i;
 
     if (dbFlag(1U) == 0) {
         room = RoomNameJms();
@@ -340,87 +342,87 @@ void SeSoundEffect3dLoad(int data) {
                     data = 9;
                     break;
                 case 0xC:
-                    data = 0xA;
+                    data = 10;
                     break;
                 case 0x12:
-                    data = 0xB;
+                    data = 11;
                     break;
                 case 0x13:
-                    data = 0xC;
+                    data = 12;
                     break;
                 case 0x14:
-                    data = 0xD;
+                    data = 13;
                     break;
                 case 0x15:
-                    data = 0xE;
+                    data = 14;
                     break;
                 case 0x16:
                     if (room == 0x30) {
-                        data = 0xF;
+                        data = 15;
                     } else {
-                        data = 0x10;
+                        data = 16;
                     }
                     break;
                 case 0x17:
-                    data = 0x10;
+                    data = 16;
                     break;
                 case 0x18:
-                    data = 0x11;
+                    data = 17;
                     break;
                 case 0x19:
-                    data = 0x12;
+                    data = 18;
                     break;
                 case 0x1A:
-                    data = 0x13;
+                    data = 19;
                     break;
                 case 0x1B:
-                    data = 0x14;
+                    data = 20;
                     break;
                 case 0x1D:
-                    data = 0x15;
+                    data = 21;
                     break;
                 case 0x1E:
-                    data = 0x16;
+                    data = 22;
                     break;
                 case 0x1F:
                 case 0x20:
-                    data = 0x17;
+                    data = 23;
                     break;
                 case 0x22:
-                    data = 0x1A;
+                    data = 26;
                     break;
                 case 0x23:
-                    data = 0x1A;
+                    data = 26;
                     break;
                 case 0x24:
-                    data = 0x1A;
+                    data = 26;
                     break;
                 case 0x25:
-                    data = 0x1B;
+                    data = 27;
                     break;
                 case 0x27:
-                    data = 0x1C;
+                    data = 28;
                     break;
                 case 0x28:
-                    data = 0x1D;
+                    data = 29;
                     break;
                 case 0x29:
-                    data = 0x1E;
+                    data = 30;
                     break;
                 case 0x2B:
-                    data = 0x1F;
+                    data = 31;
                     break;
                 case 0x2C:
-                    data = 0x20;
+                    data = 32;
                     break;
                 case 0x2D:
-                    data = 0x21;
+                    data = 33;
                     break;
                 case 0x30:
                 case 0x31:
                 case 0x32:
                 case 0x33:
-                    data = 0x22;
+                    data = 34;
                     break;
             }
         }
@@ -594,7 +596,6 @@ void SeStop(int sd_no /* r18 */) {
     }
 }
 
-#ifdef NON_MATCHING // 100% but i cant make it to match https://decomp.me/scratch/Ja3rB when building
 extern fsFileIndex* sdb_list[53];
 extern u_char snd_data_buffer[20480];
 void SeBgmChange(void) {
@@ -790,9 +791,6 @@ void SeBgmChange(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/sound/sh_sound", SeBgmChange);
-#endif
 
 void SeBgmCall(int bgm_no /* r2 */) {
     int i; // r5
@@ -840,7 +838,7 @@ int BgmPageSet(void) {
 
     scp = shCharacter_Manage_GetCharacterList();
     while (scp != NULL) {
-        if ((scp->kind >> 8) == 2 &&
+        if (IS_SCP_ENEMY(scp) &&
             ((scp->battle.status >> 0xA) & 1) &&
             !((scp->battle.status >> 1) & 1)) {
             temp_f2 = scp->pos.x - sh2jms.player->pos.x;
