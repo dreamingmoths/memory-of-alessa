@@ -4,9 +4,66 @@ static void ViewFrustum_Primitive_ClipMatrix_Create(void);
 static void ViewFrustum_BoundingBox_ClipMatrix_Create(void);
 static void AlwaysFront_WorldView_Matrix_Create(void);
 
-extern /* static */ HH_Class_Wrapper_Work * _pWork;
+extern float func_001B4100(void);
+extern float func_001B4230(void);
+extern float func_001B4250(void);
+extern float func_001B4170(void);
+extern float func_001B41C0(void);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", ViewFrustum_Primitive_ClipMatrix_Create);
+// @note was a pointer in sh2 trial
+extern /* static */ HH_Class_Wrapper_Work _pWork;
+
+void ViewFrustum_Primitive_ClipMatrix_Create(void) {    
+    if (func_0019B580(5) && func_002D7B30() == 0x41) {
+        float clip_mat[4][4];
+        float wvm[4][4];
+        float vsm[4][4];
+        float z_near, z_far;
+        float scale;
+
+        z_near = HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get();
+        z_far = HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get(); // r21
+        HH_ClassWrapper_WorldViewMatrix_Get(wvm);
+        HH_ClassWrapper_ViewScreenMatrix_Get(vsm);
+        sceVu0UnitMatrix(clip_mat);
+
+        scale = float_clamp(func_001B4100() / 1000.0f, 1.0f, 3.5f);
+        clip_mat[0][0] = (2.0f * vsm[0][0]) / 4080.0f + (scale * func_001B4170()) * (float_abs(func_001B4230() - 2048.0f)) / 2048.0f;
+        clip_mat[1][1] = (2.0f * vsm[1][1]) / 4080.0f + (scale * func_001B41C0()) * (float_abs(func_001B4250() - 2048.0f)) / 2048.0f;
+    
+        
+        clip_mat[2][2] = (z_far + z_near) / (z_far - z_near);
+        clip_mat[2][3] = 1.0f;
+        clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
+        clip_mat[3][3] = 0;
+        // @todo: field names could be wrong
+        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat);
+        sceVu0MulMatrix(_pWork.ViewFrustum_BoundingBox_ClipMatrix, clip_mat, wvm);
+    } else {
+        float clip_mat[4][4];
+        float wvm[4][4];
+        float vsm[4][4];
+        float x_range, y_range;
+        float z_near, z_far;
+        z_near = HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get();
+        z_far = HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get(); // r21
+        HH_ClassWrapper_WorldViewMatrix_Get(wvm);
+        HH_ClassWrapper_ViewScreenMatrix_Get(vsm);
+        x_range = 1024.0f;
+        y_range = 1024.0f;
+        sceVu0UnitMatrix(clip_mat);
+        clip_mat[0][0] = (2.0f * vsm[0][0]) / x_range;
+        clip_mat[1][1] = (2.0f * vsm[1][1]) / y_range;
+    
+        
+        clip_mat[2][2] = (z_far + z_near) / (z_far - z_near);
+        clip_mat[2][3] = 1.0f;
+        clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
+        clip_mat[3][3] = 0;
+        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat);    
+        sceVu0MulMatrix(_pWork.ViewFrustum_BoundingBox_ClipMatrix, clip_mat, wvm);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", ViewFrustum_BoundingBox_ClipMatrix_Create);
 

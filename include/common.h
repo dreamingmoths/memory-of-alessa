@@ -160,6 +160,16 @@ static inline void vec_scale(float s, void* v, void* out) {
 
 static inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
 
+static inline float float_abs(float x) {
+    asm("abs.s %0, %0" : "+f"(x));
+    return x;
+}
+
+static inline float float_clamp(float x, float lower, float upper) {
+    asm("max.s %0, %0, %1; min.s %0, %0, %2" : "+f"(x) : "f"(lower), "f"(upper));
+    return x;
+}
+
 static inline float float_min(float x, float y) {
     asm("min.s %0, %0, %1" : "+f"(x) : "f"(y) :);
     return x;

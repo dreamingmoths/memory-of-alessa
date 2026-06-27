@@ -68,11 +68,6 @@ static inline float vec2_length(float* a, float* b) {
     return result;
 }
 
-static inline float float_abs(float x) {
-    asm("abs.s %0, %0" : "+f"(x));
-    return x;
-}
-
 inline void vec_sub_reverse(void* y, void* x, void* out) {
     asm("\
         lqc2 vf4, 0(%0)\n\
