@@ -380,7 +380,7 @@ segments:
       - [0x10f350, asm,     text_0x10f350]
       - [0x110b40, c,       Effect2/hh_class_blood_01]
       - [0x111420, asm,     Effect2/hh_class_1]
-      - [0x111c10, c,       Effect2/hh_class_2]
+      - [0x111c10, c,       Effect2/hh_class_blood_pool_phenomenon]
       - [0x112100, asm,     Effect2/hh_class_3]
       - [0x1128f0, asm,     Effect2/hh_class_4]
       - [0x1133a0, asm,     Effect2/hh_class_5]
@@ -515,6 +515,8 @@ segments:
       - [0x287438, data,    crimw/dev/adx/src/sjx/sjx] 
       - [0x287FA8, data,    crimw/dev/adx/src/svm/svm] 
       - [0x2880f0, data,    data_0x2880f0] 
+      - [0x2889d0, .data,   Effect2/hh_class_blood_pool_phenomenon]
+      - [0x288a30, data,    data_0x288a30]
       - [0x29de40, data,    data_0x29de40]
       - [0x29e0c8, .data,   movie/pss_cscvu1]
       - [0x29e0d8, data,    data_0x29e0d8]
@@ -598,4 +600,6 @@ segments:
       - { vram: 0x1F205C0,  type: bss,  name: crimw/dev/adx/src/sjr/sjr_clt }
       - { vram: 0x1F207C0,  type: bss,  name: crimw/dev/adx/src/svm/svm }
       - { vram: 0x1F20910,  type: bss,  name: bss_0x1F20910 }
+      - { vram: 0x1F274F0,  type: .bss, name: Effect2/hh_class_blood_pool_phenomenon }
+      - { vram: 0x1F27570,  type: bss,  name: bss_0x1F27570 }
   - [0x2C9080]

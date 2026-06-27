@@ -36,6 +36,11 @@ extern Motion_Table_Infomeation _motion_info_0[2];
 extern Motion_Table_Infomeation _motion_info_1[2];
 extern Motion_Table_Infomeation * _motion_info_list[2];
 
+/* @todo identify these */
+extern sceVif1Packet* func_0013A850(int, int, int);
+extern int D_01F274D8;
+extern u_long128 D_00387F40; // giftag
+
 static u_int Object_Initialize(HH_Object_Blood_01* pThis, ImpactQueue_Element* pElement ) {
     u_int result = 0;
     float * src_direction;
@@ -167,7 +172,20 @@ static void func_00210C50() {
     return;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_blood_01", HH_Class_Prefix_Blood_01);
+u_int HH_Class_Prefix_Blood_01() {
+    u_long tex0; 
+    sceVif1Packet* pPk;
+    u_int result = 1;
+
+    pPk = func_0013A850(0, 4, 0);
+    func_00210C50(D_01F274D8);
+    sceVif1PkOpenGifTag(pPk, D_00387F40);
+    sceVif1PkAddGsAD(pPk, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(2, 16, 0, 0, 0x80));
+    sceVif1PkCloseGifTag(pPk);
+    
+    return result;
+}
+
 
 u_int HH_Class_Suffix_Blood_01() {
     return 1;

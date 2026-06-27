@@ -543,9 +543,10 @@ sh3gfw_GsExecStoreImage = 0x002399d0;
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
 HH_Class_Plural_Phenomenon_00 = 0x002f4270;
 
-// HH_Class_Blood_Pool_Phenomenon_00
-// Object_Initialize = 0x00211690; // allow_duplicated:True visibility:local
-HH_Class_Blood_Pool_Phenomenon_00 = 0x002116e0;
+// HH_Class_Blood_Pool_Phenomenon
+Object_Initialize = 0x00211690; // allow_duplicated:True visibility:local
+HH_Class_Blood_Pool_Phenomenon = 0x002116e0;
+_Time_Table = 0x00388450; // allow_duplicated:True visibility:local size:60
 
 // smoke or flame?
 // Object_Initialize = 0x00212e20; // allow_duplicated:True visibility:local
@@ -830,6 +831,8 @@ WaitSema_ = 0x001DC190;
 SignalSema_ = 0x001DC1A0;
 ErrMessage_ = 0x002B7400;
 sceDmaReset_ = 0x0012bc60;
+
+fmodf = 0x0012BB70;
 
 // dbfntprint.c
 _dbfntvsnprintf = 0x001dbd90;
