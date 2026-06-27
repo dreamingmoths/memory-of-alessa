@@ -246,8 +246,8 @@ segments:
       - [0x148790, c,   Event/stage/stg_tgs_trial]
       - [0x14c2b0, asm, Chacter/m3_rpjames]
       - [0x14ca60, asm, Chacter/m3_rwep]
-      - [0x14cac8, asm, sound/shd_vs_sp]
-      - [0x151530, asm, GFW/sh2_DrawEnvData]
+      - { start: 0x14cac8, type: asm, name: sound/shd_vs_sp, ld_align_segment_start: 0x8 }
+      - { start: 0x151530, type: asm, name: GFW/sh2_DrawEnvData, ld_align_segment_start: 0x10 }
       - [0x1521e0, asm, LoadBg/loadbg_camdata]
       - [0x1522f0, asm, LoadBg/loadbg_common]
       - [0x152850, asm, DBG/dbsw_map]
