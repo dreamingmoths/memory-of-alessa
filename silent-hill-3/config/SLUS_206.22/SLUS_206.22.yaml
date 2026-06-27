@@ -380,7 +380,7 @@ segments:
       - [0x10f350, asm,     text_0x10f350]
       - [0x110b40, c,       Effect2/hh_class_blood_01]
       - [0x111420, asm,     Effect2/hh_class_1]
-      - [0x111c10, asm,     Effect2/hh_class_2]
+      - [0x111c10, c,       Effect2/hh_class_2]
       - [0x112100, asm,     Effect2/hh_class_3]
       - [0x1128f0, asm,     Effect2/hh_class_4]
       - [0x1133a0, asm,     Effect2/hh_class_5]
