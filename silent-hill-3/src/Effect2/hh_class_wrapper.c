@@ -17,6 +17,10 @@ extern float func_001B4250(void);
 extern float func_001B4170(void);
 extern float func_001B41C0(void);
 
+/* sh3gde? */
+extern float func_001B4110(void);
+extern float func_001B4130(void);
+
 // @note was a pointer in sh2 trial
 extern /* static */ HH_Class_Wrapper_Work _pWork;
 
@@ -43,7 +47,8 @@ void ViewFrustum_Primitive_ClipMatrix_Create(void) {
         clip_mat[2][3] = 1.0f;
         clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
         clip_mat[3][3] = 0;
-        sceVu0CopyMatrix(_pWork.unk0, clip_mat);
+        // @sh3: copies the clip matrix before wvm multiplication?
+        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_LocalClipMatrix, clip_mat);
         sceVu0MulMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat, wvm);
     } else {
         float clip_mat[4][4];
@@ -66,7 +71,7 @@ void ViewFrustum_Primitive_ClipMatrix_Create(void) {
         clip_mat[2][3] = 1.0f;
         clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
         clip_mat[3][3] = 0;
-        sceVu0CopyMatrix(_pWork.unk0, clip_mat);
+        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_LocalClipMatrix, clip_mat);
         sceVu0MulMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat, wvm);
     }
 }
@@ -174,24 +179,39 @@ void HH_ClassWrapper_Matrix_Group_Update(void) {
     AlwaysFront_WorldView_Matrix_Create();
 }
 
+
+
 void HH_ClassWrapper_ViewFrustum_Primitive_ClipMatrix_Get(sceVu0FMATRIX ViewFrustum_Primitive_ClipMatrix) {
-    sceVu0CopyMatrix(ViewFrustum_Primitive_ClipMatrix, _pWork.ViewFrustum_Primitive_ClipMatrix);
+    sceVu0CopyMatrix(ViewFrustum_Primitive_ClipMatrix, _pWork.ViewFrustum_Primitive_LocalClipMatrix);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142B50);
+void HH_ClassWrapper_ViewFrustum_ClipMatrix_Get(sceVu0FMATRIX ViewFrustum_Primitive_ClipMatrix) {
+    sceVu0CopyMatrix(ViewFrustum_Primitive_ClipMatrix,  _pWork.ViewFrustum_Primitive_ClipMatrix);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142B60);
+void HH_ClassWrapper_AlwaysFront_WorldView_Matrix_Get(sceVu0FMATRIX AlwaysFront_WorldView_Matrix) {
+    sceVu0CopyMatrix(AlwaysFront_WorldView_Matrix,  _pWork.AlwaysFront_WorldView_Matrix);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_WorldViewMatrix_Get);
+void HH_ClassWrapper_WorldViewMatrix_Get(sceVu0FMATRIX WorldView_Matrix) {
+    sh3gde_getWorldViewMatrix(WorldView_Matrix);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_ViewScreenMatrix_Get);
+void HH_ClassWrapper_ViewScreenMatrix_Get(sceVu0FMATRIX ViewScreen_Matrix) {
+    sh3gde_getViewScreenMatrix(ViewScreen_Matrix);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142B90);
+void HH_ClassWrapper_WorldScreenMatrix_Get(sceVu0FMATRIX WorldScreen_Matrix) {
+    sh3gde_getWorldScreenMatrix(WorldScreen_Matrix);
+}
 
+float HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get(void) {
+    return func_001B4130();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get);
-
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get);
+float HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get(void) {
+    return func_001B4110();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142BC0);
 

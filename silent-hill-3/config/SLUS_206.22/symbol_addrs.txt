@@ -619,17 +619,21 @@ ViewFrustum_BoundingBox_ClipMatrix_Create = 0x00142790;
 AlwaysFront_WorldView_Matrix_Create = 0x00142870;
 HH_ClassWrapper_Point_Clip_Judge = 0x00142aa0;
 HH_ClassWrapper_ViewFrustum_Primitive_ClipMatrix_Get = 0x00142b40;
+HH_ClassWrapper_ViewFrustum_ClipMatrix_Get = 0x00142B50;
+HH_ClassWrapper_AlwaysFront_WorldView_Matrix_Get = 0x00142B60;
 HH_ClassWrapper_Float_Clamp = 0x00142be0;
 HH_ClassWrapper_SpotLight_ColorRatio_Calculator = 0x00142cb0;
 HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get = 0x00142BA0;
 HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get = 0x00142BB0;
 HH_ClassWrapper_WorldViewMatrix_Get = 0x00142B70;
 HH_ClassWrapper_ViewScreenMatrix_Get = 0x00142B80;
+HH_ClassWrapper_WorldScreenMatrix_Get = 0x00142B90;
 HH_ClassWrapper_Matrix_Group_Update = 0x00142B10;
 _pWork = 0x00484680; // size:0x100
 
 // sh3_get_drawenv
-sh3gde_getCameraDir = 0x001B42C0;
+sh3gde_getWorldViewMatrix = 0x001B42C0;
+sh3gde_getViewScreenMatrix = 0x001B42E0;
 sh3gde_Get_EyeDir = 0x001B3EC0;
 
 // sh3_DrawEnvData

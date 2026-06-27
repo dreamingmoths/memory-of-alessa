@@ -257,7 +257,7 @@ void func_01F6DE80_subway_02(sceVu0FVECTOR* arg0)
     sp60 = D_01F6EFC0_subway_02;
 
     func_001C18C0(&spC0);
-    sh3gde_getCameraDir(&sp70);
+    sh3gde_getWorldViewMatrix(&sp70);
 
     asm
     ("\

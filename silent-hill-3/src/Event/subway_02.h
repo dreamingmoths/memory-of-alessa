@@ -75,7 +75,7 @@ float shGetDT(void);
 void func_001C2AE0(int, sceVu0FMATRIX*);
 void func_001C2A80(int, sceVu0FMATRIX*);
 void func_001C18C0(sceVu0FVECTOR*);
-void sh3gde_getCameraDir(sceVu0FMATRIX*);
+void sh3gde_getWorldViewMatrix(sceVu0FMATRIX*);
 int func_0019B580(int);
 void func_001C7C80(sceVu0FVECTOR*, sceVu0FVECTOR*, sceVu0FVECTOR*, int);
 

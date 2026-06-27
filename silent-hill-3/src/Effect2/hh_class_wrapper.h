@@ -11,10 +11,10 @@
 
 typedef struct HH_Class_Wrapper_Work {
     // total size: 0x100
-    float unk0[4][4];                               // offset: 0x0, size: 0x40
-    float ViewFrustum_Primitive_ClipMatrix[4][4];   // offset 0x40, size 0x40
-    float ViewFrustum_BoundingBox_ClipMatrix[4][4]; // offset 0x80, size 0x40
-    float AlwaysFront_WorldView_Matrix[4][4];       // offset 0xC0, size 0x40
+    float ViewFrustum_Primitive_LocalClipMatrix[4][4]; // offset: 0x0, size 0x40, @sh3
+    float ViewFrustum_Primitive_ClipMatrix[4][4];      // offset 0x40, size 0x40
+    float ViewFrustum_BoundingBox_ClipMatrix[4][4];    // offset 0x80, size 0x40
+    float AlwaysFront_WorldView_Matrix[4][4];          // offset 0xC0, size 0x40
 } HH_Class_Wrapper_Work;
 
 u_int HH_ClassWrapper_RotTrans_PerspectiveProjection_Clip(int* Dst_iVector, float* pReverse_W, sceVu0FMATRIX LocalScreen_Matrix, sceVu0FMATRIX LocalScreen_ClipMatrix, float* Src_fVector);
