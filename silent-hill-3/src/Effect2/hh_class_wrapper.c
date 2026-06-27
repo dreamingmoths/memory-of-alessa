@@ -1,4 +1,5 @@
 #include "Effect2/hh_class_wrapper.h"
+#include "Effect2/hh_math_wrapper.h"
 
 #define PRIMITIVE_X_RANGE 1024.0f
 #define PRIMITIVE_Y_RANGE 1024.0f
@@ -98,9 +99,63 @@ void ViewFrustum_BoundingBox_ClipMatrix_Create(void) {
     
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", AlwaysFront_WorldView_Matrix_Create);
+void AlwaysFront_WorldView_Matrix_Create(void) {
+    float wvm[4][4];
+    float inv_wvm[4][4];
+    HH_ClassWrapper_WorldViewMatrix_Get(wvm);
+    
+    wvm[3][0] = 0;
+    wvm[3][1] = 0;
+    wvm[3][2] = 0;
+    sceVu0TransposeMatrix(inv_wvm, wvm);
+    sceVu0CopyMatrix(_pWork.AlwaysFront_WorldView_Matrix, inv_wvm);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_RotTrans_PerspectiveProjection_Clip);
+/**
+    @sh3: minor changes from the sh2 proto
+*/
+u_int HH_ClassWrapper_RotTrans_PerspectiveProjection_Clip(int* Dst_iVector, float* pReverse_W, sceVu0FMATRIX LocalScreen_Matrix, sceVu0FMATRIX LocalScreen_ClipMatrix, sceVu0FVECTOR Src_fVector) {
+    u_int result = 0; // r2
+    float reverse_w; // r29
+    u_int clip; // r2
+
+    // @sh3: vftoi4.xy -> vftoi4.xyz
+    asm ("lqc2 vf24, 0(%3)\n\
+          lqc2 vf25, 0x10(%3)\n\
+          lqc2 vf26, 0x20(%3)\n\
+          lqc2 vf27, 0x30(%3)\n\
+          lqc2 vf28, 0(%4)\n\
+          lqc2 vf29, 0x10(%4)\n\
+          lqc2 vf30, 0x20(%4)\n\
+          lqc2 vf31, 0x30(%4)\n\
+          lqc2 vf4, 0(%5)\n\
+          vmulax.xyzw acc, vf28, vf4x\n\
+          vmadday.xyzw acc, vf29, vf4y\n\
+          vmaddaz.xyzw acc, vf30, vf4z\n\
+          vmaddw.xyzw vf7, vf31, vf0w\n vclipw.xyz vf7, vf7w\n\
+          vmulax.xyzw acc, vf24, vf4x\n\
+          vmadday.xyzw acc, vf25, vf4y\n\
+          vmaddaz.xyzw acc, vf26, vf4z\n\
+          vmaddw.xyzw vf5, vf27, vf0w\n\
+          vdiv Q, vf0w, vf5w\n\
+          vwaitq\n\
+          vmulq.xyz vf5, vf5, Q\n\
+          vftoi4.xyz vf6, vf5\n\
+          sqc2 vf6, 0(%0)\n\
+          vaddq.x vf1, vf0, Q\n\
+          qmfc2 %1, vf1\n mtc1 %1, %2;\
+          cfc2 %1, vi18"
+    : "=r"(Dst_iVector), "=r"(clip), "+f"(reverse_w) 
+    : "r"(LocalScreen_Matrix), "r"(LocalScreen_ClipMatrix), "r"(Src_fVector));
+
+
+    if (clip & 0x3f) result = 1;
+    if (result) {
+        Dst_iVector[3] |= (1 << 15); // @sh3
+    }
+
+    *pReverse_W = reverse_w; return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142960);
 
@@ -119,7 +174,9 @@ void HH_ClassWrapper_Matrix_Group_Update(void) {
     AlwaysFront_WorldView_Matrix_Create();
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_ViewFrustum_Primitive_ClipMatrix_Get);
+void HH_ClassWrapper_ViewFrustum_Primitive_ClipMatrix_Get(sceVu0FMATRIX ViewFrustum_Primitive_ClipMatrix) {
+    sceVu0CopyMatrix(ViewFrustum_Primitive_ClipMatrix, _pWork.ViewFrustum_Primitive_ClipMatrix);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142B50);
 
@@ -148,7 +205,29 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142C00);
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142C10);
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_SpotLight_ColorRatio_Calculator);
+float HH_ClassWrapper_SpotLight_ColorRatio_Calculator(float* Light_Position, float* Light_Direction, float* Vertex, float Cos_Value, float Far_Z) {
+    float result = 0.0f; // r20
+    float vec[4]; // r29+0x30
+    float cos_phai; // r29+0x40
+    float vec_volume; // r21
+
+    sceVu0SubVector(vec, Vertex, Light_Position);
+    vec_volume = HH_MathWrapper_Sqrtf(sceVu0InnerProduct(vec, vec));
+
+    
+    if (vec_volume <= Far_Z) {
+        sceVu0Normalize(vec, vec);
+        cos_phai = sceVu0InnerProduct(vec, Light_Direction);
+
+        
+        if (cos_phai > Cos_Value) {
+            float ratio_0 = 1.0f - vec_volume / Far_Z;
+            float ratio_1 = (cos_phai - Cos_Value) / (1.0f - Cos_Value);
+            result = ratio_0 * ratio_1;
+        }
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142D90);
 
