@@ -467,14 +467,14 @@ unsigned int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElem
                 HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x14);
                 HH_DBG_Wrapper_T0_COUNT_Delta();
                 pInfo = &(&_Area_Info_List_0x0036F340)[i];
-                sprintf(tmp, "x = %f\n", (double)(pInfo->World_Location[0]));
+                snprintf(tmp, sizeof(tmp), "x = %f\n", (double)(pInfo->World_Location[0]));
                 /* @note: casts needed for match */
                 HH_DBG_Wrapper_Printf(0x100, 0xE8, (char*)tmp);
-                sprintf(tmp, "y = %f\n", (double)(pInfo->World_Location[1]));
+                snprintf(tmp, sizeof(tmp), "y = %f\n", (double)(pInfo->World_Location[1]));
                 HH_DBG_Wrapper_Printf(0x100, 0xF0, (char*)tmp);
-                sprintf(tmp, "z = %f\n", (double)(pInfo->World_Location[2]));
+                snprintf(tmp, sizeof(tmp), "z = %f\n", (double)(pInfo->World_Location[2]));
                 HH_DBG_Wrapper_Printf(0x100, 0xF8, (char*)tmp);
-                sprintf(tmp, "i = %d\n", i);
+                snprintf(tmp, sizeof(tmp), "i = %d\n", i);
                 HH_DBG_Wrapper_Printf(0x100, 0x100, (char*)tmp);
                 if (HH_DBG_Wrapper_Controller_KeyAssign_Check(1u, 0u, 0x1000u) != 0) {
                     i = 0;
