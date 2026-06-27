@@ -626,7 +626,7 @@ HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get = 0x00142BB0;
 HH_ClassWrapper_WorldViewMatrix_Get = 0x00142B70;
 HH_ClassWrapper_ViewScreenMatrix_Get = 0x00142B80;
 HH_ClassWrapper_Matrix_Group_Update = 0x00142B10;
-_pWork = 0x00484680; // size:0xC0
+_pWork = 0x00484680; // size:0x100
 
 // sh3_get_drawenv
 sh3gde_getCameraDir = 0x001B42C0;

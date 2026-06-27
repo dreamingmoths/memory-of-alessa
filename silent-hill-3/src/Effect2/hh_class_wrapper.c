@@ -1,5 +1,11 @@
 #include "Effect2/hh_class_wrapper.h"
 
+#define PRIMITIVE_X_RANGE 1024.0f
+#define PRIMITIVE_Y_RANGE 1024.0f
+#define BOUNDING_BOX_X_RANGE 1500.0f
+#define BOUNDING_BOX_Y_RANGE 1500.0f
+#define BOUNDING_BOX_Z_FAR 200.0f
+
 static void ViewFrustum_Primitive_ClipMatrix_Create(void);
 static void ViewFrustum_BoundingBox_ClipMatrix_Create(void);
 static void AlwaysFront_WorldView_Matrix_Create(void);
@@ -36,9 +42,8 @@ void ViewFrustum_Primitive_ClipMatrix_Create(void) {
         clip_mat[2][3] = 1.0f;
         clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
         clip_mat[3][3] = 0;
-        // @todo: field names could be wrong
-        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat);
-        sceVu0MulMatrix(_pWork.ViewFrustum_BoundingBox_ClipMatrix, clip_mat, wvm);
+        sceVu0CopyMatrix(_pWork.unk0, clip_mat);
+        sceVu0MulMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat, wvm);
     } else {
         float clip_mat[4][4];
         float wvm[4][4];
@@ -60,12 +65,38 @@ void ViewFrustum_Primitive_ClipMatrix_Create(void) {
         clip_mat[2][3] = 1.0f;
         clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
         clip_mat[3][3] = 0;
-        sceVu0CopyMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat);    
-        sceVu0MulMatrix(_pWork.ViewFrustum_BoundingBox_ClipMatrix, clip_mat, wvm);
+        sceVu0CopyMatrix(_pWork.unk0, clip_mat);
+        sceVu0MulMatrix(_pWork.ViewFrustum_Primitive_ClipMatrix, clip_mat, wvm);
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", ViewFrustum_BoundingBox_ClipMatrix_Create);
+// @sh3: identical function
+void ViewFrustum_BoundingBox_ClipMatrix_Create(void) {
+    float clip_mat[4][4]; // r29+0x20
+    float wvm[4][4]; // r29+0x60
+    float vsm[4][4]; // r29+0xA0
+    float x_range, y_range; // r29+0xE0
+    float z_near = HH_ClassWrapper_ViewingFrustumParamerter_NearZ_Get(); // r20
+    float z_far = HH_ClassWrapper_ViewingFrustumParamerter_FarZ_Get() - BOUNDING_BOX_Z_FAR; // r21
+
+
+    
+    HH_ClassWrapper_WorldViewMatrix_Get(wvm);
+    HH_ClassWrapper_ViewScreenMatrix_Get(vsm);
+    x_range = BOUNDING_BOX_X_RANGE;
+    y_range = BOUNDING_BOX_Y_RANGE;
+    sceVu0UnitMatrix(clip_mat);
+    clip_mat[0][0] = (2.0f * vsm[0][0]) / x_range;
+    clip_mat[1][1] = (2.0f * vsm[1][1]) / y_range;
+
+    
+    clip_mat[2][2] = (z_far + z_near) / (z_far - z_near);
+    clip_mat[2][3] = 1.0f;
+    clip_mat[3][2] = (-2.0f * (z_far * z_near)) / (z_far - z_near);
+    clip_mat[3][3] = 0;
+    sceVu0MulMatrix(_pWork.ViewFrustum_BoundingBox_ClipMatrix, clip_mat, wvm);
+    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", AlwaysFront_WorldView_Matrix_Create);
 
