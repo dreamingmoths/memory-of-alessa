@@ -18,10 +18,10 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_toilet", stg_toilet_EvProgPrologue
     return !GET_GAME_FLAG(GAME_FLAG_33) ? 4 : 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_toilet", stg_toilet_Kari_hisyakai);
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_toilet", stg_toilet_Kari_hisyakai); // https://decomp.me/scratch/9YV5c
 
 /* static */ float stg_toilet_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
     return Yst + (((Yen - Yst) * (Parm - Xst)) / (Xen - Xst));
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_toilet", stg_toilet_Toilet_Dof_Filter);
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_toilet", stg_toilet_Toilet_Dof_Filter); // https://decomp.me/scratch/dHOre
