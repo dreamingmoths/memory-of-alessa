@@ -4,16 +4,12 @@
 #include "SH2_common/sh2dt.h"
 #include "view/vb_main.h"
 
-// @note: symbols only had two args, `near_rd_p` is guess
 // @note: weird line numbering?
 #line 30
-float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA* near_rd_p, sceVu0FVECTOR chr_pos, sceVu0FVECTOR cam_tgt_pos) {
-    VC_NEAR_ROAD_DATA cur_near_road;
+float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVECTOR chr_pos, sceVu0FVECTOR cam_tgt_pos) {
     sceVu0FVECTOR ppos;
     float ofs_ang_y;
     float near_ratio;
-
-    cur_near_road = *near_rd_p;
 
     near_ratio = 0.0f;
     ofs_ang_y = shAngleRegulate(shAtan2(chr_pos[2] - cam_tgt_pos[2], chr_pos[0] - cam_tgt_pos[0]));
@@ -38,18 +34,12 @@ float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA* near_rd_p, sceVu0FVECTO
     return near_ratio;
 }
 
-// @note: symbols only showed `chr_pos` param for this.
 // @note: weird line numbering?
 #line 80
-float vcRetNearRatioSwitchAreaForCircleCam(VC_NEAR_ROAD_DATA* near_rd_p, VC_CIR_CAM_MANAGER* cir_man_p, sceVu0FVECTOR chr_pos) {
-    VC_NEAR_ROAD_DATA cur_near_road;
-    VC_CIR_CAM_MANAGER cir_man;
+float vcRetNearRatioSwitchAreaForCircleCam(VC_NEAR_ROAD_DATA cur_near_road, VC_CIR_CAM_MANAGER cir_man, sceVu0FVECTOR chr_pos) {
     sceVu0FVECTOR ppos;
     float ofs_ang_y;
     float near_ratio;
-
-    cur_near_road = *near_rd_p;
-    cir_man = *cir_man_p;
 
     ofs_ang_y = shAngleRegulate(shAtan2(chr_pos[2] - cir_man.origin[2], chr_pos[0] - cir_man.origin[0]));
     vcTransRotRoadArea(ppos, cur_near_road.sw_rzm, chr_pos);
