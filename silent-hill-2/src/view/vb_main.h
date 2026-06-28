@@ -77,7 +77,7 @@ void vbSetWorldScreenMatrix(void);
 void vbGetLw(VbCOORDINATE* coord, int fflip);
 int vbSetRefView(VbRVIEW* rview);
 float vbNormalizeRadianAngle(float ang);
-void vbTransposeMatrixWithoutTr(float m0[4], float m1[4]);      // @todo: check types
-void vbApplyMatrixWithoutTr(float* v0, float m0[4], float* v1); // @todo: check types
+void vbTransposeMatrixWithoutTr(float m0[4], float m1[4]); // @todo: check types
+void vbApplyMatrixWithoutTr(sceVu0FVECTOR v0, sceVu0FMATRIX m0, sceVu0FVECTOR v1);
 
 #endif // VB_MAIN_H

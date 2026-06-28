@@ -107,11 +107,51 @@ void vcWarpForFixAngCam(VC_WORK* v_p) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/view/vc_newest", vcRetCirRadiusReduction);
+// @todo: Likely a static in vcRetCirRadiusReduction (vc_main.c also seems to have a separate `far_tgt_watch_cir_r_0x003905C0` var.)
+extern float far_tgt_watch_cir_r_0x00399F40[];
+
+#line 210
+float vcRetCirRadiusReduction(VC_WORK* w_p) {
+    float real_r;
+    float deflt_r;
+    float cam2chr_xz_dist;
+    float ofs_ang_y;
+    float x;
+    float z;
+    float rate;
+    cam2chr_xz_dist = vec3_dist_xz(w_p->chara_pos, w_p->cam_pos);
+    cam2chr_xz_dist /= 2.0f;
+    ofs_ang_y = shAtan2(w_p->chara_pos[2] - w_p->cam_pos[2],
+                        w_p->chara_pos[0] - w_p->cam_pos[0]);
+
+
+
+    deflt_r = far_tgt_watch_cir_r_0x00399F40[w_p->cur_near_road.road_p->area_size_type];
+
+
+
+    z = cam2chr_xz_dist * shSinF(ofs_ang_y) + deflt_r * shSinF(w_p->chara_eye_ang_y);
+
+
+    x = cam2chr_xz_dist * shCosF(ofs_ang_y) + deflt_r * shCosF(w_p->chara_eye_ang_y);
+
+
+
+    real_r = SQRT(z * z + x * x);
+
+    rate = float_abs(shAngleRegulate(w_p->chara_eye_ang_y - ofs_ang_y) / PI);
+
+
+
+
+    rate = 1.0f - rate;
+
+    return real_r * rate;
+}
 
 #line 255
 void vcChangeProjByDist(VC_NEAR_ROAD_DATA* near_rd_p, float mv_vec_y) {
-    if (near_rd_p->road_p->area_size_type == VC_AREA_OUTDOOR &&
+    if ((VC_AREA_SIZE_TYPE)near_rd_p->road_p->area_size_type == VC_AREA_OUTDOOR &&
         (near_rd_p->road_p->mv_y_type == VC_MV_LOCUS_CIRCLE || near_rd_p->road_p->mv_y_type == VC_MV_THROUGH_DOOR)) {
 
 

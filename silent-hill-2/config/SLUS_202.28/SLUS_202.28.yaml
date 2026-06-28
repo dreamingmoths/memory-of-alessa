@@ -157,7 +157,7 @@ segments:
       - [0x0a66c0, asm, sh2shd/sh2shd_shadow_vu1_packet]
       - [0x0a6d00, asm, sh2shd/sh2shd_stencil_shadow_main]
       - [0x0a6ed0, asm, sh2shd/sh2shd_structs]
-      - [0x0a6ef0, asm, view/vc_calc]
+      - [0x0a6ef0, c,   view/vc_calc]
       - [0x0a7580, c,   Event/event]
       - [0x0ac650, c,   Event/event_sub]
       - [0x0adf60, c,   Event/item]
