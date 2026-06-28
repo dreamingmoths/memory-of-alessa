@@ -235,7 +235,6 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */,
 }
 
 static void shLensFlareMakeScreenPos(LensFlareWork* lf_work /* r2 */, Vector4* ws_l_sxyz_p /* r2 */, Vector4* ws_l_vec_p /* r2 */, int scr_z /* r2 */) {
-    // Range: 0x1875F0 -> 0x187720
     float geom_x;    // r2
     float geom_y;    // r3
     Vector4 tmp_pos; // r29

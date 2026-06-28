@@ -538,6 +538,17 @@ shLensFlareMakeScreenInfo = 0x0023c7d0;
 shLensFlareExec = 0x0023c8d0;
 Kari_LensFlare_DrawExec = 0x0023c000;
 sh3gfw_GsExecStoreImage = 0x002399d0;
+screen_info = 0x01F2F700; // size:0x10
+light_info = 0x01F2F710; // size:0x60
+lf_flicker_on = 0x01F2F6E0;
+shLensFlareMakeScreenPos = 0x0023C5A0;
+sh3gfw_GsSetDefStoreImage = 0x00239890;
+pow_rate_dat = 0x0038A668;
+dist_rate_dat = 0x0038A670;
+ang_z_rate_dat = 0x0038A690;
+shLensFlareCameraIsSmooth = 0x0023C110;
+light_flare_work = 0x01F2F770; // size:0x80
+
 
 // could be wrong
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
@@ -837,6 +848,7 @@ SignalSema_ = 0x001DC1A0;
 ErrMessage_ = 0x002B7400;
 sceDmaReset_ = 0x0012bc60;
 
+atan2f = 0x0012BB58;
 fmodf = 0x0012BB70;
 
 // dbfntprint.c

@@ -1,8 +1,9 @@
 #ifndef LENS_FLARE_H
 #define LENS_FLARE_H
 
-#include "sh2_common.h"
-#include "GFW/sh2gfw_structs.h"
+#include "common.h"
+#include "Chacter/character.h"
+// #include "GFW/sh2gfw_structs.h"
 
 typedef struct /* @anon6 */ {
     // total size: 0x40
@@ -32,10 +33,17 @@ typedef struct /* @anon7 */ {
     float height; // offset 0xC, size 0x4
 } ScreenInfo;
 
+typedef struct LightFlareWork_01F2F770 {
+    s_char unk0[2];
+    s_char unk2[6];
+    int unk8;
+    u_char pad[0x34];
+} LightFlareWork_01F2F770;
+
 extern ScreenInfo screen_info; // size: 0x10, address: 0x1013760
 extern float reverse_light_rate;
 extern int Lens_Fl_Head;
-extern LensFlareWork light_flare_work;
+extern LensFlareWork light_flare_work[2];
 extern LightInfo light_info[2]; // size: 0x60, address: 0x1013770
 
 extern struct sh2gfw_Effect_Man LF_Tex_Work; // size: 0x40, address: 0x1013850
@@ -46,6 +54,6 @@ int shLensFlareLightCenterIsVisible(LensFlareWork* lf_info);
 
 void shLensFlareInit(void);
 
-void shLensFlareExec(struct SubCharacter* scp, float light_intensity, int type);
+void shLensFlareExec(SubCharacter* scp, float light_intensity, int type);
 
 #endif // LENS_FLARE_H
