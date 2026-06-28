@@ -13,6 +13,7 @@
 #define GAME_FLAG_19  19
 #define GAME_FLAG_25  25
 #define GAME_FLAG_26  26
+#define GAME_FLAG_33  33
 #define GAME_FLAG_36  36
 #define GAME_FLAG_39  39
 #define GAME_FLAG_43  43
