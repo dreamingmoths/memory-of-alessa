@@ -1,8 +1,9 @@
 #ifndef LENS_FLARE_H
 #define LENS_FLARE_H
 
-#include "sh2_common.h"
-#include "GFW/sh2gfw_structs.h"
+#include "common.h"
+#include "Chacter/character.h"
+// #include "GFW/sh2gfw_structs.h"
 
 typedef struct /* @anon6 */ {
     // total size: 0x40
@@ -46,6 +47,6 @@ int shLensFlareLightCenterIsVisible(LensFlareWork* lf_info);
 
 void shLensFlareInit(void);
 
-void shLensFlareExec(struct SubCharacter* scp, float light_intensity, int type);
+void shLensFlareExec(SubCharacter* scp, float light_intensity, int type);
 
 #endif // LENS_FLARE_H
