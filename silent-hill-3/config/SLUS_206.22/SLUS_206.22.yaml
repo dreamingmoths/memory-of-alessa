@@ -394,7 +394,7 @@ segments:
       - [0x139f50, asm,     Lens/lens_th_draw]
       - [0x13a640, asm,     Effect2/hh_effect_object_texture]
       - [0x13a6a0, asm,     Lens/kari_lf_draw]
-      - [0x13c580, asm,     Lens/lens_flare]
+      - [0x13c640, c,       Lens/lens_flare]
       - [0x13d020, asm,     text_0x13d020]
       - [0x141890, asm,     Chacter/m3_claudia]  # CLAUDIA
       - [0x141b20, asm,     Effect2/hh_class_6]
