@@ -19,3 +19,17 @@ INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareMakeEffectTargetRate)
 INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareMakeScreenPos);
 
 INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareMakeScreenAngle);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", ktVectorNormal);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", _sceVu0Normalize);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shGetJamesLightInfo);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareMakeScreenInfo);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", sh2gde_getWorldViewMatrix);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareInit);
+
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareExec);
