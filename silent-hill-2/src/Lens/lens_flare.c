@@ -171,7 +171,7 @@ static float shLensFlareOresenHokan(float* Y_ary /* r17 */, int Y_suu /* r16 */,
         float amari;   // あまり // r29+0x40
         float kukan_w; // くかん // r20
         int kukan_no;  // r2
-        amari = (max_X - min_X) / (f32)(Y_suu - 1);
+        amari = (max_X - min_X) / (Y_suu - 1);
         kukan_w = input_X - min_X, kukan_no = (int)(kukan_w / amari);
         if (kukan_no >= (Y_suu - 1)) {
             output_Y = Y_ary[Y_suu - 1];
@@ -193,13 +193,16 @@ static float shLensFlareOresenHokan(float* Y_ary /* r17 */, int Y_suu /* r16 */,
     return output_Y;
 }
 
-UNCURSE_LENS_FLARE_BLOOD();
+// @hack float memes in `shLensFlareMakeEffectTargetRate`
+static inline int uncurse_lens_flare_blood(void) {
+    float x;
+}
 
+static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
+static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
+static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
 static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */, LensFlareWork* lf_work /* r16 */) {
-    static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
-    static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
-    static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
-    float ret_tgt_rate; // r29+0x30
+    float ret_tgt_rate = uncurse_lens_flare_blood(); // r29+0x30
 
     float pow_rate = shLensFlareOresenHokan(
         pow_rate_dat,
@@ -217,9 +220,10 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */,
         3328.0f
     ); // r21
 
+
     float ang_z_rate = shLensFlareOresenHokan(
         ang_z_rate_dat, 7, lf_work->scr_l_ang_z,
-        TO_RAD(78),
+        TO_RAD(78.0f),
         TO_RAD(167.000009f)
     ); // r29+0x30
 
