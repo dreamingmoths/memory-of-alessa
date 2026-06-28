@@ -6,6 +6,7 @@
 #include "sh2shd/sh2shd_structs.h"
 #include "GFW/sh2_GsAllEnv.h"
 #include "Heap/utilheap.h"
+#include "view/camera_dat.h"
 
 #define SHADOW_CHAR_MAN_SIZE 16
 #define SHADOW_OUTDOOR_MAN_SIZE 4
@@ -16,26 +17,6 @@
 #define SHADOW_OFF_WORK_BG_OBJ_COUNT 32
 
 #define SHADOW_CALC_HEAP_SIZE 0xA0
-
-typedef struct /* @anon6 */ {
-    // total size: 0x220
-    float pos[4];             // offset 0x0, size 0x10
-    float zdir[4];            // offset 0x10, size 0x10
-    float ydir[4];            // offset 0x20, size 0x10
-    float rot[4];             // offset 0x30, size 0x10
-    float clip_volume[4];     // offset 0x40, size 0x10
-    float world_view[4][4];   // offset 0x50, size 0x40
-    float view_screen[4][4];  // offset 0x90, size 0x40
-    float view_clip[4][4];    // offset 0xD0, size 0x40
-    float world_screen[4][4]; // offset 0x110, size 0x40
-    float world_clip[4][4];   // offset 0x150, size 0x40
-    float clip_screen[4][4];  // offset 0x190, size 0x40
-    float camera_pam[4];      // offset 0x1D0, size 0x10
-    float screen_pam1[4];     // offset 0x1E0, size 0x10
-    float screen_pam2[4];     // offset 0x1F0, size 0x10
-    float rot_zdir[4];        // offset 0x200, size 0x10
-    float rot_ydir[4];        // offset 0x210, size 0x10
-} CAMERA_DAT;
 
 void sh2shd_init_shadow(void);
 

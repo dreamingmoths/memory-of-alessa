@@ -89,6 +89,7 @@ void shCharacterSetPosAfterDemo(SubCharacter* scp, float* pos, float roty);
 void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short id, u_int parts_name);
 void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height, u_short kind, u_short id);
 
+// @todo move these out
 extern int demo_status; // correct home for this?
 extern sceVu0FMATRIX kt_unit_matrix; // correct home for this?
 

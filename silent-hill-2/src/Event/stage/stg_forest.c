@@ -23,7 +23,7 @@
 #include "Effect/screen_effect.h"
 #include "Font/font.h"
 #include "GFW/sh2_DrawEnvData.h"
-#include "GFW/sh2_get_drawenv.h"
+#include "GFW/sh2_set_drawenv.h"
 #include "Multi_thr/filesys/fcread.h"
 #include "Multi_thr/filesys/fileserv.h"
 #include "sound/sh_sound.h"

@@ -79,4 +79,6 @@ typedef struct sh2gfw_ALLTEXSYNC_MAN {
     struct sh2gfw_TexMAN TexMan[96]; // offset 0xA50, size 0x1E600
 } sh2gfw_ALLTEXSYNC_MAN;
 
+extern sh2gfw_ALLTEXSYNC_MAN AllTexSync_Man;
+
 #endif // SH2GFW_ALLTEXMAN_H
