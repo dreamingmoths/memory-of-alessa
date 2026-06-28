@@ -174,7 +174,7 @@ typedef struct _VC_ROAD_DATA {
     /* 0x20 */ VC_ROAD_AREA lim_rd;
     /* 0x40 */ int kind_id;
     /* 0x44 */ int flags; // `VC_ROAD_FLAGS`
-    /* 0x48 */ VC_AREA_SIZE_TYPE area_size_type;
+    /* 0x48 */ int area_size_type; // `VC_AREA_SIZE_TYPE`
     /* 0x4c */ int rd_type;
     /* 0x50 */ VC_CAM_MV_TYPE mv_y_type; // Unsure if correct type, `cam_mv_type` likely uses this enum too, maybe both use it for diff reasons?
     /* 0x54 */ float ofs_watch_hy;

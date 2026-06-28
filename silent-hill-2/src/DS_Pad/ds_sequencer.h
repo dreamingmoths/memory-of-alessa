@@ -75,6 +75,11 @@ typedef struct DSR_MU_EventDescriptor {
     float Value;   // offset 0x8, size 0x4
 } DSR_MU_EventDescriptor;
 
+typedef struct Sequencer_Data {
+    // total size: 0x10
+    float ActuaterLV[4]; // offset 0x0, size 0x10
+} Sequencer_Data;
+
 u_int DSR_Entry0(void* pAddress, u_int ControllerID, float Ratio);
 
 void DSR_Sequencer_Initialize(void);
