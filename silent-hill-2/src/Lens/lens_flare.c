@@ -32,10 +32,6 @@ void sh2gde_getWorldScreenMatrix(sceVu0FMATRIX wsm);
 extern /* static */ int lf_flicker_on; // size: 0x4, address: 0x1013750
 extern /* static */ int lf_flicker_off; // size: 0x4, address: 0x0
 
-extern /* static */ float ang_z_rate_dat_1117[7]; // @ 0x002B63F0
-extern /* static */ float dist_rate_dat_1116[7]; // @ 0x002B63D0
-extern /* static */ float pow_rate_dat_1115[2]; // @ 0x002B63C0
-
 extern float atan2f(float, float);
 
 static void shLensFlareGetScreenInfo(void) {
@@ -198,9 +194,12 @@ static float shLensFlareOresenHokan(float* Y_ary /* r17 */, int Y_suu /* r16 */,
 
 
 static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */, LensFlareWork* lf_work /* r16 */) {
-    static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
-    static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
-    static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
+    extern /* static */ float ang_z_rate_dat_1117[7]; // @ 0x002B63F0
+    extern /* static */ float dist_rate_dat_1116[7]; // @ 0x002B63D0
+    extern /* static */ float pow_rate_dat_1115[2]; // @ 0x002B63C0
+    // static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
+    // static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
+    // static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
     float ret_tgt_rate; // r29+0x30
 
     float pow_rate = shLensFlareOresenHokan(
@@ -208,19 +207,22 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */,
         2,
         light_eff_pow,
         0.0f,
-        1.0f); // r20
+        1.0f
+    ); // r20
 
     float dist_rate = shLensFlareOresenHokan(
         dist_rate_dat_1116,
         7,
         lf_work->scr_l_pos.z,
         204.8f,
-        3328.0f); // r21
+        3328.0f
+    ); // r21
 
     float ang_z_rate = shLensFlareOresenHokan(
         &ang_z_rate_dat_1117, 7, lf_work->scr_l_ang_z,
         TO_RAD(78),
-        TO_RAD(167.000009f)); // r29+0x30
+        TO_RAD(167.000009f)
+    ); // r29+0x30
     ret_tgt_rate = ang_z_rate * pow_rate * dist_rate;
     if (2.0f > ret_tgt_rate) {
         return ret_tgt_rate;
@@ -351,7 +353,7 @@ void shLensFlareInit(void) {
 
 void shLensFlareExec(SubCharacter* scp /* r2 */, float light_intensity /* r20 */, int type /* r18 */) {
     int count = *T0_COUNT; // r2
-    int proj;              // r2
+    int proj;              // r2 @todo unused symbol
     float pow;
     s32 var_v1;
 
@@ -362,16 +364,16 @@ void shLensFlareExec(SubCharacter* scp /* r2 */, float light_intensity /* r20 */
     if ((&light_flare_work)[type].flare_inhibit_f == 0) {
         shLensFlareMakeScreenInfo(&(&light_flare_work)[type], &light_info[type]);
         if (type) {
-            float temp_f0 = (&light_flare_work)[type].scr_l_ang_z;
-            if (temp_f0 < QUARTER_TURN) {
-                temp_f0 = 0.0f;
+            float angle_z = (&light_flare_work)[type].scr_l_ang_z;
+            if (angle_z < QUARTER_TURN) {
+                angle_z = 0.0f;
             } else {
-                temp_f0 = 0.63661975f * (temp_f0 - QUARTER_TURN);
+                angle_z = (2.0f / PI) * (angle_z - QUARTER_TURN);
             }
-            reverse_light_rate = temp_f0;
+            reverse_light_rate = angle_z;
         }
         var_v1 = (int)VbScreenInfo.scr_z;
-        if ((&light_flare_work)[type].scr_l_pos.z > var_v1 / 2) {
+        if ((&light_flare_work)[type].scr_l_pos.z > ((int)VbScreenInfo.scr_z) / 2) {
             (&light_flare_work)[type].lfl_sync_draw_func_exec_f = 1;
             (&light_flare_work)[type].tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(pow, &(&light_flare_work)[type]);
             shLensFlareSetLightSeed(&(&light_flare_work)[type], &screen_info, type);
