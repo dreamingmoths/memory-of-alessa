@@ -253,7 +253,7 @@ void func_0023C890(int type) {
     (&light_flare_work)[type].flare_inhibit_f = 1;
 }
 
-void func_0023C8B0(s32 type) {
+void func_0023C8B0(int type) {
     (&light_flare_work)[type].flare_inhibit_f = 0;
 }
 
