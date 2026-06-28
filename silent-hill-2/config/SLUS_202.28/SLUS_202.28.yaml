@@ -562,6 +562,8 @@ segments:
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670 }
       - { vram: 0x11b6a70, type: .bss, name: Item/otn_option }
       - { vram: 0x11b6af0, type: bss,  name: bss_0x11b6af0 }
+      - { vram: 0x11e7080, type: .bss, name: DS_Pad/ds_sequencer }
+      - { vram: 0x11e7850, type: bss,  name: bss_0x11e7850 }
       - { vram: 0x11eb550, type: .bss, name: Effect2/hh_class_water_01 }
       - { vram: 0x11eb570, type: .bss, name: Effect2/hh_class_water_02 }
       - { vram: 0x11eb5f0, type: .bss, name: Effect2/hh_class_water_10 }

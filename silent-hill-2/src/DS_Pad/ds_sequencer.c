@@ -53,59 +53,61 @@ static void EventMessageQueue_Initialize(void);
 static u_int EventMessageQueue_Length_Get(void);
 static void DSR_MUD_Initialize(void);
 
-extern DSR_MUD* pMUD;
-
 #define DSR_MU_EVENT_QUEUE_LENGTH 100
-extern DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
+#define DSR_EntryTable_Max 20
+
+DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
+Sequencer_Data _sd[2];
+DSR_MUD _mud;
+EntryRecord EntryTable[DSR_EntryTable_Max];
+
+extern DSR_MUD* pMUD;
+extern Sequencer_Data* pSD;
 
 void SequencerManager(void) {
     u_int i;
-    EntryRecord *pER;
+    EntryRecord* pER;
     u_int Handle;
-    for (i = 0; i < 0x14U; i++) {
+    for (i = 0; i < DSR_EntryTable_Max; i++) {
         pER = EntryRecord_Get_fromTableIndex(i);
-
 
         if (EntryRecord_Enable_Check(pER) != 0) {
             Handle = EntryRecord_Handle_Get(pER);
 
-
             switch (EntryRecord_Condition_Get(pER)) {
                 case 2:
 
-                    
-                switch (EntryRecord_Type_Get(pER)) {
-                    case 0:
-                        Sequencer_Type_Hispeed(pER);
-                        break;
-                    case 1:
-                        Sequencer_Type_Lowspeed(pER);
-                        break;
-                    case 2:
-                        Sequencer_Type_Hispeed_Edit(pER);
-                        break;
-                    case 3:
-                        Sequencer_Type_Lowspeed_Edit(pER);
-                        break;
-                }
-
-                EventMessage_Post(Handle, 2U, 0.0f);
-
-                if (EntryRecord_TimeOver_Check(pER) != 0) {
-                    switch (EntryRecord_Type_Get(pER))
-                    {
-                    case 0:
-                    case 1:
-                        EventMessage_Post(Handle, 1U, 0.0f);
-                        break;
-                    case 2:
-                    case 3:
-                        EventMessage_Post(Handle, 6U, 0.0f);
-                        EventMessage_Post(Handle, 3U, 0.0f);
-                        break;
+                    switch (EntryRecord_Type_Get(pER)) {
+                        case 0:
+                            Sequencer_Type_Hispeed(pER);
+                            break;
+                        case 1:
+                            Sequencer_Type_Lowspeed(pER);
+                            break;
+                        case 2:
+                            Sequencer_Type_Hispeed_Edit(pER);
+                            break;
+                        case 3:
+                            Sequencer_Type_Lowspeed_Edit(pER);
+                            break;
                     }
-                }
-                
+
+                    EventMessage_Post(Handle, 2U, 0.0f);
+
+                    if (EntryRecord_TimeOver_Check(pER) != 0) {
+                        switch (EntryRecord_Type_Get(pER)) {
+                            case 0:
+                            case 1:
+                                EventMessage_Post(Handle, 1U, 0.0f);
+                                break;
+                            case 2:
+                            case 3:
+                                EventMessage_Post(Handle, 6U, 0.0f);
+                                EventMessage_Post(Handle, 3U, 0.0f);
+                                break;
+                        }
+                    }
+
                 case 1:
                 case 3:
                 case 0: {
@@ -116,10 +118,9 @@ void SequencerManager(void) {
     }
 }
 
-void Sequencer_Type_Hispeed(EntryRecord *pER)
-{
-    DS_Record *pDSR;
-    Record_Info *pInfo;
+void Sequencer_Type_Hispeed(EntryRecord* pER) {
+    DS_Record* pDSR;
+    Record_Info* pInfo;
 
     int Node;
     int Node_Next;
@@ -134,20 +135,15 @@ void Sequencer_Type_Hispeed(EntryRecord *pER)
     Node = Node_Current_Search(pInfo, time);
     Node_Next = Node_Next_Search(pInfo, time);
 
-    if ((Node != -1) && (Node_Next != -1))
-    {
-        pDSR = (DS_Record *)pInfo->pAddress + Node;
+    if ((Node != -1) && (Node_Next != -1)) {
+        pDSR = (DS_Record*)pInfo->pAddress + Node;
         now_act_lv_i = 0;
-        if (pDSR->Complement_Enable != 0)
-        {
+        if (pDSR->Complement_Enable != 0) {
             now_act_lv_i = pDSR->Actuater_LV ? 1 : 0;
-        }
-        else
-        {
+        } else {
             section_0 = pDSR->Time;
             section_1 = section_0 + Sequence_Different_Time_Get();
-            if ((section_0 <= time) && (time < section_1))
-            {
+            if ((section_0 <= time) && (time < section_1)) {
                 now_act_lv_i = pDSR->Actuater_LV ? 1 : 0;
             }
         }
@@ -161,13 +157,13 @@ void Sequencer_Type_Hispeed(EntryRecord *pER)
     }
 }
 
-static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
+static void Sequencer_Type_Lowspeed(EntryRecord* pER /* r18 */) {
 
-    Record_Info * pInfo; // r16
-    float time; // r20
-    int Node; // r17
-    int Node_Next; // r2
-    DS_Record * pDSR; // r2
+    Record_Info* pInfo; // r16
+    float time;         // r20
+    int Node;           // r17
+    int Node_Next;      // r2
+    DS_Record* pDSR;    // r2
     float now_act_lv_f; // r29+0x50
 
     pInfo = &pER->Info;
@@ -180,22 +176,21 @@ static void Sequencer_Type_Lowspeed(EntryRecord * pER /* r18 */)  {
         if (pDSR->Complement_Enable != 0) {
             now_act_lv_f = ActuaterLV_Complement(pDSR, time);
         }
-        
+
         now_act_lv_f *= pER->Ratio;
         TotalActuaterLV_Keeper(pER->Controller_ID, 1, now_act_lv_f);
-
     }
 }
 
-static void Sequencer_Type_Hispeed_Edit(EntryRecord * pER /* r16 */) {
+static void Sequencer_Type_Hispeed_Edit(EntryRecord* pER /* r16 */) {
 
-    Record_Info * pInfo; // r2
-    float time; // r20   
-    DS_Record_Edit * pDSR; // r17
-    u_int now_act_lv_i; // r18
-    float section_0; // r21    
-    float section_1; // r29+0x50
-    
+    Record_Info* pInfo;   // r2
+    float time;           // r20
+    DS_Record_Edit* pDSR; // r17
+    u_int now_act_lv_i;   // r18
+    float section_0;      // r21
+    float section_1;      // r29+0x50
+
     time = pER->Time_Count;
     pDSR = EditNode_Current_Search(&pER->Info, time);
     if ((pDSR != NULL) && (pDSR->pNext != NULL)) {
@@ -215,12 +210,12 @@ static void Sequencer_Type_Hispeed_Edit(EntryRecord * pER /* r16 */) {
     }
 }
 
-static void Sequencer_Type_Lowspeed_Edit(EntryRecord * pER /* r16 */)  {
+static void Sequencer_Type_Lowspeed_Edit(EntryRecord* pER /* r16 */) {
 
-    Record_Info * pInfo; // r2
-    float time; // r20
-    DS_Record_Edit * pDSR; // r2    
-    float now_act_lv_f; // r29+0x30
+    Record_Info* pInfo;   // r2
+    float time;           // r20
+    DS_Record_Edit* pDSR; // r2
+    float now_act_lv_f;   // r29+0x30
 
     time = pER->Time_Count;
     pDSR = EditNode_Current_Search(&pER->Info, time);
@@ -229,19 +224,17 @@ static void Sequencer_Type_Lowspeed_Edit(EntryRecord * pER /* r16 */)  {
         if (pDSR->Record.Complement_Enable != 0) {
             now_act_lv_f = ActuaterLV_Complement_Edit(pDSR, time);
         }
-        
+
         now_act_lv_f *= pER->Ratio;
         TotalActuaterLV_Keeper(pER->Controller_ID, 1, now_act_lv_f);
     }
 }
 
-static u_int EntryRecord_Enable_Check(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_Enable_Check(EntryRecord* pER /* r2 */) {
     return pER->Enable;
 }
 
-
-
-static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_TimeOver_Check(EntryRecord* pER /* r2 */) {
 
     u_int result; // r2
 
@@ -252,32 +245,31 @@ static u_int EntryRecord_TimeOver_Check(EntryRecord * pER /* r2 */) {
     return result;
 }
 
-static u_int EntryRecord_Type_Get(EntryRecord * pER /* r2 */)  {
+static u_int EntryRecord_Type_Get(EntryRecord* pER /* r2 */) {
     return pER->Info.pObject->Type;
 }
 
-static u_int EntryRecord_ID_Get(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_ID_Get(EntryRecord* pER /* r2 */) {
     return pER->Info.pObject->ID;
 }
 
-static u_int EntryRecord_Attribute_Get(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_Attribute_Get(EntryRecord* pER /* r2 */) {
     return pER->Info.pObject->Attribute;
 }
 
-static u_int EntryRecord_Condition_Get(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_Condition_Get(EntryRecord* pER /* r2 */) {
     return pER->Condition;
 }
 
-static void EntryRecord_Condition_Set(EntryRecord * pER /* r2 */, u_int Condition /* r2 */) {
+static void EntryRecord_Condition_Set(EntryRecord* pER /* r2 */, u_int Condition /* r2 */) {
     pER->Condition = Condition;
 }
 
-static u_int EntryRecord_Handle_Get(EntryRecord * pER /* r2 */) {
+static u_int EntryRecord_Handle_Get(EntryRecord* pER /* r2 */) {
     return pER->Handle;
 }
 
-
-static void EntryRecord_Initialize(EntryRecord * pER /* r2 */) {
+static void EntryRecord_Initialize(EntryRecord* pER /* r2 */) {
     memset(pER, 0, sizeof(EntryRecord));
 }
 
@@ -285,8 +277,8 @@ static u_int EntryRecord_EntryCount_Get(void) {
     return pMUD->EntryRecord_Count;
 }
 
-static u_int EntryRecord_EntryFreeCount_Get(void)  {
-    return 0x14 - pMUD->EntryRecord_Count;
+static u_int EntryRecord_EntryFreeCount_Get(void) {
+    return DSR_EntryTable_Max - pMUD->EntryRecord_Count;
 }
 
 static u_int EntryRecord_EntryCount_Increment(void) {
@@ -304,9 +296,9 @@ static float Sequence_Different_Time_Get(void) {
     return pMUD->Different_Time;
 }
 
-
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", Sequence_Different_Time_Set);
-
+void Sequence_Different_Time_Set(float Time) {
+    pMUD->Different_Time = Time;
+}
 
 static u_int EntryRecord_Handle_Create(void) {
     u_int result; // r16
@@ -314,18 +306,37 @@ static u_int EntryRecord_Handle_Create(void) {
     result = pMUD->Handle_History + 1;
 
     while (EntryRecord_Handle_Search(result) != 0) {
-        result += 1;
+        result++;
     }
     pMUD->Handle_History = result;
     return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Get_fromTableIndex);
+static EntryRecord* EntryRecord_Get_fromTableIndex(u_int EntryTable_Index) {
+    ASSERT_ON_LINE((EntryTable_Index < DSR_EntryTable_Max), 594);
+    return &EntryTable[EntryTable_Index];
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Get_fromHandle);
+static EntryRecord* EntryRecord_Get_fromHandle(u_int Handle) {
+    void* result;
+    int i;
+    EntryRecord* pER;
+
+    result = 0;
+    for (i = 0; i < DSR_EntryTable_Max; i++) {
+        pER = EntryRecord_Get_fromTableIndex(i);
+        if (EntryRecord_Enable_Check(pER) != 0) {
+            if (Handle == EntryRecord_Handle_Get(pER)) {
+                result = pER;
+                break;
+            }
+        }
+    }
+    return result;
+}
 
 static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
-    
+
     u_int result;
 
     result = 0;
@@ -335,25 +346,77 @@ static u_int EntryRecord_Handle_Search(u_int Handle /* r2 */) {
     return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_ID_Search);
+static u_int EntryRecord_ID_Search(u_int ID) {
+    u_int result;
+    int i;
+    EntryRecord* pER;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Attribute_Search);
+    result = 0;
+    for (i = 0; i < DSR_EntryTable_Max; i++) {
+        pER = EntryRecord_Get_fromTableIndex(i);
+        if (EntryRecord_Enable_Check(pER) != 0) {
+            if (ID == EntryRecord_ID_Get(pER)) {
+                result = EntryRecord_Handle_Get(pER);
+                break;
+            }
+        }
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Time_Count);
+static u_int EntryRecord_Attribute_Search(u_int Attribute) {
+    u_int result;
+    int i;
+    EntryRecord* pER;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Time_Set);
+    result = 0;
+    for (i = 0; i < DSR_EntryTable_Max; i++) {
+        pER = EntryRecord_Get_fromTableIndex(i);
+        if (EntryRecord_Enable_Check(pER) != 0) {
+            if (EntryRecord_Attribute_Get(pER) == Attribute) {
+                result = EntryRecord_Handle_Get(pER);
+                break;
+            }
+        }
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecord_Ratio_Set);
+static void EntryRecord_Time_Count(EntryRecord* pER) {
+    pER->Time_Count += Sequence_Different_Time_Get();
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EntryRecordTable_FreeSpace_Search);
+static void EntryRecord_Time_Set(EntryRecord* pER, float Time) {
+    pER->Time_Count = Time;
+}
+
+static void EntryRecord_Ratio_Set(EntryRecord* pER, float Ratio) {
+    pER->Ratio = Ratio;
+}
+
+static EntryRecord* EntryRecordTable_FreeSpace_Search(void) {
+    void* result;
+    int i;
+    EntryRecord* pER;
+
+    result = 0;
+    for (i = 0; i < DSR_EntryTable_Max; i++) {
+        pER = EntryRecord_Get_fromTableIndex(i);
+        if (pER->Enable == 0) {
+            result = pER;
+            break;
+        }
+    }
+    return result;
+}
 
 static void EntryRecordTable_All_Initialize(void) {
-    
+
     u_int i; // r16
 
     i = 0;
 
-    while (i < 0x14) {
+    while (i < DSR_EntryTable_Max) {
         EntryRecord_Initialize(EntryRecord_Get_fromTableIndex(i));
         i++;
     }
@@ -372,40 +435,40 @@ static void EntryRecordTable_All_Initialize(void) {
 #define DSR_PERMISSION_ATTR_OR_ID  3
 #define DSR_PERMISSION_ATTR_AND_ID 4
 
-u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int ControllerID, f32 Ratio) {
+static u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int ControllerID, float Ratio) {
     u_int result = 0; // r16
-    u_int i; // r16
+    u_int i;          // r16
 
     // validate header & check that we have room for this record
-    if ((DSR_FileFormat_ErrorChecker(pHeader) == 0) && (EntryRecord_EntryFreeCount_Get() >= pHeader->Object_Num)) {    
+    if ((DSR_FileFormat_ErrorChecker(pHeader) == 0) && (EntryRecord_EntryFreeCount_Get() >= pHeader->Object_Num)) {
         u_int permission_check = 1;
-        DS_Object_Info * pObject_Info = (DS_Object_Info*) (pHeader + 1);
+        DS_Object_Info* pObject_Info = (DS_Object_Info*)(pHeader + 1);
 
         // check if we have permission to create the record
 
-        switch (pObject_Info->Permission) {        
-        case DSR_PERMISSION_ATTRIBUTE:
-            if (EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) {
-                permission_check = 0;
-            }
-            break;
-        case DSR_PERMISSION_ID:
-            if (EntryRecord_ID_Search(pObject_Info->ID) != 0) {
-                permission_check = 0;
-            }
-            break;
-        case DSR_PERMISSION_ATTR_OR_ID:
-            if ((EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) || (EntryRecord_ID_Search(pObject_Info->ID) != 0)) {
-                permission_check = 0;
-            }
-            break;
-        case DSR_PERMISSION_ATTR_AND_ID:
-            if ((EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) && (EntryRecord_ID_Search(pObject_Info->ID) != 0)) {
-                permission_check = 0;
-            }
-            break;
-        case DSR_PERMISSION_NONE:
-            break;
+        switch (pObject_Info->Permission) {
+            case DSR_PERMISSION_ATTRIBUTE:
+                if (EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) {
+                    permission_check = 0;
+                }
+                break;
+            case DSR_PERMISSION_ID:
+                if (EntryRecord_ID_Search(pObject_Info->ID) != 0) {
+                    permission_check = 0;
+                }
+                break;
+            case DSR_PERMISSION_ATTR_OR_ID:
+                if ((EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) || (EntryRecord_ID_Search(pObject_Info->ID) != 0)) {
+                    permission_check = 0;
+                }
+                break;
+            case DSR_PERMISSION_ATTR_AND_ID:
+                if ((EntryRecord_Attribute_Search(pObject_Info->Attribute) != 0) && (EntryRecord_ID_Search(pObject_Info->ID) != 0)) {
+                    permission_check = 0;
+                }
+                break;
+            case DSR_PERMISSION_NONE:
+                break;
         }
 
         // 0 & 1 are of a fixed size, and 2 & 3 have dynamic size
@@ -414,21 +477,21 @@ u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int Co
                 case 0:
                 case 1: {
                     for (i = 0; i < pHeader->Object_Num; i++, pObject_Info++) {
-                        EntryRecord * pER = EntryRecordTable_FreeSpace_Search();
+                        EntryRecord* pER = EntryRecordTable_FreeSpace_Search();
                         pER->Enable = 1;
-                        pER->Controller_ID = (u_short) ControllerID;
-    
+                        pER->Controller_ID = (u_short)ControllerID;
+
                         pER->Handle = EntryRecord_Handle_Create();
                         pER->Ratio = Ratio;
                         pER->Info.pObject = pObject_Info;
                         pER->Info.pAddress = (void*)((u_int)pHeader + pObject_Info->Offset);
-    
+
                         pER->Time_Max = ((DS_Record*)pER->Info.pAddress + pER->Info.pObject->DataNode_num - 1)->Time;
-    
+
                         if (pHandleArray != NULL) {
                             pHandleArray[i] = pER->Handle;
                         }
-    
+
                         EntryRecord_EntryCount_Increment();
                     }
                     break;
@@ -436,80 +499,138 @@ u_int EntryRecord_Entry(u_int* pHandleArray, DS_Record_Header* pHeader, u_int Co
                 case 2:
                 case 3: {
                     for (i = 0; i < pHeader->Object_Num; i++, pObject_Info++) {
-                        EntryRecord * pER = EntryRecordTable_FreeSpace_Search();
-                        DS_Record_Edit * pTail; // r2
+                        EntryRecord* pER = EntryRecordTable_FreeSpace_Search();
+                        DS_Record_Edit* pTail; // r2
                         pER->Enable = 1;
-                        pER->Controller_ID = (u_short) ControllerID;
+                        pER->Controller_ID = (u_short)ControllerID;
                         pER->Handle = EntryRecord_Handle_Create();
                         pER->Ratio = Ratio;
                         pER->Info.pObject = pObject_Info;
-                        pER->Info.pAddress = (void* ) pObject_Info->Offset;
-    
-    
+                        pER->Info.pAddress = (void*)pObject_Info->Offset;
+
                         pTail = pER->Info.pAddress;
 
                         while (pTail->pNext != NULL) {
                             pTail = pTail->pNext;
                         }
                         pER->Time_Max = pTail->Record.Time;
-    
-                        
+
                         if (pHandleArray != NULL) {
                             pHandleArray[i] = pER->Handle;
                         }
-    
+
                         EntryRecord_EntryCount_Increment();
                     }
                     break;
                 }
             }
-    
+
             result = 1;
-
-
         }
     }
     return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_FileFormat_ErrorChecker);
+static u_int DSR_FileFormat_ErrorChecker(DS_Record_Header* pHeader) {
+    u_int result;
+    u_int num;
+    DS_Object_Info* pInfo;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_FF_Header_ErrorChecker);
+    result = DSR_FF_Header_ErrorChecker(pHeader);
+    if (result == 0) {
+        pInfo = (DS_Object_Info*)(pHeader + 1);
+        for (num = 0; num < pHeader->Object_Num; num++, pInfo++) {
+            if (pInfo->Offset == 0) {
+                result++;
+            }
+            if ((pInfo->Type != 3) && (pInfo->Type != 2) && (pInfo->Type != 1) && (pInfo->Type != 0)) {
+                result++;
+            }
+            if (pInfo->DataNode_num < 2) {
+                result++;
+            }
+        }
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Keeper);
+static u_int DSR_FF_Header_ErrorChecker(DS_Record_Header* pHeader) {
+    u_int result;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Send);
+    result = 0;
+    if (pHeader == NULL) {
+        ASSERT_ON_LINE(0, 906);
+    }
+    if (pHeader->Revision != 1) {
+        result++;
+    }
+    if (pHeader->Object_Num == 0) {
+        result++;
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", TotalActuaterLV_Initialize);
+static void TotalActuaterLV_Keeper(u_int ControllerID, u_int ActuaterType, float ActuaterLV) {
+    pSD[ControllerID].ActuaterLV[ActuaterType] = ActuaterLV;
+}
 
-static float ActuaterLV_Complement(DS_Record * pDSR /* r2 */, float Time /* r29 */) {
+extern float DSS_Wrapper_AllVibrationRatio_Get(void);
+extern void DSS_Wrapper_ActuaterData_Send(u_int ControllerID, u_int ActuaterType, u_int ActuaterData);
+static void TotalActuaterLV_Send(u_int ControllerID, u_int ActuaterType) {
+    float act_lv;
+    float act_ratio;
 
-    float result; // r29
-    float time_current; // r29    
-    float time_next; // r29
-    float comp_ratio; // r3
-    float act_lv_current; // r29    
-    float act_lv_next; // r29
-    
+    act_lv = pSD[ControllerID].ActuaterLV[ActuaterType];
+    act_ratio = DSS_Wrapper_AllVibrationRatio_Get();
+
+    switch (ActuaterType) {
+        case 0:
+        case 2:
+            if (act_ratio != 0.0f) {
+                act_ratio = 1.0f;
+            }
+            break;
+        case 1:
+        case 3:
+            break;
+    }
+
+    act_lv *= act_ratio;
+    DSS_Wrapper_ActuaterData_Send(ControllerID, ActuaterType, act_lv);
+    TotalActuaterLV_Initialize(ControllerID, ActuaterType);
+}
+
+static void TotalActuaterLV_Initialize(u_int ControllerID, u_int ActuaterType) {
+    pSD[ControllerID].ActuaterLV[ActuaterType] = 0.0f;
+}
+
+static float ActuaterLV_Complement(DS_Record* pDSR /* r2 */, float Time /* r29 */) {
+
+    float result;         // r29
+    float time_current;   // r29
+    float time_next;      // r29
+    float comp_ratio;     // r3
+    float act_lv_current; // r29
+    float act_lv_next;    // r29
+
     time_current = pDSR->Time;
     time_next = pDSR[1].Time;
     comp_ratio = (Time - time_current) / (time_next - time_current);
     act_lv_current = pDSR->Actuater_LV;
     act_lv_next = pDSR[1].Actuater_LV;
     result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
-    
+
     return result;
 }
 
+static float ActuaterLV_Complement_Edit(DS_Record_Edit* pDSR /* r2 */, float Time /* r29 */) {
 
-static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Time /* r29 */) {
-
-    float result; // r29
-    float time_current; // r29
-    float time_next; // r29
-    float comp_ratio; // r3  
+    float result;         // r29
+    float time_current;   // r29
+    float time_next;      // r29
+    float comp_ratio;     // r3
     float act_lv_current; // r29
-    float act_lv_next; // r29
+    float act_lv_next;    // r29
 
     time_current = pDSR->Record.Time;
     time_next = pDSR->pNext->Record.Time;
@@ -518,13 +639,11 @@ static float ActuaterLV_Complement_Edit(DS_Record_Edit * pDSR /* r2 */, float Ti
     act_lv_next = pDSR->pNext->Record.Actuater_LV;
     result = act_lv_next * comp_ratio + act_lv_current * (1.0f - comp_ratio);
     return result;
-        
 }
-
 
 static int Node_Next_Search(Record_Info* pInfo, float Time) {
     u_int node_num = pInfo->pObject->DataNode_num;
-    DS_Record * pDSR = pInfo->pAddress;
+    DS_Record* pDSR = pInfo->pAddress;
 
     int result = -1;
     u_int i;
@@ -538,8 +657,8 @@ static int Node_Next_Search(Record_Info* pInfo, float Time) {
     return result;
 }
 
-static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0x10 */) {
-    int result = -1; // r7
+static int Node_Current_Search(Record_Info* pInfo /* r2 */, float Time /* r29+0x10 */) {
+    int result = -1;                         // r7
     int num = Node_Next_Search(pInfo, Time); // r2
 
     if (num > 0) {
@@ -549,13 +668,12 @@ static int Node_Current_Search(Record_Info * pInfo /* r2 */, float Time /* r29+0
     return result;
 }
 
-
-static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
-    DS_Record_Edit * result;
-    DS_Record_Edit * pDSR;
+static DS_Record_Edit* EditNode_Current_Search(Record_Info* pInfo, float Time) {
+    DS_Record_Edit* result;
+    DS_Record_Edit* pDSR;
 
     result = NULL;
-    pDSR = (DS_Record_Edit *)pInfo->pAddress;
+    pDSR = (DS_Record_Edit*)pInfo->pAddress;
     while (pDSR != NULL) {
         if (Time < pDSR->Record.Time) {
             result = pDSR->pPrev;
@@ -566,22 +684,64 @@ static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
     return result;
 }
 
-const char rodata_268_0x00398730[] = "ds_sequencer.c:594> assert:(%s)\n";
+static void EventManager(void) {
+    DSR_MU_EventDescriptor Descriptor;
+    EntryRecord* pER;
 
-const char rodata_269[] = "(EntryTable_Index < DSR_EntryTable_Max)";
+    while (EventMessageQueue_deQueue(&Descriptor)) {
+        pER = EntryRecord_Get_fromHandle(Descriptor.Handle);
+        if (pER != NULL) {
+            switch (Descriptor.EventID) {
+                case 1:
+                    EntryRecord_EntryCount_Decrement();
+                    EntryRecord_Initialize(pER);
+                    break;
+                case 2:
+                    EntryRecord_Time_Count(pER);
+                    break;
+                case 3:
+                    EntryRecord_Time_Set(pER, Descriptor.Value);
+                    break;
+                case 4:
+                    EntryRecord_Ratio_Set(pER, Descriptor.Value);
+                    break;
+                case 5:
+                    EntryRecord_Condition_Set(pER, 2);
+                    break;
+                case 6:
+                    EntryRecord_Condition_Set(pER, 3);
+                    break;
+            }
+        }
+    }
+}
 
-const char rodata_441[] = "ds_sequencer.c:906> assert:(%s)\n";
+static u_int EventMessage_Post(u_int Handle, u_int EventID, float Value) {
+    u_int result = 0;
+    DSR_MU_EventDescriptor Descriptor = {Handle, EventID, Value};
 
-INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @442);
+    if (EventMessageQueue_enQueue(&Descriptor)) {
+        result = 1;
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventManager);
+static u_int EventMessageQueue_enQueue(DSR_MU_EventDescriptor* pDescriptor) {
+    u_int result;
+    u_int length;
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessage_Post);
+    result = 0;
+    length = EventMessageQueue_Length_Get();
+    if (pMUD->EventQueue_Count < length) {
+        _EventQueue[pMUD->enQueue_Pos++] = *pDescriptor;
+        pMUD->enQueue_Pos = pMUD->enQueue_Pos % length;
+        pMUD->EventQueue_Count++;
+        result = 1;
+    }
+    return result;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_enQueue);
-
-
-static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
+static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor* pDescriptor) {
     u_int result;
     u_int length;
 
@@ -596,19 +756,65 @@ static u_int EventMessageQueue_deQueue(DSR_MU_EventDescriptor *pDescriptor) {
     return result;
 }
 
-
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", EventMessageQueue_Initialize);
+static void EventMessageQueue_Initialize(void) {
+    pMUD->deQueue_Pos = 0;
+    pMUD->enQueue_Pos = 0;
+    pMUD->EventQueue_Count = 0;
+}
 
 static u_int EventMessageQueue_Length_Get(void) {
     return DSR_MU_EVENT_QUEUE_LENGTH;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_MUD_Initialize);
+static void DSR_MUD_Initialize(void) {
+    pMUD->Handle_History = 0;
+    pMUD->EntryRecord_Count = 0;
+    Sequence_Different_Time_Set(1.0f / 30.0f);
+    EventMessageQueue_Initialize();
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Entry0);
+u_int DSR_Entry0(void* pAddress, u_int ControllerID, float Ratio) {
+    u_int result;
+    DS_Record_Header* pHeader;
+    int num;
+    u_int handle[64];
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequencer_Initialize);
+    utilExclLockOtherThread();
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequencer);
+    pHeader = (DS_Record_Header*)pAddress;
+    num = pHeader->Object_Num;
+    result = EntryRecord_Entry(handle, pHeader, ControllerID, Ratio);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", DSR_Sequence_Different_Time_Set);
+    if (result != 0) {
+        while (num--) {
+            EventMessage_Post(handle[num], 5, 0.0f);
+        }
+    }
+
+    utilExclUnlockOtherThread();
+    return result;
+}
+
+void DSR_Sequencer_Initialize(void) {
+    DSR_MUD_Initialize();
+    EntryRecordTable_All_Initialize();
+    TotalActuaterLV_Initialize(0, 0);
+    TotalActuaterLV_Initialize(0, 1);
+    TotalActuaterLV_Initialize(1, 0);
+    TotalActuaterLV_Initialize(1, 1);
+}
+
+void DSR_Sequencer(void) {
+    SequencerManager();
+    EventManager();
+    if (EntryRecord_EntryCount_Get()) {
+        TotalActuaterLV_Send(0, 0);
+        TotalActuaterLV_Send(0, 1);
+        TotalActuaterLV_Send(1, 0);
+        TotalActuaterLV_Send(1, 1);
+    }
+}
+
+void DSR_Sequence_Different_Time_Set(float Different_Time) {
+    Sequence_Different_Time_Set(Different_Time);
+}
