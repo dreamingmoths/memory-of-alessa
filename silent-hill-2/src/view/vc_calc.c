@@ -18,7 +18,7 @@ float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVE
     vcTransRotRoadArea(ppos, cur_near_road.sw_rzm, chr_pos);
 
     switch (cur_near_road.rd_dir_type) {
-        case 0:
+        case VC_RD_DIR_Z: // @note: Enum name might be switched with `VC_RD_DIR_X` (these names came from outside SH2 symbols)
             if (TO_RAD(0.0f) <= ofs_ang_y && ofs_ang_y < TO_RAD(180.0f)) {
                 near_ratio = (cur_near_road.sw.max_hx - ppos[0]) / (cur_near_road.sw.max_hx - cur_near_road.sw.min_hx);
 
@@ -29,7 +29,7 @@ float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVE
 
             }
             break;
-        case 1:
+        case VC_RD_DIR_X: // @note: Enum name might be switched with `VC_RD_DIR_Z`
             if (TO_RAD(-90.0f) <= ofs_ang_y && ofs_ang_y < TO_RAD(90.0f)) {
                 near_ratio = (cur_near_road.sw.max_hz - ppos[2]) / (cur_near_road.sw.max_hz - cur_near_road.sw.min_hz);
 
@@ -103,7 +103,7 @@ void vcConvertCamFile(VC_ROAD_DATA* road_ary) {
     VC_ROAD_DATA* rd_p;
 
     rd_p = road_ary;
-    while (!(rd_p->flags & 1)) {
+    while (!(rd_p->flags & VC_RD_END_DATA_F)) {
 
         rd_p->kind_id <<= 0x10;
         rd_p->kind_id >>= 0x10;
