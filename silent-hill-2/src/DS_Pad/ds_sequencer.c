@@ -53,14 +53,16 @@ static void EventMessageQueue_Initialize(void);
 static u_int EventMessageQueue_Length_Get(void);
 static void DSR_MUD_Initialize(void);
 
+#define DSR_MU_EVENT_QUEUE_LENGTH 100
+#define DSR_EntryTable_Max 20
+
+DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
+Sequencer_Data _sd[2];
+DSR_MUD _mud;
+EntryRecord EntryTable[DSR_EntryTable_Max];
+
 extern DSR_MUD* pMUD;
 extern Sequencer_Data* pSD;
-
-#define DSR_MU_EVENT_QUEUE_LENGTH 100
-extern DSR_MU_EventDescriptor _EventQueue[DSR_MU_EVENT_QUEUE_LENGTH];
-
-#define DSR_EntryTable_Max 20
-extern EntryRecord EntryTable[DSR_EntryTable_Max];
 
 void SequencerManager(void) {
     u_int i;
@@ -598,7 +600,6 @@ static void TotalActuaterLV_Keeper(u_int ControllerID, u_int ActuaterType, float
 
 extern float DSS_Wrapper_AllVibrationRatio_Get(void);
 extern void  DSS_Wrapper_ActuaterData_Send(u_int ControllerID, u_int ActuaterType, u_int ActuaterData);
-
 static void TotalActuaterLV_Send(u_int ControllerID, u_int ActuaterType)
 {
     float act_lv;
@@ -711,14 +712,6 @@ static DS_Record_Edit *EditNode_Current_Search(Record_Info *pInfo, float Time) {
     }
     return result;
 }
-
-const char rodata_268_0x00398730[] = "ds_sequencer.c:594> assert:(%s)\n";
-
-const char rodata_269[] = "(EntryTable_Index < DSR_EntryTable_Max)";
-
-const char rodata_441[] = "ds_sequencer.c:906> assert:(%s)\n";
-
-INCLUDE_RODATA("asm/nonmatchings/DS_Pad/ds_sequencer", @442);
 
 static void EventManager(void) {
     DSR_MU_EventDescriptor Descriptor;
