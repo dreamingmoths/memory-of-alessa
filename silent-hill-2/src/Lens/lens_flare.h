@@ -48,4 +48,17 @@ void shLensFlareInit(void);
 
 void shLensFlareExec(struct SubCharacter* scp, float light_intensity, int type);
 
+// @hack float memes in `shLensFlareMakeEffectTargetRate`
+#define UNCURSE_LENS_FLARE_BLOOD()                      \
+static void blood_lens_flare_blood(float a0, float a1) {\
+    sceVu0FVECTOR sp10;                                 \
+    do {                                                \
+        do {                                            \
+            SeCall(a0, 0.0f, 666);                      \
+            SeCall(a1, 0.0f, 666);                      \
+            SeCall(a1, 0.0f, 666);                      \
+        } while(1);                                     \
+    } while (0);                                        \
+}
+
 #endif // LENS_FLARE_H

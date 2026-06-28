@@ -79,41 +79,40 @@ int shLensFlareLightCenterIsVisible(LensFlareWork* lf_info /* r16 */) {
 }
 
 
-static inline u_char some_inline(LensFlareWork* lf_work /* r17 */, ScreenInfo* sc_info /* r16 */) {
+static inline u_char check_screen_bounds(LensFlareWork* lf_work, ScreenInfo* sc_info) {
     float half_width;
     float center_x;
     float screen_l_pos_x;
-    int var_a3 = 0;
-    int var_a2 = 0;
-    int var_a1 = 0;
-    int ret = 0;
-    int var_v1;
+    int above_top_y;
+    int below_bottom_y;
+    int within_z_range;
+    int ret;
+    int in_x_bounds;
+    float left_x;
 
-    half_width = sc_info->width / 2.0f;
-    center_x = sc_info->center_x;
-    screen_l_pos_x = lf_work->scr_l_pos.x;
+    // @note: assignments need to be reversed from declaration order for match?
+    ret = 0;
+    within_z_range = 0;
+    below_bottom_y = 0;
+    above_top_y = 0;
 
+    left_x = sc_info->center_x - (sc_info->width / 2.0f);
 
-    if (screen_l_pos_x >= (center_x - half_width)) {
-        var_v1 = 1;
-    } else {
-        var_v1 = 0;
+    in_x_bounds = (lf_work->scr_l_pos.x >= sc_info->center_x - (sc_info->width / 2.0f));
+    if (in_x_bounds) {
+        in_x_bounds = lf_work->scr_l_pos.x <= sc_info->center_x + (sc_info->width / 2.0f);
     }
-    if (var_v1) {
-        if (screen_l_pos_x > (center_x + half_width)) {
-            var_v1 = 0;
-        }
+    
+    if (in_x_bounds && lf_work->scr_l_pos.y >= sc_info->center_y - (sc_info->height / 2.0f)) {
+        above_top_y = 1;
     }
-    if (var_v1 && !(lf_work->scr_l_pos.y < (sc_info->center_y - (sc_info->height / 2.0f)))) {
-        var_a3 = 1;
+    if (above_top_y && lf_work->scr_l_pos.y <= sc_info->center_y + (sc_info->height / 2.0f)) {
+        below_bottom_y = 1;
     }
-    if (var_a3 && (lf_work->scr_l_pos.y <= (sc_info->center_y + (sc_info->height / 2.0f)))) {
-        var_a2 = 1;
+    if (below_bottom_y && lf_work->l_screen_pos.z >= 0) {
+        within_z_range = 1;
     }
-    if (var_a2 && (lf_work->l_screen_pos.z >= 0)) {
-        var_a1 = 1;
-    }
-    if (var_a1 && lf_work->scr_l_ang_z >= TO_RAD(78)) {
+    if (within_z_range && lf_work->scr_l_ang_z >= TO_RAD(78)) {
         ret = 1;
     }
 
@@ -129,11 +128,12 @@ static void shLensFlareSetLightSeed(LensFlareWork* lf_work /* r17 */, ScreenInfo
     _sceVu0RotTransPers((int*)&vi0, wsm, &light_info[type].world_light_pos, 1);
     lf_work->l_screen_pos = vi0;
 
-    lf_work->draw_center_f = some_inline(lf_work, sc_info);
+    lf_work->draw_center_f = check_screen_bounds(lf_work, sc_info);
 }
 
 static void _sceVu0RotTransPers(sceVu0IVECTOR dest /* r2 */, sceVu0FMATRIX mat /* r2 */, sceVu0FVECTOR src /* r2 */, int mode /* r2 */) {
-    asm volatile("lqc2	vf8,0x0(%2)\n\
+    asm volatile(".set noreorder\n\
+        lqc2	vf8,0x0(%2)\n\
     	lqc2	vf4,0x0(%1)\n\
     	lqc2	vf5,0x10(%1)\n\
     	lqc2	vf6,0x20(%1)\n\
@@ -150,6 +150,7 @@ static void _sceVu0RotTransPers(sceVu0IVECTOR dest /* r2 */, sceVu0FMATRIX mat /
     	vftoi0.zw	vf9,vf8	\n\
     _rotTP:\
     	sqc2	vf9,0x0(%0)\n\
+        .set reorder\n\
     " : : "r"(dest), "r"(mat), "r"(src), "r"(mode) : "memory");
 }
 
@@ -192,18 +193,16 @@ static float shLensFlareOresenHokan(float* Y_ary /* r17 */, int Y_suu /* r16 */,
     return output_Y;
 }
 
+UNCURSE_LENS_FLARE_BLOOD();
 
 static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */, LensFlareWork* lf_work /* r16 */) {
-    extern /* static */ float ang_z_rate_dat_1117[7]; // @ 0x002B63F0
-    extern /* static */ float dist_rate_dat_1116[7]; // @ 0x002B63D0
-    extern /* static */ float pow_rate_dat_1115[2]; // @ 0x002B63C0
-    // static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
-    // static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
-    // static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
+    static float pow_rate_dat[2] = {0.0f, 1.0f}; // @ 0x002B63C0
+    static float dist_rate_dat[7] = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f}; // @ 0x002B63D0
+    static float ang_z_rate_dat[7] = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f}; // @ 0x002B63F0
     float ret_tgt_rate; // r29+0x30
 
     float pow_rate = shLensFlareOresenHokan(
-        pow_rate_dat_1115,
+        pow_rate_dat,
         2,
         light_eff_pow,
         0.0f,
@@ -211,7 +210,7 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */,
     ); // r20
 
     float dist_rate = shLensFlareOresenHokan(
-        dist_rate_dat_1116,
+        dist_rate_dat,
         7,
         lf_work->scr_l_pos.z,
         204.8f,
@@ -219,10 +218,11 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow /* r29+0x30 */,
     ); // r21
 
     float ang_z_rate = shLensFlareOresenHokan(
-        &ang_z_rate_dat_1117, 7, lf_work->scr_l_ang_z,
+        ang_z_rate_dat, 7, lf_work->scr_l_ang_z,
         TO_RAD(78),
         TO_RAD(167.000009f)
     ); // r29+0x30
+
     ret_tgt_rate = ang_z_rate * pow_rate * dist_rate;
     if (2.0f > ret_tgt_rate) {
         return ret_tgt_rate;
@@ -258,7 +258,6 @@ static void shLensFlareMakeScreenPos(LensFlareWork* lf_work /* r2 */, Vector4* w
 }
 
 static void shLensFlareMakeScreenAngle(LensFlareWork* lf_work /* r17 */, Vector4* ws_l_sxyz_p /* r2 */, Vector4* ws_l_vec_p /* r16 */) {
-    // Range: 0x187720 -> 0x1877F8
     Vector4 one_pos, one_l_vec, one_op_vec;
     float cos_z, sin_z; // r20
     Vector4 vec;        // r29+0x70
@@ -316,10 +315,10 @@ static void shGetJamesLightInfo(SubCharacter* scp, LightInfo* l_info /* r17 */, 
 }
 
 static void shLensFlareMakeScreenInfo(LensFlareWork* lf_work /* r17 */, LightInfo* l_info /* r16 */) {
-    // Range: 0x187970 -> 0x187A10
     Vector4 ws_l_pos;  // r29+0x30
     Vector4 ws_l_vec;  // r29+0x40
     sceVu0FMATRIX wsm; // r29+0x50
+
     sh2gde_getWorldViewMatrix(wsm);
     sceVu0ApplyMatrix(&ws_l_pos, wsm, &l_info->world_light_pos);
     sceVu0ApplyMatrix(&ws_l_vec, wsm, &l_info->world_light_vector);
@@ -353,9 +352,8 @@ void shLensFlareInit(void) {
 
 void shLensFlareExec(SubCharacter* scp /* r2 */, float light_intensity /* r20 */, int type /* r18 */) {
     int count = *T0_COUNT; // r2
-    int proj;              // r2 @todo unused symbol
+    int proj;              // r2 @todo symbol usage may be wrong
     float pow;
-    s32 var_v1;
 
     pow = 3.0f;
     pow = pow * Env_ctl.SpotL0.color.fl32[0] / 7.0f;
@@ -364,7 +362,7 @@ void shLensFlareExec(SubCharacter* scp /* r2 */, float light_intensity /* r20 */
     if ((&light_flare_work)[type].flare_inhibit_f == 0) {
         shLensFlareMakeScreenInfo(&(&light_flare_work)[type], &light_info[type]);
         if (type) {
-            float angle_z = (&light_flare_work)[type].scr_l_ang_z;
+            float angle_z = (&light_flare_work)[type].scr_l_ang_z; // @note not in dwarf
             if (angle_z < QUARTER_TURN) {
                 angle_z = 0.0f;
             } else {
@@ -372,8 +370,8 @@ void shLensFlareExec(SubCharacter* scp /* r2 */, float light_intensity /* r20 */
             }
             reverse_light_rate = angle_z;
         }
-        var_v1 = (int)VbScreenInfo.scr_z;
-        if ((&light_flare_work)[type].scr_l_pos.z > ((int)VbScreenInfo.scr_z) / 2) {
+        proj = (int)VbScreenInfo.scr_z;
+        if ((&light_flare_work)[type].scr_l_pos.z > proj / 2) {
             (&light_flare_work)[type].lfl_sync_draw_func_exec_f = 1;
             (&light_flare_work)[type].tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(pow, &(&light_flare_work)[type]);
             shLensFlareSetLightSeed(&(&light_flare_work)[type], &screen_info, type);
