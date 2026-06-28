@@ -4,29 +4,40 @@
 #include "SH2_common/sh2dt.h"
 #include "view/vb_main.h"
 
-// @note: weird line numbering?
 #line 30
 float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVECTOR chr_pos, sceVu0FVECTOR cam_tgt_pos) {
-    sceVu0FVECTOR ppos;
+    float near_ratio = 0.0f;
     float ofs_ang_y;
-    float near_ratio;
+    sceVu0FVECTOR ppos;
 
-    near_ratio = 0.0f;
     ofs_ang_y = shAngleRegulate(shAtan2(chr_pos[2] - cam_tgt_pos[2], chr_pos[0] - cam_tgt_pos[0]));
+
+
+
+
     vcTransRotRoadArea(ppos, cur_near_road.sw_rzm, chr_pos);
+
     switch (cur_near_road.rd_dir_type) {
         case 0:
             if (TO_RAD(0.0f) <= ofs_ang_y && ofs_ang_y < TO_RAD(180.0f)) {
                 near_ratio = (cur_near_road.sw.max_hx - ppos[0]) / (cur_near_road.sw.max_hx - cur_near_road.sw.min_hx);
+
+
             } else {
                 near_ratio = (ppos[0] - cur_near_road.sw.min_hx) / (cur_near_road.sw.max_hx - cur_near_road.sw.min_hx);
+
+
             }
             break;
         case 1:
             if (TO_RAD(-90.0f) <= ofs_ang_y && ofs_ang_y < TO_RAD(90.0f)) {
                 near_ratio = (cur_near_road.sw.max_hz - ppos[2]) / (cur_near_road.sw.max_hz - cur_near_road.sw.min_hz);
+
+
             } else {
                 near_ratio = (ppos[2] - cur_near_road.sw.min_hz) / (cur_near_road.sw.max_hz - cur_near_road.sw.min_hz);
+
+
             }
             break;
     }
@@ -37,9 +48,9 @@ float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVE
 // @note: weird line numbering?
 #line 80
 float vcRetNearRatioSwitchAreaForCircleCam(VC_NEAR_ROAD_DATA cur_near_road, VC_CIR_CAM_MANAGER cir_man, sceVu0FVECTOR chr_pos) {
-    sceVu0FVECTOR ppos;
-    float ofs_ang_y;
     float near_ratio;
+    float ofs_ang_y;
+    sceVu0FVECTOR ppos;
 
     ofs_ang_y = shAngleRegulate(shAtan2(chr_pos[2] - cir_man.origin[2], chr_pos[0] - cir_man.origin[0]));
     vcTransRotRoadArea(ppos, cur_near_road.sw_rzm, chr_pos);
