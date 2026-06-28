@@ -22,7 +22,9 @@ float func_001B4230(void);
 float func_001B4250(void);
 float func_001B4270(void);
 float func_001B4290(void);
+float func_001B6460(void);
 extern int func_001BF910(void);
+extern float atan2f(float y, float x);
 
 extern int D_0038A660;
 extern short D_01F2F6E8;
@@ -115,6 +117,7 @@ extern /* static*/ float pow_rate_dat[2];   // = {0.0f, 1.0f};
 extern /* static*/ float dist_rate_dat[7];  // = { 4.0f, 1.3f, 0.89999998f, 0.69999999f, 0.5f, 0.34999999f, 0.2f};
 extern /* static*/ float ang_z_rate_dat[7]; // = {0.15f, 0.2f, 0.25f, 0.3f, 0.34999999f, 0.5f, 1.3f};
 
+#ifdef NON_MATCHING
 static float shLensFlareMakeEffectTargetRate(float light_eff_pow, LensFlareWork* lf_work) {
     float ret_tgt_rate;
 
@@ -123,14 +126,16 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow, LensFlareWork*
         2,
         light_eff_pow,
         0.0f,
-        1.0f);
+        1.0f
+    );
 
     float dist_rate = shLensFlareOresenHokan(
         dist_rate_dat,
         7,
         lf_work->scr_l_pos.z,
         204.8f,
-        3328.0f);
+        3328.0f
+    );
 
     float ang_z_rate = shLensFlareOresenHokan(
         &ang_z_rate_dat, 7, lf_work->scr_l_ang_z,
@@ -142,11 +147,44 @@ static float shLensFlareMakeEffectTargetRate(float light_eff_pow, LensFlareWork*
     }
     return 2.0f;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareMakeEffectTargetRate);
+#endif
 
-INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", func_0023C5A0);
+/**
+ * @sh3: greatly refactored from the sh2 proto
+ * but the sh2 proto also used this function to set lf_work->scr_l_pos, in a different way
+ * args are mostly same, except the last which was changed to a float
+ */
+static void shLensFlareMakeScreenPos(LensFlareWork* lf_work, Vector4* ws_l_sxyz_p, Vector4* ws_l_vec_p, float scr_z) {
+    IVector4 vi0;
+    sceVu0FMATRIX view_screen_matrix;
+    Vector4 vec;
+    float z;
 
-float func_0012BB58(float y, float x);
-#define atan2f func_0012BB58
+    sh3gde_getViewScreenMatrix(view_screen_matrix);
+    vec.x = ws_l_sxyz_p->x;
+    vec.y = ws_l_sxyz_p->y;
+    vec.z = ws_l_sxyz_p->z;
+    vec.w = 1.0f;
+
+    sceVu0RotTransPers(&vi0, view_screen_matrix, &vec, 1);
+
+    lf_work->scr_l_pos.x = 0.0625f * vi0.x;
+    lf_work->scr_l_pos.y = 0.0625f * vi0.y;
+
+    z = ws_l_sxyz_p->z;
+
+    if (z > (scr_z / 2.0f)) {
+        z = ws_l_sxyz_p->z;
+    } else if (z > 0.0f) {
+        z = 1.0f + 0.5f * scr_z;
+    } else {
+        z = 0.5f * scr_z;
+    }
+
+    lf_work->scr_l_pos.z = z;
+}
 
 static void shLensFlareMakeScreenAngle(LensFlareWork* lf_work, Vector4* ws_l_sxyz_p, Vector4* ws_l_vec_p) {
     Vector4 one_pos, one_l_vec, one_op_vec;
@@ -171,9 +209,25 @@ static void shLensFlareMakeScreenAngle(LensFlareWork* lf_work, Vector4* ws_l_sxy
     lf_work->scr_l_ang_z = atan2f(sin_z, cos_z);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", func_0023C760);
+/**
+* @sh3: not an exact sh2 proto equivalent, but this most closely resembles
+* `shGetJamesLightInfo`.
+* maybe `shGetHeatherLightInfo`?
+*/
+void func_0023C760(LightInfo* light_info, int reduced_light_power) {
+    float light_pow;
 
-float func_001B6460(void);
+    if (func_00239450()) {
+        func_002397C0(&light_info->world_light_pos, &light_info->world_light_vector);
+    }
+    if (reduced_light_power) {
+        light_pow = 0.6f;
+    } else {
+        light_pow = 1.0f;
+    }
+    light_info->light_pow = light_pow;
+}
+
 static void shLensFlareMakeScreenInfo(LensFlareWork* lf_work, LightInfo* l_info) {
     Vector4 ws_l_pos;
     Vector4 ws_l_vec;
@@ -185,10 +239,23 @@ static void shLensFlareMakeScreenInfo(LensFlareWork* lf_work, LightInfo* l_info)
     shLensFlareMakeScreenPos(lf_work, &ws_l_pos, &ws_l_vec, func_001B6460() /* VbScreenInfo.scr_z */);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", func_0023C850);
+void func_0023C850(void) {
+    (&light_flare_work)[0].flare_inhibit_f = 0;
+    (&light_flare_work)[0].lfl_sync_draw_func_exec_f = 0;
+    (&light_flare_work)[0].now_l_eff_rate = 0.0f;
+    (&light_flare_work)[1].flare_inhibit_f = 0;
+    (&light_flare_work)[1].lfl_sync_draw_func_exec_f = 0;
+    (&light_flare_work)[1].now_l_eff_rate = 0.0f;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", func_0023C890);
 
-INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", func_0023C8B0);
+void func_0023C890(int type) {
+    (&light_flare_work)[type].flare_inhibit_f = 1;
+}
 
+void func_0023C8B0(s32 type) {
+    (&light_flare_work)[type].flare_inhibit_f = 0;
+}
+
+// https://decomp.me/scratch/43eyN
 INCLUDE_ASM("asm/nonmatchings/Lens/lens_flare", shLensFlareExec);

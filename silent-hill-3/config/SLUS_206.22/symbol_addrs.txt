@@ -539,6 +539,7 @@ shLensFlareExec = 0x0023c8d0;
 Kari_LensFlare_DrawExec = 0x0023c000;
 sh3gfw_GsExecStoreImage = 0x002399d0;
 screen_info = 0x01F2F700; // size:0x10
+light_info = 0x01F2F710; // size:0x60
 lf_flicker_on = 0x01F2F6E0;
 shLensFlareMakeScreenPos = 0x0023C5A0;
 sh3gfw_GsSetDefStoreImage = 0x00239890;
@@ -546,6 +547,7 @@ pow_rate_dat = 0x0038A668;
 dist_rate_dat = 0x0038A670;
 ang_z_rate_dat = 0x0038A690;
 shLensFlareCameraIsSmooth = 0x0023C110;
+light_flare_work = 0x01F2F770; // size:0x80
 
 
 // could be wrong
