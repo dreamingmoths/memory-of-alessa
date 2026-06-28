@@ -109,6 +109,7 @@ typedef union Q_WORDDATA {
     u_long ul64[2];  // offset 0x0, size 0x8
     __int128 ul128;  // offset 0x0, size 0x10
 } Q_WORDDATA;
+
 typedef struct
 {
     float x;
@@ -116,6 +117,14 @@ typedef struct
     float z;
     float w;
 } Vector4 __attribute__((aligned(16)));
+
+typedef struct
+{
+    int x;
+    int y;
+    int z;
+    int w;
+} IVector4 __attribute__((aligned(16)));
 
 static inline void vec_copy(void* dst, void* src) {
     asm("\

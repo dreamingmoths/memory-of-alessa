@@ -2,6 +2,7 @@
 #define LIBGRAPH_H
 
 #include "eeregs.h"
+#include "eestruct.h"
 
 #define SCE_GS_FALSE (0)
 #define SCE_GS_TRUE  (1)
@@ -74,6 +75,152 @@ typedef struct {
 	tGS_DISPLAY2	display;
 	tGS_BGCOLOR	bgcolor;
 } sceGsDispEnv;
+
+typedef struct {
+	sceGsFrame	frame1;
+	u_long		frame1addr;
+	sceGsZbuf	zbuf1;
+	long		zbuf1addr;
+	sceGsXyoffset	xyoffset1;
+	long		xyoffset1addr;
+	sceGsScissor	scissor1;
+	long		scissor1addr;
+	sceGsPrmodecont	prmodecont;
+	long		prmodecontaddr;
+	sceGsColclamp	colclamp;
+	long		colclampaddr;
+	sceGsDthe	dthe;
+	long		dtheaddr;
+	sceGsTest	test1;
+	long		test1addr;
+} sceGsDrawEnv1 __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsFrame	frame2;
+	u_long		frame2addr;
+	sceGsZbuf	zbuf2;
+	long		zbuf2addr;
+	sceGsXyoffset	xyoffset2;
+	long		xyoffset2addr;
+	sceGsScissor	scissor2;
+	long		scissor2addr;
+	sceGsPrmodecont	prmodecont;
+	long		prmodecontaddr;
+	sceGsColclamp	colclamp;
+	long		colclampaddr;
+	sceGsDthe	dthe;
+	long		dtheaddr;
+	sceGsTest	test2;
+	long		test2addr;
+} sceGsDrawEnv2 __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsTest	testa;
+	long		testaaddr;
+	sceGsPrim	prim;
+	long		primaddr;
+	sceGsRgbaq	rgbaq;
+	long		rgbaqaddr;
+	sceGsXyz	xyz2a;
+	long		xyz2aaddr;
+	sceGsXyz	xyz2b;
+	long		xyz2baddr;
+	sceGsTest	testb;
+	long		testbaddr;
+} sceGsClear __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsDispEnv	disp[2];
+	sceGifTag	giftag0;
+	sceGsDrawEnv1	draw0;
+	sceGsClear	clear0;
+	sceGifTag	giftag1;
+	sceGsDrawEnv1	draw1;
+	sceGsClear	clear1;
+} sceGsDBuff;
+
+typedef struct {
+	sceGsDispEnv	disp[2];
+	sceGifTag	giftag0;
+	sceGsDrawEnv1	draw01;
+	sceGsDrawEnv2	draw02;
+	sceGsClear	clear0;
+	sceGifTag	giftag1;
+	sceGsDrawEnv1	draw11;
+	sceGsDrawEnv2	draw12;
+	sceGsClear	clear1;
+} sceGsDBuffDc;
+
+typedef struct {
+	sceGsTexflush	texflush;
+	long		texflushaddr;
+	sceGsTex1	tex11;
+	long		tex11addr;
+	sceGsTex0	tex01;
+	long		tex01addr;
+	sceGsClamp	clamp1;
+	long		clamp1addr;
+} sceGsTexEnv __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsTexflush	texflush;
+	long		texflushaddr;
+	sceGsTex1	tex12;
+	long		tex12addr;
+	sceGsTex0	tex02;
+	long		tex02addr;
+	sceGsClamp	clamp2;
+	long		clamp2addr;
+} sceGsTexEnv2 __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsAlpha	alpha1;
+	long		alpha1addr;
+	sceGsPabe	pabe;
+	long		pabeaddr;
+	sceGsTexa	texa;
+	long		texaaddr;
+	sceGsFba	fba1;
+	long		fba1addr;
+} sceGsAlphaEnv __attribute__((aligned(16)));
+
+typedef struct {
+	sceGsAlpha	alpha2;
+	long		alpha2addr;
+	sceGsPabe	pabe;
+	long		pabeaddr;
+	sceGsTexa	texa;
+	long		texaaddr;
+	sceGsFba	fba2;
+	long		fba2addr;
+} sceGsAlphaEnv2 __attribute__((aligned(16)));
+
+typedef struct {
+	sceGifTag	giftag0;
+	sceGsBitbltbuf	bitbltbuf;
+	long		bitbltbufaddr;
+	sceGsTrxpos	trxpos;
+	long		trxposaddr;
+	sceGsTrxreg	trxreg;
+	long		trxregaddr;
+	sceGsTrxdir	trxdir;
+	long		trxdiraddr;
+	sceGifTag	giftag1;
+} sceGsLoadImage __attribute__((aligned(16)));
+typedef struct {
+	u_int		vifcode[4];
+	sceGifTag	giftag;
+	sceGsBitbltbuf	bitbltbuf;
+	long		bitbltbufaddr;
+	sceGsTrxpos	trxpos;
+	long		trxposaddr;
+	sceGsTrxreg	trxreg;
+	long		trxregaddr;
+	sceGsFinish	finish;
+	long		finishaddr;
+	sceGsTrxdir	trxdir;
+	long		trxdiraddr;
+} sceGsStoreImage __attribute__((aligned(16)));
 
 extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
 
