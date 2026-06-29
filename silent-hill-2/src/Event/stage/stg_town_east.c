@@ -60,7 +60,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvTapeSe
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvTapeSetCb12);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_LinearTrim);
+/* static */ float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
+    return Yst + (((Yen - Yst) * (Parm - Xst)) / (Xen - Xst));
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMoster_FogHosei);
 
