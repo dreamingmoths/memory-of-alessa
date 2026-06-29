@@ -391,9 +391,9 @@ segments:
       - [0x12ef30, c,       Enemy/en_common]
       - [0x130590, asm,     Enemy/en_aid]        # CLOSER
       - [0x1398d0, asm,     text_0x1398d0]
-      - [0x139f50, asm,     Lens/lens_th_draw]
-      - [0x13a640, asm,     Effect2/hh_effect_object_texture]
-      - [0x13a6a0, asm,     Lens/kari_lf_draw]
+      - [0x139e10, c,       Lens/lens_th_draw]
+      - [0x13a630, asm,     Effect2/hh_effect_object_texture]
+      - [0x13a6a0, c,       Lens/kari_lf_draw]
       - [0x13c640, c,       Lens/lens_flare]
       - [0x13d020, asm,     text_0x13d020]
       - [0x141890, asm,     Chacter/m3_claudia]  # CLAUDIA
