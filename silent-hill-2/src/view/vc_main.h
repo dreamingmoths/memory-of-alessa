@@ -261,12 +261,19 @@ typedef struct _VC_WORK {
     /* 0xab90 */ float nearest_item_xz_dist;
 } VC_WORK;
 
+typedef struct _VC_CAMERA_INTINFO {
+    /* 0x0 */ int mode;
+    /* 0x4 */ int mv_smooth;
+    /* 0x8 */ float ev_cam_rate;
+} VC_CAMERA_INTINFO;
+
 extern VC_WORK vcWork;
+extern VC_CAMERA_INTINFO vcCameraInternalInfo;
 
 // @todo: check float*/float[] types.
 void vcInitVCSystem(VC_ROAD_DATA** vc_road_ary_list);
 void vcStartCameraSystem(void);
-void vcSetFirstCamWork(float* cam_pos, float chara_eye_ang_y, int use_through_door_cam_f);
+void vcSetFirstCamWork(sceVu0FVECTOR cam_pos, float chara_eye_ang_y, int use_through_door_cam_f);
 void vcUserWatchTarget(float* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, float rot_z, int warp_watch_f);
 void vcUserCamTarget(float* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, int warp_cam_f);
 void vcGetNowWatchPos(float* watch_pos);
