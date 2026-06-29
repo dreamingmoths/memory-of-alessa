@@ -3,11 +3,10 @@
 #include "eeregs.h"
 #include "libgraph.h"
 
-#define scePrintf(...)
-#define sceGsGetIMR isceGsGetIMR
-#define init_mp3 D_0038A3D0
-#define dSync func_0019BBD0
 #define MAXWAIT	0x1000000
+#define scePrintf(...)
+// @todo: is isceGsGetIMR symbol name correct?
+#define sceGsGetIMR isceGsGetIMR
 
 /* #define ENABLE_LENS_TH_DRAW_REMOVED_CODE */
 
@@ -43,16 +42,13 @@ int sh3gfw_GsSetDefStoreImage(sceGsStoreImage* sp, short sbp, short sbw, short s
     return 7;
 }
 
-// static u_int init_mp3[4] __attribute__((aligned(16))) = {
-//     0x06000000,
-//     0x00000000,
-//     0x00000000,
-//     0x00000000,
-// };
-
-extern /* static */ u_int init_mp3[4];
-
 int sh3gfw_GsExecStoreImage(sceGsStoreImage* sp, u_long128* dstaddr) {
+    static u_int init_mp3[4] __attribute__((aligned(16))) = {
+        0x06000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+    };
     u_int vcnt = 0;
     int w, h, i;
     int dmasizeq, allsizeq, rsizeq;

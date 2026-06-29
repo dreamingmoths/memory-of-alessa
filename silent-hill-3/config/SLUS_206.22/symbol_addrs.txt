@@ -549,7 +549,6 @@ ang_z_rate_dat = 0x0038A690;
 shLensFlareCameraIsSmooth = 0x0023C110;
 light_flare_work = 0x01F2F770; // size:0x80
 
-
 // could be wrong
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
 HH_Class_Plural_Phenomenon_00 = 0x002f4270;
@@ -612,6 +611,8 @@ fsAdxfInit = 0x00152f90;
 adxFileOpen = 0x0025d190;
 rebootIop = 0x00155d00;
 iopLoadMod = 0x00151370;
+
+dSync = 0x0019BBD0;
 
 PrintSectionSizes = 0x00156480;
 sh3_InitFilesys = 0x0012BDF0;

@@ -517,6 +517,8 @@ segments:
       - [0x2880f0, data,    data_0x2880f0] 
       - [0x2889d0, .data,   Effect2/hh_class_blood_pool_phenomenon]
       - [0x288a30, data,    data_0x288a30]
+      - [0x28a950, .data,   Lens/lens_th_draw]
+      - [0x28a960, data,    data_0x28a960]
       - [0x29de40, data,    data_0x29de40]
       - [0x29e0c8, .data,   movie/pss_cscvu1]
       - [0x29e0d8, data,    data_0x29e0d8]
