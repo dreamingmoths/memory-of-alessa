@@ -71,8 +71,8 @@ int main(int argc, s_char* argv[]) {
             break;
         case 3:
             if (func_00151150(0, 1) != 0) {
-                func_0019BBD0(1, 0, 1);
-                func_0019BBD0(2, 0, 1);
+                dSync(1, 0, 1);
+                dSync(2, 0, 1);
                 sceDmaSync(sceDmaGetChan(0), 0, 0);
                 func_0019B540(10);
                 func_0012CFE0(0);

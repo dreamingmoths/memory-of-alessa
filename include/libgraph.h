@@ -223,5 +223,9 @@ typedef struct {
 } sceGsStoreImage __attribute__((aligned(16)));
 
 extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
+extern u_long sceGsPutIMR(u_long imr);
+extern u_long sceGsGetIMR(void);
+extern u_long isceGsPutIMR(u_long imr);
+extern u_long isceGsGetIMR(void);
 
 #endif

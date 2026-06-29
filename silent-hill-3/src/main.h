@@ -78,7 +78,7 @@ extern void shSetDF(int fpi);
 extern void func_0019B450(void);
 extern void func_0019B540(int arg0);
 extern int func_0019B580(int arg0);
-extern void func_0019BBD0(int arg0, int arg1, int arg2);
+extern void dSync(int arg0, int arg1, int arg2);
 extern void func_001D9090(int arg0);
 extern void func_001E4E30(int arg0);
 extern void func_00281D80(int, int);
