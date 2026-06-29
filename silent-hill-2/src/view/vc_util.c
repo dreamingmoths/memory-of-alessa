@@ -146,5 +146,5 @@ void vcSetRefPosAndCamPosAngByPad(void) {
 
     vwGetViewAngle(cam_ang);
 
-    #line 623 // line 547 -> 623? weird gap
+    #line 623 // line 547 -> 623? Commented-out code? SH1 version of this func does a lot more.
 }
