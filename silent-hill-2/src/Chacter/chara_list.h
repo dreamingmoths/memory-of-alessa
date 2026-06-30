@@ -86,6 +86,8 @@
 
 /* =========================== mirror models (0x120 - 0x12D) =========================== */
 
+#define MIRROR_MODE_CHARA_KIND_FLAG                                                (1 << 5)
+
 /**
  * Mirror version of `LLL_JMS_CHARA_KIND`.
  */
