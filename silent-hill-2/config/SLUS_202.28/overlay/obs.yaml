@@ -27,5 +27,5 @@ segments:
       - [0xD00, data, Event/stage/stg_ovservation_data]
       - { vram: 0x1F02E80, type: bss, name: Event/stage/stg_ovservation_bss_0x1F02E80 }
       - { vram: 0x1F02E90, type: .bss, name: Event/stage/stg_ovservation }
-      - { vram: 0x1F02EA0, type: bss, name: Event/stage/stg_ovservation_bss_0x1F02EA0 }
+      - { vram: 0x1F02EB0, type: bss, name: Event/stage/stg_ovservation_bss_0x1F02EB0 }
   - [0x1080]
