@@ -14,6 +14,8 @@ do {                                 \
 
 #define EV_SUB_STEP(s_step) do { ev_s_step = s_step; } while (0)
 
+// @todo: clean up
+
 // movie/movie_main.c
 extern int MovieWaitReady(void);
 // GFW/sh2gfw_viewclip.c
@@ -58,6 +60,7 @@ void EvSubPictureFilter(void);
 void EvSubPictureInit(void);
 void EvSubPictureStart(void);
 void EvSubPictureEnd(void);
+void EvDispControlModelEntry(int* list /* r2 */, int room /* r2 */, int no /* r2 */);
 void EvDispControlModelExec(int* list /* r16 */);
 int EvSubMovieStart(int demo /* r16 */);
 void EvSubMovieEnd(void);
