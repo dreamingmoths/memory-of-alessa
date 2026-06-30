@@ -8,7 +8,7 @@
 #include "Chacter_Draw/model3_n.h"
 #include "Chacter/m3_wep.h"
 #include "Chacter/m3_play_event.h"
-
+#include "Chacter/chara_list.h"
 
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
@@ -18,10 +18,18 @@ static void shCharacterCutList(SubCharacter* scp);
 static int shCharacterNeckAngleExec(shAnime3d* ap);
 static int shCharacterKneeAngleExec(shAnime3d* ap /* r17 */);
 static void shCharacterSetClusterAnimeWork(SubCharacterDisp* scp_d, int index);
+static void shCharacterInitialize(SubCharacter* scp, int id, int model);
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */);
 static void UpdateMatrix(SubCharacter* scp /* r18 */, Vector4* rot /* r17 */, Vector4* trans /* r16 */);
 
-inline int clamp_12(int value) {
+// @todo: migrate data
+extern /* static */ u_char human_skelton[14]; // size: 0xE, address: 0x38C6D8
+extern /* static */ u_char enemy_skelton[14]; // size: 0xE, address: 0x38C6E8
+extern /* static */ u_char obj_outdoor_skelton[20]; // size: 0x14, address: 0x38C700
+extern /* static */ u_char obj_anime_skelton[69]; // size: 0x45, address: 0x38C720
+extern /* static */ u_char obj_stay_skelton[97]; // size: 0x61, address: 0x38C770
+
+static inline int clamp_12(int value) {
     int result = value & 0xFFF;
     if (value < 0 && result != 0)
         result -= (1 << 12);
@@ -129,7 +137,42 @@ static void shCharacterCutList(SubCharacter* scp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterInitialize);
+static void shCharacterInitialize(SubCharacter* scp, int id, int _model) {
+    
+    shCharacterSortList(scp);
+
+    scp->status = 1 | (1 << 4);
+    scp->sub_status = 0;
+    scp->sub_st = 0;
+
+
+    scp->id = id;
+
+    scp->step = 0;
+    scp->model_type = 0;
+
+
+    scp->pos = (Vector4){0};
+    scp->b_pos = (Vector4){0};
+    scp->rot = (Vector4){0};
+
+
+    scp->mat = kt_unit_matrix;
+
+    scp->spd_roty = 0.0f;
+    scp->spd_y = 0.0f;
+    scp->spd_org = 0.0f;
+    scp->spd = 0.0f;
+    scp->center_y = 0.0f;
+    scp->eye_y = 0.0f;
+
+    
+    shQzero(&scp->battle, sizeof(shBattleInfo));
+
+    *(u_int*) &scp->work = 0;
+    scp->function = NULL;
+
+}
 
 static void UpdateMatrix(SubCharacter* scp, Vector4* rot, Vector4* trans) {
     if (scp->status & 0x80) {
@@ -206,7 +249,8 @@ void SCSetModel(SubCharacter* scp, int model) { // not line matched
 
     model_adr = (void*) model;
     
-    ASSERT_ON_LINE(scp_d, 581);
+    if (scp_d == NULL)
+        ASSERT_ON_LINE(0, 581);
     
     if (model_adr) {
         if (!scp_d->anime.top) {
@@ -226,7 +270,7 @@ void SCSetModel(SubCharacter* scp, int model) { // not line matched
     sh2chara.total++;
 }
 
-void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp) {
+void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp, int arg1) {
     SubCharacterDisp* scp_d = scp; // r2
     return (void*) scp_d->anime_adr;
 }
@@ -286,77 +330,110 @@ SubCharacter* shCharacterGetSubCharacter(u_short kind, short id) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterGetSkeltonNum);
+u_char shCharacterGetSkeltonNum(short kind) {
+    #define NONE_SKELETON_NUM   0
+    #define ITEM_SKELETON_NUM   1
+    #define WEAPON_SKELETON_NUM 2
+
+    int type = kind >> 8;
+
+    switch (type) {
+        case HUMAN_CHARA_KIND:
+            return (human_skelton - HUMAN_CHARA_KIND_START)[kind];
+
+        case ENEMY_CHARA_KIND:
+            return (enemy_skelton - ENEMY_CHARA_KIND_START)[kind];
+
+        case OBJECT_SKELETAL_OUTDOOR_CHARA_KIND:
+            return (obj_outdoor_skelton - OBJECT_SKELETAL_OUTDOOR_CHARA_KIND_START)[kind];
+
+        case WEAPON_CHARA_KIND:
+            return WEAPON_SKELETON_NUM;
+
+        case OBJECT_ANIMATED_CHARA_KIND:
+            return (obj_anime_skelton - OBJECT_ANIMATED_CHARA_KIND_START)[kind];
+
+        case OBJECT_STAY_CHARA_KIND:
+            return (obj_stay_skelton - OBJECT_STAY_CHARA_KIND_START)[kind];
+
+        case OBJECT_G_CHARA_KIND:
+        case OBJECT_X_CHARA_KIND:
+            return ITEM_SKELETON_NUM;
+
+        default:
+            return NONE_SKELETON_NUM;
+    }
+}
 
 int shCharacterAnimeOneFrameSize(u_short id) {
     u_short result; // r2     
     switch (id) {
-        case 0x100:
-        case 0x101:
+        case LLL_JMS_CHARA_KIND:
+        case HLL_JMS_CHARA_KIND:
             result = 0x210;
             break;
-        case 0x105:
+        case LLL_MAR_CHARA_KIND:
             result = 0x1D0;
             break;
-        case 0x10B:
+        case BOAT_CHARA_KIND:
             result = 0x46;
             break;
-        case 0x106:
+        case HHH_MAR_CHARA_KIND:
             result = 0x3A0;
             break;
-        case 0x108:
+        case HHH_EDI_CHARA_KIND:
             result = 0x32C;
             break;
-        case 0x107:
+        case AGL_CHARA_KIND:
             result = 0x3B8;
             break;
-        case 0x104:
+        case LAU_CHARA_KIND:
             result = 0x468;
             break;
-        case 0x109:
-            result = 0x404;
+        case MRY_CHARA_KIND:
+            result = ITEM_I_KAKUZAI_CHARA_KIND;
             break;
-        case 0x10A:
+        case HHH_MXX_CHARA_KIND:
             result = 0x3B8;
             break;
-        case 0x10D:
+        case INU_CHARA_KIND:
             result = 0x190;
             break;
-        case 0x200:
+        case EN_SCU_CHARA_KIND:
             result = 0x184;
             break;
-        case 0x201:
+        case EN_MKN_CHARA_KIND:
             result = 0xE4;
             break;
-        case 0x202:
+        case EN_TYU_CHARA_KIND:
             result = 0x11A;
             break;
-        case 0x208:
+        case EN_RED_CHARA_KIND:
         case 0x20E:
         case 0x210:
         case 0x20F:
             result = 0x240;
             break;
-        case 0x207:
-        case 0x20B:
+        case EN_NSE_CHARA_KIND:
+        case EN_XOO_CHARA_KIND:
             result = 0x184;
             break;
-        case 0x203:
+        case EN_IKE_CHARA_KIND:
             result = 0xCE;
             break;
-        case 0x204:
+        case EN_PAP_CHARA_KIND:
             result = 0x17E;
             break;
-        case 0x205:
+        case EN_LLL_EDI_CHARA_KIND:
             result = 0x1C4;
             break;
-        case 0x206:
+        case EN_BOS_CHARA_KIND:
             result = 0x23A;
             break;
-        case 0x209:
+        case EN_ONI_CHARA_KIND:
             result = 0x210;
             break;
-        case 0x20A:
+        case EN_ARM_CHARA_KIND:
             result = 0xC8;
             break;
         case 0x400:
@@ -365,40 +442,40 @@ int shCharacterAnimeOneFrameSize(u_short id) {
         case 0x401:
             result = 0x10E;
             break;
-        case 0x801:
+        case WEAPON_HANDGUN_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x802:
+        case WEAPON_SHOTGUN_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x803:
+        case WEAPON_RIFLGUN_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x805:
+        case WEAPON_KAKUZAI_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x806:
+        case WEAPON_PIPE_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x804:
+        case WEAPON_SP_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x807:
+        case WEAPON_CSAW_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x808:
+        case WEAPON_NATA_CHARA_KIND:
             result = 0x22;
             break;
-        case 0x40B:
+        case ITEM_B_REI_CHARA_KIND:
             result = 0x28;
             break;
-        case 0x421:
+        case ITEM_B_NIK_CHARA_KIND:
             result = 0x6A;
             break;
-        case 0x408:
+        case ITEM_I_LETTER_CHARA_KIND:
             result = 0x5E;
             break;
-        case 0x42E:
+        case ITEM_B_PIZ_CHARA_KIND:
             result = 0x16;
             break;
         default:
@@ -436,88 +513,88 @@ void shCharacterInitSubCharacter(void) {
 
 static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
     switch (scp->kind) {
-        case 0x100:
-        case 0x101:
+        case LLL_JMS_CHARA_KIND:
+        case HLL_JMS_CHARA_KIND:
             shCharacterSetPlayer(scp);
             return;
-        case 0x120:
-        case 0x121:
+        case RLLL_JMS_CHARA_KIND:
+        case RHLL_JMS_CHARA_KIND:
             shCharacterSetHumanRPJMSLow(scp);
             return;
-        case 0x102:
-        case 0x103:
+        case HHL_JMS_CHARA_KIND:
+        case HHH_JMS_CHARA_KIND:
             shCharacterSetHumanDJMSLow(scp);
             return;
-        case 0x122:
-        case 0x123:
+        case RHHL_JMS_CHARA_KIND:
+        case RHHH_JMS_CHARA_KIND:
             shCharacterSetHumanRDJMSLow(scp);
             return;
-        case 0x104:
+        case LAU_CHARA_KIND:
             shCharacterSetHumanLAULow(scp);
             return;
-        case 0x105:
+        case LLL_MAR_CHARA_KIND:
             shCharacterSetHumanMARLow(scp);
             return;
-        case 0x106:
+        case HHH_MAR_CHARA_KIND:
             shCharacterSetHumanDMARLow(scp);
             return;
-        case 0x107:
+        case AGL_CHARA_KIND:
             shCharacterSetHumanAGLLow(scp);
             return;
-        case 0x127:
+        case RAGL_CHARA_KIND:
             shCharacterSetHumanRAGLLow(scp);
             return;
-        case 0x108:
+        case HHH_EDI_CHARA_KIND:
             shCharacterSetHumanEDILow(scp);
             return;
-        case 0x109:
+        case MRY_CHARA_KIND:
             shCharacterSetHumanMRYLow(scp);
             return;
-        case 0x10A:
+        case HHH_MXX_CHARA_KIND:
             shCharacterSetHumanMXXLow(scp);
             return;
-        case 0x10B:
+        case BOAT_CHARA_KIND:
             shCharacterSetHumanBOTLow(scp);
             return;
-        case 0x10D:
+        case INU_CHARA_KIND:
             shCharacterSetHumanINULow(scp);
             return;
-        case 0x200:
+        case EN_SCU_CHARA_KIND:
             shCharacterSetEnemySCULow(scp);
             return;
-        case 0x201:
+        case EN_MKN_CHARA_KIND:
             shCharacterSetEnemyMKNLow(scp);
             return;
-        case 0x202:
+        case EN_TYU_CHARA_KIND:
             shCharacterSetEnemyTYULow(scp);
             return;
-        case 0x203:
+        case EN_IKE_CHARA_KIND:
             shCharacterSetEnemyIKELow(scp);
             return;
-        case 0x204:
+        case EN_PAP_CHARA_KIND:
             shCharacterSetEnemyPAPLow(scp);
             return;
-        case 0x205:
+        case EN_LLL_EDI_CHARA_KIND:
             shCharacterSetEnemyEDBLow(scp);
             return;
-        case 0x206:
+        case EN_BOS_CHARA_KIND:
             shCharacterSetEnemyBOSLow(scp);
             return;
-        case 0x207:
-        case 0x20B:
+        case EN_NSE_CHARA_KIND:
+        case EN_XOO_CHARA_KIND:
             shCharacterSetEnemyNSELow(scp);
             return;
-        case 0x208:
+        case EN_RED_CHARA_KIND:
             shCharacterSetEnemyREDLow(scp);
             return;
-        case 0x209:
+        case EN_ONI_CHARA_KIND:
             shCharacterSetEnemyONILow(scp);
             return;
-        case 0x20A:
+        case EN_ARM_CHARA_KIND:
             shCharacterSetEnemyARMLow(scp);
             return;
-        case 0x20C:
-        case 0x20D:
+        case EN_TY2_CHARA_KIND:
+        case EN_TY3_CHARA_KIND:
             shCharacterSetEnemyTY23Low(scp);
             return;
         default:
@@ -532,11 +609,11 @@ static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
                 return;
             case 4:
                 switch (scp->kind) {
-                case 0x443:
-                case 0x444:
+                case ITEM_RI_KNIFE_CHARA_KIND:
+                case ITEM_RI_PHOTO_CHARA_KIND:
                     shCharacterSetRObjectLow(scp);
                     return;
-                case 0x421:
+                case ITEM_B_NIK_CHARA_KIND:
                     shCharacterSetObjectNIKLow(scp);
                     return;
                 default:
@@ -560,7 +637,28 @@ static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc", shCharacterCreate);
+SubCharacter* shCharacterCreate(u_int id, int model, int anime, int clani, int chr_id) {
+    SubCharacter* scp = shCharacterGetFreeList(); // r2
+    SubCharacterDisp* scp_d = (SubCharacterDisp*) scp; // r16
+
+    if (scp_d == NULL)
+        ASSERT_ON_LINE(0, 1229);
+
+
+    
+    scp->kind = chr_id;
+    
+    shCharacterInitialize(scp, id, model);
+    
+    scp_d->model_adr = model;
+    scp_d->anime_adr = anime;
+    scp_d->clani_adr = clani;
+    
+    
+    
+    shCharacterSetHandler(scp);
+    return scp;
+}
 
 void shCharacterDelete(SubCharacter* scp) { // but this is not matched lol
     SubCharacterDisp* scp_d = scp;
@@ -716,7 +814,8 @@ void shCharacterAnimeCopyForReverseModel(SubCharacter* scp) { // not line matche
     
     org = shCharacterGetSubCharacter(scp->kind - 0x20, -1);
     
-    ASSERT_ON_LINE(org, 1657);
+    if (org == NULL)
+        ASSERT_ON_LINE(0, 1657);
 
     scp_d = scp;
     org_d = org;
@@ -1044,7 +1143,8 @@ void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, in
             
             anim->total_speed.y = 0;
 
-            ASSERT_ON_LINE(anim->anim_a != NULL, 2374);
+            if (anim->anim_a == NULL)
+                ASSERT_ON_LINE(0, 2374);
 
             anim->anim_a = anim->anim_b;
             anim->anim_b = anim_info;
@@ -1518,3 +1618,4 @@ void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height,
         *height = p->grnd_height;
     }
 }
+

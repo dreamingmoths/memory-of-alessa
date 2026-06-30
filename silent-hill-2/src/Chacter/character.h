@@ -85,7 +85,7 @@ typedef struct SubCharacter {
     float spd_org;
     float spd_y;
     float spd_roty;
-    Vector4 grnd_normal;
+    Vector4 grnd_normal; // @tood: should be float[4] lol
     float grnd_height;
     Vector4 b_pos;
     Vector4 b_rot;

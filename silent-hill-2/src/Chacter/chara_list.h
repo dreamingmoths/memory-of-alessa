@@ -2,6 +2,27 @@
 #define SH2_CHARA_KINDS_H
 
 /* ===================================================================================== */
+/*                                    classification                                     */
+/* ===================================================================================== */
+
+#define HUMAN_CHARA_KIND                                                                 1
+#define ENEMY_CHARA_KIND                                                                 2
+#define OBJECT_SKELETAL_OUTDOOR_CHARA_KIND                                               3
+#define OBJECT_ANIMATED_CHARA_KIND                                                       4
+#define OBJECT_STAY_CHARA_KIND                                                           5
+#define OBJECT_G_CHARA_KIND                                                              6
+#define OBJECT_X_CHARA_KIND                                                              7
+#define WEAPON_CHARA_KIND                                                                8
+
+#define HUMAN_CHARA_KIND_START                                      (HUMAN_CHARA_KIND << 8)
+#define ENEMY_CHARA_KIND_START                                      (ENEMY_CHARA_KIND << 8)
+#define OBJECT_SKELETAL_OUTDOOR_CHARA_KIND_START  (OBJECT_SKELETAL_OUTDOOR_CHARA_KIND << 8)
+#define OBJECT_ANIMATED_CHARA_KIND_START                  (OBJECT_ANIMATED_CHARA_KIND << 8)
+#define OBJECT_G_CHARA_KIND_START                                (OBJECT_G_CHARA_KIND << 8)
+#define OBJECT_X_CHARA_KIND_START                                (OBJECT_X_CHARA_KIND << 8)
+#define OBJECT_STAY_CHARA_KIND_START                          (OBJECT_STAY_CHARA_KIND << 8)
+
+/* ===================================================================================== */
 /*                               characters (0x100 - 0x199)                              */
 /* ===================================================================================== */
 

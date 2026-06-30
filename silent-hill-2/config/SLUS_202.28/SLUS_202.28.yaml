@@ -44,7 +44,7 @@ segments:
       - [0x011a70, c,   Chacter/m3_play_2d]
       - [0x016180, c,   Chacter/m3_play_3d]
       - [0x01d080, c,   Chacter/m3_red]
-      - [0x01d610, asm, Chacter/m3_sc]
+      - [0x01d610, c,   Chacter/m3_sc]
       - [0x01ffc0, asm, Chacter/m3_scu]
       - [0x0206d0, c,   Chacter/m3_wep]
       - [0x020ca0, c,   Chacter/sh_character_battle]
@@ -377,8 +377,9 @@ segments:
       - [0x1a6900, textbin, vutext/yuvprg/load_yuvprg0_mpg]
       - [0x1a7200, textbin, vutext/yuvprg/load_yuvprg1_mpg]
       - [0x1a7b00, data,    data_0x1a7b00]
-      - [0x1a93d0, data,    Chacter/m3_sc]
       - [0x1a93e0, data,    data_0x1a93e0]
+      - [0x1a9ad0, .data,   Chacter/m3_sc]
+      - [0x1a9ae0, data,    data_0x1a9ae0]
       # - [0x1a9b10, .data,   Chacter/m3_wep]
       - [0x1a9ba0, data,    data_0x1a9ba0]
       - [0x1a9c30, .data,   Chacter_Draw/clani]
@@ -459,7 +460,7 @@ segments:
       - [0x28c3d0, .rodata, Chacter/m3_play]
       - [0x28cab0, .rodata, Chacter/m3_play_3d]
       - [0x28ccf0, rodata,  rodata_0x28ccf0]
-      - [0x28cee0, rodata,  Chacter/m3_sc]
+      - [0x28cee0, .rodata, Chacter/m3_sc]
       - [0x28cfd0, rodata,  rodata_0x28cfd0]
       - [0x28d200, .rodata, Chacter/m3_wep]
       - [0x28dbe0, .rodata, Chacter/sh_character_battle]
@@ -554,6 +555,8 @@ segments:
       - [0x29cd00, rodata,  rodata_0x29cd00]
       - [0x2c8400, sdata,   sdata_0x2c8400]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
+      - { vram: 0x03c84a0, type: .bss, name: Chacter/m3_sc }
+      - { vram: 0x03c84d0, type: bss,  name: bss_0x03c84d0 }
       - { vram: 0x0418780, type: .bss, name: Chacter_Draw/clani }
       - { vram: 0x0419380, type: bss,  name: bss_0x0419380 }
       - { vram: 0x0419d60, type: .bss, name: Chacter_Draw/model3_cluster_n }

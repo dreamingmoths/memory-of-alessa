@@ -16,7 +16,7 @@ do { \
 } while (0);
 
 /**
- * Same as ASSERT, but lets you pass in the line number. Useful for matching
+ * Same as `ASSERT`, but lets you pass in the line number. Useful for matching
  * without fully matching line numbers.
  */
 #define ASSERT_ON_LINE(cond, line) \
