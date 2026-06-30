@@ -324,7 +324,6 @@ SECTIONS
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-        stg_ovservation_bss_0x1F02E80.bss.s.o (.bss)
         stg_ovservation.c.o (.bss)
         stg_ovservation_bss_0x1F02EB0.bss.s.o (.bss)
 	}	>	obs.bin
