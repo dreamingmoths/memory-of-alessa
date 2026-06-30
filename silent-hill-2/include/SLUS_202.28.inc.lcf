@@ -319,10 +319,13 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		stg_ovservation_data.data.s.o (.data)
+        stg_ovservation.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_ovservation_bss.bss.s.o (.bss)
+        stg_ovservation_bss_0x1F02E80.bss.s.o (.bss)
+        stg_ovservation.c.o (.bss)
+        stg_ovservation_bss_0x1F02EA0.bss.s.o (.bss)
 	}	>	obs.bin
 }
