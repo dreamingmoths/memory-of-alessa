@@ -25,7 +25,7 @@ segments:
       - [0x0, databin, obs_overlay_header]
       - [0x80, c, Event/stage/stg_ovservation]
       - [0xD00, data, Event/stage/stg_ovservation_data]
-      - { vram: 0x1F02E80, type: bss, name: Event/stage/stg_ovservation_bss_0x1F02E80 }
-      - { vram: 0x1F02E90, type: .bss, name: Event/stage/stg_ovservation }
+      - [0xFD0, .data, Event/stage/stg_ovservation]
+      - { vram: 0x1F02E80, type: .bss, name: Event/stage/stg_ovservation }
       - { vram: 0x1F02EB0, type: bss, name: Event/stage/stg_ovservation_bss_0x1F02EB0 }
   - [0x1080]
