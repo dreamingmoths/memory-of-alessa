@@ -11,6 +11,7 @@
 #define GAME_FLAG_17  17
 #define GAME_FLAG_18  18
 #define GAME_FLAG_19  19
+#define GAME_FLAG_24  24
 #define GAME_FLAG_25  25
 #define GAME_FLAG_26  26
 #define GAME_FLAG_33  33
@@ -48,6 +49,7 @@
 #define GAME_FLAG_501 501
 #define GAME_FLAG_502 502
 #define GAME_FLAG_503 503
+#define GAME_FLAG_517 517
 #define GAME_FLAG_607 607
 
 #define SET_EV_STEP(p_step, s_step) \
