@@ -19,3 +19,5 @@ stg_ovservation_info_01F02DE0                                    = 0x01F02DE0; /
 stg_ovservation_chara_data_01F02E10                              = 0x01F02E10; // size:0x28
 stg_ovservation_anim_adr_01F02E80                                = 0x01F02E80; // size:0x4
 stg_ovservation_pos_01F02E90                                     = 0x01F02E90; // size:0x10 type:f32
+stg_ovservation_pos_01F02EA0                                     = 0x01F02EA0; // size:0x10 type:f32
+
