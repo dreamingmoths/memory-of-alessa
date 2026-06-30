@@ -2,12 +2,18 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
-#define ANGELA_DRAMA_ANIME_ID_START 0xDAC
-#define ANGELA_PLAY_ANIME_ID_START  0xF3C
+#define ANGELA_DRAMA_ANIME_ID_START 3500
+#define ANGELA_PLAY_ANIME_ID_START  3900
 
+#define ANGELA_ANIM_3901 3901
+#define ANGELA_ANIM_3902 3902
+#define ANGELA_ANIM_3903 3903
+#define ANGELA_ANIM_3904 3904
+#define ANGELA_ANIM_3905 3905
+
+// @todo: migrate data
 extern float wall_pos_0x003C7EA8;
 extern int mirror_mode_0x003C7EA0;
-
 extern /* static */ AnimeInfo dangela_anim[32]; // size: 0x180, address: 0x0
 extern /* static */ AnimeInfo pangela_anim[6]; // size: 0x48, address: 0x0
 extern /* static */ int dangela_anime_adr_list[32]; // size: 0x80, address: 0x2A7BD0
@@ -70,24 +76,24 @@ int shCharacterHumanAGLAnimeSetP(SubCharacter* scp, int anime_id) {
 
         // @note: possible macro here?
         switch (anime_id) {
-            case 3901:
+            case ANGELA_ANIM_3901:
                 scp->eye_y = 1986.6311f, scp->center_y = 1986.6311f;
                 break;
 
-            case 3902:
+            case ANGELA_ANIM_3902:
                 scp->eye_y = 1755.6741f, scp->center_y = 1755.6741f;
                 break;
 
-            case 3903:
+            case ANGELA_ANIM_3903:
                 scp->eye_y = -500.0f, scp->center_y = -500.0f;
                 break;
 
-            case 3904:
-            case 3905:
+            case ANGELA_ANIM_3904:
+            case ANGELA_ANIM_3905:
                 break;
         }
 
-        aip = &pangela_anim[anime_id - 0xF3C];
+        aip = &pangela_anim[anime_id - ANGELA_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(
             scp,
             0,
