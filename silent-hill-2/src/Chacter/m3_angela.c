@@ -5,11 +5,11 @@
 #define ANGELA_DRAMA_ANIME_ID_START 3500
 #define ANGELA_PLAY_ANIME_ID_START  3900
 
-#define ANGELA_ANIM_3901 3901
-#define ANGELA_ANIM_3902 3902
-#define ANGELA_ANIM_3903 3903
-#define ANGELA_ANIM_3904 3904
-#define ANGELA_ANIM_3905 3905
+#define ANGELA_PLAY_ANIM_3901       3901
+#define ANGELA_PLAY_ANIM_3902       3902
+#define ANGELA_PLAY_ANIM_3903       3903
+#define ANGELA_PLAY_ANIM_3904       3904
+#define ANGELA_PLAY_ANIM_3905       3905
 
 // @todo: migrate data
 extern float wall_pos_0x003C7EA8;
@@ -19,40 +19,40 @@ extern /* static */ AnimeInfo pangela_anim[6]; // size: 0x48, address: 0x0
 extern /* static */ int dangela_anime_adr_list[32]; // size: 0x80, address: 0x2A7BD0
 extern /* static */ int dangela_clani_adr_list[32]; // size: 0x80, address: 0x2A7C50
 
+#line 151
 void HumanAGLFunction(SubCharacter* this) {
     AnimeInfo* aip; // r2
     short id;       // r4
 
     switch (this->step) {
-        case 0: {
-
+        case 0:
             id = shCharacterGetModelID(this);
 
             if (id == AGL_CHARA_KIND) {
-
                 shCharacterAnimeSet(this, 0, 0, (aip = &dangela_anim[1]), (int)shCharacterGetAnimeAdrForDrama(this, 1));
             }
 
             this->step++;
-        }
-            /* fallthrough */
+
+        /* fallthrough */
 
         case 1:
             return;
     }
 }
 
+#line 202
 void shCharacterSetHumanAGLLow(SubCharacter* scp) {
     shCharacterSetFunction(scp, HumanAGLFunction);
 }
 
+#line 218
 int shCharacterHumanAGLAnimeSet(SubCharacter* scp, int anime_id) {
     AnimeInfo* aip; // r2
 
     SCAnimeTypeSwitch(scp, 0);
 
     if (shCharacterGetModelID(scp) == AGL_CHARA_KIND) {
-
         aip = &dangela_anim[anime_id - ANGELA_DRAMA_ANIME_ID_START];
         shCharacterAnimeSet(
             scp,
@@ -67,29 +67,29 @@ int shCharacterHumanAGLAnimeSet(SubCharacter* scp, int anime_id) {
     return -1;
 }
 
+#line 263
 int shCharacterHumanAGLAnimeSetP(SubCharacter* scp, int anime_id) {
     AnimeInfo* aip;
 
     SCAnimeTypeSwitch(scp, 1);
 
     if (shCharacterGetModelID(scp) == AGL_CHARA_KIND) {
-
         // @note: possible macro here?
         switch (anime_id) {
-            case ANGELA_ANIM_3901:
+            case ANGELA_PLAY_ANIM_3901:
                 scp->eye_y = 1986.6311f, scp->center_y = 1986.6311f;
                 break;
 
-            case ANGELA_ANIM_3902:
+            case ANGELA_PLAY_ANIM_3902:
                 scp->eye_y = 1755.6741f, scp->center_y = 1755.6741f;
                 break;
 
-            case ANGELA_ANIM_3903:
+            case ANGELA_PLAY_ANIM_3903:
                 scp->eye_y = -500.0f, scp->center_y = -500.0f;
                 break;
 
-            case ANGELA_ANIM_3904:
-            case ANGELA_ANIM_3905:
+            case ANGELA_PLAY_ANIM_3904:
+            case ANGELA_PLAY_ANIM_3905:
                 break;
         }
 
@@ -106,6 +106,7 @@ int shCharacterHumanAGLAnimeSetP(SubCharacter* scp, int anime_id) {
     return -1;
 }
 
+#line 329
 int HumanRAGLInit(SubCharacter* scp) {
     SCAnimeTypeSwitch(scp, 0);
 
@@ -121,9 +122,11 @@ int HumanRAGLInit(SubCharacter* scp) {
             wall_pos_0x003C7EA8 = -99995.0f;
             break;
     }
+
     return 0;
 }
 
+#line 355
 void HumanRAGLFunction(SubCharacter* this) {
     SubCharacter* scp;
 
@@ -169,6 +172,7 @@ void HumanRAGLFunction(SubCharacter* this) {
     }
 }
 
+#line 405
 void shCharacterSetHumanRAGLLow(SubCharacter* scp) {
     shCharacterSetFunction(scp, HumanRAGLFunction);
 }
