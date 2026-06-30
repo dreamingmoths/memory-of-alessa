@@ -12,6 +12,7 @@ int PlayerEventMariaDeadly(void);
 int PlayerEventAnimeSuccessFrame(void);
 void PlayerEventAnimeSet(int anime /* r16 */);
 void PlayerEventAnimeSetDirect(int anime /* r16 */);
+float PlayerEventMove(float* target /* r16 */);
 int PlayerEventMoveIsEnd(void);
 int PlayerEventMoveCancel(void);
 void JamesWeaponSet(int wep /* r2 */);
