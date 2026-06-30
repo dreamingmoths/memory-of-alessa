@@ -29,7 +29,41 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_ovservation", stg_ovservation_EvPr
     return EvSubPictureDisplay(&data_pic_out_p_incar_tex, 3);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_ovservation", stg_ovservation_EvProgHadBetterGetMap);
+/* static */ int stg_ovservation_EvProgHadBetterGetMap(void) {
+
+    static float stg_ovservation_pos_01F02EA0[4];
+
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            EV_PROG_STEP(10);
+            /* fallthrough */
+        case 10:
+            if (EvSubMessage(2)) {
+                EV_PROG_STEP(27);
+            }
+            break;
+            
+        case 27:
+            stg_ovservation_pos_01F02EA0[0] = sh2jms.player->pos.x;
+            stg_ovservation_pos_01F02EA0[1] = sh2jms.player->pos.y;
+            stg_ovservation_pos_01F02EA0[2] = sh2jms.player->pos.z - 500.0f;
+            stg_ovservation_pos_01F02EA0[3] = 0.0f;
+            EV_PROG_STEP(28);
+            /* fallthrough */
+        case 28:
+            PlayerEventMove(stg_ovservation_pos_01F02EA0);
+            if (PlayerEventMoveIsEnd()) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
 
 /* static */ int stg_ovservation_EvProgCantGoBack(void) {
 
@@ -42,7 +76,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_ovservation", stg_ovservation_EvPr
             EV_PROG_STEP(10);
             /* fallthrough */
         case 10:
-            if (EvSubMessage(0) != 0) {
+            if (EvSubMessage(0)) {
                 EV_PROG_STEP(27);
             }
             break;
@@ -55,7 +89,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_ovservation", stg_ovservation_EvPr
             /* fallthrough */
         case 28:
             PlayerEventMove(stg_ovservation_pos_01F02E90);
-            if (PlayerEventMoveIsEnd() != 0) {
+            if (PlayerEventMoveIsEnd()) {
                 EV_PROG_STEP(13);
             }
             break;
