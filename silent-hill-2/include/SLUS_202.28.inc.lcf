@@ -316,9 +316,9 @@ SECTIONS
 		stg_ovservation.c.o (.text)
 
 		. = ALIGN(0x80);
-		ALIGNALL(0x4);
+		ALIGNALL(0x8);
 
-		stg_ovservation_data.data.s.o (.data)
+		stg_ovservation_data_D00.data.s.o (.data)
         stg_ovservation.c.o (.data)
 
 		. = ALIGN(0x80);
