@@ -1,7 +1,13 @@
 #include "sh2_common.h"
+
 #include "Event/event.h"
 #include "Event/event_sub.h"
+#include "Event/item.h"
+
+#include "Enemy/en_common.h"
+
 #include "sound/sh_sound.h"
+
 #include "SH2_common/sh2dt.h"
 
 extern /* static */ float stg_apart_e2f_cry_pos[4]; // @ 0x01F076E0
@@ -70,9 +76,25 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgNo
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgGetLight);
+/* static */ int stg_apart_e2f_EvProgGetLight(void) {
+    int ret;
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgGetApart202Key);
+    ret = EvSubItemGetAndAnim(15, 20); // @todo: add define in item.h
+    
+    if (ret != 0) {
+        item.light_switch = 1;
+        LightSpotOnOffSet();
+        if (GET_GAME_FLAG(GAME_FLAG_66) && GET_GAME_FLAG(GAME_FLAG_67)) {
+            SET_GAME_FLAG(GAME_FLAG_68);
+        }
+        enEventDriven(2, 0);
+    }
+    return ret;
+}
+
+/* static */ int stg_apart_e2f_EvProgGetApart202Key(void) {
+    return EvSubItemGetAndAnim(APART_202_KEY, 21);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgEndHintRecoveryRead);
 
