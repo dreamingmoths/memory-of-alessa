@@ -27,7 +27,6 @@ segments:
     subsegments:
       - [0x000700, asm, crt0]
       - [0x0007c0, asm, Chacter/anime]
-      - [0x001710, asm, Chacter/fi_libvu0_inline]
       - [0x003580, asm, Chacter/bg_obj_stay]
       - [0x003670, asm, Chacter/item_screen_obj]
       - [0x003d10, asm, Chacter/m3_angela]
