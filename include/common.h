@@ -126,6 +126,11 @@ typedef struct
     int w;
 } IVector4 __attribute__((aligned(16)));
 
+typedef struct {
+    // total size: 0x40
+    float d[4][4]; // offset 0x0, size 0x40
+}  Matrix4 __attribute__((aligned(16)));
+
 static inline void vec_copy(void* dst, void* src) {
     asm("\
          lq t7, 0(%1)\n\
@@ -215,6 +220,10 @@ static inline void mat_copy_3x3(void* dst, void* src) {
 
 extern void* memcpy(void* __dest, void* __src, u_int __n);
 extern float asinf(float);
+extern float fabsf(float);
+extern float cosf(float);
+extern float sinf(float);
+extern float atan2f(float, float);
 extern float fmodf(float, float);
 extern u_int fptoui(float);
 

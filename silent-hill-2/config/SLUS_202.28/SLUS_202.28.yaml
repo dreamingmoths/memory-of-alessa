@@ -26,7 +26,7 @@ segments:
     bss_size: 0x1b3a080
     subsegments:
       - [0x000700, asm, crt0]
-      - [0x0007c0, asm, Chacter/anime]
+      - [0x0007c0, c,   Chacter/anime]
       - [0x003580, asm, Chacter/bg_obj_stay]
       - [0x003670, asm, Chacter/item_screen_obj]
       - [0x003d10, asm, Chacter/m3_angela]
@@ -375,7 +375,8 @@ segments:
       - [0x1a6000, textbin, vutext/yuvfrfl/load_yuvfrfl1_mpg]
       - [0x1a6900, textbin, vutext/yuvprg/load_yuvprg0_mpg]
       - [0x1a7200, textbin, vutext/yuvprg/load_yuvprg1_mpg]
-      - [0x1a7b00, data,    data_0x1a7b00]
+      - [0x1a7b00, .data,   Chacter/anime]
+      - [0x1a7b10, data,    data_1a7b10]
       - [0x1a93e0, data,    data_0x1a93e0]
       - [0x1a9ad0, .data,   Chacter/m3_sc]
       - [0x1a9ae0, data,    data_0x1a9ae0]
@@ -455,7 +456,8 @@ segments:
       - [0x283BC0, data,    vudata/model3_mpg1_view_load]
       - [0x285D40, data,    vudata/shamap1_mpg1_load]
       - [0x286780, data,    vudata/shavol1_mpg1_load]
-      - [0x289700, rodata,  rodata_0x289700]
+      - [0x289700, .rodata, Chacter/anime]
+      - [0x2897C0, rodata,  rodata_0x2897C0]
       - [0x28c3d0, .rodata, Chacter/m3_play]
       - [0x28cab0, .rodata, Chacter/m3_play_3d]
       - [0x28ccf0, rodata,  rodata_0x28ccf0]
@@ -554,6 +556,8 @@ segments:
       - [0x29cd00, rodata,  rodata_0x29cd00]
       - [0x2c8400, sdata,   sdata_0x2c8400]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
+      - { vram: 0x03c7e00, type: .bss, name: Chacter/anime }
+      - { vram: 0x03c7ea0, type: bss,  name: bss_0x03c7ea0 }
       - { vram: 0x03c84a0, type: .bss, name: Chacter/m3_sc }
       - { vram: 0x03c84d0, type: bss,  name: bss_0x03c84d0 }
       - { vram: 0x0418780, type: .bss, name: Chacter_Draw/clani }

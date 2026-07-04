@@ -1602,7 +1602,7 @@ void shCharacterGetPartsMatrixForShadow(float (*mat)[4], u_short kind, u_short i
             
         }
         
-        sceVu0MulMatrix(mat, p->mat[0], sk->src_m[0]);
+        sceVu0MulMatrix(mat, p->mat[0], sk->src_m.d[0]);
     }
 }
 

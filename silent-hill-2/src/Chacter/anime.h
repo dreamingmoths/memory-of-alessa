@@ -6,6 +6,11 @@
 #include "Chacter/skelton.h"
 #include "Chacter_Draw/clani.h"
 
+typedef union /* @anon3 */ {
+    int i; // offset 0x0, size 0x4
+    float f; // offset 0x0, size 0x4
+} FloatOrInt;
+
 void shCharacterStayModelExecItem(shSkelton* stp, float* rot);
 
 void shCharacterStayModelExecNthParts(shSkelton* stp, float* pos, float* rot);

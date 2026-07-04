@@ -5545,7 +5545,7 @@ _vu_29_0x002A7330                                                     = 0x002A73
 
 
 
-@861                                                                  = 0x002A7400; // allow_duplicated:True size:4 can_be_referenced:False
+@861                                                                  = 0x002A7400; // allow_duplicated:True size:16 can_be_referenced:False
 __data_start                                                          = 0x002A7400; // allow_duplicated:True size:4
 item_screen_obj_data                                                  = 0x002A7410; // allow_duplicated:True size:1856
 @925                                                                  = 0x002A7B50; // allow_duplicated:True size:4 can_be_referenced:False
@@ -21189,8 +21189,8 @@ gpoutbuff_env                                                         = 0x003C7D
 _fbss                                                                 = 0x003C7D80; // allow_duplicated:True size:4
 __bss_start                                                           = 0x003C7D88; // allow_duplicated:True size:4
 @1124_0x003C7E00                                                      = 0x003C7E00; // allow_duplicated:True size:4 can_be_referenced:False
-mat_tmp_1112                                                          = 0x003C7E10; // allow_duplicated:True size:4
-trans_tmp_1111                                                        = 0x003C7E50; // allow_duplicated:True size:4
+mat_tmp_1112                                                          = 0x003C7E10; // allow_duplicated:True size:64
+trans_tmp_1111                                                        = 0x003C7E50; // allow_duplicated:True size:16
 kt_gte                                                                = 0x003C7E60; // allow_duplicated:True size:64
 mirror_mode_0x003C7EA0                                                = 0x003C7EA0; // allow_duplicated:True size:4 can_be_referenced:False
 wall_pos_0x003C7EA8                                                   = 0x003C7EA8; // allow_duplicated:True size:4 can_be_referenced:False

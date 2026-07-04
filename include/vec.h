@@ -28,6 +28,16 @@ static inline float vec_cross_product(float* v, float* w, float* out) {
         : "+r"(v), "+r"(w), "=r"(out));
 }
 
+static inline float vec_cross_product_reverse(float* w, float* v, float* out) {
+    asm("lqc2 vf5, 0(%1)\n\
+        lqc2 vf6, 0(%2)\n\
+        vsub.w vf4, vf0, vf0\n\
+        vopmula.xyz ACC, vf5, vf6\n\
+        vopmsub.xyz vf4, vf6, vf5\n\
+        sqc2 vf4, 0(%0)"
+        : "=r"(out): "r"(v), "r"(w));
+}
+
 static inline void vec_copy_reverse(void* src, void* dst) {
     asm("\
          lq t7, 0(%1)\n\
@@ -75,6 +85,17 @@ inline void vec_sub_reverse(void* y, void* x, void* out) {
         vsub.xyzw vf4, vf4, vf5\n\
         sqc2 vf4, 0(%2)"
         : "+r"(x), "+r"(y), "+r"(out));
+}
+
+static inline vec_lerp(float* out, float* v, float* w, float t) {
+    asm("mfc1 t7, %3;\
+         qmtc2 t7, vf6x;\
+         vsubx.w vf6w, vf0, vf6x;\
+         lqc2 vf4, 0(%1);\
+         lqc2 vf5, 0(%2);\
+         vmulax ACC, vf4, vf6;\
+         vmaddw vf4, vf5, vf6;\
+         sqc2 vf4, 0(%0)" : "=r"(out) : "r"(v), "r"(w), "f"(t) : "t7");
 }
 
 /* @todo deduplicate with sh3 version in subway overlay (vec3_dot_product) */

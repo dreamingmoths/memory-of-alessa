@@ -68,7 +68,7 @@ void shUpdateWeaponMatrixAfterAnime(SubCharacter* this, short kind) {
     if (this != NULL) {
         
         GetPlayerPartsLocalMatrix(mat, 0x23);    
-        this->sk_top->src_m = mat;    
+        this->sk_top->src_m.d = mat;    
         this->sk_top->src_t = *(Vector4*)mat[3];
     
         player = shCharacterGetSubCharacter(kind, -1);        

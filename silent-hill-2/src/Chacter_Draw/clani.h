@@ -27,7 +27,7 @@ typedef struct shAnime3d {
     struct _AnimeInfo* anim_a; // offset 0x34, size 0x4
     struct _AnimeInfo* anim_b; // offset 0x38, size 0x4
     Vector4 rot_neck;          // offset 0x40, size 0x10
-    Vector4 ot_arms;           // offset 0x50, size 0x10
+    Vector4 rot_arms;          // offset 0x50, size 0x10
     Vector4 rot_body_neck;     // offset 0x60, size 0x10
     Vector4 rot_body;          // offset 0x70, size 0x10
     float scale;               // offset 0x80, size 0x4
