@@ -171,6 +171,7 @@ shCharacterExecAnimeMain = 0x0013f210;
 shCharacterStayModelExecNthParts = 0x0013fdd0;
 shCharacterAnimePartsControl = 0x0013fe50;
 shCharacterAnimeReconstruct = 0x0013ed00;
+kt_unit_matrix = 0x00356E50; // size:0x10 
 
 // not very similar to ExtGameData, but possibly related
 Sh3GameData = 0x00316d30;
