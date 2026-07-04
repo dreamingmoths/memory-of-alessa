@@ -14,6 +14,8 @@
 
 #pragma divbyzerocheck off
 
+// @todo: fix remaining mismatches & clean up the file
+
 #define ANIMATION_TYPE_NONE                  0
 #define ANIMATION_TYPE_ROTATION              1
 #define ANIMATION_TYPE_ISOMETRY              2 // translation + rotation
@@ -57,8 +59,8 @@ typedef struct _Gte {
 extern Matrix4 kt_unit_matrix; // size: 0x40, address: 0x2A7B90
 Gte kt_gte;                    // size: 0x40, address: 0x3C7E60
 
-static Matrix4 mat_tmp_1112; // @ 0x003C7E10
 static Vector4 trans_tmp_1111;
+static Matrix4 mat_tmp_1112; // @ 0x003C7E10
 
 /* inlines (@todo: find a different for these?) */
 static inline float from_q12(void* x) {
@@ -364,6 +366,8 @@ void shCharacterAnimePartsControl(shAnime3d* ap /* r16 */, shSkelton* stp, Vecto
     stp->pad = 0;
 }
 
+Vector4 rot_1124_0x003C7E00;
+#ifdef NON_MATCHING
 static void shCharacterAnimeReconstruct(shAnime3d* ap, int inter_type, int type, int frame) {
     int i = 0;
     int count;
@@ -515,6 +519,9 @@ static void shCharacterAnimeReconstruct(shAnime3d* ap, int inter_type, int type,
         i++;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/anime", shCharacterAnimeReconstruct);
+#endif
 
 static void _sceVu0ApplyMatrix_1(float* dest /* r2 */, float (*mat)[4] /* r2 */, float* src /* r2 */) {
     asm("\
@@ -531,6 +538,7 @@ static void _sceVu0ApplyMatrix_1(float* dest /* r2 */, float (*mat)[4] /* r2 */,
         jr ra;\
         nop");
 }
+
 /*
 method:
 compute all three cross products of columns (c0 x c1, c0 x c1, c1 x c2)
@@ -667,6 +675,7 @@ static void _sceVu0Normalize(sceVu0FVECTOR v0 /* r2 */, sceVu0FVECTOR v1 /* r2 *
         " : : "r"(v0), "r"(v1) : "memory");
 }
 
+#ifdef NON_MATCHING
 static void EigenVec2Mat(Vector4* ev, Matrix4* smat) {
     Vector4 v1, v2;
     Vector4 mv0, mv1, mv2;
@@ -743,6 +752,9 @@ static void EigenVec2Mat(Vector4* ev, Matrix4* smat) {
     smat->d[1][3] = 0.0f;
     smat->d[2][3] = 0.0f;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/anime", EigenVec2Mat);
+#endif
 
 static inline void vu0_transpose_matrix(sceVu0FMATRIX out, sceVu0FMATRIX matrix) {
     asm("
@@ -1401,7 +1413,7 @@ int shCharacterPlayingAnimeExecMain(shAnime3d* ap, int type) {
     if (ap->total_count < 0) {
         printf("%d %d \n", ap->total_count, ap->comp_type);
     }
-    ASSERT(ap->total_count >= 0);
+    ASSERT_ON_LINE(ap->total_count >= 0, 2110);
 
     return 0;
 }
