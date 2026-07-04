@@ -1,4 +1,4 @@
-#include "sh2_common.h"
+#include "common.h"
 
 #include "Chacter/character.h"
 #include "Chacter/anime.h"
