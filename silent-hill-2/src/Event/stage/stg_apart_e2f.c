@@ -51,7 +51,7 @@
 
 extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f }; // @ 0x01F07240
 
-extern /* static */ float stg_apart_e2f_clock_vec_0[2][4]; // address: 0x1F07250
+extern /* static */ float stg_apart_e2f_clock_vec_0[2][4]; // @ 0x1F07250
 
 /*
 static float stg_apart_e2f_clock_vec_0[2][4] = {
@@ -60,7 +60,7 @@ static float stg_apart_e2f_clock_vec_0[2][4] = {
 };
 */
 
-extern /* static */ float stg_apart_e2f_clock_vec_1[2][4]; // size: 0x20, address: 0x1F07270
+extern /* static */ float stg_apart_e2f_clock_vec_1[2][4]; // @ 0x1F07270
 
 /*
 static float stg_apart_e2f_clock_vec_1[2][4] = {
@@ -68,6 +68,16 @@ static float stg_apart_e2f_clock_vec_1[2][4] = {
     { 0.0f, 0.0f, 0.0f, 0.0f}
 };
 */
+
+extern /* static */ float stg_apart_e2f_pos_01F07380[4];
+
+extern /* static */ float stg_apart_e2f_pos_01F07390[4];
+
+extern /* static */ float stg_apart_e2f_pos_01F073A0[4];
+ 
+extern /* static */ float stg_apart_e2f_pos_01F073B0[4]; 
+
+extern /* static */ float stg_apart_e2f_pos_01F073C0[4]; 
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_clock_o_01F07420; // @ 0x01F07420
 
@@ -283,6 +293,8 @@ static CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2] = {
 extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.0f, 59200.0f, 1.0f };
 
 // @todo: migrate bss
+
+extern /* static */ int stg_apart_e2f_mv_se; // @ 0x01F07780
 
 extern /* static */ int stg_apart_e2f_se; // @ 0x01F07788
 
