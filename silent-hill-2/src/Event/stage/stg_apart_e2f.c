@@ -13,6 +13,8 @@
 
 #include "GFW/sh2_DrawEnvData.h"
 
+#include "Effect/screen_effect.h"
+
 #include "Enemy/en_common.h"
 #include "Enemy/en_insect.h"
 
@@ -38,6 +40,7 @@
 #include "data/daily.thu/data_demo_ana_c.h"
 #include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_chr_item.h"
+#include "data/daily.thu/data_pic_apt.h"
 
 // @todo: migrate data
 
@@ -182,7 +185,66 @@ extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.
 
 extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgThreeNameOnWall);
+/* static */ int stg_apart_e2f_EvProgThreeNameOnWall(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            EV_PROG_STEP(10);
+            /* fallthrough */
+        case 10:
+            if (EvSubMessage(7)) {
+                if (ev_cancel == 0) {
+                    EV_PROG_STEP(2);
+                } else {
+                    ev_prog_flag_set = 0;
+                    EV_PROG_STEP(13);
+                }
+            }
+            break;
+        case 2:
+            if (EvSubFileLoadAndFadeOut(NULL, data_pic_apt_clock_name_tex, 0)) {
+                ScreenEffectFadeStart(4, 0.0f);
+                EV_PROG_STEP(3);
+            case 3:
+                EvSubPictureStart();
+                EvSubPictureDisplayOnly();
+                EvSubPictureEnd();
+                if (ScreenEffectFadeCheck()) {
+                    EV_PROG_STEP(8);
+                }
+            }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if ((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) {
+                EV_PROG_STEP(7);
+            }
+            break;
+        case 7:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(8)) {
+                EV_PROG_STEP(4);
+                ScreenEffectFadeStart(1, 0.0f);
+            }
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+                ScreenEffectFadeStart(4, 0.0f);
+            }
+            break;
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgHintOfClockSet);
 
