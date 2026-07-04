@@ -3,14 +3,21 @@
 #include "Event/event.h"
 #include "Event/event_sub.h"
 #include "Event/item.h"
+#include "Event/stg_name.h"
+
+#include "GFW/sh2_DrawEnvData.h"
 
 #include "Enemy/en_common.h"
 
 #include "sound/sh_sound.h"
 
+#include "Chacter_Draw/sh2gfw_Draw_Character.h"
+
 #include "SH2_common/sh2dt.h"
 
 extern /* static */ float stg_apart_e2f_cry_pos[4]; // @ 0x01F076E0
+
+extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f}; // @ 0x01F07240
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgThreeNameOnWall);
 
@@ -110,8 +117,33 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvCharaD
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvRoomInit);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvSoundCallAfterLoad);
+/* static */ void stg_apart_e2f_EvSoundCallAfterLoad(void) {
+    if (RoomNameJms() == 0x18) {
+        if (GET_GAME_FLAG(GAME_FLAG_69)) {
+            SeCallPos(16000, 0.3f, stg_apart_e2f_tv_pos, 12);
+            sh2gfw_SetNoise_CharaTexture(0x557); // ITEM_NOA_CHARA_KIND? https://silenthillmuseum.org/?game=sh2&model=chr-item-noa
+            SET_GAME_FLAG(GAME_FLAG_70);
+            return;
+        }
+        sh2gfw_RemoveNoise_CharaTexture(0x557);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvAllTimeFunc);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_Delete_RedPointLight);
+/* static */ void stg_apart_e2f_Delete_RedPointLight(void) {
+    int* mp; // r17
+    DrawEnvData* ded; // r16
+
+    mp = Get_NowMapId();
+    ded = Get_NowDrawEnvData();
+    if (*mp == 0x90032) {
+        if (EventProgressCheck() == 4) {            
+            if (ded->pointLNum < 5) {
+                ded->pointLNum = 5;
+            }
+        } else if (ded->pointLNum > 4) {
+            ded->pointLNum = 4;
+        }
+    }
+}
