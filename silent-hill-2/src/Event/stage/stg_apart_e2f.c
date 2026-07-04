@@ -24,24 +24,76 @@
 #include "SH2_common/pad.h"
 #include "SH2_common/mem_share.h"
 
+#include "Font/font.h"
+
 #include "view/vc_main.h"
 
 #include "Multi_thr/filesys/fcread.h"
 #include "Multi_thr/filesys/fileserv.h"
 
+#include "DS_Pad/dsr_data.h"
+
 #include "data/daily.thu/data_demo_kao.h"
+#include "data/daily.thu/data_demo_ana.h"
 #include "data/daily.thu/data_demo_ana_c.h"
 #include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_chr_item.h"
 
 // @todo: migrate data
 
-extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f}; // @ 0x01F07240
+extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f }; // @ 0x01F07240
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07500; // @ 0x01F07500
+
+/*
+static DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07500 = {
+    .demo_no = 11,
+    .adr_dds_top = MemShare_gp_data_buf,
+    .adr_anim = (short*)&D_01F074F0_aey,
+    .adr_msg_time = NULL,
+    .msg_start = 0,
+    .voice_sd_no = 0,
+    .adr_voice = (int*)0x0000EA61,
+    .stream_no = 0,
+    .stream_start = 108.0f,
+    .add_pos_x = 0.0f,
+    .add_pos_z = 0.0f
+};
+*/
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F07530[4]; // @ 0x01F07530
+
+/*
+static CharaData_DemoList stg_apart_e2f_chara_data_01F07530[] = {
+    {
+        .kind = HHH_JMS_CHARA_KIND,
+        .model = data_chr_jms_hhh_jms_notex_mdl,
+        .animation = data_demo_ana_hhh_jms_anm,
+        .shadow = data_chr_jms_hhh_jms_kg1,
+        .cluster = data_demo_ana_hhh_jms_cls
+    },
+    {
+        .kind = ITEM_I_J_LIGHT_CHARA_KIND,
+        .model = data_chr_item_i_j_light_mdl,
+        .animation = data_demo_ana_i_j_light_anm,
+        .shadow = NULL,
+        .cluster = NULL
+    },
+    {
+        .kind = ITEM_I_KEY_CLOCK_CHARA_KIND,
+        .model = data_chr_item_i_key_clock_mdl,
+        .animation = data_demo_ana_i_key_clock_anm,
+        .shadow = NULL,
+        .cluster = NULL
+    },
+    0
+};
+*/
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590; // @ 0x01F07590
 
 /*
-DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590 = {
+static DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590 = {
     .demo_no = 11,
     .adr_dds_top = MemShare_gp_data_buf,
     .adr_anim = (short*)&D_01F07580_aey,
@@ -59,7 +111,7 @@ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590 = {
 extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4]; // @ 0x01F075C0
 
 /*
-CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4] = {
+static CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4] = {
     {
         .kind = HHH_JMS_CHARA_KIND,
         .model = data_chr_jms_hhh_jms_notex_mdl,
@@ -150,9 +202,86 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     return EvSubItemUse0(27, 24, 0, 0, 0, 1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgAnyoneInHole);
+/* static */ int stg_apart_e2f_EvProgAnyoneInHole(void) {
+    int ret;
 
-int stg_apart_e2f_EvProgNooneInHole(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            FcRead(data_demo_ana_ana_dds, MemShare_gp_data_buf);
+            CharaDataLoadDemo(stg_apart_e2f_chara_data_01F07530, true);
+            EV_PROG_STEP(10);
+            /* fallthrough */
+        case 10:
+            if (EvSubQuestion(2)) {
+                if (!fontGetStatus()) {
+                    EV_PROG_STEP(2);
+                } else {
+                    CharaDataLoadCancel(stg_apart_e2f_chara_data_01F07530);
+                    EV_PROG_STEP(13);
+                }
+            }
+            break;
+        case 2:
+            if (fsSync(1, -1) >= 0) {
+                CharaDataLoadDemo(stg_apart_e2f_chara_data_01F07530, 0);
+                CharaAdminPlayableDisplay(0);
+                sh2jms.player->status |= 0x8000;
+                SCNowDemoEventSwitch(sh2jms.player, 1);
+                if (item.light_switch == 0) {
+                    item.light_switch = 1;
+                    LightSpotOnOffSet();
+                }
+                EV_PROG_STEP(22);
+            case 22:
+                DramaDemoMain(&stg_apart_e2f_info_hole_01F07500);
+                if (shPadTrigger(0, key_config.skip)) {
+                    EV_PROG_STEP(18);
+                }
+                if (demo_frame > (total_demo_frame - 60.0f)) {
+                    EV_PROG_STEP(9);
+                }
+                if ((demo_frame >= 298.0f) && (demo_frame < 303.0f)) {
+                    DSR_Entry0(__otn_ana_00, 0, 1.0f); // @note: they forgot to include the header
+                }
+                if ((demo_frame >= 520.0f) && (demo_frame < 530.0f)) {
+                    DSR_Entry0(__otn_ana_01, 0, 1.0f);
+                }
+            }
+            break;
+        case 9:
+            ret = EvSubItemGetAndAnim(0x19, 19); // @todo: add item.h define
+            if ((DramaDemoMain(&stg_apart_e2f_info_hole_01F07500) != 0) && (ret != 0)) {
+                EV_PROG_STEP(6);
+            }
+            break;
+        case 18:
+            DramaDemoSkipLast(&stg_apart_e2f_info_hole_01F07500);
+            if (EvSubItemGetAndAnim(0x19, 19)) {
+                EV_PROG_STEP(6);
+            }
+            break;
+        case 6:
+            CharaDataDeleteOne(HHH_JMS_CHARA_KIND);
+            CharaDataDeleteOne(ITEM_I_J_LIGHT_CHARA_KIND);
+            CharaDataDeleteOne(ITEM_I_KEY_CLOCK_CHARA_KIND);
+            CharaAdminPlayableDisplay(1);
+            sh2jms.player->status &= ~0x8000;
+            vcReturnPreAutoCamWork(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            shCharacterPlayerModelToPlayable();
+            game_flag.flag[2] |= 0x8000;
+            EV_PROG_STEP(13);
+            /* fallthrough */
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
+
+/* static */ int stg_apart_e2f_EvProgNooneInHole(void) {
     int ret;
 
     switch (ev_p_step) {
