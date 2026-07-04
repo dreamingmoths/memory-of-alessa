@@ -261,6 +261,8 @@ segments:
       - [0x03e630, c,       Chacter/anime]
       - [0x040950, c,       Chacter_Draw/clani]
       - [0x0410c0, asm,     text_0x0410c0]
+      - [0x0411e0, c,       Chacter/skelton]
+      - [0x041410, asm,     text_0x041410]
       - [0x041640, c,       Effect2/hh_class_manager]
       - [0x042750, asm,     text_0x042750]
       - [0x042a80, c,       Effect2/hh_class_wrapper]
@@ -467,7 +469,8 @@ segments:
       - [0x24f4d8, .data,   Chacter/m3_sc]
       - [0x24f4e0, data,    data_0x24f4e0]
       - [0x257420, .data,   Chacter_Draw/clani]
-      - [0x257478, data,    data_0x257478]
+      - [0x257480, .data,   Chacter/skelton]
+      - [0x2574a0, data,    data_0x2574a0]
       - [0x258cd0, .data,   Font/font]
       - [0x258d10, data,    data_0x258d10]
       - [0x266e90, .data,   Chacter_Draw/model3_sub_n]
@@ -588,7 +591,8 @@ segments:
 
       - { vram: 0x03c8b00,  type: bss,  name: bss_0x03c8b00 }
       - { vram: 0x046d270,  type: .bss, name: Chacter_Draw/clani }
-      - { vram: 0x046e870,  type: bss,  name: bss_0x046e870}
+      - { vram: 0x046e870,  type: .bss, name: Chacter/skelton }
+      - { vram: 0x0484680,  type: bss,  name: bss_0x0484680 }
       - { vram: 0x1d0efb0,  type: .bss, name: Font/font }
       - { vram: 0x1d30570,  type: bss,  name: bss_0x1d30570 }
 

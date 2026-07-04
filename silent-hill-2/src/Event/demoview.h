@@ -27,7 +27,7 @@ typedef struct DramaDemo_PlayInfo {
     int demo_no; // offset 0x0, size 0x4
     char* adr_dds_top; // offset 0x4, size 0x4
     short* adr_anim; // offset 0x8, size 0x4
-    struct DramaDemo_MessageTime * adr_msg_time; // offset 0xC, size 0x4
+    DramaDemo_MessageTime * adr_msg_time; // offset 0xC, size 0x4
     short msg_start; // offset 0x10, size 0x2
     short voice_sd_no; // offset 0x12, size 0x2
     int* adr_voice; // offset 0x14, size 0x4
@@ -37,11 +37,20 @@ typedef struct DramaDemo_PlayInfo {
     float add_pos_z; // offset 0x24, size 0x4
 } DramaDemo_PlayInfo;
 
+int DramaDemoMain(DramaDemo_PlayInfo* info);
+void DramaDemoSkipLast(DramaDemo_PlayInfo* info);
+void DramaDemoFade(void);
+// int DramaDemoNumber(void); // @note: uncommenting this gives a mismatch // @todo: find a fix
+void SubtitlesExec(DramaDemo_MessageTime* msg_time, int msg_no, int str_no, float timer);
+void SubtitlesManager(void);
+
 extern int sbt_msg_no;
 extern DramaDemo_MessageTime* sbt_msg_time;
 extern int sbt_str_no;
 extern int demo_status;
 extern float demo_frame; // size: 0x4, address: 0x1133C20
+extern float total_demo_frame;
+
 extern u_short msg_buffer[];
 
 #endif // DEMOVIEW_H

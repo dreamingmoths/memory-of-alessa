@@ -29,6 +29,8 @@ void fogInit(void) {
     fogInitScreen();
 }
 
+INCLUDE_RODATA("asm/nonmatchings/Fog/fog", @966_0x0038E910);
+
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_set_defpacket);
 
 void fogSetEnvironment(FOG_ENV_DATA* edata) {

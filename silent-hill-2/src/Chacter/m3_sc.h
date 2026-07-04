@@ -41,7 +41,7 @@ void shCharacterSetFunction(SubCharacter* scp /* r2 */, void (*func)(SubCharacte
 void shCharacterExecFunctionAll(void);
 void shCharacterAnimeSet(SubCharacter* scp /* r19 */, int ctrl_type /* r2 */, int inter_type /* r18 */, AnimeInfo* anim_info /* r17 */, int anime /* r2 */);
 void SCSetModel(SubCharacter* scp /* r18 */, int model /* r2 */);
-void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */, int arg1); // @note: additional arg not in dwarf
+void* shCharacterGetAnimeAdrForDrama(SubCharacter* scp /* r2 */, int arg1); // @note: second arg not present in dwarf
 void* shCharacterGetClusterAnimeAdr(SubCharacter* scp);
 void SCAddPos(SubCharacter* scp, Vector4* pos);
 void SCSetRot(SubCharacter* scp, Vector4* rot);
