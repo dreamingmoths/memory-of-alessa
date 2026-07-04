@@ -8,7 +8,7 @@ typedef struct shSkeltonWork {
     // total size: 0x15E10
     shSkelton work[SH3_CHARACTER_NUM_SKELTONS]; // offset 0x0, size 0x15E00
     shSkelton* free;                            // offset 0x15E00, size 0x4
-    int last;                                     // offset 0x15E04, size 0x4
+    int last;                                   // offset 0x15E04, size 0x4
 } shSkeltonWork;
 
 shSkeltonWork sh3skelton; // address: 0x046E870, size: 0x15E10
@@ -62,9 +62,9 @@ shSkelton* shCharacterGetSkeletons(int n, u_char* hrc) {
     shSkelton* stp;     // r3
     shSkelton* top_stp; // r16
     shSkelton* pre_stp; // r17
-    int i;                // r4
+    int i;              // r4
     shSkelton* parent;  // r2
-    int j;                // r2
+    int j;              // r2
 
     if (sh3skelton.last < n || n == 0) {
         return NULL;
