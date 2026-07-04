@@ -71,6 +71,51 @@ typedef struct sh2gfw_Env_ctl {
     union Q_WORDDATA CopyFilterColor;    // offset 0x3E0, size 0x10
 } sh2gfw_Env_ctl;
 
+// total size: 0x1F0
+typedef struct DrawEnvData {
+    // Members
+    int map_id_name; // offset 0x0, size 0x4
+    char parallelLNum; // offset 0x4, size 0x1
+    char FakeSpotNum; // offset 0x5, size 0x1
+    char FakePointNum; // offset 0x6, size 0x1
+    char pointLNum; // offset 0x7, size 0x1
+    char spotLNum; // offset 0x8, size 0x1
+    char NightOrDay; // offset 0x9, size 0x1
+    short ShadowColor; // offset 0xA, size 0x2
+    short ShadowForceLightNo; // offset 0xC, size 0x2
+    short ShadowDarkNess; // offset 0xE, size 0x2
+    float pLight_Dir0[4]; // offset 0x10, size 0x10
+    float pLight_Col0[4]; // offset 0x20, size 0x10
+    float pLight_Dir1[4]; // offset 0x30, size 0x10
+    float pLight_Col1[4]; // offset 0x40, size 0x10
+    float pLight_Dir2[4]; // offset 0x50, size 0x10
+    float pLight_Col2[4]; // offset 0x60, size 0x10
+    float SpotCol0[4]; // offset 0x70, size 0x10
+    float SpotDecayParm0[4]; // offset 0x80, size 0x10
+    float SpotParm[4]; // offset 0x90, size 0x10
+    float FogParm[4]; // offset 0xA0, size 0x10
+    float Ld_0[4]; // offset 0xB0, size 0x10
+    float Ld_1[4]; // offset 0xC0, size 0x10
+    float Ld_2[4]; // offset 0xD0, size 0x10
+    float Ld_3[4]; // offset 0xE0, size 0x10
+    float Ld_4[4]; // offset 0xF0, size 0x10
+    float Ld_5[4]; // offset 0x100, size 0x10
+    float Ld_6[4]; // offset 0x110, size 0x10
+    float Ld_7[4]; // offset 0x120, size 0x10
+    float Ld_8[4]; // offset 0x130, size 0x10
+    float Ld_9[4]; // offset 0x140, size 0x10
+    float Ld_A[4]; // offset 0x150, size 0x10
+    float Ld_B[4]; // offset 0x160, size 0x10
+    float Ld_C[4]; // offset 0x170, size 0x10
+    float Ld_D[4]; // offset 0x180, size 0x10
+    float Ld_E[4]; // offset 0x190, size 0x10
+    float MoveFogCol[4]; // offset 0x1A0, size 0x10
+    float Ambient[4]; // offset 0x1B0, size 0x10
+    float BaseAmbient[4]; // offset 0x1C0, size 0x10
+    float BaseColor[4]; // offset 0x1D0, size 0x10
+    float VertexAmbient[4]; // offset 0x1E0, size 0x10
+} DrawEnvData;
+
 extern sh2gfw_Env_ctl Env_ctl; // size: 0x3F0, address: 0x2AD780 Env_ctl;
 
 void* Get_NowDrawEnvData(void);
