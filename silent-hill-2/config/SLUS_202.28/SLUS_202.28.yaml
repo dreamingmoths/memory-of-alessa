@@ -48,7 +48,7 @@ segments:
       - [0x0206d0, c,   Chacter/m3_wep]
       - [0x020ca0, c,   Chacter/sh_character_battle]
       - [0x024170, c,   Chacter/sh_character_status]
-      - [0x0255f0, asm, Chacter/skelton]
+      - [0x0255f0, c,   Chacter/skelton]
       - [0x025880, asm, Chacter_Draw/vifot/sh_kt_pkbuf]
       - [0x0258e0, asm, Chacter_Draw/vifot/sh_kt_vif0]
       - [0x025a20, asm, Chacter_Draw/vifot/sh_kt_vif0pkbuf]
@@ -465,7 +465,7 @@ segments:
       - [0x28cfd0, rodata,  rodata_0x28cfd0]
       - [0x28d200, .rodata, Chacter/m3_wep]
       - [0x28dbe0, .rodata, Chacter/sh_character_battle]
-      - [0x28ddd0, rodata,  rodata_0x28ddd0]
+      - [0x28ddd0, .rodata, Chacter/skelton]
       - [0x28de10, .rodata, Chacter_Draw/clani]
       - [0x28dee0, rodata,  rodata_0x28dee0]
       - [0x28e0b0, rodata,  Chacter_Draw/model3_vu1_n]
@@ -560,6 +560,8 @@ segments:
       - { vram: 0x03c7ea0, type: bss,  name: bss_0x03c7ea0 }
       - { vram: 0x03c84a0, type: .bss, name: Chacter/m3_sc }
       - { vram: 0x03c84d0, type: bss,  name: bss_0x03c84d0 }
+      - { vram: 0x03cefc0, type: .bss, name: Chacter/skelton }
+      - { vram: 0x03e66d0, type: bss,  name: bss_0x03e66d0 }
       - { vram: 0x0418780, type: .bss, name: Chacter_Draw/clani }
       - { vram: 0x0419380, type: bss,  name: bss_0x0419380 }
       - { vram: 0x0419d60, type: .bss, name: Chacter_Draw/model3_cluster_n }
