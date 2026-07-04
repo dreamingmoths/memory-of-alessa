@@ -142,6 +142,48 @@ static CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4] = {
 };
 */
 
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_juice; // @ 0x01F07620
+
+/*
+static DramaDemo_PlayInfo stg_apart_e2f_info_juice = {
+    .demo_no = 15,
+    .adr_dds_top = MemShare_gp_data_buf,
+    .adr_anim = (short*)&D_01F07610_aey,
+    .adr_msg_time = NULL,
+    .msg_start = 0,
+    .voice_sd_no = 0,
+    .adr_voice = (int*)0x0000EA6B,
+    .stream_no = 0,
+    .stream_start = 15.0f,
+    .add_pos_x = 0.0f,
+    .add_pos_z = 0.0f
+};
+*/
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F07650[3]; // @ 0x01F07650
+
+/*
+static CharaData_DemoList stg_apart_e2f_chara_data_01F07650[] = {
+    {
+        .kind = HHL_JMS_CHARA_KIND,
+        .model = data_chr_jms_hhl_jms_notex_mdl,
+        .animation = data_demo_dust_hhl_jms_anm,
+        .shadow = NULL,
+        .cluster = data_demo_dust_hhl_jms_cls
+    },
+    {
+        .kind = ITEM_I_JUICE_CHARA_KIND,
+        .model = data_chr_item_i_juice_mdl,
+        .animation = data_demo_dust_i_juice_anm,
+        .shadow = NULL,
+        .cluster = NULL
+    },
+    0
+};
+*/
+
+extern /* static */ float stg_apart_e2f_pos_01F07690[4]; // = { -103202.0469f, -97.7539978f, 8977.80957f, 0.0f }; // @ 0x01F07690
+
 extern /* static */ float stg_apart_e2f_cry_pos[4]; // = { -99400.0f, -500.0f, -10785.03027f, 0.0f }; // @ 0x01F076E0
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_01F076B0; // @ 0x01F076B0
@@ -546,7 +588,43 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgUseCannedJuice);
+/* static */ int stg_apart_e2f_EvProgUseCannedJuice(void) {
+    int ret; // r16
+    float pos[4]; // not present in DWARF
+    
+    switch (ev_p_step) {
+        case 0:
+            FcRead(data_demo_dust_dust_dds, MemShare_gp_data_buf);
+            CharaDataLoadDemo(stg_apart_e2f_chara_data_01F07650, 0);
+            CharaAdminPlayableDisplay(0);
+            SCNowDemoEventSwitch(sh2jms.player, true);
+            stg_apart_e2f_se_check = 0;
+            EV_PROG_STEP(22);
+            /* fallthrough */
+        case 22:
+            ret = DramaDemoMain(&stg_apart_e2f_info_juice);
+            if ((demo_frame >= 60.0f) && (stg_apart_e2f_se_check == 0)) {
+                pos = stg_apart_e2f_pos_01F07690;
+                SeCallPos(16005, 1.0f, pos, 0);
+                stg_apart_e2f_se_check = 1;
+            }
+            if (ret) {
+                EV_PROG_STEP(13);
+            }
+            break;
+            
+        case 13:
+            CharaDataDeleteOne(HHL_JMS_CHARA_KIND);
+            CharaDataDeleteOne(ITEM_I_JUICE_CHARA_KIND);
+            CharaAdminPlayableDisplay(1);
+            vcReturnPreAutoCamWork(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            shCharacterPlayerModelToPlayable();
+            return 1;
+    }
+    return 0;
+}
+
 
 /* static */ int stg_apart_e2f_EvProgNoFaceCorpse(void) {
     switch (ev_p_step) {
