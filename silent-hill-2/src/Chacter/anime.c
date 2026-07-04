@@ -57,8 +57,8 @@ typedef struct _Gte {
 extern Matrix4 kt_unit_matrix; // size: 0x40, address: 0x2A7B90
 Gte kt_gte;                    // size: 0x40, address: 0x3C7E60
 
-Matrix4 mat_tmp_1112; // @ 0x003C7E10
-Vector4 trans_tmp_1111;
+static Matrix4 mat_tmp_1112; // @ 0x003C7E10
+static Vector4 trans_tmp_1111;
 
 /* inlines (@todo: find a different for these?) */
 static inline float from_q12(void* x) {
@@ -478,7 +478,7 @@ static void shCharacterAnimeReconstruct(shAnime3d* ap, int inter_type, int type,
 
                 if (parent != p_stp) {
 
-                    kt_gte.matrix.d = p_stp->src_m.d;
+                    kt_gte.matrix = p_stp->src_m;
                 }
                 pos->w = 1.0f;
                 sceVu0MulMatrix(stp->src_m.d, kt_gte.matrix.d, mat->d);
