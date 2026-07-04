@@ -28,6 +28,7 @@
 #include "SH2_common/playing_info.h"
 
 #include "Font/font.h"
+#include "Font/dic.h"
 
 #include "view/vc_main.h"
 
@@ -366,7 +367,99 @@ extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgClockTime);
+/* static */ int stg_apart_e2f_EvProgClockTime(void) {
+    char c_work[6]; // r29+0x38
+    int work; // r4   
+    int i; // r16
+    int j; // r17
+    
+    switch (ev_p_step) {
+        case 0:
+            game_flag.flag[2] |= 0x2000;
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            EV_PROG_STEP(2);
+            /* fallthrough */
+        case 2:
+            if (EvSubFileLoadAndFadeOut(NULL, data_pic_apt_clock_close_tex, data_pic_apt_clock_hari_tex) ) {
+                ScreenEffectFadeStart(4, 0.0f);
+                EV_PROG_STEP(3);
+            }
+            break;
+            
+        case 3:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            stg_apart_e2f_EvProgSubClockNeedleDraw(0);
+            EvSubPictureEnd();
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(8);
+            }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            stg_apart_e2f_EvProgSubClockNeedleDraw(0);
+            EvSubPictureEnd();
+            if (shPadTrigger(0, key_config.enter + key_config.cancel)) {
+                EV_PROG_STEP(10);
+            }
+            break;
+        case 10:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            stg_apart_e2f_EvProgSubClockNeedleDraw(0);
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (playing.language == 0) {
+                j = 0;
+            } else {
+                c_work[0] = 0x5C;
+                c_work[1] = 0x68;
+                j = 2;
+            }
+
+            for (i = 0; i < 2; i++) {
+                if (i != 0) {
+                    work = ((game_flag.clock + 32) >> 6) % 60;                
+                } else {
+                    work = ((game_flag.clock + 32) >> 6) / 60;
+                }
+
+                if (work / 10 != 0) {
+                    c_work[j] = work / 10 + 0x30;
+                    c_work[j + 1] = work % 10 + 0x30;
+                    c_work[j + 2] = 0;
+                } else {
+                    c_work[j] = work % 10 + 0x30;
+                    c_work[j + 1] = 0;
+                }
+
+                fontSetMes(i, (u_short*)dicSetStr(c_work));
+            }
+            
+            if (GET_GAME_FLAG(GAME_FLAG_82)) {
+                if (!EvSubMessage(10)) {
+                    break;
+                }
+            } else if (!EvSubMessage(11)) {
+                break;
+            }
+            ScreenEffectFadeStart(1, 0.0f);
+            EV_PROG_STEP(4);
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            ScreenEffectFadeStart(4, 0.0f);
+            return 1;
+    }
+    return 0;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgClockNeedleMove);
 
