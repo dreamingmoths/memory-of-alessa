@@ -29,7 +29,7 @@ segments:
       - [0x0007c0, asm, Chacter/anime]
       - [0x003580, asm, Chacter/bg_obj_stay]
       - [0x003670, asm, Chacter/item_screen_obj]
-      - [0x003d10, asm, Chacter/m3_angela]
+      - [0x003d10, c,   Chacter/m3_angela]
       - [0x004290, asm, Chacter/m3_anime_subfunc]
       - [0x004620, asm, Chacter/m3_bgobj]
       - [0x004bd0, asm, Chacter/m3_djames]
