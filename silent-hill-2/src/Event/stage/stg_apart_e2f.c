@@ -36,11 +36,12 @@
 
 #include "DS_Pad/dsr_data.h"
 
-#include "data/daily.thu/data_demo_kao.h"
 #include "data/daily.thu/data_demo_ana.h"
 #include "data/daily.thu/data_demo_ana_c.h"
-#include "data/daily.thu/data_chr_jms.h"
+#include "data/daily.thu/data_demo_dust.h"
+#include "data/daily.thu/data_demo_kao.h"
 #include "data/daily.thu/data_chr_item.h"
+#include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_pic_apt.h"
 
 // @todo: migrate data
@@ -183,6 +184,8 @@ static CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2] = {
 extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.0f, 59200.0f, 1.0f };
 
 // @todo: migrate bss
+
+extern /* static */ int stg_apart_e2f_se_check; // @ 0x01F07790
 
 extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
 
@@ -624,11 +627,176 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgUs
     return EvSubItemGetAndAnim(APART_202_KEY, 21);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgEndHintRecoveryRead);
+/* static */ int stg_apart_e2f_EvProgEndHintRecoveryRead(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            FcRead(data_pic_apt_p_endhint_tex, get_gp_data_buf_addr());
+            EV_PROG_STEP(30);
+            /* fallthrough */
+        case 30:
+            if (EvSubMessage(26)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(2);
+            case 2:
+                if ((fsSync(1, -1) >= 0) && ScreenEffectFadeCheck()) {
+                    ScreenEffectFadeStart(4, 0.0f);
+                    EV_PROG_STEP(3);
+                case 3:
+                    EvSubPictureStart();
+                    EvSubPictureDisplayOnly();
+                    EvSubPictureEnd();
+                    if (ScreenEffectFadeCheck()) {
+                        EV_PROG_STEP(8);
+                    }
+                }
+            }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                EV_PROG_STEP(10);
+            }
+            break;
+        case 10:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(27)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(4);
+            }
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+                ScreenEffectFadeStart(4, 0.0f);
+            case 13:
+                SCNowPlayableEventSwitch(sh2jms.player, false);
+                return 1;
+            }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgEndHintMariaRead);
+/* static */ int stg_apart_e2f_EvProgEndHintMariaRead(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            FcRead(data_pic_apt_p_endhint_tex, get_gp_data_buf_addr());
+            EV_PROG_STEP(30);
+            /* fallthrough */
+        case 30:
+            if (EvSubMessage(26)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(2);
+            case 2:
+                if ((fsSync(1, -1) >= 0) && ScreenEffectFadeCheck()) {
+                    ScreenEffectFadeStart(4, 0.0f);
+                    EV_PROG_STEP(3);
+                case 3:
+                    EvSubPictureStart();
+                    EvSubPictureDisplayOnly();
+                    EvSubPictureEnd();
+                    if (ScreenEffectFadeCheck()) {
+                        EV_PROG_STEP(8);
+                    }
+                }
+            }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                EV_PROG_STEP(10);
+            }
+            break;
+        case 10:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(28)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(4);
+            }
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+                ScreenEffectFadeStart(4, 0.0f);
+            case 13:
+                SCNowPlayableEventSwitch(sh2jms.player, false);
+                return 1;
+            }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgEndHintSuicideRead);
+
+/* static */ int stg_apart_e2f_EvProgEndHintSuicideRead(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            FcRead(data_pic_apt_p_endhint_tex, get_gp_data_buf_addr());
+            EV_PROG_STEP(30);
+            /* fallthrough */
+        case 30:
+            if (EvSubMessage(26)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(2);
+            case 2:
+                if ((fsSync(1, -1) >= 0) && ScreenEffectFadeCheck()) {
+                    ScreenEffectFadeStart(4, 0.0f);
+                    EV_PROG_STEP(3);
+                case 3:
+                    EvSubPictureStart();
+                    EvSubPictureDisplayOnly();
+                    EvSubPictureEnd();
+                    if (ScreenEffectFadeCheck()) {
+                        EV_PROG_STEP(8);
+                    }
+                }
+            }
+            break;
+            
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if ((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) {
+                EV_PROG_STEP(10);
+            }
+            break;
+        case 10:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(29)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(4);
+            }
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+                ScreenEffectFadeStart(4, 0.0f);
+            case 13:
+                SCNowPlayableEventSwitch(sh2jms.player, false);
+                return 1;
+        }
+    }
+    return 0;   
+}
+
 
 /* static */ int stg_apart_e2f_EvProgUseApart202Key(void) {
     float pos[4];
