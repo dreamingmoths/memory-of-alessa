@@ -247,7 +247,79 @@ extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgHintOfClockSet);
+/* static */ int stg_apart_e2f_EvProgHintOfClockSet(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            EV_PROG_STEP(10);
+            /* fallthrough */
+        case 10:
+            if (EvSubMessage(4)) {
+                if (ev_cancel == 0) {
+                    EV_PROG_STEP(2);
+                } else {
+                    ev_prog_flag_set = 0;
+                    EV_PROG_STEP(13);
+                }
+            }
+            break;
+            
+        case 2:
+            if (playing.riddle_level > 0) {
+                if (!EvSubFileLoadAndFadeOut(NULL, data_pic_apt_clock_memo_tex, 0)) {
+                    break;
+                }
+            } else if (!EvSubFileLoadAndFadeOut(NULL, data_pic_apt_clock_memo_2_tex, 0)) {
+                break;
+            }
+    
+            ScreenEffectFadeStart(4, 0.0f);
+            EV_PROG_STEP(3);
+            
+        case 3:
+                EvSubPictureStart();
+                EvSubPictureDisplayOnly();
+                EvSubPictureEnd();
+                if (ScreenEffectFadeCheck()) {
+                    EV_PROG_STEP(8);
+                }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                EV_PROG_STEP(7);
+            }
+            break;
+        case 7:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (playing.riddle_level > 0) {
+                if (!EvSubMessage(5)) {
+                    break;
+                }
+            } else if (!EvSubMessage(9)) {
+                break;
+            }
+            EV_PROG_STEP(4);
+            ScreenEffectFadeStart(1, 0.0f);
+            break;
+        case 4:
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+                ScreenEffectFadeStart(4, 0.0f);
+            case 13:
+                SCNowPlayableEventSwitch(sh2jms.player, false);
+                return 1;
+            }
+            break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgClockTime);
 
