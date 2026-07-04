@@ -172,6 +172,15 @@ shCharacterStayModelExecNthParts = 0x0013fdd0;
 shCharacterAnimePartsControl = 0x0013fe50;
 shCharacterAnimeReconstruct = 0x0013ed00;
 
+// skelton
+shCharacterInitSkeltons = 0x00140c60;
+shCharacterFreeSkeltons = 0x00140cd0;
+sh3CharacterSubtractSkeletons = 0x0140D40; 
+sh3CharacterAddSkeletons = 0x0140D60;
+shCharacterGetSkeletons = 0x00140d80;
+sh3skelton = 0x0046E870; // size:0x15E10
+string_skeltons_0x00356F00 = 0x00356F00; // size:0x19
+
 // not very similar to ExtGameData, but possibly related
 Sh3GameData = 0x00316d30;
 
@@ -471,7 +480,6 @@ shCharacterSetClusterAnimeWork = 0x00140b40;
 shCharacterClusterAnimeSet = 0x00140bb0;
 ClearWeights = 0x140430;
 printf = 0x00100590;
-shCharacterGetSkeletons = 0x00140d80;
 close_to_angle_target = 0x00150c80;
 // event_heather_? = 0x00190410;
 Effect_Object_Initialize = 0x001c1de0;
