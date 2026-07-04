@@ -25,6 +25,7 @@
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/pad.h"
 #include "SH2_common/mem_share.h"
+#include "SH2_common/playing_info.h"
 
 #include "Font/font.h"
 
@@ -402,7 +403,73 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgLookDustChute);
+/* static */ int stg_apart_e2f_EvProgLookDustChute(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            EV_PROG_STEP(2);
+            /* fallthrough */
+        case 2:
+            if (EvSubFileLoadAndFadeOut(NULL, data_pic_apt_p_dust_in_tex, 0)) {
+                ScreenEffectFadeStart(4, 0.0f);
+                EV_PROG_STEP(3);
+            }
+            break;
+        case 3:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(7);
+            }
+            break;
+        case 7:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                EV_PROG_STEP(30);
+            }
+            break;
+        case 30:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(15)) {
+                if (playing.riddle_level > 0) {
+                    ScreenEffectFadeStart(1, 0.0f);
+                    EV_PROG_STEP(4);
+                } else {
+                    EV_PROG_STEP(31);
+                }
+            }
+            break;
+        case 31:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureFilter();
+            EvSubPictureEnd();
+            if (EvSubMessage(16)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                EV_PROG_STEP(4);
+            }
+            break;
+        case 4:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            EvSubPictureEnd();
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            ScreenEffectFadeStart(4, 0.0f);
+            return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgUseCannedJuice);
 
