@@ -1,6 +1,7 @@
 #include "common.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/character.h"
+#include "Chacter/skelton.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/sh3_character_manage.h"
 
@@ -221,7 +222,7 @@ int shCharacter_Manage_Create(CharaOptions* options) {
     u_short id;
 
     if (scp != NULL) { 
-        func_00140D40(shCharacterGetSkeltonNum(scp->kind));
+        sh3CharacterSubtractSkeletons(shCharacterGetSkeltonNum(scp->kind));
 
         vec_copy(&scp->pos, &options->pos_10);
         vec_copy(&scp->unkF0, &options->pos_10);
@@ -327,7 +328,7 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
     }
 
     if (scp_d->model_adr == NULL) {
-        func_00140D60(shCharacterGetSkeltonNum((short) scp->kind));
+        sh3CharacterAddSkeletons(shCharacterGetSkeltonNum((short) scp->kind));
         SCSetModel(scp_d, (u_long) pMD->sh_Model, (u_long) pMD->pAnime);
         scp_d->model_adr = (u_long) pMD->sh_Model;
         scp_d->anime_adr = (u_long) pMD->pAnime;
@@ -370,9 +371,9 @@ static void shCharacterDelete(SubCharacter* scp) {
     }
 
     if (scp_d->model_adr == 0) {
-        func_00140D60(shCharacterGetSkeltonNum(scp->kind));
+        sh3CharacterAddSkeletons(shCharacterGetSkeltonNum(scp->kind));
     } else {
-        func_00140CD0(scp->unk80);
+        shCharacterFreeSkeltons(scp->unk80);
     }
 
     scp_d->anime.top = NULL;
