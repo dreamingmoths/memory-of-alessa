@@ -39,5 +39,10 @@ stage_apart_e2f                                                  = 0x01F071F0; /
 stg_apart_e2f_tv_pos                                             = 0x01F07240; // size:0x10 type:f32
 stg_apart_e2f_clock_vec_0                                        = 0x01F07250; // size:0x20
 stg_apart_e2f_clock_vec_1                                        = 0x01F07270; // size:0x20
-stg_apart_e2f_cry_pos                                            = 0x01F076E0; // size:0x10
+stg_apart_e2f_cry_pos                                            = 0x01F076E0; // size:0x10 type:f32
+stg_apart_e2f_pos_01F076F0                                       = 0x01F076F0; // size:0x10 type:f32
+stg_apart_e2f_pos_01F07700                                       = 0x01F07700; // size:0x10 type:f32
+stg_apart_e2f_chara_data_01F07710                                = 0x01F07710; // size:0x28
+stg_apart_e2f_pos_01F07740                                       = 0x01F07740; // size:0x10 type:f32
 stg_apart_e2f_kao_dds                                            = 0x01F077A0; // size:0x4
+
