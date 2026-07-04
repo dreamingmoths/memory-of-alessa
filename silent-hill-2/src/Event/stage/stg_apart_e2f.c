@@ -5,8 +5,11 @@
 #include "Event/item.h"
 #include "Event/stg_name.h"
 #include "Event/chara_data_load.h"
+#include "Event/chara_admin.h"
+#include "Event/demoview.h"
 
 #include "Chacter/chara_list.h"
+#include "Chacter/m3_sc.h"
 
 #include "GFW/sh2_DrawEnvData.h"
 
@@ -18,21 +21,96 @@
 #include "Chacter_Draw/sh2gfw_Draw_Character.h"
 
 #include "SH2_common/sh2dt.h"
+#include "SH2_common/pad.h"
+#include "SH2_common/mem_share.h"
+
+#include "view/vc_main.h"
+
+#include "Multi_thr/filesys/fcread.h"
+#include "Multi_thr/filesys/fileserv.h"
 
 #include "data/daily.thu/data_demo_kao.h"
+#include "data/daily.thu/data_demo_ana_c.h"
 #include "data/daily.thu/data_chr_jms.h"
+#include "data/daily.thu/data_chr_item.h"
 
 // @todo: migrate data
 
 extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f}; // @ 0x01F07240
 
-extern /* static */ float stg_apart_e2f_cry_pos[4]; // = { -99400.0f, -500.0f, -10785.03027f, 0.0f }; @ 0x01F076E0
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590; // @ 0x01F07590
 
-extern /* static */ float stg_apart_e2f_pos_01F076F0[4]; // = { -100447.5f, -500.0f, -10785.03027f, 0.0f };
+/*
+DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07590 = {
+    .demo_no = 11,
+    .adr_dds_top = MemShare_gp_data_buf,
+    .adr_anim = (short*)&D_01F07580_aey,
+    .adr_msg_time = NULL,
+    .msg_start = 0,
+    .voice_sd_no = 0,
+    .adr_voice = NULL,
+    .stream_no = 0,
+    .stream_start = 0.0f,
+    .add_pos_x = 0.0f,
+    .add_pos_z = 0.0f
+};
+*/
 
-extern /* static */ float stg_apart_e2f_pos_01F07700[4]; // = { -99000.0f, -1500.0f, 13600.0f, 0.0f };
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4]; // @ 0x01F075C0
 
-extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2];
+/*
+CharaData_DemoList stg_apart_e2f_chara_data_01F075C0[4] = {
+    {
+        .kind = HHH_JMS_CHARA_KIND,
+        .model = data_chr_jms_hhh_jms_notex_mdl,
+        .animation = data_demo_ana_c_hhh_jms_anm,
+        .shadow = data_chr_jms_hhh_jms_kg1,
+        .cluster = data_demo_ana_c_hhh_jms_cls
+    },
+    {
+        .kind = ITEM_I_J_LIGHT_CHARA_KIND,
+        .model = data_chr_item_i_j_light_mdl,
+        .animation = data_demo_ana_c_i_j_light_anm,
+        .shadow = NULL,
+        .cluster = NULL
+    },
+    {
+        .kind = ITEM_I_KEY_CLOCK_CHARA_KIND,
+        .model = data_chr_item_i_key_clock_mdl,
+        .animation = data_demo_ana_c_i_key_clock_anm,
+        .shadow = NULL,
+        .cluster = NULL
+    },
+    0
+};
+*/
+
+extern /* static */ float stg_apart_e2f_cry_pos[4]; // = { -99400.0f, -500.0f, -10785.03027f, 0.0f }; // @ 0x01F076E0
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_01F076B0; // @ 0x01F076B0
+
+/*
+static DramaDemo_PlayInfo stg_apart_e2f_info_01F076B0 = {
+    .demo_no = 10,
+    .adr_dds_top = NULL,
+    .adr_anim = (short*)&D_01F076A0_aey,
+    .adr_msg_time = (DramaDemo_MessageTime*)&D_01F076A8_aey,
+    .msg_start = 25,
+    .voice_sd_no = 0,
+    .adr_voice = (int*)0x0000EA85,
+    .stream_no = 0,
+    .stream_start = 0.0f,
+    .add_pos_x = 0.0f,
+    .add_pos_z = 0.0f
+};
+*/
+
+extern /* static */ float stg_apart_e2f_pos_01F076F0[4]; // = { -100447.5f, -500.0f, -10785.03027f, 0.0f }; // @ 0x01F076F0
+
+extern /* static */ float stg_apart_e2f_pos_01F07700[4]; // = { -99000.0f, -1500.0f, 13600.0f, 0.0f }; // @ 0x01F07700
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2]; // @ 01F07710
+
 /*
 static CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2] = {
     {
@@ -45,6 +123,7 @@ static CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2] = {
     0
 };
 */
+
 extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.0f, 59200.0f, 1.0f };
 
 // @todo: migrate bss
@@ -73,13 +152,93 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgAnyoneInHole);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgNooneInHole);
+int stg_apart_e2f_EvProgNooneInHole(void) {
+    int ret;
+
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            FcRead(data_demo_ana_c_ana_c_dds, MemShare_gp_data_buf);
+            CharaDataLoadDemo(stg_apart_e2f_chara_data_01F075C0, 1);
+            EV_PROG_STEP(2);
+            /* fallthrough */
+        case 2:
+            if (fsSync(1, -1) >= 0) {
+                CharaDataLoadDemo(stg_apart_e2f_chara_data_01F075C0, 0);
+                CharaAdminPlayableDisplay(0);
+                sh2jms.player->status |= 0x8000;
+                SCNowDemoEventSwitch(sh2jms.player, true);
+                if (item.light_switch == 0) {
+                    item.light_switch = 1;
+                    LightSpotOnOffSet();
+                }
+                EV_PROG_STEP(22);
+            case 22:
+                DramaDemoMain(&stg_apart_e2f_info_hole_01F07590);
+                if (shPadTrigger(0, key_config.skip)) {
+                    EV_PROG_STEP(18);
+                }
+                if (demo_frame > (total_demo_frame - 90.0f)) {
+                    EV_PROG_STEP(9);
+                }
+            }
+            break;
+        case 9:
+            ret = EvSubMessage(3);
+            if ((DramaDemoMain(&stg_apart_e2f_info_hole_01F07590) != 0) && (ret != 0)) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 18:
+            DramaDemoSkipLast(&stg_apart_e2f_info_hole_01F07590);
+            if (EvSubMessage(3)) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 13:
+            CharaDataDeleteOne(HHH_JMS_CHARA_KIND);
+            CharaDataDeleteOne(ITEM_I_J_LIGHT_CHARA_KIND);
+            CharaDataDeleteOne(ITEM_I_KEY_CLOCK_CHARA_KIND);
+            CharaAdminPlayableDisplay(1);
+            sh2jms.player->status &= ~0x8000;
+            vcReturnPreAutoCamWork(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            shCharacterPlayerModelToPlayable();
+            return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgLookDustChute);
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgUseCannedJuice);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgNoFaceCorpse);
+/* static */ int stg_apart_e2f_EvProgNoFaceCorpse(void) {
+    switch (ev_p_step) {
+        case 0:
+            CharaAdminPlayableDisplay(0);
+            SCNowDemoEventSwitch(sh2jms.player, true);
+            stg_apart_e2f_info_01F076B0.adr_dds_top = stg_apart_e2f_kao_dds;
+            EV_PROG_STEP(22);
+            /* fallthrough */
+        case 22:
+            if (DramaDemoMain(&stg_apart_e2f_info_01F076B0)) {
+                EV_PROG_STEP(13);
+            }
+            break;
+        case 13:
+            CharaDataDeleteOne(HHL_JMS_CHARA_KIND);
+            sh2jms.player->status |= 0x10;
+            vcReturnPreAutoCamWork(1);
+            CharaAdminPlayableDisplay(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            shCharacterPlayerModelToPlayable();
+            return 1;
+    }
+    return 0;
+}
 
 /* static */ int stg_apart_e2f_EvProgAnyoneCry(void) {
     int anm; // r2
