@@ -41,6 +41,8 @@
 #include "data/daily.thu/data_demo_ana_c.h"
 #include "data/daily.thu/data_demo_dust.h"
 #include "data/daily.thu/data_demo_kao.h"
+#include "data/daily.thu/data_demo_tokei_0b.h"
+#include "data/daily.thu/data_demo_tokei_0c.h"
 #include "data/daily.thu/data_chr_item.h"
 #include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_pic_apt.h"
@@ -49,8 +51,62 @@
 
 extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f }; // @ 0x01F07240
 
-extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07500; // @ 0x01F07500
+extern /* static */ float stg_apart_e2f_clock_vec_0[2][4]; // address: 0x1F07250
 
+/*
+static float stg_apart_e2f_clock_vec_0[2][4] = {
+    { -58720.0f, 0.0f, 23000.0f, 0.0f },
+    { 0.0f, 0.0f, 0.0f, 0.0f}
+};
+*/
+
+extern /* static */ float stg_apart_e2f_clock_vec_1[2][4]; // size: 0x20, address: 0x1F07270
+
+/*
+static float stg_apart_e2f_clock_vec_1[2][4] = {
+    { -59020.0f, 0.0f, 23000.0f, 0.0f },
+    { 0.0f, 0.0f, 0.0f, 0.0f}
+};
+*/
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_clock_o_01F07420; // @ 0x01F07420
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_clock_o_chara[2]; // @ 0x01F07450
+
+/*
+static CharaData_DemoList stg_apart_e2f_clock_o_chara[2] = {
+    {
+        .kind = HHH_JMS_CHARA_KIND,
+        .model = data_chr_jms_hhh_jms_notex_mdl,
+        .animation = data_demo_tokei_0b_hhh_jms_anm,
+        .shadow = data_chr_jms_hhh_jms_kg1,
+        .cluster = &data_demo_tokei_0b_hhh_jms_cls
+    },
+    0
+};
+*/
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_clock_x_01F07480; // @ 0x01F07480
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_clock_x_chara[2]; // @ 0x01F074B0
+
+/*
+CharaData_DemoList stg_apart_e2f_clock_x_chara[2] = {
+    {
+        .kind = HHH_JMS_CHARA_KIND,
+        .model = data_chr_jms_hhh_jms_notex_mdl,
+        .animation = data_demo_tokei_0c_hhh_jms_anm,
+        .shadow = data_chr_jms_hhh_jms_kg1,
+        .cluster = data_demo_tokei_0c_hhh_jms_cls
+    },
+    0
+};
+*/
+
+extern /* static */ float stg_apart_e2f_pos_01F074E0[4]; // = { -58722.55078f, 0.0f, 23009.68359f, 0.0f }; // @ 01F074E0
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07500; // @ 0x01F07500
+       
 /*
 static DramaDemo_PlayInfo stg_apart_e2f_info_hole_01F07500 = {
     .demo_no = 11,
@@ -228,7 +284,11 @@ extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.
 
 // @todo: migrate bss
 
+extern /* static */ int stg_apart_e2f_se; // @ 0x01F07788
+
 extern /* static */ int stg_apart_e2f_se_check; // @ 0x01F07790
+
+extern /* static */ u_long128* stg_apart_e2f_anim_adr_01F07798; // @ 0x01F07798
 
 extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
 
@@ -460,7 +520,6 @@ extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
     return 0;
 }
 
-
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgClockNeedleMove);
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgSubClockNeedleDraw);
@@ -469,7 +528,103 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgSu
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTryMoveClock);
+/* static */ int stg_apart_e2f_EvProgTryMoveClock(void) {
+    int ox; // r16
+    int ret; // r16    
+    float pos[4]; // not present in DWARF
+
+    if ((35008 < game_flag.clock) && (game_flag.clock < 35392)) {
+        ox = 1;
+    } else {
+        ox = 0;
+    }
+    switch (ev_p_step) {
+        case 0:
+            game_flag.flag[2] |= 0x2000;
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(101);
+            if (ox != 0) {
+                FcRead(data_demo_tokei_0b_clock_push_dds, MemShare_gp_data_buf);
+                CharaDataLoadDemo(stg_apart_e2f_clock_o_chara, 1);
+                stg_apart_e2f_anim_adr_01F07798 = CharaDataLoadExtra(data_demo_tokei_0b_b_clo_anm, 256);
+            } else {
+                FcRead(data_demo_tokei_0c_clock_fail_dds, MemShare_gp_data_buf);
+                CharaDataLoadDemo(stg_apart_e2f_clock_x_chara, 1);
+                stg_apart_e2f_anim_adr_01F07798 = CharaDataLoadExtra(data_demo_tokei_0c_b_clo_anm, 256);
+            }
+            EV_PROG_STEP(30);
+            /* fallthrough */
+        case 30:
+            if (EvSubMessage(6)) {
+                EV_PROG_STEP(31);
+            }
+            break;
+        case 31:
+            if (EvSubQuestion(13)) {
+                if (!fontGetStatus()) {
+                    EV_PROG_STEP(2);
+                } else {
+                    CharaDataLoadCancel((ox != 0) ? stg_apart_e2f_clock_o_chara : stg_apart_e2f_clock_x_chara);
+                    EV_PROG_STEP(13);
+                }
+            }
+            break;
+        case 2:
+            if (fsSync(1, -1) >= 0) {
+                if (ox != 0) {
+                    CharaDataLoadDemo(stg_apart_e2f_clock_o_chara, 0);
+                    CharaDataAnimSetExtra(ITEM_B_CLO_CHARA_KIND, data_demo_tokei_0b_b_clo_anm, stg_apart_e2f_anim_adr_01F07798, 0);
+                } else {
+                    CharaDataLoadDemo(stg_apart_e2f_clock_x_chara, 0);
+                    CharaDataAnimSetExtra(ITEM_B_CLO_CHARA_KIND, data_demo_tokei_0c_b_clo_anm, stg_apart_e2f_anim_adr_01F07798, 0);
+                }
+                CharaAdminPlayableDisplay(0);
+                SCNowDemoEventSwitch(sh2jms.player, true);
+                stg_apart_e2f_se = 0;
+                shCharacter_Manage_Delete(NULL, ITEM_B_CLO_CHARA_KIND, 0);
+                EV_PROG_STEP(22);
+            case 22:
+                if (ox != 0) {
+                    ret = DramaDemoMain(&stg_apart_e2f_info_clock_o_01F07420);
+                    if ((stg_apart_e2f_se == 0) && (demo_frame > 30.0f)) {
+                        pos = stg_apart_e2f_pos_01F074E0;
+                        SeCallPos(16004, 1.0f, pos, 0);
+                        stg_apart_e2f_se = 1;
+                    }
+                    if (ret != 0) {
+                        game_flag.flag[2] |= 0x40000;
+                        EV_PROG_STEP(6);
+                    }
+                } else if (DramaDemoMain(&stg_apart_e2f_info_clock_x_01F07480)) {
+                    EV_PROG_STEP(32);
+                }
+            }
+            break;
+        case 32:
+            DramaDemoSkipLast(&stg_apart_e2f_info_clock_x_01F07480);
+            if (EvSubMessage(14)) {
+                EV_PROG_STEP(6);
+            }
+            break;
+        case 6:
+            CharaDataDeleteOne(HHH_JMS_CHARA_KIND);
+            CharaAdminPlayableDisplay(1);
+            vcReturnPreAutoCamWork(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            shCharacterPlayerModelToPlayable();
+            if (ox == 0) {
+                CharaAdminReCreate(ITEM_B_CLO_CHARA_KIND, 0, 0, stg_apart_e2f_clock_vec_0[0], stg_apart_e2f_clock_vec_0[1], 0);
+            } else {
+                CharaAdminReCreate(ITEM_B_CLO_CHARA_KIND, 0, 0, stg_apart_e2f_clock_vec_1[0], stg_apart_e2f_clock_vec_1[1], 0);
+            }
+            EV_PROG_STEP(18);
+            /* fallthrough */
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
 
 /* static */ int stg_apart_e2f_EvProgUseEmergencyKey(void) {
     return EvSubItemUse0(27, 24, 0, 0, 0, 1);
@@ -718,7 +873,6 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     return 0;
 }
 
-
 /* static */ int stg_apart_e2f_EvProgNoFaceCorpse(void) {
     switch (ev_p_step) {
         case 0:
@@ -910,7 +1064,6 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     return 0;
 }
 
-
 /* static */ int stg_apart_e2f_EvProgEndHintSuicideRead(void) {
     switch (ev_p_step) {
         case 0:
@@ -967,7 +1120,6 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgTr
     }
     return 0;   
 }
-
 
 /* static */ int stg_apart_e2f_EvProgUseApart202Key(void) {
     float pos[4];
