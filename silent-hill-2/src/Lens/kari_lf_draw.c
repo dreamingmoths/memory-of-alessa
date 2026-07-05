@@ -11,9 +11,9 @@
 
 #define EFF_VALID_ID 0xEF04
 
-static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4*,  IVector4*, IVector4*, IVector4*, IVector4*, Vector4*, Vector4*, Vector4*, Vector4*); // @note many arguments not in dwarf
+static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4*, IVector4*, IVector4*, IVector4*, IVector4*, Vector4*, Vector4*, Vector4*, Vector4*); // @note many arguments not in dwarf
 static void shLensFlareDrawCommon(sceVif1Packet* packet /* r21 */, LensFlareWork* lf_work /* r20 */, ScreenInfo* sc_info /* r19 */, IVector4* base_color /* r18 */, float base_r /* r20 */, float base_vector /* r22 */, Vector4*, Vector4*, u_short z_value /* r17 */);
-static void shLensFlareGetScreenInfo(void) ;
+static void shLensFlareGetScreenInfo(void);
 static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet /* r16 */);
 static void* kari_shLensFlareEffect_Draw(signed int center_visible_f /* r21 */, LensFlareWork* lf_work /* r20 */, ScreenInfo* sc_info /* r19 */, int unknown);
 static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4*, IVector4*, IVector4*, Vector4*, Vector4*); // @note many arguments not in dwarf
@@ -55,63 +55,22 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
     IVector4 prim_p[4]; // r29+0xE0
 
     Vector4 prim_st[7][2] = {
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.5,
-        0.5,
-        0.0,
-        0.0,
-        0.5,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.5,
-        0.0,
-        0.0,
-        0.25,
-        0.5,
-        0.0,
-        0.0,
-        0.625,
-        1.0,
-        0.0,
-        0.0,
-        0.625,
-        0.5,
-        0.0,
-        0.0,
-        1.0,
-        1.0,
-        0.0,
-        0.0,
-        0.054699998,
-        0.5547,
-        0.0,
-        0.0,
-        0.25,
-        0.5547,
-        0.0,
-        0.0,
-        0.054699998,
-        1.0,
-        0.0,
-        0.0,
-        0.25,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        0.5,
-        0.0,
-        0.0,
-        0.25,
-        1.0,
-        0.0,
-        0.0,
+        0.0, 0.0, 0.0, 0.0,
+        0.5, 0.5, 0.0, 0.0,
+        0.5, 0.0, 0.0, 0.0,
+        1.0, 0.5, 0.0, 0.0,
+        0.25, 0.5, 0.0, 0.0,
+        0.625, 1.0, 0.0, 0.0,
+        0.625, 0.5, 0.0, 0.0,
+        1.0, 1.0, 0.0, 0.0,
+        0.054699998, 0.5547, 0.0, 0.0,
+        0.25, 0.5547, 0.0, 0.0,
+        0.054699998, 1.0, 0.0, 0.0,
+        0.25, 1.0, 0.0, 0.0,
+        0.0, 0.5, 0.0, 0.0,
+        0.25, 1.0, 0.0, 0.0
     }; // r29+0x120
+
     float hensin_x;      // r20
     float hensin_y;      // r21
     float r;             // r22
@@ -145,8 +104,8 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
         0x80, 0x80, 0x80, 0x00
     }; // r29+0x2C0
 
-    float _rate; // r20
-    float add_ang, add_ang2;
+    float _rate;             // r20
+    float add_ang, add_ang2; // @ note: not in dwarf
     vif1pk = &vif1packet;
     sceVif1PkInit(vif1pk, kari_kick_packet);
 
@@ -305,14 +264,13 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
                     }
                     i1 = 0;
 
-
                     {
                         for (add_ang = -(lf_work->scr_l_ang_z) / 2.0f + (((lf_work->scr_l_pos).x + (lf_work->scr_l_pos).y) * 0.006136) + 1.0471976f, add_ang2 = (lf_work->scr_l_pos).z * 0.006136 +
                                                                                                                                                                 ((lf_work->scr_l_pos).x + (lf_work->scr_l_pos).y) * 0.024544;
                              i1 < 0xC; i1++) {
                             static float ang_dat_1042[12] = {
                                 -2.9321532,
-                                -2.268928 ,
+                                -2.268928,
                                 -1.0471976,
                                 -0.87266463,
                                 -0.2617994,
@@ -390,7 +348,8 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
 
         u_long giftag_Z[2] = {
             SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1),
-            GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)};
+            GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)
+        };
         sceVif1PkOpenGifTag(vif1pk, *(u_long128*) giftag_Z);
 
         sceVif1PkAddGsAD(vif1pk, SCE_GS_ZBUF_1, SCE_GS_SET_ZBUF(448, 58, 1));
