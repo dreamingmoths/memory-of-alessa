@@ -180,11 +180,11 @@ static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
         : "+r"(out));
 }
 
-/* Poor mans `pragma fastmath` version of sqrtf. */
+/* sqrt function for when `pragma fastmath` is not available */
 static inline float SQRT(float x) {
     float result = x;
     asm("sqrt.s  %0, %0"
-        : "=&f"(result));
+        : "+f"(result));
     return result;
 }
 

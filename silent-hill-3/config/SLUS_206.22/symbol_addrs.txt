@@ -538,7 +538,7 @@ kari_shLensFlareEffect_Draw = 0x0023aa20;
 shLensFlareSpriteAddPacketGif = 0x0023bdd0;
 shLensFlareLightCenterIsVisible = 0x0023c130;
 shLensFlareSetLightSeed = 0x0023c240;
-shLensFlareGetScreenInfo = 0x0023c0c0;
+shLensFlareGetScreenInfo = 0x0023c0c0; // allow_duplicated:true
 sh3gde_getWorldScreenMatrix = 0x001b4300;
 shLensFlareOresenHokan = 0x0023c400;
 shLensFlareMakeEffectTargetRate = 0x0023c4e0;
@@ -557,6 +557,13 @@ dist_rate_dat = 0x0038A670;
 ang_z_rate_dat = 0x0038A690;
 shLensFlareCameraIsSmooth = 0x0023C110;
 light_flare_work = 0x01F2F770; // size:0x80
+kari_kick_packet = 0x01F2A6E0;
+shLensFlareGetScreenInfo = 0x00023A7B0; // allow_duplicated:true
+shLensFlareSetAlphaEnvironment = 0x00023A950;
+reverse_light_rate = 0x01F2F6F8;
+ang_dat_0 = 0x0038A5E0;
+ang_dat_1 = 0x0038A5F0;
+shLensFlareDrawCommon = 0x00023A550;
 
 // could be wrong
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local
