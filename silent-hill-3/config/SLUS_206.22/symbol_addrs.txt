@@ -563,6 +563,8 @@ shLensFlareSetAlphaEnvironment = 0x00023A950;
 reverse_light_rate = 0x01F2F6F8;
 ang_dat_0 = 0x0038A5E0;
 ang_dat_1 = 0x0038A5F0;
+kari_shLensFlareDraw = 0x0023A800;
+dum = 0x0038A650;
 shLensFlareDrawCommon = 0x00023A550;
 
 // could be wrong

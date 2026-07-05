@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "Chacter/character.h"
-// #include "GFW/sh2gfw_structs.h"
+#include "GFW/sh3gfw_structs.h"
 
 typedef struct /* @anon6 */ {
     // total size: 0x40
@@ -39,7 +39,7 @@ extern int Lens_Fl_Head;
 extern LensFlareWork light_flare_work[2];
 extern LightInfo light_info[2]; // size: 0x60, address: 0x1013770
 
-extern struct sh2gfw_Effect_Man LF_Tex_Work; // size: 0x40, address: 0x1013850
+extern struct sh3gfw_Effect_Man LF_Tex_Work; // size: 0x40, address: 0x1013850
 
 int shLensFlareCameraIsSmooth(void);
 
@@ -47,6 +47,6 @@ int shLensFlareLightCenterIsVisible(LensFlareWork* lf_info);
 
 void shLensFlareInit(void);
 
-void shLensFlareExec(SubCharacter* scp, float light_intensity, int type);
+void shLensFlareExec(SubCharacter* scp, float light_intensity, int type, int arg2);
 
 #endif // LENS_FLARE_H

@@ -24,15 +24,38 @@ extern u_long* func_001D0740(void);
 extern int func_001D0670(void);
 extern float D_01F2A6D0;
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_Thr_LFD2TextureSend);
+extern float D_0038A3E0;
+extern float func_002394F0(void);
+extern float D_01F2A6D0;
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_Thr_LFD1D2SyncKick);
+extern /* static */ Q_WORDDATA dum;
+
+extern float func_001B4230(void);
+extern float func_001B4250(void);
+extern float func_001B4270(void);
+extern float func_001B4290(void);
+extern float func_001B6460(void);
+
+void kari_Thr_LFD2TextureSend(void) {
+    ASSERT_ON_LINE(LF_Tex_Work.valid_id==EFF_VALID_ID, 193);
+    sh3gfw_Thr_d2TextureSend(LF_Tex_Work.pTexMAN, 0, &LF_Tex_Work.thr_cid, &LF_Tex_Work.thr_sid);
+    LF_Tex_Work.Tex0Data = *(u_long128*) sh3gfw_Get_RegTEX0(LF_Tex_Work.pTexMAN, 0, 1);
+}
+
+void kari_Thr_LFD1D2SyncKick(void* pktop /* r2 */) {
+    sh3gfw_Thr_d1d2SyncKick(pktop, LF_Tex_Work.thr_cid, LF_Tex_Work.thr_sid);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlarePolyFT4AddPacketGif);
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareDrawCommon);
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareGetScreenInfo);
+void shLensFlareGetScreenInfo(void) {
+    screen_info.center_x = func_001B4230(); /* VbScreenInfo.cx */
+    screen_info.center_y = func_001B4250(); /* VbScreenInfo.cy */
+    screen_info.width = func_001B4270();    /* VbScreenInfo.sx */
+    screen_info.height = func_001B4290();   /* VbScreenInfo.sy */
+}
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", func_0023A800);
 
@@ -375,4 +398,23 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSpriteAddPacketGif);
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", Kari_LensFlare_DrawExec);
+void Kari_LensFlare_DrawExec(void) {
+    void* pak;
+    D_01F2A6D0 = 0;
+
+    if ((func_00239450() == 0) || (func_002394F0() <= 0.01f)) {
+        func_002397C0(&light_info->world_light_pos, &light_info->world_light_vector);
+        shLensFlareExec(NULL, D_0038A3E0, 0, 0);
+        shLensFlareLightCenterIsVisible(light_flare_work);
+        light_flare_work->now_l_eff_rate = 0.0f;
+        return;
+    }
+    pak  = kari_shLensFlareDraw(); // r2
+    if (pak) {
+        kari_Thr_LFD1D2SyncKick(pak);
+        return;
+    }
+    kari_Thr_LFD1D2SyncKick(&dum);
+}
+
+
