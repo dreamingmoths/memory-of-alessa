@@ -7,6 +7,8 @@ AlignConsecutiveAssignments: true
 AlignOperands: true
 AlignEscapedNewlines: Left
 AlignTrailingComments: true
+BreakBeforeBraces: Attach
+BreakBeforeCloseBracketBracedList: true
 SortIncludes: false
 SpaceAfterCStyleCast: true
 SkipMacroDefinitionBody: true

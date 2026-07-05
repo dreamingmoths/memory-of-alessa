@@ -9,6 +9,7 @@
 #define AMPOULE 3
 #define CHAINSAW 14
 #define APART_202_KEY 24
+#define COIN_OF_SNAKE 47
 
 // the meat carcass model in the eddie boss fight
 #define ITEM_B_NIK_CHARA_KIND 0x421
