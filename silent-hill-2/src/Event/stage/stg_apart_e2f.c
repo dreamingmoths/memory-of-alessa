@@ -7,6 +7,7 @@
 #include "Event/chara_data_load.h"
 #include "Event/chara_admin.h"
 #include "Event/demoview.h"
+#include "Event/picture.h"
 
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
@@ -26,6 +27,7 @@
 #include "SH2_common/pad.h"
 #include "SH2_common/mem_share.h"
 #include "SH2_common/playing_info.h"
+#include "SH2_common/sh_vu0.h"
 
 #include "Font/font.h"
 #include "Font/dic.h"
@@ -69,6 +71,14 @@ static float stg_apart_e2f_clock_vec_1[2][4] = {
 };
 */
 
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_1[3]; // @ 0x01F072A0
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_2[3]; // @ 0x01F072E0
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_1; // @ 0x01F07320
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_2; // @ 0x01F07350
+
 extern /* static */ float stg_apart_e2f_pos_01F07380[4];
 
 extern /* static */ float stg_apart_e2f_pos_01F07390[4];
@@ -77,7 +87,9 @@ extern /* static */ float stg_apart_e2f_pos_01F073A0[4];
  
 extern /* static */ float stg_apart_e2f_pos_01F073B0[4]; 
 
-extern /* static */ float stg_apart_e2f_pos_01F073C0[4]; 
+extern /* static */ float stg_apart_e2f_pos_01F073C0[4];
+
+extern /* static */ u_short stg_apart_e2f_tex[8][4]; // @ 0x01F073D0 
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_clock_o_01F07420; // @ 0x01F07420
 
