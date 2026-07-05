@@ -13,13 +13,11 @@
 #include "view/vb_main.h"
 #include "Event/item.h"
 
-#define EFF_VALID_ID 0xEF04
-
 static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, IVector4* xyz2, IVector4* xyz3, Vector4* stq0, Vector4* stq1, Vector4* stq2, Vector4* stq3); // @note many arguments not in dwarf
 static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value);
 static void shLensFlareGetScreenInfo(void);
 static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet /* r16 */);
-static void* kari_shLensFlareEffect_Draw(signed int center_visible_f /* r21 */, LensFlareWork* lf_work /* r20 */, ScreenInfo* sc_info /* r19 */, int unknown);
+static void* kari_shLensFlareEffect_Draw(int center_visible_f /* r21 */, LensFlareWork* lf_work /* r20 */, ScreenInfo* sc_info /* r19 */, int unknown);
 static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, Vector4* stq0, Vector4* stq1); // @note many arguments not in dwarf
 
 extern u_long128 kari_kick_packet[1280]; // size: 0x5000, address: 0x100E750
@@ -32,10 +30,6 @@ void kari_Thr_LFD2TextureSend(void) {
 
 void kari_Thr_LFD1D2SyncKick(void* pktop /* r2 */) {
     sh2gfw_Thr_d1d2SyncKick(pktop, LF_Tex_Work.thr_cid, LF_Tex_Work.thr_sid);
-}
-
-static inline u_int reinterpret_as_u_int(float v) {
-    return *(u_int*) &v;
 }
 
 static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, IVector4* xyz2, IVector4* xyz3, Vector4* stq0, Vector4* stq1, Vector4* stq2, Vector4* stq3) {
@@ -96,23 +90,6 @@ static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgba
     sceVif1PkCloseGifTag(packet);
 }
 
-
-static inline void set_color_clamped_vec(IVector4* color, float c, IVector4* v) {
-    color->x = (int) (v->x * c);
-    color->y = (int) (v->y * c);
-    color->z = (int) (v->z * c);
-
-    if (color->x > 255) {
-        color->x = 255;
-    }
-    if (color->y > 255) {
-        color->y = 255;
-    }
-    if (color->z > 255) {
-        color->z = 255;
-    }
-}
-
 static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value) {
     Vector4 st0 = *t0; // r29+0x80
     Vector4 st1 = *t1; // r29+0x90
@@ -145,22 +122,6 @@ static void shLensFlareGetScreenInfo(void) {
     screen_info.center_y = VbScreenInfo.cy;
     screen_info.width = VbScreenInfo.sx;
     screen_info.height = VbScreenInfo.sy;
-}
-
-static inline void set_color_clamped(IVector4* color, float c, float r, float g, float b) {
-    color->x = (int) (r * c);
-    color->y = (int) (g * c);
-    color->z = (int) (b * c);
-
-    if (color->x > 255) {
-        color->x = 255;
-    }
-    if (color->y > 255) {
-        color->y = 255;
-    }
-    if (color->z > 255) {
-        color->z = 255;
-    }
 }
 
 void* kari_shLensFlareDraw(void) {
@@ -210,7 +171,7 @@ static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet /* r16 */) {
 }
 
 
-void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, s32 arg3) {
+void* kari_shLensFlareEffect_Draw(int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int arg3) {
     IVector4 color;     // r29+0xD0
     IVector4 prim_p[4]; // r29+0xE0
 

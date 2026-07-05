@@ -7,34 +7,29 @@
 #include "libvifpk.h"
 #include "vec.h"
 
-static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4*, IVector4*, IVector4*, IVector4*, IVector4*, Vector4*, Vector4*, Vector4*, Vector4*);
-static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4*, Vector4*, u_short z_value);
+static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, IVector4* xyz2, IVector4* xyz3, Vector4* stq0, Vector4* stq1, Vector4* stq2, Vector4* stq3); // @note many arguments not in dwarf
+static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value);
 static void shLensFlareGetScreenInfo(void);
 static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet);
-static void* kari_shLensFlareEffect_Draw(signed int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int unknown);
-static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4*, IVector4*, IVector4*, Vector4*, Vector4*);
+static void* kari_shLensFlareEffect_Draw(int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int unknown);
+static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, Vector4* stq0, Vector4* stq1); // @note many arguments not in dwarf
 
 extern u_long128 kari_kick_packet[1280];
+extern float D_01F2A6D0; // light intensity?
+extern float D_0038A3E0;
+extern float D_01F2A6D0;
 
 // @todo: find proper homes for these
 extern float func_001B4170(void);
 extern float func_001B41C0(void);
-extern float func_002394F0(void); /* Env_ctl.SpotL0.color.fl32[0] */
-extern u_long* func_001D0740(void);
-extern int func_001D0670(void);
-extern float D_01F2A6D0; // light intensity?
-
-extern float D_0038A3E0;
-extern float func_002394F0(void);
-extern float D_01F2A6D0;
-
-extern /* static */ Q_WORDDATA dum;
-
 extern float func_001B4230(void);
 extern float func_001B4250(void);
 extern float func_001B4270(void);
 extern float func_001B4290(void);
 extern float func_001B6460(void);
+extern int func_001D0670(void);
+extern u_long* func_001D0740(void);
+extern float func_002394F0(void); /* Env_ctl.SpotL0.color.fl32[0] */
 
 // @sh3 unchanged from sh2 proto
 void kari_Thr_LFD2TextureSend(void) {
@@ -44,13 +39,99 @@ void kari_Thr_LFD2TextureSend(void) {
 }
 
 // @sh3 unchanged from sh2 proto
-void kari_Thr_LFD1D2SyncKick(void* pktop /* r2 */) {
+void kari_Thr_LFD1D2SyncKick(void* pktop) {
     sh3gfw_Thr_d1d2SyncKick(pktop, LF_Tex_Work.thr_cid, LF_Tex_Work.thr_sid);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlarePolyFT4AddPacketGif);
+// @sh3 unchanged
+static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, IVector4* xyz2, IVector4* xyz3, Vector4* stq0, Vector4* stq1, Vector4* stq2, Vector4* stq3) {
+    IVector4 c = *rgbaq; 
+    IVector4 v0 = *xyz0; 
+    IVector4 v1 = *xyz1; 
+    IVector4 v2 = *xyz2; 
+    IVector4 v3 = *xyz3; 
+    Vector4 st0 = *stq0; 
+    Vector4 st1 = *stq1; 
+    Vector4 st2 = *stq2; 
+    Vector4 st3 = *stq3; 
+    u_long giftag_polyf4[2] = {
+        SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 14),
+        GIF_REG(SCE_GS_PRIM, 0)   | 
+        GIF_REG(SCE_GS_TEX0_1, 1) | 
+        GIF_REG(SCE_GS_ST, 2)     | 
+        GIF_REG(SCE_GS_RGBAQ, 3)  | 
+        GIF_REG(SCE_GS_XYZ2, 4)   | 
+        GIF_REG(SCE_GS_ST, 5)     | 
+        GIF_REG(SCE_GS_RGBAQ, 6)  | 
+        GIF_REG(SCE_GS_XYZ2, 7)   | 
+        GIF_REG(SCE_GS_ST, 8)     | 
+        GIF_REG(SCE_GS_RGBAQ, 9)  | 
+        GIF_REG(SCE_GS_XYZ2, 10)  | 
+        GIF_REG(SCE_GS_ST, 11)    | 
+        GIF_REG(SCE_GS_RGBAQ, 12) | 
+        GIF_REG(SCE_GS_XYZ2, 13)
+    }; 
+    float q = 1.0f; 
+    
+    u_long128* pTex0; 
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareDrawCommon);
+    sceVif1PkOpenGifTag(packet, *(u_long128*) &giftag_polyf4);
+    sceVif1PkAddGsData(packet, 
+                       SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 
+                           true /* gouraud */, 
+                           true /* texture mapping */, 
+                           false, 
+                           true /* alpha blending */, 
+                           false, false, false, false
+                       )
+    );
+    pTex0 = &LF_Tex_Work.Tex0Data;
+    sceVif1PkAddGsData(packet, ((u_long*)pTex0)[0]);
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st0.x * q), reinterpret_as_u_int(st0.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v0.x, v0.y, v0.z));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st1.x * q), reinterpret_as_u_int(st1.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v1.x, v1.y, v1.z));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st2.x * q), reinterpret_as_u_int(st2.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v2.x, v2.y, v2.z));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st3.x * q), reinterpret_as_u_int(st3.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v3.x, v3.y, v3.z));
+    sceVif1PkCloseGifTag(packet);
+}
+
+static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value) {
+    Vector4 st0 = *t0;
+    Vector4 st1 = *t1;
+    IVector4 color;
+    IVector4 prim_p[4];
+    float r;
+    float _rate = lf_work->now_l_eff_rate;
+    float rate_scale_x = func_001B4170(); // @sh3
+    float rate_scale_y = func_001B41C0(); // @sh3
+    float rx, ry;
+
+    set_color_clamped_vec(&color, lf_work->now_l_eff_rate, base_color);
+
+    r = base_r * ((3.0f + lf_work->now_l_eff_rate) / 4.0f);
+
+    prim_p[0].x = (int)(16.0f * ((sc_info->center_x + (base_vector * (lf_work->scr_l_pos.x - sc_info->center_x))) - (r * rate_scale_x)));
+
+    prim_p[0].y = (int)(16.0f * ((sc_info->center_y + (base_vector * (lf_work->scr_l_pos.y - sc_info->center_y))) - (r * rate_scale_y)));
+
+    prim_p[1].x = (int)(16.0f * ((sc_info->center_x + (base_vector * (lf_work->scr_l_pos.x - sc_info->center_x))) + (r * rate_scale_x)));
+
+    prim_p[1].y = (int)(16.0f * ((sc_info->center_y + (base_vector * (lf_work->scr_l_pos.y - sc_info->center_y))) + (r * rate_scale_y)));
+
+    prim_p[1].z = z_value;
+    prim_p[0].z = z_value;
+
+    shLensFlareSpriteAddPacketGif(packet, &color, &prim_p[0], &prim_p[1], &st0, &st1);
+}
+
+
 
 void shLensFlareGetScreenInfo(void) {
     screen_info.center_x = func_001B4230(); /* VbScreenInfo.cx */
@@ -63,23 +144,7 @@ INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_shLensFlareDraw);
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSetAlphaEnvironment);
 
-static inline void set_color_clamped(IVector4* color, float c, float r, float g, float b) {
-    color->x = (int) (r * c);
-    color->y = (int) (g * c);
-    color->z = (int) (b * c);
-
-    if (color->x > 255) {
-        color->x = 255;
-    }
-    if (color->y > 255) {
-        color->y = 255;
-    }
-    if (color->z > 255) {
-        color->z = 255;
-    }
-}
-
-void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, s32 arg3) {
+void* kari_shLensFlareEffect_Draw(int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int arg3) {
     IVector4 color;
     IVector4 prim_p[4];
     float temp_f20          = func_001B4170();
@@ -398,9 +463,56 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
     return NULL;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSpriteAddPacketGif);
+// @sh3 unchanged
+static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, Vector4* stq0, Vector4* stq1) {
+    IVector4 c  = *rgbaq; 
+    IVector4 v0 = *xyz0; 
+    IVector4 v1 = *xyz1; 
+    Vector4 st0 = *stq0; 
+    Vector4 st1 = *stq1; 
+    u_long128* pTex0;    
+    u_long giftag_alpha_test[2] = {
+        SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 8),
+        GIF_REG(SCE_GS_PRIM, 0)       |
+            GIF_REG(SCE_GS_TEX0_1, 1) |
+            GIF_REG(SCE_GS_ST, 2)     |
+            GIF_REG(SCE_GS_RGBAQ, 3)  |
+            GIF_REG(SCE_GS_XYZ2, 4)   |
+            GIF_REG(SCE_GS_ST, 5)     |
+            GIF_REG(SCE_GS_RGBAQ, 6)  |
+            GIF_REG(SCE_GS_XYZ2, 7)   |
+            GIF_REG(SCE_GS_PRIM, 8)   |
+            GIF_REG(SCE_GS_PRIM, 9)   |
+            GIF_REG(SCE_GS_PRIM, 10)  |
+            GIF_REG(SCE_GS_PRIM, 11)  |
+            GIF_REG(SCE_GS_PRIM, 12)  |
+            GIF_REG(SCE_GS_PRIM, 13)
+    }; 
+    float q = 1.0f; 
+
+    sceVif1PkOpenGifTag(packet, *(u_long128*) giftag_alpha_test);
+    sceVif1PkAddGsData(packet,
+                       SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE,
+                                       true /* gouraud */,
+                                       true /* texture mapping */,
+                                       false,
+                                       true /* alpha blending */,
+                                       true /* antialiasing */,
+                                       false, false, false));
+    pTex0 = (u_long128*) &LF_Tex_Work.Tex0Data;
+    sceVif1PkAddGsData(packet, ((u_long*) pTex0)[0]);
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st0.x * q), reinterpret_as_u_int(st0.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v0.x, v0.y, v0.z));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_ST(reinterpret_as_u_int(st1.x * q), reinterpret_as_u_int(st1.y * q)));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_RGBAQ(c.x, c.y, c.z, 0x80, *(u_int*) &q));
+    sceVif1PkAddGsData(packet, SCE_GS_SET_XYZ(v1.x, v1.y, v1.z));
+    sceVif1PkCloseGifTag(packet);
+}
+
 
 void Kari_LensFlare_DrawExec(void) {
+    static Q_WORDDATA dum = {0x70000000};
     void* pak;
     
     
@@ -415,12 +527,10 @@ void Kari_LensFlare_DrawExec(void) {
     }
 
 
-    pak  = kari_shLensFlareDraw(); // r2
+    pak  = kari_shLensFlareDraw(); 
     if (pak) {
         kari_Thr_LFD1D2SyncKick(pak);
         return;
     }
     kari_Thr_LFD1D2SyncKick(&dum);
 }
-
-
