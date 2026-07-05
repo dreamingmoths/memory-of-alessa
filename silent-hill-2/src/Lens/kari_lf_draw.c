@@ -8,6 +8,10 @@
 #include "vec.h"
 
 #include "GFW/sh2_DrawEnvData.h"
+#include "GFW/sh2gfw_Texpacket.h"
+
+#include "view/vb_main.h"
+#include "Event/item.h"
 
 #define EFF_VALID_ID 0xEF04
 
@@ -20,15 +24,26 @@ static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4*, IVec
 
 extern u_long128 kari_kick_packet[1280]; // size: 0x5000, address: 0x100E750
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_Thr_LFD2TextureSend);
+void kari_Thr_LFD2TextureSend(void) {
+    ASSERT_ON_LINE(LF_Tex_Work.valid_id==EFF_VALID_ID, 193);
+    sh2gfw_Thr_d2TextureSend(LF_Tex_Work.pTexMAN, 0, &LF_Tex_Work.thr_cid, &LF_Tex_Work.thr_sid);
+    LF_Tex_Work.Tex0Data = *sh2gfw_Get_RegTEX0((sh2gfw_TexMAN* ) LF_Tex_Work.pTexMAN, 0, 1);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_Thr_LFD1D2SyncKick);
+void kari_Thr_LFD1D2SyncKick(void* pktop /* r2 */) {
+    sh2gfw_Thr_d1d2SyncKick(pktop, LF_Tex_Work.thr_cid, LF_Tex_Work.thr_sid);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlarePolyFT4AddPacketGif);
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareDrawCommon);
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareGetScreenInfo);
+static void shLensFlareGetScreenInfo(void) {
+    screen_info.center_x = VbScreenInfo.cx;
+    screen_info.center_y = VbScreenInfo.cy;
+    screen_info.width = VbScreenInfo.sx;
+    screen_info.height = VbScreenInfo.sy;
+}
 
 static inline void set_color_clamped(IVector4* color, float c, float r, float g, float b) {
     color->x = (int) (r * c);
@@ -46,9 +61,52 @@ static inline void set_color_clamped(IVector4* color, float c, float r, float g,
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_shLensFlareDraw);
+void* kari_shLensFlareDraw(void) {
+    int center_visible_f; // r16
+    int count = *T0_COUNT; // r2
+    float add_rate; // r29+0x40
+    float add_rate_scaled; // @ note not in dwarf
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSetAlphaEnvironment);
+    kari_Thr_LFD2TextureSend();
+    if (!light_flare_work.lfl_sync_draw_func_exec_f) {
+        return NULL;
+    }
+    light_flare_work.lfl_sync_draw_func_exec_f = 0;
+    if (light_flare_work.flare_inhibit_f) {
+        return NULL;
+    }
+    if (!GET_BIT(item.flag[0], 15) && sh2gde_CheckSpot_JmsOrBG()) {
+        return NULL;
+    }
+    center_visible_f = shLensFlareLightCenterIsVisible(&light_flare_work);
+    if (center_visible_f != 0) {
+        add_rate = light_flare_work.tgt_l_eff_rate - light_flare_work.now_l_eff_rate;
+    } else {
+        add_rate = -light_flare_work.now_l_eff_rate;
+    }
+
+    add_rate_scaled = add_rate * 0.3;
+    light_flare_work.now_l_eff_rate += add_rate_scaled;
+    if (shLensFlareCameraIsSmooth() == 0) {
+        light_flare_work.now_l_eff_rate = 0.0f;
+        center_visible_f = 0;
+    }
+    return kari_shLensFlareEffect_Draw(center_visible_f, &light_flare_work, &screen_info, 0);
+}
+
+static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet /* r16 */) {
+    u_long giftag_alpha[2] = {
+        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)
+    };
+    sceVif1PkOpenGifTag(packet, *(u_long128*) &giftag_alpha);
+    sceVif1PkAddGsAD(packet, SCE_GS_TEXFLUSH, 0);
+    sceVif1PkAddGsAD(packet, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 2, 0, 1, 0x80));
+    sceVif1PkAddGsAD(packet, SCE_GS_TEST_1, SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 2));
+    sceVif1PkAddGsAD(packet, SCE_GS_ZBUF_1, SCE_GS_SET_ZBUF(448, 58, 1));
+    sceVif1PkCloseGifTag(packet);
+}
+
 
 void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, s32 arg3) {
     IVector4 color;     // r29+0xD0
@@ -366,4 +424,14 @@ void* kari_shLensFlareEffect_Draw(s32 center_visible_f, LensFlareWork* lf_work, 
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSpriteAddPacketGif);
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", Kari_LensFlare_DrawExec);
+void Kari_LensFlare_DrawExec(void) {
+    static Q_WORDDATA dum = {0x70000000}; // @ 0x002AE300
+    void* pak = kari_shLensFlareDraw(); // r2
+
+    if (pak) {
+        kari_Thr_LFD1D2SyncKick(pak);
+        return;
+    }
+    kari_Thr_LFD1D2SyncKick(&dum);
+}
+
