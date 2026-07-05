@@ -573,7 +573,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_T
         
     case VC_TDSC_MAIN:
         if (param->active_f != 0) {
-            param->rail_sta_to_chara_dist = vec3_dist_xz(w_p->through_door.rail_sta_pos, w_p->chara_pos);//[0]// M2C_ERROR(/* unknown instruction: madd.s $f0, $f9, $f9 */);
+            param->rail_sta_to_chara_dist = vec3_dist_xz(w_p->through_door.rail_sta_pos, w_p->chara_pos);
 
             
             param->timer += shGetDT();

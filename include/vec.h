@@ -96,6 +96,15 @@ inline void vec_sub_reverse(void* y, void* x, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
+static inline void vec_sub_xyz(void* x, void* y, void* out) {
+    asm("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vsub.xyz vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "+r"(x), "+r"(y), "+r"(out));
+}
+
 static inline vec_lerp(float* out, float* v, float* w, float t) {
     asm("mfc1 t7, %3;\
          qmtc2 t7, vf6x;\
@@ -105,15 +114,6 @@ static inline vec_lerp(float* out, float* v, float* w, float t) {
          vmulax ACC, vf4, vf6;\
          vmaddw vf4, vf5, vf6;\
          sqc2 vf4, 0(%0)" : "=r"(out) : "r"(v), "r"(w), "f"(t) : "t7");
-}
-
-static inline void vec_sub_xyz(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%0)\n\
-        lqc2 vf5, 0(%1)\n\
-        vsub.xyz vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
 }
 
 static inline float vec_length(float* a) {
