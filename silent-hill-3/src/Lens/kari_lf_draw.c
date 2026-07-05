@@ -14,9 +14,10 @@ static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet);
 static void* kari_shLensFlareEffect_Draw(int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int unknown);
 static void shLensFlareSpriteAddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, Vector4* stq0, Vector4* stq1); // @note many arguments not in dwarf
 
+float D_0038A3E0 = 1.0f;
+
 extern u_long128 kari_kick_packet[1280];
 extern float D_01F2A6D0; // light intensity?
-extern float D_0038A3E0;
 extern float D_01F2A6D0;
 
 // @todo: find proper homes for these
@@ -29,6 +30,7 @@ extern float func_001B4290(void);
 extern float func_001B6460(void);
 extern int func_001D0670(void);
 extern u_long* func_001D0740(void);
+extern u_long* func_001D0720(void);
 extern float func_002394F0(void); /* Env_ctl.SpotL0.color.fl32[0] */
 
 // @sh3 unchanged from sh2 proto
@@ -102,6 +104,7 @@ static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgba
     sceVif1PkCloseGifTag(packet);
 }
 
+#ifdef NON_MATCHING
 static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value) {
     Vector4 st0 = *t0;
     Vector4 st1 = *t1;
@@ -130,6 +133,9 @@ static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work,
 
     shLensFlareSpriteAddPacketGif(packet, &color, &prim_p[0], &prim_p[1], &st0, &st1);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareDrawCommon);
+#endif
 
 
 
@@ -140,9 +146,57 @@ void shLensFlareGetScreenInfo(void) {
     screen_info.height = func_001B4290();   /* VbScreenInfo.sy */
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_shLensFlareDraw);
+void* kari_shLensFlareDraw(void) {
+    int center_visible_f; // r16
+    int count = *T0_COUNT; // r2
+    float add_rate; // r29+0x40
+    float add_rate_scaled; // @ note not in dwarf
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSetAlphaEnvironment);
+    kari_Thr_LFD2TextureSend();
+    shLensFlareExec(NULL, D_0038A3E0, 0, 0);
+    D_0038A3E0 = 1.0f;
+    if (!light_flare_work->lfl_sync_draw_func_exec_f) {
+        return NULL;
+    }
+    light_flare_work->lfl_sync_draw_func_exec_f = 0;
+    if (light_flare_work->flare_inhibit_f) {
+        return NULL;
+    }
+
+    // @sh3 is `!GET_BIT(item.flag[0], 15) && sh2gde_CheckSpot_JmsOrBG()` in the sh2 proto?
+    if ((func_00239450() == 0) || (func_002394F0() <= 0.01f)) {
+        return NULL;
+    }
+
+    center_visible_f = shLensFlareLightCenterIsVisible(&light_flare_work);
+    if (center_visible_f != 0) {
+        add_rate = light_flare_work->tgt_l_eff_rate - light_flare_work->now_l_eff_rate;
+    } else {
+        add_rate = -light_flare_work->now_l_eff_rate;
+    }
+
+    add_rate_scaled = add_rate * 0.3f; // @sh3 was a double in the sh2 proto, maybe fixed in sh2 retail?
+    light_flare_work->now_l_eff_rate += add_rate_scaled;
+    if (shLensFlareCameraIsSmooth() == 0) {
+        light_flare_work->now_l_eff_rate = 0.0f;
+        center_visible_f = 0;
+    }
+    return kari_shLensFlareEffect_Draw(center_visible_f, &light_flare_work, &screen_info, 0);
+}
+
+static void shLensFlareSetAlphaEnvironment(sceVif1Packet* packet) {
+    u_long giftag_alpha[2] = {
+        SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1),
+        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)
+    };
+    sceVif1PkOpenGifTag(packet, *(u_long128*) &giftag_alpha);
+    sceVif1PkAddGsAD(packet, SCE_GS_TEXFLUSH, 0);
+    sceVif1PkAddGsAD(packet, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 2, 0, 1, 0x80));
+    sceVif1PkAddGsAD(packet, SCE_GS_TEST_1, SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 2));
+    sceVif1PkAddGsAD(packet, SCE_GS_ZBUF_1, SCE_GS_SET_ZBUF(func_001D0670(), 58, 1));
+    sceVif1PkAddGsAD(packet, SCE_GS_FRAME_1, SCE_GS_SET_FBA(*func_001D0720()));
+    sceVif1PkCloseGifTag(packet);
+}
 
 void* kari_shLensFlareEffect_Draw(int center_visible_f, LensFlareWork* lf_work, ScreenInfo* sc_info, int arg3) {
     IVector4 color;
