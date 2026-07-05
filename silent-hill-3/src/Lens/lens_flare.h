@@ -33,13 +33,6 @@ typedef struct /* @anon7 */ {
     float height; // offset 0xC, size 0x4
 } ScreenInfo;
 
-typedef struct LightFlareWork_01F2F770 {
-    s_char unk0[2];
-    s_char unk2[6];
-    int unk8;
-    u_char pad[0x34];
-} LightFlareWork_01F2F770;
-
 extern ScreenInfo screen_info; // size: 0x10, address: 0x1013760
 extern float reverse_light_rate;
 extern int Lens_Fl_Head;
