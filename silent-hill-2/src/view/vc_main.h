@@ -4,6 +4,11 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
+// SH1-style CLAMP macro, used a lot in SH1 code, but most of SH2 uses `float_clamp`?
+// Maybe only used in `vc` since this was reused from SH1.
+#define CLAMP(x, min, max) \
+    (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
+
 typedef enum _VC_ROAD_TYPE { // : u_char
     VC_RD_TYPE_ROAD,
     VC_RD_TYPE_EFFECT,
@@ -269,6 +274,13 @@ typedef struct _VC_CAMERA_INTINFO {
 
 extern VC_WORK vcWork;
 extern VC_CAMERA_INTINFO vcCameraInternalInfo;
+extern VC_ROAD_DATA* vcNullRoadArrayList[2];
+extern VC_NEAR_ROAD_DATA vcNullNearRoad;
+extern float vcSelfViewTimer;
+extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
+extern VC_CAM_MV_PARAM vcCamMvPrmSt;
+extern const VC_WATCH_MV_PARAM watch_mv_prm_user;
+extern const VC_CAM_MV_PARAM cam_mv_prm_user;
 
 // @todo: check float*/float[] types.
 void vcInitVCSystem(VC_ROAD_DATA** vc_road_ary_list);
@@ -286,7 +298,7 @@ int vcRetSmoothCamMvF(float* old_pos, float* now_pos, float* old_ang, float* now
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
 int vcRetThroughDoorCamEndF(VC_WORK* w_p);
 float vcRetFarWatchRate(int far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
-float vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
+float vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, float far_watch_rate, VC_WORK* w_p);
 void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, float far_watch_rate, int all_warp_f);
 void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA** vc_road_ary_list);
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
@@ -305,7 +317,7 @@ void vcMakeFarWatchTgtPos(float* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE 
 void vcSetWatchTgtXzPos(float* watch_pos, float* center_pos, float* cam_pos, float tgt_chara2watch_cir_dist, float tgt_watch_cir_r, float watch_cir_ang_y);
 void vcSetWatchTgtYParam(float* watch_pos, VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, float watch_y);
 void vcAdjustWatchYLimitHighWhenFarView(float* watch_pos, float* cam_pos);
-void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, float far_watch_rate);
 float vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
 void vcMakeIdealCamPosByHeadPos(float* ideal_pos, VC_WORK* w_p);
 void vcMakeIdealCamPosForFixAngCam(float* ideal_pos, VC_WORK* w_p);

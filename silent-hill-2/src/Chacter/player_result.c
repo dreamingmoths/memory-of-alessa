@@ -1,26 +1,7 @@
 #include "Chacter/player_result.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/sh2dt.h"
-
-// this guy needs to find a home
-static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
-    float d;
-    asm("lwc1 %2, 0(%0)\n\
-         lwc1 f8, 0(%1)\n\
-         lwc1 f9, 4(%0)\n\
-         sub.s %2, %2, f8;\
-         lwc1 f10, 4(%1)\n\
-         mula.s %2, %2;\
-         lwc1 %2, 8(%0)\n\
-         lwc1 f8, 8(%1)\n\
-         sub.s f9, f9, f10\n\
-         sub.s %2, %2, f8\n\
-         madda.s f9, f9\n\
-         madd.s %2, %2, %2;\
-         sqrt.s %2, %2"
-        : "+r"(v), "+r"(w), "+f"(d) :: "f8", "f9", "f10");
-    return d;
-}
+#include "vec.h"
 
 void GameTimerCountUp(void) {
     playing.time += shGetDT();

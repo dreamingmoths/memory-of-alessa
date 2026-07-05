@@ -53,6 +53,15 @@ static inline void vec_copy_vu0(void* dst, void* src) {
         : "+r"(dst), "+r"(src));
 }
 
+static inline void vec_copy_xyz(void* dst, void* src) {
+    asm("\
+         lq t7, 0(%1)\n\
+         sd t7, 0(%0)\n\
+         pcpyud t7, t7, zero\n\
+         sw t7, 8(%0)"
+        : "+r"(dst), "+r"(src)::"t7");
+}
+
 static inline float vec3_length(void* v) {
     float d;
     asm("lwc1    %1,0(%0)\n\
@@ -98,6 +107,26 @@ static inline vec_lerp(float* out, float* v, float* w, float t) {
          sqc2 vf4, 0(%0)" : "=r"(out) : "r"(v), "r"(w), "f"(t) : "t7");
 }
 
+static inline void vec_sub_xyz(void* x, void* y, void* out) {
+    asm("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vsub.xyz vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "+r"(x), "+r"(y), "+r"(out));
+}
+
+static inline float vec_length(float* a) {
+    float result;
+    asm volatile("lwc1   %0,0(%1)\n\
+        lwc1   $f8,8(%1)\n\
+        mula.s %0, %0\n\
+        madd.s %0, $f8, $f8\n\
+        sqrt.s %0, %0"
+                 : "=f"(result) : "m"(a) : "f20", "f8", "f13");
+    return result;
+}
+
 /* @todo deduplicate with sh3 version in subway overlay (vec3_dot_product) */
 static inline float vec3_dot_product(void* v, void* w) {
     float d;
@@ -114,6 +143,25 @@ static inline float vec3_dot_product(void* v, void* w) {
         madd.s %0, %0, f8"
         : "+f"(d) : "r"(v), "r"(w) : "f8", "f9", "f10");
 
+    return d;
+}
+
+static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+    float d;
+    asm("lwc1 %2, 0(%0)\n\
+         lwc1 f8, 0(%1)\n\
+         lwc1 f9, 4(%0)\n\
+         sub.s %2, %2, f8;\
+         lwc1 f10, 4(%1)\n\
+         mula.s %2, %2;\
+         lwc1 %2, 8(%0)\n\
+         lwc1 f8, 8(%1)\n\
+         sub.s f9, f9, f10\n\
+         sub.s %2, %2, f8\n\
+         madda.s f9, f9\n\
+         madd.s %2, %2, %2;\
+         sqrt.s %2, %2"
+        : "+r"(v), "+r"(w), "=&f"(d)::"f8", "f9", "f10");
     return d;
 }
 
