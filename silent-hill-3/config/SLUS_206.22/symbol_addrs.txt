@@ -530,7 +530,7 @@ _scale_end_list = 0x00387EE0; // allow_duplicated:True
 HH_Effect_Object_Impact_Post = 0x001C20C0;
 
 LocalWrapper_TextureTransport_Entry = 0x0023a0c0;
-sh3gfw_Get_Reg_TEX0 = 0x001b5b00;
+sh3gfw_Get_RegTEX0 = 0x001b5b00;
 kari_Thr_LFD2TextureSend = 0x0023a120;
 kari_Thr_LFD1D2SyncKick = 0x0023a180;
 shLensFlarePolyFT4AddPacketGif = 0x0023a1a0;
@@ -566,6 +566,12 @@ ang_dat_1 = 0x0038A5F0;
 kari_shLensFlareDraw = 0x0023A800;
 dum = 0x0038A650;
 shLensFlareDrawCommon = 0x00023A550;
+LF_Tex_Work = 0x01F2F7F0; // size:0x40
+D_0038A410 = 0x0038A410; // size:4 type:f32
+D_0038A500 = 0x0038A500; // size:28
+D_0038A520 = 0x0038A520; // size:28
+D_0038A540 = 0x0038A540; // size:28
+D_0038A5D0 = 0x0038A5D0; // size:2 type:u16
 
 // could be wrong
 // Object_Initialize = 0x002f4130; // allow_duplicated:True visibility:local

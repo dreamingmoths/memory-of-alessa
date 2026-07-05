@@ -22,7 +22,7 @@ extern float func_001B41C0(void);
 extern float func_002394F0(void); /* Env_ctl.SpotL0.color.fl32[0] */
 extern u_long* func_001D0740(void);
 extern int func_001D0670(void);
-extern float D_01F2A6D0;
+extern float D_01F2A6D0; // light intensity?
 
 extern float D_0038A3E0;
 extern float func_002394F0(void);
@@ -36,12 +36,14 @@ extern float func_001B4270(void);
 extern float func_001B4290(void);
 extern float func_001B6460(void);
 
+// @sh3 unchanged from sh2 proto
 void kari_Thr_LFD2TextureSend(void) {
     ASSERT_ON_LINE(LF_Tex_Work.valid_id==EFF_VALID_ID, 193);
     sh3gfw_Thr_d2TextureSend(LF_Tex_Work.pTexMAN, 0, &LF_Tex_Work.thr_cid, &LF_Tex_Work.thr_sid);
     LF_Tex_Work.Tex0Data = *(u_long128*) sh3gfw_Get_RegTEX0(LF_Tex_Work.pTexMAN, 0, 1);
 }
 
+// @sh3 unchanged from sh2 proto
 void kari_Thr_LFD1D2SyncKick(void* pktop /* r2 */) {
     sh3gfw_Thr_d1d2SyncKick(pktop, LF_Tex_Work.thr_cid, LF_Tex_Work.thr_sid);
 }
@@ -57,7 +59,7 @@ void shLensFlareGetScreenInfo(void) {
     screen_info.height = func_001B4290();   /* VbScreenInfo.sy */
 }
 
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", func_0023A800);
+INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", kari_shLensFlareDraw);
 
 INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSetAlphaEnvironment);
 
@@ -400,8 +402,10 @@ INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareSpriteAddPacketGif)
 
 void Kari_LensFlare_DrawExec(void) {
     void* pak;
+    
+    
+    // @sh3
     D_01F2A6D0 = 0;
-
     if ((func_00239450() == 0) || (func_002394F0() <= 0.01f)) {
         func_002397C0(&light_info->world_light_pos, &light_info->world_light_vector);
         shLensFlareExec(NULL, D_0038A3E0, 0, 0);
@@ -409,6 +413,8 @@ void Kari_LensFlare_DrawExec(void) {
         light_flare_work->now_l_eff_rate = 0.0f;
         return;
     }
+
+
     pak  = kari_shLensFlareDraw(); // r2
     if (pak) {
         kari_Thr_LFD1D2SyncKick(pak);

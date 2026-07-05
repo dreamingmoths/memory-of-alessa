@@ -33,13 +33,13 @@ typedef struct /* @anon7 */ {
     float height; // offset 0xC, size 0x4
 } ScreenInfo;
 
-extern ScreenInfo screen_info; // size: 0x10, address: 0x1013760
+extern ScreenInfo screen_info; // size: 0x10
 extern float reverse_light_rate;
 extern int Lens_Fl_Head;
 extern LensFlareWork light_flare_work[2];
-extern LightInfo light_info[2]; // size: 0x60, address: 0x1013770
+extern LightInfo light_info[2]; // size: 0x60
 
-extern struct sh3gfw_Effect_Man LF_Tex_Work; // size: 0x40, address: 0x1013850
+extern struct sh3gfw_Effect_Man LF_Tex_Work; // size: 0x40,
 
 int shLensFlareCameraIsSmooth(void);
 
