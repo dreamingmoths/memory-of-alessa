@@ -1,0 +1,48 @@
+#ifndef SH3_HEATHER_H
+#define SH3_HEATHER_H
+
+#define HEATHER_BONE_0   0
+#define HEATHER_BONE_1   1
+#define HEATHER_BONE_2   2
+#define HEATHER_BONE_3   3
+#define HEATHER_BONE_4   4
+#define HEATHER_BONE_5   5
+#define HEATHER_BONE_6   6
+#define HEATHER_BONE_7   7
+#define HEATHER_BONE_8   8
+#define HEATHER_BONE_9   9
+#define HEATHER_BONE_10  10
+#define HEATHER_BONE_11  11
+#define HEATHER_BONE_12  12
+#define HEATHER_BONE_13  13
+#define HEATHER_BONE_14  14
+#define HEATHER_BONE_15  15
+#define HEATHER_BONE_16  16
+#define HEATHER_BONE_17  17
+#define HEATHER_BONE_18  18
+#define HEATHER_BONE_19  19
+#define HEATHER_BONE_20  20
+#define HEATHER_BONE_21  21
+#define HEATHER_BONE_22  22
+#define HEATHER_BONE_23  23
+#define HEATHER_BONE_24  24
+#define HEATHER_BONE_25  25
+#define HEATHER_BONE_26  26
+#define HEATHER_BONE_27  27
+#define HEATHER_BONE_28  28
+#define HEATHER_BONE_29  29
+#define HEATHER_BONE_30  30
+#define HEATHER_BONE_31  31
+#define HEATHER_BONE_32  32
+#define HEATHER_BONE_33  33
+#define HEATHER_BONE_34  34
+#define HEATHER_BONE_35  35
+#define HEATHER_BONE_36  36
+#define HEATHER_BONE_37  37
+#define HEATHER_BONE_38  38
+#define HEATHER_BONE_39  39
+#define HEATHER_BONE_40  40
+#define HEATHER_BONE_41  41
+#define HEATHER_BONE_42  42
+
+#endif // SH3_HEATHER_H

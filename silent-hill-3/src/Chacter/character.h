@@ -6,7 +6,13 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "common.h"
+#include "libvu0.h"
+#include "eetypes.h"
+
+typedef struct {
+    // total size: 0x40
+    float d[4][4]; // offset 0x0, size 0x40
+}  Matrix4 __attribute__((aligned(16)));
 
 typedef struct shBattleArea {
 
