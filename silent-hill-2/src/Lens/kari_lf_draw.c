@@ -110,8 +110,7 @@ static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work,
 
     prim_p[1].y = (int)(16.0f * (((512.0f * r) / 448.0f) + (sc_info->center_y + (base_vector * (lf_work->scr_l_pos.y - sc_info->center_y)))));
 
-    prim_p[1].z = z_value;
-    prim_p[0].z = z_value;
+    prim_p[0].z = prim_p[1].z = z_value;
 
     shLensFlareSpriteAddPacketGif(packet, &color, &prim_p[0], &prim_p[1], &st0, &st1);
 }

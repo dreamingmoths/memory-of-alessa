@@ -104,7 +104,6 @@ static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgba
     sceVif1PkCloseGifTag(packet);
 }
 
-#ifdef NON_MATCHING
 static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work, ScreenInfo* sc_info, IVector4* base_color, float base_r, float base_vector, Vector4* t0, Vector4* t1, u_short z_value) {
     Vector4 st0 = *t0;
     Vector4 st1 = *t1;
@@ -128,16 +127,10 @@ static void shLensFlareDrawCommon(sceVif1Packet* packet, LensFlareWork* lf_work,
 
     prim_p[1].y = (int)(16.0f * ((sc_info->center_y + (base_vector * (lf_work->scr_l_pos.y - sc_info->center_y))) + (r * rate_scale_y)));
 
-    prim_p[1].z = z_value;
-    prim_p[0].z = z_value;
+    prim_p[0].z = prim_p[1].z = z_value;
 
     shLensFlareSpriteAddPacketGif(packet, &color, &prim_p[0], &prim_p[1], &st0, &st1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Lens/kari_lf_draw", shLensFlareDrawCommon);
-#endif
-
-
 
 void shLensFlareGetScreenInfo(void) {
     screen_info.center_x = func_001B4230(); /* VbScreenInfo.cx */
