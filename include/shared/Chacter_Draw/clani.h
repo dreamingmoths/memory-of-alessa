@@ -25,14 +25,15 @@ typedef struct _IXY {
 
 typedef struct _AnimeInfo {
     // total size: 0xC
-    unsigned short name;  // offset 0x0, size 0x2
-    unsigned short frame; // offset 0x2, size 0x2
-    signed short speed;   // offset 0x4, size 0x2
-    unsigned short start; // offset 0x6, size 0x2
-    unsigned short end;   // offset 0x8, size 0x2
-    u_char loop;          // offset 0xA, size 0x1
-    char pad;             // offset 0xB, size 0x1
+    u_short name;  // offset 0x0, size 0x2
+    u_short frame; // offset 0x2, size 0x2
+    short speed;   // offset 0x4, size 0x2
+    u_short start; // offset 0x6, size 0x2
+    u_short end;   // offset 0x8, size 0x2
+    u_char loop;   // offset 0xA, size 0x1
+    char pad;      // offset 0xB, size 0x1
 } AnimeInfo;
+
 
 typedef struct shClusterAnime {
     // total size: 0x10

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "SH3_common/sh_vu0.h"
 
 #include "vec.h"
 #include "eeregs.h"
@@ -7,6 +8,8 @@
 #include "Chacter/character.h"
 #include "Chacter/anime.h"
 #include "Chacter/heather.h"
+
+extern Matrix4 kt_unit_matrix;
 
 /*
 IEEE-754 half floats (16-bit), because why not
@@ -85,29 +88,27 @@ static inline void _sceVu0RotMatrix(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx
 
 static inline _sceVu0TransposeMatrix(sceVu0FMATRIX m0, sceVu0FMATRIX m1) {
     asm volatile("\n\
-	lq 8,0x00(%1)\n\
-	lq 9,0x10(%1)\n\
-	lq 10,0x20(%1)\n\
-	lq 11,0x30(%1)\n\
+	lq $8,0x00(%1)\n\
+	lq $9,0x10(%1)\n\
+	lq $10,0x20(%1)\n\
+	lq $11,0x30(%1)\n\
 	\n\
-	pextlw 12,9,8\n\
-	pextuw 13,9,8\n\
-	pextlw 14,11,10\n\
-	pextuw 15,11,10\n\
+	pextlw $12,$9,$8\n\
+	pextuw $13,$9,$8\n\
+	pextlw $14,$11,$10\n\
+	pextuw $15,$11,$10\n\
 	\n\
-	pcpyld 8,14,12\n\
-	pcpyud 9,12,14\n\
-	pcpyld 10,15,13\n\
-	pcpyud 11,13,15\n\
+	pcpyld $8,$14,$12\n\
+	pcpyud $9,$12,$14\n\
+	pcpyld $10,$15,$13\n\
+	pcpyud $11,$13,$15\n\
 	\n\
-	sq 8,0x00(%0)\n\
-	sq 9,0x10(%0)\n\
-	sq 10,0x20(%0)\n\
-	sq 11,0x30(%0)\n\
+	sq $8,0x00(%0)\n\
+	sq $9,0x10(%0)\n\
+	sq $10,0x20(%0)\n\
+	sq $11,0x30(%0)\n\
 	" : : "r"(m0), "r"(m1) : "memory");
 }
-
-extern Matrix4 kt_unit_matrix;
 
 void shCharacterAnimePartsControl(shAnime3d* ap, shSkelton* stp, Vector4* rot) {
     Vector4 vec;
@@ -133,6 +134,52 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_0013FF50);
 INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_00140060);
 
 void sh_HEATHER_SetUntouchUpper(shSkelton* stp) {
+    stp[HEATHER_BONE_42].untouchable = (void*) 1;
+    stp[HEATHER_BONE_41].untouchable = (void*) 1;
+    stp[HEATHER_BONE_40].untouchable = (void*) 1;
+    stp[HEATHER_BONE_39].untouchable = (void*) 1;
+    stp[HEATHER_BONE_38].untouchable = (void*) 1;
+    stp[HEATHER_BONE_37].untouchable = (void*) 1;
+    stp[HEATHER_BONE_36].untouchable = (void*) 1;
+    stp[HEATHER_BONE_34].untouchable = (void*) 1;
+    stp[HEATHER_BONE_32].untouchable = (void*) 1;
+    stp[HEATHER_BONE_31].untouchable = (void*) 1;
+    stp[HEATHER_BONE_30].untouchable = (void*) 1;
+    stp[HEATHER_BONE_29].untouchable = (void*) 1;
+    stp[HEATHER_BONE_28].untouchable = (void*) 1;
+    stp[HEATHER_BONE_26].untouchable = (void*) 1;
+    stp[HEATHER_BONE_25].untouchable = (void*) 1;
+    stp[HEATHER_BONE_24].untouchable = (void*) 1;
+    stp[HEATHER_BONE_23].untouchable = (void*) 1;
+    stp[HEATHER_BONE_22].untouchable = (void*) 1;
+    stp[HEATHER_BONE_20].untouchable = (void*) 1;
+    stp[HEATHER_BONE_19].untouchable = (void*) 1;
+    stp[HEATHER_BONE_18].untouchable = (void*) 1;
+    stp[HEATHER_BONE_15].untouchable = (void*) 1;
+    stp[HEATHER_BONE_11].untouchable = (void*) 1;
+    stp[HEATHER_BONE_9].untouchable  = (void*) 1;
+    stp[HEATHER_BONE_6].untouchable  = (void*) 1;
+    stp[HEATHER_BONE_4].untouchable  = (void*) 1;
+    stp[HEATHER_BONE_2].untouchable  = (void*) 1;
+    stp[HEATHER_BONE_0].untouchable  = (void*) 1;
+    stp[HEATHER_BONE_35].untouchable = (void*) 0;
+    stp[HEATHER_BONE_33].untouchable = (void*) 0;
+    stp[HEATHER_BONE_27].untouchable = (void*) 0;
+    stp[HEATHER_BONE_21].untouchable = (void*) 0;
+    stp[HEATHER_BONE_17].untouchable = (void*) 0;
+    stp[HEATHER_BONE_16].untouchable = (void*) 0;
+    stp[HEATHER_BONE_14].untouchable = (void*) 0;
+    stp[HEATHER_BONE_13].untouchable = (void*) 0;
+    stp[HEATHER_BONE_12].untouchable = (void*) 0;
+    stp[HEATHER_BONE_10].untouchable = (void*) 0;
+    stp[HEATHER_BONE_8].untouchable  = (void*) 0;
+    stp[HEATHER_BONE_7].untouchable  = (void*) 0;
+    stp[HEATHER_BONE_5].untouchable  = (void*) 0;
+    stp[HEATHER_BONE_3].untouchable  = (void*) 0;
+    stp[HEATHER_BONE_1].untouchable  = (void*) 0;
+}
+
+void sh_HEATHER_SetUntouchUnder(shSkelton* stp) {
     stp[HEATHER_BONE_35].untouchable = (void*) 1;
     stp[HEATHER_BONE_33].untouchable = (void*) 1;
     stp[HEATHER_BONE_27].untouchable = (void*) 1;
@@ -174,50 +221,6 @@ void sh_HEATHER_SetUntouchUpper(shSkelton* stp) {
     stp[HEATHER_BONE_4].untouchable  = (void*) 0;
     stp[HEATHER_BONE_2].untouchable  = (void*) 0;
     stp[HEATHER_BONE_0].untouchable  = (void*) 0;
-}
-
-void sh_HEATHER_SetUntouchUpper(shSkelton* stp) {
-    stp[HEATHER_BONE_35].untouchable = (void*) 1;
-    stp[HEATHER_BONE_33].untouchable = (void*) 1;
-    stp[HEATHER_BONE_27].untouchable = (void*) 1;
-    stp[HEATHER_BONE_21].untouchable = (void*) 1;
-    stp[HEATHER_BONE_17].untouchable = (void*) 1;
-    stp[HEATHER_BONE_16].untouchable = (void*) 1;
-    stp[HEATHER_BONE_14].untouchable = (void*) 1;
-    stp[HEATHER_BONE_13].untouchable = (void*) 1;
-    stp[HEATHER_BONE_12].untouchable = (void*) 1;
-    stp[HEATHER_BONE_10].untouchable = (void*) 1;
-    stp[HEATHER_BONE_8].untouchable  = (void*) 1;
-    stp[HEATHER_BONE_7].untouchable  = (void*) 1;
-    stp[HEATHER_BONE_5].untouchable  = (void*) 1;
-    stp[HEATHER_BONE_3].untouchable  = (void*) 1;
-    stp[HEATHER_BONE_1].untouchable  = (void*) 1;
-    stp[HEATHER_BONE_42].untouchable = (void*) 0;
-    stp[HEATHER_BONE_41].untouchable = (void*) 0;
-    stp[HEATHER_BONE_40].untouchable = (void*) 0;
-    stp[HEATHER_BONE_39].untouchable = (void*) 0;
-    stp[HEATHER_BONE_38].untouchable = (void*) 0;
-    stp[HEATHER_BONE_37].untouchable = (void*) 0;
-    stp[HEATHER_BONE_36].untouchable = (void*) 0;
-    stp[HEATHER_BONE_34].untouchable = (void*) 0;
-    stp[HEATHER_BONE_32].untouchable = (void*) 0;
-    stp[HEATHER_BONE_31].untouchable = (void*) 0;
-    stp[HEATHER_BONE_30].untouchable = (void*) 0;
-    stp[HEATHER_BONE_29].untouchable = (void*) 0;
-    stp[HEATHER_BONE_28].untouchable = (void*) 0;
-    stp[HEATHER_BONE_26].untouchable = (void*) 0;
-    stp[HEATHER_BONE_25].untouchable = (void*) 0;
-    stp[HEATHER_BONE_24].untouchable = (void*) 0;
-    stp[HEATHER_BONE_23].untouchable = (void*) 0;
-    stp[HEATHER_BONE_22].untouchable = (void*) 0;
-    stp[HEATHER_BONE_18].untouchable = (void*) 0;
-    stp[HEATHER_BONE_15].untouchable = (void*) 0;
-    stp[HEATHER_BONE_11].untouchable = (void*) 0;
-    stp[HEATHER_BONE_9].untouchable  = (void*) 0;
-    stp[HEATHER_BONE_6].untouchable  = (void*) 0;
-    stp[HEATHER_BONE_4].untouchable  = (void*) 0;
-    stp[HEATHER_BONE_2].untouchable  = (void*) 0;
-    stp[HEATHER_BONE_0].untouchable  = (void*) 1;
 }
 
 void sh_HEATHER_ResetUntouchUnder(shSkelton* stp) {

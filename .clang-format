@@ -3,10 +3,12 @@ IndentWidth: 4
 ColumnLimit: 0
 PointerAlignment: Left
 AllowShortLoopsOnASingleLine: true
+AlignConsecutiveAssignments: true
 AlignOperands: true
 AlignEscapedNewlines: Left
 AlignTrailingComments: true
 SortIncludes: false
+SpaceAfterCStyleCast: true
 SkipMacroDefinitionBody: true
 BinPackArguments: true
 BinPackParameters: true

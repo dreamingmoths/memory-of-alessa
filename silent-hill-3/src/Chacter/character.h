@@ -6,13 +6,10 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "common.h"
 #include "libvu0.h"
 #include "eetypes.h"
-
-typedef struct {
-    // total size: 0x40
-    float d[4][4]; // offset 0x0, size 0x40
-}  Matrix4 __attribute__((aligned(16)));
+#include "shared/Chacter_Draw/clani.h"
 
 typedef struct shBattleArea {
 
@@ -20,16 +17,6 @@ typedef struct shBattleArea {
     float radius;
 } shBattleArea;
 
-typedef struct shClusterAnime {
-    // total size: 0x10
-    void* data;           // offset 0x0, size 0x4
-    u_char used;          // offset 0x4, size 0x1
-    u_char n_clusters;    // offset 0x5, size 0x1
-    u_char is_repeat;     // offset 0x6, size 0x1
-    u_char frame_updated; // offset 0x7, size 0x1
-    int frame_no;         // offset 0x8, size 0x4
-    float* weights;       // offset 0xC, size 0x4
-} shClusterAnime;
 
 typedef struct _CL_HITPOLY_HEAD {
     // total size: 0x10
@@ -76,24 +63,6 @@ typedef struct shBattleInfo {
     u_char unk74[0xC];
 } shBattleInfo;
 
-typedef struct _USXY {
-    // total size: 0x4
-    u_short x; // offset 0x0, size 0x2
-    u_short y; // offset 0x2, size 0x2
-} USXY;
-
-typedef struct _SXY {
-    // total size: 0x4
-    short x; // offset 0x0, size 0x2
-    short y; // offset 0x2, size 0x2
-} SXY;
-
-typedef struct _IXY {
-    // total size: 0x8
-    int x; // offset 0x0, size 0x4
-    int y; // offset 0x4, size 0x4
-} IXY;
-
 /**
  * @sh3 parent & next were swapped since the sh2 proto.
  * also, 0x10 bytes were removed, though it's unclear which ones
@@ -114,17 +83,6 @@ typedef struct shSkelton {
     int unkD0;                  // offset 0xD0, size 0x4
     void* untouchable;          // offset 0xD4, size 0x4
 } shSkelton;
-
-typedef struct _AnimeInfo {
-    // total size: 0xC
-    u_short name;  // offset 0x0, size 0x2
-    u_short frame; // offset 0x2, size 0x2
-    short speed;   // offset 0x4, size 0x2
-    u_short start; // offset 0x6, size 0x2
-    u_short end;   // offset 0x8, size 0x2
-    u_char loop;   // offset 0xA, size 0x1
-    char pad;      // offset 0xB, size 0x1
-} AnimeInfo;
 
 typedef struct shAnime3d {
     // total size: 0x90
@@ -256,4 +214,4 @@ typedef struct shCharacterAll {
     int total;                 // offset 0x640C, size 0x1
 } shCharacterAll;
 
-#endif
+#endif // CHARACTER_H
