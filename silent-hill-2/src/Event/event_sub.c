@@ -2,12 +2,26 @@
 #include "Event/item.h"
 #include "Event/picture.h"
 #include "Event/stg_name.h"
-#include "Font/font.h"
-#include "sound/sh_sound.h"
-#include "Multi_thr/filesys/fileserv.h"
-#include "Effect/screen_effect.h"
-#include "GFW/sh2_GsAllEnv.h"
+
+#include "Chacter/m3_sc.h"
 #include "Chacter/sh2_character_manage.h"
+#include "Chacter/m3_play_event.h"
+
+#include "Effect/screen_effect.h"
+
+#include "Font/font.h"
+
+#include "GFW/sh2_GsAllEnv.h"
+#include "GFW/sh2gfw_2d_filters.h"
+#include "GFW/sh2gfw_viewclip.h"
+
+#include "Multi_thr/filesys/fileserv.h"
+
+#include "movie/movie_main.h"
+
+#include "SH2_common/sh_vu0.h"
+
+#include "sound/sh_sound.h"
 
 static int ItemUseSeTiming(int kind /* r2 */, int boa /* r2 */);
 
@@ -271,14 +285,16 @@ int EvSubPictureDisplay(union fsFileIndex* file /* r16 */, int msg /* r17 */) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/event_sub", EvSubMapGet);
+int EvSubMapGet(fsFileIndex* file /* r2 */, int msg /* r2 */) {
+    EvSubPictureDisplay(file, msg);
+}
 
 void EvSubPictureLayer(int x0 /* r20 */, int y0 /* r19 */, int x1 /* r18 */, int y1 /* r17 */, int alpha /* r16 */) {
-    struct PicDraw_Data pic;
+    PicDraw_Data pic;
     
-    PictureLoadImage((struct sh2gfw_AREA_HEAD *)layer_adr, 2, -1, -1);
-    shQzero(&pic, 0x44);
-    pic.ap = (struct sh2gfw_AREA_HEAD *) layer_adr;
+    PictureLoadImage((sh2gfw_AREA_HEAD *)layer_adr, 2, -1, -1);
+    shQzero(&pic, sizeof(PicDraw_Data));
+    pic.ap = (sh2gfw_AREA_HEAD *) layer_adr;
     pic.tex = -1;
     pic.clut = -1;
     pic.status |= 1;
