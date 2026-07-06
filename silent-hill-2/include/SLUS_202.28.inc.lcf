@@ -111,11 +111,13 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		stg_toilet_data.data.s.o (.data)
+        stg_toilet.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_toilet_bss.bss.s.o (.bss)
+        stg_toilet_bss.bss.s.o (.bss)
+		stg_toilet.c.o (.bss)
 	}	>	toi.bin
 
 	.xxx.bin :
