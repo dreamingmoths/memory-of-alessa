@@ -6,6 +6,8 @@
 #include "SH2_common/sh2sys.h"
 #include "SH2_common/pad.h"
 
+#include "data/fs_structs.h"
+
 #define EV_PROG_STEP(p_step) \
 do {                                 \
     ev_p_step = p_step;              \
@@ -16,36 +18,8 @@ do {                                 \
 
 // @todo: clean up
 
-// movie/movie_main.c
-extern int MovieWaitReady(void);
-// GFW/sh2gfw_viewclip.c
-extern int sh2gfw_Set_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
-extern void sh2gfw_Init_DispOnOffObj(void);
-extern int sh2gfw_FastSet_DispOnOffObj(int mapid /* r2 */, int dispflg /* r2 */);
-// GFW/sh2gfw_2d_filters.c
-extern void sh2gfw_Reset_FilterCommand(void);
-extern void sh2gfw_Black_Clear(void);
-extern void sh2gfw_Set_PauseRetain(void);
-
-// SH2_common/pad.c
-extern int shPadTrigger(int port /* r17 */, int key /* r16 */);
-
-// Chacter/sh2_character_manage.c
-extern int shCharacter_Manage_Delete(struct SubCharacter* scp /* r2 */, short kind /* r2 */, short id /* r2 */);
 // gamemain.c
-extern char* get_gp_data_buf_addr(void);
-// SH2_common/sh_vu0.c
-extern void shQzero(void*, int);
-
-// Chacter/m3_play_event.c
-extern void PlayerEventAnimeSet(int anime /* r16 */);
-extern int PlayerEventAnimeSuccessFrame(void);
-// Chacter/m3_sc.c
-extern void SCNowPlayableEventSwitch(struct SubCharacter* scp /* r2 */, int flag /* r2 */);
-extern int shCharacterAnimeIsEnd(struct SubCharacter* scp /* r2 */);
-extern void shCharacterAnimePause(struct SubCharacter* scp /* r2 */);
-extern void shCharacterAnimeRestart(struct SubCharacter* scp /* r2 */);
-extern struct SubCharacter* shCharacterGetSubCharacter(u_short kind /* r2 */, short id /* r2 */);
+extern char* get_gp_data_buf_addr(void); // @note: removing this gives problems
 
 // almost every function above should be moved to its correct place
 int EvSubMessage(int msg /* r2 */);
@@ -54,7 +28,8 @@ int EvSubItemUse0(int kind /* r19 */, int message /* r20 */, int se /* r18 */, i
 int EvSubItemGet(int kind /* r16 */, int message /* r2 */);
 int EvSubItemGetAndAnim(int kind /* r16 */, int message /* r2 */);
 int EvSubPictureDisplayOnly(void);
-int EvSubPictureDisplay(union fsFileIndex* file /* r16 */, int msg /* r17 */);
+int EvSubPictureDisplay(fsFileIndex* file /* r16 */, int msg /* r17 */);
+int EvSubMapGet(fsFileIndex* file /* r2 */, int msg /* r2 */);
 void EvSubPictureLayer(int x0 /* r20 */, int y0 /* r19 */, int x1 /* r18 */, int y1 /* r17 */, int alpha /* r16 */);
 void EvSubPictureFilter(void);
 void EvSubPictureInit(void);
