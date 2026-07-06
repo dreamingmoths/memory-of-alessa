@@ -1,4 +1,5 @@
 #include "Event/event_sub.h"
+#include "Event/event.h"
 #include "Event/item.h"
 #include "Event/picture.h"
 #include "Event/stg_name.h"
@@ -332,7 +333,19 @@ INCLUDE_ASM("asm/nonmatchings/Event/event_sub", EvSubPictureEnd);
 
 INCLUDE_ASM("asm/nonmatchings/Event/event_sub", EvSubPictureCursor);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event_sub", EvDispControlModelEntry);
+void EvDispControlModelEntry(int* list /* r2 */, int room /* r2 */, int no /* r2 */) {
+    int temp; // not present in DWARF
+    int map_id;
+    temp = stage->glb_crd << 16; temp |= room;
+    
+    for (; (map_id = *list, map_id != 0); list += 2) { if (map_id == temp) break; }
+    if (map_id == 0) {
+        list[1] = 0;
+        list[2] = 0;
+    }
+    *list = temp;
+    if (no >= 0) { list[1] |= 1 << no; }
+}
 
 void EvDispControlModelExec(int* list /* r16 */) {
     switch (BgIsOut(0)) {
