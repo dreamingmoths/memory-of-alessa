@@ -8,6 +8,7 @@
 #define FIRST_AID_KIT 2
 #define AMPOULE 3
 #define CHAINSAW 14
+#define APART_GATE_KEY 23
 #define APART_202_KEY 24
 #define COIN_OF_SNAKE 47
 
