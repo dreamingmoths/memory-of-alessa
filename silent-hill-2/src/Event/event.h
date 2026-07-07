@@ -196,10 +196,12 @@ extern struct shPlayerWork sh2jms;
 extern Stage_Data* stage;
 extern Radio_Data radio;
 
+void EventProgInit(void);
 void EventCancel(void);
 float CharToFloat2(char* cp);
 float CharToFloat4(char* cp);
 int LightSpotOnOffCheck(void);
 void LightSpotOnOffSet(void);
+
 
 #endif // EVENT_H
