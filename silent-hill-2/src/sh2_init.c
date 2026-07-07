@@ -4,20 +4,47 @@
 
 #include "libmc.h"
 
-#include "Font/font.h"
+#include "gamemain.h"
 
+#include "Chacter/m3_sc.h"
+#include "Chacter/m3_maria.h"
+#include "Chacter/m3_play.h"
+#include "Chacter/skelton.h"
+#include "Chacter/sh2_character_manage.h"
+
+#include "Chacter_Draw/sh2gfw_md_spclmapping.h"
+#include "Chacter_Draw/clani.h"
+
+#include "DBG/dbflag.h"
+#include "DBG/dbfntprint.h"
+
+#include "Enemy/en_common.h"
+
+#include "Event/event.h"
+#include "Event/demoview.h"
 #include "Event/picture.h"
 #include "Event/chara_data_load.h"
 
+#include "Effect/screen_effect.h"
+
+#include "Font/font.h"
+
 #include "Fog/spack.h"
 
+#include "Heap/sh2_ch_malloc.h"
+
 #include "sh2gfw_all_sysinit.h"
+#include "sh2gfw_drawloop_main.h"
 
 #include "SH2_common/playing_info.h"
 #include "SH2_common/pad.h"
 #include "SH2_common/data_load.h"
+#include "SH2_common/mem_share.h"
+#include "SH2_common/sh2sys.h"
 
 #include "movie/movie_main.h"
+
+#include "MC/mc.h"
 
 #include "Multi_thr/intc/syncv.h"
 #include "Multi_thr/sys/init_mt_sys.h"
@@ -25,18 +52,19 @@
 #include "Multi_thr/filesys/fcread.h"
 #include "Multi_thr/filesys/fileserv.h"
 
-#include "Chacter/sh2_character_manage.h"
-
-#include "Chacter_Draw/sh2gfw_md_spclmapping.h"
-
 #include "GFW/gfw_test/kari_probe_draw.h"
 #include "GFW/gfw_test/sh2gfw_util.h"
 #include "GFW/sh2gfw_Texpacket.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
 
+#include "sound/sh_sound.h"
 #include "sound/sh_sd_call.h"
 
 #include "data/daily.thu/data_pic_etc.h"
+
+// @todo: migrate bss
+
+extern /* static */ int count_892;
 
 void systemColdInit(void) {
     int fid; // r16
@@ -115,8 +143,103 @@ void systemColdInit(void) {
     MovieInit();
 }
 
+int systemHotInit(void) { // not line matched
+    int next; // r2
+    int ret;  // r16
+    int wait; // r17
+    int step; // r18
 
-INCLUDE_ASM("asm/nonmatchings/sh2_init", systemHotInit);
+    step = Sh2sys.step[1];
+    ret = 0;
+    wait = 2;
+    if (dbFlag(4)) {
+        wait = 100;
+    }
+    if (step > 0) {
+        DrawLopp_Pre();
+        dbfntlocate(0x100, 0x100);
+        dbfntprintf("Hot Init: %d(%d)", step, count_892);
+    } else {
+        count_892 = 0;
+    }
+
+    if (--count_892 <= 0) {
+        switch (step) {
+        case 0:
+            MemShareWaitRealloc(0);
+            step_init_ONE();
+            all_Frame_Buffer_Clear();
+            ScreenEffectInit();
+            break;
+        case 1:
+            mcInit();
+            break;
+        case 2:
+            sh2gfw_srInit_ModelDrawWork();
+            break;
+        case 3:
+            CharaDataDeleteAll();
+            CharaDataLoadItem();
+            enInitEnemy();
+            break;
+        case 4:
+            shCharacterInitSubCharacter();
+            break;
+        case 5:
+            shCharacterInitSkeltons();
+            break;
+        case 6:
+            shCharacterInitCluster();
+            break;
+        case 7:
+            kari_ChAlloc_Init();
+            break;
+        case 8:
+            shCharacterPlayerWorkInitAtPowerOn();
+            shCharacterPlayerWorkInitAtGameStart();
+            shCharacterMariaWorkInit();
+            shCharacterMariaWorkInitAtGameStart();
+            break;
+        case 9:
+            EventProgInit();
+            break;
+        case 10:
+            SeCallReset();
+            break;
+        case 11:
+            stage = NULL;
+            playing.stage = 0;
+            PlayingInfoHotInit();
+            break;
+        case 12:
+            demo_number = 0;
+            Sh2sys.main_status &= ~0x40;
+            break;
+        case 13:
+            SeSoundLoad();
+            break;
+        case 14:
+        default:
+            if (!(shSdStat() & 0xF) && (fsSync(1, -1) >= 0)) {
+                ret = 1;
+            }
+            break;
+        }
+        count_892 = wait;
+        next = Sh2sys.step[1] + 1;
+        Sh2sys.step[1] = next;
+        Sh2sys.step[2] = 0;
+        Sh2sys.step[3] = 0;
+        Sh2sys.step[4] = 0;
+        Sh2sys.step[5] = 0;
+        Sh2sys.step[6] = 0;
+        Sh2sys.step[7] = 0;
+    }
+    fsSync(0, -1);
+    Sh2sys.soft_reset = 0;
+    DrawLopp_Post();
+    return ret;
+}
 
 /* static */ int PlayingInfoColdInit(void) { // @note: DWARF said this returned "void" and not "int" 
     playing.enemy_off = 0;
