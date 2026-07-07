@@ -51,6 +51,8 @@ extern int demo_status;
 extern float demo_frame; // size: 0x4, address: 0x1133C20
 extern float total_demo_frame;
 
+extern int demo_number;
+
 extern u_short msg_buffer[];
 
 #endif // DEMOVIEW_H
