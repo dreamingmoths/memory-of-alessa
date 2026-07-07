@@ -1,26 +1,8 @@
 #ifndef PICTURE_H
 #define PICTURE_H
 
-#include "common.h"
-
-typedef struct sh2gfw_AREA_HEAD {
-    // total size: 0x10
-    u_int area_id;           // offset 0x0, size 0x4
-    u_int toGlobalTexHead;   // offset 0x4, size 0x4
-    u_int toGlobalClutsHead; // offset 0x8, size 0x4
-    u_int date;              // offset 0xC, size 0x4
-} sh2gfw_AREA_HEAD;
-
-typedef struct SPACK_OT_DATA {
-    // total size: 0x10
-    u_short DmaQwc;   // offset 0x0, size 0x2
-    u_short DmaId;    // offset 0x2, size 0x2
-    void* Addr;       // offset 0x4, size 0x4
-    u_int W;          // offset 0x8, size 0x4
-    u_short VifQwc;   // offset 0xC, size 0x2
-    u_char EnvID;     // offset 0xE, size 0x1
-    u_char VifDirect; // offset 0xF, size 0x1
-} SPACK_OT_DATA;
+#include "sh2_common.h"
+#include "GFW\sh2gfw_structs.h"
 
 typedef struct PicDraw_Data {
     // total size: 0x44
@@ -98,5 +80,7 @@ inline void picture_set_tex_coords(PicDraw_Data* pic, short uvst[4]) {
 
 void PictureDraw(PicDraw_Data* pic /* r21 */);
 void PictureLoadImage(sh2gfw_AREA_HEAD* ap /* r2 */, int otp /* r23 */, int tex_adr /* r22 */, int clut_adr /* r21 */);
+
+extern char cursor_adr[51200]; // size: 0xC800, address: 0x1126940
 
 #endif // PICTURE_H
