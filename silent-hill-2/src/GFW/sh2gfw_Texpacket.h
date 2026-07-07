@@ -2,6 +2,7 @@
 #define SH2GFW_TEXPACKET_H
 
 #include "GFW/sh2gfw_alltexman.h"
+#include "GFW/sh2gfw_structs.h"
 
 extern int fake_cid[4];
 extern int fake_slot[4];
