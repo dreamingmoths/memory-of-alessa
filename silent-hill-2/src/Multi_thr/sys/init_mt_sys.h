@@ -7,6 +7,10 @@
 
 void check_build_environment(char* bootfilename /* r16 */);
 
+void init_sh2_dmac(void);
+int init_sh2_devsys(void);
+int init_sh2_filesys(void);
+
 extern fsFileIndex data_sound_mgf[1]; // size: 0x8, address: 0x3A1B70
 extern fsFileIndex data_pic_mgf[1];   // size: 0x8, address: 0x3A1B68
 extern fsFileIndex data_movie_mgf[1]; // size: 0x8, address: 0x3A2030
