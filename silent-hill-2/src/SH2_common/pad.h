@@ -69,6 +69,10 @@ typedef struct Pad_KeyConfig {
     int padding[6];  // offset 0x48, size 0x18
 } Pad_KeyConfig;
 
+// @todo: clean up
+
+void shPadInit(void);
+
 void libShPadRead(int a, int b, void* c); // NOT SURE ABOUT THIS
 
 void shPadSetGameKeyAssign(void);
