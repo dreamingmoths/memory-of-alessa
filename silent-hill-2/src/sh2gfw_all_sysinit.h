@@ -6,7 +6,7 @@
 int Vcallback_test(int ca);
 void init_PS2(void);
 void step_init_ONE(void);
-void step_init_STAGE(void);
-void map_DATA_LOAD(void);
+void step_init_STAGE(void); 
+void map_DATA_LOAD(); // @todo: need to check what args this function really takes
 
 #endif // SH2GFW_ALL_SYSINIT_H
