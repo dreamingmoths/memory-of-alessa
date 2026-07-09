@@ -53,6 +53,8 @@ typedef struct FilesBgStage {
     int* room_max;                    // offset 0xC, size 0x4
 } FilesBgStage;
 
+FilesBgBlock* FilesGetBgBlock(STAGE_ID stg_id /* r2 */, int blk_id /* r2 */);
+
 extern struct FilesBgStage* FilesBgStageList[17];
 extern int FilesBgStageMax[1];
 
