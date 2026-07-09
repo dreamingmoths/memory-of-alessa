@@ -222,6 +222,10 @@ typedef struct {
 	long		trxdiraddr;
 } sceGsStoreImage __attribute__((aligned(16)));
 
+void sceGsResetGraph(short mode, short inter, short omode, short ffmode);
+
+void sceGsResetPath(void);
+
 extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
 extern u_long sceGsPutIMR(u_long imr);
 extern u_long sceGsGetIMR(void);
