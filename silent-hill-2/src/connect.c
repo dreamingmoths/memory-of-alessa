@@ -101,61 +101,33 @@ int connectMain(void) {
     switch (Sh2sys.step[3]) {
         case 0:
             StgOverlay();
-            Sh2sys.step[3]++;
-            Sh2sys.step[4] = 0;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_3();
             break;       
         case 1:
             (((func_t*)&lisPutCmd0))(connectStageInit);
-            Sh2sys.step[3]++;
-            Sh2sys.step[4] = 0;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_3();
             break;
         case 2:
             if (lisSync(1, -1) >= 0) {
-                Sh2sys.step[3]++;
-                Sh2sys.step[4] = 0;
-                Sh2sys.step[5] = 0;
-                Sh2sys.step[6] = 0;
-                Sh2sys.step[7] = 0;
+                sh2sys_step_3();
             }
             break;
         case 3:
             shCharacterSetPosAfterDemo(sh2jms.player, connect_pos, connect_pos[3]);
-            Sh2sys.step[3]++;
-            Sh2sys.step[4] = 0;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_3();
             break;
         case 4:
             (((func_t*)&lisPutCmd0))(connectRoomInit);
-            Sh2sys.step[3]++;
-            Sh2sys.step[4] = 0;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_3();
             break;
         case 5:
             if (lisSync(1, -1) >= 0) {
-                Sh2sys.step[3]++;
-                Sh2sys.step[4] = 0;
-                Sh2sys.step[5] = 0;
-                Sh2sys.step[6] = 0;
-                Sh2sys.step[7] = 0;
+                sh2sys_step_3();
             }
             break;
         case 6:
             (((func_t*)&lisPutCmd0))(connectPlayableInit);
-            Sh2sys.step[3]++;
-            Sh2sys.step[4] = 0;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_3();
             break;
         case 7:
             if ((lisSync(1, -1) >= 0) && (fsSync(1, -1) >= 0)) {
