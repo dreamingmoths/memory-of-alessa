@@ -152,7 +152,7 @@ float vcRetCirRadiusReduction(VC_WORK* w_p) {
 #line 255
 void vcChangeProjByDist(VC_NEAR_ROAD_DATA* near_rd_p, float mv_vec_y) {
     if ((VC_AREA_SIZE_TYPE)near_rd_p->road_p->area_size_type == VC_AREA_OUTDOOR &&
-        (near_rd_p->road_p->mv_y_type == VC_MV_LOCUS_CIRCLE || near_rd_p->road_p->mv_y_type == VC_MV_THROUGH_DOOR)) {
+        ((VC_CAM_MV_TYPE)near_rd_p->road_p->mv_y_type == VC_MV_LOCUS_CIRCLE || (VC_CAM_MV_TYPE)near_rd_p->road_p->mv_y_type == VC_MV_THROUGH_DOOR)) {
 
 
 

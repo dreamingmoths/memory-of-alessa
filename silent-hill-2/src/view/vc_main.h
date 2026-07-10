@@ -181,7 +181,7 @@ typedef struct _VC_ROAD_DATA {
     /* 0x44 */ int flags; // `VC_ROAD_FLAGS`
     /* 0x48 */ int area_size_type; // `VC_AREA_SIZE_TYPE`
     /* 0x4c */ int rd_type;
-    /* 0x50 */ VC_CAM_MV_TYPE mv_y_type; // Unsure if correct type, `cam_mv_type` likely uses this enum too, maybe both use it for diff reasons?
+    /* 0x50 */ int mv_y_type; // `VC_CAM_MV_TYPE`? Unsure if correct, `cam_mv_type` likely uses this enum too, maybe both use it for diff reasons?
     /* 0x54 */ float ofs_watch_hy;
     /* 0x58 */ float trace_btm_hy;
     /* 0x5c */ int rd_dir_type; // `VC_ROAD_DIR_TYPE`
@@ -280,6 +280,12 @@ typedef struct
 	/* 0xc */ int flg;
 } VC_PROJECTION_PARAMS; // @note: Guessed name, struct is anon in symbols.
 
+typedef enum
+{
+	MAKE_CAM_TGT_BY_ROAD,
+	MAKE_CAM_TGT_BY_CHARA_HEAD
+} MAKE_CAM_TGT; // @note: Guessed name, enum is anon in symbols.
+
 extern VC_WORK vcWork;
 extern VC_CAMERA_INTINFO vcCameraInternalInfo;
 extern VC_ROAD_DATA* vcNullRoadArrayList[2];
@@ -290,6 +296,7 @@ extern VC_CAM_MV_PARAM vcCamMvPrmSt;
 extern const VC_WATCH_MV_PARAM watch_mv_prm_user;
 extern const VC_CAM_MV_PARAM cam_mv_prm_user;
 extern int excl_r_ary[9];
+extern int mv_stl_ang_ary[5];
 extern VC_PROJECTION_PARAMS vcProjectionParam;
 
 // @todo: check float*/float[] types.
@@ -329,7 +336,7 @@ void vcSetWatchTgtYParam(float* watch_pos, VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_t
 void vcAdjustWatchYLimitHighWhenFarView(float* watch_pos, float* cam_pos);
 void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, float far_watch_rate);
 float vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
-void vcMakeIdealCamPosByHeadPos(float* ideal_pos, VC_WORK* w_p);
+void vcMakeIdealCamPosByHeadPos(float* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
 void vcMakeIdealCamPosForFixAngCam(float* ideal_pos, VC_WORK* w_p);
 void vcMakeIdealCamPosForThroughDoorCam(float* ideal_pos, VC_WORK* w_p);
 void vcMakeIdealCamPosForLocusCircleCam(float* ideal_pos, VC_WORK* w_p);
