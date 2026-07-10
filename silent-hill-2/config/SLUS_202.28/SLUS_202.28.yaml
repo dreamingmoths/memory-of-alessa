@@ -236,7 +236,7 @@ segments:
       - [0x136350, asm, Event/chara_data_load]
       - [0x1395d0, asm, Chacter/m3_arm]
       - [0x139a00, asm, Chacter/m3_mary]
-      - [0x139ca0, asm, Chacter/m3_mxx]
+      - [0x139ca0, c,   Chacter/m3_mxx]
       - [0x139db0, asm, Enemy/en_arm]
       - [0x13b3b0, asm, MC/mc]
       - [0x143370, c,   MC/mc_menu]
