@@ -5,8 +5,15 @@
 #include "Enemy/en_red.h"
 #include "libvu0.h"
 
+#define D_RED_ANIM_START 6300
+
+// @todo: general clean up
+
+// @todo: migrate data
+
 extern /* static */ AnimeInfo red_anim[12]; // size: 0x90, address: 0x0
 extern /* static */ AnimeInfo d_red_anim[7]; // size: 0x54, address: 0x0
+extern /* static */ int dred_anime_adr_list[7]; // size: 0x1C, address: 0x2A93A0
 
 static int EnemyREDInit(SubCharacter* scp); // not sure about the argument here
 static void EnemyREDFunction(SubCharacter* scp);
@@ -81,7 +88,28 @@ void shCharacterSetWeaponRED(SubCharacter* scp, int on_off) {
     sh2gfw_Set_JMSequip(scp, 0, 0, (on_off != 0) ? 3 : 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_red", shCharacterEnemyREDAnimeSet);
+int shCharacterEnemyREDAnimeSet(SubCharacter* scp, int anime_id) {
+    AnimeInfo* aip; // r2
+
+    if (shCharacterGetModelID(scp) == EN_RED_CHARA_KIND) {
+
+        enDeleteEnemy(scp->enemy_p);
+
+        SCAnimeTypeSwitch(scp, 0);
+        aip = &d_red_anim[anime_id - D_RED_ANIM_START];
+        shCharacterAnimeSet(scp,
+                            0,
+                            2,
+                            aip,
+                            dred_anime_adr_list[anime_id - D_RED_ANIM_START] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - D_RED_ANIM_START));
+        
+        
+        
+        return 0;
+    }
+    return -1;
+
+}
 
 int shCharacterEnemyREDAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */) {
     AnimeInfo* aip; // r18
