@@ -154,11 +154,29 @@ static inline void vec_add(void* x, void* y, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
+static inline void vec_add_xyz(void* x, void* y, void* out) {
+    asm("\
+        lqc2 vf4, 0(%0)\n\
+        lqc2 vf5, 0(%1)\n\
+        vadd.xyz vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "+r"(x), "+r"(y), "+r"(out));
+}
+
 static inline void vec_sub(void* x, void* y, void* out) {
     asm("\
         lqc2 vf4, 0(%0)\n\
         lqc2 vf5, 0(%1)\n\
         vsub.xyzw vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "+r"(x), "+r"(y), "+r"(out));
+}
+
+static inline void vec_sub_xyz_reverse(void* x, void* y, void* out) {
+    asm("\
+        lqc2 vf4, 0(%1)\n\
+        lqc2 vf5, 0(%0)\n\
+        vsub.xyz vf4, vf4, vf5\n\
         sqc2 vf4, 0(%2)"
         : "+r"(x), "+r"(y), "+r"(out));
 }
@@ -172,7 +190,17 @@ static inline void vec_scale(float s, void* v, void* out) {
         : "+r"(v), "+f"(s), "+r"(out)::"t7");
 }
 
+static inline void vec_scale_xyz(float s, void* v, void* out) {
+    asm("mfc1 t7, %1;\
+          lqc2 vf4, 0(%0)\n\
+          qmtc2 t7, vf5\n\
+          vmulx.xyz vf4, vf4, vf5x\n\
+          sqc2 vf4, 0(%2)"
+        : "+r"(v), "+f"(s), "+r"(out)::"t7");
+}
+
 static inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
+static inline void vec_zero_xyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
 
 static inline float float_abs(float x) {
     asm("abs.s %0, %0" : "+f"(x));

@@ -165,6 +165,25 @@ static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     return d;
 }
 
+static inline float vec3_dist_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+    float d;
+    asm("lwc1 %2, 0(%0)\n\
+         lwc1 f8, 0(%1)\n\
+         lwc1 f9, 4(%0)\n\
+         sub.s %2, %2, f8;\
+         lwc1 f10, 4(%1)\n\
+         mula.s %2, %2;\
+         lwc1 %2, 8(%0)\n\
+         lwc1 f8, 8(%1)\n\
+         sub.s f9, f9, f10\n\
+         sub.s %2, %2, f8\n\
+         madda.s f9, f9\n\
+         madd.s %2, %2, %2;\
+         sqrt.s %2, %2"
+        : "+r"(w), "+r"(v), "=&f"(d)::"f8", "f9", "f10");
+    return d;
+}
+
 /* build 4x4 identity matrix using VU0 */
 static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
     asm("\
@@ -177,6 +196,12 @@ static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
         sqc2 vf4, 0x20(%0)\n\
         sqc2 vf5, 0x10(%0)\n\
         sqc2 vf6, 0(%0)"
+        : "+r"(out));
+}
+
+static inline void vu0_unit_vector(sceVu0FVECTOR out) {
+    asm("\
+        sqc2 vf0, 0x0(%0)"
         : "+r"(out));
 }
 

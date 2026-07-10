@@ -272,6 +272,14 @@ typedef struct _VC_CAMERA_INTINFO {
     /* 0x8 */ float ev_cam_rate;
 } VC_CAMERA_INTINFO;
 
+typedef struct
+{
+	/* 0x0 */ float new;
+	/* 0x4 */ float old;
+	/* 0x8 */ float delta;
+	/* 0xc */ int flg;
+} VC_PROJECTION_PARAMS; // @note: Guessed name, struct is anon in symbols.
+
 extern VC_WORK vcWork;
 extern VC_CAMERA_INTINFO vcCameraInternalInfo;
 extern VC_ROAD_DATA* vcNullRoadArrayList[2];
@@ -281,6 +289,8 @@ extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern VC_CAM_MV_PARAM vcCamMvPrmSt;
 extern const VC_WATCH_MV_PARAM watch_mv_prm_user;
 extern const VC_CAM_MV_PARAM cam_mv_prm_user;
+extern int excl_r_ary[9];
+extern VC_PROJECTION_PARAMS vcProjectionParam;
 
 // @todo: check float*/float[] types.
 void vcInitVCSystem(VC_ROAD_DATA** vc_road_ary_list);
@@ -334,11 +344,11 @@ void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
 void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_MV_TYPE cam_mv_type, int visible_chara_f);
 void vcMakeNewBaseCamAng(float* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p);
 void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, float* new_base_cam_ang);
-void vcMakeOfsCamTgtAng(float* ofs_tgt_ang, float base_matT[4], VC_WORK* w_p);
-void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(float* ofs_cam2chara_btm_ang, float* ofs_cam2chara_top_ang, float base_matT[4], float* cam_pos, float* chara_pos, float chara_bottom_y, float chara_top_y);
+void vcMakeOfsCamTgtAng(sceVu0FVECTOR ofs_tgt_ang, sceVu0FMATRIX base_matT, VC_WORK* w_p);
+void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(sceVu0FVECTOR ofs_cam2chara_btm_ang, sceVu0FVECTOR ofs_cam2chara_top_ang, sceVu0FMATRIX base_matT, sceVu0FVECTOR cam_pos, sceVu0FVECTOR chara_pos, float chara_bottom_y, float chara_top_y);
 void vcAdjCamOfsAngByCharaInScreen(float* cam_ang, float* ofs_cam2chara_btm_ang, float* ofs_cam2chara_top_ang, VC_WORK* w_p);
 void vcAdjCamOfsAngByOfsAngSpd(float* ofs_ang, float* ofs_ang_spd, float* ofs_tgt_ang, VC_WATCH_MV_PARAM* prm_p);
-void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(float* cam_mat_ang, float cam_mat[4], float* base_cam_ang, float* ofs_cam_ang, float* cam_pos);
+void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(sceVu0FVECTOR cam_mat_ang, sceVu0FMATRIX cam_mat, sceVu0FVECTOR base_cam_ang, sceVu0FVECTOR ofs_cam_ang, sceVu0FVECTOR cam_pos);
 void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 float vcCamMatNoise(float noise_w, float ang_spd1, float ang_spd2);
 float vcGetXZSumDistFromLimArea(float* out_vec_x_p, float* out_vec_z_p, float chk_wld_x, float chk_wld_z, float lim_min_x, float lim_max_x, float lim_min_z, float lim_max_z, int can_ret_minus_dist_f);
