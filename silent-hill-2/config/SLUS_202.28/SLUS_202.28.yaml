@@ -36,7 +36,7 @@ segments:
       - [0x005250, asm, Chacter/m3_dmaria]
       - [0x005550, asm, Chacter/m3_eddie]
       - [0x005830, asm, Chacter/m3_ike]
-      - [0x005d20, asm, Chacter/m3_laura]
+      - [0x005d20, c,   Chacter/m3_laura]
       - [0x005fc0, asm, Chacter/m3_mkn]
       - [0x006560, asm, Chacter/m3_pap]
       - [0x006aa0, c,   Chacter/m3_play]
