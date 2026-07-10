@@ -183,7 +183,7 @@ segments:
       - [0x0c6b90, c,   Chacter/sh2_character_manage]
       - [0x0c71a0, asm, DBG/verbose]
       - [0x0c7290, c,   Event/chizu]
-      - [0x0cb1f0, asm, Event/chara_admin]
+      - [0x0cb1f0, c,   Event/chara_admin]
       - [0x0cd7b0, asm, Fog/spkTexMan]
       - [0x0cda60, c,   Font/fj_man]
       - [0x0cdf30, asm, DBG/dbkernel]
