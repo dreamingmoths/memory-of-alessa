@@ -2,7 +2,12 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
-// @todo: add defines like how it was done in m3_angela.c
+#define EDDIE_DRAMA_ANIME_ID_START 4500
+#define EDDIE_PLAY_ANIME_ID_START  4800
+
+#define EDDIE_PLAY_ANIM_4801       4801
+#define EDDIE_PLAY_ANIM_4802       4802
+#define EDDIE_PLAY_ANIM_4803       4803
 
 // @todo: migrate data
 
@@ -93,19 +98,19 @@ int shCharacterHumanEDIAnimeSet(SubCharacter* scp, int anime_id) {
     if (shCharacterGetModelID(scp) == HHH_EDI_CHARA_KIND) {
         
         
-        aip = &eddie_anim[anime_id - 0x1194];
+        aip = &eddie_anim[anime_id - EDDIE_DRAMA_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             2,
                             aip,
-                            deddie_anime_adr_list[anime_id - 0x1194] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 0x1194));
+                            deddie_anime_adr_list[anime_id - EDDIE_DRAMA_ANIME_ID_START] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - EDDIE_DRAMA_ANIME_ID_START));
         
         
         
         
         
         
-        shCharacterClusterAnimeSet(scp, deddie_clani_adr_list[anime_id - 0x1194] + (int) shCharacterGetClusterAnimeAdr(scp));
+        shCharacterClusterAnimeSet(scp, deddie_clani_adr_list[anime_id - EDDIE_DRAMA_ANIME_ID_START] + (int) shCharacterGetClusterAnimeAdr(scp));
 
         
         
@@ -125,20 +130,20 @@ int shCharacterHumanEDIAnimeSetP(SubCharacter* scp, int anime_id) {
         
         
         switch (anime_id) {
-            case 0x12C1:
+            case EDDIE_PLAY_ANIM_4801:
                 scp->eye_y = -242.1998f; scp->center_y = -242.1998f;
                 
                 break;
-            case 0x12C2:
+            case EDDIE_PLAY_ANIM_4802:
                 scp->eye_y = -432.1998f; scp->center_y = -432.1998f;
                 
                 break;
             
-            
-            case 0x12C3:
+
+            case EDDIE_PLAY_ANIM_4803:
                 break;
         }
-        aip = &peddie_anim[anime_id - 0x12C0];
+        aip = &peddie_anim[anime_id - EDDIE_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             0,
