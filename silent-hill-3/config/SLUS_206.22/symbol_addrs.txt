@@ -625,6 +625,10 @@ blood_color = 0x1d880c2; // type:u8
 blood_volume = 0x1d880c4; // type:u8
 bullet_adjust = 0x01d88019;
 
+sh3_initGS = 0x0012BC70;
+sh3_initVU = 0x0012BD30;
+sh3_initTimers = 0x0012BD60;
+
 GetBloodColor = 0x0019a3f0;
 GetBloodVolume = 0x0019a430;
 GetBulletAdjust = 0x0019a470;
@@ -641,7 +645,7 @@ iopLoadMod = 0x00151370;
 dSync = 0x0019BBD0;
 
 PrintSectionSizes = 0x00156480;
-sh3_InitFilesys = 0x0012BDF0;
+sh3_initFilesys = 0x0012BDF0;
 sh3_InitSif = 0x001e4e30;
 sh3_InitAdx = 0x001e2830;
 sh3_AllocIopHeap = 0x001e5050;
