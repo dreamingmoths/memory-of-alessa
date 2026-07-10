@@ -3,6 +3,8 @@
 
 #include "sh2_common.h"
 
+#define CHARA_BOUND_TBL_NUM 236
+
 // total size: 0x8
 typedef struct Chara_Bound {
     // Members
@@ -12,6 +14,6 @@ typedef struct Chara_Bound {
 
 int CharaBoundTblNum(void);
 
-extern Chara_Bound chara_bound_tbl[236]; // size: 0x760, address: 0x373070
+extern Chara_Bound chara_bound_tbl[CHARA_BOUND_TBL_NUM]; // size: 0x760, address: 0x373070
 
 #endif // CHARABOUNDTBL_H
