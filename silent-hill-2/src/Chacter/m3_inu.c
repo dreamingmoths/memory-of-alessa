@@ -12,7 +12,7 @@ extern /* static */ AnimeInfo d_inu_anim[3]; // size: 0x24, address: 0x39A7B0
 extern /* static */ int dinu_anime_adr_list[3]; // size: 0xC, address: 0x371BA0
 
 #line 69
-void HumanINUFunction(SubCharacter* this) {
+/* static */ void HumanINUFunction(SubCharacter* this) {
     float pos[4]; // r29+0x20
     float rot[4]; // r29+0x30
 
