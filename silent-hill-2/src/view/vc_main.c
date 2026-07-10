@@ -107,7 +107,7 @@ void vcSetFirstCamWork(sceVu0FVECTOR cam_pos, float chara_eye_ang_y, int use_thr
     vec_zero(vcWork.cam_tgt_velo);
     vcWork.cam_mv_ang_y = 0.0f;
     vcWork.cam_tgt_spd = 0.0f;
-    vcWork.cam_chara2ideal_ang_y = shAngleRegulate(chara_eye_ang_y + PI);
+    vcWork.cam_chara2ideal_ang_y = shAngleRegulate(chara_eye_ang_y + TO_RAD(180.0f));
     
     vcWork.cur_near_road = vcNullNearRoad;
 
@@ -162,11 +162,11 @@ void vcUserCamTarget(sceVu0FVECTOR cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, int 
 
 #line 682
 void vcGetNowWatchPos(sceVu0FVECTOR watch_pos) {
-    f32 cos_x;
-    f32 sin_x;
-    f32 cos_y;
-    f32 sin_y;
-    f32 r;
+    float cos_x;
+    float sin_x;
+    float cos_y;
+    float sin_y;
+    float r;
 
 
 
@@ -193,9 +193,9 @@ void vcGetNowWatchPos(sceVu0FVECTOR watch_pos) {
     r = vec3_dist_reverse(vcWork.watch_tgt_pos, vcWork.cam_pos);
 
     
-    watch_pos[0] = (f32) (vcWork.cam_pos[0] + (cos_x * (r * sin_y)));
-    watch_pos[2] = (f32) (vcWork.cam_pos[2] + (cos_x * (r * cos_y)));
-    watch_pos[1] = (f32) (vcWork.cam_pos[1] - (r * sin_x));
+    watch_pos[0] = vcWork.cam_pos[0] + (cos_x * (r * sin_y));
+    watch_pos[2] = vcWork.cam_pos[2] + (cos_x * (r * cos_y));
+    watch_pos[1] = vcWork.cam_pos[1] - (r * sin_x);
     
 }
 
@@ -385,7 +385,55 @@ void vcSetAllNpcDeadTimer(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/view/vc_main", vcRetSmoothCamMvF);
+#line 1023
+int vcRetSmoothCamMvF(sceVu0FVECTOR old_pos, sceVu0FVECTOR now_pos, sceVu0FVECTOR old_ang, sceVu0FVECTOR now_ang) {
+    int intrpt;
+    float rot_y;
+    float rot_x;
+    float mv_vec;
+
+    intrpt = shGetDF();
+    intrpt = CLAMP(intrpt, 1.0f, 4.0f);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    mv_vec = vec3_dist(now_pos, old_pos) / (float)intrpt;
+
+    
+    if (mv_vec > 100.0f) return 0;
+
+    
+    rot_x = float_abs(now_ang[0] - old_ang[0]) / (float)intrpt;
+    
+    if (rot_x > TO_RAD(20.0f)) return 0;
+    
+    rot_y = float_abs(shAngleRegulate(now_ang[1] - old_ang[1])) / (float)intrpt;
+    rot_y = rot_y * shCosF(now_ang[0]);
+    
+    if (rot_y > TO_RAD(30.0f)) return 0;
+
+    
+    return 1;
+}
 
 #line 1087
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) {
@@ -808,8 +856,8 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) {
 void vcSetNearestItemDataInVC_WORK(VC_WORK* w_p) {
     SubCharacter* sc_p;
     SubCharacter* all_min_sc_p = NULL;
-    f32 all_min_dist;
-    s32 i;
+    float all_min_dist;
+    int i;
 
     all_min_dist = 5000.0f;
     
@@ -822,7 +870,7 @@ void vcSetNearestItemDataInVC_WORK(VC_WORK* w_p) {
     for (i = 0; i < 20; i++) {
         sceVu0FVECTOR ofs_xz;
         int adv_sc_f; // @unused
-        f32 xz_dist;
+        float xz_dist;
         
         sc_p = shCameraGetNearTarget(i, 1);
         
@@ -1212,8 +1260,8 @@ int vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) {
 
         old_cur_rd_ang_y = shAngleRegulate(w_p->chara_mv_ang_y - ofs_ang_y);
         
-        if (old_cur_rd_ang_y < TO_RAD(0.0f)) old_cur_rd_ang_y += PI;
-        if (old_cur_rd_ang_y > TO_RAD(90.0f)) old_cur_rd_ang_y = PI - old_cur_rd_ang_y;
+        if (old_cur_rd_ang_y < TO_RAD(0.0f)) old_cur_rd_ang_y += TO_RAD(180.0f);
+        if (old_cur_rd_ang_y > TO_RAD(90.0f)) old_cur_rd_ang_y = TO_RAD(180.0f) - old_cur_rd_ang_y;
 
         
         if ((old_cur_sum_dist - adv_old_cur_dist) <= new_cur_sum_dist) {
@@ -1456,7 +1504,7 @@ float vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) {
 
 // ASSERT(0)
 #line 2386
-void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size, f32 far_watch_rate, f32 self_view_eff_rate) {
+void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size, float far_watch_rate, float self_view_eff_rate) {
     sceVu0FVECTOR far_watch_pos, vec;
 
     vcMakeFarWatchTgtPos(far_watch_pos, w_p, cur_rd_area_size);
@@ -2229,7 +2277,7 @@ void vcMakeIdealCamPosForThroughDoorCam(sceVu0FVECTOR ideal_pos, VC_WORK* w_p) {
 
         
         cos_ang_y = float_max(0.0f, abs_ofs_ang_y - cut_ang_y);
-        cos_ang_y = (cos_ang_y * PI) / (PI - cut_ang_y);
+        cos_ang_y = (cos_ang_y * PI) / (TO_RAD(180.0f) - cut_ang_y);
         mv_forwd_dist = -max_add_forwd_dist * shCosF(cos_ang_y) + base_forwd_dist;
         
         mv_right_dist = shSinF(w_p->chara_eye_ang_y - prm_p->rail_ang_y) * -max_add_right_dist;
@@ -2747,8 +2795,8 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
 }
 
 #line 4149
-void vcCamTgtMvVecIsFlipedFromCharaFront(f32* tgt_mv_vec, VC_WORK* w_p, f32 max_tgt_mv_xz_len, VC_AREA_SIZE_TYPE cur_rd_area_size) {
-    f32 flip_ang_y, chk_near_dist, flip_dist, pre_nearest_dist, min_in_road_dist, min_x, max_x, min_z, max_z, mv_len, ang_y;
+void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p, float max_tgt_mv_xz_len, VC_AREA_SIZE_TYPE cur_rd_area_size) {
+    float flip_ang_y, chk_near_dist, flip_dist, pre_nearest_dist, min_in_road_dist, min_x, max_x, min_z, max_z, mv_len, ang_y;
     VC_NEAR_ROAD_DATA* use_nearest_p;
     sceVu0FVECTOR pre_tgt_pos, chk_pos, post_tgt_pos, sincos_y, pos;
     
@@ -3441,7 +3489,7 @@ float vcCamMatNoise(float noise_w, float ang_spd1, float ang_spd2) {
 }
 
 #line 5225
-float vcGetXZSumDistFromLimArea(float* out_vec_x_p, float* out_vec_z_p, float chk_wld_x, float chk_wld_z, float lim_min_x, float lim_max_x, float lim_min_z, float lim_max_z, s32 can_ret_minus_dist_f) {
+float vcGetXZSumDistFromLimArea(float* out_vec_x_p, float* out_vec_z_p, float chk_wld_x, float chk_wld_z, float lim_min_x, float lim_max_x, float lim_min_z, float lim_max_z, int can_ret_minus_dist_f) {
     float cntr_z;
     float cntr_x;
     float x_dist;
