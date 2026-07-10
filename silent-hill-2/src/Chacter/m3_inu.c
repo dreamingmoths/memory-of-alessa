@@ -3,7 +3,9 @@
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_play_event.h"
 
-// @todo: add defines like how it was done in m3_angela.c
+#define INU_DRAMA_ANIME_ID_START 4900
+#define INU_PLAY_ANIME_ID_START  4850
+#define INU_PLAY_ANIM_4851       4851
 
 // @todo: migrate data
 
@@ -29,7 +31,7 @@ extern /* static */ int dinu_anime_adr_list[3]; // size: 0xC, address: 0x371BA0
             
                 SCAnimeTypeSwitch(this, 1);
                 
-                shCharacterHumanINUAnimeSetP(this, 0x12F3, 1);
+                shCharacterHumanINUAnimeSetP(this, INU_PLAY_ANIM_4851, 1);
             }
             
             
@@ -58,12 +60,12 @@ int shCharacterHumanINUAnimeSet(SubCharacter* scp, int anime_id) {
 
     if (shCharacterGetModelID(scp) == INU_CHARA_KIND) {
         SCAnimeTypeSwitch(scp, 0);
-        aip = &d_inu_anim[anime_id - 0x1324];
+        aip = &d_inu_anim[anime_id - INU_DRAMA_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             2,
                             aip,
-                            dinu_anime_adr_list[anime_id - 0x1324] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 0x1324));
+                            dinu_anime_adr_list[anime_id - INU_DRAMA_ANIME_ID_START] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - INU_DRAMA_ANIME_ID_START));
         
         
         
@@ -78,10 +80,10 @@ int shCharacterHumanINUAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
     AnimeInfo* aip; // r18
 
     if (shCharacterGetModelID(scp) == INU_CHARA_KIND) {
-        aip = &inu_anim[anime_id - 0x12F2];
+        aip = &inu_anim[anime_id - INU_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
-                            (char) ((comp == 1) ? 4 : 2),
+                            (char) ((comp == 1) ? 4 : 2), // @todo: add comp type defines
                             aip,
                             (int) shCharacterGetAnimeAdrForPlay(scp));
         
