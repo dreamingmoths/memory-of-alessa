@@ -12,7 +12,7 @@ extern /* static */ int deddie_anime_adr_list[28]; // size: 0x70, address: 0x2A8
 extern /* static */ int deddie_clani_adr_list[28]; // size: 0x70, address: 0x2A8800
 
 #line 143
-/* static */void HumanEDIFunction(SubCharacter* this) {
+/* static */ void HumanEDIFunction(SubCharacter* this) {
     AnimeInfo* aip;
     short id;
 
