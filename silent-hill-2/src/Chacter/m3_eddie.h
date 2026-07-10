@@ -1,11 +1,11 @@
-#ifndef M3_LAURA_H
-#define M3_LAURA_H
+#ifndef M3_EDDIE_H
+#define M3_EDDIE_H
 
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
-void shCharacterSetHumanLAULow(SubCharacter* scp);
-int shCharacterHumanLAUAnimeSet(SubCharacter* scp, int anime_id);
-int shCharacterHumanLAUAnimeSetP(SubCharacter* scp, int anime_id);
+void shCharacterSetHumanEDILow(SubCharacter* scp);
+int shCharacterHumanEDIAnimeSet(SubCharacter* scp, int anime_id);
+int shCharacterHumanEDIAnimeSetP(SubCharacter* scp, int anime_id);
 
-#endif // M3_LAURA_H
+#endif // M3_EDDIE_H
