@@ -52,7 +52,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/demoview", DramaDemoSkipLast);
 
 INCLUDE_ASM("asm/nonmatchings/Event/demoview", RotationToInterest);
 
-void DramaDemoFade(void) { // needs inlines
+void DramaDemoFade(void) { // @todo: add inlines
     PicDraw_Data pic;
 
     if (Check_Filter_Soft() == 0) {
