@@ -2,7 +2,8 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
-// @todo: add defines like how it was done in m3_angela.c
+#define LAURA_DRAMA_ANIME_ID_START 2500
+#define LAURA_PLAY_ANIME_ID_START  2900
 
 // @todo: migrate data
 extern /* static */ AnimeInfo laura_anim[41]; // size: 0x1EC, address: 0x38AC50
@@ -63,18 +64,18 @@ int shCharacterHumanLAUAnimeSet(SubCharacter* scp, int anime_id) {
     if (shCharacterGetModelID(scp)== LAU_CHARA_KIND) {
         
         
-        aip = &laura_anim[anime_id - 0x9C4];
+        aip = &laura_anim[anime_id - LAURA_DRAMA_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             2,
                             aip,
-                            dlaura_anime_adr_list[anime_id - 0x9C4] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 0x9C4));
+                            dlaura_anime_adr_list[anime_id - LAURA_DRAMA_ANIME_ID_START] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - LAURA_DRAMA_ANIME_ID_START));
         
         
         
 
         
-        shCharacterClusterAnimeSet(scp, dlaura_clani_adr_list[anime_id - 0x9C4] + (int) shCharacterGetClusterAnimeAdr(scp));
+        shCharacterClusterAnimeSet(scp, dlaura_clani_adr_list[anime_id - LAURA_DRAMA_ANIME_ID_START] + (int) shCharacterGetClusterAnimeAdr(scp));
         
         
         
@@ -99,7 +100,7 @@ int shCharacterHumanLAUAnimeSetP(SubCharacter* scp, int anime_id) {
         
         
         
-        aip = &plaura_anim[anime_id - 0xB54];
+        aip = &plaura_anim[anime_id - LAURA_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             0,
