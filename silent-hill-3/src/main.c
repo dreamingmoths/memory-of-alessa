@@ -18,7 +18,7 @@ int main(int argc, s_char* argv[]) {
     func_0012CED0();
     func_001D9350();
     func_00337AB0();
-    sh3_InitFilesys(*argv);
+    sh3_initFilesys(*argv);
     func_00172FA0();
     func_0012CEF0();
     func_00156370(0);

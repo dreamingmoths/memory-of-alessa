@@ -248,9 +248,9 @@ segments:
       # - [0x02C0F0, asm,     sdk/sce/ee/gcc/ee/lib/libm]
       # - [0x02C108, asm,     sdk/sce/ee/gcc/ee/lib/libm]
       # - [0x02C120, asm,     sdk/sce/ee/gcc/ee/lib/libm/wf_sqrt]
-      - [0x02C140, asm,     unk]
-
-      - { start: 0x02cff0, type: c,   name: main, ld_align_segment_start: 0x10 }
+    
+      - { start: 0x02c140, type: c, name: sh3_init, ld_align_segment_start: 0x10 }
+      - [0x02cff0, c, main]
       - [0x02d2a0, asm,     text_0x02d2a0]
       - [0x02f3e0, c,       Chacter/m3_sc]
       - [0x0307a0, asm,     text_0x0307a0]
@@ -466,6 +466,8 @@ segments:
       - [0x238080, textbin, vutext]
 
       - [0x23aa80, data,    data]
+      - [0x24d6d0, .data,   sh3_init]
+      - [0x24d838, data,    data_0x24d838]
       - [0x24f4d8, .data,   Chacter/m3_sc]
       - [0x24f4e0, data,    data_0x24f4e0]
       - [0x257420, .data,   Chacter_Draw/clani]
