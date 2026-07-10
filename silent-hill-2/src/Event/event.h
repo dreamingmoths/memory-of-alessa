@@ -47,6 +47,7 @@
 #define GAME_FLAG_95   95
 #define GAME_FLAG_96   96
 #define GAME_FLAG_97   97
+#define GAME_FLAG_108  108
 #define GAME_FLAG_109  109
 #define GAME_FLAG_117  117
 #define GAME_FLAG_146  146
@@ -61,6 +62,7 @@
 #define GAME_FLAG_197  197
 #define GAME_FLAG_227  227
 #define GAME_FLAG_228  228
+#define GAME_FLAG_240  240
 #define GAME_FLAG_251  251
 #define GAME_FLAG_272  272
 #define GAME_FLAG_368  368
@@ -202,6 +204,7 @@ float CharToFloat2(char* cp);
 float CharToFloat4(char* cp);
 int LightSpotOnOffCheck(void);
 void LightSpotOnOffSet(void);
+int EventItemConditionCheck(int level, int flag);
 
 
 #endif // EVENT_H
