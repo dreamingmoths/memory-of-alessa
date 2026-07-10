@@ -1,0 +1,114 @@
+#include "Chacter/m3_laura.h"
+#include "Chacter/chara_list.h"
+#include "Chacter/m3_sc.h"
+
+// @todo: add defines like how it was done in m3_angela.c
+
+// @todo: migrate data
+extern /* static */ AnimeInfo laura_anim[41]; // size: 0x1EC, address: 0x38AC50
+extern /* static */ AnimeInfo plaura_anim[3]; // size: 0x24, address: 0x38AE40
+extern /* static */ int dlaura_anime_adr_list[41]; // size: 0xA4, address: 0x2A88B0
+extern /* static */ int dlaura_clani_adr_list[41]; // size: 0xA4, address: 0x2A8960
+
+static int HumanLAUInit(SubCharacter* this) {
+    return 0;
+}
+
+void HumanLAUFunction(SubCharacter* this) {
+    short id;
+    AnimeInfo* aip;
+    
+    switch (this->step) {
+        case 0:
+
+
+
+
+            
+            id = shCharacterGetModelID(this);
+            
+            if (id == LAU_CHARA_KIND) {
+                HumanLAUInit(this);
+    
+                
+                
+                
+                shCharacterAnimeSet(this,
+                                    0,
+                                    0,
+                                    (aip = &laura_anim[1]),
+                                    (int) shCharacterGetAnimeAdrForDrama(this, 1));
+
+            }
+            
+            this->step++;
+            /* fallthrough */
+        case 1:
+            return;
+    }
+
+
+
+}
+
+void shCharacterSetHumanLAULow(SubCharacter* scp) {
+    shCharacterSetFunction(scp, HumanLAUFunction);
+}
+
+int shCharacterHumanLAUAnimeSet(SubCharacter* scp, int anime_id) {
+    AnimeInfo* aip; // r2
+
+    
+    SCAnimeTypeSwitch(scp, 0);
+    if (shCharacterGetModelID(scp)== LAU_CHARA_KIND) {
+        
+        
+        aip = &laura_anim[anime_id - 0x9C4];
+        shCharacterAnimeSet(scp,
+                            0,
+                            2,
+                            aip,
+                            dlaura_anime_adr_list[anime_id - 0x9C4] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 0x9C4));
+        
+        
+        
+
+        
+        shCharacterClusterAnimeSet(scp, dlaura_clani_adr_list[anime_id - 0x9C4] + (int) shCharacterGetClusterAnimeAdr(scp));
+        
+        
+        
+        
+        
+        return 0;
+    }
+    return -1;
+
+}
+
+int shCharacterHumanLAUAnimeSetP(SubCharacter* scp, int anime_id) {
+    AnimeInfo * aip;
+   
+    SCAnimeTypeSwitch(scp, 1);
+    
+    
+    if (shCharacterGetModelID(scp) == LAU_CHARA_KIND) {
+        
+        
+        
+        
+        
+        
+        aip = &plaura_anim[anime_id - 0xB54];
+        shCharacterAnimeSet(scp,
+                            0,
+                            0,
+                            aip,
+                            (int) shCharacterGetAnimeAdrForPlay(scp));
+        
+        
+        return 0;
+    }
+    return -1;
+
+}
