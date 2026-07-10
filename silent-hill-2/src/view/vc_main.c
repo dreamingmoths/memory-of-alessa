@@ -492,7 +492,6 @@ int vcRetThroughDoorCamEndF(VC_WORK* w_p) {
     return 0;
 }
 
-// ASSERT(0)
 #line 1176
 float vcRetFarWatchRate(int far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p) {
     float far_watch_rate;
@@ -647,7 +646,6 @@ float vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, float far_watch_ra
     return ret_eff_rate;
 }
 
-// ASSERT(0)
 #line 1362 
 void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, float far_watch_rate, int all_warp_f) {
 
@@ -1156,9 +1154,8 @@ const u_char unkPadding_0039066X[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
         proj_frame = new_cur_p->road_p->proj_sec * shGetFPS(); \
     } \
     vcSetProjectionValue(new_cur_p->road_p->projection, proj_frame); \
-    vcWork.flags |= VC_SWITCH_NEAR_RD_DATA_F; \
+    vcWork.flags |= VC_SWITCH_NEAR_RD_DATA_F;
 
-// ASSERT(0)
 #line 1973
 int vcSetCurNearRoadInVC_WORK(VC_WORK* w_p) {
     VC_NEAR_ROAD_DATA* n_rd_p;
@@ -1407,7 +1404,6 @@ float vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CHK_TYPE chk_ty
     return new_cur_dist;
 }
 
-// ASSERT(0)
 #line 2250
 float vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, float* pos, VC_WORK* w_p, int chk_only_set_marge_f) {
 	/* 0x10 */ VC_NEAR_ROAD_DATA* nearest_p, *n_rd_p;
@@ -1478,7 +1474,6 @@ float vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CHK_
     return min_sum_dist;
 }
 
-// ASSERT(0)
 #line 2340
 float vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) {
     if ((u_short)old_cur_p->road_p->flags & VC_RD_NO_EXTRA_AREA_F) {
@@ -1502,7 +1497,6 @@ float vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p) {
     }
 }
 
-// ASSERT(0)
 #line 2386
 void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size, float far_watch_rate, float self_view_eff_rate) {
     sceVu0FVECTOR far_watch_pos, vec;
@@ -1590,7 +1584,6 @@ static inline void vec_add_reverse(void* x, void* y, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
-// ASSERT(0)
 #line 2487
 void vcMakeNormalWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang_z_p, VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size) {
     sceVu0FVECTOR ang;
@@ -1917,7 +1910,6 @@ static inline void vec_div_xyz_reverse(void* v, void* out, float s) {
         : "+r"(v), "+f"(s), "+r"(out)::"t7");
 }
 
-// ASSERT(0)
 #line 3101
 void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p, VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, float far_watch_rate) {
     sceVu0FVECTOR tgt_vec;
@@ -2655,7 +2647,6 @@ void vcMakeBasicCamTgtMvVec(sceVu0FVECTOR tgt_mv_vec, sceVu0FVECTOR ideal_pos, V
     else tgt_mv_vec[1] = ideal_pos[1] - w_p->cam_tgt_pos[1];
 }
 
-// ASSERT(0)
 #line 3990 
 void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
     float tgt_y;
@@ -3257,7 +3248,6 @@ static inline float flush_denorm(float f1)
     return f1;
 }
 
-// ASSERT(0)
 #line 4689
 void vcMakeNewBaseCamAng(sceVu0FVECTOR new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) {
     sceVu0FVECTOR xyz_vec;
