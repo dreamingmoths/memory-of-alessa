@@ -1,8 +1,10 @@
 #include "Event/demoview.h"
+#include "Event/picture.h"
 #include "SH2_common/sh2dt.h"
 #include "sound/sh_sd_call.h"
 #include "Font/font.h"
 #include "SH2_common/playing_info.h"
+#include "GFW/sh2gfw_2d_filters.h"
 
 #pragma fast_fptosi on // temporary fix SubtitlesManager needs `fast_fptosi on` but `sh2_common.h` has `fast_fptosi off`
 
@@ -50,9 +52,44 @@ INCLUDE_ASM("asm/nonmatchings/Event/demoview", DramaDemoSkipLast);
 
 INCLUDE_ASM("asm/nonmatchings/Event/demoview", RotationToInterest);
 
-INCLUDE_ASM("asm/nonmatchings/Event/demoview", DramaDemoFade);
+void DramaDemoFade(void) { // needs inlines
+    PicDraw_Data pic;
 
-INCLUDE_ASM("asm/nonmatchings/Event/demoview", DramaDemoNumber);
+    if (Check_Filter_Soft() == 0) {
+        
+        
+        shQzero(&pic, sizeof(PicDraw_Data));
+        pic.r = 0;
+        pic.g = 0;
+        pic.b = 0;
+        pic.status |= 0x10;
+        pic.test_ate = 0;
+        pic.test_atst = 0;
+        pic.test_aref = 0;
+        pic.test_afail = 0;
+        pic.test_date = 0;
+        pic.test_datm = 0;
+        pic.test_zte = 1;
+        pic.test_ztst = 1;
+        pic.status |= 0x40;
+        pic.x0 = -4096;
+        pic.y0 = -4096;
+        pic.x1 = 4096;
+        pic.y1 = -3072;
+        pic.status |= 2;
+        PictureDraw(&pic);
+        pic.x0 = -4096;
+        pic.y0 = 3072;
+        pic.x1 = 4096;
+        pic.y1 = 4096;
+        pic.status |= 2;
+        PictureDraw(&pic);
+    }
+}
+
+int DramaDemoNumber(void) {
+    return demo_number;
+}
 
 void SubtitlesExec(DramaDemo_MessageTime* msg_time /* r2 */, int msg_no /* r2 */, int str_no /* r2 */, float timer /* r29 */)  {
     sbt_msg_time = msg_time;
