@@ -4,6 +4,7 @@
 #include "sound/sh_sound.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "Chacter_Draw/sh2_JmsSpot_Man.h"
+#include "SH2_common/playing_info.h"
 
 static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
 static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */);
@@ -37,7 +38,7 @@ INCLUDE_RODATA("asm/nonmatchings/Event/event", @1419_0x00390EC0);
 
 INCLUDE_RODATA("asm/nonmatchings/Event/event", @1420_0x00390EE0);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventMainStandard);
+INCLUDE_ASM("asm/nonmatchings/Event/event", EventMainStandard); // https://decomp.me/scratch/2ayfI I think we need EventCheck before we can add this
 
 INCLUDE_RODATA("asm/nonmatchings/Event/event", @1583_0x00390F50);
 
@@ -164,7 +165,22 @@ void EventCancel(void) {
     ev_cancel = 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSubFlagSet); // https://decomp.me/scratch/uNvCi 
+static void EventExecSubFlagSet(Event_List* el) {
+    int flg;
+
+    flg = EventListElement(el, 3);
+    if (flg == 0) return;
+    if (EventListElement(el, 2) != 0) {
+        if (EventListElement(el, 1) != 0) UNSET_GAME_FLAG(flg);            
+        else SET_GAME_FLAG(flg);
+    }
+
+    flg = EventListElement(el, 6);
+    if (flg == 0) return;
+    if (EventListElement(el, 5) == 0) return;
+    if (EventListElement(el, 4) != 0) UNSET_GAME_FLAG(flg);
+    else SET_GAME_FLAG(flg);
+}
 
 static int EventExecFlag(void) {    
     Event_List* el; // r2   
@@ -344,7 +360,33 @@ static int EventExecChizuFail(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventProgressCheck);
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventItemConditionCheck);
+int EventItemConditionCheck(int level, int flag) {
+    switch (playing.battle_level) {
+        case 1:
+            if (level == 2 || level == 3 || level == 6) return 0;
+            break;            
+        case 2:
+            if (level == 1 || level == 3 || level == 5) return 0;
+            break;            
+        case 3: 
+            if (level == 1 || level == 2 || level == 4) return 0;
+            break;
+    }
+
+    
+    switch (flag) {
+        case 1:
+            if (!GET_GAME_FLAG(GAME_FLAG_251)) return 0;
+            break;            
+        case 2:
+            if (!GET_GAME_FLAG(GAME_FLAG_108)) return 0;
+            break;            
+        case 3:
+            if (!GET_GAME_FLAG(GAME_FLAG_240)) return 0;
+            break;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", RadioNoise);
 
