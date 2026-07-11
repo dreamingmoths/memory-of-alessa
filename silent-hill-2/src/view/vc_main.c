@@ -1,10 +1,10 @@
 #include "vc_main.h"
 #include "vb_main.h"
 #include "vc_calc.h"
+#include "vc_newest.h"
 #include "vc_play.h"
 #include "vc_prio.h"
 #include "vw_calc.h"
-#include "vc_newest.h"
 #include "Chacter/sh_character_status.h"
 #include "Event/event.h"
 #include "SH2_common/playing_info.h"
@@ -485,7 +485,7 @@ int vcRetThroughDoorCamEndF(VC_WORK* w_p) {
         
         
         
-        if (abs_ofs_ang_y > 1.2217305f) return 1;
+        if (abs_ofs_ang_y > TO_RAD(70.0f)) return 1;
     }
 
     
@@ -549,7 +549,7 @@ float vcRetFarWatchRate(int far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_ty
                         
                         
                         
-                        far_watch_rate = (far_watch_rate * (1.2217305f - abs_ofs_ang_y)) / 1.2217305f;
+                        far_watch_rate = (far_watch_rate * (TO_RAD(70.0f) - abs_ofs_ang_y)) / (TO_RAD(70.0f));
                         
                         
                         
@@ -2181,7 +2181,7 @@ void vcMakeIdealCamPosForFixAngCam(sceVu0FVECTOR ideal_pos, VC_WORK* w_p) {
 
 
     
-    ideal_pos[0] = w_p->chara_pos[0] + (base_front_r * shSinF(w_p->chara_eye_ang_y)) + (front2cam_dist * shSinF(3.1415927f + ang[1]));
+    ideal_pos[0] = w_p->chara_pos[0] + (base_front_r * shSinF(w_p->chara_eye_ang_y)) + (front2cam_dist * shSinF(ang[1] + TO_RAD(180.0f)));
     
     
     
@@ -2189,7 +2189,7 @@ void vcMakeIdealCamPosForFixAngCam(sceVu0FVECTOR ideal_pos, VC_WORK* w_p) {
     
     
     
-    ideal_pos[2] = w_p->chara_pos[2] + (base_front_r * shCosF(w_p->chara_eye_ang_y)) + (front2cam_dist * shCosF(3.1415927f + ang[1]));
+    ideal_pos[2] = w_p->chara_pos[2] + (base_front_r * shCosF(w_p->chara_eye_ang_y)) + (front2cam_dist * shCosF(ang[1] + TO_RAD(180.0f)));
     
     
     
