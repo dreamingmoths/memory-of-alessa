@@ -15,7 +15,7 @@ static int HumanLAUInit(SubCharacter* this) {
     return 0;
 }
 
-void HumanLAUFunction(SubCharacter* this) {
+static void HumanLAUFunction(SubCharacter* this) {
     short id;
     AnimeInfo* aip;
     
