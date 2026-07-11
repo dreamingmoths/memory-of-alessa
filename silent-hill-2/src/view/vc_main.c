@@ -2936,10 +2936,10 @@ float vcFlipFromCamExclusionArea(float* flip_ang_y_p, float* old_cam_excl_area_r
         rate = excl_max_rate[cur_rd_area_size];
     }
     
-    cam_excl_area_r = vwOresenHokan(excl_r_ary, sizeof(excl_r_ary) / sizeof(int), (int)(4096.0f * ofs_ang_y), 0, 0x3243);
-
-
-
+    cam_excl_area_r = vwOresenHokan(excl_r_ary, sizeof(excl_r_ary) / sizeof(int), 
+                                    ofs_ang_y * 4096.0f, // @todo: Q12 macro?
+                                    0, 
+                                    TO_RAD(180.0f) * 4096.0f);
     
     cam_excl_area_r = 500.0f * cam_excl_area_r;
     cam_excl_area_r = cam_excl_area_r / 4096.0f;
@@ -3332,9 +3332,9 @@ void vcMakeNewBaseCamAng(sceVu0FVECTOR new_base_ang, VC_CAM_MV_TYPE cam_mv_type,
 
                 
                 new_base_ang_x = vwOresenHokan(mv_stl_ang_ary, sizeof(mv_stl_ang_ary) / sizeof(int), 
-                                               (int)(new_base_ang_x * 4096.0f), 
+                                               new_base_ang_x * 4096.0f,
                                                0, 
-                                               (int)(TO_RAD(90.0f) * 4096.0f));
+                                               TO_RAD(90.0f) * 4096.0f);
                 
                 new_base_ang_x = new_base_ang_x / 4096.0f;
                 
