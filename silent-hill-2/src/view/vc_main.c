@@ -3486,7 +3486,7 @@ void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(sceVu0FVECTOR cam_mat_ang,
     vec_zero_xyz(cam_mat[3]);
     vec_copy_xyz(cam_mat[3], cam_pos);
     
-    vwMatrixToAngleYXZ(cam_mat_ang, *cam_mat);
+    vwMatrixToAngleYXZ(cam_mat_ang, cam_mat);
 }
 
 // @todo: Issue with float args to `vcCamMatNoise`, matched at https://decomp.me/scratch/mlHnL
