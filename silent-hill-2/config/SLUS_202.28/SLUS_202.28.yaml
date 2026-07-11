@@ -33,7 +33,7 @@ segments:
       - [0x004290, asm, Chacter/m3_anime_subfunc]
       - [0x004620, asm, Chacter/m3_bgobj]
       - [0x004bd0, asm, Chacter/m3_djames]
-      - [0x005250, asm, Chacter/m3_dmaria]
+      - [0x005250, c,   Chacter/m3_dmaria]
       - [0x005550, c,   Chacter/m3_eddie]
       - [0x005830, asm, Chacter/m3_ike]
       - [0x005d20, c,   Chacter/m3_laura]
