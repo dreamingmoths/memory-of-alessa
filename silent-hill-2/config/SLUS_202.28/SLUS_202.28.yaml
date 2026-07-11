@@ -401,6 +401,8 @@ segments:
       - [0x1bb5c0, data,    data_0x1bb5c0]
       - [0x24c8c0, .data,   jump_menu]
       - [0x24c8d0, data,    data_0x24c8d0]
+      - [0x24cbc0, .data,   Chacter/m3_maria_sub]
+      - [0x24cd90, data,    data_0x24cd90]
       - [0x24cff8, .data,   Multi_thr/scf/ps2_scf]
       - [0x24d010, data,    data_0x24d010]
       - [0x26e560, .data,   Effect2/hh_class_blood_01]
@@ -580,6 +582,8 @@ segments:
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670 }
       - { vram: 0x11b6a70, type: .bss, name: Item/otn_option }
       - { vram: 0x11b6af0, type: bss,  name: bss_0x11b6af0 }
+      - { vram: 0x11b6f00, type: .bss, name: Chacter/m3_maria_sub }
+      - { vram: 0x11b6f40, type: bss,  name: bss_0x11b6f40 }
       - { vram: 0x11e7080, type: .bss, name: DS_Pad/ds_sequencer }
       - { vram: 0x11e7850, type: bss,  name: bss_0x11e7850 }
       - { vram: 0x11eb550, type: .bss, name: Effect2/hh_class_water_01 }
