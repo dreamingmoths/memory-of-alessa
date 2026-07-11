@@ -31,7 +31,7 @@ typedef enum bool {
 #define QUARTER_TURN 1.5707964f
 #define MAX_FLOAT 3.4028235e38f
 #define RADIANS_PER_DEGREE (PI / 180.0f)
-#define TO_RAD(x) RADIANS_PER_DEGREE * (x)
+#define TO_RAD(x) (RADIANS_PER_DEGREE * (x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
