@@ -3459,8 +3459,35 @@ void vcAdjCamOfsAngByCharaInScreen(sceVu0FVECTOR cam_ang, sceVu0FVECTOR ofs_cam2
 // @todo: Issue with float args to `vwRetNewAngSpdToTargetAng`, matched at https://decomp.me/scratch/iIZHY
 INCLUDE_ASM("asm/nonmatchings/view/vc_main", vcAdjCamOfsAngByOfsAngSpd);
 
-// @todo: Issue with params passed to `shMulMatrix`, matched at https://decomp.me/scratch/NycP5
-INCLUDE_ASM("asm/nonmatchings/view/vc_main", vcMakeCamMatAndCamAngByBaseAngAndOfsAng);
+#line 5085
+void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(sceVu0FVECTOR cam_mat_ang, 
+                                             sceVu0FMATRIX cam_mat, 
+                                             sceVu0FVECTOR base_cam_ang, 
+                                             sceVu0FVECTOR ofs_cam_ang, 
+                                             sceVu0FVECTOR cam_pos) {
+    sceVu0FMATRIX base_mat;
+    sceVu0FMATRIX ofs_mat;
+
+
+
+
+
+
+    
+    
+    vu0_unit_matrix(base_mat);
+    vu0_unit_matrix(ofs_mat);
+    
+    vwRotMatrixYXZ(base_cam_ang, base_mat);
+    vwRotMatrixYXZ(ofs_cam_ang, ofs_mat);
+    
+    shMulMatrix(cam_mat, base_mat, ofs_mat);
+    
+    vec_zero_xyz(cam_mat[3]);
+    vec_copy_xyz(cam_mat[3], cam_pos);
+    
+    vwMatrixToAngleYXZ(cam_mat_ang, *cam_mat);
+}
 
 // @todo: Issue with float args to `vcCamMatNoise`, matched at https://decomp.me/scratch/mlHnL
 INCLUDE_ASM("asm/nonmatchings/view/vc_main", vcSetDataToVwSystem);

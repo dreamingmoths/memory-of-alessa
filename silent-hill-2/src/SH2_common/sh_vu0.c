@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/nonmatchings/SH2_common/sh_vu0", shQzero);
 
 INCLUDE_ASM("asm/nonmatchings/SH2_common/sh_vu0", shFill);
 
-asm void shMulMatrix(register float m0[4], register float m1[4], register float m2[4]) {
+asm void shMulMatrix(register sceVu0FMATRIX m0, register sceVu0FMATRIX m1, register sceVu0FMATRIX m2) {
 	lqc2         vf1, 0(a1)
 	lqc2         vf2, 0x10(a1)
 	lqc2         vf3, 0x20(a1)
