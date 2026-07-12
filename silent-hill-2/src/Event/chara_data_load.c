@@ -133,6 +133,12 @@ void CharaDataLoadStage(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadRoom);
 
+const char pad_0x00398ed8[] = "\0\0\0\0";
+
+INCLUDE_RODATA("asm/nonmatchings/Event/chara_data_load", @1120_0x00398EE0);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/chara_data_load", @1121_0x00398F10);
+
 void CharaDataLoadDemo(CharaData_DemoList* dlp, int status) {
     CharaData_EntryList entry_list[32]; // r29+0x40
     int entry_number; // r16
@@ -238,6 +244,10 @@ static void CharaDataLoadExecWeapon(CharaData_EntryList* entry_list_p) {
         mem_admin[j].kind = entry_list_p->kind;
     }
 }
+
+INCLUDE_RODATA("asm/nonmatchings/Event/chara_data_load", @1412);
+
+INCLUDE_RODATA("asm/nonmatchings/Event/chara_data_load", @1413);
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_data_load", CharaDataLoadExecStandard);
 
@@ -360,7 +370,8 @@ u_long128* CharaDataLoadExtra(union fsFileIndex* file, int status) { // not line
     do {
         adr = (u_long*)CharaDataFreeSearch(size);
         if (adr != NULL) break;
-        ASSERT_ON_LINE(CharaDeleteNoUseOne() != 0, 1520);
+        del = CharaDeleteNoUseOne();
+        ASSERT_ON_LINE(del, 1520);
     } while (1);
 
     if (status & 0x4) {
@@ -529,13 +540,13 @@ static int SeekMemAdminCtgry(int category /* r16 */) {
     if (31 >= i) return i;
 
     
-    if (category == CATEGORY_NULL) CharaDeleteNoUseOne();
+    if (category == Category_null) CharaDeleteNoUseOne();
 
     
     for (i = 0; i < 32; i++) 
         if (mem_admin[i].category == category) break;            
     
-    ASSERT_ON_LINE(category != CATEGORY_NULL || i < 32, 1791);
+    ASSERT_ON_LINE(category != Category_null || i < 32, 1791);
     return i;
 }
 

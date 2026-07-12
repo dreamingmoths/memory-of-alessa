@@ -4,7 +4,7 @@
 #include "sh2_common.h"
 #include "FilesList/fileslist_bg.h"
 
-#define CATEGORY_NULL 0
+#define Category_null 0
 
 // total size: 0xC
 typedef struct CharaData_MemAdmin_One {
