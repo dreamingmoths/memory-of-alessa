@@ -139,15 +139,15 @@ void shMemCopy(void* ds, void* sr, int datasize) {
     while (*D9_CHCR & 0x100);
     
     
-    while (now >= 0x1000 ) {
-        *D9_SADR = (bufpage_481 << 0xC) + SCRATCHPAD_START + 0x2000; // *D9_SADR = SCRATCHPAD_START + 0x2000 + bufpage_481 * 4096;         
+    while (now >= 4096) {
+        *D9_SADR = SCRATCHPAD_START + 0x2000 + bufpage_481 * 4096;   
         *D9_MADR = (u_int)sr + datasize - now; 
         *D9_QWC = 0x100;
         do {            
         } while (*D8_CHCR & 0x100);
         *D9_CHCR = 0x101;
         
-        *D8_SADR = (bufpage_481 << 0xC) + SCRATCHPAD_START + 0x2000;
+        *D8_SADR = SCRATCHPAD_START + 0x2000 + bufpage_481 * 4096;
         *D8_MADR = (u_int)ds + datasize - now;
         *D8_QWC = 0x100;
         do {            
@@ -155,7 +155,7 @@ void shMemCopy(void* ds, void* sr, int datasize) {
         *D8_CHCR = 0x100;
         
         bufpage_481 ^= 1;
-        now -= 0x1000;
+        now -= 4096;
     }
     
     do {            
@@ -163,14 +163,14 @@ void shMemCopy(void* ds, void* sr, int datasize) {
     
     if (now == 0) return;
     
-    *D9_SADR = (bufpage_481 << 0xC) + SCRATCHPAD_START + 0x2000;
+    *D9_SADR = SCRATCHPAD_START + 0x2000 + bufpage_481 * 4096;
     *D9_MADR = (u_int)sr + datasize - now; 
     *D9_QWC = now >> 4;
     
     while (*D9_CHCR & 0x100);
     *D9_CHCR = 0x101;
     
-    *D8_SADR = (bufpage_481 << 0xC) + SCRATCHPAD_START + 0x2000;
+    *D8_SADR = SCRATCHPAD_START + 0x2000 + bufpage_481 * 4096;
     *D8_MADR = (u_int)ds + datasize - now; 
     *D8_QWC = now >> 4;    
     
