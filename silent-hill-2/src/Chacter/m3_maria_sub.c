@@ -190,46 +190,58 @@ static void MariaCheckSoundLower(void) {
         } else if (sh2mar.r_foot.kind == 1) {
             material = sh2mar.r_foot.hobj.wall.pd->material;
         }
-        // @todo: add missing #defines
+
         switch (material) {
-            case 12:
-                se = 19031;
+            case MATERIAL_TYPE_12:
+                se = SH2_SOUND_19031;
                 break;
-            case 0:
-                se = 19031;
+
+            case MATERIAL_TYPE_0:
+                se = SH2_SOUND_19031;
                 break;
-            case 1:
-                se = 19035;
+
+            case MATERIAL_TYPE_1:
+                se = SH2_SOUND_19035;
                 break;
-            case 2:
-                se = 19032;
+
+            case MATERIAL_TYPE_2:
+                se = SH2_SOUND_19032;
                 break;
-            case 3:
-                se = 19035;
+
+            case MATERIAL_TYPE_3:
+                se = SH2_SOUND_19035;
                 break;
-            case 4:
-                se = 19035;
+
+            case MATERIAL_TYPE_4:
+                se = SH2_SOUND_19035;
                 break;
-            case 5:
-                se = 19038;
+
+            case MATERIAL_TYPE_5:
+                se = SH2_SOUND_19038;
                 break;
-            case 6:
-                se = 19037;
+
+            case MATERIAL_TYPE_6:
+                se = SH2_SOUND_19037;
                 break;
-            case 7:
-                se = 19036;
+
+            case MATERIAL_TYPE_7:
+                se = SH2_SOUND_19036;
                 break;
-            case 8:
-                se = 19033;
+
+            case MATERIAL_TYPE_8:
+                se = SH2_SOUND_19033;
                 break;
-            case 9:
-                se = 19038;
+
+            case MATERIAL_TYPE_9:
+                se = SH2_SOUND_19038;
                 break;
-            case 10:
-                se = 19034;
+
+            case MATERIAL_TYPE_10:
+                se = SH2_SOUND_19034;
                 break;
-            case 11:
-                se = 19038;
+
+            case MATERIAL_TYPE_11:
+                se = SH2_SOUND_19038;
                 break;
         }
         if (i != 0) {
@@ -250,12 +262,14 @@ static void MariaCheckSoundLower(void) {
             se_info[0].vol = 0.3f;
             se_info[1].vol = 0.3f;
             break;
+
         case MAR_SUB_ST_RELAX:
             if (a_info->name == 16) {
                 se_info[0].frame = 18;
                 se_info[0].vol   = 0.3f;
             }
             break;
+
         case MAR_SUB_ST_AFRAID:
             se_info[0].frame = 10;
             se_info[1].frame = 16;
@@ -266,6 +280,7 @@ static void MariaCheckSoundLower(void) {
             se_info[2].vol   = 0.3f;
             se_info[3].vol   = 0.3f;
             break;
+
         case MAR_SUB_ST_WALK:
         case MAR_SUB_ST_RUN:
             se_info[0].frame = 5;
@@ -273,6 +288,7 @@ static void MariaCheckSoundLower(void) {
             se_info[0].vol   = 0.6f;
             se_info[1].vol   = 0.6f;
             break;
+
         case MAR_SUB_ST_DAMAGE:
             switch (a_info->name) {
                 case 22:
@@ -280,69 +296,85 @@ static void MariaCheckSoundLower(void) {
                     se_info[1].frame = 4;
                     se_info[2].frame = 9;
                     break;
+
                 case 23:
                     se_info[0].frame = 4;
                     se_info[1].frame = 9;
                     se_info[2].frame = 13;
                     break;
+
                 case 24:
                     se_info[0].frame = 3;
                     se_info[1].frame = 6;
                     break;
+
                 case 25:
                     se_info[0].frame = 3;
                     se_info[1].frame = 5;
                     se_info[2].frame = 9;
                     break;
+
                 case 26:
                     se_info[0].frame = 5;
                     se_info[1].frame = 8;
                     break;
+
                 case 27:
                     se_info[0].frame = 4;
                     se_info[1].frame = 8;
                     break;
+
                 case 28:
                     se_info[0].frame = 5;
                     se_info[1].frame = 8;
                     break;
+
                 case 29:
                     se_info[0].frame = 5;
                     se_info[1].frame = 9;
                     break;
+
                 case 20:
                     se_info[0].frame = 6;
                     se_info[1].frame = 10;
                     break;
+
                 case 21:
                     se_info[0].frame = 4;
                     se_info[1].frame = 12;
                     break;
+
                 case 30:
                     se_info[0].frame = 6;
                     se_info[1].frame = 12;
                     break;
+
                 case 31:
                     se_info[0].frame = 4;
                     se_info[1].frame = 5;
                     se_info[2].frame = 13;
                     break;
+
                 case 34:
                     se_info[0].frame = 2;
                     se_info[1].frame = 6;
                     break;
+
                 case 35:
                     se_info[0].frame = 7;
                     se_info[1].frame = 13;
                     break;
+
                 case 39:
                     se_info[0].frame = 3;
                     se_info[1].frame = 11;
                     break;
+
                 case 40:
                     se_info[0].frame = 2;
                     se_info[1].frame = 11;
                     break;
+
                 case 47:
                     se_info[0].frame = 10;
                     break;
@@ -357,22 +389,26 @@ static void MariaCheckSoundLower(void) {
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             break;
+
         case MAR_SUB_ST_RELAX:
             if (a_info->name == 16) {
                 se_info[0].domain = 2;
             }
             break;
+
         case MAR_SUB_ST_AFRAID:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             se_info[2].domain = 1;
             se_info[3].domain = 2;
             break;
+
         case MAR_SUB_ST_WALK:
         case MAR_SUB_ST_RUN:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             break;
+
         case MAR_SUB_ST_DAMAGE:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
@@ -388,6 +424,7 @@ static void MariaCheckSoundLower(void) {
                             case 1:
                                 shMariaSoundOn(sh2mar.mar_p, se_info[i].vol, se_r, 0);
                                 break;
+
                             case 2:
                                 shMariaSoundOn(sh2mar.mar_p, se_info[i].vol, se_l, 0);
                                 break;
@@ -418,13 +455,14 @@ static void MariaCheckSoundUpper(void) {
 
     switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_TIRED:
-            se = 19039;
+            se = SH2_SOUND_19039;
             break;
+
         case MAR_SUB_ST_DAMAGE:
             if (sh2mar.dead != 0) {
-                se = 19041;
+                se = SH2_SOUND_19041;
             } else {
-                se = 19040;
+                se = SH2_SOUND_19040;
             }
             break;
     }
@@ -433,6 +471,7 @@ static void MariaCheckSoundUpper(void) {
             se_info[0].frame = 1;
             se_info[0].vol   = 0.5f;
             break;
+
         case MAR_SUB_ST_DAMAGE:
             if (sh2mar.dead != 0) {
                 se_info[0].frame = 1;
@@ -617,12 +656,14 @@ static void mar_sub_relax(SubCharacter* p) {
                 mar_flg_on(&sh2mar.anime_st_flg, 64);
             }
             break;
+
         case 1:
             if (!(sh2mar.relax_time < 10.0f)) {
                 sh2mar.relax_flag = 2;
                 mar_flg_on(&sh2mar.anime_st_flg, 64);
             }
             break;
+
         case 2:
             if (sh2mar.anime_pause & 1) {
                 sh2mar.relax_time = 0.0f;
@@ -764,6 +805,7 @@ static void mar_sub_damage(SubCharacter* p) {
                     p->spd = 0.2f;
                 }
                 break;
+
             case 21:
             case 23:
             case 27:
@@ -774,6 +816,7 @@ static void mar_sub_damage(SubCharacter* p) {
                     p->spd = 1.2f;
                 }
                 break;
+
             case 24:
             case 28:
             case 32:
@@ -785,6 +828,7 @@ static void mar_sub_damage(SubCharacter* p) {
                     p->spd = 0.05f * (f32) cur_frame;
                 }
                 break;
+
             case 25:
             case 29:
             case 33:
@@ -945,15 +989,15 @@ static u_short MariaDamageMotionNo(SubCharacter* this) {
     u_short damage_motion_james_weapon_index[24][2][2] = {
         28, 29, 28, 29,
         28, 29, 28, 29,
-        0, 0, 0, 0,
+        0,  0,  0,  0,
         28, 29, 28, 29,
-        0, 0, 0, 0,
+        0,  0,  0,  0,
         28, 29, 28, 29,
-        0, 0, 0, 0,
+        0,  0,  0,  0,
         22, 23, 22, 23,
         22, 23, 22, 23,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
+        0,  0,  0,  0,
+        0,  0,  0,  0,
         39, 40, 45, 45,
         39, 40, 45, 45,
         34, 35, 36, 37,
@@ -981,8 +1025,8 @@ static u_short MariaDamageMotionNo(SubCharacter* this) {
         38, 38, 38, 38,
         38, 38, 38, 38,
         43, 44, 45, 46,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
+        0,  0,  0,  0,
+        0,  0,  0,  0,
         39, 40, 41, 42,
         39, 40, 41, 42,
         47, 47, 24, 25
@@ -1107,6 +1151,7 @@ static void MariaSetColumn_SetTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* 
     switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_AFRAID:
             break;
+
         case MAR_SUB_ST_DAMAGE:
             if (a_info->name != 21) {
                 int x = 0; // @hack
@@ -1409,14 +1454,17 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[1], 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_RELAX:
                 switch (sh2mar.relax_flag) {
                     case 0:
                         anime = 16;
                         break;
+
                     case 1:
                         anime = 18;
                         break;
+
                     case 2:
                         anime = 19;
                         break;
@@ -1424,32 +1472,39 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[anime - 10], 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_RELAX_OFF:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[7], 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_AFRAID:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[5], 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_TIRED:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[4], 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_ONESTEP:
                 switch (sh2mar.pushed_dir) {
                     case -1:
                         aip = &pmaria_anim_0x00397090[39];
                         break;
+
                     case 1:
                         aip = &pmaria_anim_0x00397090[38];
                         break;
+
                     case 0:
                         break;
                 }
                 maria_anim_set_all(aip, 4);
                 mar_flg_on(&w->anime_st_flg, 2);
                 break;
+
             case MAR_SUB_ST_WALK: {
                 int comp_type;
                 switch (w->sub_status_prev) {
@@ -1457,6 +1512,7 @@ void MariaCheckAnime(void) {
                         comp_type = 10;
                         mar_flg_on(&w->anime_st_flg, 4);
                         break;
+
                     case MAR_SUB_ST_RELAX_OFF:
                         comp_type = 2;
                         break;
@@ -1468,6 +1524,7 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[2], comp_type);
                 break;
             }
+
             case MAR_SUB_ST_RUN: {
                 int comp_type;
                 if (w->sub_status_prev == 6) {
@@ -1488,16 +1545,20 @@ void MariaCheckAnime(void) {
         anime_change_check = w->sub_status_now;
         mar_flg_off(&w->anime_st_flg, 64);
     }
+
     if (scp_d->anime.comp_type < 3) {
         mar_flg_off(&w->anime_st_flg, 2);
     }
+
     if (scp_d->anime.comp_type < 9) {
         mar_flg_off(&w->anime_st_flg, 4);
     }
+
     if (scp_d->anime.comp_type == -1) {
         mar_flg_on(&w->anime_pause, 1);
         return;
     }
+
     mar_flg_off(&w->anime_pause, 1);
 }
 
@@ -1586,7 +1647,7 @@ void MariaInitOnConnect(void) {
         sh2mar.mar_p->pos.x = sh2jms.player->pos.x + (500.0f * shSinF(sh2jms.player->rot.y));
         sh2mar.mar_p->pos.y = sh2jms.player->pos.y;
         sh2mar.mar_p->pos.z = sh2jms.player->pos.z + (500.0f * shCosF(sh2jms.player->rot.y));
-        sh2mar.mar_p->rot.y = 3.1415927f + sh2jms.player->pos.y;
+        sh2mar.mar_p->rot.y = PI + sh2jms.player->pos.y;
         sh2mar.active_type  = 2;
     }
 
