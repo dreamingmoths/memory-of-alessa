@@ -34,6 +34,8 @@ typedef enum bool {
 #define TO_RAD(x) (RADIANS_PER_DEGREE * (x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define CLAMP_MAX(_val, _max) do { (_val) = (_val) > (_max) ? (_val) : (_max); } while (0);
+#define CLAMP_MIN(_val, _min) do { (_val) = (_val) > (_min) ? (_min) : (_val); } while (0);
 
 #define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 #define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
@@ -70,6 +72,11 @@ typedef enum bool {
 #define ASSERT(cond)
 #define ASSERT_ON_LINE(cond, line)
 #endif
+
+#define STATIC_ASSERT(cond, msg) \
+    typedef char static_assertion_##msg[(cond) ? 1 : -1]
+#define STATIC_ASSERT_SIZEOF(type, size) \
+    typedef char static_assertion_sizeof_##type[(sizeof(type) == (size)) ? 1 : -1]
 
 #define INCLUDE_ASM(FOLDER, NAME)
 #define INCLUDE_RODATA(FOLDER, NAME)
@@ -254,5 +261,6 @@ extern float sinf(float);
 extern float atan2f(float, float);
 extern float fmodf(float, float);
 extern u_int fptoui(float);
+extern double dpdiv(double, double);
 
 #endif
