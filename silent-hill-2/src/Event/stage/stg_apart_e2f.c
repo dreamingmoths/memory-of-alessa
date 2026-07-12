@@ -7,6 +7,7 @@
 #include "Event/chara_data_load.h"
 #include "Event/chara_admin.h"
 #include "Event/demoview.h"
+#include "Event/picture.h"
 
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
@@ -26,6 +27,7 @@
 #include "SH2_common/pad.h"
 #include "SH2_common/mem_share.h"
 #include "SH2_common/playing_info.h"
+#include "SH2_common/sh_vu0.h"
 
 #include "Font/font.h"
 #include "Font/dic.h"
@@ -51,7 +53,7 @@
 
 extern /* static */ float stg_apart_e2f_tv_pos[4]; // = { -58082.375f, -356.5f , 19011.39062, 0.0f }; // @ 0x01F07240
 
-extern /* static */ float stg_apart_e2f_clock_vec_0[2][4]; // address: 0x1F07250
+extern /* static */ float stg_apart_e2f_clock_vec_0[2][4]; // @ 0x1F07250
 
 /*
 static float stg_apart_e2f_clock_vec_0[2][4] = {
@@ -60,7 +62,7 @@ static float stg_apart_e2f_clock_vec_0[2][4] = {
 };
 */
 
-extern /* static */ float stg_apart_e2f_clock_vec_1[2][4]; // size: 0x20, address: 0x1F07270
+extern /* static */ float stg_apart_e2f_clock_vec_1[2][4]; // @ 0x1F07270
 
 /*
 static float stg_apart_e2f_clock_vec_1[2][4] = {
@@ -68,6 +70,26 @@ static float stg_apart_e2f_clock_vec_1[2][4] = {
     { 0.0f, 0.0f, 0.0f, 0.0f}
 };
 */
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_1[3]; // @ 0x01F072A0
+
+extern /* static */ CharaData_DemoList stg_apart_e2f_chara_2[3]; // @ 0x01F072E0
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_1; // @ 0x01F07320
+
+extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_2; // @ 0x01F07350
+
+extern /* static */ float stg_apart_e2f_pos_01F07380[4];
+
+extern /* static */ float stg_apart_e2f_pos_01F07390[4];
+
+extern /* static */ float stg_apart_e2f_pos_01F073A0[4];
+ 
+extern /* static */ float stg_apart_e2f_pos_01F073B0[4]; 
+
+extern /* static */ float stg_apart_e2f_pos_01F073C0[4];
+
+extern /* static */ u_short stg_apart_e2f_tex[8][4]; // @ 0x01F073D0 
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e2f_info_clock_o_01F07420; // @ 0x01F07420
 
@@ -283,6 +305,8 @@ static CharaData_DemoList stg_apart_e2f_chara_data_01F07710[2] = {
 extern /* static */ float stg_apart_e2f_pos_01F07740[4]; // = { -22800.0f, -700.0f, 59200.0f, 1.0f };
 
 // @todo: migrate bss
+
+extern /* static */ int stg_apart_e2f_mv_se; // @ 0x01F07780
 
 extern /* static */ int stg_apart_e2f_se; // @ 0x01F07788
 
