@@ -88,7 +88,7 @@ static u_short MariaDamageMotionNo(SubCharacter* this);
 static int MariaTouchJamesCheck(void);
 static void MariaCheckFootLine(SubCharacter* this);
 static void MariaSetSearchArea(SubCharacter* this);
-static void MariaSetColumn_SetTarget(_CL_HITPOLY_COLUMN* mov, _CL_HITPOLY_COLUMN* atk, float* mov_z, float* atk_z);
+static void MariaSetColumn_SetTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* atk, float* mov_z, float* atk_z);
 static void MariaSetColumn_CloseToTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* atk, float* mov_z, float* atk_z);
 static void MariaSetHitColumn(SubCharacter* this);
 static void MariaCheckNeckAngle(SubCharacter* this);
@@ -96,7 +96,7 @@ static void MariaUpdateStatusInitial(SubCharacter* this);
 static void MariaUpdateStatusExecPhase1(void);
 static void MariaUpdateStatusExecPhase2(SubCharacter* this);
 static void MariaUpdateStatusExec(SubCharacter* this);
-static void maria_anim_set_all(_AnimeInfo* aip, int comp_type);
+static void maria_anim_set_all(AnimeInfo* aip, int comp_type);
 
 void mar_flg_on(u_int* type, u_int status) {
     *type |= status;
@@ -272,7 +272,7 @@ static void MariaCheckSoundLower(void) {
         }
     }
     switch ((u8) sh2mar.sub_status_now) {
-        case 5:
+        case MAR_SUB_ST_ONESTEP:
             if (a_info->name == 48) {
                 se_info[0].frame = 6;
                 se_info[1].frame = 12;
@@ -283,13 +283,13 @@ static void MariaCheckSoundLower(void) {
             se_info[0].vol = 0.3f;
             se_info[1].vol = 0.3f;
             break;
-        case 1:
+        case MAR_SUB_ST_RELAX:
             if (a_info->name == 16) {
                 se_info[0].frame = 18;
                 se_info[0].vol   = 0.3f;
             }
             break;
-        case 3:
+        case MAR_SUB_ST_AFRAID:
             se_info[0].frame = 10;
             se_info[1].frame = 16;
             se_info[2].frame = 22;
@@ -299,14 +299,14 @@ static void MariaCheckSoundLower(void) {
             se_info[2].vol   = 0.3f;
             se_info[3].vol   = 0.3f;
             break;
-        case 6:
-        case 7:
+        case MAR_SUB_ST_WALK:
+        case MAR_SUB_ST_RUN:
             se_info[0].frame = 5;
             se_info[1].frame = 17;
             se_info[0].vol   = 0.6f;
             se_info[1].vol   = 0.6f;
             break;
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             switch (a_info->name) {
                 case 22:
                     se_info[0].frame = 2;
@@ -386,27 +386,27 @@ static void MariaCheckSoundLower(void) {
             break;
     }
     switch ((u8) sh2mar.sub_status_now) {
-        case 5:
+        case MAR_SUB_ST_ONESTEP:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             break;
-        case 1:
+        case MAR_SUB_ST_RELAX:
             if (a_info->name == 16) {
                 se_info[0].domain = 2;
             }
             break;
-        case 3:
+        case MAR_SUB_ST_AFRAID:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             se_info[2].domain = 1;
             se_info[3].domain = 2;
             break;
-        case 6:
-        case 7:
+        case MAR_SUB_ST_WALK:
+        case MAR_SUB_ST_RUN:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             break;
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
             se_info[2].domain = 1;
@@ -450,10 +450,10 @@ static void MariaCheckSoundUpper(void) {
     frame = shCharacterAnimeFrameGet(sh2mar.mar_p);
 
     switch ((u8) sh2mar.sub_status_now) {
-        case 4:
+        case MAR_SUB_ST_TIRED:
             se = 19039;
             break;
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             if (sh2mar.dead != 0) {
                 se = 19041;
             } else {
@@ -462,11 +462,11 @@ static void MariaCheckSoundUpper(void) {
             break;
     }
     switch ((u8) sh2mar.sub_status_now) {
-        case 4:
+        case MAR_SUB_ST_TIRED:
             se_info[0].frame = 1;
             se_info[0].vol   = 0.5f;
             break;
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             if (sh2mar.dead != 0) {
                 se_info[0].frame = 1;
                 se_info[0].vol   = 1.0f;
@@ -1085,9 +1085,9 @@ static void MariaSetColumn_SetTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* 
     *mov_z                      = 0.0f;
     *atk_z                      = 0.0f;
     switch ((u8) sh2mar.sub_status_now) {
-        case 3:
+        case MAR_SUB_ST_AFRAID:
             break;
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             if (a_info->name != 21) {
                 int x = 0; // @hack
             } else {
@@ -1179,9 +1179,9 @@ static void MariaCheckNeckAngle(SubCharacter* this) {
     float tmp[4];
 
     switch (sh2mar.sub_status_now) {
-        case 4:
-        case 3:
-        case 8:
+        case MAR_SUB_ST_TIRED:
+        case MAR_SUB_ST_AFRAID:
+        case MAR_SUB_ST_DAMAGE:
 
             sh2mar.tgt_neck_angle.y = 0.0f;
             sh2mar.tgt_neck_angle.x = 0.0f;
@@ -1381,11 +1381,11 @@ void MariaCheckAnime(void) {
 
     if ((mar_anime_flg_on(2U) == 0) && (((u8) w->sub_status_now != anime_change_check_1840) || (mar_anime_flg_on(64) != 0))) {
         switch ((u8) w->sub_status_now) {
-            case 0:
+            case MAR_SUB_ST_STAND:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[1], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 1:
+            case MAR_SUB_ST_RELAX:
                 switch (sh2mar.relax_flag) {
                     case 0:
                         anime = 16;
@@ -1400,19 +1400,19 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[anime - 10], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 2:
+            case MAR_SUB_ST_RELAX_OFF:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[7], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 3:
+            case MAR_SUB_ST_AFRAID:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[5], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 4:
+            case MAR_SUB_ST_TIRED:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[4], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 5:
+            case MAR_SUB_ST_ONESTEP:
                 switch (sh2mar.pushed_dir) {
                     case -1:
                         aip = &pmaria_anim_0x00397090[39];
@@ -1426,14 +1426,14 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip, 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
-            case 6: {
+            case MAR_SUB_ST_WALK: {
                 int comp_type;
                 switch ((u8) w->sub_status_prev) {
-                    case 7:
+                    case MAR_SUB_ST_RUN:
                         comp_type = 10;
                         mar_flg_on(&w->anime_st_flg, 4U);
                         break;
-                    case 2:
+                    case MAR_SUB_ST_RELAX_OFF:
                         comp_type = 2;
                         break;
                     default:
@@ -1444,7 +1444,7 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[2], comp_type);
                 break;
             }
-            case 7: {
+            case MAR_SUB_ST_RUN: {
                 int comp_type;
                 if ((u8) w->sub_status_prev == 6) {
                     comp_type = 10;
@@ -1456,7 +1456,7 @@ void MariaCheckAnime(void) {
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[3], comp_type);
                 break;
             }
-            case 8:
+            case MAR_SUB_ST_DAMAGE:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[sh2mar.damage_no - 10], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
@@ -1493,7 +1493,7 @@ void MariaUpdatePosition(SubCharacter* this) {
 
     mar_sub_func(this);
     switch (sh2mar.sub_status_now) {
-        case 8:
+        case MAR_SUB_ST_DAMAGE:
             var_f12 = this->rot.y + this->spd_roty;
             if (var_f12 <= PI) {
                 i1 = 0;
