@@ -537,7 +537,7 @@ static void mar_timer_set(int mode) {
 
 static void mar_main_stand(void) {
     shMariaWork* w;
-    if (mar_sub_flg_on(4U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_TIRED) != 0) {
         mar_sub_flg_check(2);
         return;
     }
@@ -545,7 +545,7 @@ static void mar_main_stand(void) {
         mar_sub_flg_check(5);
         return;
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
@@ -553,7 +553,7 @@ static void mar_main_stand(void) {
 
 static void mar_main_close_to(void) {
     shMariaWork* w = &sh2mar;
-    if (mar_sub_flg_on(4U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_TIRED) != 0) {
         mar_sub_flg_check(2);
         return;
     }
@@ -565,7 +565,7 @@ static void mar_main_close_to(void) {
         mar_sub_flg_check(6);
         return;
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
@@ -573,11 +573,11 @@ static void mar_main_close_to(void) {
 
 static void mar_main_alert(void) {
     shMariaWork* w;
-    if (mar_sub_flg_on(8U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_DAMAGE) != 0) {
         mar_sub_flg_check(3);
         return;
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
@@ -597,7 +597,7 @@ static void mar_main_recover(void) {
         mar_sub_flg_check(5);
         return;
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
@@ -605,7 +605,7 @@ static void mar_main_recover(void) {
 
 static void mar_main_boredom(void) {
     shMariaWork* w;
-    if (mar_sub_flg_on(2U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX_OFF) != 0) {
         mar_sub_flg_check(1);
         return;
     }
@@ -613,7 +613,7 @@ static void mar_main_boredom(void) {
         mar_sub_flg_check(5);
         return;
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
@@ -624,7 +624,7 @@ static void mar_main_damaged(void) {
     if (mar_sub_flg_on(256) != 0) {
         mar_sub_flg_check(8);
     }
-    if (mar_sub_flg_on(1U) != 0) {
+    if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
         mar_sub_flg_check(0);
         mar_muteki_set();
     }
