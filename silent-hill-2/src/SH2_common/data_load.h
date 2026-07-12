@@ -3,6 +3,8 @@
 
 #include "sh2_common.h"
 
+#define SH2_BUFPAGE_SIZE 4096
+
 int DataLoadMessage(int msg /* r2 */);
 void shMemCopy(void* ds /* r18 */, void* sr /* r17 */, int datasize /* r16 */);
 
