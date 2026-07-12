@@ -271,7 +271,7 @@ static void MariaCheckSoundLower(void) {
             se_r = se;
         }
     }
-    switch ((u8) sh2mar.sub_status_now) {
+    switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_ONESTEP:
             if (a_info->name == 48) {
                 se_info[0].frame = 6;
@@ -385,7 +385,7 @@ static void MariaCheckSoundLower(void) {
             se_info[2].vol = 0.6f;
             break;
     }
-    switch ((u8) sh2mar.sub_status_now) {
+    switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_ONESTEP:
             se_info[0].domain = 1;
             se_info[1].domain = 2;
@@ -449,7 +449,7 @@ static void MariaCheckSoundUpper(void) {
 
     frame = shCharacterAnimeFrameGet(sh2mar.mar_p);
 
-    switch ((u8) sh2mar.sub_status_now) {
+    switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_TIRED:
             se = 19039;
             break;
@@ -461,7 +461,7 @@ static void MariaCheckSoundUpper(void) {
             }
             break;
     }
-    switch ((u8) sh2mar.sub_status_now) {
+    switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_TIRED:
             se_info[0].frame = 1;
             se_info[0].vol   = 0.5f;
@@ -492,7 +492,7 @@ static void MariaCheckSoundUpper(void) {
 }
 
 static void mar_sub_flg_check(int status) {
-    if ((sh2mar.anime_st_flg == 0) && ((u8) sh2mar.sub_status_now != status)) {
+    if ((sh2mar.anime_st_flg == 0) && (sh2mar.sub_status_now != status)) {
         mar_sub_st_set(status, &sh2mar);
         mar_sub_flg_set(status, &sh2mar);
     }
@@ -538,15 +538,15 @@ static void mar_timer_set(int mode) {
 static void mar_main_stand(void) {
     shMariaWork* w;
     if (mar_sub_flg_on(MAR_SUB_ST_TIRED) != 0) {
-        mar_sub_flg_check(2);
+        mar_sub_flg_check(MAR_SUB_ST_RELAX_OFF);
         return;
     }
     if (mar_sub_flg_on(32) != 0) {
-        mar_sub_flg_check(5);
+        mar_sub_flg_check(MAR_SUB_ST_ONESTEP);
         return;
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -554,19 +554,19 @@ static void mar_main_stand(void) {
 static void mar_main_close_to(void) {
     shMariaWork* w = &sh2mar;
     if (mar_sub_flg_on(MAR_SUB_ST_TIRED) != 0) {
-        mar_sub_flg_check(2);
+        mar_sub_flg_check(MAR_SUB_ST_RELAX_OFF);
         return;
     }
     if ((mar_sub_flg_on(128) != 0) && !(w->dist_to_jms < 2000.0f)) {
-        mar_sub_flg_check(7);
+        mar_sub_flg_check(MAR_SUB_ST_RUN);
         return;
     }
     if ((mar_sub_flg_on(64) != 0) && (!(w->dist_to_jms < 1000.0f) || (sh2mar.look_jms == 0))) {
-        mar_sub_flg_check(6);
+        mar_sub_flg_check(MAR_SUB_ST_WALK);
         return;
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -574,11 +574,11 @@ static void mar_main_close_to(void) {
 static void mar_main_alert(void) {
     shMariaWork* w;
     if (mar_sub_flg_on(MAR_SUB_ST_DAMAGE) != 0) {
-        mar_sub_flg_check(3);
+        mar_sub_flg_check(MAR_SUB_ST_AFRAID);
         return;
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -590,15 +590,15 @@ static void mar_main_discover(void) {
 static void mar_main_recover(void) {
     shMariaWork* w;
     if (mar_sub_flg_on(16) != 0) {
-        mar_sub_flg_check(4);
+        mar_sub_flg_check(MAR_SUB_ST_TIRED);
         return;
     }
     if (mar_sub_flg_on(32) != 0) {
-        mar_sub_flg_check(5);
+        mar_sub_flg_check(MAR_SUB_ST_ONESTEP);
         return;
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -606,15 +606,15 @@ static void mar_main_recover(void) {
 static void mar_main_boredom(void) {
     shMariaWork* w;
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX_OFF) != 0) {
-        mar_sub_flg_check(1);
+        mar_sub_flg_check(MAR_SUB_ST_RELAX);
         return;
     }
     if (mar_sub_flg_on(32) != 0) {
-        mar_sub_flg_check(5);
+        mar_sub_flg_check(MAR_SUB_ST_ONESTEP);
         return;
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -622,10 +622,10 @@ static void mar_main_boredom(void) {
 static void mar_main_damaged(void) {
     shMariaWork* w;
     if (mar_sub_flg_on(256) != 0) {
-        mar_sub_flg_check(8);
+        mar_sub_flg_check(MAR_SUB_ST_DAMAGE);
     }
     if (mar_sub_flg_on(MAR_SUB_ST_RELAX) != 0) {
-        mar_sub_flg_check(0);
+        mar_sub_flg_check(MAR_SUB_ST_STAND);
         mar_muteki_set();
     }
 }
@@ -635,7 +635,7 @@ static void mar_sub_stand(SubCharacter* p) {
     sh2mar.tired -= dt_0x011B6F38;
     MariaSpeedDownToStand(p);
     if (sh2mar.pushed_dir != 0) {
-        mar_flg_on(&sh2mar.sub_st_flg, 32);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_ONESTEP));
     }
 }
 
@@ -666,10 +666,10 @@ static void mar_sub_relax(SubCharacter* p) {
     }
     if (sh2mar.main_status_now != 5) {
         sh2mar.relax_flag = 0;
-        mar_flg_on(&sh2mar.sub_st_flg, 4U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_RELAX_OFF));
     }
     if (sh2mar.pushed_dir != 0) {
-        mar_flg_on(&sh2mar.sub_st_flg, 32);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_ONESTEP));
     }
 }
 
@@ -678,10 +678,10 @@ static void mar_sub_relax_off(SubCharacter* p) {
     MariaSpeedDownToStand(p);
     if (sh2mar.anime_pause & 1) {
         mar_flg_off(&sh2mar.sub_st_flg, 4U);
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     }
     if (sh2mar.pushed_dir != 0) {
-        mar_flg_on(&sh2mar.sub_st_flg, 32);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_ONESTEP));
     }
 }
 
@@ -692,7 +692,7 @@ static void mar_sub_afraid(SubCharacter* p) {
     MariaSpeedDownToStand(p);
     if (sh2mar.anime_pause & 1) {
         mar_flg_off(&sh2mar.sub_st_flg, 8U);
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
         sh2mar.stand_time = 0.0f;
     }
 }
@@ -703,10 +703,10 @@ static void mar_sub_tired(SubCharacter* p) {
     MariaSpeedDownToStand(p);
     if (sh2mar.tired < ((s32) sh2mar.tired_max >> 1)) {
         mar_flg_off(&sh2mar.sub_st_flg, 16);
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     }
     if (sh2mar.pushed_dir != 0) {
-        mar_flg_on(&sh2mar.sub_st_flg, 32);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_ONESTEP));
     }
 }
 
@@ -716,7 +716,7 @@ static void mar_sub_onestep(SubCharacter* p) {
     MariaSpeedDownToStand(p);
     if (sh2mar.anime_pause & 1) {
         mar_flg_off(&sh2mar.sub_st_flg, 32);
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
         sh2mar.stand_time = 0.0f;
     }
 }
@@ -741,7 +741,7 @@ static void mar_sub_walk(SubCharacter* p) {
     }
     MariaBodyAngleCloseToTarget(sh2mar.to_target);
     if (sh2mar.move_time >= 1.06f) {
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     }
 }
 
@@ -759,7 +759,7 @@ static void mar_sub_run(SubCharacter* p) {
     }
     MariaBodyAngleCloseToTarget(sh2mar.to_target);
     if (!(sh2mar.move_time < 0.91f)) {
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     }
 }
 
@@ -830,7 +830,7 @@ static void mar_sub_damage(SubCharacter* p) {
             return;
         }
         mar_flg_off(&sh2mar.sub_st_flg, 256);
-        mar_flg_on(&sh2mar.sub_st_flg, 1U);
+        mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     }
 }
 
@@ -1084,7 +1084,7 @@ static void MariaSetColumn_SetTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* 
     mov->p[1][1] = atk->p[1][1] = -800.0f + sh2mar.mar_p->pos.y;
     *mov_z                      = 0.0f;
     *atk_z                      = 0.0f;
-    switch ((u8) sh2mar.sub_status_now) {
+    switch (sh2mar.sub_status_now) {
         case MAR_SUB_ST_AFRAID:
             break;
         case MAR_SUB_ST_DAMAGE:
@@ -1219,7 +1219,7 @@ static void MariaUpdateStatusInitial(SubCharacter* this) {
     sh2mar.enemy_around   = sh2jms.enemy_around;
     sh2mar.look_tgt       = (SubCharacter*) shBattleGetTargetChara(sh2mar.mar_p, 0);
     sh2mar.dist_to_jms    = vec3_dist(&sh2jms.player->pos, &this->pos);
-    if ((u8) sh2mar.sub_status_now == 7) {
+    if (sh2mar.sub_status_now == 7) {
         sh2mar.tired += dt_0x011B6F38;
         sh2mar.tired = (sh2mar.tired < 0) ? 0 : ((sh2mar.tired_max < sh2mar.tired) ? sh2mar.tired_max : sh2mar.tired);
     }
@@ -1299,7 +1299,7 @@ void MariaCheckDamage(SubCharacter* this) {
             sh2mar.no_damage  = 1;
             sh2mar.relax_flag = 0;
             mar_main_st_set(6, &sh2mar);
-            mar_flg_on(&sh2mar.sub_st_flg, 256);
+            mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_DAMAGE));
             ASSERT_ON_LINE(this->battle.id < BTL_ID_JAMES_KICK_START || this->battle.id > BTL_ID_JAMES_KICK_END, 2263);
 
             if (this->battle.damage) {
@@ -1379,8 +1379,8 @@ void MariaCheckAnime(void) {
     AnimeInfo* aip;
     int anime;
 
-    if ((mar_anime_flg_on(2U) == 0) && (((u8) w->sub_status_now != anime_change_check_1840) || (mar_anime_flg_on(64) != 0))) {
-        switch ((u8) w->sub_status_now) {
+    if ((mar_anime_flg_on(2U) == 0) && ((w->sub_status_now != anime_change_check_1840) || (mar_anime_flg_on(64) != 0))) {
+        switch (w->sub_status_now) {
             case MAR_SUB_ST_STAND:
                 maria_anim_set_all(aip = &pmaria_anim_0x00397090[1], 4);
                 mar_flg_on(&w->anime_st_flg, 2U);
@@ -1428,7 +1428,7 @@ void MariaCheckAnime(void) {
                 break;
             case MAR_SUB_ST_WALK: {
                 int comp_type;
-                switch ((u8) w->sub_status_prev) {
+                switch (w->sub_status_prev) {
                     case MAR_SUB_ST_RUN:
                         comp_type = 10;
                         mar_flg_on(&w->anime_st_flg, 4U);
@@ -1446,7 +1446,7 @@ void MariaCheckAnime(void) {
             }
             case MAR_SUB_ST_RUN: {
                 int comp_type;
-                if ((u8) w->sub_status_prev == 6) {
+                if (w->sub_status_prev == 6) {
                     comp_type = 10;
                     mar_flg_on(&w->anime_st_flg, 4U);
                 } else {
@@ -1461,7 +1461,7 @@ void MariaCheckAnime(void) {
                 mar_flg_on(&w->anime_st_flg, 2U);
                 break;
         }
-        anime_change_check_1840 = (s32) (u8) w->sub_status_now;
+        anime_change_check_1840 = (s32) w->sub_status_now;
         mar_flg_off(&w->anime_st_flg, 64);
     }
     if (scp_d->anime.comp_type < 3) {
@@ -1478,7 +1478,7 @@ void MariaCheckAnime(void) {
 }
 
 void MariaUpdatePosition(SubCharacter* this) {
-    void (*mar_sub_func)(SubCharacter*) = func_list_sub[(u8) sh2mar.sub_status_now];
+    void (*mar_sub_func)(SubCharacter*) = func_list_sub[sh2mar.sub_status_now];
     float cos_x;
     float cos_z;
 
@@ -1632,11 +1632,11 @@ void MariaInitOnConnect(void) {
     sh2mar.tired_max        = 0;
     sh2mar.tired            = 0;
     sh2mar.no_damage        = 0;
-    sh2mar.main_status_now  = 0;
-    sh2mar.main_status_prev = 0;
-    sh2mar.sub_status_now   = 0;
-    sh2mar.sub_status_prev  = 0;
-    mar_flg_on(&sh2mar.sub_st_flg, 1U);
+    sh2mar.main_status_now  = MAR_MAIN_ST_STAND;
+    sh2mar.main_status_prev = MAR_MAIN_ST_STAND;
+    sh2mar.sub_status_now   = MAR_SUB_ST_STAND;
+    sh2mar.sub_status_prev  = MAR_SUB_ST_STAND;
+    mar_flg_on(&sh2mar.sub_st_flg, (1 << MAR_SUB_ST_STAND));
     mar_sub_st_set(0, &sh2mar);
     mar_sub_flg_set(0, &sh2mar);
     sh2mar.look_jms = 1;
