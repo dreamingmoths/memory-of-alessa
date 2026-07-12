@@ -378,6 +378,7 @@ segments:
       - [0x1a7b00, .data,   Chacter/anime]
       - [0x1a7b10, data,    data_1a7b10]
       - [0x1a93e0, data,    data_0x1a93e0]
+      - [0x1a9ac0, .data,   Chacter/m3_red]
       - [0x1a9ad0, .data,   Chacter/m3_sc]
       - [0x1a9ae0, data,    data_0x1a9ae0]
       # - [0x1a9b10, .data,   Chacter/m3_wep]
