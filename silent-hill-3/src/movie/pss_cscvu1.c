@@ -1,8 +1,8 @@
 #include "common.h"
 #include "movie/pss_cscvu1.h"
-#include "mpeg/defs.h"
-#include "eeregs.h"
-#include "libvifpk.h"
+#include "sce/mpeg/defs.h"
+#include "sce/eeregs.h"
+#include "sce/libvifpk.h"
 
 typedef struct {
     u_char y[16][16];

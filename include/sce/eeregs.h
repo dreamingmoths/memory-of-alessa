@@ -1,7 +1,7 @@
 #ifndef _EEREGS_H_
 #define _EEREGS_H_
 
-#include "eekernel.h"
+#include "sce/eekernel.h"
 
 
 /* TIMER */

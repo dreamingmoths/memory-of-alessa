@@ -1,5 +1,5 @@
 #include "sh2_common.h"
-#include "mpeg/defs.h"
+#include "sce/mpeg/defs.h"
 #include "movie/movie.h"
 #include "movie/pss_readbuf.h"
 

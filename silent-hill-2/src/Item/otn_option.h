@@ -1,7 +1,7 @@
 #ifndef OTN_OPTION_H
 #define OTN_OPTION_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 static inline void dword_struct_copy(u_int* dst, u_int* src, u_int size) {
     int i = size / 8;

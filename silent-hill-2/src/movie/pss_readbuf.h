@@ -1,7 +1,7 @@
 #ifndef PSS_READBUF_H
 #define PSS_READBUF_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 #define READ_UNIT_SIZE (64*1024)
 #define N_READ_UNIT     5

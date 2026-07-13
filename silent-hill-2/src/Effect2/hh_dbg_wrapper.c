@@ -1,5 +1,5 @@
 #include "common.h"
-#include "eeregs.h"
+#include "sce/eeregs.h"
 
 int _t0_count;
 static char tmp[40];

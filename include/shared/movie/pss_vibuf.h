@@ -4,12 +4,12 @@
 #ifndef PSS_VIBUF_SHARED_H
 #define PSS_VIBUF_SHARED_H
 
-#include "libipu.h"
-#include "mpeg/vibuf.h"
-#include "mpeg/defs.h"
+#include "sce/libipu.h"
+#include "sce/mpeg/vibuf.h"
+#include "sce/mpeg/defs.h"
 #include "common.h"
-#include "eeregs.h"
-#include "eekernel.h"
+#include "sce/eeregs.h"
+#include "sce/eekernel.h"
 #include "movie/movie.h"
 
 int getFIFOindex(ViBuf* f, void* addr);

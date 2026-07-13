@@ -2,8 +2,8 @@
 #define MODEL3_VU1_N_H
 
 #include "common.h"
-#include "libvifpk.h"
-#include "libdma.h"
+#include "sce/libvifpk.h"
+#include "sce/libdma.h"
 #include "model_common.h"
 
 typedef struct Part {

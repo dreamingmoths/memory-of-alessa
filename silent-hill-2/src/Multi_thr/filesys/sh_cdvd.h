@@ -2,7 +2,7 @@
 #define SH_CDVD_H
 
 #include "common.h"
-#include "libcdvd.h"
+#include "sce/libcdvd.h"
 
 // ???
 extern int CreateSema2(int, int, int);

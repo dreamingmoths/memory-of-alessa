@@ -23,7 +23,7 @@
 #define _LIBSCF_H
 
 #ifndef _LIBCDVD_H
-#include "libcdvd.h"
+#include "sce/libcdvd.h"
 #endif
 
 /* ASPECT */

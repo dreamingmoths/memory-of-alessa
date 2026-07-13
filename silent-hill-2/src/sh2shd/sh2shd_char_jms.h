@@ -1,7 +1,7 @@
 #ifndef SH2SHD_CHAR_JMS_H
 #define SH2SHD_CHAR_JMS_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 #include "Chacter/character.h"
 #include "sh2shd/sh2shd_structs.h"
 

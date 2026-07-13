@@ -1,7 +1,7 @@
 #ifndef FONT_SHARED_H
 #define FONT_SHARED_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 #include "shared/Font/font.h"
 
 #define MES_V_COUNT 10

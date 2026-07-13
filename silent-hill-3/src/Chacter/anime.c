@@ -2,8 +2,8 @@
 #include "SH3_common/sh_vu0.h"
 
 #include "vec.h"
-#include "eeregs.h"
-#include "libvu0.h"
+#include "sce/eeregs.h"
+#include "sce/libvu0.h"
 
 #include "Chacter/character.h"
 #include "Chacter/anime.h"

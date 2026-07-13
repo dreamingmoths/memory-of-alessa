@@ -1,7 +1,7 @@
 #include "Effect2/hh_class_blood_00.h"
 #include "Effect2/hh_packet.h"
 #include "Effect2/hh_class_wrapper.h"
-#include "libvifpk.h"
+#include "sce/libvifpk.h"
 #include "Chacter_Draw/sh2gfw_md_spclmapping.h"
 
 extern int rand(void);

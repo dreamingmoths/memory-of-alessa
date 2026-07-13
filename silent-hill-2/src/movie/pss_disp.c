@@ -1,5 +1,5 @@
 #include "sh2_common.h"
-#include "eeregs.h"
+#include "sce/eeregs.h"
 #include "movie/pss_disp.h"
 #include "movie/pss_vobuf.h"
 #include "movie/pss_videodec.h"

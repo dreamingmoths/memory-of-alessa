@@ -4,7 +4,7 @@
 #include "Effect2/hh_packet.h"
 #include "Effect2/hh_effect_object_texture.h"
 #include "Effect2/hh_dbg_wrapper.h"
-#include "libgraph.h"
+#include "sce/libgraph.h"
 
 static Wave_Element* Free_WaveElement_Search(HH_Object_Water_00* pThis);
 static Wave_Element* Oldest_WaveElement_Search(HH_Object_Water_00* pThis);

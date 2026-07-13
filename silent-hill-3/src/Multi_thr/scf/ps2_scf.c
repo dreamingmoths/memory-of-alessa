@@ -1,7 +1,7 @@
 #include "common.h"
 #include "Multi_thr/scf/ps2_scf.h"
-#include "eekernel.h"
-#include "libscf.h"
+#include "sce/eekernel.h"
+#include "sce/libscf.h"
 
 #define TZ_UTC_9 540
 

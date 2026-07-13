@@ -1,7 +1,7 @@
 #include "common.h"
-#include "eestruct.h"
-#include "eeregs.h"
-#include "libgraph.h"
+#include "sce/eestruct.h"
+#include "sce/eeregs.h"
+#include "sce/libgraph.h"
 
 #define MAXWAIT	0x1000000
 #define scePrintf(...)

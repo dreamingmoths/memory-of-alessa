@@ -3,7 +3,7 @@
 #include "Lens/lens_flare.h"
 #include "Lens/lens_th_draw.h"
 
-#include "libgraph.h"
+#include "sce/libgraph.h"
 #include "Chacter/character.h"
 #include "Event/demoview.h"
 

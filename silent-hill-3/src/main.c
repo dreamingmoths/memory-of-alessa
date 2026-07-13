@@ -1,6 +1,6 @@
 #include "common.h"
 #include "main.h"
-#include "eeregs.h"
+#include "sce/eeregs.h"
 
 int main(int argc, s_char* argv[]) {
     int temp_s1;

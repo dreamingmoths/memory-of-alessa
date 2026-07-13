@@ -1,6 +1,6 @@
 #include "common.h"
-#include "eeregs.h"
-#include "libgraph.h"
+#include "sce/eeregs.h"
+#include "sce/libgraph.h"
 #include "gs.h"
 
 /* sets vif0 chcr */

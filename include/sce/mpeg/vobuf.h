@@ -4,10 +4,10 @@
 #define SCE_MPEG_VOBUF_H
 
 #include "common.h"
-#include "mpeg/libmpeg.h"
-#include "mpeg/defs.h"
+#include "sce/mpeg/libmpeg.h"
+#include "sce/mpeg/defs.h"
 #include "shared/movie/cscvu1.h"
-#include "libipu.h"
+#include "sce/libipu.h"
 
 #define VOBUF_STATUS_EMPTY 0
 #define VOBUF_STATUS_TOPDONE 1

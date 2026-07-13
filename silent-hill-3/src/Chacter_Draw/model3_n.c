@@ -1,5 +1,5 @@
 #include "common.h"
-#include "eeregs.h"
+#include "sce/eeregs.h"
 #include "Chacter/character.h"
 #include "Chacter_Draw/model3_n.h"
 #include "Chacter_Draw/model3_sub_n.h"

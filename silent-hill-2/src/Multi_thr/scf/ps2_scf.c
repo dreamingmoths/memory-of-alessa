@@ -1,6 +1,6 @@
 #include "sh2_common.h"
-#include "eekernel.h"
-#include "libscf.h"
+#include "sce/eekernel.h"
+#include "sce/libscf.h"
 
 #define TZ_UTC_9 540
 

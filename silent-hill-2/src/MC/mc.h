@@ -2,7 +2,7 @@
 #define MC_H
 
 #include "SH2_common/playing_info.h"
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 #define MC_STATUS_FLAG_0 0x0
 #define MC_STATUS_FLAG_1 0x1

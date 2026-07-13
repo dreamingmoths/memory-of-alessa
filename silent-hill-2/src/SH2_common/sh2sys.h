@@ -1,7 +1,7 @@
 #ifndef SH2SYS_H
 #define SH2SYS_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 typedef struct _SH2_SYS {
     // total size: 0x30

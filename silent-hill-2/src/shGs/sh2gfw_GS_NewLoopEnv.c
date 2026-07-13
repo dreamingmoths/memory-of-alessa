@@ -1,5 +1,5 @@
 #include "sh2gfw_GS_NewLoopEnv.h"
-#include "libgraph.h"
+#include "sce/libgraph.h"
 
 int sh2gfw_RotateTBuff(shGsAllEnv* shGsEnv)
 {

@@ -1,8 +1,8 @@
 #ifndef PSS_DISP_H
 #define PSS_DISP_H
 
-#include "eetypes.h"
-#include "libgraph.h"
+#include "sce/eetypes.h"
+#include "sce/libgraph.h"
 
 // ////////////////////////////////////////////////////////////////
 //

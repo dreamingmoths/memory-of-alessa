@@ -1,8 +1,8 @@
 #include "sh2_common.h"
 #include "Font/font.h"
 #include "Font/fj_man.h"
-#include "libgraph.h"
-#include "eestruct.h"
+#include "sce/libgraph.h"
+#include "sce/eestruct.h"
 #include "SH2_common/pad.h"
 #include "gs.h"
 
