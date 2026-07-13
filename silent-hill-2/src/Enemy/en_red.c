@@ -3,23 +3,9 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 
-#pragma fast_fptosi on //temporary fix enREDSoundLife
+// @todo: migrate data
 
 extern /* static */ EnANIME_DATA EnREDAnime[11]; 
-
-/* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
-/* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
-/* static */ void enREDCtrlHand(void);
-/* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
-/* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
-
-static void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */);
-
-static float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */);
-
-static void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */);
-
-static void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData);
 
@@ -28,7 +14,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlMain);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
 
 /* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
-    if (enCheckSleepOut(dp) != 0) {
+    if (enCheckSleepOut(dp)) {
         enSleepOut(dp);
         SET_DP_STATE_LV(dp, 0, 0);
         dp->type = 0;
@@ -64,7 +50,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBattleEnd);
 
 /* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sslv == 0) {
-        enREDAnimeSet(dp, TRUE);
+        enREDAnimeSet(dp, true);
         enREDGetWalkSpeed(dp);
     }
 }
@@ -90,25 +76,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeePlayer);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
 
-#ifdef NON_MATCHING
-static void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
-    if (anim == dp->anim) {
-        enAnimeRestart(dp);
-        if (anim == 2) {
-            enREDSetMoveCount(dp);
-        }
-        return;
-    } 
-    
-    (anim >= 0 && anim < 0xBU) ? 0 : fjAssert_("en_red.c", 0x3EB, "anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA)");              
-    enAnimeSet(dp, anim, EnREDAnime[anim].Anime);
-    if (anim == 2) {
-        enREDSetMoveCount(dp);
-    }
-}
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeSet)
-#endif
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeSet); // https://decomp.me/scratch/EJU91 I guess I need to add enREDAnimeReset too to make it work
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeReset);
 
@@ -126,18 +94,11 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetFeelRange);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetRotSpeed);
 
-/* static */ void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */) {
-    int timer[5] = { 180, 90, 60, 30, 1 }; // r29+0x20 taken from ghidra @1716
-
-
-
-
-
-    
-    enSetTimer(dp, timer[enGetMode()] * 2);
-}
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetSlowTime); // https://decomp.me/scratch/x7D12 migrate data first?
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
+
+#pragma fast_fptosi on
 
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sound_wait < 0x12C) {
@@ -149,3 +110,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
         dp->sound_wait = 0;
     }
 }
+
+#pragma fast_fptosi off
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_red", @1620);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_red", @1621);
