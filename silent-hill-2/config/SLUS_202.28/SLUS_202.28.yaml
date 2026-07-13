@@ -209,7 +209,7 @@ segments:
       - [0x110fc0, c,   Item/otn_option]
       - [0x11c4c0, asm, Chacter/m3_play_common]
       - [0x120870, c,   SH2_common/sh2dt]
-      - [0x120990, asm, Chacter/m3_maria]
+      - [0x120990, c,   Chacter/m3_maria]
       - [0x120e00, asm, Chacter/m3_tyu]
       - [0x121210, asm, Chacter/m3_bos]
       - [0x121750, asm, Chacter/m3_oni]
