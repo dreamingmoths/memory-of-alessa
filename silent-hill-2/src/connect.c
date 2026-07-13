@@ -1,5 +1,7 @@
 #include "connect.h"
 
+#include "vec.h"
+
 #include "gamemain.h"
 
 #include "sh2gfw_all_sysinit.h"

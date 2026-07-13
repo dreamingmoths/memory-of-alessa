@@ -1,5 +1,7 @@
 #include "Event/stage/mall_b_02.h"
 
+#include "vec.h"
+
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 

@@ -20,40 +20,6 @@ typedef struct
     u_char unk4;
 } func_001C7C80_struct;
 
-static inline float vec3_length(void* v) {
-    float d;
-
-    asm("\
-        lwc1 %1, 0(%0)\n\
-        lwc1 f8, 4(%0)\n\
-        lwc1 f9, 8(%0)\n\
-        mula.s %1, %1;\
-        madda.s f8,f8;\
-        madd.s %1, f9, f9;\
-        sqrt.s %1, %1"
-        : "+r"(v), "+f"(d)::"f8", "f9");
-
-    return d;
-}
-
-static inline float vec3_dot_product(void* v, void* w) {
-    float d;
-
-    asm volatile("\
-        lwc1 %0, 0(%1)\n\
-        lwc1 f8, 0(%2)\n\
-        lwc1 f9, 4(%1)\n\
-        lwc1 f10, 4(%2)\n\
-        mula.s %0, f8\n\
-        lwc1 %0, 8(%1)\n\
-        lwc1 f8, 8(%2)\n\
-        madda.s f9, f10\n\
-        madd.s %0, %0, f8"
-                 : "=f"(d) : "r"(v), "r"(w) : "f8", "f9", "f10");
-
-    return d;
-}
-
 void func_001C2290(int, float);
 int func_0016C540(int*, int*);
 int func_001646F0(void);

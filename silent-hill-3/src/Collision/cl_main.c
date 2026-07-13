@@ -1,4 +1,5 @@
 #include "common.h"
+#include "vec.h"
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clAllInitCollisionData);
 

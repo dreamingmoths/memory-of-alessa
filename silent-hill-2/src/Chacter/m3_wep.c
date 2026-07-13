@@ -2,6 +2,7 @@
 #include "Chacter/m3_sc.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_play.h"
+#include "vec.h"
 
 /* static */ const AnimeInfo weapon_anim[9] = { // but does this belong here?
     // name,  frame, speed, start, end, loop, pad

@@ -1,4 +1,5 @@
 #include "city_00.h"
+#include "vec.h"
 
 void func_01F6D680_city_00(void) {
     D_01F6DB80_city_00 = 0;

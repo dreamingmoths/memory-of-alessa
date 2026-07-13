@@ -1,4 +1,5 @@
 #include "church_00.h"
+#include "vec.h"
 
 UNCURSE_CHURCH();
 

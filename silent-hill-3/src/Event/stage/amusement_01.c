@@ -1,4 +1,5 @@
 #include "amusement_01.h"
+#include "vec.h"
 #include "Font/font.h"
 #include "SH3_common/sh3dt.h"
 #include "SH3_common/sh_vu0.h"
@@ -620,11 +621,11 @@ int func_01F6E9A0_amusement_01(void) {
                         + (D_01F74D50_amusement_01[i] * shSinF(D_01F74D40_amusement_01)));
             }
     
-            if (vec3_dist(D_01F74880_amusement_01, &heather->pos) >= 2250.0f) {
-                D_01F74D38_amusement_01 = 0.5f * (vec3_dist(D_01F74880_amusement_01, &heather->pos) / 500.0f);
+            if (vec3_dist_amusement_01(D_01F74880_amusement_01, &heather->pos) >= 2250.0f) {
+                D_01F74D38_amusement_01 = 0.5f * (vec3_dist_amusement_01(D_01F74880_amusement_01, &heather->pos) / 500.0f);
             } else {
-                if (vec3_dist(D_01F74880_amusement_01, &heather->pos) >= 1500.0f) {
-                    D_01F74D38_amusement_01 = 0.3333f * (vec3_dist(D_01F74880_amusement_01, &heather->pos) / 500.0f);
+                if (vec3_dist_amusement_01(D_01F74880_amusement_01, &heather->pos) >= 1500.0f) {
+                    D_01F74D38_amusement_01 = 0.3333f * (vec3_dist_amusement_01(D_01F74880_amusement_01, &heather->pos) / 500.0f);
                 } else {
                     D_01F74D38_amusement_01 = 1.0f;
                 }

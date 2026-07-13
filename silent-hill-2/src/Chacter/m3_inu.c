@@ -2,6 +2,7 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_play_event.h"
+#include "vec.h"
 
 #define INU_DRAMA_ANIME_ID_START 4900
 #define INU_PLAY_ANIME_ID_START  4850

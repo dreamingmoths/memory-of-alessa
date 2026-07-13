@@ -2,6 +2,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2sys.h"
 #include "common.h"
+#include "vec.h"
 
 // @todo: move to vec.h/common.h - currently moving this to `common.h` underneath `vec_scale` causes mismatch?
 static inline void vec_div_xyz(void* v, float s, void* out) {
@@ -15,16 +16,6 @@ static inline void vec_div_xyz(void* v, float s, void* out) {
          vmulx.xyz vf4, vf4, vf5x\n\
          sqc2 vf4, 0(%2)"
         : "+r"(v), "+f"(s), "+r"(out)::"t7");
-}
-
-// switched %1 and %0
-static inline void vec_add_alt(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%1)\n\
-        lqc2 vf5, 0(%0)\n\
-        vadd.xyzw vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
 }
 
 #line 63

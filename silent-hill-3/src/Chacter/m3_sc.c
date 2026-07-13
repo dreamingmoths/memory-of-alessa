@@ -1,4 +1,5 @@
 #include "common.h"
+#include "vec.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/character.h"
 #include "Chacter/skelton.h"

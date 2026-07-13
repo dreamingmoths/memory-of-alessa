@@ -314,7 +314,7 @@ float moon_candle_amusement_01(float x, float y) {        \
 }
 /* end candles */
 
-static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+static inline float vec3_dist_amusement_01(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
     asm("lwc1 %2, 0(%0)\n\
          lwc1 f8, 0(%1)\n\

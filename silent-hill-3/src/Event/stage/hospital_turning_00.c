@@ -1,4 +1,5 @@
 #include "hospital_turning_00.h"
+#include "vec.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_turning_00", func_01F6D680_hospital_turning_00);
 

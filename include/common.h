@@ -5,42 +5,14 @@
 #pragma mpwc_relax     on
 #pragma fast_fptosi    on
 
-#include "sce/eetypes.h"
+#include "types.h"
+#include "math.h"
+#include "sdk.h"
 #include "sce/libvu0.h"
 #include "dma.h"
 
-typedef unsigned char u8;
-typedef signed char s8;
-typedef unsigned short u16;
-typedef short s16;
-typedef unsigned int u32;
-typedef int s32;
-typedef unsigned long u64;
-typedef long s64;
-typedef float f32;
-
-typedef signed char s_char;
-
-typedef enum bool {
-    false,
-    true,
-} bool;
-
-#define NULL 0
-#define PI 3.1415927f
-#define TAU 6.2831855f
-#define QUARTER_TURN 1.5707964f
-#define MAX_FLOAT 3.4028235e38f
-#define RADIANS_PER_DEGREE (PI / 180.0f)
-#define TO_RAD(x) (RADIANS_PER_DEGREE * (x))
-#define MIN(a, b) ((a) > (b) ? (b) : (a))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define CLAMP_MAX(_val, _max) do { (_val) = (_val) > (_max) ? (_val) : (_max); } while (0);
-#define CLAMP_MIN(_val, _min) do { (_val) = (_val) > (_min) ? (_min) : (_val); } while (0);
-#define SQUARE(_x) ((_x) * (_x))
-
-#define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
-#define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
+#define ABORT() asm("breakc 0")
+#define BLOCK_WHILE(_cond) do { /* wait */ } while (_cond)
 
 #define UNCACHED(p) ((char*)((u_int)p | 0x20000000))
 #define READ_UNCACHED(addr) ((((u_int)(addr)) & 0x0fffffff) | 0x20000000)
@@ -56,13 +28,10 @@ typedef enum bool {
 #define SET_BIT(x, i) ((x) |= (1 << (i)))
 #define UNSET_BIT(x, i) ((x) &= ~(1 << (i)))
 
-/* `game_flag` helpers */
+/* bit array helpers */
 #define GET_FLAG(x, i) ((((x)[(i) >> 5]) >> ((i) & 0x1F)) & 1)
 #define SET_FLAG(x, i) (((x)[(i) >> 5]) |= (1 << ((i) & 0x1F)))
 #define UNSET_FLAG(x, i) ((x)[(i) >> 5] &= ~(1 << ((i) & 0x1F)))
-
-#define ABORT() asm("breakc 0")
-#define BLOCK_WHILE(_cond) do { /* wait */ } while (_cond)
 
 #ifdef DEBUG
 #define debugPrintf(...) printf(__VA_ARGS__)
@@ -145,121 +114,6 @@ typedef struct {
 
 static inline u_int reinterpret_as_u_int(float v) {
     return *(u_int*) &v;
-}
-
-static inline void vec_copy(void* dst, void* src) {
-    asm("\
-         lq t7, 0(%1)\n\
-         sq t7, 0(%0)"
-        : "+r"(dst), "+r"(src)::"t7");
-}
-
-static inline void volatile_vec_copy(void* dst, void* src) {
-    asm volatile("\
-         lq t7, 0(%1)\n\
-         sq t7, 0(%0)"
-                 : "=r"(dst) : "r"(src) : "t7");
-}
-
-static inline void vec_add(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%0)\n\
-        lqc2 vf5, 0(%1)\n\
-        vadd.xyzw vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
-}
-
-static inline void vec_add_xyz(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%0)\n\
-        lqc2 vf5, 0(%1)\n\
-        vadd.xyz vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
-}
-
-static inline void vec_sub(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%0)\n\
-        lqc2 vf5, 0(%1)\n\
-        vsub.xyzw vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
-}
-
-static inline void vec_sub_xyz_reverse(void* x, void* y, void* out) {
-    asm("\
-        lqc2 vf4, 0(%1)\n\
-        lqc2 vf5, 0(%0)\n\
-        vsub.xyz vf4, vf4, vf5\n\
-        sqc2 vf4, 0(%2)"
-        : "+r"(x), "+r"(y), "+r"(out));
-}
-
-static inline void vec_scale(float s, void* v, void* out) {
-    asm("mfc1 t7, %1;\
-          lqc2 vf4, 0(%0)\n\
-          qmtc2 t7, vf5\n\
-          vmulx.xyzw vf4, vf4, vf5x\n\
-          sqc2 vf4, 0(%2)"
-        : "+r"(v), "+f"(s), "+r"(out)::"t7");
-}
-
-static inline void vec_scale_xyz(float s, void* v, void* out) {
-    asm("mfc1 t7, %1;\
-          lqc2 vf4, 0(%0)\n\
-          qmtc2 t7, vf5\n\
-          vmulx.xyz vf4, vf4, vf5x\n\
-          sqc2 vf4, 0(%2)"
-        : "+r"(v), "+f"(s), "+r"(out)::"t7");
-}
-
-static inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
-static inline void vec_zero_xyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
-
-static inline float float_abs(float x) {
-    asm("abs.s %0, %0" : "+f"(x));
-    return x;
-}
-
-static inline float float_clamp(float x, float lower, float upper) {
-    asm("max.s %0, %0, %1; min.s %0, %0, %2" : "+f"(x) : "f"(lower), "f"(upper));
-    return x;
-}
-
-static inline float float_min(float x, float y) {
-    asm("min.s %0, %0, %1" : "+f"(x) : "f"(y) :);
-    return x;
-}
-
-static inline float float_max(float x, float y) {
-    asm("max.s %0, %0, %1" : "+f"(x) : "f"(y) :);
-    return x;
-}
-
-static inline void mat_copy(void* dst, void* src) {
-    asm volatile("\
-        lq $t6, 0(%1)\n\
-        lq $t7, 0x10(%1)\n\
-        sq $t6, 0(%0)\n\
-        sq $t7, 0x10(%0)\n\
-        lq $t6, 0x20(%1)\n\
-        lq $t7, 0x30(%1)\n\
-        sq $t6, 0x20(%0)\n\
-        sq $t7, 0x30(%0)"
-                 : : "r"(dst), "r"(src) : "t6", "t7");
-}
-static inline void mat_copy_3x3(void* dst, void* src) {
-    asm volatile("\
-        lq   $t7,  0(%1)\n\
-        lq   $t6,  0x10(%1)\n\
-        sq   $t7,  0x0(%0)\n\
-        sq   $t6,  0x10(%0)\n\
-        lq   $t7,  0x20(%1)\n\
-        sqc2 $vf0, 0x30(%0)\n\
-        sq   $t7,  0x20(%0)"
-                 : : "r"(dst), "r"(src) : "t6", "t7");
 }
 
 extern float asinf(float);

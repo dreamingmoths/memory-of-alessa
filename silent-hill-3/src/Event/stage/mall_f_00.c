@@ -1,4 +1,5 @@
 #include "mall_f_00.h"
+#include "vec.h"
 
 void func_01F6D680_mall_f_00(void)
 {

@@ -3,6 +3,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 #include "view/vb_main.h"
+#include "vec.h"
 
 #line 30
 float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVECTOR chr_pos, sceVu0FVECTOR cam_tgt_pos) {
