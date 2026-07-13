@@ -7,6 +7,24 @@
 
 extern /* static */ EnANIME_DATA EnREDAnime[11]; 
 
+extern /* static */ float hp_roof_pos[4];
+
+/* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
+/* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
+
+/* static */ void enREDCtrlHand(void);
+
+/* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
+/* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
+/* static */ int enREDSetDamage(EnLOCAL_DATA* dp);
+
+/* static */ void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */);
+/* static */ void enREDAnimeReset(EnLOCAL_DATA* dp, int anim);
+
+/* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */);
+
+/* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
+
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlMain);
@@ -26,7 +44,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
     SET_DP_STATE_LV(dp, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlEvent);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlEvent); // https://decomp.me/scratch/FXm6U help needed
 
 /* static */ void enREDCtrlHand(void) {
     return;
@@ -70,15 +88,48 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBattleEnd);
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetDamage);
+/* static */ int enREDSetDamage(EnLOCAL_DATA* dp) {
+    enREDSetSlowTime(dp);
+    if (dp->type != 2) {
+        if ((dp->endurance -= dp->scp->battle.damage, dp->endurance < 0.0f)) dp->endurance = 0.0f;
+        dp->scp->battle.damage = 0.0f;        
+    } else {
+        enReduceHP(dp);
+        if (enCheckDeath(dp))
+            return 1;
+        
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeePlayer);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeSet); // https://decomp.me/scratch/EJU91 I guess I need to add enREDAnimeReset too to make it work
+/* static */ void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
+    if (anim == dp->anim) {
+        enAnimeRestart(dp);
+        if (anim == 2) {
+            enREDSetMoveCount(dp);
+        }
+        return;
+    } 
+    
+    (anim >= 0 && anim < 11U) ? 0 : fjAssert_("en_red.c", 0x3EB, "anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA)");              
+    enAnimeSet(dp, anim, EnREDAnime[anim].Anime);
+    if (anim == 2) {
+        enREDSetMoveCount(dp);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeReset);
+/* static */ void enREDAnimeReset(EnLOCAL_DATA* dp, int anim) {
+
+    (anim >= 0 && anim < 11U) ? 0 : fjAssert_("en_red.c", 0x3F6, "anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA)");
+    enAnimeSet(dp, anim, EnREDAnime[anim].Anime);
+    if (anim == 2) {
+        enREDSetMoveCount(dp);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeExec);
 
@@ -112,7 +163,3 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
 }
 
 #pragma fast_fptosi off
-
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_red", @1620);
-
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_red", @1621);
