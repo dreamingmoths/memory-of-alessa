@@ -26,7 +26,7 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */);
 
 /* static */ float enREDGetRotSpeed(void);
-
+/* static */ void enREDSetSlowTime(EnLOCAL_DATA * dp /* r16 */);
 /* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp);
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
@@ -201,7 +201,20 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetFeelRange);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetRotSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetSlowTime); // https://decomp.me/scratch/x7D12 migrate data first?
+#ifdef NON_MATCHING
+/* static */ void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */) {
+    int timer[5] = { 180, 90, 60, 30, 1 }; // r29+0x20
+
+
+
+
+
+    
+    enSetTimer(dp, timer[enGetMode()] * 2);
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetSlowTime)  // @note: data migration needed I guess
+#endif
 
 #pragma fast_fptosi on
 
