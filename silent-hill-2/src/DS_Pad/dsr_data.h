@@ -1,7 +1,7 @@
 #ifndef DSR_DATA_H
 #define DSR_DATA_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 extern u_char __show_kodou_h_00[112]; // size: 0x70, address: 0x34D4F0
 extern u_char __show_kodou_h_01[112]; // size: 0x70, address: 0x34D560

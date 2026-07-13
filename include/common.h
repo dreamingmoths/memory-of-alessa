@@ -5,8 +5,8 @@
 #pragma mpwc_relax     on
 #pragma fast_fptosi    on
 
-#include "eetypes.h"
-#include "libvu0.h"
+#include "sce/eetypes.h"
+#include "sce/libvu0.h"
 
 typedef unsigned char u8;
 typedef signed char s8;

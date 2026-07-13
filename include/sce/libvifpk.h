@@ -2,8 +2,8 @@
 #ifndef LIB_VIF_PK_H
 #define LIB_VIF_PK_H
 
-#include "eetypes.h"
-#include "eestruct.h"
+#include "sce/eetypes.h"
+#include "sce/eestruct.h"
 
 #define SCE_VIF_NOP			(0x00U)
 #define SCE_VIF_STCYCL		(0x01U)

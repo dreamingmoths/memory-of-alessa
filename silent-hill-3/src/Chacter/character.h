@@ -7,8 +7,8 @@
 #define CHARACTER_H
 
 #include "common.h"
-#include "libvu0.h"
-#include "eetypes.h"
+#include "sce/libvu0.h"
+#include "sce/eetypes.h"
 #include "shared/Chacter_Draw/clani.h"
 
 typedef struct shBattleArea {

@@ -1,7 +1,7 @@
 #ifndef PSS_VODATA_H
 #define PSS_VODATA_H
 
-#include "mpeg/vobuf.h"
+#include "sce/mpeg/vobuf.h"
 
 extern VoBuf voBuf;
 

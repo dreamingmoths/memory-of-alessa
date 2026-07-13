@@ -2,7 +2,7 @@
 #define EF_PACKET_H
 
 #include "common.h"
-#include "libvifpk.h"
+#include "sce/libvifpk.h"
 
 sceVif1Packet* shEfctPkInit(void* packet /* r2 */);
 sceVif1Packet* shEfctPkReset(void);

@@ -1,8 +1,8 @@
 #ifndef LIB_DMA_H
 #define LIB_DMA_H
 
-#include "eeregs.h"
-#include "eetypes.h"
+#include "sce/eeregs.h"
+#include "sce/eetypes.h"
 
 //
 // Channels

@@ -3,8 +3,8 @@
 #include "data/fs_structs.h"
 #include "Font/font.h"
 #include "Multi_thr/filesys/fcread.h"
-#include "eekernel.h"
-#include "eeregs.h"
+#include "sce/eekernel.h"
+#include "sce/eeregs.h"
 
 // @todo: rename symbols
 

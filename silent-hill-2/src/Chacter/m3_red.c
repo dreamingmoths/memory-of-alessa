@@ -3,7 +3,7 @@
 #include "Chacter_Draw/model3_equip_n.h"
 #include "Enemy/en_common.h"
 #include "Enemy/en_red.h"
-#include "libvu0.h"
+#include "sce/libvu0.h"
 #include "vec.h"
 
 #define D_RED_ANIM_START 6300

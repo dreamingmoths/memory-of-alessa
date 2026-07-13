@@ -3,7 +3,7 @@
 
 /* miscellaneous GS/GIF helpers, with commentary from @Mc-muffin */
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480

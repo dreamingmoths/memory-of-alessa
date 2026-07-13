@@ -4,7 +4,7 @@
 
 #include "vec.h"
 #include "debug.h"
-#include "libvu0.h"
+#include "sce/libvu0.h"
 
 #include "Chacter/m3_maria_sub.h"
 #include "Chacter/m3_sc.h"

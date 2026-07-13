@@ -2,8 +2,8 @@
 #define HH_PACKET_H
 
 #include "common.h"
-#include "eestruct.h"
-#include "libvifpk.h"
+#include "sce/eestruct.h"
+#include "sce/libvifpk.h"
 
 u_int HH_Vif1PacketBuffer_Memory_Allocate_Check(void);
 

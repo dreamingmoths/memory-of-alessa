@@ -1,7 +1,7 @@
 #ifndef SH_KT_VIF0
 #define SH_KT_VIF0
 
-#include "libdma.h"
+#include "sce/libdma.h"
 #include "Chacter_Draw/model_common.h"
 
 typedef struct ktVif1Ot2 {

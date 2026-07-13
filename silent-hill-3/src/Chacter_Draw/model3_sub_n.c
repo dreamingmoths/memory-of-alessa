@@ -1,9 +1,9 @@
 #include "model3_sub_n.h"
 #include "model_common.h"
-#include "libdma.h"
-#include "eestruct.h"
-#include "eeregs.h"
-#include "libgraph.h"
+#include "sce/libdma.h"
+#include "sce/eestruct.h"
+#include "sce/eeregs.h"
+#include "sce/libgraph.h"
 
 float* func_001D3780(void *work_)
 {

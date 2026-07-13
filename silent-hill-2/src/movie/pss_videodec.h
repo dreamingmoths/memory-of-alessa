@@ -2,7 +2,7 @@
 #define PSS_VIDEODEC_H
 
 #include "sh2_common.h"
-#include "mpeg/videodec.h"
+#include "sce/mpeg/videodec.h"
 #include "shared/movie/cscvu1.h"
 #include "pss_vobuf.h"
 

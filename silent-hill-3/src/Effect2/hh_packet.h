@@ -2,8 +2,8 @@
 #define HH_PACKET_H
 
 #include "common.h"
-#include "eestruct.h"
-#include "libvifpk.h"
+#include "sce/eestruct.h"
+#include "sce/libvifpk.h"
 
 sceVif1Packet* HH_Vif1Packet_Current_Get(void);
 

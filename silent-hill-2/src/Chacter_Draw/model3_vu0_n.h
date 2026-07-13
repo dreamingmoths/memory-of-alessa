@@ -1,9 +1,9 @@
 #ifndef MODEL3_VU0_N_H
 #define MODEL3_VU0_N_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 #include "sh2_common.h"
-#include "libdma.h"
+#include "sce/libdma.h"
 
 #define GIF_REG(reg, n) ((u_long)(reg) << ((n) * 4))
 

@@ -1,7 +1,7 @@
 #ifndef SH2GFW_STRUCTS_H
 #define SH2GFW_STRUCTS_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 typedef struct sh2gfw_AREA_HEAD {
     // total size: 0x10

@@ -20,7 +20,7 @@
 #ifndef _LIB_VU0_H_
 #define _LIB_VU0_H_
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 #ifdef __cplusplus
 extern "C" {

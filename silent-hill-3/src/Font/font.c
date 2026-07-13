@@ -2,8 +2,8 @@
 #include "Font/font.h"
 #include "Font/fj_man.h"
 #include "SH3_common/sh3dt.h"
-#include "libgraph.h"
-#include "eestruct.h"
+#include "sce/libgraph.h"
+#include "sce/eestruct.h"
 #include "gs.h"
 #include "shared/Font/font.h"
 

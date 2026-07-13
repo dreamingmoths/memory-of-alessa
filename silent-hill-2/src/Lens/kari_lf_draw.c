@@ -3,8 +3,8 @@
 #include "Lens/lens_flare.h"
 #include "Lens/kari_lf_draw.h"
 
-#include "libgraph.h"
-#include "libvifpk.h"
+#include "sce/libgraph.h"
+#include "sce/libvifpk.h"
 #include "vec.h"
 
 #include "GFW/sh2_DrawEnvData.h"

@@ -6,7 +6,7 @@
 #include "Effect2/hh_effect_object_texture.h"
 #include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_math_wrapper.h"
-#include "libvifpk.h"
+#include "sce/libvifpk.h"
 
 static u_int _area00_view_list_0x00375128[3] = {0, 1, 5};
 static u_int _area01_view_list_0x00375140[4] = {0, 1, 2, 5};

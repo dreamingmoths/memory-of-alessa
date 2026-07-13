@@ -1,8 +1,8 @@
 #include "sh2_init.h"
 
-#include "eekernel.h"
+#include "sce/eekernel.h"
 
-#include "libmc.h"
+#include "sce/libmc.h"
 
 #include "gamemain.h"
 

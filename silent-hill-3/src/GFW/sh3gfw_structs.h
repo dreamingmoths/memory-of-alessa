@@ -1,7 +1,7 @@
 #ifndef SH3GFW_STRUCTS_H
 #define SH3GFW_STRUCTS_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 typedef struct sh3gfw_AREA_HEAD {
     // total size: 0x10

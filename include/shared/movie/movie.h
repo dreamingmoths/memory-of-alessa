@@ -1,8 +1,8 @@
 #ifndef MOVIE_SHARED_H
 #define MOVIE_SHARED_H
 
-#include "libcdvd.h"
-#include "eekernel.h"
+#include "sce/libcdvd.h"
+#include "sce/eekernel.h"
 
 typedef struct {
     int play_event_no;

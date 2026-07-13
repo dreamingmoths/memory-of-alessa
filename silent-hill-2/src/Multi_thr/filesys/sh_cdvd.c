@@ -1,8 +1,8 @@
 #include "Multi_thr/filesys/sh_cdvd.h"
-#include "eekernel.h"
-#include "eeregs.h"
-#include "sifdev.h"
-#include "sifrpc.h"
+#include "sce/eekernel.h"
+#include "sce/eeregs.h"
+#include "sce/sifdev.h"
+#include "sce/sifrpc.h"
 #include "debug.h"
 
 static int WaitExec(void);

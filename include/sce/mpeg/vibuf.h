@@ -4,7 +4,7 @@
 #define SCE_MPEG_VIBUF_H
 
 #include "common.h"
-#include "libipu.h"
+#include "sce/libipu.h"
 
 #define DMA_ID_REFE 0
 #define DMA_ID_NEXT 2

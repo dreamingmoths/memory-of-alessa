@@ -1,5 +1,5 @@
 #include "common.h"
-#include "eeregs.h"
+#include "sce/eeregs.h"
 
 static int shSyncVHandler2(int arg, void* arg1, void* arg2);
 static int shSyncVInitSub(int* sid_p, int* hid_p, int intc_cause);

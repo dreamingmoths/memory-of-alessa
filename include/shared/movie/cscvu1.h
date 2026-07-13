@@ -1,7 +1,7 @@
 #ifndef PSS_CSCVU1_SHARED_H
 #define PSS_CSCVU1_SHARED_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 #define CSCVU1_LASTKICK 0x7FC
 

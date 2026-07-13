@@ -1,7 +1,7 @@
 #ifndef PSS_AUDIODEC_H
 #define PSS_AUDIODEC_H
 
-#include "eetypes.h"
+#include "sce/eetypes.h"
 
 
 // ///////////////////////////////////////////////////////

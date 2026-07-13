@@ -1,7 +1,7 @@
 #ifndef PS2_SCF_H
 #define PS2_SCF_H
 
-#include "libscf.h"
+#include "sce/libscf.h"
 
 void ps2ScfInit(void);
 

@@ -2,7 +2,7 @@
 #define EF_COMMON_H
 
 #include "common.h"
-#include "libvifpk.h"
+#include "sce/libvifpk.h"
 #include "taskman/shtskman.h"
 
 // total size: 0x18

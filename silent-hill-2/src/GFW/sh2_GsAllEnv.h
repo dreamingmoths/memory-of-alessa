@@ -4,7 +4,7 @@
 /* this header is not found in the symbols */
 
 #include "sh2_common.h"
-#include "libgraph.h"
+#include "sce/libgraph.h"
 
 typedef struct shGsLoopEnv {
     // total size: 0xB0

@@ -2,7 +2,7 @@
 #define FSSERVE_H
 
 #include "common.h"
-#include "sif.h"
+#include "sce/sif.h"
 
 typedef struct unk_00488E50 {
     char unk0;

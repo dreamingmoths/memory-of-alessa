@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libgraph.h"
+#include "sce/libgraph.h"
 
 #include "Lens/lens_flare.h"
 #include "Lens/lens_th_draw.h"

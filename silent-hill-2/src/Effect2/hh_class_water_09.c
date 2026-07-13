@@ -6,7 +6,7 @@
 #include "Effect2/hh_effect_object_texture.h"
 #include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_math_wrapper.h"
-#include "libvifpk.h"
+#include "sce/libvifpk.h"
 
 #pragma divbyzerocheck off
 

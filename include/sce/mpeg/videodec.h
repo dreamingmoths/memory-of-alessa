@@ -3,8 +3,8 @@
 #ifndef SCE_MPEG_VIDEODEC_H
 #define SCE_MPEG_VIDEODEC_H
 
-#include "mpeg/libmpeg.h"
-#include "mpeg/vibuf.h"
+#include "sce/mpeg/libmpeg.h"
+#include "sce/mpeg/vibuf.h"
 
 #define VD_STATE_NORMAL 0
 #define VD_STATE_ABORT 1

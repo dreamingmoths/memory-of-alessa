@@ -3,8 +3,8 @@
 #include "Lens/lens_flare.h"
 #include "Lens/kari_lf_draw.h"
 
-#include "libgraph.h"
-#include "libvifpk.h"
+#include "sce/libgraph.h"
+#include "sce/libvifpk.h"
 #include "vec.h"
 
 static void shLensFlarePolyFT4AddPacketGif(sceVif1Packet* packet, IVector4* rgbaq, IVector4* xyz0, IVector4* xyz1, IVector4* xyz2, IVector4* xyz3, Vector4* stq0, Vector4* stq1, Vector4* stq2, Vector4* stq3); // @note many arguments not in dwarf

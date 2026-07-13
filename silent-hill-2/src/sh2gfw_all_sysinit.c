@@ -1,8 +1,8 @@
 #include "sh2gfw_all_sysinit.h"
 
-#include "eeregs.h"
-#include "libgraph.h"
-#include "libvu0.h"
+#include "sce/eeregs.h"
+#include "sce/libgraph.h"
+#include "sce/libvu0.h"
 
 #include "Chacter_Draw/vifot/sh_kt_vif0.h"
 #include "Chacter_Draw/vifot/sh_kt_vif1.h"

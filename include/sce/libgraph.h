@@ -1,8 +1,8 @@
 #ifndef LIBGRAPH_H
 #define LIBGRAPH_H
 
-#include "eeregs.h"
-#include "eestruct.h"
+#include "sce/eeregs.h"
+#include "sce/eestruct.h"
 
 #define SCE_GS_FALSE (0)
 #define SCE_GS_TRUE  (1)
