@@ -27,6 +27,7 @@ extern /* static */ float hp_roof_pos[4];
 
 /* static */ float enREDGetRotSpeed(void);
 
+/* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp);
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData);
@@ -202,9 +203,13 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDGetRotSpeed);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetSlowTime); // https://decomp.me/scratch/x7D12 migrate data first?
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDSetMoveCount);
-
 #pragma fast_fptosi on
+
+/* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp) {
+    int n;
+    n = 6.0f - (enGetMode() * 0.2f) + shSway1f(-2.0f, 0.5f);    
+    enSetAnimeCount(dp, n << 11);
+}
 
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sound_wait < 0x12C) {
