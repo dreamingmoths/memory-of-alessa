@@ -14,6 +14,8 @@ extern /* static */ float hp_roof_pos[4];
 
 /* static */ void enREDCtrlHand(void);
 
+/* static */ void enREDCtrlAttack(EnLOCAL_DATA* dp);
+
 /* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
 /* static */ int enREDSetDamage(EnLOCAL_DATA* dp);
@@ -22,6 +24,8 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDAnimeReset(EnLOCAL_DATA* dp, int anim);
 
 /* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */);
+
+/* static */ float enREDGetRotSpeed(void);
 
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
@@ -58,7 +62,58 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBerserk);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlStair);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAttack);
+/* static */ void enREDCtrlAttack(EnLOCAL_DATA* dp) { // not line matched
+    int t; // r2
+    if (enCheckDamage(dp)) {
+        enREDSetDamage(dp);
+    }
+    switch (dp->sslv) {
+        case 0:
+            t = enREDCanSeePlayer(dp);
+            if (t == 3) {
+                enREDAnimeReset(dp, 4);
+            } else if (t == 4) {
+                enREDAnimeReset(dp, 5);
+            } else {
+                enREDAnimeReset(dp, 3);
+            }
+            enFlagSetCritical(dp);
+            enAttackStart(dp);
+            dp->red.attack_count++;
+            dp->sslv++;
+            break;
+        
+        case 1:
+            if (dp->anim != 4) {
+                enMoveAngleToPlayer(dp, enREDGetRotSpeed());
+            }
+
+            enAttackCheck(dp, dp->anim + 0x29);
+            if (dp->anim_n == -1) {
+                enFlagResetCritical(dp);
+                if ((dp->type == 2) && enCheckDeath(dp)) {
+                    SET_DP_STATE_LV(dp, 7, 0);
+                } else if (enREDCanSeePlayer(dp) >= 2) {
+                    dp->sslv = 0;
+                } else {
+                    if (dp->type == 2) {
+                        SET_DP_STATE_LV(dp, 1, 0);
+                    } else if (dp->type == 1) {
+                        if ((dp->anim == 4) && (enREDCanSeePlayer(dp) < 2)) {
+                            dp->type = 0;
+                            SET_DP_STATE_LV(dp, 0, 0);
+                        } else {
+                            SET_DP_STATE_LV(dp, 2, 0);
+                        }
+                    } else {
+                        SET_DP_STATE_LV(dp, 0, 0);
+                    }
+                }
+            }
+            break;
+    }
+    enREDGetAttackSpeed(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlSeize);
 
