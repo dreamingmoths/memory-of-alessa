@@ -115,6 +115,7 @@ void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp /* r2 */);
 void enFlagSetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 void enFlagResetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 
+float enCalcDirection(float* pa /* r2 */, float* pb /* r2 */);
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 
 int enCalcTimer(int t /* r2 */);
@@ -126,6 +127,8 @@ void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */);
 void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
 
 void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
+void enInitPath(struct EnPATH_DATA* p /* r16 */, float angle /* r29+0x20 */);
+int enSetPath(struct EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */);
 
 void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
 
@@ -148,7 +151,5 @@ struct EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float
 void enResetForbiddenArea(void);
 
 void enEventDriven(int event /* r2 */, int id /* r2 */);
-
-// extern void shQzero(void*, int);
 
 #endif
