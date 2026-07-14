@@ -2,6 +2,7 @@
 #include "Font/fj_man.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
+#include "Event/event.h"
 
 // @todo: migrate data
 
@@ -11,6 +12,7 @@ extern /* static */ float hp_roof_pos[4];
 
 /* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
+/* static */ void enREDCtrlEvent(EnLOCAL_DATA* dp);
 
 /* static */ void enREDCtrlHand(void);
 
@@ -49,7 +51,40 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
     SET_DP_STATE_LV(dp, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlEvent); // https://decomp.me/scratch/FXm6U help needed
+/* static */ void enREDCtrlEvent(EnLOCAL_DATA* dp) {
+        
+    
+    
+    
+    
+    
+    
+    switch (dp->type) {
+        case 0:
+            if (dp->sslv == 0) {
+                enREDAnimeSet(dp, 10);
+                dp->sslv++;
+            }
+            break;
+        case 1:
+            if (dp->sslv == 0) {
+                enREDAnimeSet(dp, 1);
+                enInitPath(&dp->path, -QUARTER_TURN);
+                dp->sslv++;
+            }
+            dp->path.markangle = enCalcDirection(&hp_roof_pos, &dp->scp->pos);
+            enMoveAngle(&dp->path, enREDGetRotSpeed());
+            dp->scp->rot.y = dp->path.angle;            
+            if (vec3_dist_xz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
+                SET_GAME_FLAG(202); // @todo: add define
+            }
+    }
+    
+    
+    enREDAnimeExec(dp);
+    
+    enMoveExec(dp);
+}
 
 /* static */ void enREDCtrlHand(void) {
     return;
