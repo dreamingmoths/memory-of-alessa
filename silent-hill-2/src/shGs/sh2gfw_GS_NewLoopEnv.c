@@ -1,5 +1,4 @@
 #include "sh2gfw_GS_NewLoopEnv.h"
-#include "sce/libgraph.h"
 
 int sh2gfw_RotateTBuff(shGsAllEnv* shGsEnv)
 {
@@ -58,7 +57,7 @@ u_int sh2gfw_GetStencilFBP(shGsAllEnv* stdb)
 
 u_int sh2gfw_GetFilterFBP(shGsAllEnv* stdb, u_int page)
 {
-    return stdb->StencilWork[stdb->loop3 * 2 + page].frame.ui32[0] & 0x1FF;
+    return stdb->StencilWork[stdb->loop3 * 2 + page].frame.ui32[0] & GS_FRAME_FBP_M;
 }
 
 void sh2gfw_StartShadowFilter(shGsAllEnv* stdb, u_int page)
@@ -70,7 +69,7 @@ void sh2gfw_StartShadowFilter(shGsAllEnv* stdb, u_int page)
 
 void sh2gfw_ChangeMask_ShadowFilter(shGsAllEnv* stdb, int mode, int pageno)
 {
-    u_int id = stdb->loop3 * 2; // r3
+    u_int id = stdb->loop3 * 2;
 
     switch (mode)
     {
@@ -88,9 +87,9 @@ void sh2gfw_ChangeMask_ShadowFilter(shGsAllEnv* stdb, int mode, int pageno)
 
 void sh2gfw_ChangeClear_StencilBuf(shGsAllEnv* stdb, u_int r, u_int g, u_int b, u_int a)
 {
-    Q_WORDDATA* qwd = (Q_WORDDATA *) &stdb->StencilBuf[stdb->loop3].clear.rgbaq; // r9
+    Q_WORDDATA* qwd = (Q_WORDDATA *) &stdb->StencilBuf[stdb->loop3].clear.rgbaq;
 
-    qwd->ui32[0] = r | (g << 8) | (b << 16) | (a << 24);
+    qwd->ui32[0] = COLOR_RGBA(r, g, b, a);
 }
 
 u_int sh2gfw_InclimentLoopCounter(shGsAllEnv* stdb)
