@@ -42,6 +42,14 @@
 #define SCE_GS_DECAL			(1)
 #define SCE_GS_HILIGHT			(2)
 
+#define SCE_GS_NEAREST			(0)
+#define SCE_GS_LINEAR			(1)
+#define SCE_GS_NEAREST_MIPMAP_NEAREST	(2)
+#define SCE_GS_NEAREST_MIPMAP_LINEAR	SCE_GS_NEAREST_MIPMAP_LENEAR
+#define SCE_GS_NEAREST_MIPMAP_LENEAR	(3)
+#define SCE_GS_LINEAR_MIPMAP_NEAREST	(4)
+#define SCE_GS_LINEAR_MIPMAP_LINEAR	(5)
+
 #define SCE_GS_ZNOUSE			(0)
 #define SCE_GS_ZALWAYS			(1)
 #define SCE_GS_ZGEQUAL			(2)
@@ -67,6 +75,20 @@
 #define SCE_GS_ALPHA_AS			(0)
 #define SCE_GS_ALPHA_AD			(1)
 #define SCE_GS_ALPHA_FIX		(2)
+
+#define SCE_GS_REPEAT			(0)
+#define SCE_GS_CLAMP			(1)
+#define SCE_GS_REGION_CLAMP		(2)
+#define SCE_GS_REGION_REPEAT		(3)
+
+#define SCE_GS_NOINTERLACE		(0)
+#define SCE_GS_INTERLACE		(1)
+
+#define SCE_GS_NTSC			(2)
+#define SCE_GS_PAL			(3)
+
+#define	SCE_GS_FIELD			(0)
+#define	SCE_GS_FRAME			(1)
 
 typedef struct {
 	tGS_PMODE	pmode;
@@ -207,6 +229,7 @@ typedef struct {
 	long		trxdiraddr;
 	sceGifTag	giftag1;
 } sceGsLoadImage __attribute__((aligned(16)));
+
 typedef struct {
 	u_int		vifcode[4];
 	sceGifTag	giftag;
@@ -222,11 +245,21 @@ typedef struct {
 	long		trxdiraddr;
 } sceGsStoreImage __attribute__((aligned(16)));
 
-void sceGsResetGraph(short mode, short inter, short omode, short ffmode);
+typedef struct {
+	short		sceGsInterMode;
+	short		sceGsOutMode;
+	short		sceGsFFMode;
+	short		sceGsVersion;
+	volatile int	(*sceGsVSCfunc)(int);
+	int		sceGsVSCid;
+} sceGsGParam __attribute__((aligned(16)));
 
+void sceGsResetGraph(short mode, short inter, short omode, short ffmode);
+sceGsGParam* sceGsGetGParam(void);
 void sceGsResetPath(void);
 
-extern void sceGsPutDispEnv(sceGsDispEnv* dispenv);
+void sceGsPutDispEnv(sceGsDispEnv* disp);
+int sceGsSetDefClear(sceGsClear* cp, short ztest, short x, short y, short w, short h, u_char r, u_char g, u_char b, u_char a, u_int z);
 extern u_long sceGsPutIMR(u_long imr);
 extern u_long sceGsGetIMR(void);
 extern u_long isceGsPutIMR(u_long imr);
