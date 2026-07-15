@@ -71,6 +71,8 @@
 #define GAME_FLAG_501  501
 #define GAME_FLAG_502  502
 #define GAME_FLAG_503  503
+#define GAME_FLAG_506  506
+#define GAME_FLAG_508  508
 #define GAME_FLAG_517  517
 #define GAME_FLAG_518  518
 #define GAME_FLAG_607  607

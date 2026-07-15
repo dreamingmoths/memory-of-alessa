@@ -12,6 +12,11 @@
         fjAssert_(_file, _line, #_cond); \
     }
 
+#define FJ_ASSERT_ON_LINE(_cond, _line) { \
+    if ((_cond) != 0) { int x = 0; } \
+    else fjAssert_(__FILE__, _line, #_cond); \
+}
+
 void fjInitAll(void);
 
 void fjInitFontTexture(void);
