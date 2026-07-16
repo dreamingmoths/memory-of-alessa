@@ -4,6 +4,16 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
+#define SET_DP_STATE_LV(_dp, _slv, _sslv) do { \
+    _dp->slv = _slv; \
+    _dp->sslv = _sslv; \
+} while (0)
+
+#define ENEMY_STEP(_slv) SET_DP_STATE_LV(dp, _slv, 0)
+#define ENEMY_NEXT_SUB_STEP() do { dp->sslv++; } while (0)
+#define ENEMY_SUB_STEP(_sslv) do { dp->sslv = _sslv; } while (0)
+#define ENEMY_MLV(_mlv) do { dp->mlv = _mlv; } while (0)
+
 typedef struct EnSOUND_QUEUE {
     // total size: 0x10
     struct SubCharacter* scp; // offset 0x0, size 0x4
@@ -84,6 +94,8 @@ void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */);
 void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */);
 float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */);
+float enCheckPlayerHitEyes(struct EnLOCAL_DATA* dp, float* ep);
+float enCalcDirection(float* pa, float* pb);
 float enGetPlayerDistance(struct EnLOCAL_DATA* dp /* r2 */);
 float enGetPlayerDirection(struct EnLOCAL_DATA* dp /* r2 */);
 int enGetPlayerWeapon(void);
@@ -115,17 +127,25 @@ void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp /* r2 */);
 void enFlagSetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 void enFlagResetDisplay(struct EnLOCAL_DATA* dp /* r2 */);
 
+float enCalcDirection(float* pa /* r2 */, float* pb /* r2 */);
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 
 int enCalcTimer(int t /* r2 */);
 void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */);
 int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */);
 
+struct EnLOCAL_DATA* enGetNearOtherEnemy(struct EnLOCAL_DATA* dp);
+
+void enCheckNearPlayer(struct EnLOCAL_DATA* dp, int* count, float* dist, float limit);
+
+
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */);
 void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */);
 void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
 
 void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */);
+void enInitPath(struct EnPATH_DATA* p /* r16 */, float angle /* r29+0x20 */);
+int enSetPath(struct EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */);
 
 void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
 
@@ -148,7 +168,5 @@ struct EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float
 void enResetForbiddenArea(void);
 
 void enEventDriven(int event /* r2 */, int id /* r2 */);
-
-// extern void shQzero(void*, int);
 
 #endif

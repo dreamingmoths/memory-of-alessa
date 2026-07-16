@@ -6,6 +6,24 @@
  * eventually be moved here
  */
 
+static inline void vu0_add_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+    asm volatile("\
+	lqc2      vf4,0x0(%1)\n\
+	lqc2      vf5,0x0(%2)\n\
+	vadd.xyzw vf4,vf4,vf5\n\
+	sqc2      vf4,0x0(%0)\n\
+	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
+}
+
+static inline void vu0_sub_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+    asm volatile("\
+	lqc2      vf4,0x0(%1)\n\
+	lqc2      vf5,0x0(%2)\n\
+	vsub.xyzw vf4,vf4,vf5\n\
+	sqc2      vf4,0x0(%0)\n\
+	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
+}
+
 static inline float vec_normalize(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\
         vmul.xyz vf5, vf4, vf4\n\

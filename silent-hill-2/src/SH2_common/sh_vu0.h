@@ -11,7 +11,7 @@ void sh_ecossin(void);
 float shSinF(float);
 float shCosF(float);
 void shSinCosV(void*, float);
-void shSinCosV_Scale(void*, float, float);
+void shSinCosV_Scale(sceVu0FVECTOR, float, float);
 void shRotVectorY(void);
 void shRotMatrixX(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx);
 void shRotMatrixY(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float ry);
