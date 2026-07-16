@@ -292,7 +292,7 @@ segments:
       - [0x16c1c0, c,   Multi_thr/filesys/fcread]
       - [0x16c4c0, asm, Chacter/m3_boat_jms]
       - [0x16c780, asm, Chacter/m3_boat]
-      - [0x16f630, asm, Chacter/lake_wave]
+      - [0x16f630, c,   Chacter/lake_wave]
       - [0x16fbf0, c,   Chacter/m3_inu]
       - [0x16fe80, c,   view/vc_play]
       - [0x170010, asm, LoadBg/loadbg_2x2]
@@ -556,6 +556,8 @@ segments:
       - [0x29a960, rodata,  rodata_0x29a960]
       - [0x29ace0, .rodata, Multi_thr/filesys/fcread]
       - [0x29ad10, rodata,  rodata_0x29ad10]
+      - [0x29ad80, .rodata, Chacter/lake_wave]
+      - [0x29aea0, rodata,  rodata_0x29aea0]
       - [0x29bf50, .rodata, sh2shd/sh2shd_shadow_env]
       - [0x29bfd0, rodata,  rodata_0x29bfd0]
       - [0x29c140, .rodata, Chacter/m3_play_event]
@@ -606,6 +608,8 @@ segments:
       - { vram: 0x11eb830, type: bss,  name: Effect2/hh_class_wrapper}
       - { vram: 0x11eb8f0, type: .bss, name: Effect2/hh_dbg_wrapper }
       - { vram: 0x11eb930, type: bss,  name: bss_0x11eb930 }
+      - { vram: 0x1202580, type: .bss, name: Chacter/lake_wave }
+      - { vram: 0x1202730, type: bss,  name: bss_0x1202730 }
       - { vram: 0x1202ed0, type: .bss, name: Effect2/hh_class_water_03 }
       - { vram: 0x1202ef0, type: .bss, name: Effect2/hh_class_water_04 }
       - { vram: 0x1202f10, type: .bss, name: Effect2/hh_class_water_06 }
