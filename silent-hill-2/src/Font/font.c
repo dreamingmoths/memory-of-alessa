@@ -4,6 +4,7 @@
 #include "sce/libgraph.h"
 #include "sce/eestruct.h"
 #include "SH2_common/pad.h"
+#include "sound/sh_sound.h"
 #include "gs.h"
 
 #pragma fast_fptosi on
@@ -188,8 +189,6 @@ const char rodata_955[] = "x >= (4096-SCREEN_WIDTH)/2";
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrMain);
 
 const char rodata_1377_0x003914C0[] = "num >= 0 && num <= 16";
-
-const char rodata_1810[] = "fontSetMes: Illegal number!\n";
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintDec);
 
@@ -398,7 +397,15 @@ void fontEachTurn() {
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPreload);
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetMes);
+void fontSetMes(int num, u_short* str) {
+    
+    if ((num < 0) || (9 < num)) {
+        printf("fontSetMes: Illegal number!\n");
+        num = 0;
+    }
+    fontCopyMessage(font.mes_v[num],str);
+
+}
 
 void fontCopyMessage(u_short* pto, u_short* pfrom) {
     u_short n;
@@ -408,13 +415,51 @@ void fontCopyMessage(u_short* pto, u_short* pfrom) {
     } while (n != 0xffff);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontPushButton);
+void fontPushButton(void) {
+    if (font.wait_type == 4) {
+        font.wait_type = 5;
+        font.st_num = 0;
+    
+    } else if (((font.wait_type & 7) != 2) &&
+               !(font.flag & 0x10)) { // @note: macro?       
+        font.wait_count = 0;
+    
+    }
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontPushButton2);
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectUp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectDown);
+void fontPushButton2(void) {
+    if (((font.wait_type & 7) != 2) &&
+        !(font.flag & 0x10)) {
+        font.wait_count = 0;
+    }
+
+
+
+}
+
+void fontSelectUp(void) {
+    if (font.wait_type == 4) {
+        SeCall(10000, 1.0, 0);
+        if (font.sel_max == -1) {
+            font.sel_now = 0; 
+        }                   
+        else if (--font.sel_now < 0) font.sel_now = font.sel_max - 1;
+                    
+    }
+}
+
+void fontSelectDown(void) {
+    if (font.wait_type == 4) {
+        SeCall(10000, 1.0, 0);
+        if (font.sel_max == -1) {
+            font.sel_now = 1;  
+        }                      
+        else if (++font.sel_now >= font.sel_max)  font.sel_now = 0;
+                   
+    }
+}
 
 u_short* fontGetMesAdr(u_short* str /* r2 */, u_short num /* r2 */) {
     if (str == NULL) {
