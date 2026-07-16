@@ -75,7 +75,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
             shGsEnv->DrawEnv[i].draw.frame1.PSM << GS_FRAME_PSM_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBW << GS_FRAME_FBW_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBP << GS_FRAME_FBP_O;
-        shGsEnv->DrawEnv[i].frame_mskalpha.ui32[1] = 255 << 24;
+        shGsEnv->DrawEnv[i].frame_mskalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 255);
         shGsEnv->DrawEnv[i].frame_mskalpha.ul64[1] = SCE_GS_FRAME_1;
 
         shGsEnv->DrawEnv[i].gifad_frame_mskDalpha = shGsEnv->DrawEnv[i].gifad_frame_normal;
@@ -84,7 +84,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
             shGsEnv->DrawEnv[i].draw.frame1.PSM << GS_FRAME_PSM_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBW << GS_FRAME_FBW_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBP << GS_FRAME_FBP_O;
-        shGsEnv->DrawEnv[i].frame_mskDalpha.ui32[1] = 1 << 31;
+        shGsEnv->DrawEnv[i].frame_mskDalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 128);
         shGsEnv->DrawEnv[i].frame_mskDalpha.ul64[1] = SCE_GS_FRAME_1;
 
         shGsEnv->DrawEnv[i].gifad_frame_mskRGB = shGsEnv->DrawEnv[i].gifad_frame_normal;
@@ -93,7 +93,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
             shGsEnv->DrawEnv[i].draw.frame1.PSM << GS_FRAME_PSM_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBW << GS_FRAME_FBW_O |
             shGsEnv->DrawEnv[i].draw.frame1.FBP << GS_FRAME_FBP_O;
-        shGsEnv->DrawEnv[i].frame_mskRGB.ui32[1] = 255 | (255 << 8) | (255 << 16);
+        shGsEnv->DrawEnv[i].frame_mskRGB.ui32[1] = COLOR_RGBA(255, 255, 255, 0);
         shGsEnv->DrawEnv[i].frame_mskRGB.ul64[1] = SCE_GS_FRAME_1;
     }
 
@@ -311,7 +311,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             (w / 64) << GS_FRAME_FBW_O |
             SCE_GS_PSMCT16S << GS_FRAME_PSM_O |
             shGsEnv->LoopEnv.GsShadowFBP[i] << GS_FRAME_FBP_O;
-        shGsEnv->StencilBuf[i].frame.ui32[1] = 255 << 24;
+        shGsEnv->StencilBuf[i].frame.ui32[1] = COLOR_RGBA(0, 0, 0, 255);
         shGsEnv->StencilBuf[i].frame.ul64[1] = SCE_GS_FRAME_1;
 
         shGsEnv->StencilBuf[i].gifad_frame_normal.ui32[3] = 0;
@@ -374,7 +374,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1
         );
         shGsEnv->StencilBuf[i].frame_mskDalpha = shGsEnv->StencilBuf[i].frame;
-        shGsEnv->StencilBuf[i].frame_mskDalpha.ui32[1] = 1 << 31;
+        shGsEnv->StencilBuf[i].frame_mskDalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 128);
     }
 
     for (i = 0; i < SH2GFW_ENV_COUNT; i++)
@@ -507,11 +507,11 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
 
     shGsEnv->StencilWork[0].gifad_mskalpha = shGsEnv->StencilWork[0].gifad_normal;
     shGsEnv->StencilWork[0].frame_mskalpha = shGsEnv->StencilWork[0].frame;
-    shGsEnv->StencilWork[0].frame_mskalpha.ui32[1] = 255 << 24;
+    shGsEnv->StencilWork[0].frame_mskalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 255);
 
     shGsEnv->StencilWork[0].gifad_mskDalpha = shGsEnv->StencilWork[0].gifad_normal;
     shGsEnv->StencilWork[0].frame_mskDalpha = shGsEnv->StencilWork[0].frame;
-    shGsEnv->StencilWork[0].frame_mskDalpha.ui32[1] = 1 << 31;
+    shGsEnv->StencilWork[0].frame_mskDalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 128);
 
     for (i = 1; i < 6; i++)
     {
@@ -538,14 +538,14 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
         shGsEnv->StencilWork[i + 1].frame_normal = shGsEnv->StencilWork[i + 1].frame;
 
         shGsEnv->StencilWork[i].frame_mskalpha = shGsEnv->StencilWork[i].frame;
-        shGsEnv->StencilWork[i].frame_mskalpha.ui32[1] = 255 << 24;
+        shGsEnv->StencilWork[i].frame_mskalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 255);
         shGsEnv->StencilWork[i + 1].frame_mskalpha = shGsEnv->StencilWork[i + 1].frame;
-        shGsEnv->StencilWork[i + 1].frame_mskalpha.ui32[1] = 255 << 24;
+        shGsEnv->StencilWork[i + 1].frame_mskalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 255);
 
         shGsEnv->StencilWork[i].frame_mskDalpha = shGsEnv->StencilWork[i].frame;
-        shGsEnv->StencilWork[i].frame_mskDalpha.ui32[1] = 1 << 31;
+        shGsEnv->StencilWork[i].frame_mskDalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 128);
         shGsEnv->StencilWork[i + 1].frame_mskDalpha = shGsEnv->StencilWork[i + 1].frame;
-        shGsEnv->StencilWork[i + 1].frame_mskDalpha.ui32[1] = 1 << 31;
+        shGsEnv->StencilWork[i + 1].frame_mskDalpha.ui32[1] = COLOR_RGBA(0, 0, 0, 128);
     }
 }
 
