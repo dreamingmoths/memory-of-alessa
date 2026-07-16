@@ -2,26 +2,28 @@
 
 #pragma divbyzerocheck off
 
+#define SH2GFW_ENV_COUNT 3
+
 void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, short w, short h, short ztest, short zpsm)
 {
     u_int i; // r16
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsSetDefTBuffDispEnv(&shGsEnv->DispEnv[i], disp_psm, w, h, 0, 0);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsSetDefTBuffDrawEnv(&shGsEnv->DrawEnv[i].draw, draw_psm, w, h, ztest, zpsm);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         sceGsSetDefClear(&shGsEnv->DrawEnv[i].clear, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 0, 0, 0, 0, 0);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         SCE_GIF_CLEAR_TAG(&shGsEnv->DrawEnv[i].giftag);
 
@@ -35,7 +37,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
         shGsEnv->DrawEnv[i].draw_nc = shGsEnv->DrawEnv[i].draw;
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsEnv->DispEnv[i].dispfb.FBP = shGsEnv->LoopEnv.GsNowDispFBPs[i];
         shGsEnv->DrawEnv[i].draw.frame1.FBP = shGsEnv->LoopEnv.GsDrawFBPs[i];
@@ -95,7 +97,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
         shGsEnv->DrawEnv[i].frame_mskRGB.ul64[1] = SCE_GS_FRAME_1;
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsEnv->DrawEnv[i].drawq2[0].ui32[0] =
             draw_psm << GS_FRAME_PSM_O |
@@ -131,7 +133,7 @@ void shGs_TrimDispArea(int xx, int yy)
 {
     int i; // r3
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGs_AllEnv.DispEnv[i].dispfb.DBX += xx;
         shGs_AllEnv.DispEnv[i].dispfb.DBY += yy;
@@ -142,7 +144,7 @@ void shGs_SetDefaultDispArea(void)
 {
     int i; // r7
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGs_AllEnv.DispEnv[i].dispfb.DBX = 0;
         shGs_AllEnv.DispEnv[i].dispfb.DBY = 32;
@@ -277,17 +279,17 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
 {
     u_int i; // r18
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGs_InitStencilDrawEnv(&shGsEnv->StencilBuf[i], w, h, ztest, zpsm);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         sceGsSetDefClear(&shGsEnv->StencilBuf[i].clear, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 128, 128, 128, 0, 0);
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         SCE_GIF_CLEAR_TAG(&shGsEnv->StencilBuf[i].giftag);
 
@@ -300,7 +302,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
         shGsEnv->StencilBuf[i].giftag_nc.NLOOP = 15;
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsEnv->StencilBuf[i].draw.frame1.FBP = shGsEnv->LoopEnv.GsShadowFBP[i];
         shGsEnv->StencilBuf[i].draw_nc.frame1.FBP = shGsEnv->LoopEnv.GsShadowFBP[i];
@@ -375,7 +377,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
         shGsEnv->StencilBuf[i].frame_mskDalpha.ui32[1] = 1 << 31;
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < SH2GFW_ENV_COUNT; i++)
     {
         shGsEnv->StencilBuf[i].alpha1.ul64[1] = SCE_GS_ALPHA_1;
         shGsEnv->StencilBuf[i].alpha1.ul64[0] = SCE_GS_SET_ALPHA_1(SCE_GS_ALPHA_CS, SCE_GS_ALPHA_ZERO, SCE_GS_ALPHA_AS, SCE_GS_ALPHA_CD, 0);
