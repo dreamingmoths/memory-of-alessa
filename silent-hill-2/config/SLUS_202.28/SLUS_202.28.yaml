@@ -402,6 +402,8 @@ segments:
       - [0x1bb5c0, data,    data_0x1bb5c0]
       - [0x24c8c0, .data,   jump_menu]
       - [0x24c8d0, data,    data_0x24c8d0]
+      - [0x24c900, .data,   Chacter/m3_play_common]
+      - [0x24c980, data,    data_0x24c980]
       - [0x24cbc0, .data,   Chacter/m3_maria_sub]
       - [0x24cd90, data,    data_0x24cd90]
       - [0x24cff8, .data,   Multi_thr/scf/ps2_scf]

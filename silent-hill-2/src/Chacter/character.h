@@ -448,7 +448,7 @@ typedef enum _JAMES_LOWER_STATUS {
     JMS_ST_L_KICK = 29,
     JMS_ST_L_TO_STAND = 30,
     JMS_ST_L_EVENT = 31,
-} E_JAMES_LOWER_STATUS;
+} JAMES_LOWER_STATUS;
 
 typedef enum _JAMES_UPPER_STATUS {
     JMS_ST_U_STAND = 0,
@@ -483,7 +483,7 @@ typedef enum _JAMES_UPPER_STATUS {
     JMS_ST_U_KICK = 29,
     JMS_ST_U_TO_STAND = 30,
     JMS_ST_U_EVENT = 31,
-} E_JAMES_UPPER_STATUS;
+} JAMES_UPPER_STATUS;
 
 typedef struct _CL_HITPOLY_COLUMN {
     // total size: 0x30

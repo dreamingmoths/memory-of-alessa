@@ -94,6 +94,8 @@ void PlayerStatusClear(void);
 
 void close_to_angle_target(float* now, float tgt, float min, float max, float spd);
 
+void close_to_value(float* now, float tgt, float mov);
+
 int PlayerReverseLightCalcIsOn(void);
 
 int PlayerWaterRoadIsOn(void);
