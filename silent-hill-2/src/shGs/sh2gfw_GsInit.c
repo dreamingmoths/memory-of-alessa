@@ -47,7 +47,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         ) >> 32;
@@ -55,7 +55,7 @@ void shGs_InitDefTBuff(shGsAllEnv* shGsEnv, short draw_psm, short disp_psm, shor
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         );
@@ -318,7 +318,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         ) >> 32;
@@ -326,7 +326,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         );
@@ -339,7 +339,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         ) >> 32;
@@ -347,7 +347,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         );
@@ -359,7 +359,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         ) >> 32;
@@ -367,7 +367,7 @@ void shGs_InitGsStencilBuff(shGsAllEnv* shGsEnv, short w, short h, short ztest, 
             1,
             SCE_GS_TRUE,
             SCE_GS_FALSE,
-            SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+            0,
             SCE_GIF_PACKED,
             1
         );
@@ -454,7 +454,7 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
         5,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -462,7 +462,7 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
         5,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -489,7 +489,7 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -497,7 +497,7 @@ void shGs_InitGsTinyStencilBuff(shGsAllEnv* shGsEnv, short w, short h)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -582,7 +582,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         9,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -590,7 +590,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         9,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -607,7 +607,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         2,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -615,7 +615,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         2,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -626,7 +626,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -634,7 +634,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -713,7 +713,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -721,7 +721,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
@@ -735,7 +735,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     ) >> 32;
@@ -743,7 +743,7 @@ void shGs_InitDefaultRegsEnv(shGsAllEnv* shGsEnv)
         1,
         SCE_GS_TRUE,
         SCE_GS_FALSE,
-        SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+        0,
         SCE_GIF_PACKED,
         1
     );
