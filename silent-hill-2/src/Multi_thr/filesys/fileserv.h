@@ -1,22 +1,27 @@
 #ifndef FILESERV_H
 #define FILESERV_H
 
-#include "common.h"
-#include "FilesList/fileslist_bg.h" // correct?
+#include "sh2_common.h"
+#include "data/fs_structs.h"
 #include "Multi_thr/util/cmd_serv.h"
 
-int fsInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */);
-int fsSync(int mode /* r17 */, int fid /* r16 */);
-int fsGetStat(CmdServStat* stat /* r2 */);
+int fsInit(int th_prio, void* stack, int stackSize, void* queue, int queueSize);
+int fsSync(int mode, int fid);
+int fsGetStat(CmdServStat* stat);
 int fsGetTrayStat(void);
-
+int fcSifInit(void);
+int fcCdInitW(int cb_prio, void* stack, int stackSize);
+int fcIopLoadMod(char* module);
 int fcDiskSelectC(void);
 int fcDiskSelectCH(void);
 int fcDiskSelectHC(void);
-
-int fcDiskSelect(int mode /* r2 */);
-
-int fcRead(union fsFile* fp /* r17 */, void* buf /* r16 */);
-int fcFixFile(union fsFile* fp /* r2 */);
+int fcHdInit(int mode);
+int fcDiskSelect(int mode);
+int fcExecDevSelect(int mode);
+int fcSetParamForCheckDisk(int media_permission, fsFile** fplist, void** buflist, int (*check_func)(fsFile**, void**));
+int fcCdCheckDisk(int force_check);
+int fcRead(fsFile* fp, void* buf);
+int fcReadPart(fsFile* fp, void* buf, int offset, int size);
+int fcFixFile(fsFile* fp);
 
 #endif // FILESERV_H
