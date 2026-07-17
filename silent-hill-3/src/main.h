@@ -38,9 +38,16 @@ extern void func_0012C980(void);
 extern int func_0012C9B0(void);
 extern void func_0012CED0(void);
 extern void func_0012CEF0(void);
+
+/* @brief This function retrieves the equivalent of `_SH2_SYS::step[]`.
+ * While in SH2 it is required to manually input what state to retrieve, SH3
+ * handle this with this function which returns the state of the game based
+ * on the current level the code is being executed.
+ */
 extern int func_0012D080(void);
+
 extern void func_0012DC50(void);
-extern void func_0012DCA0(void);
+extern void func_0012DCA0(void); 
 extern void func_00130640(int arg0);
 extern int func_00130650(void);
 extern void func_0013A780(void);
@@ -55,7 +62,17 @@ extern int func_00156B50(int arg0);
 extern int func_00156B80(int arg1);
 extern void func_0015DB70(void);
 extern void func_00172FA0(void);
-extern void func_00194480(void);
+
+/* @note Game states.
+ * 1  = Main menu/splash screen
+ * 2  = Loading screen
+ * 5  = In-game
+ * 6  = Inventory
+ * 14 = Option menu
+ *
+ * @note PC apparently shares the same list.
+ */
+extern void GameMain(void);
 extern void func_00195490(void);
 extern void func_00195A40(void);
 extern void func_00195B90(void);

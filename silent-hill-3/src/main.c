@@ -49,7 +49,7 @@ int main(int argc, s_char* argv[]) {
             func_001D9090(1);
             *T0_COUNT = 0;
             func_001E5170();
-            func_00194480();
+            GameMain();
             func_0012DCB0(2);
             func_0012DCB0(0);
             func_001D90D0();

@@ -1,5 +1,8 @@
 entry = 0x0100008;
 
+// gamemain.c
+GameMain = 0x194480;
+
 // main.c
 main = 0x12ca70;
 db_watch_point = 0x3d44b0;
