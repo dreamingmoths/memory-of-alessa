@@ -71,8 +71,11 @@ extern void func_00172FA0(void);
  * 14 = Option menu
  *
  * @note PC apparently shares the same list.
+ *
+ * @note SH2 counterpart and PC in Ghidra tells this function returns some 4 byte value.
  */
 extern void GameMain(void);
+
 extern void func_00195490(void);
 extern void func_00195A40(void);
 extern void func_00195B90(void);
@@ -89,7 +92,13 @@ extern void func_00337AB0(void);
 
 extern int func_00115890(int arg0);
 extern void func_0012BDF0(s_char* arg0);
+
+/* @brief This function set a value to the equivalent of `_SH2_SYS::step[]`.
+ * Just like `func_0012D080` but it instead of retrieving the value it sets
+ * the value.
+ */
 extern void func_0012CFE0(int arg0);
+
 extern void func_0012DCB0(int arg0);
 extern void shSetDF(int fpi);
 extern void func_0019B450(void);
@@ -101,6 +110,25 @@ extern void func_001E4E30(int arg0);
 extern void func_00281D80(int, int);
 extern void func_00282090(int arg0);
 
+/* extern void func_0026730(int arg0);
+ * Used to defines values related framerate limit and sets game's delta timer value.
+ */
+ 
+/* extern int func_002A6340(void);
+ * Handle both splash screen and main title screen.
+ * Unlike SH1/2 where the splash screen is handled in a different state, SH3 handles
+ * the splash screen in the same state as the main title screen.
+ *
+ * 3 = Warning Content Screen Start
+ * 4 = Unused Warning Unfinished State Screen
+ */
+
+/* extern void func_002A6730(int arg0, int arg1);
+ * Used during the splash screens.
+ * @param arg0 Background image index
+ * @param arg1 Text index
+ */
+ 
 extern int D_003D44A0;
 extern int D_003D44A8;
 extern int D_003D44B0;
