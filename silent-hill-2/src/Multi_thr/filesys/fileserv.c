@@ -1,6 +1,28 @@
 #include "Multi_thr/filesys/fileserv.h"
-#include "Multi_thr/intc/syncv.h"
 #include "Multi_thr/filesys/filecmd.h"
+#include "Multi_thr/filesys/sh_cdvd.h"
+#include "Multi_thr/filesys/iopload.h"
+#include "Multi_thr/intc/syncv.h"
+
+typedef int (fileserv_func_t)(void);
+typedef int (fileserv_func2_t)(fileserv_func_t*);
+typedef int (fileserv_func3_t)(u_long128*, fileserv_func_t*);
+typedef int (fileserv_func4_t)(int, void*, int);
+//typedef int (fileserv_func5_t)(u_long128*, fileserv_func4_t*, u_long128, u_long128, u_long128);
+typedef int (fileserv_func5_t)(u_long128*, fileserv_func4_t*, ...);
+typedef int (fileserv_func6_t)(char*);
+typedef int (fileserv_func7_t)(u_long128*, fileserv_func6_t*, char*);
+typedef int (fileserv_func8_t)(int);
+typedef int (fileserv_func9_t)(u_long128*, fileserv_func8_t*, ...);
+typedef int (fileserv_func10_t)(fsFile**, void**);
+typedef int (fileserv_func11_t)(int, fsFile**, void**, fileserv_func10_t);
+typedef int (fileserv_func12_t)(u_long128*, fileserv_func11_t*, ...);
+typedef int (fileserv_func13_t)(fsFile*, void*);
+typedef int (fileserv_func14_t)(u_long128*, fileserv_func13_t*, ...);
+typedef int (fileserv_func15_t)(fsFile*, void*, int, int);
+typedef int (fileserv_func16_t)(u_long128*, fileserv_func15_t*, ...);
+typedef int (fileserv_func17_t)(fsFile*);
+typedef int (fileserv_func18_t)(u_long128*, fileserv_func17_t*, ...);
 
 static void checkReadAlign(void* buffer /* r2 */);
 
@@ -20,7 +42,7 @@ int fsInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */,
 int fsSync(int mode /* r17 */, int fid /* r16 */) {
     int ret; // r2 
     
-    if ((mode == 0) && (shSyncVEnd(1) < 0xA)) {
+    if ((mode == 0) && (shSyncVEnd(1) < 10)) {
         shSyncVEnd(0);
     }
     ret = CmdQueueSync(fsCmdWork, mode, fid);
@@ -35,19 +57,33 @@ int fsGetTrayStat(void) {
     return fsCmdGetTrayStat();
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcSifInit);
+int fcSifInit(void) {
+    return (((fileserv_func3_t*)&CmdQueuePut0))(fsCmdWork, shSifInit);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcCdInitW);
+int fcCdInitW(int cb_prio, void* stack, int stackSize) {    
+    return (((fileserv_func5_t*)&CmdQueuePut3)(fsCmdWork, shCdInitW, cb_prio, stack, stackSize));
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcIopLoadMod);
+int fcIopLoadMod(char* module) {    
+    return ((fileserv_func7_t*)&CmdQueuePut1)(fsCmdWork, shIopLoadMod, module);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcDiskSelectC);
+int fcDiskSelectC(void) {
+    return ((fileserv_func3_t*)&CmdQueuePut0)(fsCmdWork, fsCmdDiskSelectC);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcDiskSelectCH);
+int fcDiskSelectCH(void) {
+    return ((fileserv_func3_t*)&CmdQueuePut0)(fsCmdWork, fsCmdDiskSelectCH);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcDiskSelectHC);
+int fcDiskSelectHC(void) {
+    return ((fileserv_func3_t*)&CmdQueuePut0)(fsCmdWork, fsCmdDiskSelectHC);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcHdInit);
+int fcHdInit(int mode) {
+    return ((fileserv_func9_t*)&CmdQueuePut1)(fsCmdWork, fsCmdHdInit, mode);
+}
 
 int fcDiskSelect(int mode /* r2 */) {
     switch (mode) {
@@ -60,11 +96,17 @@ int fcDiskSelect(int mode /* r2 */) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcExecDevSelect);
+int fcExecDevSelect(int mode) {
+    return ((fileserv_func9_t*)&CmdQueuePut1)(fsCmdWork, fsCmdExecDevSelect, mode);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcSetParamForCheckDisk);
+int fcSetParamForCheckDisk(int media_permission, fsFile** fplist, void** buflist, int (*check_func)(fsFile**, void**)) {
+    return ((fileserv_func12_t*)&CmdQueuePut4)(fsCmdWork, fsCmdSetParamForCheckDisk, media_permission, fplist, buflist, check_func);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcCdCheckDisk);
+int fcCdCheckDisk(int force_check) {
+    return ((fileserv_func9_t*)&CmdQueuePut1)(fsCmdWork, fsCmdCdCheckDisk, force_check);
+}
 
 static void checkReadAlign(void* buffer /* r2 */) {
     if ((int)buffer & 0x3F) {
@@ -73,8 +115,15 @@ static void checkReadAlign(void* buffer /* r2 */) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcRead);
+int fcRead(fsFile* fp, void* buf) {
+    checkReadAlign(buf);
+    return ((fileserv_func14_t*)&CmdQueuePut2)(fsCmdWork, fsCmdRead, fp, buf);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcReadPart);
+int fcReadPart(fsFile* fp, void* buf, int offset, int size) {
+    return ((fileserv_func16_t*)&CmdQueuePut4)(fsCmdWork, fsCmdReadPart, fp, buf, offset, size);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/fileserv", fcFixFile);
+int fcFixFile(fsFile* fp) {
+    return ((fileserv_func18_t*)&CmdQueuePut1)(fsCmdWork, fsCmdFixFile, fp);
+}
