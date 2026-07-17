@@ -132,7 +132,7 @@ segments:
       - [0x0893f0, asm, Multi_thr/dma/sh_dma1]
       - [0x0897d0, asm, Multi_thr/dma/sh_dma2]
       - [0x089bc0, asm, Multi_thr/dma/texslot]
-      - [0x089e30, asm, Multi_thr/util/cmd_serv]
+      - [0x089e30, c,   Multi_thr/util/cmd_serv]
       - [0x08b280, asm, Multi_thr/util/utilexcl]
       - [0x08b390, asm, Multi_thr/util/utilstr]
       - [0x08bbc0, asm, shPad/lib_sh_pad]
@@ -593,6 +593,8 @@ segments:
       - { vram: 0x0419fa8, type: bss,  name: bss_0x0419fa8 }
       - { vram: 0x041bf10, type: .bss, name: Chacter_Draw/model_common }
       - { vram: 0x0438588, type: bss,  name: bss_0x0438588 }
+      - { vram: 0x1159230, type: .bss, name: Multi_thr/filesys/fileserv }
+      - { vram: 0x1159238, type: bss,  name: bss_0x1159238 }
       - { vram: 0x116e3d0, type: .bss, name: Item/otn_itemmain }
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670 }
       - { vram: 0x11b6a70, type: .bss, name: Item/otn_option }
