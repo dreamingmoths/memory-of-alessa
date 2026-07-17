@@ -26,7 +26,7 @@ typedef int (fileserv_func18_t)(u_long128*, fileserv_func17_t*, ...);
 
 static void checkReadAlign(void* buffer /* r2 */);
 
-extern /* static */ u_long128* fsCmdWork;
+static u_long128* fsCmdWork = NULL;
 
 int fsInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */) {
     int ret = 0; // r2
