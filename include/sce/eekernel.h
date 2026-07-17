@@ -23,5 +23,7 @@ int DeleteSema(int);
 int SetAlarm(u_short, void (*)(int, u_short, void*), void*);
 void InvalidDCache(void*, void*);
 void SyncDCache(void*, void*);
+int StartThread(int, void *arg);
+int GetThreadId(void);
 
 #endif
