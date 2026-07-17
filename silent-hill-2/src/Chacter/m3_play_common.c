@@ -8,12 +8,17 @@
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_play.h"
 #include "Chacter/m3_play_common.h"
+#include "Chacter/sh_character_battle.h"
 
 #include "Event/event.h"
 
-extern int dt_18574072;
-extern float dtf_18574064;
+static void PlayerCheckHuggedPos(float* l_pos, int dir, float mov);
+static int PlayerCheckKeyLStickTrg(int dir);
 
+static int dt;
+static float dtf;
+
+#ifdef NON_MATCHING
 void PlayerCheckHuggedPos(float* l_pos, int dir, float mov) {
     float tgt_rot;      // r21
     float target_pos_x; // @note: not in dwarf
@@ -52,10 +57,13 @@ void PlayerCheckHuggedPos(float* l_pos, int dir, float mov) {
         shCharacterAnimeCounterSet_(sh2jms.player, 2, anim_counter);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play_common", PlayerCheckHuggedPos);
+#endif
 
 void PlayerSetDT(void) {
-    dt_18574072  = shGetDF();
-    dtf_18574064 = shGetDT();
+    dt  = shGetDF();
+    dtf = shGetDT();
 }
 
 void PlayerUpdateStatus(SubCharacter* this) {
@@ -96,13 +104,13 @@ void PlayerUpdateStatus(SubCharacter* this) {
     sh2jms.se_on      = 0;
 
     if ((sh2jms.lower_now >= 12) && (sh2jms.lower_now < 17)) {
-        sh2jms.running_time += dtf_18574064;
+        sh2jms.running_time += dtf;
     } else {
         sh2jms.running_time = 0.0f;
     }
 
     if (sh2jms.muteki_time) {
-        if ((sh2jms.muteki_time -= dtf_18574064) < 0.0f) {
+        if ((sh2jms.muteki_time -= dtf) < 0.0f) {
             sh2jms.muteki_time = 0.0f;
         }
     }
@@ -193,7 +201,7 @@ void PlayerSpeedDownToStand(SubCharacter* p) {
 
 void PlayerSetAttackWithWalkIsOk(void) {
 
-    if (sh2jms.upper_now == (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)) {
+    if (((sh2jms.upper_now == ((1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)))) || (sh2jms.upper_now ==  ((1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)) )) {
         if (!l_anime_flg_on(2))
             if ((sh2jms.act_with_wep & (1 << 4)) && sh2jms.atk_type < 4) {
 
@@ -205,7 +213,7 @@ void PlayerSetAttackWithWalkIsOk(void) {
 }
 
 void PlayerSetAttackWithRunIsOk(void) {
-    if (sh2jms.upper_now == (1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)) {
+    if (((sh2jms.upper_now == ((1 << JMS_ST_U_ALERT) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)))) || (sh2jms.upper_now ==  ((1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)) )) {
         if (!l_anime_flg_on(2)) {
             if ((sh2jms.act_with_wep & (1 << 5)) && sh2jms.atk_type < 4) {
 
@@ -227,7 +235,7 @@ void PlayerCheckAimingToEnemy(SubCharacter* p, SubCharacter* target) {
         to_target = shAtan2(target->pos.z - p->pos.z, target->pos.x - p->pos.x);
 
         roty_tmp  = shAngleRegulate(p->rot.y - to_target);
-        mov_angle = (roty_tmp / 3.0915928) * (shGetDT() * 15.0f);
+        mov_angle = (roty_tmp / 3.0915927410125734) * (shGetDT() * 15.0f);
         if (roty_tmp >= 0.0f) {
             if (roty_tmp - mov_angle <= 0.0f)
                 p->rot.y = to_target;
@@ -242,17 +250,18 @@ void PlayerCheckAimingToEnemy(SubCharacter* p, SubCharacter* target) {
     }
 }
 
+
 void PlayerCheckAttack(SubCharacter* this) {
     AnimeInfo* a_info = shCharacterAnimeGetInfo_(this, 1); // r2
     shPlayerWork* w   = &sh2jms;                           // r16
     PAD_INFO* pad;                                         // r2
-    u16 var_v0;
+    int attack_no; // @note not in dwarf
 
-    if ((w->upper_now == (1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY)) && ((sh2jms.anime_pause & 2) || (a_info->loop != 0))) {
+    if ((w->upper_now == ((1 << JMS_ST_U_RELAX) | (1 << JMS_ST_U_TIRED) | (1 << JMS_ST_U_READY))) && ((sh2jms.anime_pause & 2) || (a_info->loop != 0))) {
         PlayerRequestAttack(w, 0);
-        w->atk_count = 0;
+        sh2jms.atk_count = 0;
     }
-    if ((sh2jms.enemy_liedown != NULL) && ((w->upper_now < 18) || (w->upper_now >= 30))) {
+    if ((w->enemy_liedown != NULL) && ((w->upper_now < 18) || (w->upper_now > 29))) {
         PlayerRequestAttackFinish(w);
         player_flg_on(&w->upper_st_flg, (1 << JMS_ST_U_KICK));
     } else {
@@ -262,11 +271,11 @@ void PlayerCheckAttack(SubCharacter* this) {
         if (w->atk_reserve[0] != 0) {
             w->atk_type = w->atk_reserve[0];
             if (w->atk_type == 7) {
-                var_v0 = w->motion_no + 30;
+                attack_no = w->motion_no + 30;
             } else {
-                var_v0 = w->motion_no + 25;
+                attack_no = w->motion_no + 25;
             }
-            w->attack_no = var_v0;
+            w->attack_no = attack_no;
             shBattleAttackHitCheckInit(this);
             if (w->upper_now != 29) {
                 upper_st_set(29, w);
@@ -302,10 +311,10 @@ void PlayerCheckAttack(SubCharacter* this) {
                     }
                 }
                 switch (w->lower_now) {
-                    case JMS_ST_L_LSWALK:
-                    case JMS_ST_L_RSWALK:
-                    case JMS_ST_L_WALK:
                     case JMS_ST_L_BACK:
+                    case JMS_ST_L_WALK:
+                    case JMS_ST_L_RSWALK:
+                    case JMS_ST_L_LSWALK:
                         break;
                     default:
                         player_flg_on(&w->lower_st_flg, (1 << JMS_ST_L_HOLD));
@@ -350,7 +359,7 @@ void PlayerCheckAttack(SubCharacter* this) {
             case 4:
                 w->atk_type = 2;
                 if ((w->shoot_val == 0) && (w->reload_val != 0)) {
-                    if (w->upper_prev == 28) {
+                    if (sh2jms.upper_prev == 28) {
                         w->attack_no = 11;
                     } else {
                         w->attack_no = 10;
@@ -472,6 +481,7 @@ void PlayerCheckAttack(SubCharacter* this) {
                         player_flg_on(&w->lower_st_flg, (1 << JMS_ST_L_ATTACK));
                         break;
                 }
+                break;
 
             case 8:
                 if (w->atk_reserve[0] == 3) {
@@ -509,7 +519,7 @@ static inline int get_tired(int x, int y) {
 
 void lower_stand(SubCharacter* p) {
     actwithwep_flg_set(0, &sh2jms);
-    sh2jms.tired -= dt_18574072;
+    sh2jms.tired -= dt;
     PlayerSpeedDownToStand(p);
     if (p->spd < 0.1f) {
         player_flg_on(&sh2jms.lower_st_flg, (1 << JMS_ST_L_READY));
@@ -559,7 +569,7 @@ void upper_alert(SubCharacter* p) {
 void lower_tired(SubCharacter* p) {
     AnimeInfo* temp_s0;
 
-    sh2jms.tired -= dt_18574072;
+    sh2jms.tired -= dt;
     PlayerSpeedDownToStand(p);
     temp_s0 = shCharacterAnimeGetInfo_(p, 2);
     if (sh2jms.tired <= get_tired(sh2jms.tired_max, sh2jms.tired)) {
@@ -632,9 +642,9 @@ void upper_run2(SubCharacter* p) {
             if ((p->spd == 4.0f) && (sh2jms.u_anime_st_flg == 0) && (sh2jms.tired < sh2jms.tired_max)) {
                 player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN3));
                 player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN2));
-                return;
+                break;
             }
-            return;
+            break;
         case 1:
             if ((p->spd <= 3.5f) && (sh2jms.u_anime_st_flg == 0)) {
                 player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN1));
@@ -654,9 +664,9 @@ void upper_run3(SubCharacter* p) {
             if ((sh2jms.tired >= sh2jms.tired_max) && (sh2jms.u_anime_st_flg == 0)) {
                 player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN2));
                 player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN3));
-                return;
+                break;
             }
-            return;
+            break;
         case 1:
             if (((p->spd <= 4.0f) || (sh2jms.tired >= sh2jms.tired_max)) && (sh2jms.u_anime_st_flg == 0)) {
                 player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RUN2));
@@ -667,82 +677,72 @@ void upper_run3(SubCharacter* p) {
 }
 
 void lower_hold(SubCharacter* p) {
-    AnimeInfo* temp_s0;
-    float temp_f0;
-    float temp_f0_2;
-    int var_a2;
-    s64 temp_a2;
-    s64 temp_a2_3;
-    s64 temp_s1;
-    u16 temp_a2_2;
-    u16 temp_v1;
+    AnimeInfo* a_info = shCharacterAnimeGetInfo_(p, 2);
+    short frame = shCharacterAnimeFrameGet_(p, 2);
+    int check;
 
-    temp_s0 = shCharacterAnimeGetInfo_(p, 2);
-    temp_s1 = shCharacterAnimeFrameGet_(p, 2);
     PlayerSpeedDownToStand(p);
     switch (sh2jms.weapon) {
         case 3:
-            if (!(sh2jms.anime_pause & 1)) {
-                temp_a2 = temp_s1;
-                if ((temp_a2 >= 4) && (temp_a2 < 15)) {
-                    if (playing.control_type == 0) {
-                        p->spd_roty = 0.0f;
-                    }
-
-                    temp_f0    = 0.25 * dtf_18574064;
-                    p->spd     = temp_f0;
-                    p->spd_org = temp_f0;
+            if (!(sh2jms.anime_pause & 1) && (frame >= 4) && (frame < 15)) {
+                if (playing.control_type == 0) {
+                    p->spd_roty = 0.0f;
                 }
+
+                p->spd_org = p->spd     = 25.0 * dtf;
             }
             break;
         case 5:
-            temp_a2_2 = temp_s0->name;
-            if (((temp_a2_2 == 351) || (temp_a2_2 == 353)) && !(sh2jms.anime_pause & 1)) {
-                temp_a2_3 = temp_s1;
-                if ((temp_a2_3 >= 2) && (temp_a2_3 < 9)) {
+            if (((a_info->name == 351) || (a_info->name == 353)) && !(sh2jms.anime_pause & 1)) {
+                if ((frame >= 2) && (frame < 9)) {
                     if (playing.control_type == 0) {
                         p->spd_roty = 0.0f;
                     }
 
-                    temp_f0_2  = 0.25 * dtf_18574064;
-                    p->spd     = temp_f0_2;
-                    p->spd_org = temp_f0_2;
+                    p->spd_org = p->spd     = 20.0 * dtf;
                 }
             }
             break;
     }
-    if ((sh2jms.anime_pause & 1) || ((temp_s0->loop != 0) && (temp_s0->name >= 200))) {
+    if ((sh2jms.anime_pause & 1) || ((a_info->loop != 0) && (a_info->name >= 200))) {
         player_flg_on(&sh2jms.lower_st_flg, (1 << JMS_ST_L_RELEASE));
         player_flg_on(&sh2jms.lower_st_flg, (1 << JMS_ST_L_ATTACK));
-        if (temp_s0->loop == 0) {
+        if (a_info->loop == 0) {
             switch (sh2jms.weapon) {
-                case 4:
-                case 8:
-                case 6:
-                case 5:
+                case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                case WEAPON_ID(WEAPON_SP_CHARA_KIND):
                     sh2jms.hold_loop[1] = 1;
                     break;
-                case 7:
+
+                case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
                     sh2jms.hold_loop[1] = 1;
                     break;
             }
         }
         if (sh2jms.hold_chg[1] == 0) {
-            if ((sh2jms.weapon != 7) && (sh2jms.weapon != 8) && (sh2jms.weapon != 6) && (sh2jms.weapon != 5)) {
-
-            } else {
-                switch (sh2jms.hold_type) {
-                    case 0:
-                        if ((sh2jms.r_side.kind == 1) && (sh2jms.l_side.kind != 1)) {
-                            sh2jms.hold_chg[1] = 1;
-                        }
-                        break;
-                    case 1:
-                        if ((sh2jms.l_side.kind == 1) && (sh2jms.r_side.kind != 1)) {
-                            sh2jms.hold_chg[1] = 1;
-                        }
-                        break;
-                }
+            switch (sh2jms.weapon) {
+                case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                    switch (sh2jms.hold_type) {
+                        case 0:
+                            if ((sh2jms.r_side.kind == 1) && (sh2jms.l_side.kind != 1)) {
+                                sh2jms.hold_chg[1] = 1;
+                            }
+                            break;
+                        case 1:
+                            if ((sh2jms.l_side.kind == 1) && (sh2jms.r_side.kind != 1)) {
+                                sh2jms.hold_chg[1] = 1;
+                            }
+                            break;
+                    }
+                    break;
+                
+                default:
+                    break;
             }
         }
         if ((sh2jms.upper_now != 28) || !(sh2jms.anime_pause & 8)) {
@@ -760,9 +760,8 @@ void lower_hold(SubCharacter* p) {
         }
     }
     if ((sh2jms.weapon == 2) && (sh2jms.anime_pause & 1)) {
-        var_a2  = 0;
-        temp_v1 = temp_s0->name;
-        switch (temp_v1) {
+        check  = 0;
+        switch (a_info->name) {
             case 251:
             case 253:
             case 256:
@@ -771,25 +770,25 @@ void lower_hold(SubCharacter* p) {
             case 262:
             case 264:
                 if (sh2jms.shotgun_dir != 1) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
             case 254:
             case 261:
             case 266:
                 if (sh2jms.shotgun_dir != 2) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
             case 257:
             case 263:
             case 265:
                 if (sh2jms.shotgun_dir != 0) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
         }
-        if (var_a2 != 0) {
+        if (check != 0) {
             sh2jms.hold_chg[1] = 1;
             player_flg_off(&sh2jms.lower_st_flg, (1 << JMS_ST_L_RELEASE));
             player_flg_off(&sh2jms.lower_st_flg, (1 << JMS_ST_L_ATTACK));
@@ -800,40 +799,51 @@ void lower_hold(SubCharacter* p) {
 }
 
 void upper_hold(SubCharacter* p) {
-    AnimeInfo* temp_s0;
-    int var_a2;
-    u16 temp_v1;
+    AnimeInfo* a_info  = shCharacterAnimeGetInfo_(p, 1);
+    int check;
 
-    temp_s0 = shCharacterAnimeGetInfo_(p, 1);
     if (sh2jms.lock_on != 0) {
         PlayerCheckAimingToEnemy(p, sh2jms.target);
     }
-    if ((sh2jms.anime_pause & 2) || ((temp_s0->loop != 0) && (temp_s0->name >= 200))) {
+    if ((sh2jms.anime_pause & 2) || ((a_info->loop != 0) && (a_info->name >= 200))) {
         player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RELEASE));
         player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_ATTACK));
-        if (temp_s0->loop == 0) {
-            if ((sh2jms.weapon != 4) && (sh2jms.weapon != 7) && (sh2jms.weapon != 8) && (sh2jms.weapon != 6) && (sh2jms.weapon != 5)) {
+        if (a_info->loop == 0) {
 
-            } else {
-                sh2jms.hold_loop[0] = 1;
+            switch (sh2jms.weapon) {
+                case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                case WEAPON_ID(WEAPON_SP_CHARA_KIND):
+                    sh2jms.hold_loop[0] = 1;
+                    break;
+                default:
+                    break;
             }
         }
         if (sh2jms.hold_chg[0] == 0) {
-            if ((sh2jms.weapon != 7) && (sh2jms.weapon != 8) && (sh2jms.weapon != 6) && (sh2jms.weapon != 5)) {
+            switch (sh2jms.weapon) {
+                case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                    switch (sh2jms.hold_type) {
+                        case 0:
+                            if ((sh2jms.r_side.kind == 1) && (sh2jms.l_side.kind != 1)) {
+                                sh2jms.hold_chg[0] = 1;
+                            }
+                            break;
+                        case 1:
+                            if ((sh2jms.l_side.kind == 1) && (sh2jms.r_side.kind != 1)) {
+                                sh2jms.hold_chg[0] = 1;
+                            }
+                            break;
+                    }
+                    break;
 
-            } else {
-                switch (sh2jms.hold_type) {
-                    case 0:
-                        if ((sh2jms.r_side.kind == 1) && (sh2jms.l_side.kind != 1)) {
-                            sh2jms.hold_chg[0] = 1;
-                        }
-                        break;
-                    case 1:
-                        if ((sh2jms.l_side.kind == 1) && (sh2jms.r_side.kind != 1)) {
-                            sh2jms.hold_chg[0] = 1;
-                        }
-                        break;
-                }
+                default:
+                    break;
             }
         }
         if (sh2jms.hold_chg[0] != 0) {
@@ -846,9 +856,8 @@ void upper_hold(SubCharacter* p) {
         }
     }
     if ((sh2jms.weapon == 2) && (sh2jms.anime_pause & 2)) {
-        var_a2  = 0;
-        temp_v1 = temp_s0->name;
-        switch (temp_v1) {
+        check  = 0;
+        switch (a_info->name) {
             case 251:
             case 253:
             case 256:
@@ -857,25 +866,25 @@ void upper_hold(SubCharacter* p) {
             case 262:
             case 264:
                 if (sh2jms.shotgun_dir != 1) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
             case 254:
             case 261:
             case 266:
                 if (sh2jms.shotgun_dir != 2) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
             case 257:
             case 263:
             case 265:
                 if (sh2jms.shotgun_dir != 0) {
-                    var_a2 = 1;
+                    check = 1;
                 }
                 break;
         }
-        if (var_a2 != 0) {
+        if (check != 0) {
             sh2jms.hold_chg[0] = 1;
             player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RELEASE));
             player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_ATTACK));
@@ -902,14 +911,9 @@ void lower_release(SubCharacter* p) {
                     if (playing.control_type == 0) {
                         p->spd_roty = -PI;
 
-                        temp_f0    = 0.25 * dtf_18574064;
-                        p->spd     = temp_f0;
-                        p->spd_org = temp_f0;
+                        p->spd_org = p->spd = 25.0 * dtf;
                     } else {
-
-                        temp_f0_2  = 0.25 * dtf_18574064;
-                        p->spd     = temp_f0_2;
-                        p->spd_org = temp_f0_2;
+                        p->spd_org = p->spd = -25.0 * dtf;
                     }
                 }
             }
@@ -920,10 +924,10 @@ void lower_release(SubCharacter* p) {
                     if (playing.control_type == 0) {
                         p->spd_roty = -PI;
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = 20.0 * dtf;
                     } else {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = -20.0 * dtf;
                     }
                 }
             }
@@ -943,7 +947,7 @@ void upper_release(SubCharacter* p) {
         sh2jms.lock_on = 0;
     }
     sh2jms.lock_on = 0;
-    if ((sh2jms.lower_now == (1 << JMS_ST_L_RELAX) | (1 << JMS_ST_L_READY)) || (sh2jms.lower_now == 19) || (sh2jms.lower_now == 20) || (sh2jms.lower_now == 21) || (sh2jms.lower_now == 23) || (sh2jms.lower_now == 22)) {
+    if ((sh2jms.lower_now == ((1 << JMS_ST_L_RELAX) | (1 << JMS_ST_L_READY))) || (sh2jms.lower_now == 19) || (sh2jms.lower_now == 20) || (sh2jms.lower_now == 21) || (sh2jms.lower_now == 23) || (sh2jms.lower_now == 22)) {
         player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_RELEASE));
         sh2jms.lock_on = 0;
     }
@@ -952,7 +956,6 @@ void upper_release(SubCharacter* p) {
 void lower_attack(SubCharacter* p) {
     AnimeInfo* a_info = shCharacterAnimeGetInfo_(p, 2);
     short frame       = shCharacterAnimeFrameGet_(p, 2);
-    s64 a_info_2;
 
     PlayerSpeedDownToStand(p);
     if (playing.control_type == 0) {
@@ -964,11 +967,11 @@ void lower_attack(SubCharacter* p) {
                 frame = frame;
                 if ((frame >= 4) && (frame < 10)) {
 
-                    p->spd_org = p->spd = 0.25 * dtf_18574064;
+                    p->spd_org = p->spd = 30.0 * dtf;
                 }
                 if ((frame >= 11) && (frame < 20)) {
 
-                    p->spd_org = p->spd = 0.25 * dtf_18574064;
+                    p->spd_org = p->spd = -20.0 * dtf;
                 }
             }
             break;
@@ -977,11 +980,11 @@ void lower_attack(SubCharacter* p) {
                 frame = frame;
                 if ((frame >= 2) && (frame < 10)) {
 
-                    p->spd_org = p->spd = 0.25 * dtf_18574064;
+                    p->spd_org = p->spd = 35.0 * dtf;
                 }
                 if ((frame >= 14) && (frame < 25)) {
 
-                    p->spd_org = p->spd = 0.25 * dtf_18574064;
+                    p->spd_org = p->spd = -20.0 * dtf;
                 }
             }
             break;
@@ -989,37 +992,32 @@ void lower_attack(SubCharacter* p) {
             if (sh2jms.atk_type == 4) {
                 if (sh2jms.hold_type == 0) {
                     if (a_info->speed > 0) {
-                        a_info_2 = frame;
-                        if ((a_info_2 >= 10) && (a_info_2 < 14)) {
-
-                            p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        if ((frame >= 10) && (frame < 14)) {
+                            p->spd_org = p->spd = 5.0 * dtf;
                         }
-                        if ((a_info_2 >= 14) && (a_info_2 < 17)) {
-
-                            p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        if ((frame >= 14) && (frame < 17)) {
+                            p->spd_org = p->spd = 30.0 * dtf;
                         }
-                        if ((a_info_2 >= 2) && (a_info_2 < 5)) {
-
-                            p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        if ((frame >= 2) && (frame < 5)) {
+                            p->spd_org = p->spd = 10.0 * dtf;
                         }
-                        if ((a_info_2 >= 25) && (a_info_2 < 31)) {
-
-                            p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        if ((frame >= 25) && (frame < 31)) {
+                            p->spd_org = p->spd = -28.0 * dtf;
                         }
                     }
                 } else if (a_info->speed > 0) {
                     frame = frame;
                     if ((frame >= 14) && (frame < 18)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = 33.0 * dtf;
                     }
                     if ((frame > 0) && (frame < 4)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = -3.0 * dtf;
                     }
                     if ((frame >= 25) && (frame < 31)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = -24.0 * dtf;
                     }
                 }
             }
@@ -1030,21 +1028,21 @@ void lower_attack(SubCharacter* p) {
                     frame = frame;
                     if ((frame > 0) && (frame < 7)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = 30.0 * dtf;
                     }
                     if ((frame >= 13) && (frame < 19)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = -25.0 * dtf;
                     }
                 } else {
                     frame = frame;
                     if ((frame >= 2) && (frame < 7)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = 30.0 * dtf;
                     }
                     if ((frame >= 12) && (frame < 18)) {
 
-                        p->spd_org = p->spd = 0.25 * dtf_18574064;
+                        p->spd_org = p->spd = -25.0 * dtf;
                     }
                 }
             }
@@ -1065,11 +1063,9 @@ void lower_attack(SubCharacter* p) {
         player_flg_on(&sh2jms.lower_st_flg, (1 << JMS_ST_L_RELEASE));
     }
 }
-
 void upper_attack(SubCharacter* p) {
     AnimeInfo* a_info; // r16
     int wep;           // r17
-    // AnimeInfo * a_info; // r2
     u_short name1; // r3
     u_short name2; // r5
     u_short frame; // r16
@@ -1123,7 +1119,7 @@ void upper_attack(SubCharacter* p) {
         return;
     }
     if ((sh2jms.shoot_val == 0) && (sh2jms.reload_val != 0)) {
-        a_info = shCharacterAnimeGetInfo_(p, 1);
+        AnimeInfo * a_info = shCharacterAnimeGetInfo_(p, 1); // r2
         switch (sh2jms.weapon) { /* irregular */
             case 1:
                 name1 = 209;
@@ -1162,8 +1158,8 @@ void upper_attack(SubCharacter* p) {
             return;
         }
     } else {
-
-        ASSERT_ON_LINE(sh2jms.attack_no != 0, 1);
+        if (!sh2jms.attack_no)
+            ASSERT_ON_LINE(0, 1961);
         switch (sh2jms.weapon) {
             case 8:
             case 7:
@@ -1195,11 +1191,10 @@ void lower_kick(SubCharacter* p) {
 
 void upper_kick(SubCharacter* p) {
     if (p->battle.atk_result != 1) {
-        ASSERT_ON_LINE(sh2jms.attack_no != 0, 1);
+        if (!sh2jms.attack_no)
+            ASSERT_ON_LINE(0, 2000);
         shBattleAttackHitCheckToEnemy(p, sh2jms.weapon, sh2jms.attack_no);
-        goto block_5;
     }
-block_5:
     if (sh2jms.anime_pause & 2) {
         player_flg_on(&sh2jms.upper_st_flg, (1 << JMS_ST_U_STAND));
         player_flg_off(&sh2jms.upper_st_flg, (1 << JMS_ST_U_KICK));
@@ -1214,7 +1209,7 @@ void lower_fall(SubCharacter* p) {
         if (p->spd > 0.9f) {
             PlayerSpeedDownToStand(p);
         } else {
-            p->spd += (2.5f * dtf_18574064);
+            p->spd += (2.5f * dtf);
             p->spd_org = p->spd = p->spd > 0.9f ? 0.9f : p->spd;
         }
     } else {
@@ -1245,7 +1240,7 @@ void lower_damage(SubCharacter* p) {
     };
 
     cur_frame   = shCharacterAnimeFrameGet_(p, 2);
-    p->spd_roty = shAngleRegulate(shAtan2(p->battle.vec.z, p->battle.vec.x) - p->rot.y);
+    p->spd_roty = shAngleRegulate(shAtan2(p->battle.vec[2], p->battle.vec[0]) - p->rot.y);
     if (l_anime_flg_on(2) == 0) {
         switch (sh2jms.damage_no) {
             case 20008:
@@ -1313,31 +1308,31 @@ void lower_damage(SubCharacter* p) {
             case 20030:
             case 20031:
 
-                PlayerCheckHuggedPos(hugging_pos[1], 1, dtf_18574064 * 500.0);
+                PlayerCheckHuggedPos(hugging_pos[1], 1, dtf * 500.0);
                 break;
             case 20038:
             case 20039:
             case 20040:
 
-                PlayerCheckHuggedPos(hugging_pos[0], 1, dtf_18574064 * 500.0);
+                PlayerCheckHuggedPos(hugging_pos[0], 1, dtf * 500.0);
                 break;
             case 20042:
             case 20043:
             case 20045:
 
-                PlayerCheckHuggedPos(hugging_pos[2], 1, dtf_18574064 * 500.0);
+                PlayerCheckHuggedPos(hugging_pos[2], 1, dtf * 500.0);
                 break;
             case 20046:
             case 20047:
             case 20049:
 
-                PlayerCheckHuggedPos(hugging_pos[3], 0, dtf_18574064 * 500.0);
+                PlayerCheckHuggedPos(hugging_pos[3], 0, dtf * 500.0);
                 break;
             case 20056:
             case 20054:
             case 20055:
 
-                PlayerCheckHuggedPos(hugging_pos[4], 1, dtf_18574064 * 500.0);
+                PlayerCheckHuggedPos(hugging_pos[4], 1, dtf * 500.0);
                 break;
             default:
                 p->spd = 0.0f;
@@ -1466,3 +1461,4 @@ void upper_event(SubCharacter* p) {
         sh2jms.event_anime = 0;
     }
 }
+

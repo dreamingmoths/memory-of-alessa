@@ -605,7 +605,6 @@
 #define WEAPON_KAKUZAI_CHARA_KIND                                                     0x805
 #define WEAPON_PIPE_CHARA_KIND                                                        0x806
 #define WEAPON_CSAW_CHARA_KIND                                                        0x807
-#define WEAPON_CSAW_CHARA_KIND                                                        0x807
 #define WEAPON_NATA_CHARA_KIND                                                        0x808
 #define WEAPON_COLT_CHARA_KIND                                                        0x809
 #define WEAPON_CHINANIFE_CHARA_KIND                                                   0x80a
@@ -621,5 +620,7 @@
 #define RWEAPON_COLT_NOTEX_CHARA_KIND                                                 0x829
 #define RWEAPON_CHINANIFE_CHARA_KIND                                                  0x82a
 #define RWEAPON_CHINANIFE_NOTEX_CHARA_KIND                                            0x82a
+
+#define WEAPON_ID(_kind)                                                    ((_kind) & 0xff)
 
 #endif // SH2_CHARA_KINDS_H
