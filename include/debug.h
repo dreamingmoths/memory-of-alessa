@@ -13,7 +13,7 @@ do { \
         printf(__FILE__ ":" ASSTR(__LINE__) "> assert:(%s)\n", #cond); \
         do {} while (1); \
     } \
-} while (0);
+} while (0)
 
 /**
  * Same as `ASSERT`, but lets you pass in the line number. Useful for matching
@@ -25,7 +25,10 @@ do { \
         printf(__FILE__ ":" #line "> assert:(%s)\n", #cond); \
         do {} while (1); \
     } \
-} while (0);
+} while (0)
+
+#define DEBUG_LOG(...) printf(__FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__)
+#define DEBUG_LOG_ON_LINE(line, ...) printf(__FILE__ ":" #line "> " __VA_ARGS__)
 
 #define VERBOSE(level, ...) { \
     verbose(level, __FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__); \
