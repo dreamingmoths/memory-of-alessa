@@ -96,6 +96,22 @@ sh3gfw_EnQue_TexSlot = 0x001b5da0; 
 fake_kick = 0x00362860; // size:0x10
 fake_cid = 0x01E55F30; // size:0x10
 
+sh3gfw_0x001ecc80 = 0x001ecc80;
+sh3gfw_Swap_Soft  = 0x001ed4c0;
+sh3gfw_0x002596f0 = 0x002596f0;
+sh3gfw_registDrawTag = 0x001b3560;
+sh3gfw_setEND_chain = 0x001b35e0;
+sh3gfw_VUMICRO_registchain = 0x001b3600;
+sh3gfw_0x001b3680 = 0x001b3680;
+sh3gfw_0x001b36f0 = 0x001b36f0;
+sh3gfw_init_GSPACKMAN = 0x001cdac0;
+sh3gfw_setREF_gsctl = 0x001cdb00;
+sh3gfw_setREF_tagchain = 0x001cdb60;
+sh3gfw_setEND_gsctl = 0x001cdbb0;
+sh3gfw_0x001cdbf0 = 0x001cdbf0;
+Gman = 0x01eda180; // size:0x10
+GSENV_CTL_PACK = 0x01eda190; // size:0x4000
+
 // dma2tscmd
 d2tscBeginToUseSlot = 0x00130410;
 d2tscSend = 0x001304B0;

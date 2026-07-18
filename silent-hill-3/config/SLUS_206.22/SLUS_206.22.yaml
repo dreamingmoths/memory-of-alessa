@@ -294,6 +294,8 @@ segments:
       - [0x0a7e20, asm,     text_0x0a7e20]
       - [0x0aa0e0, c,       GFW/sh3gfw_viewclip]
       - [0x0ab250, asm,     text_0x0ab250]
+      - [0x0b3ae0, asm,     GFW/gfw_test/sh3_dmachain_regist]
+      - [0x0b3ce0, asm,     text_0x0b3ce0]
       - [0x0b55b0, c,       GFW/sh3gfw_Texpacket]
       - [0x0b68f0, asm,     view/vb_main]
       - [0x0b71a0, asm,     view/vc_calc]
@@ -320,6 +322,8 @@ segments:
       - [0x0eb070, asm,     text_0x0eb070]
       - [0x0eb610, c,       Fog/fogdata]
       - [0x0eca00, asm,     text_0x1ec480]
+      - [0x0ecd30, asm,     GFW/sh3gfw_2d_filters]
+      - [0x0eeeb0, asm,     text_0x0eeeb0]
       - [0x0ef080, c,       Effect2/hh_class_cartridge]
       - [0x0f0920, asm,     text_0x0f0920]
 
