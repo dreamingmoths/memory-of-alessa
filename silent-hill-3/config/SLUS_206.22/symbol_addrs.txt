@@ -111,6 +111,7 @@ sh3gfw_setEND_gsctl = 0x001cdbb0;
 sh3gfw_0x001cdbf0 = 0x001cdbf0;
 Gman = 0x01eda180; // size:0x10
 GSENV_CTL_PACK = 0x01eda190; // size:0x4000
+sh3gfw_0x001aeaf0 = 0x001aeaf0;
 
 // dma2tscmd
 d2tscBeginToUseSlot = 0x00130410;
