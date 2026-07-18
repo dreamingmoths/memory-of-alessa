@@ -88,7 +88,7 @@ void PlayerUpdateStatus(SubCharacter* this) {
 
     shCharacterAnimeSpeedAdd(this, 0);
 
-    if (sh2jms.weapon == WEAPON_NATA_CHARA_KIND >> 8) {
+    if (sh2jms.weapon == WEAPON_ID(WEAPON_NATA_CHARA_KIND)) {
         if (l_anime_flg_on(4) == 0) {
             shCharacterAnimeSpeedAddY_(this, 2, -256);
             shCharacterAnimeSpeedAddY_(this, 1, -256);
