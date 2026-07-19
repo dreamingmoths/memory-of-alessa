@@ -25,6 +25,7 @@ AnimeInfo* shCharacterAnimeGetInfo(SubCharacter* scp /* r2 */);
 AnimeInfo* shCharacterAnimeGetInfo_(SubCharacter* scp /* r2 */, int ctrl_type /* r2 */);
 void shCharacterAnimeFrameSet(SubCharacter* scp /* r2 */, u_short frame /* r2 */);
 void shCharacterAnimeRestart(SubCharacter* scp /* r2 */);
+int shCharacterGetSkeltonNum(short kind);
 
 void shCharacterDelete(SubCharacter* scp);
 void shCharacterPlayingExecAnimeOne(SubCharacter * scp /* r16 */);

@@ -155,6 +155,27 @@ typedef struct Radio_Data {
     float pos[4] __attribute__((aligned(16)));   // offset 0x30, size 0x10
 } Radio_Data;
 
+typedef struct Model_List {
+    // total size: 0x30
+    signed short kind; // offset 0x0, size 0x2
+    signed short id; // offset 0x2, size 0x2
+    signed short flag_off; // offset 0x4, size 0x2
+    signed short flag_on; // offset 0x6, size 0x2
+    sceVu0FVECTOR pos; // offset 0x10, size 0x10
+    sceVu0FVECTOR rot; // offset 0x20, size 0x10
+} Model_List;
+typedef struct Enemy_List {
+    // total size: 0x14
+    signed short kind; // offset 0x0, size 0x2
+    signed short id; // offset 0x2, size 0x2
+    signed int pos_x; // offset 0x4, size 0x4
+    signed int pos_z; // offset 0x8, size 0x4
+    signed short pos_y; // offset 0xC, size 0x2
+    signed short rot_y; // offset 0xE, size 0x2
+    signed short status; // offset 0x10, size 0x2
+    unsigned short condition; // offset 0x12, size 0x2
+} Enemy_List;
+
 // total size: 0x44
 typedef struct Stage_Data {
     // Members

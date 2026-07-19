@@ -2,15 +2,6 @@
 #include "Chacter/character.h"
 #include "Chacter/skelton.h"
 
-#define SH2_CHARACTER_NUM_SKELTONS 400
-
-typedef struct shSkeltonWork {
-    // total size: 0x17710
-    shSkelton work[SH2_CHARACTER_NUM_SKELTONS]; // offset 0x0, size 0x17700
-    shSkelton* free;                            // offset 0x17700, size 0x4
-    int last;                                   // offset 0x17704, size 0x4
-} shSkeltonWork;
-
 shSkeltonWork sh2skelton; // size: 0x17710, address: 0x3CEFC0
 
 void shCharacterInitSkeltons(void) {
