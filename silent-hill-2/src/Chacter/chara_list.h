@@ -22,6 +22,8 @@
 #define OBJECT_X_CHARA_KIND_START                                (OBJECT_X_CHARA_KIND << 8)
 #define OBJECT_STAY_CHARA_KIND_START                          (OBJECT_STAY_CHARA_KIND << 8)
 
+#define GET_KIND_TYPE(_kind)                                                 ((_kind) >> 8)
+
 /* ===================================================================================== */
 /*                               characters (0x100 - 0x199)                              */
 /* ===================================================================================== */
@@ -598,6 +600,7 @@
 /* ===================================================================================== */
 
 #define WEAPON_ID_START                                                               0x800
+#define WEAPON_ID_NONE                                                                0x800
 #define WEAPON_HANDGUN_CHARA_KIND                                                     0x801
 #define WEAPON_SHOTGUN_CHARA_KIND                                                     0x802
 #define WEAPON_RIFLGUN_CHARA_KIND                                                     0x803

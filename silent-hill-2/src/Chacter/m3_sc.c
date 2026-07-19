@@ -330,7 +330,7 @@ SubCharacter* shCharacterGetSubCharacter(u_short kind, short id) {
     return NULL;
 }
 
-u_char shCharacterGetSkeltonNum(short kind) {
+int shCharacterGetSkeltonNum(short kind) {
     #define NONE_SKELETON_NUM   0
     #define ITEM_SKELETON_NUM   1
     #define WEAPON_SKELETON_NUM 2

@@ -37,6 +37,7 @@ typedef enum bool {
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define CLAMP_MAX(_val, _max) do { (_val) = (_val) > (_max) ? (_val) : (_max); } while (0);
 #define CLAMP_MIN(_val, _min) do { (_val) = (_val) > (_min) ? (_min) : (_val); } while (0);
+#define SQUARE(_x) ((_x) * (_x))
 
 #define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 #define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
