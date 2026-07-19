@@ -632,6 +632,7 @@ ObjectInstanceHandle_Get_from_ClassDescriptor_and_AttachCount = 0x00142140;
 Instance_DesignateClassDescriptorAttach_Count = 0x001416B0;
 InstanceHandle_Get_from_ClassDescriptor_and_AttachCount = 0x001416F0;
 InstanceHierarchyTable_DesignateInstance_Initialize = 0x00141A20;
+FreeInstance_Stack_FreeCheck = 0x001418B0;
 
 // m3_play_event
 PlayerGetHeatherWeapon = 0x00190870;
