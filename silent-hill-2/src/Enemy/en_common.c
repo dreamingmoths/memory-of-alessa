@@ -400,9 +400,15 @@ float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */) {
     return (float*)&dp->scp->battle.target->pos;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerDistance);
+float enGetPlayerDistance(EnLOCAL_DATA* dp) {
+    return vec3_dist_xz_reverse(enGetPlayerPos(dp), &dp->scp->pos);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetPlayerDirection);
+float enGetPlayerDirection(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x20
+    vu0_sub_vector(vec, enGetPlayerPos(dp), &dp->scp->pos);
+    return shAtanV(&vec);
+}
 
 int enGetPlayerWeapon(void) {
     return (u_char) sh2jms.weapon;
@@ -548,19 +554,50 @@ void enFlagResetDisplay(struct EnLOCAL_DATA* dp) {
     dp->scp->status &= ~0x410;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcDirection);
+float enCalcDirection(float* pa, float* pb) {
+    sceVu0FVECTOR vec; // r29+0x10
+    vu0_sub_vector(vec, pa, pb);    
+    return shAtanV(&vec);
+}
 
 float enCalcAngleDifference(float angle1, float angle2) {
     return float_abs(shAngleRegulate(angle1 - angle2));
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCalcSpeedRate);
+float enCalcSpeedRate(float angle, float* mpos, float* tpos) { // not line matched
+    float d; // r29+0x20
+    d = (PI - float_abs(shAngleRegulate(enCalcDirection(tpos, mpos) - angle)));
+    return 0.5f + (0.5f * (d / PI));    
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMakeRotVector);
+void enMakeRotVector(float* vec, float* rot, float range) {
+    sceVu0FMATRIX rmat; // r29+0x40
+    vu0_unit_matrix(rmat);
+    shRotMatrixZ(rmat, rmat, rot[2]); shRotMatrixY(rmat, rmat, rot[1]); shRotMatrixX(rmat, rmat, rot[0]);   
+    vec_zero(vec);
+    vec[2] = range;
+    vu0_transform_vector(vec, rmat);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckIntoScreen);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetNearCharacter);
+SubCharacter* enGetNearCharacter(EnLOCAL_DATA* dp) {
+    float dist, d;
+    int i;
+    EnLOCAL_DATA* tp = enLocalWork.Data;
+    SubCharacter* scp = shBattleGetTargetHuman(dp->scp, 0);
+    dist = vec3_dist_xz_reverse(&scp->pos, &dp->scp->pos);   
+    for (i = 0; i < 32; i++, tp++) {
+        if ((tp->kind != 0) && (tp != dp) && (tp->scp->battle.hp > 0.0f)) {
+            d = vec3_dist_xz_reverse(&tp->scp->pos, &dp->scp->pos);
+            if (d < dist) {
+                dist = d;
+                scp = tp->scp;
+            }
+        }
+    }
+    return scp;
+}
 
 int enCalcTimer(int t /* r2 */) {
     return (t * 60) / 60;
@@ -627,7 +664,13 @@ void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enMoveExec);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetRotFloor);
+void enSetRotFloor(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x30
+    float inv_rot_y = -dp->scp->rot.y; // @note: not present in DWARF but cant match without
+    shRotVectorY(&vec, &dp->scp->grnd_normal, inv_rot_y); // if u have a better match that would be nice
+    dp->trx = -shAtan2(-vec[1], vec[2]);
+    dp->trz = shAtan2(-vec[1], vec[0]);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetHitColumn);
 
@@ -653,7 +696,13 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath2);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForward);
+float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
+    sceVu0FVECTOR tp; // r29+0x30
+    enMakeRotVector(tp, rot, range);
+    vu0_add_vector(tp, pos, tp);
+    return enCheckHitEyes(dp, pos, tp);
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckHitEyes);
 
@@ -820,7 +869,7 @@ void enEventDriven(int event /* r2 */, int id /* r2 */) {
     int i; // r3
     struct EnLOCAL_DATA* dp = enLocalWork.Data; // r6
 
-    switch (event) {                                 /* irregular */
+    switch (event) {
         case 0:
             for (i = 0; i < 32; i++, dp++) {
                 if ((dp->kind != 0) && (dp->mlv != 0)) {

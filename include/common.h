@@ -7,6 +7,7 @@
 
 #include "sce/eetypes.h"
 #include "sce/libvu0.h"
+#include "dma.h"
 
 typedef unsigned char u8;
 typedef signed char s8;

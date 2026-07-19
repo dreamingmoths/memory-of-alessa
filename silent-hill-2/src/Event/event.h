@@ -230,5 +230,4 @@ int LightSpotOnOffCheck(void);
 void LightSpotOnOffSet(void);
 int EventItemConditionCheck(int level, int flag);
 
-
 #endif // EVENT_H

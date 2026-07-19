@@ -217,6 +217,21 @@ static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
         : "+r"(out));
 }
 
+static inline void vu0_transform_vector(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
+    asm("\
+        lqc2         vf4, 0x0(%0)\n\
+        lqc2         vf5, 0x0(%1)\n\
+        lqc2         vf6, 0x10(%1)\n\
+        vmulax.xyzw  ACC, vf5, vf4x\n\
+        lqc2         vf5, 0x20(%1)\n\
+        vmadday.xyzw ACC, vf6, vf4y\n\
+        lqc2         vf6, 0x30(%1)\n\
+        vmaddaz.xyzw ACC, vf5, vf4z\n\
+        vmaddw.xyzw  vf4, vf6, vf4w\n\
+        sqc2         vf4, 0x0(%0)"
+        : "+r"(vec): "r"(mat));
+}
+
 static inline void vu0_unit_vector(sceVu0FVECTOR out) {
     asm("\
         sqc2 vf0, 0x0(%0)"

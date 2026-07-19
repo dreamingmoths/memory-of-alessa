@@ -108,7 +108,7 @@ segments:
       - [0x076690, asm, GFW/sh2_shadow_filters]
       - [0x0771c0, asm, GFW/sh2_shadow_main]
       - [0x0773e0, asm, GFW/sh2gfw_2d_filters]
-      - [0x07bde0, asm, GFW/sh2gfw_GSCTL_man]
+      - [0x07bde0, c,   GFW/sh2gfw_GSCTL_man]
       - [0x07bfa0, asm, GFW/sh2gfw_Init_ModelDrawData]
       - [0x07d9a0, asm, GFW/sh2gfw_LightSet]
       - [0x07eb80, c,   GFW/sh2gfw_Texpacket]
@@ -596,6 +596,8 @@ segments:
       - { vram: 0x0419fa8, type: bss,  name: bss_0x0419fa8 }
       - { vram: 0x041bf10, type: .bss, name: Chacter_Draw/model_common }
       - { vram: 0x0438588, type: bss,  name: bss_0x0438588 }
+      - { vram: 0x0e3c250, type: .bss, name: GFW/sh2gfw_GSCTL_man }
+      - { vram: 0x0e40280, type: bss,  name: bss_0x0e40280 }
       - { vram: 0x1159230, type: .bss, name: Multi_thr/filesys/fileserv }
       - { vram: 0x1159238, type: bss,  name: bss_0x1159238 }
       - { vram: 0x116e3d0, type: .bss, name: Item/otn_itemmain }

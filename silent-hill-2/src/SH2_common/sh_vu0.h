@@ -12,7 +12,7 @@ float shSinF(float);
 float shCosF(float);
 void shSinCosV(void*, float);
 void shSinCosV_Scale(sceVu0FVECTOR, float, float);
-void shRotVectorY(void);
+void shRotVectorY(sceVu0FVECTOR*, sceVu0FVECTOR*, float); // @note: not sure if this is the correct signature
 void shRotMatrixX(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx);
 void shRotMatrixY(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float ry);
 void shRotMatrixZ(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rz);
