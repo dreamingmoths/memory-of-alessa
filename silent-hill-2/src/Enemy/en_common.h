@@ -148,6 +148,9 @@ void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
 void enSetRotFloor(EnLOCAL_DATA* dp);
 
 void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */);
+
+float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range);
+
 void enInitPath(EnPATH_DATA* p /* r16 */, float angle /* r29+0x20 */);
 int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */);
 
