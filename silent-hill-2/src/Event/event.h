@@ -97,6 +97,9 @@ do {                                \
 #define SET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] |= (1 << ((index) & 0x1F))))
 #define UNSET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] &= ~(1 << ((index) & 0x1F))))
 
+#define GET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] >> ((index) & 0x1F)) & 1)
+#define SET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] |= (1 << ((index) & 0x1F))))
+
 // total size: 0x10
 typedef struct Event_List {
     // Members

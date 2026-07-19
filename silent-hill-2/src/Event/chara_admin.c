@@ -21,11 +21,7 @@
 #include "Event/chara_data_load.h"
 #include "Event/chara_admin.h"
 
-#define GET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] >> ((index) & 0x1F)) & 1)
-#define GET_ITEM_FLAG(index) ((item.flag[(index) >> 5] >> ((index) & 0x1F)) & 1)
-#define SET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] |= (1 << ((index) & 0x1F))))
-#define VEC_LENGTH_XZ(_x, _z) ((_x) * (_x) + (_z) * (_z))
-#define SQUARE(_x) ((_x) * (_x))
+/* @todo: match rest of functions, migrate data, and clean up */
 
 static int RoomDistanceSub(struct CharaAdmin_RoomDistance* dist, short room0, short room1, u_long flag);
 static void DeleteEnemyWorkIn(void);
@@ -34,8 +30,17 @@ static int RoomDistance(short room0, short room1);
 static void DeleteEnemyWork(void);
 static int CharaAdminEnemyEntryCondition(short cond);
 
-#define weapon weapon_959
-signed short weapon_959[9][2]; // @ 0x0033DC70
+static short weapon[9][2] = {
+    { 0,    WEAPON_ID(WEAPON_ID_NONE           ) },
+    { 4,    WEAPON_ID(WEAPON_HANDGUN_CHARA_KIND) },
+    { 6,    WEAPON_ID(WEAPON_SHOTGUN_CHARA_KIND) },
+    { 8,    WEAPON_ID(WEAPON_RIFLGUN_CHARA_KIND) },
+    { 10,   WEAPON_ID(WEAPON_SP_CHARA_KIND     ) },
+    { 11,   WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND) },
+    { 12,   WEAPON_ID(WEAPON_PIPE_CHARA_KIND   ) },
+    { 13,   WEAPON_ID(WEAPON_NATA_CHARA_KIND   ) },
+    { 14,   WEAPON_ID(WEAPON_CSAW_CHARA_KIND   ) },
+}; // @ 0x0033DC70
 
 extern float connect_pos[4];                                     // size: 0x10, address: 0x11B6720
 extern /* static */ int back_load_admin;                         // size: 0x4, address: 0x116DBC8
@@ -363,7 +368,7 @@ static int CharaAdminEnemyEntryCondition(short cond) {
             return 0;
     }
 
-    // todo line numbers
+    // @todo line numbers
     switch (cond & 0xFFC0) { /* switch 2; irregular */
         case 0x40:           /* switch 2 */
             if (!GET_GAME_FLAG(43) || GET_GAME_FLAG(251)) {
@@ -505,7 +510,7 @@ void CharaAdminBackLoadEnemy(CharaData_DemoList* list /* r16 */) {
     CharaDataLoadDemo(list, 4);
     back_load_admin = 1;
     for (i = 0; list->kind != 0; i++) {
-        ASSERT_ON_LINE(i < (8 - 1), 962);
+        ASSERT_ON_LINE(i < ( 8 - 1 ), 962);
         back_load_admin_list[i].kind      = list->kind;
         back_load_admin_list[i].model     = list->model;
         back_load_admin_list[i].animation = list->animation;

@@ -401,6 +401,8 @@ segments:
       - [0x1b9ae0, data,    data_0x1b9ae0]
       - [0x1bb580, .data,   Font/font]
       - [0x1bb5c0, data,    data_0x1bb5c0]
+      - [0x23e370, .data,   Event/chara_admin]
+      - [0x23e3a0, data,    data_0x23e3a0]
       - [0x248700, .data,   Chacter/m3_nse]
       - [0x248710, data,    data_0x248710]
       - [0x24c8c0, .data,   jump_menu]
