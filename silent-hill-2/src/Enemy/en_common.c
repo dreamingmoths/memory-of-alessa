@@ -696,7 +696,13 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath2);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForward);
+float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
+    sceVu0FVECTOR tp; // r29+0x30
+    enMakeRotVector(tp, rot, range);
+    vu0_add_vector(tp, pos, tp);
+    return enCheckHitEyes(dp, pos, tp);
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckHitEyes);
 
