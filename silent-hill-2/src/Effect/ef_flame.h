@@ -39,8 +39,6 @@ typedef struct EFCTFlameObject {
 } EFCTFlameObject;
 STATIC_ASSERT_SIZEOF(EFCTFlameObject, 0x940);
 
-const int x = sizeof(EFCTFlameObject);
-
 void EFCTFlameChangeCamera(void);
 void DrawFlame(void* task);
 void InitFlameTexEnv(EFCTTexEnvInfo* pTexInfo);

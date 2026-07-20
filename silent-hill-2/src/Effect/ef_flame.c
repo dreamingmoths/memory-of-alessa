@@ -102,7 +102,6 @@ static void SetFlameCycleData(u_char kind /* r2 */, EFCTFlamePlane* plane /* r16
     plane->height_cycle_param = height * (h_cycle_param_min + ((h_cycle_param_max - h_cycle_param_min) * shRandF()));
 }
 
-// Range: 0x22E7F0 -> 0x22E900
 static void SetFlameStartPos(u_char kind /* r2 */, float width /* r20 */, float height, float* start_pos /* r16 */) {
 
     if ((kind == 0) || (kind == 1)) {
@@ -198,7 +197,6 @@ static void SetFlameVertex(u_char kind /* r2 */, float width /* r23 */, float he
     VertexData[3].LocalPos[3] = 1.0f;
 }
 
-// Range: 0x22EE00 -> 0x22EEEC
 static void FlameLocalRot(EFCTVertexData* pVertex /* r16 */, float* rot /* r17 */) {
     sceVu0FMATRIX mtx; // r29+0x30
     int i;             // r4
@@ -250,7 +248,6 @@ static void SetFlameTransParam(u_char kind /* r2 */, float width /* r21 */, floa
     trans[0] = shSway1f(0.4f * -width, 0.4f * width);
 }
 
-// Range: 0x22F150 -> 0x22F250
 static void SetFlameRotParam(u_char kind /* r2 */, float* rot /* r2 */) {
     vec_zero(rot);
 
@@ -370,7 +367,6 @@ void DrawFlame(void* task /* r2 */) {
     DrawSparks(&flame->sparks);
 }
 
-// Range: 0x22F560 -> 0x22F5D8
 static EFCTFlameObject* GetFlameObject(EFCTObject* pObj /* r2 */) {
     int i; // r6
 
@@ -383,7 +379,6 @@ static EFCTFlameObject* GetFlameObject(EFCTObject* pObj /* r2 */) {
     return NULL;
 }
 
-// Range: 0x22F5E0 -> 0x22F964
 static void RenewFlameSize(EFCTObject* pObj /* r18 */, EFCTFlameObject* flame /* r17 */) {
     int i;                        // r16
     float life_timer;             // r29+0x70
@@ -466,7 +461,6 @@ static void RenewFlameSize(EFCTObject* pObj /* r18 */, EFCTFlameObject* flame /*
     }
 }
 
-// Range: 0x22F970 -> 0x22FA38
 static void EnlargeFlameSize(float time /* r29 */, float w_speed /* r29 */, float h_speed /* r29 */, float w_enlarge_time /* r29 */, float h_enlarge_time /* r29 */, float* width /* r2 */, float* height /* r2 */) {
     if (time <= w_enlarge_time) {
 
