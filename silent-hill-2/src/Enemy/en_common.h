@@ -98,7 +98,9 @@ void enSleepIn(EnLOCAL_DATA* dp /* r2 */);
 void enSleepOut(EnLOCAL_DATA* dp /* r2 */);
 void enKillCountUp(EnLOCAL_DATA* dp /* r2 */);
 float* enGetPlayerPos(EnLOCAL_DATA* dp /* r2 */);
+
 float enCheckPlayerHitEyes(EnLOCAL_DATA* dp, float* ep);
+
 float enCalcDirection(float* pa, float* pb);
 float enGetPlayerDistance(EnLOCAL_DATA* dp /* r2 */);
 float enGetPlayerDirection(EnLOCAL_DATA* dp /* r2 */);
@@ -153,6 +155,8 @@ void enSetRotFloor(EnLOCAL_DATA* dp);
 
 void enARMTrans(EnLOCAL_DATA* dp);
 
+void enWaitRegenerate(EnLOCAL_DATA* dp);
+
 void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */);
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos);
@@ -165,7 +169,7 @@ void enInitPath(EnPATH_DATA* p /* r16 */, float angle /* r29+0x20 */);
 int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */);
 
 void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n);
-
+void enGetSkeletonMatrix(float (*mat)[4], EnLOCAL_DATA* dp, int n);
 int enGetDamageMotion(EnLOCAL_DATA* dp);
 int enGetDownMotion(EnLOCAL_DATA* dp /* r18 */);
 int enGetLieDirection(int dm);
