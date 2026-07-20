@@ -10,12 +10,12 @@ typedef struct EFCTSparksPlane {
     float width;                                 // offset 0x0, size 0x4
     float height;                                // offset 0x4, size 0x4
     int kind;                                    // offset 0x8, size 0x4
-    float trans[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
-    float speed[4] __attribute__((aligned(16))); // offset 0x20, size 0x10
+    sceVu0FVECTOR trans;                         // offset 0x10, size 0x10
+    sceVu0FVECTOR speed;                         // offset 0x20, size 0x10
     float timer;                                 // offset 0x30, size 0x4
     float life_span;                             // offset 0x34, size 0x4
-    float pos[4] __attribute__((aligned(16)));   // offset 0x40, size 0x10
-    int rgba[4];                                 // offset 0x50, size 0x10
+    sceVu0FVECTOR pos;                           // offset 0x40, size 0x10
+    sceVu0IVECTOR rgba;                          // offset 0x50, size 0x10
 } EFCTSparksPlane;
 
 // total size: 0x120

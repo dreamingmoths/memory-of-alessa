@@ -18,6 +18,7 @@ typedef struct EFCTAnimationData {
     u_char Status;               // offset 0x11, size 0x1
     void (*SetAnimParam)(void*); // offset 0x14, size 0x4
 } EFCTAnimationData;
+STATIC_ASSERT_SIZEOF(EFCTAnimationData, 0x18);
 
 // total size: 0x60
 typedef struct EFCTVertexData {
@@ -49,6 +50,14 @@ typedef struct EFCTObject {
     EFCTVertexData* pVertex;      // offset 0x54, size 0x4
     EFCTAnimationData* pAnimData; // offset 0x58, size 0x4
 } EFCTObject;
+STATIC_ASSERT_SIZEOF(EFCTObject, 0x60);
+
+typedef struct EFCTTexEnvInfo {
+    // total size: 0x6
+    u_short clut_id; // offset 0x0, size 0x2
+    u_short tfx; // offset 0x2, size 0x2
+    u_short transparency; // offset 0x4, size 0x2
+} EFCTTexEnvInfo;
 
 // total size: 0x200
 typedef struct EFCTTask {
