@@ -4,6 +4,10 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
+#define EN_LOCAL_DATA_COUNT 32
+#define EnKIND_NONE 0
+#define EnKIND_INS 15
+
 #define SET_DP_STATE_LV(_dp, _slv, _sslv) do { \
     _dp->slv = _slv; \
     _dp->sslv = _sslv; \
@@ -53,10 +57,10 @@ typedef struct EnANIME_DATA {
     u_char Loop;   // offset 0x2, size 0x1
 } EnANIME_DATA;
 
-extern EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
-
 void enInitEnemy(void);
+
 EnLOCAL_DATA* enEntryEnemy(int kind /* r2 */);
+void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */);
 void enDeleteEnemy(EnLOCAL_DATA* dp /* r2 */);
 void enDummyCtrl(EnLOCAL_DATA* dp /* r2 */);
 int enTransID(int id /* r2 */);
@@ -149,13 +153,25 @@ void enSetRotFloor(EnLOCAL_DATA* dp);
 
 void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */);
 
+float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos);
+float enCheckPath2(EnLOCAL_DATA* dp, float* tpos, float* mpos);
 float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range);
 float enCheckHitEyes(EnLOCAL_DATA* dp /* r18 */, float* sp /* r17 */, float* ep /* r2 */);
+float enCheckHitEyes2(EnLOCAL_DATA* dp /* r18 */, float* sp /* r17 */, float* ep /* r19 */);
+
 void enInitPath(EnPATH_DATA* p /* r16 */, float angle /* r29+0x20 */);
 int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */);
 
+void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n);
+
+int enGetDamageMotion(EnLOCAL_DATA* dp);
+
+int enGetLieDirection(int dm);
 void enAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
 
+void enSetTransN(EnLOCAL_DATA* dp, int n);
+
+void enSetTransForward(EnLOCAL_DATA* dp, float s);
 void enAnimePause(EnLOCAL_DATA* dp /* r2 */);
 void enAnimeRestart(EnLOCAL_DATA* dp /* r2 */);
 void enAnimeFrameSet(EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */);
