@@ -990,9 +990,77 @@ int enGetDamageMotion(EnLOCAL_DATA* dp) { // @note: left like this since I dont 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDamageMotion)
 #endif
 
-//INCLUDE_RODATA("asm/nonmatchings/Enemy/en_common", @2475);
+#ifdef NON_MATCHING
+int enGetDownMotion(EnLOCAL_DATA* dp) {
+    shBattleInfo* bi; // r16
+    int m; // r17
+    int id; // r2
+    int dd; // r2 idk how this is used
+    float a; // r29+0x40
+    
+    bi = &dp->scp->battle;
+    a = shAngleRegulate(shAtanV(&bi->vec) - dp->scp->rot.y);
+    if (float_abs(a) > QUARTER_TURN) {
+        id = 0;
+    } else {
+        id = 1;
+    }
+       
+    switch (dp->last_atk) {
+        case 2:
+        case 1: 
+        case 36: 
+            m = 0xE;
+            break;
+        case 4: 
+        case 6: 
+            m = id + 0xF;
+            break;
+        case 12:
+        case 13:
+        case 15:
+        case 16:
+        case 19:
+        case 20:
+        case 23:
+        case 38:
+        case 39:
+        case 40:
+        case 44:
+        case 46:
+        case 50:
+            if (a < 0.0f) {
+                m = 0x11;
+            } else {
+                m = 0x12;
+            }
+            break;
+        case 14:
+        case 17:
+        case 21:
+        case 22:
+        case 45:
+            m = 0x13;
+            break;
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDownMotion);
+        case 18:
+        case 24:
+        case 41:
+        case 49:
+            m = id + 0x14;
+            bi->shock = 0.0f;
+            dp->hb_s = 0.0f;
+            break;
+        default:
+            m = 0xE;
+            printf("Illegal down type!(%d)\n", dp->last_atk);
+            break;
+    }
+    return m;
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDownMotion)
+#endif
 
 #ifdef NON_MATCHING
 int enGetLieDirection(int dm) {
