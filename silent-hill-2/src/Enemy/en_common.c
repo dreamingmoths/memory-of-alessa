@@ -1,27 +1,43 @@
 #include "Enemy/en_common.h"
-#include "shared/Fog/fog.h"
-#include "Fog/fog.h"
-#include "SH2_common/playing_info.h"
-#include "sound/sh_sound.h"
-#include "sound/sh_sd_call.h"
-#include "Event/event.h"
-#include "Event/item.h"
-#include "Event/stg_name.h"
-#include "GFW/sh2gfw_LightSet.h"
-#include "GFW/sh2gfw_2d_filters.h"
-#include "Chacter_Draw/sh2gfw_model_light.h"
+#include "Enemy/en_effect.h"
+#include "Enemy/en_arm.h"
+
 #include "Chacter/sh_character_status.h"
 #include "Chacter/sh_character_battle.h"
 #include "Chacter/player_result.h"
 #include "Chacter/sh2_character_manage.h"
 #include "Chacter/m3_sc.h"
+
+#include "Chacter_Draw/sh2gfw_model_light.h"
+
+#include "Event/event.h"
+#include "Event/item.h"
+#include "Event/stg_name.h"
+
+#include "Effect2/hh_class_object_execute.h"
+
+#include "GFW/sh2gfw_LightSet.h"
+#include "GFW/sh2gfw_2d_filters.h"
+
+#include "shared/Fog/fog.h"
+#include "Fog/fog.h"
+
+#include "sound/sh_sound.h"
+#include "sound/sh_sd_call.h"
+
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/sh_vu0.h"
-#include "Enemy/en_effect.h"
-#include "Effect2/hh_class_object_execute.h"
+#include "SH2_common/playing_info.h"
+
 #include "vec.h"
 
+#include "view/vb_main.h"
+
+#include "Font/fj_man.h"
+
 extern /* static */ int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int); 
+
+extern /* static */ EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
 static inline float angle_add(struct EnPATH_DATA* p, float a0) { // what is the best place for this?
     float a1 = p->markangle;
@@ -45,7 +61,7 @@ EnLOCAL_DATA* enEntryEnemy(int kind) {
     int i = 0;
     struct EnLOCAL_DATA* dp = &enLocalWork.Data[0];
     while (dp->kind) {
-        if (++i >= 0x20) {
+        if (++i >= EN_LOCAL_DATA_COUNT) {
             printf("enemy task empty.\n", i);
             return NULL;
         }
@@ -56,7 +72,50 @@ EnLOCAL_DATA* enEntryEnemy(int kind) {
     return dp;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData);
+#ifdef NON_MATCHING
+void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */) {
+    int kind; // r16    
+    void (*enInitDataFunc[15])(EnLOCAL_DATA*) = {
+        enSCUInitData,
+        enMKNInitData,
+        enTYUInitData,
+        enREDInitData,
+        enONIInitData,
+        enNSEInitData,
+        enIKEInitData,
+        enPAPInitData,
+        enEDBInitData,
+        enARMInitData,
+        enBOSInitData,
+        enNIKInitData,
+        enTY2InitData,
+        enTY3InitData, 
+        enINSInitData
+    };    
+        
+    if ((dp == NULL) || (scp == NULL)) return;
+    kind = dp->kind;
+    ASSERT_ON_LINE(kind > EnKIND_NONE && kind <= EnKIND_INS, 372);
+
+    enLocalWork.This = dp;
+    shQzero(dp, sizeof(EnLOCAL_DATA));
+    dp->kind = kind;
+    dp->scp = scp;
+    dp->path.markangle = dp->path.angle = dp->scp->rot.y;
+    volatile_vec_copy(&dp->scp->b_pos, &dp->scp->pos);
+    
+    
+    dp->scp->battle.status &= ~0x4F;
+    
+    
+    enInitDataFunc[kind - 1](dp);
+    
+    
+    dp->randseed = shRandI() ^ shRandI();
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData)
+#endif
 
 void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */) {
     if (dp != NULL) {
@@ -178,7 +237,47 @@ int enCheckDarkOrBrightPlayer(void) {
     return enCheckDarkOrBright(sh2jms.player);
 }
  
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckWater);
+int enCheckWater(EnLOCAL_DATA* dp) {
+    float y = 3.4028235e38f; // r20
+    switch (RoomName(0, dp->scp->pos.x, dp->scp->pos.z)) {
+        case 0x63:
+        case 0x62:
+            y = -200.0f;
+            break;
+        case 0x80:
+        case 0x85:
+        case 0x7E:
+        case 0x82:
+            y = -180.0f;
+            break;
+        case 0x7A:
+        case 0x7C:
+            y = -165.0f;
+            break;
+        case 0xBB:
+            y = 160.0f;
+            break;
+        case 0xB6:
+            y = -280.0f;
+            break;
+        case 0xB7:
+            y = -310.0f;
+            break;
+        case 0xAB:
+            y = -320.0f;
+            break;
+        case 0xB8:
+            y = -360.0f;
+            break;
+        case 0xB9:
+            y = -350.0f;
+            break;
+    }
+
+    return dp->scp->pos.y >= y;
+
+
+}
 
 void enSetBattleTarget(struct EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */) {
     dp->scp->battle.target = shBattleGetTargetHuman(dp->scp, type);
@@ -587,7 +686,7 @@ SubCharacter* enGetNearCharacter(EnLOCAL_DATA* dp) {
     EnLOCAL_DATA* tp = enLocalWork.Data;
     SubCharacter* scp = shBattleGetTargetHuman(dp->scp, 0);
     dist = vec3_dist_xz_reverse(&scp->pos, &dp->scp->pos);   
-    for (i = 0; i < 32; i++, tp++) {
+    for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, tp++) {
         if ((tp->kind != 0) && (tp != dp) && (tp->scp->battle.hp > 0.0f)) {
             d = vec3_dist_xz_reverse(&tp->scp->pos, &dp->scp->pos);
             if (d < dist) {
@@ -624,7 +723,28 @@ int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */) {
     return t;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetNearOtherEnemy);
+EnLOCAL_DATA* enGetNearOtherEnemy(EnLOCAL_DATA* dp) {
+    int i; // r6
+    EnLOCAL_DATA* tp; // r7
+    EnLOCAL_DATA* rp; // r2
+    float d; // r29    
+    float m; // r29
+   
+    tp = enLocalWork.Data;
+    rp = NULL;
+    
+    m = MAX_FLOAT;
+    for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, tp++) {
+        if ((tp->kind != 0) && (tp != dp) && !(tp->scp->battle.status & 2)) {
+            d = vec3_dist(&dp->scp->pos, &tp->scp->pos);
+            if (d < m) {
+                rp = tp;
+                m = d;
+            }
+        }
+    }    
+    return rp;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckNearPlayer);
 
@@ -692,9 +812,43 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitPath);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetPath);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath);
+float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
+    sceVu0FVECTOR sp, ep; // r29+0x10
+    volatile_vec_copy(sp, mpos);
+    volatile_vec_copy(ep, tpos);
+    if (dp->flag & 0x40) {
+        if (dp->flag & 0x100) {
+            
+            sp[1] = ep[1] = dp->scp->pos.y + dp->eye_y;
+        } else {
+            
+            sp[1] = ep[1] = 50.0f + dp->scp->pos.y;
+        }
+    } else {
+        if (dp->flag & 0x100) {
+                
+            sp[1] = ep[1] = dp->scp->pos.y - dp->eye_y;
+        } else {
+            
+            sp[1] = ep[1] = dp->scp->pos.y - 50.0f;
+        }
+    } 
+    return enCheckHitEyes(dp, sp, ep);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPath2);
+float enCheckPath2(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
+    sceVu0FVECTOR sp, ep;
+    volatile_vec_copy(sp, mpos);
+    volatile_vec_copy(ep, tpos);
+    if (dp->flag & 0x40) {
+        
+        sp[1] = ep[1] = dp->scp->pos.y + dp->eye_y;
+    } else {
+        
+        sp[1] = ep[1] = dp->scp->pos.y - dp->eye_y;
+    }
+    return enCheckHitEyes2(dp, sp, ep);
+}
 
 float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
     sceVu0FVECTOR tp; // r29+0x30
@@ -712,15 +866,146 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerHitEyes);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckFloor);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSkeletonVector);
+void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
+    shSkelton* sp; // r5
+    int i; // r7
+    Matrix4* m; // not present in DWARF
+    
+    sp = dp->scp->sk_top;
+    if (!(dp->scp->status & 0x10)) {
+        vec_zero(vec);
+        return;
+    }
+    i = 0;
+    while ((i < n) && (sp->next != NULL)) {
+        sp = sp->next;
+        i++;
+    }
+    m = &sp->src_m;
+    vec_copy_vu0(vec, m->d[3]);
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSkeletonMatrix);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDamageMotion);
+#ifdef NON_MATCHING
+int enGetDamageMotion(EnLOCAL_DATA* dp) { // @note: left like this since I dont know how those variables were used
+    struct shBattleInfo* bi; // r16   
+    int m; // r18
+    int id; // r2
+    int dd; // r2    
+    float a; // r29+0x40
+    
+    int var_s2;
+    int var_v0;
+
+    bi = &dp->scp->battle;
+    a = shAngleRegulate(shAtanV(&bi->vec) - dp->scp->rot.y);
+    if (float_abs(a) > QUARTER_TURN) {
+        var_v0 = 0;
+    } else {
+        var_v0 = 1;
+    }
+
+    switch (dp->last_atk) {
+        case 2:
+        case 1:
+        case 36:
+            var_s2 = 5;
+            break;
+        case 4:
+        case 6:
+            var_s2 = var_v0 + 6;
+            break;
+        case 23:
+            bi->shock = 0.0f;
+            dp->hb_s = 0.0f;
+            /* fallthrough */
+        case 12:
+        case 13:
+        case 15:
+        case 16:
+        case 38:
+        case 39:
+        case 40:
+        case 44:
+        case 46:
+        case 50:
+            if (a < 0.0f) {
+                var_s2 = 8;
+            } else {
+                var_s2 = 9;
+            }
+            break;
+        case 14:
+        case 17:
+            var_s2 = 0xA;
+            break;
+        case 18:
+        case 41:
+        case 49:
+            var_s2 = var_v0 + 0xB;
+            bi->shock = 0.0f;
+            dp->hb_s = 0.0f;
+            break;
+        case 19:
+        case 20:
+            if (a < 0.0f) {
+                var_s2 = 0x11;
+            } else {
+                var_s2 = 0x12;
+            }
+            break;
+        case 21:
+        case 22:
+        case 45:
+            var_s2 = 0x13;
+            break;
+        case 24:
+            var_s2 = 0xD;
+            bi->shock = 0.0f;
+            dp->hb_s = 0.0f;
+            break;
+        default:
+            var_s2 = 5;
+            printf("Illegal damage type!(%d)\n", dp->last_atk);
+            break;
+    }
+    return var_s2;
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDamageMotion)
+#endif
+
+//INCLUDE_RODATA("asm/nonmatchings/Enemy/en_common", @2475);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDownMotion);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetLieDirection);
+#ifdef NON_MATCHING
+int enGetLieDirection(int dm) {
+    int m; // r16
+    switch (dm) {
+    case 14:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+        m = 0;
+        break;
+    case 15:
+        m = 1;
+        break;
+    default:
+        m = 0;
+        printf("Illegal down motion!(%d)\n", dm);
+    }
+    return m;
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetLieDirection)
+#endif
 
 void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */) {
     enAnimeRestart(dp);
@@ -738,17 +1023,47 @@ void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /*
     dp->tz2 = dp->tz;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeSetDirectFrame);
+void enAnimeSetDirectFrame(EnLOCAL_DATA* dp, int anim, int id, int frame) {
+    AnimeInfo* ai; // r2    
+    enAnimeRestart(dp);
+    dp->anim = anim;
+    dp->anim_s = 0x1000;
+    dp->anim_loop = 0;
+    dp->anim_step = 0;
+    dp->flag &= ~0x4080;
+    EnAnimeSetFunc[dp->kind](dp->scp, id, 0);
+    ai = shCharacterAnimeGetInfo(dp->scp);
+    if (frame < 0) {
+        frame = ai->frame + frame;
+        if (frame < 0) frame = 0;
+    } else {
+        if (frame >= ai->frame) frame = ai->frame - 1;
+    }
+    shCharacterAnimeFrameSet(dp->scp, frame);
+    dp->anim_n = frame * 0x960;
+    
+    enSetTrans(dp);
+    dp->tx2 = dp->tx;
+    dp->tz2 = dp->tz;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enAnimeExec);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTrans);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTransN);
+void enSetTransN(EnLOCAL_DATA* dp, int n) {
+    sceVu0FVECTOR vec;
+    enGetSkeletonVector(vec, dp, n);
+    dp->tx = vec[0];
+    dp->tz = vec[2];
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTransWalk);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetTransForward);
+void enSetTransForward(EnLOCAL_DATA* dp, float s) {
+    dp->tx = dp->tx2 = dp->tz2 = 0.0f;
+    dp->tz = ((-s * dp->anim_s) / 4096.0f) * shGetDT();
+}
 
 void enAnimePause(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->flag |= 1;
@@ -804,7 +1119,6 @@ void enResetFilter(void) {
     sh2gfw_Reset_FilterCommand();
 }
 
-
 void enSoundCall(int num /* r2 */, float vol /* r29+0x10 */, float* pos /* r2 */) {
     SeCallPos(num, vol, pos, 0);
 }
@@ -857,7 +1171,19 @@ void enResetForbiddenArea(void) {
     enLocalWork.ForbiddenNum = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetForbiddenArea);
+#ifdef NON_MATCHING
+void enSetForbiddenArea(float x0, float z0, float x1, float z1) {
+    int n = enLocalWork.ForbiddenNum; // r16   
+    (n < 2) ? 0 : fjAssert_("en_common.c", 0xB99, "n < EN_FORBIDDENAREA_MAX");   // #define EN_FORBIDDENAREA_MAX 2 ??
+    enLocalWork.ForbiddenArea[n].x0 = x0;
+    enLocalWork.ForbiddenArea[n].z0 = z0;
+    enLocalWork.ForbiddenArea[n].x1 = x1;
+    enLocalWork.ForbiddenArea[n].z1 = z1;
+    enLocalWork.ForbiddenNum = n + 1;
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetForbiddenArea)
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enRoomForbiddenArea);
 
@@ -871,28 +1197,28 @@ void enEventDriven(int event /* r2 */, int id /* r2 */) {
 
     switch (event) {
         case 0:
-            for (i = 0; i < 32; i++, dp++) {
+            for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, dp++) {
                 if ((dp->kind != 0) && (dp->mlv != 0)) {
                     dp->mlv = 0;
                 }
             }
             break;
         case 1:
-            for (i = 0; i < 32; i++, dp++) {
+            for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, dp++) {
                 if ((dp->kind != 0) && (dp->mlv != 1)) {
                     dp->mlv = 3;
                 }
             }
             break;
         case 2:
-            for (i = 0; i < 32; i++, dp++) {
+            for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, dp++) {
                 if ((dp->kind == 2) && (dp->type == 6)) {
                     dp->type = 7;
                 }
             }
             break;
         case 3:
-            for (i = 0; i < 32; i++, dp++) {
+            for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, dp++) {
                 if (dp->kind == 4) {
                     dp->mlv = 4;
                     dp->slv = 3;
@@ -900,7 +1226,7 @@ void enEventDriven(int event /* r2 */, int id /* r2 */) {
             }
             break;
         case 4:
-            for (i = 0; i < 32; i++, dp++) {
+            for (i = 0; i < EN_LOCAL_DATA_COUNT; i++, dp++) {
                 if ((dp->kind == 5) && (dp->mlv == 4)) {
                     dp->slv = event;
                     dp->sslv = id;
