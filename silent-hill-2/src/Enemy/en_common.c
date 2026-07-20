@@ -796,7 +796,20 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetHitColumn);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enIKETrans);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enARMTrans);
+void enARMTrans(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x20
+    if ((dp == NULL) || (dp->scp->battle.status & 2) != 0) return;    
+    volatile_vec_copy(&dp->scp->b_pos, &dp->scp->pos);    
+    vu0_sub_vector(vec,&dp->scp->pos, dp->arm.old_pos);   
+    vec_add_xyz(dp->arm.hand_pos, vec, dp->arm.hand_pos);
+    if (dp->scu.dc >= 0) {
+        enARMGetHandPos(vec, dp, dp->scu.dc);
+        vec_sub_xyz(dp->arm.hand_pos, vec, vec);
+        dp->scp->pos.x = vec[0];
+        dp->scp->pos.z = vec[2];
+    }
+    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enDyingExec);
 
