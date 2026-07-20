@@ -151,6 +151,8 @@ void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta);
 
 void enSetRotFloor(EnLOCAL_DATA* dp);
 
+void enARMTrans(EnLOCAL_DATA* dp);
+
 void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */);
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos);
@@ -165,9 +167,10 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
 void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n);
 
 int enGetDamageMotion(EnLOCAL_DATA* dp);
-
+int enGetDownMotion(EnLOCAL_DATA* dp /* r18 */);
 int enGetLieDirection(int dm);
 void enAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
+void enAnimeSetDirectFrame(EnLOCAL_DATA* dp, int anim, int id, int frame);
 
 void enSetTransN(EnLOCAL_DATA* dp, int n);
 
