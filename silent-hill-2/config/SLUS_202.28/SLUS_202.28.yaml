@@ -489,7 +489,8 @@ segments:
       - [0x28e768, rodata,  Effect/ef_stage]
       - [0x28e860, .rodata, Enemy/en_bos]
       - [0x28e8b0, .rodata, Enemy/en_common]
-      - [0x28e8d0, rodata,  rodata_0x28e8d0]
+      - [0x28e8d0, rodata,  rodata_0x28e8d0] # this is wrong @todo: fix
+#      - [0x28e9d0, rodata,  rodata_0x28e9d0] # this is the correct one
       - [0x28ee10, .rodata, Enemy/en_red]
       - [0x28eeb0, rodata,  rodata_0x28eeb0]
       - [0x28f010, .rodata, Fog/fog]
