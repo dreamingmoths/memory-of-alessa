@@ -10,6 +10,8 @@
 
 #include "Chacter_Draw/sh2gfw_model_light.h"
 
+#include "Collision/cl_main.h"
+
 #include "Event/event.h"
 #include "Event/item.h"
 #include "Event/stg_name.h"
@@ -746,7 +748,37 @@ EnLOCAL_DATA* enGetNearOtherEnemy(EnLOCAL_DATA* dp) {
     return rp;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckNearPlayer);
+void enCheckNearPlayer(EnLOCAL_DATA* dp, int* count, float* dist, float limit) {
+    float d; // r29+0x60
+    sceVu0FVECTOR vec; // r29+0x50
+    if ((enCheckAimedByHuman(dp) == 0) || (d = vec3_dist_xz_reverse(&dp->scp->pos, enGetPlayerPos(dp)), (d > limit))) {
+        
+        *count = 0;
+        return;
+    }
+    if (*count <= 0) {
+        *count += shGetDF();
+        if (*count > 0) {
+            *dist = d;
+        }
+        return;
+    }
+    *count += shGetDF();
+    if (60 < *count) {
+        *count = -10;
+        return;
+    }
+    if (d < *dist) {
+        *dist = d;
+    } else {
+        d = *dist;
+    }
+    shSinCosV_Scale(vec, enGetPlayerAngle(dp), d);  
+    vu0_add_vector(vec, enGetPlayerPos(dp), vec);
+    dp->scp->pos.x = vec[0];
+    dp->scp->pos.z = vec[2];
+    vec_zero(dp->vec);
+}
 
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
     if ((dp->kind == 4) && (dp->type == 0)) {
@@ -813,7 +845,28 @@ void enARMTrans(EnLOCAL_DATA* dp) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enDyingExec);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enWaitRegenerate);
+void enWaitRegenerate(EnLOCAL_DATA* dp) {
+    
+    
+    
+    
+    
+    
+    switch (dp->sslv) {
+        case 0:
+            if (!(dp->scp->battle.status & 0x400) || ((BgIsOut(0) != 0) && (dp->p_dist > 30000.0f))) {
+                
+                ENEMY_NEXT_SUB_STEP();          
+            }
+            break;
+        case 1:
+            if ((dp->scp->battle.status & 0x400) && ((BgIsOut(0) == 0) || (dp->p_dist < 15000.0f))) {
+                
+                enInitData(dp, dp->scp);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enFlyingFunc);
 
@@ -821,7 +874,11 @@ void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */) {
     shCharacter_Manage_Delete(dp->scp, dp->scp->kind, dp->scp->id);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitPath);
+void enInitPath(EnPATH_DATA* p, float angle) {
+    p->markangle = p->angle =  shAngleRegulate(angle);
+    p->step = 0;
+    p->timer = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetPath);
 
@@ -875,7 +932,23 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckHitEyes);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckHitEyes2);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckPlayerHitEyes);
+float enCheckPlayerHitEyes(EnLOCAL_DATA* dp, float* ep) {
+    CL_VHIT_RESULT* res = &enLocalWork.HitResult; // r16
+    sceVu0FVECTOR p1; // r29+0x20    
+    sceVu0FVECTOR p2; // r29+0x30
+
+
+    volatile_vec_copy(p1, &dp->scp->battle.target->pos);
+    volatile_vec_copy(p2, ep);
+    p2[1] = p1[1] = dp->scp->battle.target->eye_y;
+    clCheckHitEyes(res, (u_int) dp->scp->battle.target, p1, p2, 0);
+    if (res->kind == 0) {
+        return -vec3_dist_reverse(p2, p1);
+    } else if (res->kind == 3) {
+        return vec3_dist(p1, res->hobj.wall.nl);
+    }
+    return vec3_dist(p1, res->hobj.wall.cp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckFloor);
 
@@ -899,7 +972,22 @@ void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetSkeletonMatrix);
+void enGetSkeletonMatrix(float (*mat)[4], EnLOCAL_DATA* dp, int n) {
+    shSkelton* sp; // r5
+    int i; // r7
+
+    sp = dp->scp->sk_top;
+    
+    if (!(dp->scp->status & 0x10)) {
+        vec_zero(mat[0]);
+        vec_zero(mat[1]);
+        vec_zero(mat[2]);
+        vec_zero(mat[3]);
+        return;
+    }    
+    for (i = 0; (i < n) && (sp->next != NULL); i++) sp = sp->next;    
+    mat_copy(mat, &sp->src_m);
+}
 
 #ifdef NON_MATCHING
 int enGetDamageMotion(EnLOCAL_DATA* dp) { // @note: left like this since I dont know how those variables were used
