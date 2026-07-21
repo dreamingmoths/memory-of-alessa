@@ -145,7 +145,7 @@ SECTIONS
 		. = ALIGN(0x80);
 		ALIGNALL(0x4);
 
-		stg_apart_e3fw_data.data.s.o (.data)
+        stg_apart_e3fw.c.o (.data)
 	}	>	aew.bin
 
 	.aee.bin :
