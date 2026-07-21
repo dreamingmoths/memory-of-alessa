@@ -6,6 +6,8 @@
  * eventually be moved here
  */
 
+/* @note(dreamingmoths, july 20th, 2026): try to use these `vu0_` inlines where possible. */
+
 static inline void vu0_add_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
     asm volatile("\
 	lqc2      vf4,0x0(%1)\n\
@@ -23,6 +25,17 @@ static inline void vu0_sub_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVEC
 	sqc2      vf4,0x0(%0)\n\
 	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
 }
+
+static inline void vu0_scale_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float t) {
+    asm volatile("mfc1    t7,%2\n\
+	lqc2    vf4,0x0(%1)\n\
+	qmtc2    t7,vf5\n\
+	vmulx.xyzw	vf4,vf4,vf5\n\
+	sqc2    vf4,0x0(%0)\n\
+	": : "r" (v0) , "r" (v1), "f" (t):"t7", "memory");
+}
+
+/* all inlines below may be used, but they may not exist forever. */
 
 static inline float vec_normalize(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\

@@ -158,20 +158,38 @@ void clAllInitCollisionData(void);
 
 void clFrameInitCollisionData(void);
 
-void clBattleAddQue(struct _CL_BATTLE_QUE* que /* r2 */);
+void clCollectCharaPosition(void);
 
-struct _CL_BATTLE_RESULT* clBattleGetResult(u_int id /* r2 */, struct _CL_BATTLE_RESULT* before /* r2 */);
+void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col, CL_HITPOLY_COLUMN* wcol, struct SubCharacter* sc, void (* func)(void));
 
-void clAddDynamicWall(struct _CL_HITPOLY_PLANE* pl /* r2 */);
+void clAddDynamicWall(CL_HITPOLY_PLANE* pl);
 
-void clAddDynamicFloor(struct _CL_HITPOLY_PLANE* pl /* r2 */);
+void clAddDynamicFloor(CL_HITPOLY_PLANE* pl);
 
-// nonmatching:
+void clBattleAddQue(CL_BATTLE_QUE* que);
 
-int clCheckSubColumnToColumn(struct _CL_HITRESULT* result /* r2 */, float (*clm0)[4] /* r2 */, float (*clm1)[4] /* r2 */);
+CL_BATTLE_RESULT* clBattleGetResult(u_int id, CL_BATTLE_RESULT* before);
 
-void clCheckHitEyes(struct _CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /* r2 */, float* ed /* r2 */, int thru /* r2 */);
+void clBattleCheckExec(void);
 
-void clCheckHitEyesOnlyFloor(struct _CL_VHIT_RESULT* res /* r19 */, int unknown, float* sp /* r18 */, float* ep /* r17 */);
+CL_SELECT_MAP* clGetHitSectListVECHIT(float* st, float* ed);
+
+int clCheckCrossLine2BoxXZ(float (* box)[4], float* st, float* ed);
+
+int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1);
+
+CL_SELECT_MAP* clGetHitSectListMOVE(float* bpos);
+
+void clCheckHitEyes(CL_VHIT_RESULT* res, u_int id, float* st, float* ed, int thru);
+
+void clCheckHitEyesOnlyFloor(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep);
+
+void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res, float* sp, float* ep);
+
+void clCheckHitEyesOnlyWall(CL_VHIT_RESULT* res, float* sp, float* ep);
+
+void clCheckHitEyesOnlyFloorCeil(CL_VHIT_RESULT* res, float* sp, float* ep);
+
+int clPermitColumnExpansion(void);
 
 #endif CL_MAIN_H
