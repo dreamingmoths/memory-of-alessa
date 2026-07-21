@@ -24,6 +24,26 @@ static inline void vu0_sub_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVEC
 	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
 }
 
+static inline void vu0_transform_vector_perspective(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
+    asm ("\
+         lqc2         vf4, 0x0(%0)\n\
+         lqc2         vf5, 0x0(%1)\n\
+         lqc2         vf6, 0x10(%1)\n\
+         vmulax.xyzw  ACC, vf5, vf4x\n\
+         vmadday.xyzw ACC, vf6, vf4y\n\
+         lqc2         vf5, 0x20(%1)\n\
+         lqc2         vf6, 0x30(%1)\n\
+         vmaddaz.xyzw ACC, vf5, vf4z\n\
+         vmaddw.xyzw  vf4, vf6, vf4w\n\
+         vdiv         Q, vf0w, vf4w\n\
+         vwaitq\n\
+         vmulq.xyz    vf4, vf4, Q\n\
+         cfc2         t7, $vi22\n\
+         sqc2         vf4, 0x0(%0)\n\
+         mtc1         t7, $f0"
+        : "+r"(vec) : "r"(mat) : "t7", "f0");
+}
+
 static inline float vec_normalize(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\
         vmul.xyz vf5, vf4, vf4\n\
