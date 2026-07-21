@@ -137,7 +137,7 @@ float enCalcDirection(float* pa /* r2 */, float* pb /* r2 */);
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 float enCalcSpeedRate(float angle, float* mpos, float* tpos);
 void enMakeRotVector(float* vec, float* rot, float range);
-
+int enCheckIntoScreen(EnLOCAL_DATA* dp);
 SubCharacter* enGetNearCharacter(EnLOCAL_DATA* dp);
 int enCalcTimer(int t /* r2 */);
 void enSetTimer(EnLOCAL_DATA* dp /* r16 */, int t /* r2 */);
