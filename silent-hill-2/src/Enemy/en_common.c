@@ -1341,9 +1341,10 @@ void enResetForbiddenArea(void) {
 }
 
 #ifdef NON_MATCHING
+#define EN_FORBIDDENAREA_MAX 2
 void enSetForbiddenArea(float x0, float z0, float x1, float z1) {
     int n = enLocalWork.ForbiddenNum; // r16   
-    (n < 2) ? 0 : fjAssert_("en_common.c", 0xB99, "n < EN_FORBIDDENAREA_MAX");   // #define EN_FORBIDDENAREA_MAX 2 ??
+    FJ_ASSERT_ON_LINE(n < EN_FORBIDDENAREA_MAX, 2969);
     enLocalWork.ForbiddenArea[n].x0 = x0;
     enLocalWork.ForbiddenArea[n].z0 = z0;
     enLocalWork.ForbiddenArea[n].x1 = x1;

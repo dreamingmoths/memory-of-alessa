@@ -206,7 +206,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
         return;
     } 
     
-    (anim >= 0 && anim < 11U) ? 0 : fjAssert_("en_red.c", 0x3EB, "anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA)");              
+    FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA), 1003);
     enAnimeSet(dp, anim, EnREDAnime[anim].Anime);
     if (anim == 2) {
         enREDSetMoveCount(dp);
@@ -215,7 +215,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
 
 /* static */ void enREDAnimeReset(EnLOCAL_DATA* dp, int anim) {
 
-    (anim >= 0 && anim < 11U) ? 0 : fjAssert_("en_red.c", 0x3F6, "anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA)");
+    FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnREDAnime) / sizeof(EnANIME_DATA), 1014);
     enAnimeSet(dp, anim, EnREDAnime[anim].Anime);
     if (anim == 2) {
         enREDSetMoveCount(dp);
