@@ -5,13 +5,16 @@ stg_apart_e3fw_EvRoomInit                                        = 0x01F02210; /
 stg_apart_e3fw_EvProgSubScreamOn                                 = 0x01F02220; // type:func
 stg_apart_e3fw_pjames_stage_anim                                 = 0x01F02380; // size:0xFC
 stg_apart_e3fw_ev_pos                                            = 0x01F02480; // size:0x90
-stg_apart_e3fw_ev_list                                           = 0x01F02510; // size:0xE0
-stg_apart_e3fw_gi_list                                           = 0x01F025F0; // size:0x40
+stg_apart_e3fw_ev_list                                           = 0x01F02510; // size:0xE0 can_reference:false
+stg_apart_e3fw_gi_list                                           = 0x01F025F0; // size:0x40 can_reference:false
 stg_apart_e3fw_ev_prog                                           = 0x01F02630; // size:0xC
-stg_apart_e3fw_mdl_list                                          = 0x01F02640; // size:0xC0
-stg_apart_e3fw_en_list                                           = 0x01F02700; // size:0x64
+stg_apart_e3fw_mdl_list                                          = 0x01F02640; // size:0xC0 can_reference:false
+stg_apart_e3fw_en_list                                           = 0x01F02700; // size:0x64 can_reference:false
 stage_apart_e3fw                                                 = 0x01F02770; // size:0x44
-
-stg_apart_e3fw_yard_key_after_data                               = 0x01F02860; // size:0x20
-stg_apart_e3fw_kagikeri_data                                     = 0x01F02810; // size:0x50
+stg_apart_e3fw_anim_01F027B8                                     = 0x01F027B8; // size:0x8  type:s16
+stg_apart_e3fw_movie_msg_01F027C0                                = 0x01F027C0; // size:0x20 type:u16
 stg_apart_e3fw_kick                                              = 0x01F027E0; // size:0x28
+stg_apart_e3fw_kagikeri_data                                     = 0x01F02810; // size:0x50
+stg_apart_e3fw_yard_key_after_data                               = 0x01F02860; // size:0x20 type:f32
+
+

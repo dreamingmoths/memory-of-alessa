@@ -23,5 +23,5 @@ segments:
     subsegments:
       - [0x0, databin, aew_overlay_header]
       - [0x80, c, Event/stage/stg_apart_e3fw]
-      - [0x580, data, Event/stage/stg_apart_e3fw_data]
+      - [0x580, .data, Event/stage/stg_apart_e3fw]
   - [0xA80]

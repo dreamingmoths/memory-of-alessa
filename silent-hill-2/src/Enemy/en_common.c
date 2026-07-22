@@ -680,7 +680,16 @@ void enMakeRotVector(float* vec, float* rot, float range) {
     vu0_transform_vector(vec, rmat);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckIntoScreen);
+int enCheckIntoScreen(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x10
+    vec_copy_vu0(vec, &dp->scp->pos);    
+    vec[1] -= dp->eye_y;
+    vu0_transform_vector_perspective(vec, VbWvsMatrix.wsm);    
+    if (shScreenClipF(vec)) {
+        return 0;
+    }
+    return 1;
+}
 
 SubCharacter* enGetNearCharacter(EnLOCAL_DATA* dp) {
     float dist, d;

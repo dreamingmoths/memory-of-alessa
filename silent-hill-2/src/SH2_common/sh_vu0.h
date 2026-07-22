@@ -30,7 +30,7 @@ void shSway1f_asm(void);
 void shCreateNormal(float*, float*, float*, float*);
 void shSetMiniMaxN(float* min, float* max, float* v, int n);
 char shScreenClipI(int* v0);
-char shScreenClipF(float* v0);
+int shScreenClipF(float* v0); // @note: changed this from char to int
 void shQzero(void*, int);
 void shFill(void*, int, int);
 void shMulMatrix(sceVu0FMATRIX m0, sceVu0FMATRIX m1, sceVu0FMATRIX m2);
