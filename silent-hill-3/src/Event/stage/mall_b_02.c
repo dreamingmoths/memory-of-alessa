@@ -220,7 +220,7 @@ int func_01F6DBC0_mall_b_02(void) {
             func_001EC5E0(p->unkC);
             if (func_00190240()) {
                 func_001EC5C0(0);
-                D_1D316AC &= 0xDFFFFFFF;
+                D_1D316AC &= ~0x20000000;
                 return 1;
             }
             if (p->unk10[1] < p->unk10[2]) {
@@ -237,7 +237,7 @@ int func_01F6DBC0_mall_b_02(void) {
             }
             D_1D31658 |= 0x20;
             func_001EC5C0(0);
-            D_1D316AC &= 0xDFFFFFFF;
+            D_1D316AC &= ~0x20000000;
             func_0013D280(0);
             return 1;
     }
