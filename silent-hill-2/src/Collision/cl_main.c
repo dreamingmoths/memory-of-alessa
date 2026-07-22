@@ -371,7 +371,7 @@ void clCheckHitThrustGunVector(u_int id, float* sp, float* ep) {
         vaddy.x vf3, vf3, vf3y\n
         qmfc2 t0, vf3\n\
         mtc1 t0, f12\n\
-        sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep));
+        sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep): "t0");
     clVHitResult[clVHitListUse].kind = 0;
     smap = clGetHitSectListVECHIT(sp, ep);
     smapsv = smap;
