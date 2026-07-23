@@ -4,6 +4,17 @@
 #include "common.h"
 #include "taskman/shtskman.h"
 
+typedef struct _EF_RAINDRAWDATA {
+    // Members
+    int spoton; // offset 0x0, size 0x4
+    float ambcol[4]__attribute__((aligned(16))); // offset 0x10, size 0x10
+    float lightpos[4]__attribute__((aligned(16))); // offset 0x20, size 0x10
+    float lightdir[4]__attribute__((aligned(16))); // offset 0x30, size 0x10
+    float lightcol[4]__attribute__((aligned(16))); // offset 0x40, size 0x10
+    float lightpar[4]__attribute__((aligned(16))); // offset 0x50, size 0x10
+    float wcm[4][4]__attribute__((aligned(16))); // offset 0x60, size 0x40
+} EF_RAINDRAWDATA;
+
 // total size: 0x180
 typedef struct _EF_RAINDROP_DATA {
     // Members
@@ -32,5 +43,7 @@ int EFCTSetRainDrop(int lev /* r17 */);
 void EFCTDelRainDrop(void);
 void EFCTRainDropMain(shTskTASK* ptr /* r18 */);
 void efRainDropDrawLINE(EF_RAIN_LINE* p);
+
+extern EF_RAINDRAWDATA efRainDrawData;
 
 #endif // EF_RAIN_H
