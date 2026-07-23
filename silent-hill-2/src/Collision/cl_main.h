@@ -184,7 +184,7 @@ void clCheckHitEyes(CL_VHIT_RESULT* res, u_int id, float* st, float* ed, int thr
 
 void clCheckHitEyesOnlyFloor(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep);
 
-void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res, float* sp, float* ep);
+void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep);
 
 void clCheckHitEyesOnlyWall(CL_VHIT_RESULT* res, float* sp, float* ep);
 

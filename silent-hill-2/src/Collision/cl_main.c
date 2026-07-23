@@ -894,9 +894,89 @@ void clCheckHitEyes(CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyFloor);
+void clCheckHitEyesOnlyFloor(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep) {   CL_SELECT_MAP* smap; // r2
+    CL_SELECT_MAP* smapsv; // r16
+    CL_HITPOLY_PLANE* wall; // r2
+    int* ptr; // r2
+    float min; // r29+0x5C
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyFloorThru);
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)":: "r"(&min), "r"(sp), "r"(ep): "t0");
+
+    
+
+    res->kind = 0;
+    
+    
+    clCheckHitEyeVectorDynamicFloor(res, sp, ep, &min);
+
+    
+    smapsv = clGetHitSectListVECHIT(sp, ep);
+
+
+    
+    if (smapsv->base != NULL) {
+
+        
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((CL_CLDHEADER* ) smap->base)->fldofs;
+            ptr = smap->base + ((int*)smap->base)[smap->sect + 8];
+            clCheckHitSwordVectorWall(res, sp, ep, &min, wall, ptr);
+        }
+    }
+}
+
+
+void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res /* r19 */, int unknown, float* sp /* r18 */, float* ep /* r17 */) {
+    CL_SELECT_MAP* smap; // r2
+    CL_SELECT_MAP* smapsv; // r16
+    CL_HITPOLY_PLANE* wall; // r2
+    int* ptr; // r2
+    float min; // r29+0x5C
+
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)":: "r"(&min), "r"(sp), "r"(ep): "t0");
+
+    
+
+    res->kind = 0;
+    
+    
+    clCheckHitEyeVectorDynamicFloor(res, sp, ep, &min);
+
+    
+    smapsv = clGetHitSectListVECHIT(sp, ep);
+
+
+    
+    if (smapsv->base != NULL) {
+
+        
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((CL_CLDHEADER* ) smap->base)->fldofs;
+            ptr = smap->base + ((int*)smap->base)[smap->sect + 8];
+            clCheckHitEyeVectorWall(res, sp, ep, &min, wall, ptr);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyWall);
 
