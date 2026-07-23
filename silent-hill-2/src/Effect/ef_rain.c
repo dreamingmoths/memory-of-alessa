@@ -144,9 +144,9 @@ void EFCTRainDropMain(shTskTASK* ptr) {
                 
                 efRainDropInitSpray(pt, res.hobj.wall.cp);
                 ptr->exe.mode++;
-            } else 
+            }  
                 
-                if (!(line.v[1][1] < 2500.0f + campos[1])) 
+            else if ((line.v[1][1] >= 2500.0f + campos[1])) 
                     
                     ptr->exe.mode = 0;
             break;
