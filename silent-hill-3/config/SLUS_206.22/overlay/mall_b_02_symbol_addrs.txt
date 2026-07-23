@@ -16,3 +16,7 @@ func_01F6E484_mall_b_02 = 0x1F6E484;
 D_01F6E770_mall_b_02 = 0x1F6E770;
 D_01F6E7A0_mall_b_02 = 0x1F6E7A0;
 D_01F6E800_mall_b_02 = 0x1F6E800;
+
+D_01F6E880_mall_b_02 = 0x01F6E880;
+
+D_01F6E890_mall_b_02 = 0x01F6E890; // size:0x1C
