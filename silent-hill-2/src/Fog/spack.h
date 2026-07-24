@@ -64,4 +64,11 @@ typedef struct SPACK_DATA {
 
 SPACK_DATA* spkInit(void);
 
+void spkOpenDGiftag(u_long giftag1 /* r2 */, u_long giftag2 /* r2 */, u_int w /* r2 */, u_short envid /* r2 */);
+
+void spkCloseGiftag(void);
+void spkCloseOpenDGiftag(u_long giftag1 /* r18 */, u_long giftag2 /* r17 */);
+
+extern struct SPACK_DATA spack;
+
 #endif // SPACK_H
