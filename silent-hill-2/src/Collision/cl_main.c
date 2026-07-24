@@ -1,14 +1,98 @@
-#include "cl_main.h"
-#include "LoadBg/loadbg_cld.h"
+#include "sh2_common.h"
 #include "SH2_common/sh_vu0.h"
 
-static void clCheckColumn2WallHit(CL_HITRESULT* cres /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, CL_HITPOLY_COLUMN* col /* r16 */);
-static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */);
-static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col /* r19 */, int* whnum /* r18 */, CL_HITPOLY_COLUMN* cl /* r17 */, int* ptr /* r16 */);
-static void clCollectCharaHeightNormal(struct SubCharacter* sc /* r17 */);
+#include "vec.h"
+
+#include "LoadBg/loadbg_cld.h"
+
+#include "Collision/cl_main.h"
+
+static void clCollectCharaALL(void);
+
+static void clAddCollectVector(float* v0, float* v1);
+
+static void clCheckBg2Chara(int no);
+
+static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPOLY_PLANE* pl, int* ptr);
+
+static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum);
+
+static int clMakeWallHitCollectVector(struct SubCharacter* sc, float* wcv, float mang, int* flg, int num);
+
+static void clAddWallCollectVector(float* v0, float* v1, int* flg);
+
+static void clCheckColumn2WallHit(CL_HITRESULT* cres, CL_HITPOLY_PLANE* pl, CL_HITPOLY_COLUMN* col);
+
+static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPOLY_COLUMN* cl, int* ptr);
+
+static void clCollectCharaHeightNormal(struct SubCharacter* sc);
+
+static void clModifiedBattleData(void);
+
+static void clSetOneBattleResult(CL_BATTLE_QUE* que, CL_VHIT_RESULT* vres, float* vec);
+
+static void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec);
+
+static void clCheckHitSwordWeapon(CL_VHIT_RESULT* res, u_int id, float* svs, float* sve, float* evs, float* eve);
+
+static void clCheckHitGunWeapon(CL_VHIT_RESULT* res, u_int id, float* st, float* ed);
+
+static void clCheckHitSwordVector(CL_VHIT_RESULT* res, u_int id, float* sp, float* ep);
+
+static void clCheckHitSwordVectorWall(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, CL_HITPOLY_PLANE* pl, int* ptr);
+
+static void clCheckHitNoThruVectorWall(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, CL_HITPOLY_PLANE* pl, int* ptr);
+
+static void clCheckHitSwordVectorDynamicWall(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitSwordVectorDynamicWallNoThru(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitSwordVectorDynamicFloor(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitSwordVectorDynamicFloorNoThru(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitSwordWeaponThrust(u_int id, float* svs, float* sve, float* evs, float* eve);
+
+static int clCheckHitThrustSwordVector(u_int id, float* sp, float* ep);
+
+static void clCheckHitGunWeaponThrust(u_int id, float* st, float* ed);
+
+static void clCheckHitThrustGunVector(u_int id, float* sp, float* ep);
+
+static void clCheckHitThrustGunVectorCharacter(float* sp, float* ep, float min, u_int id);
+
+static CL_SELECT_MAP* clGetHitSectListVECHITOutDoor(float* st, float* ed);
+
+static CL_SELECT_MAP* clGetHitSectListVECHITInDoor(void);
+
+static int Line2PlaneBoundaryCheckXZ(float (* l0)[4], float (* l1)[4], float (* p0)[4], float (* p1)[4], float (* p2)[4], float (* p3)[4]);
+
+static CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos);
+
 static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(void);
 
-void clAllInitCollisionData() {
+static void clCheckHitEyeVector(CL_VHIT_RESULT* res, u_int id, float* sp, float* ep);
+
+static void clCheckHitEyeVectorNoThru(CL_VHIT_RESULT* res, u_int id, float* sp, float* ep);
+
+static void clCheckHitEyeVectorAllNoThru(CL_VHIT_RESULT* res, u_int id, float* sp, float* ep);
+
+static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, CL_HITPOLY_PLANE* pl, int* ptr);
+
+static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, CL_HITPOLY_COLUMN* cl, int* ptr);
+
+static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
+
+static void clCheckHitEyeVectorCharacter(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, u_int id);
+
+// @todo: figure out wtf these are
+#define SMAP_WALL_BASE_START 88
+#define SMAP_CL_STRIDE 16
+#define SMAP_CL_START 8
+
+void clAllInitCollisionData(void) {
     clCharaListAct = 0;
     clDynamicWallListAct = 0;
     clDynamicFloorListAct = 0;
@@ -23,7 +107,7 @@ void clAllInitCollisionData() {
     clCollisionEnable = 1;
 }
 
-void clFrameInitCollisionData() {
+void clFrameInitCollisionData(void) {
     clCharaListAct = clCharaListAct ? 0 : 1;
     clCharaListUse[clCharaListAct] = 0;
     clUseBattleQue = 0;
@@ -221,31 +305,454 @@ INCLUDE_RODATA("asm/nonmatchings/Collision/cl_main", @1814);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clSetThrustBattleResult);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordWeapon);
+static void clCheckHitSwordWeapon(CL_VHIT_RESULT* res /* r22 */, u_int id /* r21 */, float* svs /* r20 */, float* sve /* r19 */, float* evs /* r18 */, float* eve /* r17 */) {
+    int i; // r16
+    sceVu0FVECTOR st; // r29+0x80
+    sceVu0FVECTOR ed; // r29+0x90
+    sceVu0FVECTOR tmp; // r29+0xA0
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitGunWeapon);
+    for (i = 0; i < 5; i++) {
+        vu0_scale_vector(st, svs, clswPerc[i]);
+        vu0_scale_vector(tmp, evs, clswPerc[4 - i]);
+        vu0_add_vector(st, st, tmp);
+        vu0_scale_vector(ed, sve, clswPerc[i]);
+        vu0_scale_vector(tmp, eve, clswPerc[4 - i]);
+        vu0_add_vector(ed, ed, tmp);
+        
+        clCheckHitSwordVector(res, id, st, ed);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVector);
+        if (res->kind) {
+            break;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVectorWall);
+static void clCheckHitGunWeapon(CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /* r2 */, float* ed /* r2 */) {
+    clCheckHitEyeVector(res, id, st, ed);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitNoThruVectorWall);
+static void clCheckHitSwordVector(CL_VHIT_RESULT* res /* r21 */, u_int id /* r20 */, float* sp /* r19 */, float* ep /* r18 */) {
+    CL_SELECT_MAP* smap; // r16
+    CL_SELECT_MAP* smapsv; // r17
+    CL_HITPOLY_PLANE* wall; // r2
+    CL_HITPOLY_COLUMN* cl; // r2
+    int* ptr; // r2
+    float min; // r29+0x7C
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVectorDynamicWall);
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep): "t0");
+    res->kind = 0;
+    smap = clGetHitSectListVECHIT(sp, ep);
+    smapsv = smap;
+    clCheckHitSwordVectorDynamicWall(res, sp, ep, &min);
+    clCheckHitSwordVectorDynamicFloor(res, sp, ep, &min);
+    if (smap->base != NULL) {
+        for (; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START]; // ???
+            clCheckHitSwordVectorWall(res, sp, ep, &min, wall, cl);
+        }
+       for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 1]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 1]; // ???
+            clCheckHitSwordVectorWall(res, sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 2]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 2]; // ???
+            clCheckHitSwordVectorWall(res, sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 4]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 4]; // ???
+            clCheckHitEyeVectorBGColumn(res, sp, ep, &min, wall, cl);
+        }
+    }
+    clCheckHitEyeVectorCharacter(res, sp, ep, &min, id);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVectorDynamicWallNoThru);
+static inline vec_dist_squared(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float* ptr) {
+    asm("lqc2 vf1, 0(%0)\n\
+        lqc2 vf2, 0(%1)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%2)":: "r"(v0), "r"(v1), "r"(ptr): "t0");
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVectorDynamicFloor);
+#line 2360
+static void clCheckHitSwordVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* r20 */, float* ep /* r19 */, float* min /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */) {
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x70
+    float dist; // r29+0xBC
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordVectorDynamicFloorNoThru);
+    for (; *ptr != -1; ptr = ptr + 1) {
+        
+        if (pl[*ptr].material == MATERIAL_TYPE_12) continue;
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitSwordWeaponThrust);
+        
+        if (pl[*ptr].shape == 0)
+            ret = clCheckSubLineToPlane3(&cres,
+                                         sp, ep, 
+                                         pl[*ptr].p, pl[*ptr].p + 1, pl[*ptr].p + 2);
+        else
+            ret =clCheckSubLineToPlane(&cres,
+                                       sp, ep,
+                                       &pl[*ptr].p[0], &pl[*ptr].p[1],&pl[*ptr].p[2],&pl[*ptr].p[3]);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitThrustSwordVector);
+        
+        if (ret != 0) {
+            // @note: not an inline in other functions??
+            vec_dist_squared(sp, cres.cp, &dist);
+            if (dist < *min) {
+            
+                
+                *min = dist;
+                res->kind = 1;
+                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                clCalcPlaneEquation(pl + *ptr,(res->hobj).wall.nl);
+                (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(pl + *ptr);
+            }
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitGunWeaponThrust);
+static void clCheckHitNoThruVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* r20 */, float* ep /* r19 */, float* min /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */) {
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x70
+    float dist; // r29+0xBC
+    for (; *ptr != -1; ptr = ptr + 1) {
+        if (pl[*ptr].shape == 0)
+            ret = clCheckSubLineToPlane3(&cres,
+                                         sp, ep, 
+                                         pl[*ptr].p, pl[*ptr].p + 1, pl[*ptr].p + 2);
+        else
+            ret =clCheckSubLineToPlane(&cres,
+                                       sp, ep,
+                                       &pl[*ptr].p[0], &pl[*ptr].p[1],&pl[*ptr].p[2],&pl[*ptr].p[3]);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitThrustGunVector);
+        
+        if (ret != 0) {
+            // @note: not an inline in other functions??
+            vec_dist_squared(sp, cres.cp, &dist);
+            if (dist < *min) {
+            
+                
+                *min = dist;
+                res->kind = 1;
+                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                clCalcPlaneEquation(pl + *ptr,(res->hobj).wall.nl);
+                (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(pl + *ptr);
+            }
+        }
+    }
+}
+
+static void clCheckHitSwordVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
+    int i; // r16
+    int j; // r17
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x80
+    float dist; // r29+0xCC
+    int ac = (clDynamicWallListAct != 0) ? 0 : 1; // r2
+
+    for (i = 0; i < clDynamicWallList[ac].use; i++) {
+        for (j = 0; clDynamicWallList[ac].dw[i][j].kind != 0; j++) {
+        
+            if (clDynamicWallList[ac].dw[i][j].material == MATERIAL_TYPE_12) continue;
+    
+            
+            if (clDynamicWallList[ac].dw[i][j].shape == 0)
+                ret = clCheckSubLineToPlane3(&cres,
+                                             sp, ep, 
+                                             clDynamicWallList[ac].dw[i][j].p, clDynamicWallList[ac].dw[i][j].p + 1, clDynamicWallList[ac].dw[i][j].p + 2);
+            else
+                ret =clCheckSubLineToPlane(&cres,
+                                           sp, ep,
+                                           &clDynamicWallList[ac].dw[i][j].p[0], &clDynamicWallList[ac].dw[i][j].p[1],&clDynamicWallList[ac].dw[i][j].p[2],&clDynamicWallList[ac].dw[i][j].p[3]);
+    
+            
+            if (ret != 0) {
+                // @note: not an inline in other functions??
+                vec_dist_squared(sp, cres.cp, &dist);
+                if (dist < *min) {
+                
+                    
+                    *min = dist;
+                    res->kind = 1;
+                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    clCalcPlaneEquation(&clDynamicWallList[ac].dw[i][j], (res->hobj).wall.nl);
+                    (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicWallList[ac].dw[i][j]);
+                }
+            }
+        }
+    }
+}
+
+static void clCheckHitSwordVectorDynamicWallNoThru(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
+    int i; // r16
+    int j; // r17
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x80
+    float dist; // r29+0xCC
+    int ac = (clDynamicWallListAct != 0) ? 0 : 1; // r2
+
+    for (i = 0; i < clDynamicWallList[ac].use; i++) {
+        for (j = 0; clDynamicWallList[ac].dw[i][j].kind != 0; j++) {        
+            if (clDynamicWallList[ac].dw[i][j].shape == 0)
+                ret = clCheckSubLineToPlane3(&cres,
+                                             sp, ep, 
+                                             clDynamicWallList[ac].dw[i][j].p, clDynamicWallList[ac].dw[i][j].p + 1, clDynamicWallList[ac].dw[i][j].p + 2);
+            else
+                ret =clCheckSubLineToPlane(&cres,
+                                           sp, ep,
+                                           &clDynamicWallList[ac].dw[i][j].p[0], &clDynamicWallList[ac].dw[i][j].p[1],&clDynamicWallList[ac].dw[i][j].p[2],&clDynamicWallList[ac].dw[i][j].p[3]);
+    
+            
+            if (ret != 0) {
+                // @note: not an inline in other functions??
+                vec_dist_squared(sp, cres.cp, &dist);
+                if (dist < *min) {
+                
+                    
+                    *min = dist;
+                    res->kind = 1;
+                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    clCalcPlaneEquation(&clDynamicWallList[ac].dw[i][j], (res->hobj).wall.nl);
+                    (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicWallList[ac].dw[i][j]);
+                }
+            }
+        }
+    }
+}
+
+static void clCheckHitSwordVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
+    int i; // r16
+    int j; // r17
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x80
+    float dist; // r29+0xCC
+    int ac = (clDynamicFloorListAct != 0) ? 0 : 1; // r2
+
+    for (i = 0; i < clDynamicFloorList[ac].use; i++) {
+        for (j = 0; clDynamicFloorList[ac].dw[i][j].kind != 0; j++) {
+        
+            if (clDynamicFloorList[ac].dw[i][j].material == MATERIAL_TYPE_12) continue;
+    
+            
+            if (clDynamicFloorList[ac].dw[i][j].shape == 0)
+                ret = clCheckSubLineToPlane3(&cres,
+                                             sp, ep, 
+                                             clDynamicFloorList[ac].dw[i][j].p, clDynamicFloorList[ac].dw[i][j].p + 1, clDynamicFloorList[ac].dw[i][j].p + 2);
+            else
+                ret =clCheckSubLineToPlane(&cres,
+                                           sp, ep,
+                                           &clDynamicFloorList[ac].dw[i][j].p[0], &clDynamicFloorList[ac].dw[i][j].p[1],&clDynamicFloorList[ac].dw[i][j].p[2],&clDynamicFloorList[ac].dw[i][j].p[3]);
+    
+            
+            if (ret != 0) {
+                // @note: not an inline in other functions??
+                vec_dist_squared(sp, cres.cp, &dist);
+                if (dist < *min) {
+                
+                    
+                    *min = dist;
+                    res->kind = 1;
+                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    clCalcPlaneEquation(&clDynamicFloorList[ac].dw[i][j], (res->hobj).wall.nl);
+                    (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicFloorList[ac].dw[i][j]);
+                }
+            }
+        }
+    }
+}
+
+static void clCheckHitSwordVectorDynamicFloorNoThru(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
+    int i; // r16
+    int j; // r17
+    int ret; // r2
+    CL_HITRESULT cres; // r29+0x80
+    float dist; // r29+0xCC
+    int ac = (clDynamicFloorListAct != 0) ? 0 : 1; // r2
+
+    for (i = 0; i < clDynamicFloorList[ac].use; i++) {
+        for (j = 0; clDynamicFloorList[ac].dw[i][j].kind != 0; j++) {
+
+            if (clDynamicFloorList[ac].dw[i][j].shape == 0)
+                ret = clCheckSubLineToPlane3(&cres,
+                                             sp, ep, 
+                                             clDynamicFloorList[ac].dw[i][j].p, clDynamicFloorList[ac].dw[i][j].p + 1, clDynamicFloorList[ac].dw[i][j].p + 2);
+            else
+                ret =clCheckSubLineToPlane(&cres,
+                                           sp, ep,
+                                           &clDynamicFloorList[ac].dw[i][j].p[0], &clDynamicFloorList[ac].dw[i][j].p[1],&clDynamicFloorList[ac].dw[i][j].p[2],&clDynamicFloorList[ac].dw[i][j].p[3]);
+    
+            
+            if (ret != 0) {
+                // @note: not an inline in other functions??
+                vec_dist_squared(sp, cres.cp, &dist);
+                if (dist < *min) {
+                
+                    
+                    *min = dist;
+                    res->kind = 1;
+                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    clCalcPlaneEquation(&clDynamicFloorList[ac].dw[i][j], (res->hobj).wall.nl);
+                    (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicFloorList[ac].dw[i][j]);
+                }
+            }
+        }
+    }
+}
+
+#line 2738
+void clCheckHitSwordWeaponThrust(u_int id /* r21 */, float* svs /* r20 */, float* sve /* r19 */, float* evs /* r18 */, float* eve /* r17 */) {
+    int i; // r16
+    sceVu0FVECTOR st; // r29+0x70
+    sceVu0FVECTOR ed; // r29+0x80
+    sceVu0FVECTOR tmp; // r29+0x90
+    clVHitListUse = 0;
+
+    
+    for (i = 0; i < 5; i++) {
+    
+        vu0_scale_vector(st, svs, clswPerc[i]);
+        vu0_scale_vector(tmp, evs, clswPerc[4 - i]);
+        vu0_add_vector(st, st, tmp);
+        vu0_scale_vector(ed, sve, clswPerc[i]);
+        vu0_scale_vector(tmp, eve, clswPerc[4 - i]);
+        vu0_add_vector(ed, ed, tmp);
+        
+        if (clCheckHitThrustSwordVector(id, st, ed)) break;
+        
+    }
+}
+
+
+#line 2777
+static int clCheckHitThrustSwordVector(u_int id /* r21 */, float* sp /* r20 */, float* ep /* r19 */) {
+    CL_SELECT_MAP* smap; // r16
+    CL_SELECT_MAP* smapsv; // r17
+    CL_HITPOLY_PLANE* wall; // r2
+    CL_HITPOLY_COLUMN* cl; // r2
+    int* ptr; // r2
+    float min; // r29+0x7C
+    int whflg = 0; // r18
+
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep): "t0");
+    clVHitResult[clVHitListUse].kind = 0;
+    smap = clGetHitSectListVECHIT(sp, ep);
+    smapsv = smap;
+    clCheckHitSwordVectorDynamicWall(&clVHitResult[clVHitListUse], sp, ep, &min);
+    clCheckHitSwordVectorDynamicFloor(&clVHitResult[clVHitListUse], sp, ep, &min);
+    if (smap->base != NULL) {
+        for (; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START]; // ???
+            clCheckHitSwordVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+       for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 1]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 1]; // ???
+            clCheckHitSwordVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 2]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 2]; // ???
+            clCheckHitSwordVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 4]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 4]; // ???
+            clCheckHitEyeVectorBGColumn(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+    }
+    if (clVHitResult[clVHitListUse].kind != 0) {
+        clVHitListUse++;
+        whflg = 1;
+    }
+    clCheckHitThrustGunVectorCharacter(sp, ep, min, id);
+    return whflg;
+}
+
+void clCheckHitGunWeaponThrust(u_int id, float* st, float* ed) {
+    clVHitListUse = 0;
+    clCheckHitThrustGunVector(id, st, ed);
+}
+
+void clCheckHitThrustGunVector(u_int id, float* sp, float* ep) {
+    CL_SELECT_MAP* smap; // r16
+    CL_SELECT_MAP* smapsv; // r17
+    CL_HITPOLY_PLANE* wall; // r2
+    CL_HITPOLY_COLUMN* cl; // r2
+    int* ptr; // r2
+    float min; // r29+0x6C
+
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep): "t0");
+    clVHitResult[clVHitListUse].kind = 0;
+    smap = clGetHitSectListVECHIT(sp, ep);
+    smapsv = smap;
+    clCheckHitEyeVectorDynamicWall(&clVHitResult[clVHitListUse], sp, ep, &min);
+    clCheckHitEyeVectorDynamicFloor(&clVHitResult[clVHitListUse], sp, ep, &min);
+    if (smap->base != NULL) {
+        for (; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START]; // ???
+            clCheckHitEyeVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+       for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 1]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 1]; // ???
+            clCheckHitEyeVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 2]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 2]; // ???
+            clCheckHitEyeVectorWall(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((int*)smap->base)[SMAP_WALL_BASE_START + 4]; // ???
+            cl = smap->base + ((int*) (smap->base + smap->sect * 4))[SMAP_CL_START + SMAP_CL_STRIDE * 4]; // ???
+            clCheckHitEyeVectorBGColumn(&clVHitResult[clVHitListUse], sp, ep, &min, wall, cl);
+        }
+    }
+    if (clVHitResult[clVHitListUse].kind != 0) {
+        clVHitListUse++;
+    }
+    clCheckHitThrustGunVectorCharacter(sp, ep, min, id);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitThrustGunVectorCharacter);
 
@@ -257,7 +764,46 @@ INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListVECHITInDoor);
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", Line2PlaneBoundaryCheckXZ);
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckCrossLine2BoxXZ);
+#line 3393
+int clCheckCrossLine2BoxXZ(float (* box)[4] /* r19 */, float* st /* r18 */, float* ed /* r17 */) {
+    int i; // r16
+    sceVu0FVECTOR va, vb; // r29+0x50, r29+0x60
+    float outer; // r1
+    int jyun[5] = {0, 1, 2, 3, 0}; // r29+0x70
+
+    // check if first endpoint is inside the box.
+    for (i = 0; i < 4; i++) {
+        // test direction of rotation. va = box wall, vb = line from box corner to first endpoint.
+        vu0_sub_vector(va, box[jyun[i + 1]], box[jyun[i]]);
+        vu0_sub_vector(vb, st, box[i]);
+        outer = va[0] * vb[2] - va[2] * vb[0]; /* determinant */
+        if (outer > 0.0f)
+            break; // box is winding clockwise, but we have to wind counterclockwise.
+    }
+    if (i == 4)
+        return 1;
+
+    // check if second endpoint is inside the box.
+    for (i = 0; i < 4; i++) {
+        // test direction of rotation. va = box wall, vb = line from box corner to first endpoint.
+        vu0_sub_vector(va, box[jyun[i + 1]], box[jyun[i]]);
+        vu0_sub_vector(vb, ed, box[i]);
+        outer = va[0] * vb[2] - va[2] * vb[0]; /* determinant */
+        if (outer > 0.0f)
+            break;
+    }
+    if (i == 4)
+        return 1;
+
+    // neither endpoint is inside the box, so check if line intersects any wall.
+    for (i = 0; i < 4; i++) {
+        // check if wall intersects line segment
+        if (clCheckCrossLine2LineXZ(st, ed, box[jyun[i]], box[jyun[i + 1]]))
+            return 1;
+    }
+
+    return 0;
+}
 
 int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1) {
     float bp[4]; // r29
@@ -348,9 +894,89 @@ void clCheckHitEyes(CL_VHIT_RESULT* res /* r2 */, u_int id /* r2 */, float* st /
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyFloor);
+void clCheckHitEyesOnlyFloor(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep) {   CL_SELECT_MAP* smap; // r2
+    CL_SELECT_MAP* smapsv; // r16
+    CL_HITPOLY_PLANE* wall; // r2
+    int* ptr; // r2
+    float min; // r29+0x5C
 
-INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyFloorThru);
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)":: "r"(&min), "r"(sp), "r"(ep): "t0");
+
+    
+
+    res->kind = 0;
+    
+    
+    clCheckHitEyeVectorDynamicFloor(res, sp, ep, &min);
+
+    
+    smapsv = clGetHitSectListVECHIT(sp, ep);
+
+
+    
+    if (smapsv->base != NULL) {
+
+        
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((CL_CLDHEADER* ) smap->base)->fldofs;
+            ptr = smap->base + ((int*)smap->base)[smap->sect + 8];
+            clCheckHitSwordVectorWall(res, sp, ep, &min, wall, ptr);
+        }
+    }
+}
+
+
+void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res /* r19 */, int unknown, float* sp /* r18 */, float* ep /* r17 */) {
+    CL_SELECT_MAP* smap; // r2
+    CL_SELECT_MAP* smapsv; // r16
+    CL_HITPOLY_PLANE* wall; // r2
+    int* ptr; // r2
+    float min; // r29+0x5C
+
+    ptr = &min;
+    // not an inline based on the line numbers.
+    asm("lqc2 vf1, 0(%1)\n\
+        lqc2 vf2, 0(%2)\n\
+        vsub.xyz vf3, vf1, vf2\n\
+        vmul.xyz vf3, vf3, vf3\n\
+        vaddz.x vf3, vf3, vf3z\n\
+        vaddy.x vf3, vf3, vf3y\n\
+        qmfc2 t0, vf3\n\
+        mtc1 t0, f12\n\
+        sw t0, 0(%0)":: "r"(&min), "r"(sp), "r"(ep): "t0");
+
+    
+
+    res->kind = 0;
+    
+    
+    clCheckHitEyeVectorDynamicFloor(res, sp, ep, &min);
+
+    
+    smapsv = clGetHitSectListVECHIT(sp, ep);
+
+
+    
+    if (smapsv->base != NULL) {
+
+        
+        for (smap = smapsv; smap->base != NULL; smap++) {
+            wall = smap->base + ((CL_CLDHEADER* ) smap->base)->fldofs;
+            ptr = smap->base + ((int*)smap->base)[smap->sect + 8];
+            clCheckHitEyeVectorWall(res, sp, ep, &min, wall, ptr);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyesOnlyWall);
 
