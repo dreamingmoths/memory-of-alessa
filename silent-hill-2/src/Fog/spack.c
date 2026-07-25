@@ -12,7 +12,7 @@ void spkResetOT(void) {
     
     spack.old_lastpos = spack.pk_last;
     spack.dmabuf_pos = spack.dma_top;
-    spack.pk_last = spack.pos = (u_long128 *)((u_int)spack.packet | 0x20000000);
+    spack.pk_last = spack.pos = (u_long128 *)(UNCACHED(spack.packet));
     spack.w_mini = -1;
     spack.w_max = 0;
 }
@@ -31,7 +31,7 @@ void spkOpenGiftag(void* giftag, u_int w, u_short envid) {
     SPACK_OT_DATA* pd = spack.dmabuf_pos; // r3    
     u_long d[2]; // r29+0x20
 
-    pd->Addr = (void *)(((u_int)(pos)) & 0x0FFFFFFF);
+    pd->Addr = (void *)(((u_int)(pos)) & 0x0FFFFFFF); // @todo: add macro
     pd->W = w;
     pd->EnvID = envid;
     pd->VifDirect = 0x50;
@@ -48,7 +48,7 @@ void spkOpenDGiftag(u_long giftag1 /* r2 */, u_long giftag2 /* r2 */, u_int w /*
     u_long* pos = spack.pk_last; // r8
     SPACK_OT_DATA* pd = spack.dmabuf_pos; // r9
 
-    pd->Addr = (void *)(((u_int)(pos)) & 0x0FFFFFFF);
+    pd->Addr = (void *)(((u_int)(pos)) & 0x0FFFFFFF); // @todo: add macro
     pd->W = w;
     pd->EnvID = envid;
     pd->VifDirect = 0x50;
