@@ -113,6 +113,22 @@ static inline float vec3_length(void* v) {
     return d;
 }
 
+static inline float vec3_lenght_alt(void* v) {
+    float d;
+    asm("lwc1    %1, 0(%0)\n\
+        lwc1     f8, 0(%0)\n\
+        lwc1     f9, 4(%0)\n\
+        mov.s    f10, f9\n\
+        mula.s   %1, f8\n\
+        lwc1     %1, 8(%0)\n\
+        lwc1     f8, 8(%0)\n\
+        madda.s  f9, f10\n\
+        madd.s   %1, %1, f8\n\
+        sqrt.s   %1, %1"
+        : "+r"(v), "=&f"(d) :: "f8", "f9", "f10");
+    return d;
+}
+
 // @todo: combine with the inline from `vc_play.h`
 static inline float vec2_length(float* a, float* b) {
     float result;
@@ -250,6 +266,21 @@ static inline void vu0_transform_vector(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
         vmaddw.xyzw  vf4, vf6, vf4w\n\
         sqc2         vf4, 0x0(%0)"
         : "+r"(vec): "r"(mat));
+}
+
+static inline void vu0_transform_vector_alt(sceVu0FVECTOR dst, sceVu0FVECTOR src, sceVu0FMATRIX mat) {
+    asm("\
+        lqc2         vf4, 0x0(%1)\n\
+        lqc2         vf5, 0x0(%2)\n\
+        lqc2         vf6, 0x10(%2)\n\
+        vmulax.xyzw  ACC, vf5, vf4x\n\
+        lqc2         vf5, 0x20(%2)\n\
+        vmadday.xyzw ACC, vf6, vf4y\n\
+        lqc2         vf6, 0x30(%2)\n\
+        vmaddaz.xyzw ACC, vf5, vf4z\n\
+        vmaddw.xyzw  vf4, vf6, vf4w\n\
+        sqc2         vf4, 0x0(%0)"
+        : "+r"(dst) : "r"(src), "r"(mat));
 }
 
 static inline void vu0_unit_vector(sceVu0FVECTOR out) {
