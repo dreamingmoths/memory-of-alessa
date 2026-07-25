@@ -7,8 +7,6 @@ static u_int Object_Initialize(HH_Object_Blood_Stick_00* pThis /* r2 */, ImpactQ
 static u_int Object_Monitor(HH_Object_Blood_Stick_00* pThis /* r17 */, ImpactQueue_Element* pElement /* r16 */);
 static u_int Object_Manager(HH_Object_Blood_Stick_00* pThis /* r17 */, ImpactQueue_Element* pElement /* r19 */);
 
-// @todo: rename these
-
 static float _unit_vector_x_0x0036E6F0[4] = { 1.0f, 0.0f, 0.0f, 1.0f }; // size: 0x10, address: 0x36E6F0
 static float _unit_vector_z_0x0036E700[4] = { 0.0f, 0.0f, 1.0f, 1.0f }; // size: 0x10, address: 0x36E700
 
