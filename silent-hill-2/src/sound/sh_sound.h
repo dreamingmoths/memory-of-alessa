@@ -114,6 +114,10 @@ int Se3dPlayCheck(int sd_no /* r2 */);
 void SeStop(int sd_no /* r18 */);
 void SeBgmChange(void);
 void SeBgmCall(int bgm_no /* r2 */);
+
+int SeCallPosDistance(float volume, float* pos);
+float SeCallPosDistanceF(float* pos /* r2 */);
+int Se3dPlayCheck(int sd_no /* r2 */);
 void SeSoundLoad(void);
 void SeSoundEffect3dLoad(int data /* r16 */);
 void SeSoundEffectLoad(int data /* r16 */);
@@ -135,9 +139,6 @@ extern int se_3d_load_data;
 extern int se_load_data;
 extern SOUND_WORK sound_work;
 extern Change_List change_list[242]; // size: 0xB58, address: 0x2B8880
-// extern Playing_Info playing;
-
-// extern void shQzero(void*, int); // we need to find shQzero proper signature
 
 extern void sd_setpath(char* dp /* r2 */); // M:\select\sound\sd0712\ee\sd_call.c we need to find a home for lil bro
 
