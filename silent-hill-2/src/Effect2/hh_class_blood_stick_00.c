@@ -130,7 +130,7 @@ u_int HH_Class_Blood_Stick_00(void* pBlock, ImpactQueue_Element* pElement) {
         case 1:
             Object_Manager(pThis, pElement);
             
-            pThis->Timer += 0.033333335f;
+            pThis->Timer += 1.0f / 30.0f;
             
             if (pThis->Leftover <= 0) {
                 pThis->Step = 2;
