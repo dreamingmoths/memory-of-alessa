@@ -844,9 +844,6 @@ void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /*
     shBattleAddAttackQueue(scp, 0, atk_no);
 }
 
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1453);
-
 int shBattleRequestNextAttackIsOk(u_short atk, u_short frame) {
 
     
@@ -921,9 +918,132 @@ void shBattleInitAttackQueue(void) {
     sh2_battle_wall_hit = 0.0f;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1654);
+void shBattleExecAttackQueue(void) {
+    int i = 0; // r16
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleExecAttackQueue);
+
+    if (sh2_attack_queue.rest == 20) 
+        sh2_battle_attack_check = 0;         
+    else 
+        sh2_battle_attack_check = 1;
+    
+    while (sh2_attack_queue.queue[i].scp != NULL) {
+        
+        if (sh2_attack_queue.queue[i].atk_no >= 36) {
+            
+            
+            switch (sh2_attack_list[sh2_attack_queue.queue[i].atk_no].kind) {
+                case 1:
+                    shBattleAttackByEnemySlash(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);                    
+                    
+                    
+                    
+                    break;
+                case 2:
+                    shBattleAttackByEnemyStrike(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 4:
+                    shBattleAttackByEnemyFog(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 5:
+                    shBattleAttackByEnemyBite();
+                    
+                    
+                    
+                    break;
+                case 6:
+                    shBattleAttackByEnemyHug(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 3:
+                    
+                    switch (sh2_attack_queue.queue[i].atk_no) {
+                        case 0x34:
+                        case 0x33:
+                            shBattleAttackByEnemyShot(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                            
+                            
+                            
+                            break;
+                        case 0x29:
+                        case 0x2B:
+                        case 0x31:
+                            shBattleAttackByEnemyStrike(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                            
+                            
+                            
+                            break;
+                        case 0x40:
+                        case 0x41:
+                            shBattleAttackByEnemyNeedle(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                            break;
+                        }
+                    break;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                        
+            }
+        } else {
+            
+            if (sh2_attack_queue.queue[i].atk_no >= 0x19) {
+                shBattleAttackByHumanFinish(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+            
+            
+            
+            } else {                
+                switch (sh2_attack_queue.queue[i].wep_no) {
+                case 0:
+                    ASSERT_ON_LINE(0, 2081); // I dont remember how this works lol
+                
+                case 1:
+                case 3:
+                    shBattleAttackByHumanGunshotTypeA(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 2:
+                    shBattleAttackByHumanGunshotTypeB(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    shBattleAttackByHumanFightType(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                case 4:
+                    shBattleAttackByHumanFog(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
+                    
+                    
+                    
+                    break;
+                }
+            }
+        }
+        i++;
+    }
+}
 
 float shBattleGetJamesHP(void) {
     return sh2jms.player->battle.hp;
