@@ -22,7 +22,10 @@
 #include "Effect/ef_common.h"
 #include "Effect2/hh_class_object_execute.h"
 
+#include "Enemy/en_edb.h"
+
 #include "Event/item.h"
+#include "Event/stg_name.h"
 
 #include "sce/libvu0.h"
 
@@ -37,6 +40,7 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short a
 
 static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
 
+static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyBite(void);
 static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
@@ -302,7 +306,64 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnem
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyStrike);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyFog);
+static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk) {
+    int i;
+    sceVu0FVECTOR s_pos; sceVu0FVECTOR s_vec;   
+    u_short cur_frame;
+    u_short st;
+    u_short ed;  
+    float max_range;    
+    CL_BATTLE_QUE que;
+
+
+    cur_frame = shCharacterAnimeFrameGet(attacker);
+    st = sh2_attack_list[atk].atk_start;
+    ed = sh2_attack_list[atk].atk_end;
+    
+
+    
+    
+    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result != 0)) {
+        
+        max_range = ((cur_frame - st) * (500.0f * (BgIsOut(0) ? 3.6f : 1.8f))) / (ed - st);
+
+        for (i = 0; i < 5; i++) {
+            
+            
+            
+            
+            shGetEnemyAttackStartPos(attacker, (u_short) i, s_pos, s_vec);
+            
+            que.svs[0] = s_pos[0];
+            que.svs[1] = s_pos[1];
+            que.svs[2] = s_pos[2];
+            que.sve[0] = s_pos[0] + s_vec[0] * max_range;
+            que.sve[1] = s_pos[1] + s_vec[1] * max_range;
+            que.sve[2] = s_pos[2] + s_vec[2] * max_range;
+            que.svs[3] = que.sve[3] = 1.0f;
+            
+            que.btlid = atk + 256;
+            que.kind = sh2_attack_list[atk].kind;
+            que.sc = attacker;
+            
+            
+            
+            
+            
+            
+            
+            clBattleAddQue(&que);
+        }
+        
+        
+        
+        if (attacker->battle.se == 0) {
+            SeCallPos(0x2EE0, 0.7f, s_pos, 0);
+            attacker->battle.se = 1;
+        }
+    
+    }
+}
 
 static void shBattleAttackByEnemyBite(void) {
     return;
