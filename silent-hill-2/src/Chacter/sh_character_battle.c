@@ -33,6 +33,8 @@
 
 #include "sound/sh_sound.h"
 
+#include "vec.h"
+
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec);
@@ -252,7 +254,61 @@ static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk) 
    
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shGetHumanAttackSprayPos);
+void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) {
+    sceVu0FVECTOR pos1; // r29+0x60
+    sceVu0FVECTOR vec; // r29+0x70
+    float rotx; // r20
+    float roty; // r21
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    roty = shAtan2(s_vec[2], s_vec[0]);
+    rotx = shAtan2(vec_length(s_vec), s_vec[1]);
+    
+    switch (i) {
+        case 0:
+            pos1[0] = s_pos[0] + (900.0f * shSinF(roty));
+            pos1[2] = s_pos[2] + (900.0f * shCosF(roty));
+            pos1[1] = s_pos[1] + (900.0f * shSinF(rotx));
+            break;
+        case 1:
+            pos1[0] = s_pos[0] + (900.0f * shSinF(roty));
+            pos1[2] = s_pos[2] + (900.0f * shCosF(roty));
+            pos1[1] = s_pos[1] + (900.0f * shSinF(0.41887903f + rotx));
+            break;
+        case 2:
+            pos1[0] = s_pos[0] + (900.0f * shSinF(0.41887903f + roty));
+            pos1[2] = s_pos[2] + (900.0f * shCosF(0.41887903f + roty));
+            pos1[1] = s_pos[1] + (900.0f * shSinF(rotx));
+            break;
+        case 3:
+            pos1[0] = s_pos[0] + (900.0f * shSinF(roty));
+            pos1[2] = s_pos[2] + (900.0f * shCosF(roty));
+            pos1[1] = s_pos[1] + (900.0f * shSinF(rotx - 0.41887903f));
+            break;
+        case 4:
+            pos1[0] = s_pos[0] + (900.0f * shSinF(roty - 0.41887903f));
+            pos1[2] = s_pos[2] + (900.0f * shCosF(roty - 0.41887903f));
+            pos1[1] = s_pos[1] + (900.0f * shSinF(rotx));
+            break;
+    }
+    
+    vec[0] = pos1[0] - s_pos[0];
+    vec[1] = pos1[1] - s_pos[1];
+    vec[2] = pos1[2] - s_pos[2];
+    vec[3] = 0.0f;
+    vec_normalize(vec, result);
+
+    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHumanFog);
 
