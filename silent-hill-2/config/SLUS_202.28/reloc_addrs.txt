@@ -6119,8 +6119,8 @@ rom:0x022424 reloc:MIPS_HI16                           symbol:max_range_1171
 rom:0x022428 reloc:MIPS_LO16                           symbol:max_range_1171
 rom:0x02249C reloc:MIPS_HI16           addend:+0x9     symbol:playing
 rom:0x0224A0 reloc:MIPS_LO16           addend:+0x9     symbol:playing
-rom:0x022518 reloc:MIPS_HI16                           symbol:"@1229"
-rom:0x02251C reloc:MIPS_LO16                           symbol:"@1229"
+rom:0x022518 reloc:MIPS_HI16                           symbol:"rodata_1229"
+rom:0x02251C reloc:MIPS_LO16                           symbol:"rodata_1229"
 rom:0x022520 reloc:MIPS_HI16                           symbol:"@1230_0x0038D578"
 rom:0x022524 reloc:MIPS_LO16                           symbol:"@1230_0x0038D578"
 rom:0x022528 reloc:MIPS_26                             symbol:printf

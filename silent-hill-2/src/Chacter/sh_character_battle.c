@@ -1,3 +1,7 @@
+#include "sh2_common.h"
+#include "SH2_common/playing_info.h"
+#include "SH2_common/sh2dt.h"
+
 #include "Chacter/sh_character_battle.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
@@ -53,6 +57,9 @@ static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk);
 
 static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
+
+extern /* static */ float max_range_1171;
+extern /* static */ float min_range_1172;
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result) {
     if (scp->battle.status & 0x40) {
@@ -310,7 +317,103 @@ void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) 
     
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHumanFog);
+static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short atk /* r17 */) {
+    int i; // r16
+    sceVu0FVECTOR s_pos; // r29+0x40
+    sceVu0FVECTOR s_vec; // r29+0x50
+    sceVu0FVECTOR s_vec_result; // r29+0x60
+    sceVu0FVECTOR sp_start; // r29+0x70
+    sceVu0FVECTOR sp_end; // r29+0x80
+    u_short cur_frame; // r2
+    u_short st; // r2
+    u_short ed; // r2
+    CL_BATTLE_QUE que; // r29+0x90
+    int wep; // r16
+    u_int pow; // r2
+    u_int color; // @note: not in dwarf
+
+    if ((atk == 10) || (atk == 11)) {
+        attacker->battle.se = 0;
+        return;
+    }
+
+    if (sh2jms.spray_time == 0.0f) {
+        wep = PlayerNowItemName(sh2jms.weapon);
+        do {
+
+        } while (ItemWeaponShoot(wep, 1));
+        return;
+    }
+
+    // @note: some optimized out code here?
+    cur_frame = shCharacterAnimeFrameGet_(attacker, 1);
+    shGetJamesWeaponEndPos(s_pos, s_vec);
+
+    max_range_1171 = sh2jms.spray_time >= 10.0f 
+        ? sh2_attack_list[atk].max_range 
+        : 0.1f * (sh2jms.spray_time * sh2_attack_list[atk].max_range);
+    min_range_1172 = sh2jms.spray_time >= 10.0f 
+        ? sh2_attack_list[atk].min_range 
+        : 0.1f * (sh2jms.spray_time * sh2_attack_list[atk].min_range);
+    for (i = 0; i < 5; i++) {
+        shGetHumanAttackSprayPos(i, &s_pos[0], &s_vec[0], &s_vec_result[0]);
+        que.svs[0] = s_pos[0] + (s_vec_result[0] * min_range_1172);
+        que.svs[1] = s_pos[1] + (s_vec_result[1] * min_range_1172);
+        que.svs[2] = s_pos[2] + (s_vec_result[2] * min_range_1172);
+        que.sve[0] = s_pos[0] + (s_vec_result[0] * max_range_1171);
+        que.sve[1] = s_pos[1] + (s_vec_result[1] * max_range_1171);
+        que.sve[2] = s_pos[2] + (s_vec_result[2] * max_range_1171);
+        que.sve[3] = 1.0f;
+        que.svs[3] = 1.0f;
+        que.btlid = 0x100 + (short) atk;
+        que.kind = sh2_attack_list[atk].kind;
+        que.sc = attacker;
+        clBattleAddQue(&que);
+        if (i == 0) {
+            max_range_1171 += 150.0f;
+            que.sve[0] = s_pos[0] + (s_vec_result[0] * max_range_1171);
+            que.sve[1] = s_pos[1] + (s_vec_result[1] * max_range_1171);
+            que.sve[2] = s_pos[2] + (s_vec_result[2] * max_range_1171);
+            volatile_vec_copy(sp_start, que.svs);
+            vu0_sub_vector(sp_end, que.sve, que.svs);
+        }
+    }
+    switch (playing.spray_pow) {
+        case -1:
+            color = COLOR_RGBA(0x40, 0x00, 0x40, 0xFF);
+            break;
+        case 0:
+            color = COLOR_RGBA(0xC0, 0xC0, 0xC0, 0xFF);
+            break;
+        case 1:
+            color = COLOR_RGBA(0xC0, 0xC0, 0x40, 0xFF);
+            break;
+        case 2:
+            color = COLOR_RGBA(0x40, 0xFF, 0x40, 0xFF);
+            break;
+        default:
+            ASSERT_ON_LINE(0, 953);
+    }
+
+    enEfctSetSpray(sp_start, sp_end, color, 0xC);
+    if (attacker->battle.se == 0) {
+        if (!sh2jms.csaw_se_vol) {
+            sh2jms.csaw_se_vol = 0.7f;
+            SeCallPos(11047, sh2jms.csaw_se_vol, s_pos, 0);
+        }
+        attacker->battle.se = 1;
+    }
+
+    sh2jms.spray_time -= shGetDT();
+    if (sh2jms.spray_time <= 0.0f) {
+        wep = PlayerNowItemName(sh2jms.weapon);
+        do {
+
+        } while (ItemWeaponShoot(wep, 1) != 0);
+        sh2jms.spray_time = 0.0f;
+    }
+    return;
+}
 
 static void shBattleAttackByHumanFinish(SubCharacter* attacker, u_short atk) {
     sceVu0FVECTOR s_pos; sceVu0FVECTOR s_vec; // r29+0x90        
@@ -366,9 +469,6 @@ static void shBattleAttackByHumanFinish(SubCharacter* attacker, u_short atk) {
 
 }
 
-INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1229);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1230_0x0038D578);
 
 static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float* s_pos, float* s_vec) {
     
@@ -819,7 +919,8 @@ static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk) {
 static void shBattleAddAttackQueue(SubCharacter* scp, u_char wep_no, u_short atk_no) {
     int no; // r3
     
-    ASSERT_ON_LINE(sh2_attack_queue.rest, 1690);
+    if (!sh2_attack_queue.rest)
+        ASSERT_ON_LINE(0, 1690);
 
 
     
