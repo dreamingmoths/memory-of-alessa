@@ -24,6 +24,10 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short a
 static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
 
 static void shBattleAttackByEnemyBite(void);
+static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
+
+static void shGetEnemyAttackStartPos(SubCharacter* attacker /* r18 */, u_short atk /* r8 */, float* s_pos /* r17 */, float* s_vec /* r16 */);
+
 static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result) {
@@ -248,7 +252,50 @@ static void shBattleAttackByEnemyBite(void) {
     return;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyHug);
+static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk) {
+    sceVu0FVECTOR s_pos; // r29+0x40    
+    sceVu0FVECTOR s_vec; // r29+0x50    
+    CL_BATTLE_QUE que; // r29+0x60
+
+    
+    shGetEnemyAttackStartPos(attacker, atk, s_pos, s_vec);
+
+    que.eve[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].max_range;
+    que.eve[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].max_range;
+    que.eve[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].max_range;
+    que.eve[3] = 1.0f;
+        
+    
+    
+    
+    
+    que.evs[0] = que.svs[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].min_range;
+    que.evs[1] = que.svs[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].min_range;   
+    que.evs[2] = que.svs[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].min_range;
+    que.evs[3] = que.svs[3] = 1.0f;
+    que.sve[0] = attacker->battle.prev_atk_pos.x;
+    que.sve[1] = attacker->battle.prev_atk_pos.y;
+    que.sve[2] = attacker->battle.prev_atk_pos.z;
+    que.sve[3] = 1.0f;
+    
+    que.btlid = atk + 256;
+    que.kind = sh2_attack_list[atk].kind;
+    que.sc = attacker;
+    
+    
+    
+    
+    
+    
+    
+    
+    if (attacker->battle.prev_atk_pos.w) {
+        clBattleAddQue(&que);
+    }
+    
+    
+    sceVu0CopyVector(&attacker->battle.prev_atk_pos, que.eve);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyNeedle);
 
