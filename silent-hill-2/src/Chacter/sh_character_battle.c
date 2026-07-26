@@ -26,6 +26,8 @@
 
 #include "sce/libvu0.h"
 
+#include "SH2_common/sh_vu0.h"
+
 #include "sound/sh_sound.h"
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
@@ -37,6 +39,7 @@ static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
 
 static void shBattleAttackByEnemyBite(void);
 static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
+static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
 
 static void shGetEnemyAttackStartPos(SubCharacter* attacker /* r18 */, u_short atk /* r8 */, float* s_pos /* r17 */, float* s_vec /* r16 */);
 
@@ -350,7 +353,55 @@ static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk) {
     sceVu0CopyVector(&attacker->battle.prev_atk_pos, que.eve);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyNeedle);
+static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk) {
+    int i; // r16
+    sceVu0FVECTOR s_pos; sceVu0FVECTOR s_vec;   
+    u_short cur_frame; // r2
+    u_short st; // r2
+    u_short ed; // r2    
+    CL_BATTLE_QUE que; // r29+0x70
+    cur_frame = shCharacterAnimeFrameGet(attacker);
+    st = sh2_attack_list[atk].atk_start;
+
+
+    
+    for (i = 0; i < 2; i++) {
+        shGetEnemyAttackStartPos(attacker, (u_short) i, s_pos, s_vec);
+
+        que.sve[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].max_range;
+        que.sve[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].max_range;
+        que.sve[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].max_range;
+        que.sve[3] = 1.0f;
+        
+        que.svs[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].min_range;
+        que.svs[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].min_range;   
+        que.svs[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].min_range;
+        que.svs[3] = 1.0f;
+        
+        que.btlid = atk + 256;
+        que.kind = sh2_attack_list[atk].kind;
+        que.sc = attacker;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        clBattleAddQue(&que);
+        
+        
+        if (attacker->battle.se == 0) {
+            
+            SeCallPos(((shRandI() >> 10) & 1) + 0x2FDC, 0.8f, s_pos, 0);
+            
+            attacker->battle.se = 1;
+        }
+
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyShot);
 
