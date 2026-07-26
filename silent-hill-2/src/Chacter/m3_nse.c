@@ -98,7 +98,7 @@ int shCharacterEnemyNSEAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
 
 }
 
-void shGetEnemyNSEAttackPos(SubCharacter* scp, float* s_pos, float* s_vec) {
+void shGetEnemyNSEAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_short atk) {
     sceVu0FVECTOR pos0; // r29+0x40
     sceVu0FVECTOR pos1; // r29+0x50
     sceVu0FVECTOR vec; // r29+0x60
