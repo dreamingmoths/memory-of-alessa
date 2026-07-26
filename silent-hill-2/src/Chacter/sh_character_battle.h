@@ -55,6 +55,8 @@ extern int sh2_battle_attack_check;
 extern shAttackInfo sh2_attack_list[66];
 extern shPlayerWork sh2jms;
 
+void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result);
+
 void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */);
 void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
 void shBattleAttackHitCheckToEnemy(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
@@ -66,7 +68,6 @@ void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* 
 float shBattleEventWallHitCheck(void);
 int shBattleCheckAttackByEnemy(void);
 
-
-extern void shQzero(void*, int);
+int shBattleRequestNextAttackIsOk(u_short atk, u_short frame);
 
 #endif
