@@ -1,17 +1,28 @@
-#include "sh_character_battle.h"
-#include "Collision/cl_main.h"
-#include "Effect/ef_common.h"
-#include "Effect2/hh_class_object_execute.h"
-#include "Chacter_Draw/sh2_JmsSpot_Man.h"
+#include "Chacter/sh_character_battle.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_play.h"
-#include "sound/sh_sound.h"
+#include "Chacter/m3_wep.h"
+
+#include "Chacter_Draw/sh2_JmsSpot_Man.h"
+
+#include "Collision/cl_main.h"
+
+#include "Effect/ef_common.h"
+#include "Effect2/hh_class_object_execute.h"
+
 #include "Event/item.h"
+
+#include "sce/libvu0.h"
+
+#include "sound/sh_sound.h"
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec);
 static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short atk);
+
+static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
+
 static void shBattleAttackByEnemyBite(void);
 static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
 
@@ -118,7 +129,102 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker /* r20 */,
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHumanGunshotTypeB);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByHumanFightType);
+static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk) {
+    int jouken; // r4
+    sceVu0FVECTOR s_pos; sceVu0FVECTOR s_vec;     
+    u_short cur_frame; 
+    u_short st; 
+    u_short ed;
+    CL_BATTLE_QUE que;    
+    cur_frame = shCharacterAnimeFrameGet_(attacker, 1);
+    st = sh2_attack_list[atk].atk_start;
+    ed = sh2_attack_list[atk].atk_end;
+    
+    
+    shGetJamesWeaponStartPos(s_pos,s_vec);
+    que.eve[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].max_range;
+    que.eve[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].max_range;
+    que.eve[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].max_range;
+    que.eve[3] = 1.0f;
+    
+    
+    switch (atk) {
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+             if (cur_frame >= st && cur_frame <= ed && !attacker->battle.atk_result)
+                jouken = 1;
+
+            else jouken = 0;
+            break;
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24:    
+            if (cur_frame >= st && cur_frame <= ed)
+                jouken = 1;
+
+            else jouken = 0;        
+            break;
+        default:
+            return;
+    }
+
+
+    
+    if (cur_frame == ed) {
+        sh2jms.wep_no_hit_floor = 1;
+    
+    } else {
+        sh2jms.wep_no_hit_floor = 0;
+    }
+    
+    
+    if (jouken) {
+        
+        que.evs[0] = que.svs[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].min_range;
+        que.evs[1] = que.svs[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].min_range;    
+        que.evs[2] = que.svs[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].min_range;        
+        que.svs[3] = que.evs[3] = 1.0f;
+        que.sve[0] = attacker->battle.prev_atk_pos.x;
+        que.sve[1] = attacker->battle.prev_atk_pos.y;
+        que.sve[2] = attacker->battle.prev_atk_pos.z;
+        que.sve[3] = 1.0f;
+        
+        que.btlid = atk + 256;
+        que.kind = sh2_attack_list[atk].kind;
+        que.sc = attacker;
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        if (attacker->battle.prev_atk_pos.w) {
+            clBattleAddQue(&que);
+        }
+    }
+    
+    
+    
+    
+    sceVu0CopyVector(&attacker->battle.prev_atk_pos, que.eve);
+    
+    
+    if (cur_frame <= ed) return;
+    attacker->battle.atk_result = 0;
+    
+   
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shGetHumanAttackSprayPos);
 
