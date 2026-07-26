@@ -9351,8 +9351,8 @@ rom:0x033BA0 reloc:MIPS_LO16           addend:+0xD0    symbol:clCharaList
 rom:0x033BC4 reloc:MIPS_HI16                           symbol:clCharaList
 rom:0x033BC8 reloc:MIPS_LO16                           symbol:clCharaList
 rom:0x033BE0 reloc:MIPS_26                             symbol:clCheckSubColumnToColumn
-rom:0x033C0C reloc:MIPS_HI16                           symbol:"@1085_0x002A9960"
-rom:0x033C10 reloc:MIPS_LO16                           symbol:"@1085_0x002A9960"
+rom:0x033C0C reloc:MIPS_HI16                           symbol:"data_1085_0x002A9960"
+rom:0x033C10 reloc:MIPS_LO16                           symbol:"data_1085_0x002A9960"
 rom:0x033CF0 reloc:MIPS_HI16                           symbol:clCharaListAct
 rom:0x033CF4 reloc:MIPS_LO16                           symbol:clCharaListAct
 rom:0x033D04 reloc:MIPS_HI16                           symbol:clCharaList

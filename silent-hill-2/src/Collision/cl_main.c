@@ -92,16 +92,11 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res, float* sp, floa
 
 static void clCheckHitEyeVectorCharacter(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, u_int id);
 
-float clswPerc[5] = { 1.0f, 0.7f, 0.5f, 0.3f, 0.0f };
-
 
 // @todo: figure out wtf these are
 #define SMAP_WALL_BASE_START 88
 #define SMAP_CL_STRIDE 16
 #define SMAP_CL_START 8
-
-
-#define FLOAT_MAX 3.4028235e+38f
 
 void clAllInitCollisionData(void) {
     clCharaListAct = 0;
@@ -139,8 +134,8 @@ void clCollectCharaPosition(void) {
         vu0_sub_vector(dif, clCharaList[clCharaListAct][i].col.p[0], clCharaList[clCharaListAct][i].opos);
         clCharaList[clCharaListAct][i].sc->pos.x += dif[0];
         clCharaList[clCharaListAct][i].sc->pos.z += dif[2];
-        clCharaList[clCharaListAct][i].sc->mat.d[3][0] += dif[0];
-        clCharaList[clCharaListAct][i].sc->mat.d[3][2] += dif[2];
+        clCharaList[clCharaListAct][i].sc->mat[3][0] += dif[0];
+        clCharaList[clCharaListAct][i].sc->mat[3][2] += dif[2];
         vu0_add_vector(clCharaList[clCharaListAct][i].wcol.p[0], clCharaList[clCharaListAct][i].wcol.p[0], dif);
         
         clCharaList[clCharaListAct][i].wcol.p[0][3] = 1.0f;
@@ -150,14 +145,14 @@ void clCollectCharaPosition(void) {
         if (float_abs(dif[0]) > (600.0f / shGetFPS()) && !(clCharaList[clCharaListAct][i].sc->status & (1 << SCP_STATUS_BIT_FREEFALL))) {
             dif[0] /= 2.0f;
             clCharaList[clCharaListAct][i].sc->pos.y += dif[0];
-            clCharaList[clCharaListAct][i].sc->mat.d[3][1] += dif[0];
+            clCharaList[clCharaListAct][i].sc->mat[3][1] += dif[0];
             clCharaList[clCharaListAct][i].wcol.p[0][1] += dif[0];
                 
         }
     }
 }
 
-
+#line 642
 void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col /* r17 */, CL_HITPOLY_COLUMN* wcol /* r19 */, SubCharacter* sc /* r18 */, void (* func)() /* r16 */) {
     sceVu0FVECTOR dif; // r29+0x50
 
@@ -183,7 +178,7 @@ void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col /* r17 */, CL_HITPOLY_COLUMN* wc
     vu0_sub_vector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec, &sc->pos, &sc->b_pos);
 
     if (clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[0] == 0.0f && clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[2] == 0.0f) {
-        clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mang = FLOAT_MAX;
+        clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mang = MAX_FLOAT;
     } else {
         clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mang = shAtan2(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[0], clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[2]);
     }
@@ -208,6 +203,7 @@ void clAddDynamicFloor(CL_HITPOLY_PLANE* pl /* r2 */) {
     clDynamicFloorList[clDynamicFloorListAct].use++;
 }
 
+#ifdef NON_MATCHING
 void clCollectCharaALL(void) {
     int i; // r16
     int j; // r20
@@ -268,7 +264,7 @@ void clCollectCharaALL(void) {
             if (clCharaList[clCharaListAct][i].mvec[0] == 0.0f && clCharaList[clCharaListAct][i].mvec[2] == 0.0f) {
             
                 
-                clCharaList[clCharaListAct][i].mang = FLOAT_MAX;
+                clCharaList[clCharaListAct][i].mang = MAX_FLOAT;
             } else {
                 
                 
@@ -480,6 +476,10 @@ void clCollectCharaALL(void) {
         else hit = 0;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCollectCharaALL);
+float data_1085_0x002A9960[5] = { 1.0f, 0.98f, 0.94f, 0.9f, 0.86f };
+#endif
 
 static void clAddCollectVector(float* v0 /* r2 */, float* v1 /* r2 */) {
     float tv[4]; // r29
@@ -546,7 +546,7 @@ static void clCheckBg2Chara(int no /* r18 */) {
     vu0_add_vector(tmp, &clCharaList[clCharaListAct][no].sc->pos, tmp);
     vu0_sub_vector(tmp, tmp, &clCharaList[clCharaListAct][no].sc->b_pos);
     if ((tmp[0] == 0.0f) && (tmp[2] == 0.0f)) {
-        mang = FLOAT_MAX;
+        mang = MAX_FLOAT;
     } else {
         mang = shAtan2(tmp[0], tmp[2]);
     }
@@ -606,6 +606,7 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum) {
     }
 }
 
+#ifdef NON_MATCHING
 #line 1272
 static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* r20 */, float mang /* r20 */, int* flg /* r19 */, int num /* r18 */) {
     int i, j; // r16, r17
@@ -629,7 +630,7 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
                 vec_normalize(clWallHitData[i].normal, clWallHitData[i].normal);
                 clWallHitData[i].nang = shAtan2(clWallHitData[i].normal[0], clWallHitData[i].normal[2]);
                 
-                if (mang != FLOAT_MAX) {
+                if (mang != MAX_FLOAT) {
                 
                     
                     
@@ -701,7 +702,7 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
             
             if (sc->status & 0x10000) {
             
-                sc->colis_fall_timer = (double) shGetFPS(); // @note
+                sc->colis_fall_timer = (double) shGetFPS();
             }
             
             if (sc->colis_fall_timer != 0) {
@@ -771,7 +772,9 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
     }
     return 1;
 }
-
+#else
+INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clMakeWallHitCollectVector);
+#endif
 
 void clAddWallCollectVector(float* v0, float* v1, int* flg) {
     float tv[4];
@@ -797,78 +800,7 @@ void clAddWallCollectVector(float* v0, float* v1, int* flg) {
     *flg += 1;
 }
 
-// yuck
-static void clCheckColumn2WallHit(CL_HITRESULT* cres /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, CL_HITPOLY_COLUMN* col /* r16 */) {
-    CL_HITRESULT tmp; // r29+0x40
-    sceVu0FVECTOR normal; // r29+0x80
-    sceVu0FVECTOR pos; // r29+0x90
-    int hitchk; // r2
-    sceVu0FVECTOR vec; // r29+0xA0
-    float iv0; // r29+0xD0
-    float iv1; // r29+0xD0
-    sceVu0FVECTOR vp[2]; // r29+0xB0
-    float temp_f1, temp_f2;
-    cres->chk = 0;
-    vu0_sub_vector(col->p[0], pl->p[2], col->p[0]);
-    clCalcPlaneEquation(pl, &normal[0]);
-    if (!(vec3_dot_product(normal, normal) < 0.0f) && (clCheckSubWallToColumn(&tmp, pl->p[0], pl->p[2], col->p[0]) == 1)) {
-        volatile_vec_copy(vp[0], pl->p[0]);
-        volatile_vec_copy(vp[1], pl->p[3]);
-        vu0_sub_vector(col->p[0], pl->p[2], col->p[0]);
-        vec[1] = 0.0f;
-        pos[1] = 0.0f;
-        temp_f1 = vec3_dot_product(normal, normal);
-        vu0_sub_vector(col->p[0], pl->p[2], col->p[0]);
-        vu0_sub_vector(col->p[0], pl->p[2], col->p[0]);
-        vec[1] = 0.0f;
-        pos[1] = 0.0f;
-        temp_f2 = vec3_dot_product(normal, normal);
-        if (((temp_f1 < 0.0f) && !(temp_f2 < 0.0f)) || (!(temp_f1 < 0.0f) && (temp_f2 < 0.0f))) {
-            asm("lqc2 vf1, 0(%0)\n\
-                 lqc2 vf2, 0(%1)\n\
-                 \
-                 vsub.xz vf3, vf1, vf2\n\
-                 vmul.xz vf3, vf3, vf3\n\
-                 vaddz.x vf3, vf3, vf3z\n\
-                 \
-                 qmfc2 t0, vf3\n\
-                 mtc1 t0, f12\n\
-                 sw t0, 0(%2)":: "r"(vp[0]), "r"(tmp.cv), "r"(temp_f1) : "t0");
-            asm("lqc2 vf1, 0(%0)\n\
-                 lqc2 vf2, 0(%1)\n\
-                 \
-                 vsub.xz vf3, vf1, vf2\n\
-                 vmul.xz vf3, vf3, vf3\n\
-                 vaddz.x vf3, vf3, vf3z\n\
-                 \
-                 qmfc2 t0, vf3\n\
-                 mtc1 t0, f12\n\
-                 sw t0, 0(%2)":: "r"(vp[0]), "r"(tmp.cv), "r"(temp_f1) : "t0");
-            if (!(temp_f1 < temp_f1)) {
-                // M2C_ERROR(/* unknown instruction: vadd.xz vf5, vf0, vf7 */);
-            }
-            asm("\
-                lqc2 vf6, 0x10(v1)\n\
-                vaddw.w vf6, vf0, vf6w\n\
-                vaddw.x vf6, vf0, vf6w\n\
-                vwaitq\n\
-                vsubq.x vf6, vf6, Q\n\
-                vaddq.x vf4, vf0, Q\n\
-                 vdiv Q, vf6x, vf4x\n\
-                 vmove.yw vf5, vf0\n\
-                vwaitq\n\
-                vmulq.xz vf5, vf5, Q\n\
-                 vnop\n\
-                 sqc2 vf5, 0(a1)");
-            cres->chk = 2;
-        } else {
-            cres->chk = 1;
-        }
-        cres->pd = (CL_HITPOLY_HEAD* ) pl;
-        volatile_vec_copy(cres->cv, tmp.cv);
-    }
-}
-
+INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckColumn2WallHit);
 
 static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPOLY_COLUMN* cl, int* ptr) {
     CL_HITRESULT cres; // r29+0x50
@@ -994,7 +926,7 @@ void clBattleCheckExec(void) {
                 break;
 
             default:
-                ASSERT(0);
+                ASSERT_ON_LINE(0, 1869);
         }
     }
     
@@ -1204,6 +1136,8 @@ void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec) {
         }
     }
 }
+
+float clswPerc[5] = { 1.0f, 0.7f, 0.5f, 0.3f, 0.0f };
 
 static void clCheckHitSwordWeapon(CL_VHIT_RESULT* res /* r22 */, u_int id /* r21 */, float* svs /* r20 */, float* sve /* r19 */, float* evs /* r18 */, float* eve /* r17 */) {
     int i; // r16
@@ -1533,7 +1467,6 @@ void clCheckHitSwordWeaponThrust(u_int id /* r21 */, float* svs /* r20 */, float
         
     }
 }
-
 
 #line 2777
 static int clCheckHitThrustSwordVector(u_int id /* r21 */, float* sp /* r20 */, float* ep /* r19 */) {
@@ -1917,6 +1850,7 @@ CL_SELECT_MAP* clGetHitSectListMOVE(f32* bpos) {
     return clGetHitSectListMOVEInDoor(bpos);
 }
 
+#ifdef NON_MATCHING
 #line 3516
 CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
     int j, k; // r7, r9
@@ -2012,6 +1946,9 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
     
     return clSelectMap;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clGetHitSectListMOVEOutDoor);
+#endif
 
 
 static CL_SELECT_MAP* clGetHitSectListMOVEInDoor(float* bpos /* @note unused */) {
@@ -2506,43 +2443,7 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float
     }
 }
 
-static void clCheckHitEyeVectorCharacter(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */, u_int id /* r18 */) {
-    int i; // r16
-    int ret; // r2
-    CL_HITRESULT cres; // r29+0x80
-    float dist; // r29+0xCC
-    int ac; // r2
-    s32 temp_a0;
-    s32 temp_a2;
-    s32 temp_s1;
-    s32 var_s0;
-
-    temp_s1 = (clCharaListAct != 0) ? 0 : 1;
-    var_s0 = 0;
-loop_7:
-    if (var_s0 < clCharaListUse[temp_s1]) {
-        if (id != clCharaList[temp_s1][var_s0].sc->id && (clCharaList[temp_s1][var_s0].batflg != 0) && (clCheckSubLineToColumnPlus(&cres, sp, ep, clCharaList[temp_s1][var_s0].wcol.p[0]) != 0)) {
-            asm("lqc2 vf1, 0(%1)\n\
-                lqc2 vf2, 0(%2)\n\
-                vsub.xyz vf3, vf1, vf2\n\
-                vmul.xyz vf3, vf3, vf3\n\
-                vaddz.x vf3, vf3, vf3z\n\
-                vaddy.x vf3, vf3, vf3y\n
-                qmfc2 t0, vf3\n\
-                mtc1 t0, f12\n\
-                sw t0, 0(%0)": "=r"(ptr): "r"(sp), "r"(ep): "t0");
-            dist = M2C_ERROR(/* unknown instruction: qmfc2.ni $t0, $vf3 */);
-            if (dist < *min) {
-                *min = dist;
-                res->kind = 3;
-                res->hobj.wall.nl = cres.cp;
-                res->hobj.wall.cp = clCharaList[clCharaListAct][i].opos;
-            }
-        }
-        var_s0 += 1;
-        goto loop_7;
-    }
-}
+INCLUDE_ASM("asm/nonmatchings/Collision/cl_main", clCheckHitEyeVectorCharacter);
 
 int clPermitColumnExpansion(void) {
     return clPermColExpFlg[RoomNameJms()];

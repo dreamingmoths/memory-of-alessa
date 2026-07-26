@@ -77,7 +77,7 @@ typedef struct SubCharacter {
     Vector4 rot;
     Vector4 pos_spd;
     Vector4 rot_spd;
-    Matrix4 mat;
+    sceVu0FMATRIX mat; // @todo: should be Matrix4
     struct shSkelton* sk_top;
     float eye_y;
     float center_y;
