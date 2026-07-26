@@ -847,7 +847,71 @@ void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /*
 
 INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1453);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleRequestNextAttackIsOk);
+int shBattleRequestNextAttackIsOk(u_short atk, u_short frame) {
+
+    
+    
+    switch (atk) {
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+            return 0;
+        case 1:
+        case 2:
+
+            if (!((frame < (sh2_attack_list[atk].atk_start + 9)) || ((frame > sh2_attack_list[atk].atk_end  + 9)))) {
+                
+                return 1;
+            }
+            return 0;
+        
+        
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            if (!((frame < (sh2_attack_list[atk].atk_end - 2)) || (frame > sh2_attack_list[atk].atk_end))) {
+                return 1;
+            }
+            return 0;
+        
+        
+        
+        case 12:
+        case 13:
+        case 15:
+        case 16:
+            if (((frame >= (sh2_attack_list[atk].atk_end + 2)) && ((sh2_attack_list[atk].atk_end + 4) >= frame)) || ( (shCharacterAnimeSpeedGet_(sh2jms.player, 1) < 0))) {
+                
+                return 1;
+            }
+            return 0;
+        
+        
+        case 14:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24:
+            return 0;
+        
+        
+        default:
+            if (!((frame < sh2_attack_list[atk].atk_start) || (frame > sh2_attack_list[atk].atk_end))) {
+                
+                return 1;
+            }
+            return 0;    
+    }
+
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetResult);
 
