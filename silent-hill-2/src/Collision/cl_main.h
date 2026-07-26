@@ -7,16 +7,16 @@
 
 typedef struct _CL_CHARA_LIST {
     // total size: 0xE0
-    struct _CL_HITPOLY_COLUMN col;  // offset 0x0, size 0x30
-    struct _CL_HITPOLY_COLUMN wcol; // offset 0x30, size 0x30
+    CL_HITPOLY_COLUMN col;  // offset 0x0, size 0x30
+    CL_HITPOLY_COLUMN wcol; // offset 0x30, size 0x30
     struct SubCharacter* sc;        // offset 0x60, size 0x4
-    float opos[4];                  // offset 0x70, size 0x10
-    float pos[4];                   // offset 0x80, size 0x10
-    float mvec[4];                  // offset 0x90, size 0x10
-    float wallcv[4];                // offset 0xA0, size 0x10
+    sceVu0FVECTOR opos;                  // offset 0x70, size 0x10
+    sceVu0FVECTOR pos;                   // offset 0x80, size 0x10
+    sceVu0FVECTOR mvec;                  // offset 0x90, size 0x10
+    sceVu0FVECTOR wallcv;                // offset 0xA0, size 0x10
     float mang;                     // offset 0xB0, size 0x4
     int wflg;                       // offset 0xB4, size 0x4
-    float ccvec[4];                 // offset 0xC0, size 0x10
+    sceVu0FVECTOR ccvec;                 // offset 0xC0, size 0x10
     signed short movflg;            // offset 0xD0, size 0x2
     signed short batflg;            // offset 0xD2, size 0x2
     void (*heightfunc)(float*);     // offset 0xD4, size 0x4
