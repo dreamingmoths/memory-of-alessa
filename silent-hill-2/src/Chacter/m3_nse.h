@@ -6,6 +6,6 @@
 
 void shCharacterSetEnemyNSELow(SubCharacter* scp);
 int shCharacterEnemyNSEAnimeSetP(SubCharacter* scp, int anime_id, int comp);
-void shGetEnemyNSEAttackPos(SubCharacter* scp, float* s_pos, float* s_vec);
+void shGetEnemyNSEAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_short atk);
 
 #endif // M3_NSE_H
