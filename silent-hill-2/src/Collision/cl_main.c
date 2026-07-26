@@ -6,6 +6,7 @@
 
 #include "LoadBg/loadbg_cld.h"
 
+#include "Chacter/character.h"
 #include "Chacter/m3_sc.h"
 
 #include "Collision/cl_main.h"
@@ -21,7 +22,7 @@ static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
 
 static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum);
 
-static int clMakeWallHitCollectVector(struct SubCharacter* sc, float* wcv, float mang, int* flg, int num);
+static int clMakeWallHitCollectVector(SubCharacter* sc, float* wcv, float mang, int* flg, int num);
 
 static void clAddWallCollectVector(float* v0, float* v1, int* flg);
 
@@ -29,7 +30,7 @@ static void clCheckColumn2WallHit(CL_HITRESULT* cres, CL_HITPOLY_PLANE* pl, CL_H
 
 static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPOLY_COLUMN* cl, int* ptr);
 
-static void clCollectCharaHeightNormal(struct SubCharacter* sc);
+static void clCollectCharaHeightNormal(SubCharacter* sc);
 
 static void clModifiedBattleData(void);
 
@@ -90,6 +91,9 @@ static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res, float* sp, float
 static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res, float* sp, float* ep, float* min);
 
 static void clCheckHitEyeVectorCharacter(CL_VHIT_RESULT* res, float* sp, float* ep, float* min, u_int id);
+
+float clswPerc[5] = { 1.0f, 0.7f, 0.5f, 0.3f, 0.0f };
+
 
 // @todo: figure out wtf these are
 #define SMAP_WALL_BASE_START 88
@@ -1310,7 +1314,6 @@ static void clCheckHitSwordVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /
 
         
         if (ret != 0) {
-            // @note: not an inline in other functions??
             vec_dist_squared(sp, cres.cp, &dist);
             if (dist < *min) {
             
@@ -1341,7 +1344,6 @@ static void clCheckHitNoThruVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp 
 
         
         if (ret != 0) {
-            // @note: not an inline in other functions??
             vec_dist_squared(sp, cres.cp, &dist);
             if (dist < *min) {
             
@@ -1381,7 +1383,6 @@ static void clCheckHitSwordVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, floa
     
             
             if (ret != 0) {
-                // @note: not an inline in other functions??
                 vec_dist_squared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
@@ -1418,7 +1419,6 @@ static void clCheckHitSwordVectorDynamicWallNoThru(CL_VHIT_RESULT* res /* r22 */
     
             
             if (ret != 0) {
-                // @note: not an inline in other functions??
                 vec_dist_squared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
@@ -1459,7 +1459,6 @@ static void clCheckHitSwordVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, flo
     
             
             if (ret != 0) {
-                // @note: not an inline in other functions??
                 vec_dist_squared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
@@ -1497,7 +1496,6 @@ static void clCheckHitSwordVectorDynamicFloorNoThru(CL_VHIT_RESULT* res /* r22 *
     
             
             if (ret != 0) {
-                // @note: not an inline in other functions??
                 vec_dist_squared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
@@ -2180,13 +2178,6 @@ void clCheckHitEyesOnlyWall(CL_VHIT_RESULT* res /* r20 */, float* sp /* r19 */, 
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x001392C0 -> 0x00139414
-*/
-// Range: 0x1392C0 -> 0x139414
 void clCheckHitEyesOnlyFloorCeil(CL_VHIT_RESULT* res /* r20 */, float* sp /* r19 */, float* ep /* r18 */) {
     CL_SELECT_MAP* smap; // r16
     CL_SELECT_MAP* smapsv; // r17
@@ -2273,13 +2264,6 @@ static void clCheckHitEyeVector(CL_VHIT_RESULT* res /* r21 */, u_int id /* r20 *
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00139680 -> 0x001398D4
-*/
-// Range: 0x139680 -> 0x1398D4
 static void clCheckHitEyeVectorNoThru(CL_VHIT_RESULT* res /* r21 */, u_int id /* r20 */, float* sp /* r19 */, float* ep /* r18 */) {
     CL_SELECT_MAP* smap; // r16
     CL_SELECT_MAP* smapsv; // r17
@@ -2330,13 +2314,6 @@ static void clCheckHitEyeVectorNoThru(CL_VHIT_RESULT* res /* r21 */, u_int id /*
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x001398E0 -> 0x00139B8C
-*/
-// Range: 0x1398E0 -> 0x139B8C
 static void clCheckHitEyeVectorAllNoThru(CL_VHIT_RESULT* res /* r21 */, u_int id /* r20 */, float* sp /* r19 */, float* ep /* r18 */) {
     CL_SELECT_MAP* smap; // r16
     CL_SELECT_MAP* smapsv; // r17
@@ -2391,13 +2368,6 @@ static void clCheckHitEyeVectorAllNoThru(CL_VHIT_RESULT* res /* r21 */, u_int id
     clCheckHitEyeVectorCharacter(res, sp, ep, &min, id);
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00139B90 -> 0x00139D40
-*/
-// Range: 0x139B90 -> 0x139D40
 static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* r20 */, float* ep /* r19 */, float* min /* r18 */, CL_HITPOLY_PLANE* pl /* r17 */, int* ptr /* r16 */) {
     int ret; // r2
     CL_HITRESULT cres; // r29+0x70
@@ -2419,7 +2389,6 @@ static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* 
 
         
         if (ret != 0) {
-            // @note: not an inline in other functions??
             vec_dist_squared(sp, cres.cp, &dist);
             if (dist < *min) {
             
@@ -2434,14 +2403,6 @@ static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* 
     }
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00139D40 -> 0x00139E68
-*/
-// Range: 0x139D40 -> 0x139E68
 static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res /* r21 */, float* sp /* r20 */, float* ep /* r19 */, float* min /* r18 */, CL_HITPOLY_COLUMN* cl /* r17 */, int* ptr /* r16 */) {
     int ret; // r2
     CL_HITRESULT cres; // r29+0x70
@@ -2451,7 +2412,6 @@ static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res /* r21 */, float* sp
         ret = clCheckSubLineToColumnPlus(&cres, sp, ep, &cl[*ptr].p[0]);
         
         if (ret != 0) {
-            // @note: not an inline in other functions??
             vec_dist_squared(sp, cres.cp, &dist);
             if (dist < *min) {
             
@@ -2466,14 +2426,6 @@ static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res /* r21 */, float* sp
     }
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00139E70 -> 0x0013A1F4
-*/
-// Range: 0x139E70 -> 0x13A1F4
 static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
     int i; // r16
     int j; // r17
@@ -2499,7 +2451,6 @@ static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float*
     
             
             if (ret == 0) continue;
-            // @note: not an inline in other functions??
             vec_dist_squared(sp, cres.cp, &dist);
             if (dist >= *min) continue;
             
@@ -2515,13 +2466,6 @@ static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float*
     }
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0013A200 -> 0x0013A584
-*/
-// Range: 0x13A200 -> 0x13A584
 static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */) {
     int i; // r16
     int j; // r17
@@ -2547,7 +2491,6 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float
     
             
             if (ret != 0) {
-                // @note: not an inline in other functions??
                 vec_dist_squared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
@@ -2563,14 +2506,6 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float
     }
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0013A590 -> 0x0013A744
-*/
-// Range: 0x13A590 -> 0x13A744
 static void clCheckHitEyeVectorCharacter(CL_VHIT_RESULT* res /* r22 */, float* sp /* r21 */, float* ep /* r20 */, float* min /* r19 */, u_int id /* r18 */) {
     int i; // r16
     int ret; // r2
@@ -2609,14 +2544,6 @@ loop_7:
     }
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Collision\cl_main.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0013A750 -> 0x0013A780
-*/
-// Range: 0x13A750 -> 0x13A780
 int clPermitColumnExpansion(void) {
     return clPermColExpFlg[RoomNameJms()];
 }
