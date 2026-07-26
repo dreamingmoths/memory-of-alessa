@@ -1,7 +1,19 @@
 #include "Chacter/sh_character_battle.h"
+#include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_play.h"
 #include "Chacter/m3_wep.h"
+#include "Chacter/m3_scu.h"
+#include "Chacter/m3_mkn.h"
+#include "Chacter/m3_nse.h"
+#include "Chacter/m3_red.h"
+#include "Chacter/m3_oni.h"
+#include "Chacter/m3_edb.h"
+#include "Chacter/m3_pap.h"
+#include "Chacter/m3_tyu.h"
+#include "Chacter/m3_ike.h"
+#include "Chacter/m3_bos.h"
+#include "Chacter/m3_arm.h"
 
 #include "Chacter_Draw/sh2_JmsSpot_Man.h"
 
@@ -240,7 +252,48 @@ INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1229);
 
 INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", @1230_0x0038D578);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shGetEnemyAttackStartPos);
+static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float* s_pos, float* s_vec) {
+    
+    switch (attacker->kind) {
+        
+        case EN_SCU_CHARA_KIND:
+            shGetEnemySCUAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_MKN_CHARA_KIND:
+            shGetEnemyMKNAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_NSE_CHARA_KIND:
+        case EN_XOO_CHARA_KIND:
+            shGetEnemyNSEAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_RED_CHARA_KIND:
+            shGetEnemyREDAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_ONI_CHARA_KIND:
+            shGetEnemyONIAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_LLL_EDI_CHARA_KIND:
+            shGetEnemyEDBAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_PAP_CHARA_KIND:
+            shGetEnemyPAPAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_TYU_CHARA_KIND:
+            shGetEnemyTYUAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_IKE_CHARA_KIND:
+            shGetEnemyIKEAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        case EN_BOS_CHARA_KIND:
+            shGetEnemyBOSAttackPos(attacker, s_pos, s_vec, atk);
+            break;
+        
+        case EN_ARM_CHARA_KIND:            
+            shGetEnemyARMAttackPos(attacker, s_pos, s_vec, 0);
+            shGetEnemyARMAttackPos(attacker, s_pos, s_vec, 1);
+            /* fallthrough */
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemySlash);
 
