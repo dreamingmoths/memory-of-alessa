@@ -527,7 +527,19 @@ static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAddAttackQueue);
+static void shBattleAddAttackQueue(SubCharacter* scp, u_char wep_no, u_short atk_no) {
+    int no; // r3
+    
+    ASSERT_ON_LINE(sh2_attack_queue.rest, 1690);
+
+
+    
+    no = 20 - sh2_attack_queue.rest;  // #define ?
+    sh2_attack_queue.queue[no].scp = scp;
+    sh2_attack_queue.queue[no].wep_no = wep_no;
+    sh2_attack_queue.queue[no].atk_no = atk_no;
+    sh2_attack_queue.rest--;
+}
 
 void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */) {
     scp->battle.se = 0;
