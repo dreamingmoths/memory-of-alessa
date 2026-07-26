@@ -44,6 +44,7 @@ static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyBite(void);
 static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
+static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk);
 
 static void shGetEnemyAttackStartPos(SubCharacter* attacker /* r18 */, u_short atk /* r8 */, float* s_pos /* r17 */, float* s_vec /* r16 */);
 
@@ -71,7 +72,7 @@ static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u
     int atk_type;
 
     switch (scp->kind) { 
-    case 0x208: case 0x209: case 0x421:
+    case EN_RED_CHARA_KIND: case EN_ONI_CHARA_KIND: case ITEM_B_NIK_CHARA_KIND:
         return;
     }
 
@@ -118,7 +119,7 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker /* r20 */,
     st = sh2_attack_list[atk].atk_start;
     ed = sh2_attack_list[atk].atk_end;
 
-    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result != 0)) {
+    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result)) {
         shGetJamesWeaponEndPos(gunpos, gunvec);
 
         que.svs[0] = gunpos[0] + gunvec[0] * sh2_attack_list[atk].min_range;
@@ -129,7 +130,7 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker /* r20 */,
         que.sve[1] = gunpos[1] + gunvec[1] * sh2_attack_list[atk].max_range;
         que.sve[2] = gunpos[2] + gunvec[2] * sh2_attack_list[atk].max_range;
         que.sve[3] = 1.0f;
-        que.btlid = atk + 0x100;
+        que.btlid = atk + 256;
         que.kind = sh2_attack_list[atk].kind;
         que.sc = attacker;
         clBattleAddQue(&que);
@@ -323,7 +324,7 @@ static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk) {
 
     
     
-    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result != 0)) {
+    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result)) {
         
         max_range = ((cur_frame - st) * (500.0f * (BgIsOut(0) ? 3.6f : 1.8f))) / (ed - st);
 
@@ -464,7 +465,67 @@ static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAttackByEnemyShot);
+static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk) {
+    sceVu0FVECTOR s_pos; // r29+0x60
+    sceVu0FVECTOR s_vec; // r29+0x70
+    u_short cur_frame; // r2
+    u_short st; // r2
+    u_short ed; // r16    
+    CL_BATTLE_QUE que; // r29+0x80
+
+    cur_frame = shCharacterAnimeFrameGet(attacker);
+    st = sh2_attack_list[atk].atk_start;
+    ed = sh2_attack_list[atk].atk_end;
+    
+    
+    if (!(cur_frame < st || cur_frame > ed || attacker->battle.atk_result)) {
+
+        
+        shGetEnemyAttackStartPos(attacker, atk, s_pos, s_vec);
+        
+
+        que.svs[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].min_range;
+        que.svs[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].min_range;
+        que.svs[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].min_range;
+        que.svs[3] = 1.0f;
+        que.sve[0] = s_pos[0] + s_vec[0] * sh2_attack_list[atk].max_range;
+        que.sve[1] = s_pos[1] + s_vec[1] * sh2_attack_list[atk].max_range;
+        que.sve[2] = s_pos[2] + s_vec[2] * sh2_attack_list[atk].max_range;
+        que.sve[3] = 1.0f;        
+        que.btlid = atk + 256;
+        que.kind = sh2_attack_list[atk].kind;
+        que.sc = attacker;
+
+
+
+
+
+
+
+        
+        clBattleAddQue(&que);
+        
+        
+        
+        attacker->battle.atk_result = 1;
+        
+        if (attacker->kind == EN_LLL_EDI_CHARA_KIND) {
+            
+            enEDBSetGunFire(attacker->enemy_p);
+            
+            
+            
+            SeCallPos(0x4719, 1.0f, s_pos, 1);
+        }
+    }
+    
+    
+    
+    
+    if (ed < cur_frame) {
+        attacker->battle.atk_result = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleAddAttackQueue);
 
