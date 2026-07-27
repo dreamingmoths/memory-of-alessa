@@ -1,6 +1,7 @@
 #ifndef SH2GFW_INIT_MODEL_DRAW_DATA_H
 #define SH2GFW_INIT_MODEL_DRAW_DATA_H
 
+#include "Chacter/character.h"
 #include "FilesList/fileslist_bg.h"
 
 typedef struct Part {
@@ -45,6 +46,9 @@ typedef struct chr_mge_files {
     fsFileIndex* shadow_fid;  // offset 0xC, size 0x4
     int mid;                  // offset 0x10, size 0x4
 } chr_mge_files;
+
+// @note: placement may be wrong.
+extern sh2gfw_ModelDraw_MAN UniModelDW_Man; // size: 0x94, address: 0x616E00
 
 void sh2gfw_srInit_ModelDrawWork(void);
 
