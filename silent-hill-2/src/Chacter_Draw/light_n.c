@@ -11,6 +11,7 @@
 #include "GFW/sh2gfw_viewclip.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2_DrawEnvData.h"
+#include "GFW/sh2gfw_Init_ModelDrawData.h"
 
 #include "Event/demoview.h"
 
@@ -30,8 +31,6 @@
 #define EXTRA_MAX             6
 #define LIGHT_MAX             12
 
-extern sh2gfw_ModelDraw_MAN UniModelDW_Man; // size: 0x94, address: 0x616E00
-
 static void UpdateIntensity(Light* l);
 static void UpdateFParam(Light* l);
 static void UpdateSParam(Light* l);
@@ -40,14 +39,17 @@ static int CompareByIntensity(void* xx, void* yy);
 static int CompareByInfluence(void* xx, void* yy);
 static void UpdateExtras(float* center, float radius);
 
-static float monochrome_vector[4] = {0.3f, 0.6f, 0.1f, 0.0f}; // size: 0x10, address: 0x2A9540
+/* migrated data */
+static float monochrome_vector[4] = {0.3f, 0.6f, 0.1f, 0.0f};          // size: 0x10, address: 0x2A9540
 
-extern float unit_fvector_z[4]; /* = {0.0f, 0.0f, 1.0f, 0.0f}; */ // size: 0x10, address: 0x2A94D0
-extern float unit_fvector_w[4];                                   // size: 0x10, address: 0x2A94E0
-extern float unit_fvector_y[4];                                   // size: 0x10, address: 0x2A94C0
-extern float zero_fmatrix[4][4];                                  // size: 0x40, address: 0x2A94F0
-extern float zero_fvector[4];                                     // size: 0x10, address: 0x2A94B0
+/* unmigrated data, may not belong here */
+extern sceVu0FVECTOR unit_fvector_z; /* = {0.0f, 0.0f, 1.0f, 0.0f}; */ // size: 0x10, address: 0x2A94D0
+extern sceVu0FVECTOR unit_fvector_w;                                   // size: 0x10, address: 0x2A94E0
+extern sceVu0FVECTOR unit_fvector_y;                                   // size: 0x10, address: 0x2A94C0
+extern sceVu0FVECTOR zero_fvector;                                     // size: 0x10, address: 0x2A94B0
+extern sceVu0FMATRIX zero_fmatrix;                                     // size: 0x40, address: 0x2A94F0
 
+/* unmigrated bss */
 extern LightWork light_work; // size: 0x9E0, address: 0x419380
 
 float ktClampFloat(float x /* r29 */, float l /* r29 */, float h /* r29 */) {
