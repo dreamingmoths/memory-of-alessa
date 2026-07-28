@@ -124,7 +124,129 @@ int shBattleAroundTargetEnemy(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleCheckTargetChara);
+int shBattleCheckTargetChara(SubCharacter* scp) {
+    int i; // r16
+    int j; // r17
+    SubCharacter* tgt; // r16
+    shInArea in_area; // r29+0x6C
+    sceVu0FVECTOR look_center; // r29+0x40
+    sceVu0FVECTOR feel_center; // r29+0x50    
+    shInAreaTgtInfo dummy; // r29+0x60
+    look_center[0] = scp->pos.x + (scp->battle.look.center * shSinF(scp->rot.y));
+    look_center[1] = scp->eye_y;
+    look_center[2] = scp->pos.z + (scp->battle.look.center * shCosF(scp->rot.y));
+    
+    
+    feel_center[0] = scp->pos.x + (scp->battle.feel.center * shSinF(scp->rot.y));
+    feel_center[1] = scp->center_y;
+    feel_center[2] = scp->pos.z + (scp->battle.feel.center * shCosF(scp->rot.y));
+    
+    
+    if (scp->kind == LLL_MAR_CHARA_KIND) {
+        shQzero(sh2_target_info, sizeof(sh2_target_info));
+        rest_tgt = 20;
+    }
+
+    
+    
+    
+    for (tgt = sh2chara.head; tgt != NULL; tgt = tgt->next) {
+        
+        
+        if (tgt == scp) continue;        
+        switch (GET_KIND_TYPE(tgt->kind)) {
+            case HUMAN_CHARA_KIND: case ENEMY_CHARA_KIND: case OBJECT_X_CHARA_KIND: break;            
+            default: continue;                
+        }            
+                        
+        if ((GET_KIND_TYPE(tgt->kind) == ENEMY_CHARA_KIND) && !(tgt->battle.status & 0x400)) continue;
+          
+        shBattleCheckTargetMyArea(&in_area, scp, tgt, look_center, feel_center);
+        if ((in_area.look_on == 0 && in_area.feel_on == 0 && in_area.light_on == 0) || rest_tgt == 0) continue;
+
+        sh2_target_info[20 - rest_tgt].in_area = in_area;
+        sh2_target_info[20 - rest_tgt].adr.scp = tgt;
+        sh2_target_info[20 - rest_tgt].distance = vec3_dist(&scp->pos, &tgt->pos);
+        
+        rest_tgt--;        
+    }    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    for (i = 0; i < 19 - rest_tgt; i++) {
+        for (j = 1; j < 20 - rest_tgt; j++) {
+            if (sh2_target_info[i].distance > sh2_target_info[j].distance) {
+                memcpy(&dummy, &sh2_target_info[i], sizeof(shInAreaTgtInfo));
+                memcpy(&sh2_target_info[i], &sh2_target_info[j], sizeof(shInAreaTgtInfo));
+                memcpy(&sh2_target_info[j], &dummy, sizeof(shInAreaTgtInfo));
+            }
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (scp == sh2jms.player) {
+        memcpy(sh2_target_info_buf, sh2_target_info, sizeof(sh2_target_info));
+        rest_tgt_buf = rest_tgt;
+    }
+
+    if (rest_tgt == 20) {
+        return 0;
+    }
+    return 1;
+}
 
 SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp) {
     int i;
@@ -224,10 +346,10 @@ u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
             }
             break;
         case HUMAN_CHARA_KIND:
-            return 0U;
+            return 0;
     }
     
-    return 0U;
+    return 0;
 }
 
 SubCharacter* shCameraGetNearTarget(int i, int type) {
