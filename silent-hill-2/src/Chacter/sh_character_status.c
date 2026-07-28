@@ -1,5 +1,6 @@
 #include "Chacter/sh_character_status.h"
 #include "Chacter/chara_list.h"
+#include "Chacter/m3_sc.h"
 
 #include "Event/item.h"
 
@@ -279,7 +280,50 @@ SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetHuman);
+SubCharacter* shBattleGetTargetHuman(SubCharacter* scp, u_int type) {
+    sceVu0FVECTOR pos1; // r29+0x30
+    sceVu0FVECTOR pos2; // r29+0x40
+    float scalar1; float scalar2; 
+    SubCharacter* p; SubCharacter* p1; SubCharacter* p2; 
+    switch (type) {
+        case 1:
+            p = shCharacterGetSubCharacter(LLL_JMS_CHARA_KIND, -1);
+            if (p == NULL) 
+                p = shCharacterGetSubCharacter(HLL_JMS_CHARA_KIND, -1);            
+            break;
+        case 2:
+            p = shCharacterGetSubCharacter(LLL_MAR_CHARA_KIND, -1);
+            break;
+        default:
+            p1 = shCharacterGetSubCharacter(LLL_JMS_CHARA_KIND, -1);
+            if (p1 == NULL) {
+                p1 = shCharacterGetSubCharacter(HLL_JMS_CHARA_KIND, -1);
+            }
+            p2 = shCharacterGetSubCharacter(LLL_MAR_CHARA_KIND, -1);
+            
+            if (p1 != NULL) {
+                if (p2 != NULL) {
+                    pos1[0] = p1->pos.x - scp->pos.x;
+                    pos1[2] = p1->pos.z - scp->pos.z;
+                    pos2[0]= p2->pos.x - scp->pos.x;
+                    pos2[2] = p2->pos.z - scp->pos.z;
+                    scalar1 = vec_length(pos1);
+                    scalar2 = vec_length(pos2);
+                    p = (scalar1 <= scalar2) ? p1 : p2;
+                    break;
+                } else p = p1;                                                                      
+                
+                break;
+            } else if (p2 != NULL)
+                
+                p = p2;                
+            else p = NULL;
+            
+    }
+    return p;
+
+
+}
 
 int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt) {
     if (tgt->battle.status & 0x200) {
