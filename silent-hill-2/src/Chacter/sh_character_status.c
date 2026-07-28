@@ -1,16 +1,29 @@
-#include "sh_character_status.h"
+#include "Chacter/sh_character_status.h"
+#include "Chacter/chara_list.h"
+
+#include "Event/item.h"
+
+#include "GFW/sh2_get_drawenv.h"
+
+#include "sh2shd/sh2shd_shadow_model.h"
+
+#include "SH2_common/sh_vu0.h"
+
+#include "vec.h"
+
+static void shBattleCheckHitEyes(CL_VHIT_RESULT* eye, SubCharacter* scp, int i, int net);
 
 static float _shLength(float*, float*);
 
-static void shBattleCheckHitEyes(struct _CL_VHIT_RESULT *eye, struct SubCharacter *scp, int i, int net) {
-    float sp[4];
-    float ep[4];
+static void shBattleCheckHitEyes(CL_VHIT_RESULT* eye, SubCharacter* scp, int i, int net) {
+    sceVu0FVECTOR sp;
+    sceVu0FVECTOR ep;
 
     sp[0] = scp->pos.x;
     sp[1] = scp->eye_y;
     sp[2] = scp->pos.z;
 
-    if ((sh2_target_info[i].adr.scp->kind >> 8) == 7) {
+    if (GET_KIND_TYPE(sh2_target_info[i].adr.scp->kind) == OBJECT_X_CHARA_KIND) {
         ep[0] = sh2_target_info[i].adr.scp->pos_spd.x;
         ep[1] = sh2_target_info[i].adr.scp->center_y;
         ep[2] = sh2_target_info[i].adr.scp->pos_spd.z;
@@ -23,12 +36,12 @@ static void shBattleCheckHitEyes(struct _CL_VHIT_RESULT *eye, struct SubCharacte
     clCheckHitEyes(eye, (u_int) scp, sp, ep, net);
 }
 
-void shBattleCheckTargetMyArea(struct shInArea *in_area, struct SubCharacter *scp, struct SubCharacter *tgt, float *look, float *feel) {
-    float tgt_pos[4];
+void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel) {
+    sceVu0FVECTOR tgt_pos;
     float tgt_to_look;
     float tgt_to_feel;
 
-    if ((tgt->kind >> 8) == 7) {
+    if (GET_KIND_TYPE(tgt->kind) == OBJECT_X_CHARA_KIND) {
         tgt_pos[0] = tgt->pos_spd.x;
         tgt_pos[1] = tgt->center_y;
         tgt_pos[2] = tgt->pos_spd.z;
@@ -46,7 +59,7 @@ void shBattleCheckTargetMyArea(struct shInArea *in_area, struct SubCharacter *sc
     in_area->look_on = (tgt_to_look <= scp->battle.look.radius) ? 1 : 0;
     in_area->feel_on = (tgt_to_feel <= scp->battle.feel.radius) ? 1 : 0;
 
-    switch (tgt->kind >> 8) {
+    switch (GET_KIND_TYPE(tgt->kind)) {
         case 7:
             if (!(scp->status & 0x200)) {
                 in_area->look_on = in_area->feel_on = 0;
@@ -70,46 +83,311 @@ void shBattleCheckTargetMyArea(struct shInArea *in_area, struct SubCharacter *sc
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", _shLength);
+static asm float _shLength(register float* x, register float* y) { // @todo: write C equivalent
+    lwc1    f0, 0(a0)
+    lwc1    $f8,0(a1)
+    lwc1    $f9,4(a0)
+    lwc1    $f0,0(a0)
+    lwc1    $f8,0(a1)
+    lwc1    $f9,4(a0)
+    sub.s   $f0,$f0,$f8
+    lwc1    $f10,4(a1)
+    mula.s  $f0,$f0
+    lwc1    $f0,8(a0)
+    lwc1    $f8,8(a1)
+    sub.s   $f9,$f9,$f10
+    sub.s   $f0,$f0,$f8
+    madda.s $f9,$f9
+    madd.s  $f0,$f0,$f0
+    sqrt.s  $f0,$f0
+    nop     
+    nop     
+    nop     
+    jr      ra
+    nop     
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleAroundTargetEnemy);
+int shBattleAroundTargetEnemy(void) {
+    SubCharacter* tgt; // r4
+
+    for (tgt = sh2chara.head; tgt != NULL;  tgt = tgt->next) {       
+        
+        if (((GET_KIND_TYPE(tgt->kind)) == ENEMY_CHARA_KIND) 
+            && (tgt->battle.status & 0x400) && !(tgt->battle.status & 2)) {
+            return 1;
+        }
+    }
+    
+    
+    
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleCheckTargetChara);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetEnemy);
+SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp) {
+    int i;
+    SubCharacter* kari_target = NULL;
+    CL_VHIT_RESULT eye;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleChangeTargetEnemy);
+    if (rest_tgt == 20) 
+        return NULL;
+    
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetChara);
+    
+    for (i = 0; i < 20 - rest_tgt; i++) {
+        
+        if (GET_KIND_TYPE(sh2_target_info[i].adr.scp->kind) == ENEMY_CHARA_KIND) {
+            
+            if (!(sh2_target_info[i].adr.scp->battle.status & 2)) {
+                
+                shBattleCheckHitEyes(&eye, scp, i, 1);
+                
+                if ((eye.kind == 3) && (eye.hobj.chara.sc == sh2_target_info[i].adr.scp)) {
+                    
+                    if (sh2_target_info[i].adr.scp->battle.status & 4) {
+                        
+                        if (kari_target == NULL) {
+                            kari_target = sh2_target_info[i].adr.scp;
+                        }
+                        continue;
+                    }    
+                    return sh2_target_info[i].adr.scp;
+                
+                }
+            }
+        }
+    }
+    return kari_target;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shCameraGetNearTarget);
+SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key) {
+    int i; // r16
+    float to_target; // r29+0x90
+    float rot_tmp; // r29+0x90
+    CL_VHIT_RESULT eye; // r29+0x50
+    if (rest_tgt == 20)
+        return NULL;
+    
+    
+    
+    for (i = 0; i < 20 - rest_tgt; i++) {
+        
+        if (sh2jms.target == sh2_target_info[i].adr.scp)
+            continue;
+        if (GET_KIND_TYPE(sh2_target_info[i].adr.scp->kind) != ENEMY_CHARA_KIND)
+            continue;
+        if (sh2_target_info[i].adr.scp->battle.status & 2)
+            continue;
+        to_target = shAtan2(sh2_target_info[i].adr.scp->pos.z - scp->pos.z, sh2_target_info[i].adr.scp->pos.x - scp->pos.x);
+        
+        rot_tmp = shAngleRegulate(to_target - scp->rot.y);
+        if ((key == 1 && rot_tmp > 0.0f) || (key == -1 && rot_tmp < 0.0f)) {
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetNearDeadlyTargetEnemy);
+            shBattleCheckHitEyes(&eye, scp, i, 1);
+    
+            if (eye.kind == 3) {
+                
+                return sh2_target_info[i].adr.scp;
+            }
+                       
+        }  
+
+
+    }
+    return NULL;
+}
+
+u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
+    int i; // r16
+    CL_VHIT_RESULT eye; // r29+0x30
+
+    switch (kind) {
+        case 0: // ???
+            if (rest_tgt == 20) 
+                return 0;
+            
+            
+            
+            for (i = 0; i < 20 - rest_tgt; i++) {
+                
+                shBattleCheckHitEyes(&eye, scp, i, 1);
+                
+                
+                
+                
+                if ((eye.kind != 1) && ( eye.kind != 2)) {
+                    return (u_int) sh2_target_info[i].adr.scp;
+                }
+            
+            }
+            break;
+        case HUMAN_CHARA_KIND:
+            return 0U;
+    }
+    
+    return 0U;
+}
+
+SubCharacter* shCameraGetNearTarget(int i, int type) {
+    int kind; // r4
+
+    if (rest_tgt_buf == 20)
+        return NULL;
+    
+    if (sh2_target_info_buf[i].adr.scp != NULL) {
+        kind = GET_KIND_TYPE(sh2_target_info_buf[i].adr.scp->kind);
+        
+        if ((((type == 0)) && (kind == ENEMY_CHARA_KIND)) ||
+            ((type == 1) && (kind == OBJECT_X_CHARA_KIND)))             
+            return sh2_target_info_buf[i].adr.scp;
+    } 
+    
+    return NULL;
+
+}
+
+SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp) {
+    int i; // r16
+    CL_VHIT_RESULT eye; // r29+0x50
+
+    
+    if (rest_tgt == 20) 
+        return NULL;
+    
+    
+    
+    for (i = 0; i < 20 - rest_tgt; i++) {        
+        
+        if (GET_KIND_TYPE(sh2_target_info[i].adr.scp->kind) == ENEMY_CHARA_KIND) {
+            
+            if (!(sh2_target_info[i].adr.scp->battle.status & 2) && (sh2_target_info[i].adr.scp->battle.status & 4)) {
+                
+                
+                shBattleCheckHitEyes(&eye, scp, i, 0);
+                if ((eye.kind == 3) && (eye.hobj.chara.sc == sh2_target_info[i].adr.scp)) {
+                    
+                    
+                    if (sh2_target_info[i].distance <= 600.0f) {
+                        return sh2_target_info[i].adr.scp;
+                    }
+                }
+            }
+        }
+    }
+    
+    return NULL;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleGetTargetHuman);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleListenHumanSound);
+int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt) {
+    if (tgt->battle.status & 0x200) {
+        return 1;
+    } 
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSeeHumanLight);
+int shBattleSeeHumanLight(SubCharacter* scp) {
+    SPOT_LIGHT spot; // r29+0x20
+    sceVu0FVECTOR light_center; // r29+0x50
+    sceVu0FVECTOR scp_center; // r29+0x60
+    float angle; // r29+0x70
+    float light_radius; // r1    
+    float dist; // r29+0x70
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleAimedByHuman);
+    if (item.light_switch == 0) {
+        return -1;
+    }
+    
+    
+    
+    kari_sh2gde_getspotParams(spot.c, spot.zdir, spot.range);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleFinishedByHuman);
+    
+    angle = shAtan2(spot.zdir[2], spot.zdir[0]);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHuman);
+    light_center[0] = spot.c[0] + ((0.5f * spot.range[3]) * spot.zdir[0]);
+    light_center[1] = spot.c[1] + ((0.5f * spot.range[3]) * spot.zdir[1]);
+    light_center[2] = spot.c[2] + ((0.5f * spot.range[3]) * spot.zdir[2]);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHumanJames);
+    
+    light_radius = (0.5f * spot.range[3]) * shSinF(spot.range[1]);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleNoDamageHumanMaria);
+    
+    scp_center[0] = scp->pos.x;    
+    scp_center[2] = scp->pos.z;
+    scp_center[1] = scp->center_y;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleHuggedHuman);
+    
+    dist = vec3_dist_reverse(scp_center, light_center);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSetLookArea);
+    if (dist < light_radius) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleSetFeelArea);
+int shBattleAimedByHuman(SubCharacter* scp) {
+    if ((sh2jms.target == scp) && (sh2jms.lock_on)) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleInitEnemyCheckWork);
+int shBattleFinishedByHuman(SubCharacter* scp) {
+    if ((sh2jms.enemy_liedown == scp) && (sh2jms.lower_now == JMS_ST_L_KICK)) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleInit);
+int shBattleNoDamageHuman(void) {
+    return shBattleNoDamageHumanJames();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_status", shBattleExec);
+int shBattleNoDamageHumanJames(void) {
+    if ((sh2jms.no_damage) || (sh2jms.muteki_time)) {
+        return 1;
+    }
+    return 0;
+}
+
+int shBattleNoDamageHumanMaria(void) {
+    if ((sh2mar.no_damage) || (sh2mar.muteki_time)) {
+        return 1;
+    }
+    return 0;
+}
+
+int shBattleHuggedHuman(void) {
+    if (sh2jms.hugging_gauge) {
+        return 1;
+    }
+    return 0;
+}
+
+void shBattleSetLookArea(SubCharacter* scp, float center, float radius) {
+    scp->battle.look.center = 500.0f * center;
+    scp->battle.look.radius = 500.0f * radius;
+}
+
+void shBattleSetFeelArea(SubCharacter* scp, float center, float radius) {
+    scp->battle.feel.center = 500.0f * center;
+    scp->battle.feel.radius = 500.0f * radius;
+}
+
+void shBattleInitEnemyCheckWork(void) {
+    shQzero(sh2_target_info, sizeof(sh2_target_info));
+    shQzero(sh2_target_info_buf, sizeof(sh2_target_info_buf));
+    rest_tgt = rest_tgt_buf = 20;
+}
+
+void shBattleInit(void) {
+    shBattleInitEnemyCheckWork();
+    shBattleInitAttackQueue();
+}
+
+void shBattleExec(void) {
+    shBattleExecAttackQueue();
+}
