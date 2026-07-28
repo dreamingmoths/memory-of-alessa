@@ -1,71 +1,54 @@
-#ifndef SH_CHARACTER_BATTLE_H
-#define SH_CHARACTER_BATTLE_H
+#ifndef SH_CHARACTER_STATUS_H
+#define SH_CHARACTER_STATUS_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
-typedef struct shBattleFight {
-    // total size: 0xC
-    float test_a; // offset 0x0, size 0x4
-    float test_b; // offset 0x4, size 0x4
-    float test_c; // offset 0x8, size 0x4
-} shBattleFight;
-typedef struct shBattleShot {
-    // total size: 0xC
-    float test_a; // offset 0x0, size 0x4
-    float test_b; // offset 0x4, size 0x4
-    float test_c; // offset 0x8, size 0x4
-} shBattleShot;
-typedef struct shAttackInfo {
-    // total size: 0x24
-    unsigned short id;   // offset 0x0, size 0x2
-    unsigned short kind; // offset 0x2, size 0x2
-    float ap;            // offset 0x4, size 0x4
-    float sp;            // offset 0x8, size 0x4
-    float min_range;     // offset 0xC, size 0x4
-    float max_range;     // offset 0x10, size 0x4
-    union {
-        struct shBattleFight fight; // offset 0x0, size 0xC
-        struct shBattleShot shot;   // offset 0x0, size 0xC
-    } hit_check;                    // offset 0x14, size 0xC
-    u_char atk_start;               // offset 0x20, size 0x1
-    u_char atk_end;                 // offset 0x21, size 0x1
-    u_char sd;                      // offset 0x22, size 0x1
-    u_char eff;                     // offset 0x23, size 0x1
-} shAttackInfo;
-
-// total size: 0x8
-typedef struct shAttackQueueOne {
+// total size: 0x1
+typedef struct shInArea {
     // Members
-    struct SubCharacter* scp; // offset 0x0, size 0x4
-    u_char wep_no;            // offset 0x4, size 0x1
-    u_short atk_no;           // offset 0x6, size 0x2
-} shAttackQueueOne;
+    u_char look_on : 2;  // offset 0x0, size 0x1
+    u_char feel_on : 2;  // offset 0x0, size 0x1
+    u_char light_on : 4; // offset 0x0, size 0x1
+} shInArea;
 
-// total size: 0xA4
-typedef struct shAttackQueue {
+// total size: 0xC
+typedef struct shInAreaTgtInfo {
     // Members
-    int rest;                          // offset 0x0, size 0x4
-    struct shAttackQueueOne queue[20]; // offset 0x4, size 0xA0
-} shAttackQueue;
+    union /* @anon4 */ {
+        struct SubCharacter* scp; // offset 0x0, size 0x4
+    } adr;                        // offset 0x0, size 0x4
+    float distance;               // offset 0x4, size 0x4
+    struct shInArea in_area;      // offset 0x8, size 0x1
+} shInAreaTgtInfo;
 
+extern shInAreaTgtInfo sh2_target_info[20];
+extern shInAreaTgtInfo sh2_target_info_buf[20]; 
+extern shCharacterAll sh2chara;
+extern int rest_tgt; // size: 0x4, address: 0x3CEDD0
+extern int rest_tgt_buf; // size: 0x4, address: 0x3CEDC8
 
-extern shAttackInfo sh2_attack_list[66];
-extern shPlayerWork sh2jms;
-
-void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result);
-
-void shBattleAttackHitCheckInit(SubCharacter* scp /* r2 */);
-void shBattleAttackHitCheckToHuman(SubCharacter* scp /* r2 */, u_short atk_no /* r2 */);
-void shBattleAttackHitCheckToEnemy(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
-void shBattleInitAttackQueue(void);
-void shBattleExecAttackQueue(void);
-float shBattleGetJamesHP(void);
-float shBattleGetJamesHP_Rate(void);
-void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */);
-float shBattleEventWallHitCheck(void);
-int shBattleCheckAttackByEnemy(void);
-
-int shBattleRequestNextAttackIsOk(u_short atk, u_short frame);
+void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel);
+int shBattleAroundTargetEnemy(void);
+int shBattleCheckTargetChara(SubCharacter* scp);
+SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp);
+SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key);
+u_int shBattleGetTargetChara(SubCharacter* scp, int kind);
+SubCharacter* shCameraGetNearTarget(int i, int type);
+SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp);
+SubCharacter* shBattleGetTargetHuman(SubCharacter* scp, u_int type);
+int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt);
+int shBattleSeeHumanLight(SubCharacter* scp);
+int shBattleAimedByHuman(SubCharacter* scp);
+int shBattleFinishedByHuman(SubCharacter* scp);
+int shBattleNoDamageHuman(void);
+int shBattleNoDamageHumanJames(void);
+int shBattleNoDamageHumanMaria(void);
+int shBattleHuggedHuman(void);
+void shBattleSetLookArea(SubCharacter* scp, float center, float radius);
+void shBattleSetFeelArea(SubCharacter* scp, float center, float radius);
+void shBattleInitEnemyCheckWork(void);
+void shBattleInit(void);
+void shBattleExec(void);
 
 #endif
