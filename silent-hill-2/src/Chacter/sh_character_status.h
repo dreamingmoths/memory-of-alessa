@@ -1,7 +1,7 @@
 #ifndef SH_CHARACTER_STATUS_H
 #define SH_CHARACTER_STATUS_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
 // total size: 0x1
@@ -23,6 +23,10 @@ typedef struct shInAreaTgtInfo {
 } shInAreaTgtInfo;
 
 extern shInAreaTgtInfo sh2_target_info[20];
+extern shInAreaTgtInfo sh2_target_info_buf[20]; 
+extern shCharacterAll sh2chara;
+extern int rest_tgt; // size: 0x4, address: 0x3CEDD0
+extern int rest_tgt_buf; // size: 0x4, address: 0x3CEDC8
 
 void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacter* tgt, float* look, float* feel);
 int shBattleAroundTargetEnemy(void);
