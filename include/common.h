@@ -255,7 +255,7 @@ static inline void mat_copy_3x3(void* dst, void* src) {
                  : : "r"(dst), "r"(src) : "t6", "t7");
 }
 
-extern void* memcpy(void* __dest, void* __src, u_int __n);
+// extern void* memcpy(void* __dest, void* __src, u_int __n);
 extern float asinf(float);
 extern float fabsf(float);
 extern float cosf(float);
