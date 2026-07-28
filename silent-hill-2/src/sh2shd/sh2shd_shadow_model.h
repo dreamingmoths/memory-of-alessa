@@ -18,6 +18,15 @@
 
 #define SHADOW_CALC_HEAP_SIZE 0xA0
 
+// total size: 0x30
+typedef struct SPOT_LIGHT {  // @note: not sure if this is the correct place for this
+    // Members
+    sceVu0FVECTOR c; // offset 0x0, size 0x10
+    sceVu0FVECTOR zdir; // offset 0x10, size 0x10
+    sceVu0FVECTOR range; // offset 0x20, size 0x10
+} SPOT_LIGHT;
+
+
 void sh2shd_init_shadow(void);
 
 void sh2shd_reset_shadow(void);
