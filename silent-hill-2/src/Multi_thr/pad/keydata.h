@@ -41,7 +41,5 @@ typedef union shGameKeyData {
 int shSysKeyNormalize(char* paddata /* r2 */);
 int shSysKeyAdjust(char* paddata /* r2 */);
 int shGameKeyConvert(shGameKeyData* key /* r10 */, char* paddata /* r2 */);
-// void shGameKeyGetAssign(struct shGameKeyAssign * assign /* r2 */);
-// void shGameKeySetAssign(struct shGameKeyAssign * assign /* r2 */)
 
 #endif // KEYDATA_H
