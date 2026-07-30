@@ -1,9 +1,15 @@
 #include "Chacter/m3_play.h"
 #include "Chacter/m3_sc.h"
 
+#include "Event/event.h"
+
+#include "Multi_thr/pad/keydata.h"
+
 #include "SH2_common/pad.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/sh_vu0.h"
+
+#include "shPad/lib_sh_pad.h"
 
 #include "sound/sh_sound.h"
 
@@ -428,7 +434,229 @@ static u_char PlayerCheckKeyInputDash(u_char dash) {
     }            
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckKeyInput);
+void PlayerCheckKeyInput(void) {
+    s_char pad_local_org[4]; // r29+0x4C
+    u_char pad_local[32]; // r29+0x20
+    s_char asobi_x; // r3
+    s_char asobi_y; // r2
+    int i; // r5
+    PAD_INFO* pad = sh2jms.pad; // r16
+    shGameKeyData key; // r29+0x40
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    for (i = 9; i > 0; i--) {
+        sh2jms.pad[i] = sh2jms.pad[i - 1];
+    }
+
+    
+    libShPadRead(0, 0, pad_local);
+    shSysKeyNormalize(pad_local);
+
+    for (i = 0; i < 4; i++) {
+        pad_local_org[i] = pad_local[i + 4] - 0x80;
+    }
+    shSysKeyAdjust(pad_local);
+    shGameKeyConvert(&key, pad_local);
+
+    
+    
+    
+    pad[0].skip  = pad_local[22];
+    pad[0].pause = pad_local[22];
+    pad[0].action = shPadTrigger(0, key_config.action);
+    pad[0].attack0 = key.f.ACTION;
+
+    if (sh2jms.weapon == 8) {
+        pad[0].dash = 0;
+    } else {
+        pad[0].dash = PlayerCheckKeyInputDash((key.f.DASH != 0) ? 1 : 0);
+    }
+
+    pad[0].hold = PlayerCheckKeyInputHold(sh2jms.pad[1].hold, key.f.READY);
+    pad[0].menu = shPadTrigger(0, key_config.item);
+    pad[0].search = key.f.VIEW;
+    pad[0].map = shPadTrigger(0, key_config.map);
+    pad[0].light_ = key.f.LIGHT;
+    pad[0].light = PlayerCheckKeyInputTrgLight();
+    
+    
+    pad[0].rstickY = pad_local_org[1];
+    pad[0].rstickX = pad_local_org[0];
+    pad[0].lstickY = pad_local_org[3];
+    pad[0].lstickX = pad_local_org[2];
+
+    
+    
+    if (int_abs(pad[0].lstickY) < 0x26) pad[0].lstickY = 0;
+    if (int_abs(pad[0].lstickX) < 0x26) pad[0].lstickX = 0;
+    if (int_abs(pad[0].rstickY) < 0x26) pad[0].rstickY = 0;
+    if (int_abs(pad[0].rstickX) < 0x26) pad[0].rstickX = 0;
+
+    if (playing.control_type == 0) {
+        asobi_x = int_abs(pad[0].lstickY) / 2;
+        asobi_x = (asobi_x < 0) ? 0 : (asobi_x > 0x40) ? 0x40 : asobi_x;        
+        asobi_y = int_abs(pad[0].lstickX) / 2;
+        asobi_y = (asobi_y < 0) ? 0 : (asobi_y > 0x40) ? 0x40 : asobi_y;
+            
+        if (int_abs(pad[0].lstickY) < asobi_y) pad[0].lstickY = 0;        
+        if (int_abs(pad[0].lstickX) < asobi_x) pad[0].lstickX = 0;
+    } else {
+        asobi_x = asobi_y = 0;
+    }
+
+    if (pad[0].lstickX >= 0) {
+        
+        sh2jms.lstick_x = PlayerCheckKeyStickClamp(pad[0].lstickX,
+                                                   (asobi_x < 0x13) ? 0.0f : asobi_x,
+                                                   104.0f);
+    
+    
+    
+    } else {
+        
+        sh2jms.lstick_x = -PlayerCheckKeyStickClamp(-pad[0].lstickX,
+                                                    (asobi_x < 0x13) ? 0.0f : asobi_x,
+                                                    104.0f);
+    }
+
+    
+    if (pad[0].lstickY >= 0) {
+        sh2jms.lstick_y = PlayerCheckKeyStickClamp(pad[0].lstickY,
+                                                   0.0f,
+                                                   104.0f);
+    } else {
+        sh2jms.lstick_y = -PlayerCheckKeyStickClamp(-pad[0].lstickY,
+                                                    0.0f,
+                                                    104.0f);
+    }
+    if (pad[0].rstickX >= 0) {
+        sh2jms.rstick_x = PlayerCheckKeyStickClamp(pad[0].rstickX, 38.0f, 104.0f);
+    } else {
+        sh2jms.rstick_x = -PlayerCheckKeyStickClamp(-pad[0].rstickX, 38.0f, 104.0f);
+    }
+    if (pad[0].rstickY >= 0) {
+        sh2jms.rstick_y = PlayerCheckKeyStickClamp(pad[0].rstickY, 38.0f, 104.0f);
+    } else {
+        sh2jms.rstick_y = -PlayerCheckKeyStickClamp(-pad[0].rstickY, 38.0f, 104.0f);
+    }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    pad[0].forward = pad_local[10];
+    pad[0].backward = pad_local[11];
+    pad[0].lround = pad_local[9];
+    pad[0].rround = pad_local[8];
+
+    
+    
+    
+    if ((pad[0].forward == 0) && (pad[0].backward == 0) && (pad[0].lround == 0) && (pad[0].rround == 0) && ((pad[0].lstickX != 0) || (pad[0].lstickY != 0)))  {
+        
+        sh2jms.ctrl_unit = 1;
+    } else {
+        sh2jms.ctrl_unit = 0;
+    }
+
+    
+    pad[0].attack1 = PlayerCheckKeyInputPrsAttack();
+    pad[0].attack2 = PlayerCheckKeyInputTrgAttack();
+
+    
+    switch (playing.control_type) {
+
+        case 0:
+            pad[0].pad3d.lslide = key.f.LSLIDE;
+            pad[0].pad3d.rslide = key.f.RSLIDE;
+            
+            pad[0].pad3d.lturn180 = PlayerCheckKeyInputL180();
+            pad[0].pad3d.rturn180 = PlayerCheckKeyInputR180();
+            pad[0].pad3d.round_way = PlayerCheckKeyInputRoundWay();
+            break;
+
+        case 1:            
+            pad[0].pad2d.dir = PlayerCheckKeyInputStickDir();
+        
+            sh2jms.lstick_p = PlayerCheckKeyInputStickPow();
+            break;
+    }
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    if ((sh2jms.player->status & 0x4000) != 0) {
+
+        shQzero(pad, sizeof(PAD_INFO));
+
+        if (sh2jms.event_anime == 0) {
+            if (shPadTrigger(0, key_config.front_move) ||
+                shPadTrigger(0, key_config.back_move) ||
+                shPadTrigger(0, key_config.right_move) ||
+                shPadTrigger(0, key_config.left_move) ||
+                shPadTrigger(0, key_config.right_turn) ||
+                shPadTrigger(0, key_config.left_turn) ||
+                shPadTrigger(0, key_config.ready) ||
+                key.f.AY != 0 ||
+                key.f.AX != 0)
+            {
+                
+                sh2jms.event_anime = 0;
+                EventCancel();
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerDamageMotionNo);
 
