@@ -101,6 +101,11 @@ static inline int clamp_n(int value, int n) {
     return result;
 }
 
+static inline int int_abs(int b) {
+    asm("slt $t7, %0, $zero; neg $t6, %0; movn %0, $t6, $t7" : "=r"(b) :);
+    return b;
+}
+
 extern float sqrtf(float);
 
 #endif
