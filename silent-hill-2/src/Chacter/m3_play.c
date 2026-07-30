@@ -673,16 +673,16 @@ static void PlayerCheckSideLine(SubCharacter* this) {
     
     ep[0] = sp[0] + (600.0f * shSinF(QUARTER_TURN + this->rot.y));
     ep[2] = sp[2] + (600.0f * shCosF(QUARTER_TURN + this->rot.y));
-    clCheckHitEyes(&sh2jms.r_side, (u32) this, sp, ep, 0);
+    clCheckHitEyes(&sh2jms.r_side, (u_int) this, sp, ep, 0);
     
     
     ep[0] = sp[0] + (600.0f * shSinF(this->rot.y - QUARTER_TURN));
     ep[2] = sp[2] + (600.0f * shCosF(this->rot.y - QUARTER_TURN));
-    clCheckHitEyes(&sh2jms.l_side, (u32) this, sp, ep, 0);
+    clCheckHitEyes(&sh2jms.l_side, (u_int) this, sp, ep, 0);
 
 }
 
-void PlayerCheckFootLine(SubCharacter* this) {
+static void PlayerCheckFootLine(SubCharacter* this) {
     sceVu0FMATRIX mat; // r29+0x20
     sceVu0FVECTOR sp; // r29+0x60
     sceVu0FVECTOR ep; // r29+0x70
@@ -716,8 +716,69 @@ void PlayerCheckFootLine(SubCharacter* this) {
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeightDummy);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeight);
+void PlayerSetHeight(SubCharacter* this) {
+    float rot_tmp; // r29+0x50
+    sceVu0FVECTOR sp; // r29+0x30
+    sceVu0FVECTOR ep; // r29+0x40
 
+
+
+
+    volatile_vec_copy(sp, &this->pos);
+    volatile_vec_copy(ep, sp);
+    sp[1] -= 250.0f;
+    ep[1] += 1500.0f;
+    clCheckHitEyesOnlyFloor(&sh2jms.ft_floor, (int) this, sp, ep);
+    
+    if (sh2jms.ft_floor.kind == 1) {
+        this->grnd_height = sh2jms.ft_floor.hobj.wall.cp[1];
+        this->grnd_normal = *(Vector4*)&sh2jms.ft_floor.hobj.wall.nl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    sh2jms.dist_pos.y = this->grnd_height;
+    SCFreefallSwitch(this, 0);
+    
+    if (sh2jms.dist_pos.y <= this->pos.y) {
+        this->spd_y = 0.0f;
+        this->pos.y = sh2jms.dist_pos.y;
+    } else {    
+        this->spd_y += 9.8f * shGetDT() * shGetDT();
+        if (sh2jms.dist_pos.y > (100.0f + this->pos.y)) {
+            SCFreefallSwitch(this, 1);
+            if (sh2jms.dist_pos.y > (250.0f + this->pos.y)) {
+                
+                if (sh2jms.lower_now != JMS_ST_L_FALL) {     
+                    player_flg_on(&sh2jms.lower_st_flg, 1 << JMS_ST_L_FALL);
+                    
+                    rot_tmp = shAtan2(this->pos.z - this->b_pos.z, this->pos.x - this->b_pos.x);
+                    rot_tmp = shAngleRegulate(this->rot.y - rot_tmp);
+                    if (float_abs(rot_tmp) < QUARTER_TURN) {
+                        sh2jms.fall_type = 0;
+                    } else {
+                        sh2jms.fall_type = 1;
+                    }                    
+                }
+            }
+        
+        
+        } else {
+            
+            this->spd_y = 0.0f;
+            this->pos.y = sh2jms.dist_pos.y;
+        }
+    }
+
+
+
+}
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeightConnectWait);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetColumn_SetTarget);
