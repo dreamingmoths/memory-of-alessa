@@ -1,6 +1,8 @@
 #include "Chacter/m3_play.h"
 #include "Chacter/m3_sc.h"
 
+#include "Collision/cl_main.h"
+
 #include "Event/event.h"
 
 #include "Multi_thr/pad/keydata.h"
@@ -680,7 +682,37 @@ static void PlayerCheckSideLine(SubCharacter* this) {
 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckFootLine);
+void PlayerCheckFootLine(SubCharacter* this) {
+    sceVu0FMATRIX mat; // r29+0x20
+    sceVu0FVECTOR sp; // r29+0x60
+    sceVu0FVECTOR ep; // r29+0x70
+
+
+    GetPlayerPartsWorldMatrix(mat, 14);
+    volatile_vec_copy(sp, mat[3]);
+    volatile_vec_copy(ep, sp);
+    sp[1] -= 250.0f;
+    ep[1] += 750.0f;
+    clCheckHitEyesOnlyFloor(&sh2jms.r_foot, (int) this, sp, ep);
+    if (sh2jms.r_foot.kind == 1) {
+         
+        vec_normalize(sh2jms.r_foot.hobj.chara.cp, sh2jms.r_foot.hobj.chara.cp);
+        // vec_normalize(sh2jms.r_foot.hobj.wall.nl, sh2jms.r_foot.hobj.wall.nl); // which one is correct?
+    
+    
+    }
+    GetPlayerPartsWorldMatrix(mat, 13);
+    volatile_vec_copy(sp, mat[3]);
+    volatile_vec_copy(ep, sp);
+    sp[1] -= 250.0f;
+    ep[1] += 750.0f;
+    clCheckHitEyesOnlyFloor(&sh2jms.l_foot, (int) this, sp, ep);
+    if (sh2jms.l_foot.kind == 1) {
+        
+        vec_normalize(sh2jms.l_foot.hobj.chara.cp, sh2jms.l_foot.hobj.chara.cp);
+        // vec_normalize(sh2jms.l_foot.hobj.wall.nl, sh2jms.l_foot.hobj.wall.nl); // ???
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeightDummy);
 
