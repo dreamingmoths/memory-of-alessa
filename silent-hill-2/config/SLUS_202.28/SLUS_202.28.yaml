@@ -616,6 +616,8 @@ segments:
       - { vram: 0x0e40280, type: bss,  name: bss_0x0e40280 }
       - { vram: 0x1159230, type: .bss, name: Multi_thr/filesys/fileserv }
       - { vram: 0x1159238, type: bss,  name: bss_0x1159238 }
+      - { vram: 0x116d788, type: .bss, name: Event/title }
+      - { vram: 0x116d9e8, type: bss,  name: bss_0x116d9e8 }
       - { vram: 0x116e3d0, type: .bss, name: Item/otn_itemmain }
       - { vram: 0x116e670, type: bss,  name: bss_0x116e670 }
       - { vram: 0x11b6a70, type: .bss, name: Item/otn_option }

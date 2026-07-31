@@ -6,6 +6,10 @@
 #define SH2_BATTLE_LEVEL_NORMAL       2
 #define SH2_BATTLE_LEVEL_HARD         3
 
+#define SH2_RIDDLE_LEVEL_EASY         1
+#define SH2_RIDDLE_LEVEL_NORMAL       2
+#define SH2_RIDDLE_LEVEL_HARD         3
+
 /* @note: header not in symbols */
 
 #define BTL_ID_8                      8

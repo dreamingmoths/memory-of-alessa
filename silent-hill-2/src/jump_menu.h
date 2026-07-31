@@ -17,4 +17,6 @@ void JumpMenuPosNormal(void);
 
 void CheckModeJumpDataSet(void);
 
+extern int jump_menu_select; // size: 0x4, address: 0x11B6990
+
 #endif

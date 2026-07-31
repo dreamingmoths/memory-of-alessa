@@ -83,6 +83,7 @@ void spkSetEnvLoadImage(void* image, short bp, short bw, short psm, short x, sho
 void spkEndEnvLoadImage(void);
 void spkSetOTPacketS(u_long128* adr /* r19 */, u_int w /* r18 */, u_char envid /* r17 */);
 void spkSetOTPacketS_asm(void);
+void* spkDmaKick(void);
 
 extern struct SPACK_DATA spack;
 

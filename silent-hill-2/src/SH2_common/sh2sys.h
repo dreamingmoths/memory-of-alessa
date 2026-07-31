@@ -22,9 +22,23 @@ static inline void sh2sys_step_2() {
     Sh2sys.step[6] = 0;
     Sh2sys.step[7] = 0;
 }
+static inline void sh2sys_backstep_2() {
+    Sh2sys.step[2]--;
+    Sh2sys.step[3] = 0;
+    Sh2sys.step[4] = 0;
+    Sh2sys.step[5] = 0;
+    Sh2sys.step[6] = 0;
+    Sh2sys.step[7] = 0;
+}
 static inline void sh2sys_step_3() {
     Sh2sys.step[3]++;
     Sh2sys.step[4] = 0;
+    Sh2sys.step[5] = 0;
+    Sh2sys.step[6] = 0;
+    Sh2sys.step[7] = 0;
+}
+static inline void sh2sys_step_4() {
+    Sh2sys.step[4]++;
     Sh2sys.step[5] = 0;
     Sh2sys.step[6] = 0;
     Sh2sys.step[7] = 0;
