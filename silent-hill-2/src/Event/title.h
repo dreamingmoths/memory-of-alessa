@@ -1,6 +1,8 @@
 #ifndef TITLE_H
 #define TITLE_H
 
+#include "Event/picture.h"
+
 typedef struct _OPD_W {
     // total size: 0x34
     float u0;       // offset 0x0, size 0x4
@@ -30,6 +32,32 @@ typedef struct /* @anon7 */ {
     short h;            // offset 0xA, size 0x2
     sceVu0IVECTOR rgba; // offset 0x10, size 0x10
 } TitleSprWork;
+
+typedef struct /* @anon3 */ {
+    // total size: 0x18
+    float pos_x;      // offset 0x0, size 0x4
+    float pos_y;      // offset 0x4, size 0x4
+    float pos_z;      // offset 0x8, size 0x4
+    float rot;        // offset 0xC, size 0x4
+    int stg;          // offset 0x10, size 0x4
+    int jump_nemu_id; // offset 0x14, size 0x4
+} TitlePointList;
+
+typedef struct /* @anon6 */ {
+    // total size: 0x94
+    int memcard;              // offset 0x0, size 0x4
+    int mode;                 // offset 0x4, size 0x4
+    int sel;                  // offset 0x8, size 0x4
+    float timer;              // offset 0xC, size 0x4
+    int alpha;                // offset 0x10, size 0x4
+    float alphar;             // offset 0x14, size 0x4
+    u_int menu[10];           // offset 0x18, size 0x28
+    struct PicDraw_Data pic0; // offset 0x40, size 0x44
+    u_char* pload0;           // offset 0x84, size 0x4
+    u_char* pload1;           // offset 0x88, size 0x4
+    int texadr;               // offset 0x8C, size 0x4
+    int clutadr;              // offset 0x90, size 0x4
+} TitleDataWork;
 
 typedef struct /* @anon0 */ {
     // total size: 0x30
