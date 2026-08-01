@@ -395,11 +395,8 @@ TitlePointList TitleJPStartPointList[5] = {
 
 TitleDataWork TitleData; // size: 0x94, address: 0x116D950
 int title_after_data_set;
-int title_start_point;                      // size: 0x4, address: 0x116D938
-float analog_data;                          // size: 0x4, address: 0x116D930
-
-extern int jump_menu_select;                       // size: 0x4, address: 0x11B6990
-
+int title_start_point;                             // size: 0x4, address: 0x116D938
+float analog_data;                                 // size: 0x4, address: 0x116D930
 static int title_test_mode = TITLE_TEST_MODE_NONE; // size: 0x4, address: 0x116D788
 
 int TitleMain(void) {
@@ -422,7 +419,6 @@ int TitleMain(void) {
     }
     return TitleData.mode;
 }
-
 
 void titleSetDataStartPoint(void) {
     int i; // r16
@@ -555,11 +551,10 @@ void titleSetDataStartPoint(void) {
     }
 }
 
-
 static void titleInit(void) {
-    static int fid;       // @ 18274600
-    static int wait_loop; // @ 18274592
-    int i;                // r5
+    static int fid;
+    static int wait_loop;
+    int i; // r5
 
     switch (Sh2sys.step[3]) {
         case 0:
@@ -800,7 +795,7 @@ static void titleMainSelect(void) {
     titleDrawTitle();
     titleDrawMainMenu();
     pad_ret = titleCheckPad();
-    switch (pad_ret) { /* irregular */
+    switch (pad_ret) {
         case 0:
             break;
         case 1:
@@ -884,7 +879,6 @@ static void titleMainSelect(void) {
     return;
 }
 
-
 #ifdef NON_MATCHING
 static int titleCheckPad(void) {
     int ret; // r16
@@ -945,10 +939,10 @@ static int titleCheckPad(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/title", titleCheckPad);
 #endif
 
-static int titleGetCursorFromBattleLevel(u_char battle_level /* r2 */) {
+static int titleGetCursorFromBattleLevel(u_char battle_level) {
     int ret; // r2
 
-    switch (battle_level) { /* irregular */
+    switch (battle_level) {
         case SH2_BATTLE_LEVEL_HARD:
             ret = 1;
             break;
@@ -972,7 +966,7 @@ static void titleBattleSelect(void) {
     titleDrawSubMenu(0);
     TitleData.timer -= shGetDT();
     pad_ret = titleCheckPad();
-    switch (pad_ret) { /* irregular */
+    switch (pad_ret) {
         case 0:
             break;
         case 1:
@@ -1021,10 +1015,10 @@ static void titleBacktoMainMenuFromLevelMenu(void) {
     sh2sys_set_2(2);
 }
 
-static u_char titleGetBattleLevelFromCursor(int cur /* r2 */) {
+static u_char titleGetBattleLevelFromCursor(int cur) {
     u_char ret; // r2
 
-    switch (cur) { /* irregular */
+    switch (cur) {
         case 1:
             ret = 3;
             break;
@@ -1041,10 +1035,10 @@ static u_char titleGetBattleLevelFromCursor(int cur /* r2 */) {
     return ret;
 }
 
-static int titleGetCursorFromRiddleLevel(u_char riddle_level /* r2 */) {
+static int titleGetCursorFromRiddleLevel(u_char riddle_level) {
     int ret; // r2
 
-    switch (riddle_level) { /* irregular */
+    switch (riddle_level) {
         case 2:
             ret = 1;
             break;
@@ -1067,7 +1061,7 @@ static void titleRiddleSelect(void) {
     titleDrawSubMenu(1);
     TitleData.timer -= shGetDT();
     pad_ret = titleCheckPad();
-    switch (pad_ret) { /* irregular */
+    switch (pad_ret) {
         case 0:
             break;
         case 1:
@@ -1108,10 +1102,10 @@ static void titleRiddleSelect(void) {
     TitleData.alpha = (int) (191.0f + (63.0f * shCosF(TitleData.alphar)));
 }
 
-static u_char titleGetRiddleLevelFromCursor(int cur /* r2 */) {
+static u_char titleGetRiddleLevelFromCursor(int cur) {
     u_char ret; // r2
 
-    switch (cur) { /* irregular */
+    switch (cur) {
         case 1:
             ret = 2;
             break;
@@ -1254,7 +1248,7 @@ static void titleDrawTitle(void) {
 }
 
 #ifdef NON_MATCHING
-static void titleDrawSprite(short x /* r17 */, short y /* r16 */, short id /* r18 */) {
+static void titleDrawSprite(short x) {
     shQzero(&TitleData.pic0, sizeof(PicDraw_Data));
     picture_set_ap(&TitleData.pic0, TitleData.pload1);
     picture_set_rgb(&TitleData.pic0, &TitleSpr[id].rgba);
@@ -1283,9 +1277,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/title", titleDrawSprite);
 
 #line 2058
 static void titleDrawMainMenu(void) {
-    short cpos[8], cposy[8];   // r29+64, r29+80
-    int i, j;           // r16, r17
-    short ef_pos[7], w[7]; // r29+96, r29+112
+    short cpos[8], cposy[8]; // r29+64, r29+80
+    int i, j;                // r16, r17
+    short ef_pos[7], w[7];   // r29+96, r29+112
 
     if (title_test_mode == TITLE_TEST_MODE_US) {
         cpos[0]  = -94;
@@ -1315,7 +1309,7 @@ static void titleDrawMainMenu(void) {
             cposy[6] = 140;
             cposy[7] = 162;
         } else {
-        
+
             cpos[0]  = -68;
             cpos[1]  = -92;
             cpos[2]  = -94;
@@ -1327,32 +1321,6 @@ static void titleDrawMainMenu(void) {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     if (title_test_mode == TITLE_TEST_MODE_US) {
         ef_pos[0] = -80;
         ef_pos[1] = -71;
@@ -1378,7 +1346,7 @@ static void titleDrawMainMenu(void) {
             w[3]      = 142;
             w[4]      = 116;
             w[5]      = 100;
-            w[6]      = 84; 
+            w[6]      = 84;
             w[7]      = 120; // @weird writing out of bounds??
         } else {
 
@@ -1392,77 +1360,61 @@ static void titleDrawMainMenu(void) {
             w[3]      = 120;
         }
     }
-    
+
     titleChangeSpriteColor2(11);
     TitleSpr[11].w = w[TitleData.sel - 1] + 8;
     titleDrawSprite((ef_pos[TitleData.sel - 1] - 4), cposy[TitleData.sel - 1] + 1, 11);
-    
-    
-    
-    
-    
+
     if (title_test_mode == TITLE_TEST_MODE_US) {
-    
-        
+
         titleDrawSprite(-96, cposy[0], 3);
-        
+
         titleDrawSprite(-96, cposy[1], 14);
         titleDrawSprite(-99, cposy[2], 13);
-        
-        
-        
+
         titleChangeCursorSpriteColor();
 
-        
         titleDrawSprite(cpos[TitleData.sel - 1], cposy[TitleData.sel - 1], 12);
     } else {
-            if (title_test_mode == TITLE_TEST_MODE_JP) {
+        if (title_test_mode == TITLE_TEST_MODE_JP) {
             for (i = 0; i < 2; i++) {
-                if (TitleData.menu[i + 1] == -1) continue;
-                    
+                if (TitleData.menu[i + 1] == -1)
+                    continue;
+
                 j = TitleData.menu[i + 1] - 1;
-                
-                
+
                 titleDrawSprite(-96, cposy[i], j + 1);
             }
-                
+
             titleDrawSprite(-96, cposy[2], 3);
             titleDrawSprite(-96, cposy[3], 14);
             titleDrawSprite(-96, cposy[4], 16);
             titleDrawSprite(-99, cposy[5], 13);
             titleDrawSprite(-96, cposy[6], 15);
             titleDrawSprite(-96, cposy[7], 4);
-            
-                
-                
+
             titleChangeCursorSpriteColor();
-            
-                
+
             titleDrawSprite(cpos[TitleData.sel - 1], cposy[TitleData.sel - 1], 12);
             return;
         }
-        
+
         for (i = 0; i < 4; i++) {
-            
-            if (TitleData.menu[i + 1] == -1) continue;
+
+            if (TitleData.menu[i + 1] == -1)
+                continue;
 
             j = TitleData.menu[i + 1] - 1;
 
-        
             titleDrawSprite(-96, cposy[i], j + 1);
             if (TitleData.sel == (i + 1)) {
-                
-                
-                
-                
+
                 titleChangeCursorSpriteColor();
-                
-                
+
                 titleDrawSprite(cpos[j], cposy[i], 12);
             }
         }
     }
-
 }
 
 static void titleDrawSubMenu(int sel) {
@@ -1498,7 +1450,7 @@ static void titleDrawSubMenu(int sel) {
         titleDrawSprite(11, 98, 8);
         titleDrawSprite(11, 115, 9);
         switch (playing.battle_level) {
-            case 1:                    
+            case 1:
                 titleDrawSprite(-196, 115, 9);
                 break;
             case 2:
@@ -1523,7 +1475,7 @@ static void titleDrawSubMenu(int sel) {
         }
     }
     switch (playing.battle_level) {
-        case SH2_BATTLE_LEVEL_EASY:                    
+        case SH2_BATTLE_LEVEL_EASY:
             titleDrawSprite(-196, 115, 9);
             break;
         case SH2_BATTLE_LEVEL_NORMAL:
@@ -1534,7 +1486,7 @@ static void titleDrawSubMenu(int sel) {
             break;
     }
     switch (playing.riddle_level) {
-        case SH2_RIDDLE_LEVEL_EASY:                    
+        case SH2_RIDDLE_LEVEL_EASY:
             titleDrawSprite(11, 115, 9);
             return;
         case SH2_RIDDLE_LEVEL_NORMAL:
@@ -1546,7 +1498,7 @@ static void titleDrawSubMenu(int sel) {
     }
 }
 
-static short titleGetCursorXPosBattle(int cur /* r2 */) {
+static short titleGetCursorXPosBattle(int cur) {
     short ret; // r2
 
     switch (cur) {
@@ -1566,7 +1518,7 @@ static short titleGetCursorXPosBattle(int cur /* r2 */) {
     return ret;
 }
 
-static void titleGetMenuEfctPosBattle(short* x_pos /* r2 */, short* w /* r2 */, int cur /* r2 */) {
+static void titleGetMenuEfctPosBattle(short* x_pos, short* w, int cur) {
     switch (cur) {
         case 1:
             *x_pos = -141;
@@ -1585,7 +1537,7 @@ static void titleGetMenuEfctPosBattle(short* x_pos /* r2 */, short* w /* r2 */, 
     }
 }
 
-static short titleGetCursorXPosRiddle(int cur /* r2 */) {
+static short titleGetCursorXPosRiddle(int cur) {
     short ret; // r2
 
     switch (cur) {
@@ -1606,7 +1558,7 @@ static short titleGetCursorXPosRiddle(int cur /* r2 */) {
     return ret;
 }
 
-static void titleGetMenuEfctPosRiddle(short* x_pos /* r2 */, short* w /* r2 */, int cur /* r2 */) {
+static void titleGetMenuEfctPosRiddle(short* x_pos, short* w, int cur) {
     switch (cur) {
         case 1:
             *x_pos = 66;
@@ -1625,7 +1577,7 @@ static void titleGetMenuEfctPosRiddle(short* x_pos /* r2 */, short* w /* r2 */, 
     }
 }
 
-static void titleChangeSpriteColor2(short id /* r2 */) {
+static void titleChangeSpriteColor2(short id) {
     TitleSprChgColorWork* chg_color_info; // r16
 
     chg_color_info = &TitleSprChgColor[id];
@@ -1639,7 +1591,7 @@ static void titleChangeCursorSpriteColor(void) {
     titleChangeColor(TitleSpr[12].rgba, chg_color_info->start_rgba, chg_color_info->end_rgba, chg_color_info->timer, chg_color_info->cycle, 1.0f);
 }
 
-static void titleRenewChangeColorManagement(float* timer /* r16 */, float cycle /* r20 */, int repeat /* r2 */) {
+static void titleRenewChangeColorManagement(float* timer, float cycle, int repeat) {
     if (repeat == 1) {
         *timer += shGetDT();
         if (*timer >= cycle) {
@@ -1653,12 +1605,11 @@ static void titleRenewChangeColorManagement(float* timer /* r16 */, float cycle 
 #ifdef NON_MATCHING
 #line 2977
 // really silly register issue?
-static void titleChangeColor(int* rgba /* r20 */, int* start_rgba /* r19 */, int* end_rgba /* r18 */, float timer /* r29+128 */, float cycle_time /* r29+128 */, float cycle_sin /* r29+128 */) {
+static void titleChangeColor(int* rgba, int* start_rgba, int* end_rgba, float timer, float cycle_time, float cycle_sin) {
     sceVu0IVECTOR diff_color; // r29+112
     float ratio;              // r20
     int i;                    // r16
 
-    
     ratio = shSinF(PI * (cycle_sin * (timer / cycle_time)));
 
     for (i = 0; i < 4; i++) {
@@ -1671,10 +1622,10 @@ INCLUDE_ASM("asm/nonmatchings/Event/title", titleChangeColor);
 #endif
 
 int GameendMain(void) {
-    static float game_over_timer; // @ 18274584
-    PicDraw_Data pic;             // r29+16
+    static float game_over_timer;
+    PicDraw_Data pic; // r29+16
 
-    switch (Sh2sys.step[4]) { /* irregular */
+    switch (Sh2sys.step[4]) {
         case 0:
             FcRead(data_pic_etc_comingsoon_tex, TitleData.pload0);
             sh2sys_step_4();
@@ -1715,14 +1666,14 @@ static void opd_work_init(void) {
     bzero(&org_title, sizeof(org_title));
 
     for (loop = 0; loop < 2; loop++) {
-        opd_w[loop].u0 = 0.0f;
-        opd_w[loop].u1 = 160.0f;
-        opd_w[loop].v0 = (loop + 1) * 48;
-        opd_w[loop].v1 = 47.0f + opd_w[loop].v0;
-        opd_w[loop].x0 = -80.0f;
-        opd_w[loop].x1 = 80.0f;
-        opd_w[loop].y0 = -24.0f;
-        opd_w[loop].y1 = 47.0f + opd_w[loop].y0;
+        opd_w[loop].u0  = 0.0f;
+        opd_w[loop].u1  = 160.0f;
+        opd_w[loop].v0  = (loop + 1) * 48;
+        opd_w[loop].v1  = 47.0f + opd_w[loop].v0;
+        opd_w[loop].x0  = -80.0f;
+        opd_w[loop].x1  = 80.0f;
+        opd_w[loop].y0  = -24.0f;
+        opd_w[loop].y1  = 47.0f + opd_w[loop].y0;
         opd_w[loop + 2] = opd_w[loop];
         opd_w[loop + 4] = opd_w[loop];
     }
@@ -1741,14 +1692,14 @@ int GameoverMain(void) {
     static float game_over_timer;
     static int fid;
 
-    switch (Sh2sys.step[4]) { /* irregular */
+    switch (Sh2sys.step[4]) {
         case 0:
             game_over_timer = 0.0f;
             sh2sys_step_4();
             /* fallthrough */
         case 1:
             fontClear();
-            fid = FcRead(data_pic_etc_gameover1_tex, get_gp_data_buf_addr());
+            fid             = FcRead(data_pic_etc_gameover1_tex, get_gp_data_buf_addr());
             game_over_timer = 0.0f;
             if (fid != -1) {
                 fsSync(0, fid);
@@ -1780,7 +1731,7 @@ static int draw_opd_wowk_main(void) {
     int loop;         // r16
     int rnd;          // r3
 
-    switch (org_title.step) { /* irregular */
+    switch (org_title.step) {
         case 0:
             org_title.timer++;
             if (org_title.timer == 32) {
@@ -1816,7 +1767,7 @@ static int draw_opd_wowk_main(void) {
     PictureLoadImage(get_gp_data_buf_addr(), 0, -1, -1);
     shQzero(&pic, sizeof(PicDraw_Data));
     picture_set_ap(&pic, get_gp_data_buf_addr());
-    pic.otp       = 1;
+    pic.otp = 1;
     picture_set_alpha(&pic, 128);
     for (loop = 0; loop < 6; loop++) {
         rnd = (rand() % 30) - 15;
@@ -1847,10 +1798,10 @@ static int draw_opd_wowk_main(void) {
     pic.us1 = q4(org_title.u1);
     pic.vt1 = q4(org_title.v1);
     pic.status |= 4;
-    pic.x0     = q4(org_title.x0);
-    pic.y0     = q4(org_title.y0);
-    pic.x1     = q4(org_title.x1);
-    pic.y1     = q4(org_title.y1);
+    pic.x0 = q4(org_title.x0);
+    pic.y0 = q4(org_title.y0);
+    pic.x1 = q4(org_title.x1);
+    pic.y1 = q4(org_title.y1);
     pic.status |= 2;
     PictureDraw(&pic);
     d1cSend(spkDmaKick());

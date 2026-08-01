@@ -27,7 +27,6 @@
  */
 #define TITLE_TEST_MODE_US     2
 
-
 typedef struct _OPD_W {
     // total size: 0x34
     float u0;       // offset 0x0, size 0x4
