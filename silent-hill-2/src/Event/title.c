@@ -589,26 +589,26 @@ static void titleInit(void) {
             wait_loop += 1;
             switch (fsSync(1, fid)) { /* switch 2; irregular */
                 case 1:               /* switch 2 */
-                    DEBUG_LOG_ON_LINE(642, "title.tex: read finished(%d.%02d)", (wait_loop / 60), ((wait_loop % 60) * 100) / 60);
+                    DEBUG_LOG_ON_LINE(642, "title.tex: read finished(%d.%02d)\n", (wait_loop / 60), ((wait_loop % 60) * 100) / 60);
                     sh2sys_step_3();
                     break;
                 case 0: /* switch 2 */
-                    DEBUG_LOG_ON_LINE(647, "!!! illegal fid=%d", fid);
+                    DEBUG_LOG_ON_LINE(647, "!!! illegal fid=%d\n", fid);
                     break;
                 case -1: /* switch 2 */
                     if ((wait_loop % 60) == 0) {
-                        DEBUG_LOG_ON_LINE(651, "title.tex: now reading(%d.)...", (wait_loop / 60));
+                        DEBUG_LOG_ON_LINE(651, "title.tex: now reading(%d.)...\n", (wait_loop / 60));
                         break;
                     }
                     break;
                 case -2: /* switch 2 */
                     if ((wait_loop % 60) == 0) {
-                        DEBUG_LOG_ON_LINE(656, "title.tex: now waiting(%d.)...", (wait_loop / 60));
+                        DEBUG_LOG_ON_LINE(656, "title.tex: now waiting(%d.)...\n", (wait_loop / 60));
                         return;
                     }
                     break;
                 default: /* switch 2 */
-                    DEBUG_LOG_ON_LINE(660, "illegal return value");
+                    DEBUG_LOG_ON_LINE(660, "illegal return value\n");
                     break;
             }
             break;
@@ -624,26 +624,26 @@ static void titleInit(void) {
             wait_loop += 1;
             switch (fsSync(1, fid)) { /* switch 3; irregular */
                 case 1:               /* switch 3 */
-                    DEBUG_LOG_ON_LINE(681, "title.tex: read finished(%d.%02d)", (wait_loop / 60), (((wait_loop % 60) * 100) / 60));
+                    DEBUG_LOG_ON_LINE(681, "title.tex: read finished(%d.%02d)\n", (wait_loop / 60), (((wait_loop % 60) * 100) / 60));
                     sh2sys_step_2();
                     return;
                 case 0: /* switch 3 */
-                    DEBUG_LOG_ON_LINE(686, "!!! illegal fid=%d", fid);
+                    DEBUG_LOG_ON_LINE(686, "!!! illegal fid=%d\n", fid);
                     return;
                 case -1: /* switch 3 */
                     if ((wait_loop % 60) == 0) {
-                        DEBUG_LOG_ON_LINE(690, "title.tex: now reading(%d.)...", (wait_loop / 60));
+                        DEBUG_LOG_ON_LINE(690, "title.tex: now reading(%d.)...\n", (wait_loop / 60));
                         return;
                     }
                     break;
                 case -2: /* switch 3 */
                     if ((wait_loop % 60) == 0) {
-                        DEBUG_LOG_ON_LINE(695, "title.tex: now waiting(%d.)...", (wait_loop / 60));
+                        DEBUG_LOG_ON_LINE(695, "title.tex: now waiting(%d.)...\n", (wait_loop / 60));
                         return;
                     }
                     break;
                 default: /* switch 3 */
-                    DEBUG_LOG_ON_LINE(699, "illegal return value");
+                    DEBUG_LOG_ON_LINE(699, "illegal return value\n");
                     break;
             }
             break;
@@ -1249,7 +1249,7 @@ static void titleDrawTitle(void) {
     PictureDraw(&TitleData.pic0);
     PictureLoadImage((struct sh2gfw_AREA_HEAD*) TitleData.pload1, 2, -1, -1);
     titleRenewChangeColorManagement(&TitleSprChgColor->timer, TitleSprChgColor->cycle, 1);
-    titleChangeColor(TitleSpr[1].rgba, TitleSprChgColor->start_rgba, TitleSprChgColor->end_rgba, TitleSprChgColor->timer, TitleSprChgColor->cycle, 0.5f);
+    titleChangeColor(TitleSpr[0].rgba, TitleSprChgColor->start_rgba, TitleSprChgColor->end_rgba, TitleSprChgColor->timer, TitleSprChgColor->cycle, 0.5f);
     titleDrawSprite(-257, -103, 0);
 }
 
@@ -1600,7 +1600,7 @@ static short titleGetCursorXPosRiddle(int cur /* r2 */) {
             break;
 
         default:
-            ASSERT_ON_LINE(0, 2562);
+            ASSERT_ON_LINE(0, 2608);
     }
 
     return ret;
@@ -1705,8 +1705,8 @@ int GameendMain(void) {
     }
 }
 
-OPD_W org_title; // size: 52, address: 18274208
 OPD_W opd_w[6];  // size: 312, address: 18274272
+OPD_W org_title; // size: 52, address: 18274208
 
 static void opd_work_init(void) {
     int loop; // r3
@@ -1743,7 +1743,7 @@ int GameoverMain(void) {
 
     switch (Sh2sys.step[4]) { /* irregular */
         case 0:
-            fid = 0.0f;
+            game_over_timer = 0.0f;
             sh2sys_step_4();
             /* fallthrough */
         case 1:
@@ -1856,6 +1856,3 @@ static int draw_opd_wowk_main(void) {
     d1cSend(spkDmaKick());
     return 0;
 }
-
-
-const u_char pazzd[0x40];
