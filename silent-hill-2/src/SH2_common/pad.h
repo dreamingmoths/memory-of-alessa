@@ -5,6 +5,7 @@
 
 #define PAD_KEY_SELECT     (1 << 2)
 #define PAD_KEY_START      (1 << 3)
+#define PAD_KEY_7          (1 << 7)
 #define PAD_KEY_DPAD_RIGHT (1 << 8)
 #define PAD_KEY_DPAD_LEFT  (1 << 9)
 #define PAD_KEY_DPAD_UP    (1 << 10)

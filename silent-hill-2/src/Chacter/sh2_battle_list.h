@@ -6,9 +6,9 @@
 #define SH2_BATTLE_LEVEL_NORMAL       2
 #define SH2_BATTLE_LEVEL_HARD         3
 
-#define SH2_RIDDLE_LEVEL_EASY         1
-#define SH2_RIDDLE_LEVEL_NORMAL       2
-#define SH2_RIDDLE_LEVEL_HARD         3
+#define SH2_RIDDLE_LEVEL_EASY         0
+#define SH2_RIDDLE_LEVEL_NORMAL       1
+#define SH2_RIDDLE_LEVEL_HARD         2
 
 /* @note: header not in symbols */
 

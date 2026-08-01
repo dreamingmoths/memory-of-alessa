@@ -17,7 +17,9 @@
 #include "Effect/screen_effect.h"
 #include "MC/mc.h"
 #include "Fog/spack.h"
+
 #include "data/fs_structs.h"
+#include "data/daily.thu/data_pic_etc.h"
 
 #include "sound/sh_sd_call.h"
 #include "sound/sh_sound.h"
@@ -391,26 +393,14 @@ TitlePointList TitleJPStartPointList[5] = {
 };
 
 
-static int title_test_mode; // size: 0x4, address: 0x116D788
-int title_after_data_set;
 TitleDataWork TitleData; // size: 0x94, address: 0x116D950
+int title_after_data_set;
+int title_start_point;                      // size: 0x4, address: 0x116D938
+float analog_data;                          // size: 0x4, address: 0x116D930
 
-extern int title_start_point;                      // size: 0x4, address: 0x116D938
 extern int jump_menu_select;                       // size: 0x4, address: 0x11B6990
-extern float analog_data;                          // size: 0x4, address: 0x116D930
 
-
-
-
-
-/* not from here */
-
-extern fsFileIndex data_pic_etc_start01_tex[1];    // size: 0x8, address: 0x3A1C78
-extern fsFileIndex data_pic_etc_start00_tex[1];    // size: 0x8, address: 0x3A1C70
-extern fsFileIndex data_pic_etc_comingsoon_tex[1]; // size: 0x8, address: 0x3A1C30
-extern fsFileIndex data_pic_etc_gameover1_tex[1];  // size: 0x8, address: 0x3A1C38
-
-#define SH2_TITLE_DATA_MODE_5 5
+static int title_test_mode = TITLE_TEST_MODE_NONE; // size: 0x4, address: 0x116D788
 
 int TitleMain(void) {
     static void (*g0_step_func[8])() = {
@@ -433,136 +423,138 @@ int TitleMain(void) {
     return TitleData.mode;
 }
 
+
 void titleSetDataStartPoint(void) {
     int i; // r16
 
-    if ((title_test_mode != 0) && (jump_menu_select == 0) && (title_after_data_set == 0)) {
+    if ((title_test_mode != TITLE_TEST_MODE_NONE) && (jump_menu_select == 0) && (title_after_data_set == 0)) {
         title_after_data_set = 1;
-        ItemGet(17);
-        ItemGet(18);
+        ItemGet(SH2_ITEM_17);
+        ItemGet(SH2_ITEM_18);
         item.light_switch = 1;
-        if (title_test_mode == 2) {
+        if (title_test_mode == TITLE_TEST_MODE_US) {
             switch (title_start_point) { /* switch 1; irregular */
                 case 1:                  /* switch 1 */
-                    ItemGet(4);
+                    ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 3; i++) {
-                        ItemGet(5);
+                        ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(11);
+                    ItemGet(SH2_ITEM_11);
                     for (i = 0; i < 5; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
                     for (i = 0; i < 1; i++) {
-                        ItemGet(2);
+                        ItemGet(FIRST_AID_KIT);
                     }
-                    ItemGet(16);
+                    ItemGet(SH2_ITEM_16);
                     item.equip = 4;
-                    game_flag.flag[0] |= 33554432;
-                    game_flag.flag[2] |= 4;
-                    game_flag.flag[1] |= 8;
-                    game_flag.flag[1] |= 256;
-                    game_flag.flag[1] |= 512;
-                    game_flag.flag[1] |= 2048;
-                    game_flag.flag[1] |= 131072;
-                    game_flag.flag[2] |= 8;
+                    SET_GAME_FLAG(25);
+                    SET_GAME_FLAG(66);
+                    SET_GAME_FLAG(35);
+                    SET_GAME_FLAG(40);
+                    SET_GAME_FLAG(41);
+                    SET_GAME_FLAG(43);
+                    SET_GAME_FLAG(49);
+                    SET_GAME_FLAG(67);
                     playing.riddle_level = 0;
                     return;
                 case 2: /* switch 1 */
-                    ItemGet(4);
+                    ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 3; i++) {
-                        ItemGet(5);
+                        ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(6);
+                    ItemGet(SH2_ITEM_06);
                     for (i = 0; i < 1; i++) {
-                        ItemGet(7);
+                        ItemGet(SH2_ITEM_07);
                     }
-                    ItemGet(11);
-                    ItemGet(12);
+                    ItemGet(SH2_ITEM_11);
+                    ItemGet(SH2_ITEM_12);
                     for (i = 0; i < 8; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
                     for (i = 0; i < 2; i++) {
-                        ItemGet(2);
+                        ItemGet(FIRST_AID_KIT);
                     }
-                    ItemGet(15);
-                    ItemGet(16);
+                    ItemGet(SH2_ITEM_15);
+                    ItemGet(SH2_ITEM_16);
                     item.equip = 4;
-                    game_flag.flag[0] |= 268435456;
-                    game_flag.flag[1] |= 8;
+                    SET_GAME_FLAG(28);
+                    SET_GAME_FLAG(35);
                     playing.riddle_level = 0;
                     return;
             }
         } else {
             switch (title_start_point) { /* switch 2; irregular */
                 case 1:                  /* switch 2 */
-                    ItemGet(11);
-                    ItemGet(16);
+                    ItemGet(SH2_ITEM_11);
+                    ItemGet(SH2_ITEM_16);
                     for (i = 0; i < 16; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
                     item.equip = 11;
                     return;
                 case 2: /* switch 2 */
-                    game_flag.flag[0] |= 32768;
-                    ItemGet(11);
-                    ItemGet(4);
+                    SET_GAME_FLAG(15);
+                    ItemGet(SH2_ITEM_11);
+                    ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(5);
+                        ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(12);
-                    ItemGet(16);
-                    ItemGet(15);
+                    ItemGet(SH2_ITEM_12);
+                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_15);
                     for (i = 0; i < 16; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
                     item.equip = 4;
                     return;
                 case 3: /* switch 2 */
-                    ItemGet(11);
-                    ItemGet(4);
+                    ItemGet(SH2_ITEM_11);
+                    ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(5);
+                        ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(6);
+                    ItemGet(SH2_ITEM_06);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(7);
+                        ItemGet(SH2_ITEM_07);
                     }
-                    ItemGet(12);
-                    ItemGet(16);
-                    ItemGet(15);
+                    ItemGet(SH2_ITEM_12);
+                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_15);
                     for (i = 0; i < 16; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
                     item.equip = 4;
                     return;
                 case 4: /* switch 2 */
-                    ItemGet(4);
+                    ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(5);
+                        ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(6);
+                    ItemGet(SH2_ITEM_06);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(7);
+                        ItemGet(SH2_ITEM_07);
                     }
-                    ItemGet(8);
+                    ItemGet(SH2_ITEM_08);
                     for (i = 0; i < 9; i++) {
-                        ItemGet(9);
+                        ItemGet(SH2_ITEM_09);
                     }
-                    ItemGet(10);
-                    ItemGet(11);
-                    ItemGet(12);
-                    ItemGet(13);
+                    ItemGet(SH2_ITEM_10);
+                    ItemGet(SH2_ITEM_11);
+                    ItemGet(SH2_ITEM_12);
+                    ItemGet(SH2_ITEM_13);
                     for (i = 0; i < 16; i++) {
-                        ItemGet(1);
+                        ItemGet(HEALTH_DRINK);
                     }
-                    ItemGet(15);
-                    ItemGet(16);
+                    ItemGet(SH2_ITEM_15);
+                    ItemGet(SH2_ITEM_16);
                     item.equip = 4;
                     break;
             }
         }
     }
 }
+
 
 static void titleInit(void) {
     static int fid;       // @ 18274600
@@ -572,7 +564,7 @@ static void titleInit(void) {
     switch (Sh2sys.step[3]) {
         case 0:
             TitleData.memcard = -1;
-            TitleData.mode    = 0;
+            TitleData.mode    = SH2_TITLE_DATA_MODE_0;
             TitleData.sel     = 0;
             TitleData.alpha   = 255;
             TitleData.alphar  = 0.0f;
@@ -581,7 +573,7 @@ static void titleInit(void) {
                 TitleData.menu[i] = -1;
             }
             TitleData.pload0     = get_gp_data_buf_addr();
-            TitleData.pload1     = get_gp_data_buf_addr() + 524288;
+            TitleData.pload1     = get_gp_data_buf_addr() + 0x80000;
             playing.battle_level = 2;
             playing.riddle_level = 1;
             ScreenEffectInit();
@@ -689,7 +681,7 @@ static void titleFadeIn(void) {
 
 static void titleChangeMainMenu(void) {
     int card; // r2
-    if (title_test_mode == 2) {
+    if (title_test_mode == TITLE_TEST_MODE_US) {
         titleCreateMainMenu();
         return;
     }
@@ -701,7 +693,7 @@ static void titleChangeMainMenu(void) {
 }
 
 static void titleCreateMainMenu(void) {
-    if (title_test_mode == 2) {
+    if (title_test_mode == TITLE_TEST_MODE_US) {
         TitleData.menu[0] = -1;
         TitleData.menu[1] = 3;
         TitleData.menu[2] = 14;
@@ -815,13 +807,13 @@ static void titleMainSelect(void) {
             TitleData.timer = 60.0f;
             shSdCall(10000, 0, 0, 0);
             TitleSprChgColor[11].timer = 0;
-            return;
+            break;
 
         case 2:
             TitleData.timer            = 60.0f;
             TitleSprChgColor[12].timer = 0;
             title_after_data_set       = 0;
-            if (title_test_mode == 2) {
+            if (title_test_mode == TITLE_TEST_MODE_US) {
                 if (TitleData.sel != 4) {
                     title_start_point = TitleData.sel - 1;
                 }
@@ -830,7 +822,7 @@ static void titleMainSelect(void) {
                 SeCall(15002, 1.0f, 0);
                 sh2sys_set_2(6);
             } else {
-                if (title_test_mode == 1) {
+                if (title_test_mode == TITLE_TEST_MODE_JP) {
                     select_game_start = TitleData.sel >= 3;
                     if (select_game_start != 0) {
                         select_game_start = TitleData.sel < 8;
@@ -843,7 +835,7 @@ static void titleMainSelect(void) {
                     select_load       = TitleData.sel == 1;
                 }
                 if (select_game_start != 0) {
-                    if (title_test_mode == 1) {
+                    if (title_test_mode == TITLE_TEST_MODE_JP) {
                         title_start_point = TitleData.sel - 3;
                     }
                     TitleData.menu[0] = -1;
@@ -860,24 +852,14 @@ static void titleMainSelect(void) {
                     TitleData.alphar  = 0.0f;
                     TitleData.timer   = 60.0f;
                     shSdCall(10002, 0, 0, 0);
-                    Sh2sys.step[2] += 1;
-                    Sh2sys.step[3] = 0;
-                    Sh2sys.step[4] = 0;
-                    Sh2sys.step[5] = 0;
-                    Sh2sys.step[6] = 0;
-                    Sh2sys.step[7] = 0;
+                    sh2sys_step_2();
                 } else {
                     if ((select_option != 0) || (select_load != 0)) {
                         shSdCall(10002, 0, 0, 0);
                     } else {
                         SeCall(15002, 1.0f, 0);
                     }
-                    Sh2sys.step[2] = 6;
-                    Sh2sys.step[3] = 0;
-                    Sh2sys.step[4] = 0;
-                    Sh2sys.step[5] = 0;
-                    Sh2sys.step[6] = 0;
-                    Sh2sys.step[7] = 0;
+                    sh2sys_set_2(6);
                 }
             }
             break;
@@ -901,11 +883,9 @@ static void titleMainSelect(void) {
     TitleData.alpha = (int) (191.0f + (63.0f * shCosF(TitleData.alphar)));
     return;
 }
-// static inline float yay(float x) {
-//     float dt = shGetDT();
-//     return x / 19.2f * dt;
-// }
 
+
+#ifdef NON_MATCHING
 static int titleCheckPad(void) {
     int ret; // r16
     int an;  // r2
@@ -925,7 +905,7 @@ static int titleCheckPad(void) {
     } else {
         analog_data += ((an - 160) / 19.2f) * shGetDT();
     }
-    if ((shPadTrigger(0, 1024) != 0) || (shPadRepeat(0, 1024) != 0) || (analog_data < -1.0f)) {
+    if ((shPadTrigger(0, PAD_KEY_DPAD_UP) != 0) || (shPadRepeat(0, PAD_KEY_DPAD_UP) != 0) || (analog_data < -1.0f)) {
         analog_data += 1.0f;
         if (analog_data > 0.0f) {
             analog_data = 0.0f;
@@ -939,7 +919,7 @@ static int titleCheckPad(void) {
             }
         }
         ret = 1;
-    } else if ((shPadTrigger(0, 2048) != 0) || (shPadRepeat(0, 2048) != 0) || !(analog_data <= 1.0f)) {
+    } else if ((shPadTrigger(0, PAD_KEY_DPAD_DOWN) != 0) || (shPadRepeat(0, PAD_KEY_DPAD_DOWN) != 0) || analog_data > 1.0f) {
         analog_data -= 1.0f;
         if (analog_data < 0.0f) {
             analog_data = 0.0f;
@@ -954,13 +934,16 @@ static int titleCheckPad(void) {
             }
         }
         ret = 1;
-    } else if ((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, 4) != 0)) {
+    } else if ((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, PAD_KEY_SELECT) != 0)) {
         ret = 2;
     } else if (shPadTrigger(0, key_config.cancel) != 0) {
         ret = 3;
     }
     return ret;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/title", titleCheckPad);
+#endif
 
 static int titleGetCursorFromBattleLevel(u_char battle_level /* r2 */) {
     int ret; // r2
@@ -1153,7 +1136,7 @@ static void titleFadeOutNewGame(void) {
             ScreenEffectFadeStart(2, 2.0f);
             TitleData.alpha = 255;
             titleDrawTitle();
-            if (title_test_mode != 2) {
+            if (title_test_mode != TITLE_TEST_MODE_US) {
                 titleDrawSubMenu(2);
             }
             sh2sys_step_3();
@@ -1164,25 +1147,25 @@ static void titleFadeOutNewGame(void) {
     }
 
     if (ScreenEffectFadeCheck() != 0) {
-        if (title_test_mode == 0) {
+        if (title_test_mode == TITLE_TEST_MODE_NONE) {
             connect_pos[0] = TitleJPStartPointList->pos_x;
             connect_pos[1] = TitleJPStartPointList->pos_y;
             connect_pos[2] = TitleJPStartPointList->pos_z;
             connect_pos[3] = TitleJPStartPointList->rot;
             playing.stage  = TitleJPStartPointList->stg;
-        } else if (title_test_mode == 1) {
+        } else if (title_test_mode == TITLE_TEST_MODE_JP) {
             connect_pos[0] = TitleJPStartPointList[title_start_point].pos_x;
             connect_pos[1] = TitleJPStartPointList[title_start_point].pos_y;
             connect_pos[2] = TitleJPStartPointList[title_start_point].pos_z;
             connect_pos[3] = TitleJPStartPointList[title_start_point].rot;
             playing.stage  = TitleJPStartPointList[title_start_point].stg;
         }
-        TitleData.mode = 3;
+        TitleData.mode = SH2_TITLE_DATA_MODE_3;
         return;
     }
     TitleSprChgColor->timer = TitleSprChgColor->cycle;
     titleDrawTitle();
-    if (title_test_mode != 2) {
+    if (title_test_mode != TITLE_TEST_MODE_US) {
         titleDrawSubMenu(2);
     }
     return;
@@ -1205,7 +1188,7 @@ static void titleFadeOut(void) {
     }
 
     if (ScreenEffectFadeCheck() != 0) {
-        if (title_test_mode == 2) {
+        if (title_test_mode == TITLE_TEST_MODE_US) {
             connect_pos[0] = TitleUSPStartPointList[title_start_point].pos_x;
             connect_pos[1] = TitleUSPStartPointList[title_start_point].pos_y;
             connect_pos[2] = TitleUSPStartPointList[title_start_point].pos_z;
@@ -1241,10 +1224,10 @@ static void titleExit(void) {
     }
 
     if (ScreenEffectFadeCheck() != 0) {
-        TitleData.mode = 5;
+        TitleData.mode = SH2_TITLE_DATA_MODE_5;
     }
-    if (!(TitleData.timer <= 0.0f)) {
-        TitleData.mode = 6;
+    if (TitleData.timer > 0.0f) {
+        TitleData.mode = SH2_TITLE_DATA_MODE_6;
         return;
     }
 
@@ -1266,10 +1249,11 @@ static void titleDrawTitle(void) {
     PictureDraw(&TitleData.pic0);
     PictureLoadImage((struct sh2gfw_AREA_HEAD*) TitleData.pload1, 2, -1, -1);
     titleRenewChangeColorManagement(&TitleSprChgColor->timer, TitleSprChgColor->cycle, 1);
-    titleChangeColor(&TitleSpr->rgba[1], TitleSprChgColor->start_rgba, TitleSprChgColor->end_rgba, TitleSprChgColor->timer, TitleSprChgColor->cycle, 0.5f);
+    titleChangeColor(TitleSpr[1].rgba, TitleSprChgColor->start_rgba, TitleSprChgColor->end_rgba, TitleSprChgColor->timer, TitleSprChgColor->cycle, 0.5f);
     titleDrawSprite(-257, -103, 0);
 }
 
+#ifdef NON_MATCHING
 static void titleDrawSprite(short x /* r17 */, short y /* r16 */, short id /* r18 */) {
     shQzero(&TitleData.pic0, sizeof(PicDraw_Data));
     picture_set_ap(&TitleData.pic0, TitleData.pload1);
@@ -1293,24 +1277,17 @@ static void titleDrawSprite(short x /* r17 */, short y /* r16 */, short id /* r1
     TitleData.pic0.status |= 4;
     PictureDraw(&TitleData.pic0);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/title", titleDrawSprite);
+#endif
 
+#line 2058
 static void titleDrawMainMenu(void) {
-    short cpos[8];   // r29+64
-    short cposy[8];  // r29+80
-    int i;           // r16
-    int j;           // r17
-    short ef_pos[7]; // r29+96
-    short w[7];      // r29+112
+    short cpos[8], cposy[8];   // r29+64, r29+80
+    int i, j;           // r16, r17
+    short ef_pos[7], w[7]; // r29+96, r29+112
 
-    s32 temp_s1;
-    s32 loop;
-    s32 loop_2;
-    u32 temp_v0;
-    u32 temp_v1_2;
-    void* temp_v0_2;
-    void* temp_v1;
-
-    if (title_test_mode == 2) {
+    if (title_test_mode == TITLE_TEST_MODE_US) {
         cpos[0]  = -94;
         cpos[1]  = -86;
         cpos[2]  = -70;
@@ -1319,138 +1296,186 @@ static void titleDrawMainMenu(void) {
         cposy[1] = 99;
         cposy[2] = 121;
         cposy[3] = 143;
-    } else if (title_test_mode == 1) {
-        cpos[0]  = -68;
-        cpos[1]  = -92;
-        cpos[2]  = -94;
-        cpos[3]  = -86;
-        cpos[4]  = -74;
-        cpos[5]  = -70;
-        cpos[6]  = -62;
-        cpos[7]  = -78;
-        cposy[0] = 8;
-        cposy[1] = 30;
-        cposy[2] = 52;
-        cposy[3] = 74;
-        cposy[4] = 96;
-        cposy[5] = 118;
-        cposy[6] = 140;
-        cposy[7] = 162;
     } else {
-        cpos[0]  = -68;
-        cpos[1]  = -92;
-        cpos[2]  = -94;
-        cpos[3]  = -78;
-        cposy[0] = 74;
-        cposy[1] = 96;
-        cposy[2] = 118;
-        cposy[3] = 140;
+        if (title_test_mode == TITLE_TEST_MODE_JP) {
+            cpos[0]  = -68;
+            cpos[1]  = -92;
+            cpos[2]  = -94;
+            cpos[3]  = -86;
+            cpos[4]  = -74;
+            cpos[5]  = -70;
+            cpos[6]  = -62;
+            cpos[7]  = -78;
+            cposy[0] = 8;
+            cposy[1] = 30;
+            cposy[2] = 52;
+            cposy[3] = 74;
+            cposy[4] = 96;
+            cposy[5] = 118;
+            cposy[6] = 140;
+            cposy[7] = 162;
+        } else {
+        
+            cpos[0]  = -68;
+            cpos[1]  = -92;
+            cpos[2]  = -94;
+            cpos[3]  = -78;
+            cposy[0] = 74;
+            cposy[1] = 96;
+            cposy[2] = 118;
+            cposy[3] = 140;
+        }
     }
-    if (title_test_mode == 2) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    if (title_test_mode == TITLE_TEST_MODE_US) {
         ef_pos[0] = -80;
         ef_pos[1] = -71;
         ef_pos[2] = -50;
         ef_pos[3] = -60;
-        w[1]      = 160;
-        w[2]      = 142;
-        w[3]      = 100;
-        w[4]      = 120;
-    } else if (title_test_mode == 1) {
-        ef_pos[0] = -48;
-        ef_pos[1] = -78;
-        ef_pos[2] = -80;
-        ef_pos[3] = -71;
-        ef_pos[4] = -58;
-        ef_pos[5] = -50;
-        ef_pos[6] = -42;
-        w[0]      = -60;
-        w[1]      = 96;
-        w[2]      = 156;
-        w[3]      = 160;
-        w[4]      = 142;
-        w[5]      = 116;
-        w[6]      = 100;
-        w[7]      = 84; //????
-        w[8]      = 120;
+        w[0]      = 160;
+        w[1]      = 142;
+        w[2]      = 100;
+        w[3]      = 120;
     } else {
-        ef_pos[0] = -48;
-        ef_pos[1] = -78;
-        ef_pos[2] = -80;
-        ef_pos[3] = -60;
-        w[1]      = 96;
-        w[2]      = 156;
-        w[3]      = 160;
-        w[4]      = 120;
+        if (title_test_mode == TITLE_TEST_MODE_JP) {
+            ef_pos[0] = -48;
+            ef_pos[1] = -78;
+            ef_pos[2] = -80;
+            ef_pos[3] = -71;
+            ef_pos[4] = -58;
+            ef_pos[5] = -50;
+            ef_pos[6] = -42;
+            ef_pos[7] = -60; // @weird writing out of bounds??
+            w[0]      = 96;
+            w[1]      = 156;
+            w[2]      = 160;
+            w[3]      = 142;
+            w[4]      = 116;
+            w[5]      = 100;
+            w[6]      = 84; 
+            w[7]      = 120; // @weird writing out of bounds??
+        } else {
+
+            ef_pos[0] = -48;
+            ef_pos[1] = -78;
+            ef_pos[2] = -80;
+            ef_pos[3] = -60;
+            w[0]      = 96;
+            w[1]      = 156;
+            w[2]      = 160;
+            w[3]      = 120;
+        }
     }
+    
     titleChangeSpriteColor2(11);
     TitleSpr[11].w = w[TitleData.sel - 1] + 8;
-    titleDrawSprite((s16) ((s64) ((cpos[TitleData.sel - 1] - 4) << 48) >> 48), (s16) ((s64) (((&cpos[7])[TitleData.sel] + 1) << 48) >> 48), 11);
-    if (title_test_mode == 2) {
+    titleDrawSprite((ef_pos[TitleData.sel - 1] - 4), cposy[TitleData.sel - 1] + 1, 11);
+    
+    
+    
+    
+    
+    if (title_test_mode == TITLE_TEST_MODE_US) {
+    
+        
         titleDrawSprite(-96, cposy[0], 3);
+        
         titleDrawSprite(-96, cposy[1], 14);
         titleDrawSprite(-99, cposy[2], 13);
+        
+        
+        
         titleChangeCursorSpriteColor();
-        titleDrawSprite(cpos[TitleData.sel], (&cpos[7])[TitleData.sel], 12);
-        return;
-    }
-    if (title_test_mode == 1) {
-        loop = 0;
-    loop_17:
-        if (loop < 2) {
-            temp_v0 = (&TitleData.menu[1])[loop];
-            if (temp_v0 != -1U) {
-                titleDrawSprite(-96, cposy[loop], (s16) ((s64) ((temp_v0 - 1 + 1) << 48) >> 48));
+
+        
+        titleDrawSprite(cpos[TitleData.sel - 1], cposy[TitleData.sel - 1], 12);
+    } else {
+            if (title_test_mode == TITLE_TEST_MODE_JP) {
+            for (i = 0; i < 2; i++) {
+                if (TitleData.menu[i + 1] == -1) continue;
+                    
+                j = TitleData.menu[i + 1] - 1;
+                
+                
+                titleDrawSprite(-96, cposy[i], j + 1);
             }
-            loop += 1;
-            goto loop_17;
+                
+            titleDrawSprite(-96, cposy[2], 3);
+            titleDrawSprite(-96, cposy[3], 14);
+            titleDrawSprite(-96, cposy[4], 16);
+            titleDrawSprite(-99, cposy[5], 13);
+            titleDrawSprite(-96, cposy[6], 15);
+            titleDrawSprite(-96, cposy[7], 4);
+            
+                
+                
+            titleChangeCursorSpriteColor();
+            
+                
+            titleDrawSprite(cpos[TitleData.sel - 1], cposy[TitleData.sel - 1], 12);
+            return;
         }
-        titleDrawSprite(-96, cposy[2], 3);
-        titleDrawSprite(-96, cposy[3], 14);
-        titleDrawSprite(-96, cposy[4], 16);
-        titleDrawSprite(-99, cposy[5], 13);
-        titleDrawSprite(-96, cposy[6], 15);
-        titleDrawSprite(-96, cposy[7], 4);
-        titleChangeCursorSpriteColor();
-        titleDrawSprite(cpos[TitleData.sel - 1], (&cpos[7])[TitleData.sel], 12);
-        return;
-    }
-    loop_2 = 0;
-loop_24:
-    if (loop_2 < 4) {
-        temp_v1_2 = (&TitleData.menu[1])[loop_2];
-        if (temp_v1_2 != -1U) {
-            temp_s1 = temp_v1_2 - 1;
-            titleDrawSprite(-96, cposy[loop_2], (s16) ((s64) ((temp_s1 + 1) << 48) >> 48));
-            if (TitleData.sel == (loop_2 + 1)) {
+        
+        for (i = 0; i < 4; i++) {
+            
+            if (TitleData.menu[i + 1] == -1) continue;
+
+            j = TitleData.menu[i + 1] - 1;
+
+        
+            titleDrawSprite(-96, cposy[i], j + 1);
+            if (TitleData.sel == (i + 1)) {
+                
+                
+                
+                
                 titleChangeCursorSpriteColor();
-                titleDrawSprite(cpos[temp_s1], cposy[loop_2], 12);
+                
+                
+                titleDrawSprite(cpos[j], cposy[i], 12);
             }
         }
-        loop_2 += 1;
-        goto loop_24;
     }
+
 }
 
-static void titleDrawSubMenu(int sel /* r16 */) {
-    short x_pos; // r29+42
-    // short x_pos; // r29+44
+static void titleDrawSubMenu(int sel) {
     int i; // r4
-    // short x_pos; // r29+46
-
-    s16 sp2E;
-    s16 sp2C;
-    s16 sp2A;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 var_a0;
 
     titleDrawSprite(-196, 60, 5);
     titleDrawSprite(11, 60, 6);
     if (sel == 0) {
+        short x_pos; // r29+0x2A
         TitleSpr[11].h -= 7;
         titleChangeSpriteColor2(11);
-        titleGetMenuEfctPosBattle(&sp2A, &TitleSpr[11].w, TitleData.sel);
-        titleDrawSprite(sp2A, (s16) ((s64) (((TitleData.sel * 18) + 66) << 48) >> 48), 11);
+        titleGetMenuEfctPosBattle(&x_pos, &TitleSpr[11].w, TitleData.sel);
+        titleDrawSprite(x_pos, ((TitleData.sel * 18) + 66), 11);
         TitleSpr[11].h += 7;
         titleDrawSprite(-196, 80, 7);
         titleDrawSprite(-196, 98, 8);
@@ -1459,65 +1484,63 @@ static void titleDrawSubMenu(int sel /* r16 */) {
         titleDrawSprite(11, 98, 8);
         titleDrawSprite(11, 115, 9);
         titleChangeCursorSpriteColor();
-        temp_s0 = TitleData.sel;
-        titleDrawSprite(titleGetCursorXPosBattle(temp_s0), (s16) ((s64) (((temp_s0 * 18) + 62) << 48) >> 48), 12);
+        titleDrawSprite(titleGetCursorXPosBattle(TitleData.sel), TitleData.sel * 18 + 62, 12);
         return;
     }
     if (sel == 1) {
+        short x_pos; // r29+0x2C
         TitleSpr[11].h -= 7;
         titleChangeSpriteColor2(11);
-        titleGetMenuEfctPosRiddle(&sp2C, &TitleSpr[11].w, TitleData.sel);
-        titleDrawSprite(sp2C, (s16) ((s64) (((TitleData.sel * 18) + 66) << 48) >> 48), 11);
+        titleGetMenuEfctPosRiddle(&x_pos, &TitleSpr[11].w, TitleData.sel);
+        titleDrawSprite(x_pos, TitleData.sel * 18 + 66, 11);
         TitleSpr[11].h += 7;
         titleDrawSprite(11, 80, 7);
         titleDrawSprite(11, 98, 8);
         titleDrawSprite(11, 115, 9);
-        switch (playing.battle_level) { /* switch 1; irregular */
-            case 1:                     /* switch 1 */
+        switch (playing.battle_level) {
+            case 1:                    
                 titleDrawSprite(-196, 115, 9);
                 break;
-            case 2: /* switch 1 */
+            case 2:
                 titleDrawSprite(-196, 98, 8);
                 break;
-            case 3: /* switch 1 */
+            case 3:
                 titleDrawSprite(-196, 80, 7);
                 break;
         }
-        var_a0 = 0;
-    loop_12:
-        if (var_a0 < 4) {
-            TitleSpr[11].rgba[var_a0] = (&TitleSprChgColor[13].end_rgba[2])[var_a0];
-            var_a0 += 1;
-            goto loop_12;
+        {
+            short x_pos; // r29+0x2E
+            for (i = 0; i < 4; i++) {
+                TitleSpr[11].rgba[i] = TitleSprChgColor[11].end_rgba[i];
+            }
+            TitleSpr[11].h -= 7;
+            titleGetMenuEfctPosBattle(&x_pos, &TitleSpr[11].w, titleGetCursorFromBattleLevel(playing.battle_level));
+            titleDrawSprite(x_pos, (titleGetCursorFromBattleLevel(playing.battle_level) * 18) + 66, 11);
+            TitleSpr[11].h += 7;
+            titleChangeCursorSpriteColor();
+            titleDrawSprite(titleGetCursorXPosRiddle(TitleData.sel), (TitleData.sel * 18) + 62, 12);
+            return;
         }
-        TitleSpr[11].h -= 7;
-        titleGetMenuEfctPosBattle(&sp2E, &TitleSpr[11].w, titleGetCursorFromBattleLevel(playing.battle_level));
-        titleDrawSprite(sp2E, (s16) ((s64) (((titleGetCursorFromBattleLevel(playing.battle_level) * 18) + 66) << 48) >> 48), 11);
-        TitleSpr[11].h += 7;
-        titleChangeCursorSpriteColor();
-        temp_s0_2 = TitleData.sel;
-        titleDrawSprite(titleGetCursorXPosRiddle(temp_s0_2), (s16) ((s64) (((temp_s0_2 * 18) + 62) << 48) >> 48), 12);
-        return;
     }
-    switch (playing.battle_level) { /* switch 2; irregular */
-        case 1:                     /* switch 2 */
+    switch (playing.battle_level) {
+        case SH2_BATTLE_LEVEL_EASY:                    
             titleDrawSprite(-196, 115, 9);
             break;
-        case 2: /* switch 2 */
+        case SH2_BATTLE_LEVEL_NORMAL:
             titleDrawSprite(-196, 98, 8);
             break;
-        case 3: /* switch 2 */
+        case SH2_BATTLE_LEVEL_HARD:
             titleDrawSprite(-196, 80, 7);
             break;
     }
-    switch (playing.riddle_level) { /* switch 3; irregular */
-        case 0:                     /* switch 3 */
+    switch (playing.riddle_level) {
+        case SH2_RIDDLE_LEVEL_EASY:                    
             titleDrawSprite(11, 115, 9);
             return;
-        case 1: /* switch 3 */
+        case SH2_RIDDLE_LEVEL_NORMAL:
             titleDrawSprite(11, 98, 8);
             return;
-        case 2: /* switch 3 */
+        case SH2_RIDDLE_LEVEL_HARD:
             titleDrawSprite(11, 80, 7);
             return;
     }
@@ -1627,18 +1650,25 @@ static void titleRenewChangeColorManagement(float* timer /* r16 */, float cycle 
     }
 }
 
+#ifdef NON_MATCHING
+#line 2977
+// really silly register issue?
 static void titleChangeColor(int* rgba /* r20 */, int* start_rgba /* r19 */, int* end_rgba /* r18 */, float timer /* r29+128 */, float cycle_time /* r29+128 */, float cycle_sin /* r29+128 */) {
-    int diff_color[4]; // r29+112
-    float ratio;       // r20
-    int i;             // r16
+    sceVu0IVECTOR diff_color; // r29+112
+    float ratio;              // r20
+    int i;                    // r16
 
+    
     ratio = shSinF(PI * (cycle_sin * (timer / cycle_time)));
 
     for (i = 0; i < 4; i++) {
         diff_color[i] = end_rgba[i] - start_rgba[i];
-        rgba[i]       = (int) (start_rgba[i] + (ratio * diff_color[i]));
+        rgba[i]       = start_rgba[i] + (diff_color[i] * ratio);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/title", titleChangeColor);
+#endif
 
 int GameendMain(void) {
     static float game_over_timer; // @ 18274584
@@ -1647,10 +1677,7 @@ int GameendMain(void) {
     switch (Sh2sys.step[4]) { /* irregular */
         case 0:
             FcRead(data_pic_etc_comingsoon_tex, TitleData.pload0);
-            Sh2sys.step[4] += 1;
-            Sh2sys.step[5] = 0;
-            Sh2sys.step[6] = 0;
-            Sh2sys.step[7] = 0;
+            sh2sys_step_4();
             /* fallthrough */
         case 1:
             if ((fsSync(1, -1) >= 0) && (ScreenEffectFadeCheck() != 0)) {
@@ -1662,15 +1689,12 @@ int GameendMain(void) {
                 case 3:
                     PictureLoadImage((sh2gfw_AREA_HEAD*) TitleData.pload0, 0, -1, -1);
                     shQzero(&pic, sizeof(PicDraw_Data));
-                    pic.ap   = (sh2gfw_AREA_HEAD*) TitleData.pload0;
-                    pic.tex  = -1;
-                    pic.clut = -1;
-                    pic.status |= 1;
+                    picture_set_ap(&pic, TitleData.pload0);
                     pic.otp = 1;
                     PictureDraw(&pic);
                     d1cSend(spkDmaKick());
                     game_over_timer += shGetDT();
-                    if ((shPadTrigger(0, key_config.action) != 0) || (shPadTrigger(0, key_config.cancel) != 0) || !(game_over_timer <= 5.0f)) {
+                    if ((shPadTrigger(0, key_config.action) != 0) || (shPadTrigger(0, key_config.cancel) != 0) || game_over_timer > 5.0f) {
                         return 1;
                     }
                     goto block_14;
@@ -1687,58 +1711,22 @@ OPD_W opd_w[6];  // size: 312, address: 18274272
 static void opd_work_init(void) {
     int loop; // r3
 
-    OPD_W* var_a1;
-    OPD_W* var_a3_2;
-    OPD_W* var_t0;
-    OPD_W* var_t1;
-    f32 temp_a0_2;
-    f32 temp_a2_2;
-    f32* temp_a2;
-    f32* temp_a3;
-    s32 temp_a0;
-    s32 var_a2;
-    s32 var_a3;
-    s32 var_v1;
-
     bzero(opd_w, sizeof(opd_w));
     bzero(&org_title, sizeof(org_title));
-    var_v1 = 0;
-loop_6:
-    if (var_v1 < 2) {
-        temp_a0                 = var_v1 * 52;
-        var_a1                  = &opd_w[var_v1];
-        var_a1->u0              = 0.0f;
-        *(&opd_w->u1 + temp_a0) = 160.0f;
-        temp_a3                 = &opd_w->v0 + temp_a0;
-        *temp_a3                = (f32) ((var_v1 + 1) * 48);
-        *(&opd_w->v1 + temp_a0) = 47.0f + *temp_a3;
-        *(&opd_w->x0 + temp_a0) = -80.0f;
-        *(&opd_w->x1 + temp_a0) = 80.0f;
-        temp_a2                 = &opd_w->y0 + temp_a0;
-        *temp_a2                = -24.0f;
-        *(&opd_w->y1 + temp_a0) = 47.0f + *temp_a2;
-        var_t1                  = &(&opd_w[2])[var_v1];
-        var_a3                  = 13;
-        var_t0                  = var_a1;
-        do {
-            temp_a2_2 = var_t0->u0;
-            var_t0 += 4;
-            var_a3 -= 1;
-            var_t1->u0 = temp_a2_2;
-            var_t1 += 4;
-        } while (var_a3 > 0);
-        var_a3_2 = &(&opd_w[4])[var_v1];
-        var_a2   = 13;
-        do {
-            temp_a0_2 = var_a1->u0;
-            var_a1 += 4;
-            var_a2 -= 1;
-            var_a3_2->u0 = temp_a0_2;
-            var_a3_2 += 4;
-        } while (var_a2 > 0);
-        var_v1 += 1;
-        goto loop_6;
+
+    for (loop = 0; loop < 2; loop++) {
+        opd_w[loop].u0 = 0.0f;
+        opd_w[loop].u1 = 160.0f;
+        opd_w[loop].v0 = (loop + 1) * 48;
+        opd_w[loop].v1 = 47.0f + opd_w[loop].v0;
+        opd_w[loop].x0 = -80.0f;
+        opd_w[loop].x1 = 80.0f;
+        opd_w[loop].y0 = -24.0f;
+        opd_w[loop].y1 = 47.0f + opd_w[loop].y0;
+        opd_w[loop + 2] = opd_w[loop];
+        opd_w[loop + 4] = opd_w[loop];
     }
+
     org_title.u0 = 0.0f;
     org_title.u1 = 160.0f;
     org_title.v0 = 0.0f;
@@ -1750,8 +1738,8 @@ loop_6:
 }
 
 int GameoverMain(void) {
-    static float game_over_timer; // @ 18274200
-    static int fid;               // @ 18274192
+    static float game_over_timer;
+    static int fid;
 
     switch (Sh2sys.step[4]) { /* irregular */
         case 0:
@@ -1761,7 +1749,7 @@ int GameoverMain(void) {
         case 1:
             fontClear();
             fid = FcRead(data_pic_etc_gameover1_tex, get_gp_data_buf_addr());
-            fid = 0.0f;
+            game_over_timer = 0.0f;
             if (fid != -1) {
                 fsSync(0, fid);
             }
@@ -1773,12 +1761,14 @@ int GameoverMain(void) {
             if (draw_opd_wowk_main() != 0) {
                 sh2sys_step_4();
             }
-        default:
-            return 0;
+            break;
+
         case 3:
             return 1;
     }
+    return 0;
 }
+
 static inline int q4(float x) {
     int ret;
     asm("qmtc2 %1, vf4; vftoi4.x vf4, vf4; qmfc2 %0, vf4" : "=r"(ret) : "r"(x));
@@ -1790,16 +1780,11 @@ static int draw_opd_wowk_main(void) {
     int loop;         // r16
     int rnd;          // r3
 
-    s16 temp_v0;
-    s16 temp_v0_2;
-    s16 temp_v0_3;
-    s32 temp_v1;
-
     switch (org_title.step) { /* irregular */
         case 0:
-            org_title.timer += 1;
+            org_title.timer++;
             if (org_title.timer == 32) {
-                org_title.step += 1;
+                org_title.step++;
                 org_title.timer = 0;
             }
             break;
@@ -1808,44 +1793,33 @@ static int draw_opd_wowk_main(void) {
         case 1:
             org_title.rgb += 4;
             if (org_title.rgb == 96) {
-                org_title.step += 1;
+                org_title.step++;
             }
             break;
         case 2:
-            org_title.timer += 1;
+            org_title.timer++;
             if (org_title.timer == 64) {
-                org_title.step += 1;
+                org_title.step++;
                 org_title.timer = 0;
             }
             break;
         case 3:
             org_title.rgb -= 8;
             if (org_title.rgb == 0) {
-                org_title.step += 1;
+                org_title.step++;
             }
             break;
         case 4:
             return 1;
     }
-block_15:
+
     PictureLoadImage(get_gp_data_buf_addr(), 0, -1, -1);
     shQzero(&pic, sizeof(PicDraw_Data));
-    pic.ap   = get_gp_data_buf_addr();
-    pic.tex  = -1;
-    pic.clut = -1;
-    pic.status |= 1;
+    picture_set_ap(&pic, get_gp_data_buf_addr());
     pic.otp       = 1;
-    pic.a         = 128;
-    pic.alpha_a   = 0;
-    pic.alpha_b   = 1;
-    pic.alpha_c   = 0;
-    pic.alpha_d   = 1;
-    pic.alpha_fix = 128;
-    pic.status    = temp_v0 | 32;
-    loop          = 0;
-loop_19:
-    if (loop < 6) {
-        temp_v1 = (rand() % 30) - 15;
+    picture_set_alpha(&pic, 128);
+    for (loop = 0; loop < 6; loop++) {
+        rnd = (rand() % 30) - 15;
         if (org_title.step >= 2) {
             pic.r = org_title.rgb;
             pic.g = org_title.rgb;
@@ -1858,13 +1832,11 @@ loop_19:
         pic.vt1 = q4(opd_w[loop].v1);
         pic.status |= 4;
         pic.x0 = q4(opd_w[loop].x0);
-        pic.y0 = q4(opd_w[loop].y0);
+        pic.y0 = q4(rnd + opd_w[loop].y0);
         pic.x1 = q4(opd_w[loop].x1);
-        pic.y1 = q4(opd_w[loop].y1);
+        pic.y1 = q4(rnd + opd_w[loop].y1);
         pic.status |= 2;
         PictureDraw(&pic);
-        loop += 1;
-        goto loop_19;
     }
     pic.r = org_title.rgb;
     pic.g = org_title.rgb;
@@ -1879,8 +1851,11 @@ loop_19:
     pic.y0     = q4(org_title.y0);
     pic.x1     = q4(org_title.x1);
     pic.y1     = q4(org_title.y1);
-    pic.status = temp_v0_3 | 2;
+    pic.status |= 2;
     PictureDraw(&pic);
     d1cSend(spkDmaKick());
     return 0;
 }
+
+
+const u_char pazzd[0x40];

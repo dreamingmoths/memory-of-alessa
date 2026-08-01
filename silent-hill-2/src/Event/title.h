@@ -3,6 +3,31 @@
 
 #include "Event/picture.h"
 
+#define SH2_TITLE_DATA_MODE_0 0
+#define SH2_TITLE_DATA_MODE_1 1
+#define SH2_TITLE_DATA_MODE_2 2
+#define SH2_TITLE_DATA_MODE_3 3
+#define SH2_TITLE_DATA_MODE_4 4
+#define SH2_TITLE_DATA_MODE_5 5
+#define SH2_TITLE_DATA_MODE_6 6
+
+/**
+ * The default title test mode.
+ */
+#define TITLE_TEST_MODE_NONE   0
+
+/**
+ * Contains the default menu options and also allows the user to jump to
+ * apartment, hospital, prison, or hotel.
+ */
+#define TITLE_TEST_MODE_JP     1
+
+/**
+ * Only allows one to select new game, apartment, or prison.
+ */
+#define TITLE_TEST_MODE_US     2
+
+
 typedef struct _OPD_W {
     // total size: 0x34
     float u0;       // offset 0x0, size 0x4
