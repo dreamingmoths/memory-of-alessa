@@ -100,4 +100,6 @@ int PlayerReverseLightCalcIsOn(void);
 
 int PlayerWaterRoadIsOn(void);
 
+extern AnimeInfo* jms_stage_anim;
+
 #endif // M3_PLAY_H

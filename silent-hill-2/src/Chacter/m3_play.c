@@ -1,11 +1,16 @@
 #include "Chacter/m3_play.h"
+#include "Chacter/m3_rpjames.h"
 #include "Chacter/m3_sc.h"
+#include "Chacter/sh_character_status.h"
 
 #include "Collision/cl_main.h"
 
 #include "Event/event.h"
+#include "Event/stg_name.h"
 
 #include "Multi_thr/pad/keydata.h"
+
+#include "sce/libvu0.h"
 
 #include "SH2_common/pad.h"
 #include "SH2_common/playing_info.h"
@@ -784,11 +789,37 @@ void PlayerSetHeight(SubCharacter* this) {
 
 
 }
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeightConnectWait);
+
+void PlayerSetHeightConnectWait(void) {
+    PlayerSetHeight(sh2jms.player);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetColumn_SetTarget);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetColumn_CloseToTarget);
+static void PlayerSetColumn_CloseToTarget(CL_HITPOLY_COLUMN* mov, CL_HITPOLY_COLUMN* atk, float* mov_z, float* atk_z) {
+
+
+    
+    sh2jms.column_mov.p[0][0] = sh2jms.column_atk.p[0][0] = sh2jms.player->pos.x;
+    sh2jms.column_mov.p[0][1] = sh2jms.column_atk.p[0][1] = -50.0f + sh2jms.player->pos.y;
+    sh2jms.column_mov.p[0][2] = sh2jms.column_atk.p[0][2] = sh2jms.player->pos.z;    
+    sh2jms.column_mov.p[0][3] = sh2jms.column_atk.p[0][3] = 1.0f;    
+    sh2jms.column_mov.p[1][0] = sh2jms.column_atk.p[1][0] = 0.0f;    
+    sh2jms.column_mov.p[1][1] = sh2jms.column_atk.p[1][1] = -850.0f + sh2jms.player->pos.y;;    
+    sh2jms.column_mov.p[1][2] = sh2jms.column_atk.p[1][2] = 0.0f;
+    
+    close_to_value(&sh2jms.column_mov.p[1][3], mov->p[1][3], 5.0f);
+    close_to_value(&sh2jms.column_atk.p[1][3], atk->p[1][3], 5.0f);
+    close_to_value(&sh2jms.col_mov_z_hosei, *mov_z, 5.0f);
+    close_to_value(&sh2jms.col_atk_z_hosei, *atk_z, 5.0f);
+    
+    
+    sh2jms.column_mov.p[0][0] += sh2jms.col_mov_z_hosei * shSinF(sh2jms.player->rot.y);
+    sh2jms.column_mov.p[0][2] += sh2jms.col_mov_z_hosei * shCosF(sh2jms.player->rot.y);
+    sh2jms.column_atk.p[0][0] += sh2jms.col_atk_z_hosei * shSinF(sh2jms.player->rot.y);
+    sh2jms.column_atk.p[0][2] += sh2jms.col_atk_z_hosei * shCosF(sh2jms.player->rot.y);
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHitColumn);
 
@@ -816,8 +847,19 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set_all);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetStageAnime);
-
+static AnimeInfo* PlayerGetStageAnime(int anime) {
+    int i; // r5
+    
+    i = 0;
+    
+    while (jms_stage_anim[i].name != 0LL) {
+        if (anime == jms_stage_anim[i].name) {
+            return &jms_stage_anim[i];
+        }
+        i++;
+    }
+    return 0;
+}
 
 const char rodata_2356_0x0038BEB0[] = "m3_play.c:3888> assert:(%s)\n";
 const char rodata_assertion[] = "0";
@@ -3082,7 +3124,10 @@ void PlayerCheckAnimeLower(void) {
     sh2jms.hold_loop[1] = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckAnime);
+static void PlayerCheckAnime(void) {
+    PlayerCheckAnimeLower();
+    PlayerCheckAnimeUpper();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", BoatPlayerCheckAnime);
 
@@ -3098,23 +3143,174 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc_Hand);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", GetPlayerPartsMatrixForCameraCtrl);
+void GetPlayerPartsMatrixForCameraCtrl(float (*mat)[4], u_int parts_name) {
+    int i1; // r3
+    shSkelton* sk; // r6
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", GetPlayerPartsWorldMatrix);
+    sk = sh2jms.player->sk_top;
+    for (i1 = 0; i1 < parts_name; i1++) 
+        sk = sk->next;
+            
+    sceVu0MulMatrix(mat, sh2jms.player->mat[0], &sk->src_m);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", GetPlayerPartsLocalMatrix);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", GetPlayerInfoForCameraCtrl);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shCharacterPlayerWorkInitAtPowerOn);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shCharacterPlayerWorkInitAtGameStart);
+}
+
+void GetPlayerPartsWorldMatrix(float (*mat)[4], u_int parts_name) {
+    GetPlayerPartsMatrixForCameraCtrl(mat, parts_name);
+}
+
+void GetPlayerPartsLocalMatrix(float (*dest)[4], int parts_name) {
+    int i1; // r4
+    SubCharacter* p; // r2
+    shSkelton* sk; // r5
+
+
+    if (p = sh2jms.player, p->status & (1 << SCP_STATUS_BIT_NOW_DEMO_EVENT)) {
+        p = shCharacterGetSubCharacter(HHH_JMS_CHARA_KIND, -1);
+        if (p == NULL) p = shCharacterGetSubCharacter(HHL_JMS_CHARA_KIND, -1);        
+        if (p == NULL) p = sh2jms.player;        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    if (p == NULL) return;
+       
+    sk = p->sk_top;
+    for (i1 = 0; i1 < parts_name; i1++) 
+        sk = sk->next;
+    
+    *(Matrix4*)dest = sk->src_m;        
+}
+
+shCharaInfo* GetPlayerInfoForCameraCtrl(void) {
+    return (shCharaInfo*) &sh2jms.player->pos;
+}
+
+void shCharacterPlayerWorkInitAtPowerOn(void) {
+    shQzero(&sh2jms, sizeof(sh2jms));
+}
+
+void shCharacterPlayerWorkInitAtGameStart(void) {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    switch (playing.battle_level) { 
+        case 0:
+        case 1:
+            sh2jms.hp = sh2jms.hp_max = 200.0f;
+            
+            break;        
+        case 2:
+        case 3:                       
+            sh2jms.hp = sh2jms.hp_max = 100.0f;
+    }
+    
+    
+    
+    
+    
+    sh2jms.tired_max = 600;
+    sh2jms.light_vec_inner_rate = 0.5f;
+    sh2jms.spray_set = 200;
+    sh2jms.spray_time = 20.0f;
+    
+    
+    
+    
+    sh2jms.hold_type = -1;
+    actwithwep_flg_set(0, &sh2jms);
+    
+    
+    sh2jms.allbody_now = 0;
+    sh2jms.upper_now = 0;
+    sh2jms.lower_now = 0;
+    sh2jms.allbody_prev = 0xFF;
+    sh2jms.upper_prev = 0xFF;
+    sh2jms.lower_prev = 0xFF;
+    sh2jms.event_status_now = 0xFF;
+    sh2jms.event_status_prev = 0xFF;
+    
+    player_flg_on(&sh2jms.lower_st_flg, 1 << JMS_ST_L_STAND);
+    player_flg_on(&sh2jms.upper_st_flg, 1 << JMS_ST_U_STAND);
+    
+    
+    
+    sh2jms.column_mov.kind = sh2jms.column_atk.kind = 1;
+    sh2jms.column_mov.weight = sh2jms.column_atk.weight = 2;
+    
+    sh2jms.column_mov.material = sh2jms.column_atk.material = 6;
+    sh2jms.column_mov.shape = sh2jms.column_atk.shape = 3;
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shCharacterSetPlayerLow);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetTargetInfo);
+void PlayerGetTargetInfo(void) {
+    
+    
+    
+    sh2jms.enemy_atk_area = shBattleCheckTargetChara(sh2jms.player);
+    
+    
+    sh2jms.enemy_around = shBattleAroundTargetEnemy();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    sh2jms.look_tgt = (SubCharacter*) shBattleGetTargetChara(sh2jms.player, 0);
+    
+    
+    
+        
+    if (sh2jms.target != NULL)
+        if ((sh2jms.look_tgt == NULL) || (sh2jms.target->battle.status & 2))
+            sh2jms.target = NULL;
+    
+    
+    
+    
+    sh2jms.enemy_liedown = shBattleGetNearDeadlyTargetEnemy(sh2jms.player);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetTarget);
+void PlayerGetTarget(void) {
+    if (sh2jms.enemy_atk_area != 0) 
+        if (sh2jms.target == NULL) 
+            sh2jms.target = shBattleGetTargetEnemy(sh2jms.player);
+    
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerChangeTarget);
 
@@ -3132,7 +3328,25 @@ INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @3495);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttack);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerRequestAttackFinish);
+void PlayerRequestAttackFinish(shPlayerWork* w) {
+    u_char attack; // r2
+    u_char atk2; // r5
+    u_char atk1; // r2
+
+    atk2 = w->pad[0].attack2;
+    atk1 = w->pad[0].attack1;   
+    attack = (atk2 != 0) ? atk2 : atk1;
+
+    if (attack != 0) {
+        if (w->atk_reserve[0] == 0) {
+            if ((attack & 0xFF) == 3) {
+                w->atk_reserve[0] = 7;
+                return;
+            } else w->atk_reserve[0] = 6;
+                                 
+        }
+    } 
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckStraightLine);
 
@@ -3144,23 +3358,151 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesTrampStartPos);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerNowItemName);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSearchVIewButtonCheck);
+int PlayerSearchVIewButtonCheck(void) {
+
+    if (!(sh2jms.player->status & (1 << SCP_STATUS_BIT_NOW_DEMO_EVENT)) && !(sh2jms.player->status & (1 << SCP_STATUS_BIT_NOW_PLAYABLE_EVENT))) {
+        
+        switch (playing.view_control) {
+            case 0:
+                return sh2jms.pad[0].search;
+            
+            case 1:
+                return !sh2jms.pad[0].search;
+        }
+    } 
+    
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetNeckAngleX);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetNeckAngleY);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerInitOnConnect);
+void PlayerInitOnConnect(void) {
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerStatusClear);
+        
+    sh2jms.column_mov.kind = sh2jms.column_atk.kind = 1;    
+    sh2jms.column_mov.weight = sh2jms.column_atk.weight = 2;
+    
+    sh2jms.column_mov.material = 6;
+    sh2jms.column_atk.material = 0;    
+    sh2jms.column_mov.shape = sh2jms.column_atk.shape = 3;    
+    
+    sh2jms.column_mov.p[0][3] = sh2jms.column_atk.p[0][3] = 1.0f;    
+    sh2jms.column_mov.p[1][0] = sh2jms.column_atk.p[0][0] = 0.0f;    
+    sh2jms.column_mov.p[1][2] = sh2jms.column_atk.p[0][2] = 0.0f;
+    
+    
+    sh2jms.column_mov.p[0][0] = sh2jms.column_atk.p[0][0] = sh2jms.player->pos.x;    
+    sh2jms.column_mov.p[0][1] = sh2jms.column_atk.p[0][1] = -50.0f + sh2jms.player->pos.y;
+    sh2jms.column_mov.p[0][2] = sh2jms.column_atk.p[0][2] = sh2jms.player->pos.z;
+    sh2jms.column_mov.p[1][1] = sh2jms.column_atk.p[1][1] = -850.0f + sh2jms.player->pos.y;    
+    sh2jms.column_mov.p[1][3] = sh2jms.column_atk.p[1][3] = 200.0f;
+    
+    
+    sh2jms.col_mov_z_hosei = 0.0f;
+    sh2jms.col_atk_z_hosei = 0.0f;    
+    
+    
+    sh2jms.player->spd = sh2jms.player->spd_org = 0.0f;
+    
+    
+    PlayerSetReverseMode();
+    
+    
+    sh2jms.room_name_prev = sh2jms.room_name_now;
+    sh2jms.room_name_now = RoomNameJms();
+    
+    if ((sh2jms.room_name_prev == 0x5D) && (sh2jms.room_name_now == 0x5E)) { // @todo: add rooms
+    
+        sh2jms.player->grnd_height = 0.0f;
+        sh2jms.dist_pos.y = 0.0f;
+    }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", close_to_angle_target);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", close_to_value);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerReverseLightCalcIsOn);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerWaterRoadIsOn);
+
+
+
+
+
+}
+
+void PlayerStatusClear(void) {
+    
+    
+    sh2jms.hold_type = -1;
+    sh2jms.lock_on = 0;
+    sh2jms.running = 0;
+    sh2jms.hold_chg[0] = sh2jms.hold_chg[1] = 0;
+    sh2jms.hold_loop[0] = sh2jms.hold_loop[1] = 0;    
+    sh2jms.reload = 0;
+    sh2jms.atk_type = 0;
+    sh2jms.atk_reserve[0] = 0;
+    sh2jms.atk_reserve[1] = 0;
+    sh2jms.csaw_se_vol = 0.0f;
+    sh2jms.player->battle.atk_result = 0;
+    sh2jms.cam_chg_flg = 0;
+    sh2jms.shotgun_prev = sh2jms.shotgun_dir;
+    sh2jms.anime_pause = 0;
+    
+    
+    
+    shQzero(sh2jms.pad, sizeof(sh2jms.pad[0]));
+
+}
+
+void close_to_angle_target(float* now, float tgt, float min, float max, float spd) {
+    float rot_tmp; float mov_angle; float tgt_tmp; 
+    tgt_tmp = tgt;
+    
+    if (tgt > max) tgt_tmp = max;
+    if (tgt_tmp < min) tgt_tmp = min;
+    
+    rot_tmp = shAngleRegulate(*now - tgt_tmp);
+    mov_angle = (rot_tmp / 3.0915927410125734) * (spd * shGetDT()); // forgor a f?
+
+    if (rot_tmp >= 0.0f) {
+        if ((rot_tmp - mov_angle) <= 0.0f) 
+            *now = tgt_tmp;
+        else 
+            *now = *now - mov_angle;        
+    } else {
+        if ((rot_tmp - mov_angle) >= 0.0f) 
+            *now = tgt_tmp;
+        else 
+            *now = *now - mov_angle;        
+    }
+    *now = shAngleRegulate(*now);
+
+}
+
+void close_to_value(float* now, float tgt, float mov) {
+
+    
+
+    
+    if (*now != tgt) {
+        if (*now > tgt) {
+            *now = *now - mov;
+            if (*now < tgt) 
+                *now = tgt;            
+        } else {
+            *now = *now + mov;
+            if (*now > tgt)
+                *now = tgt;           
+        }
+    }
+}
+
+int PlayerReverseLightCalcIsOn(void) {
+    return sh2jms.light_reverse;
+}
+
+int PlayerWaterRoadIsOn(void) {
+    return sh2jms.water_road;
+}
 
 INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @905_0x0038C2D0);
 
