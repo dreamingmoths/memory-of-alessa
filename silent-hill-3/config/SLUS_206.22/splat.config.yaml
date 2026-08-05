@@ -16,3 +16,247 @@ options:
     # Prepend $ to VU registers.
     .set ACC, $ACC
     .set Q, $Q
+
+external_segments:
+  - name: engine
+    rom_start: 0x580
+    rom_end: 0x2C9080
+    vram: 0x00100000
+    bss_size: 0x1BA4B00
+    is_global: True
+
+  - name: mall_f_01
+    rom_start: 0x80
+    rom_end: 0x5580
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: motel_00
+    rom_start: 0x80
+    rom_end: 0xB00
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_b_00
+    rom_start: 0x80
+    rom_end: 0x3000
+    vram:  0x1F6D680
+    bss_size: 0x100
+
+  - name: hospital_f_03
+    rom_start: 0x80
+    rom_end: 0x3280
+    vram:  0x1F6D680
+    bss_size: 0x100
+
+  - name: church_03
+    rom_start: 0x80
+    rom_end: 0x980
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: building_f_01
+    rom_start: 0x80
+    rom_end: 0x2B80
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: amusement_02
+    rom_start: 0x80
+    rom_end: 0x9080
+    vram:  0x1F6D680
+    bss_size: 0x4500
+
+  - name: overlay_align
+    rom_start: 0x80
+    rom_end: 0x280
+    vram:  0x1F6D680
+
+  - name: mall_f_00
+    rom_start: 0x80
+    rom_end: 0x2580
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: apart_00
+    rom_start: 0x80
+    rom_end: 0x2A00
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_turning_00
+    rom_start: 0x80
+    rom_end: 0x3980
+    vram:  0x1F6D680
+    bss_size: 0x700
+
+  - name: building_b_00
+    rom_start: 0x80
+    rom_end: 0x2500
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: mall_b_01
+    rom_start: 0x80
+    rom_end: 0x5280
+    vram:  0x1F6D680
+    bss_size: 0x100
+
+  - name: sewer_01
+    rom_start: 0x80
+    rom_end: 0x3280
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: mall_b_02
+    rom_start: 0x80
+    rom_end: 0x1280
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: building_f_02
+    rom_start: 0x80
+    rom_end: 0x1200
+    vram:  0x1F6D680
+
+  - name: subway_00
+    rom_start: 0x80
+    rom_end: 0x2000
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: subway_01
+    rom_start: 0x80
+    rom_end: 0x3100
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_f_00
+    rom_start: 0x80
+    rom_end: 0x2480
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: building_f_00
+    rom_start: 0x80
+    rom_end: 0x1780
+    vram:  0x1F6D680
+
+  - name: sewer_00
+    rom_start: 0x80
+    rom_end: 0x2800
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: mall_b_00
+    rom_start: 0x80
+    rom_end: 0x4080
+    vram:  0x1F6D680
+    bss_size: 0x100
+
+  - name: car_00
+    rom_start: 0x80
+    rom_end: 0x680
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: amusement_00
+    rom_start: 0x80
+    rom_end: 0x5780
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: church_00
+    rom_start: 0x80
+    rom_end: 0x1000
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: building_b_02
+    rom_start: 0x80
+    rom_end: 0x1900
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: town_00
+    rom_start: 0x80
+    rom_end: 0xA00
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: amusement_01
+    rom_start: 0x80
+    rom_end: 0x7680
+    vram:  0x1F6D680
+    bss_size: 0x180
+
+  - name: church_02
+    rom_start: 0x80
+    rom_end: 0x9F80
+    vram:  0x1F6D680
+    bss_size: 0x400
+
+  - name: subway_02
+    rom_start: 0x80
+    rom_end: 0x1A80
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: building_b_01
+    rom_start: 0x80
+    rom_end: 0x1B00
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: church_01
+    rom_start: 0x80
+    rom_end: 0x3000
+    vram:  0x1F6D680
+    bss_size: 0x100
+
+  - name: heaven_00
+    rom_start: 0x80
+    rom_end: 0x300
+    vram:  0x1F6D680
+
+  - name: building_b_03
+    rom_start: 0x80
+    rom_end: 0x2600
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: city_00
+    rom_start: 0x80
+    rom_end: 0x580
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_b_02
+    rom_start: 0x80
+    rom_end: 0x6B00
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: construct_00
+    rom_start: 0x80
+    rom_end: 0x2400
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_f_01
+    rom_start: 0x80
+    rom_end: 0x4080
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_f_02
+    rom_start: 0x80
+    rom_end: 0x2980
+    vram:  0x1F6D680
+    bss_size: 0x80
+
+  - name: hospital_b_01
+    rom_start: 0x80
+    rom_end: 0x1580
+    vram:  0x1F6D680
+    bss_size: 0x80

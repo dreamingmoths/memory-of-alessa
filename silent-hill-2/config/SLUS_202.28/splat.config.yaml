@@ -17,3 +17,77 @@ options:
     # Prepend $ to VU registers.
     .set ACC, $ACC
     .set Q, $Q
+
+external_segments:
+  - name: engine
+    rom_start: 0x700
+    rom_end: 0x2C8480
+    vram: 0x0100000
+    bss_size: 0x1B3A080
+    is_global: True
+  - name: aot
+    rom_start: 0x0
+    rom_end: 0xF80
+    vram: 0x1F01E00
+    bss_size: 0x0
+  - name: toi
+    rom_start: 0x0
+    rom_end: 0xA80
+    vram: 0x1F01E00
+    bss_size: 0x280
+  - name: xxx
+    rom_start: 0x0
+    rom_end: 0x200
+    vram: 0x1E08700
+    bss_size: 0x0
+  - name: aew
+    rom_start: 0x0
+    rom_end: 0xA80
+    vram: 0x1F01E00
+    bss_size: 0x0
+  - name: aee
+    rom_start: 0x0
+    rom_end: 0x1280
+    vram: 0x1F01E00
+    bss_size: 0x780
+  - name: ast
+    rom_start: 0x0
+    rom_end: 0x1600
+    vram: 0x1F01E00
+    bss_size: 0x80
+  - name: aey
+    rom_start: 0x0
+    rom_end: 0x5980
+    vram: 0x1F01E00
+    bss_size: 0x80
+  - name: aex
+    rom_start: 0x0
+    rom_end: 0x1180
+    vram: 0x1F01E00
+    bss_size: 0x80
+  - name: awy
+    rom_start: 0x0
+    rom_end: 0x2100
+    vram: 0x1F01E00
+    bss_size: 0x0
+  - name: awx
+    rom_start: 0x0
+    rom_end: 0x2C00
+    vram: 0x1F01E00
+    bss_size: 0x80
+  - name: fst
+    rom_start: 0x0
+    rom_end: 0x2000
+    vram: 0x1F01E00
+    bss_size: 0x80
+  - name: twe
+    rom_start: 0x0
+    rom_end: 0x6400
+    vram: 0x1F01E00
+    bss_size: 0x800
+  - name: obs
+    rom_start: 0x0
+    rom_end: 0x1080
+    vram: 0x1F01E00
+    bss_size: 0x80
+

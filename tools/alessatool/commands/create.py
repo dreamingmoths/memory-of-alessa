@@ -22,7 +22,8 @@ run `alessatool create --help` for more information.
 
 
 from re import sub
-from json import load
+from json import load as load_json
+from yaml import dump as dump_yaml
 from pathlib import Path
 from hashlib import sha1, sha256
 from dataclasses import dataclass
@@ -48,6 +49,7 @@ class CreationInfo:
     template: str
     map_filename: Callable
     symbol_addrs_lines: list[str]
+    external_segments: list[dict]
 
 def align_next(value: int, alignment: int):
     return ((value + (alignment - 1)) // alignment) * alignment;
@@ -78,6 +80,14 @@ def _create_from_template(info: CreationInfo) -> str:
 
     for (key, value) in data.items():
         result = result.replace("${{ %s }}" % key, value)
+
+    info.external_segments.append({
+        "name": data["name"],
+        "rom_start": "0x0",
+        "rom_end": data["file_size"],
+        "vram": data["vram_start"],
+        "bss_size": data["bss_size"]
+    })
 
     return (result, data)
 
@@ -124,6 +134,7 @@ def create_overlay_yamls(args: CreationArgs):
         yaml_contents = template_yaml_file.read()
 
     checksum_lines = [_create_executable_checksum_line(args)]
+    external_segments = []
 
     for overlay_path in args.input_path.glob("*.bin"):
         name = overlay_path.stem
@@ -133,7 +144,7 @@ def create_overlay_yamls(args: CreationArgs):
         
         if args.filename_mapping_path:
             with open(args.filename_mapping_path) as filename_mapping_file:
-                filename_mapping = load(filename_mapping_file)
+                filename_mapping = load_json(filename_mapping_file)
                 map_filename = lambda key : filename_mapping[key]
         else:
             map_filename = lambda key : key
@@ -154,7 +165,8 @@ def create_overlay_yamls(args: CreationArgs):
                 overlay_contents=overlay_contents,
                 template=yaml_contents,
                 map_filename=map_filename,
-                symbol_addrs_lines=symbol_addrs_lines
+                symbol_addrs_lines=symbol_addrs_lines,
+                external_segments=external_segments
             )
             (result, data) = _create_from_template(creation_info)
         except Exception as exception:
@@ -163,14 +175,15 @@ def create_overlay_yamls(args: CreationArgs):
 
         checksum_lines.append(_create_overlay_checksum_line(args, creation_info, name))
 
-        ensure_path_and_write(args.output_path / f"{name}.yaml", result)
-        ensure_path_and_write(
-            args.output_path / f"{name}_symbol_addrs.txt",
-            "\n".join([
-                f"//* {name} === {map_filename(mw_header.name)} *//",
-                _parse_template_symbol_addrs(creation_info)
-            ])
-        )
+        # ensure_path_and_write(args.output_path / f"{name}.yaml", result)
+        # ensure_path_and_write(
+        #     args.output_path / f"{name}_symbol_addrs.txt",
+        #     "\n".join([
+        #         f"//* {name} === {map_filename(mw_header.name)} *//",
+        #         _parse_template_symbol_addrs(creation_info)
+        #     ])
+        # )
 
-    ensure_path_and_write(args.output_path.parent / "checksum.sha", "\n".join(checksum_lines) + "\n")
+    ensure_path_and_write(args.output_path.parent / "external_segments.yaml",  dump_yaml(external_segments, sort_keys=False))
+    # ensure_path_and_write(args.output_path.parent / "checksum.sha", "\n".join(checksum_lines) + "\n")
 
