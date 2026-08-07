@@ -1,6 +1,8 @@
+from dataclasses import dataclass
 from pathlib import Path
 from constants import ASM, SRC
 from os import stat
+from io import TextIOBase
 
 def normalize_object_path(path: Path, prefix_path: Path):
     '''
@@ -47,3 +49,43 @@ def get_file_size(file_path: Path):
 
 def hex_format(number: int) -> str:
     return f"0x{number:X}"
+
+@dataclass
+class SplatSymbol:
+    name: str
+    addr: int
+    addr_hex: str
+    duplicated: bool
+
+def parse_symbol_addrs(symbol_addrs: Path | TextIOBase) -> str:
+    '''
+    Simplified parsing of a Splat symbols file, assuming one symbol per address.
+    '''
+
+    syms: dict[SplatSymbol] = dict()
+
+    with open(symbol_addrs, "r") as symbol_addrs_file:
+        symbol_addrs_lines: list[str] = symbol_addrs_file.splitlines()
+
+        for line in symbol_addrs_lines:
+            line = line.strip()
+
+            if not line or line.startswith("//"):
+                continue
+
+            statement, comment = line.split(";")
+            name, addr_hex = statement.split("=")
+
+            name = name.strip()
+            addr_hex = addr_hex.strip().upper()
+            addr = int(addr_hex, 16)
+
+            duplicated = addr in syms
+            syms[addr] = SplatSymbol(
+                name=name,
+                addr=addr,
+                addr_hex=addr_hex,
+                duplicated=duplicated
+            )
+
+    return syms

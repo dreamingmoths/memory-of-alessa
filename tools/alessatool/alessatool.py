@@ -8,6 +8,7 @@ from commands.annotate import AnnotationArgs, annotate_asm
 from commands.patch import PatchArgs, patch_relocations
 from commands.merge import MergeArgs, merge_objdiff_units
 from commands.create import CreationArgs, create_overlay_yamls
+from commands.debug import DebugArgs, debug_nonmatching
 
 from commands.util import configure_util_parser
 
@@ -28,6 +29,9 @@ def merge(args: MergeArgs):
 
 def create(args: CreationArgs):
     create_overlay_yamls(args)
+
+def debug(args: DebugArgs):
+    debug_nonmatching(args)
 
 def main():
     parser = argparse.ArgumentParser(  
@@ -286,6 +290,17 @@ def main():
         help="a symbol_addrs template (see overlay_symbol_addrs.txt)"
     )
     create_parser.set_defaults(func=create)
+
+    debug_parser = subparsers.add_parser(
+        "debug",
+        help="troubleshoot issues when the build is not matching"
+    )
+    debug_parser.add_argument(
+        "--project",
+        default="silent-hill-3",
+        help="name of the project to debug (e.g., `silent-hill-2`)"
+    )
+    debug_parser.set_defaults(func=debug)
 
     util_parser = subparsers.add_parser(
         "util",

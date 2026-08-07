@@ -19,3 +19,8 @@ SECTION_DIRECTIVE = ".section "
 TEXT_SECTION_DIRECTIVE = ".section .text"
 UNIQUE_TEXT_SECTION_DIRECTIVE = '.section .text,"ax",@progbits,unique,'
 INCLUDE_MACRO_INC_DIRECTIVE = '.include "macro.inc"'
+
+PROJECT_CONFIGURATIONS = {
+    "silent-hill-2": SH2_SERIAL,
+    "silent-hill-3": SH3_SERIAL,
+}
