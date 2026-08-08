@@ -20,15 +20,17 @@ def normalize_object_path(path: Path, prefix_path: Path):
 
     return (prefix_path / path_str).as_posix()
 
-def relative_to_name(path_str: str, folder: str):
+def relative_to_name(path_str: str, folder: str, include_base=True):
     '''
     Get path after and including a certain folder name. Similar to
     `Path.relative_to`, but works with a string instead of a known path.
     '''
     folder = f"{folder}/"
+    result = path_str
     if folder in path_str:
-        path_str = folder + path_str.split(folder, 1)[1]
-    return path_str
+        result = include_base and folder or ""
+        result += path_str.split(folder, 1)[1]
+    return result
 
 def to_expected_path(base_path: str):
     '''
@@ -57,15 +59,9 @@ class SplatSymbol:
     addr_hex: str
     duplicated: bool
 
-def parse_symbol_addrs(symbol_addrs: Path | TextIOBase) -> str:
-    '''
-    Simplified parsing of a Splat symbols file, assuming one symbol per address.
-    '''
-
-    syms: dict[SplatSymbol] = dict()
-
+def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, syms: dict[SplatSymbol] | None = None) -> str:
     with open(symbol_addrs, "r") as symbol_addrs_file:
-        symbol_addrs_lines: list[str] = symbol_addrs_file.splitlines()
+        symbol_addrs_lines: list[str] = symbol_addrs_file.readlines()
 
         for line in symbol_addrs_lines:
             line = line.strip()
@@ -77,11 +73,11 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase) -> str:
             name, addr_hex = statement.split("=")
 
             name = name.strip()
-            addr_hex = addr_hex.strip().upper()
+            addr_hex = addr_hex.strip().replace("0x", "").upper()
             addr = int(addr_hex, 16)
 
-            duplicated = addr in syms
-            syms[addr] = SplatSymbol(
+            duplicated = name in syms
+            syms[name] = SplatSymbol(
                 name=name,
                 addr=addr,
                 addr_hex=addr_hex,
