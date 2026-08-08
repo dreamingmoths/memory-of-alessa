@@ -35,4 +35,3 @@ MWLD_FLAGS := \
 	-noinhibit-exec $(MWLD_OVERLAY_FLAGS)
 
 BSS_ALIGNMENT := 8
-
