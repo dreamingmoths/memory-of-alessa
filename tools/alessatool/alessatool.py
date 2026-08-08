@@ -238,7 +238,7 @@ def main():
 
     merge_parser = subparsers.add_parser(
         "merge",
-        help="merge objdiff.json fragments"
+        help="merge `.d` or objdiff.json fragments"
     )
     merge_subparsers = merge_parser.add_subparsers(dest="mode")
     objdiff_merge_parser = merge_subparsers.add_parser(name="objdiff")
