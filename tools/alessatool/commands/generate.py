@@ -126,7 +126,7 @@ def generate_linker_dependencies(args: GenerationArgs):
     for path_str in path_strs:
         output += f"{path_str}:\n"
 
-    output_path = ld_script_path.with_suffix(".d"),
+    output_path = ld_script_path.with_suffix(".d")
     ensure_path_and_write(output_path, output)
     append_to_file(ld_script_path.parent / INTERMEDIATE_D_NAME, main_exe_output)
 
