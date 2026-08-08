@@ -1,8 +1,14 @@
 '''
 alessatool/merge:
 
-merge objdiff units. this is helper script that takes a list of objdiff.json
-files from `alessatool generate` and combines them into one.
+merge temporary files. it has two modes:
+
+- `objdiff`: merge objdiff units. this is helper script that takes a list of
+  objdiff.json files from `alessatool generate` and combines them into one.
+
+- `dependencies`: merge `.d` files. splat can only see the dependencies
+  belonging to a single yaml, so we combine them to pass all object files to
+  mwld.  
 
 see `alessatool merge --help` for more information.
 '''
