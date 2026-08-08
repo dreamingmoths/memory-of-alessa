@@ -130,9 +130,6 @@ def generate_linker_dependencies(args: GenerationArgs):
     ensure_path_and_write(output_path, output)
     append_to_file(ld_script_path.parent / INTERMEDIATE_D_NAME, main_exe_output)
 
-    if args.verbose:
-        print(f"✅ alessatool/generate: wrote linker dependencies to {output_path}")
-
 def generate_lcf(args: GenerationArgs):
     '''
     Generate a linker command file. It uses an oversimplified method of looping
