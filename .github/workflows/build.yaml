@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - ci/test
+      - alessatool/merge/dependencies
     paths-ignore:
       - '**.md'
 
