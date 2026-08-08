@@ -6,7 +6,7 @@ from commands.generate import GenerationArgs, split_yaml
 from commands.extract import ExtractionArgs, extract_mfa
 from commands.annotate import AnnotationArgs, annotate_asm
 from commands.patch import PatchArgs, patch_relocations
-from commands.merge import MergeArgs, merge_objdiff_units
+from commands.merge import MergeArgs, merge_fragments
 from commands.create import CreationArgs, create_overlay_yamls
 
 from commands.util import configure_util_parser
@@ -24,7 +24,7 @@ def patch(args: PatchArgs):
     patch_relocations(args)
 
 def merge(args: MergeArgs):
-    merge_objdiff_units(args)
+    merge_fragments(args)
 
 def create(args: CreationArgs):
     create_overlay_yamls(args)
@@ -107,6 +107,11 @@ def main():
         "--no-lcf",
         action="store_true",
         help="don't generate a linker command file."
+    )
+    generate_parser.add_argument(
+        "--no-dependencies",
+        action="store_true",
+        help="don't generate linker dependencies."
     )
     generate_parser.add_argument(
         "--no-objdiff",
@@ -235,21 +240,30 @@ def main():
         "merge",
         help="merge objdiff.json fragments"
     )
-    merge_parser.add_argument(
-        "--output-path",
+    merge_subparsers = merge_parser.add_subparsers(dest="mode")
+    objdiff_merge_parser = merge_subparsers.add_parser(name="objdiff")
+    objdiff_merge_parser.add_argument(
+        "--objdiff-output-path",
         type=Path,
         default="objdiff.json"
     )
-    merge_parser.add_argument(
+    objdiff_merge_parser.add_argument(
         "--categories-path",
         type=Path,
         default=None
     )
-    merge_parser.add_argument(
+    objdiff_merge_parser.add_argument(
         "objdiff_fragments",
         type=Path,
         nargs="+",
         help="list of json files to merge"
+    )
+    dependencies_merge_parser = merge_subparsers.add_parser(name="dependencies")
+    dependencies_merge_parser.add_argument(
+        "--d-path",
+        type=Path,
+        required=True,
+        help=f"output .d filepath (should be sibling with {INTERMEDIATE_D_NAME})"
     )
     merge_parser.set_defaults(func=merge)
 

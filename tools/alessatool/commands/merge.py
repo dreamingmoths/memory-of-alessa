@@ -10,13 +10,17 @@ see `alessatool merge --help` for more information.
 from pathlib import Path
 from dataclasses import dataclass
 from json import load, dumps
-from utils import ensure_path_and_write
+
+from constants import INTERMEDIATE_D_NAME
+from utils import ensure_path_and_write, remove_file
 
 @dataclass
 class MergeArgs:
+    mode: str
     objdiff_fragments: list[Path]
     categories_path: Path
-    output_path: Path
+    objdiff_output_path: Path
+    d_path: Path
     verbose: bool
 
 def merge_objdiff_units(args: MergeArgs):
@@ -45,7 +49,41 @@ def merge_objdiff_units(args: MergeArgs):
         "units": units,
     })
 
-    ensure_path_and_write(args.output_path, result)
+    ensure_path_and_write(args.objdiff_output_path, result)
 
     if args.verbose:
         print(f"🟣 alessatool/merge: wrote objdiff.json")
+
+def merge_linker_dependencies(args: MergeArgs):
+    d_path = args.d_path
+    all_d_path = args.d_path.parent / INTERMEDIATE_D_NAME
+
+    with open(d_path) as d_file:
+        d_lines = d_file.readlines()
+
+    with open(all_d_path) as all_d_file:
+        all_d_contents = all_d_file.read() + "\n\n"
+
+    for index in range(1, len(d_lines)):
+        if not d_lines[index].startswith(" "): break
+
+    merged = d_lines[0] + all_d_contents + "".join(d_lines[index:])
+
+    with open(d_path.with_suffix(".d"), "w") as d_file:
+        d_file.write(merged)
+
+    remove_file(all_d_path)
+
+    if args.verbose:
+        print(f"🟣 alessatool/merge: wrote f{d_file.name}")
+
+def merge_fragments(args: MergeArgs):
+    match args.mode:
+        case "objdiff":
+            merge_objdiff_units(args)
+
+        case "dependencies":
+            merge_linker_dependencies(args)
+
+        case _:
+            raise Exception(f"unknown merge mode {args.mode}")

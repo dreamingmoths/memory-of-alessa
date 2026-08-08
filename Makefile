@@ -97,7 +97,7 @@ LD :=
 ifneq ($(NON_MATCHING),1)
 ifneq ($(LINK),0)
 	LD = $(WIBO) $(MWLD) -o "$@" $(MWLD_FLAGS) \
-			"$(LINKER_SCRIPT)" $(shell find $(BUILD) -name "*.o")
+			"$(LINKER_SCRIPT)" $(filter %.o, $^)
 endif
 endif
 
@@ -134,6 +134,7 @@ OBJDIFF_BINARY := objdiff-cli-$(PLATFORM)-$(ARCH)
 OBJDIFF := $(TOOLS)/$(OBJDIFF_BINARY)
 OBJDIFF_CONFIG := objdiff.json
 OBJDIFF_FRAGMENTS = $(patsubst $(CONFIG)/%.yaml, $(BUILD)/objdiff/%.json, $(YAMLS))
+CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge objdiff --categories-path $(CONFIG)/categories.json
 
 ALESSATOOL := $(PYTHON) $(TOOLS)/alessatool/alessatool.py --verbose
 ALESSATOOL_OVERLAY_LOCK := $(OVERLAY_SOURCE_DIR)/.lock
@@ -147,6 +148,7 @@ EXTRACT := extract \
 	--archive-path $(SOURCE_OVERLAY_ARCHIVE) \
 	--output-dir $(ROM) \
 	--overlay
+MERGE_DEPENDENCIES = merge dependencies --d-path $(LINKERS)/$(SERIAL).d
 
 GENERATE_FLAGS = --make-full-disasm-for-code
 GENERATE_OVERLAY_FLAGS = --no-lcf --make-full-disasm-for-code
@@ -160,7 +162,7 @@ endif
 ifeq ($(GENERATE_LCF),0)
 	GENERATE_FLAGS += --no-lcf
 endif
-GENERATE_EXPECTED := $(GENERATE) --no-lcf --make-full-disasm-for-code
+GENERATE_EXPECTED := $(GENERATE) --no-lcf --no-dependencies --make-full-disasm-for-code
 
 CHECK_MATCH_PERCENT :=
 ifneq ($(NON_MATCHING),1)
@@ -264,6 +266,7 @@ $(LINKERS)/%.d: $(CONFIG)/overlay/%.yaml $(OVERLAY_SPLAT_FILES) $(SETUP)
 
 $(LINKERS)/%.d: $(CONFIG)/%.yaml $(SPLAT_FILES) $(SETUP)
 	$(GENERATE) $(GENERATE_FLAGS) $(SPLAT_CONFIG) $<
+	$(ALESSATOOL) $(MERGE_DEPENDENCIES)
 
 $(BUILD)/$(SERIAL): $(SETUP) $(OVERLAY_TARGETS) $(LINKER_SCRIPT)
 	$(LD)

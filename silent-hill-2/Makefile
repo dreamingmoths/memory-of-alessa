@@ -36,4 +36,3 @@ MWLD_FLAGS := \
 
 BSS_ALIGNMENT := 8
 
-CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge --categories-path $(CONFIG)/categories.json

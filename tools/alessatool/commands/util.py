@@ -27,5 +27,6 @@ class LowercaseArgs:
     folder_path: Path
 
 def make_folder_lowercase(args: LowercaseArgs):
+    print(args)
     for file_path in args.folder_path.glob("*"):
         file_path.rename(file_path.parent / file_path.name.lower())
