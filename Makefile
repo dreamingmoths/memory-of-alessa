@@ -134,7 +134,9 @@ OBJDIFF_BINARY := objdiff-cli-$(PLATFORM)-$(ARCH)
 OBJDIFF := $(TOOLS)/$(OBJDIFF_BINARY)
 OBJDIFF_CONFIG := objdiff.json
 OBJDIFF_FRAGMENTS = $(patsubst $(CONFIG)/%.yaml, $(BUILD)/objdiff/%.json, $(YAMLS))
-CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge objdiff --categories-path $(CONFIG)/categories.json
+CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge objdiff \
+	--categories-path $(CONFIG)/categories.json \
+	--project $(PROJECT)
 
 ALESSATOOL := $(PYTHON) $(TOOLS)/alessatool/alessatool.py --verbose
 ALESSATOOL_OVERLAY_LOCK := $(OVERLAY_SOURCE_DIR)/.lock
@@ -156,13 +158,13 @@ ifeq ($(GENERATE_REPORT),0)
 	GENERATE_FLAGS += --no-objdiff
 	GENERATE_OVERLAY_FLAGS += --no-objdiff
 else
-	GENERATE_FLAGS += --objdiff-output-path=$(BUILD)/objdiff/$*.json
-	GENERATE_OVERLAY_FLAGS += --objdiff-output-path=$(BUILD)/objdiff/overlay/$*.json
+	GENERATE_FLAGS += --objdiff-output-path=$(BUILD)/objdiff/$*.json --no-dependencies
+	GENERATE_OVERLAY_FLAGS += --objdiff-output-path=$(BUILD)/objdiff/overlay/$*.json --no-dependencies
 endif
 ifeq ($(GENERATE_LCF),0)
 	GENERATE_FLAGS += --no-lcf
 endif
-GENERATE_EXPECTED := $(GENERATE) --no-lcf --no-dependencies --make-full-disasm-for-code
+GENERATE_EXPECTED := $(GENERATE) --no-lcf --make-full-disasm-for-code
 
 CHECK_MATCH_PERCENT :=
 ifneq ($(NON_MATCHING),1)
@@ -285,6 +287,7 @@ $(LINKER_SCRIPT): $(SPLAT_CONFIG) $(CONFIG)/$(SERIAL).yaml $(LINKER_TEMPLATE)
 
 $(OBJDIFF_CONFIG): $(OBJDIFF_FRAGMENTS)
 	$(CREATE_OBJDIFF_CONFIG) $^
+	$(ALESSATOOL) $(MERGE_DEPENDENCIES)
 
 $(BUILD)/objdiff/%.json: $(CONFIG)/%.yaml
 	$(GENERATE_EXPECTED) --objdiff-output-path=$(BUILD)/objdiff/$*.json --make-full-disasm-for-code $(SPLAT_CONFIG) $<

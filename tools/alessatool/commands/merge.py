@@ -28,6 +28,7 @@ class MergeArgs:
     objdiff_output_path: Path
     d_path: Path
     verbose: bool
+    project: Path
 
 def merge_objdiff_units(args: MergeArgs):
     units = []
@@ -49,8 +50,9 @@ def merge_objdiff_units(args: MergeArgs):
 
     result = dumps({
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
-        "build_base": False,
+        "build_base": True,
         "build_target": False,
+        "custom_args": [f"PROJECT={args.project}", "report", "-j"],
         "progress_categories": progress_categories,
         "units": units,
     })

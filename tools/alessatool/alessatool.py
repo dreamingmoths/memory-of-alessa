@@ -253,6 +253,11 @@ def main():
         default=None
     )
     objdiff_merge_parser.add_argument(
+        "--project",
+        type=str,
+        required=True
+    )
+    objdiff_merge_parser.add_argument(
         "objdiff_fragments",
         type=Path,
         nargs="+",
