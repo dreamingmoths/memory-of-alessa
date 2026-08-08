@@ -1,5 +1,7 @@
 #include "town_00.h"
 
+Town00Struct state_town_00; // 0x01F6E000
+
 int func_01F6D680_town_00() {
     int var_s0  = 0;
 
