@@ -5,7 +5,7 @@ troubleshoot issues with nonmatching builds.
 
 example:
 
-alessatool debug --executable SLUS_206.22
+alessatool debug --project silent-hill-2
 
 run `alessatool debug --help` for more information.
 '''
@@ -87,6 +87,10 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             if target_symbol.duplicated:
                 continue
 
+            if object_file.endswith(".c.o") and symbol_name.startswith("@"):
+                # don't bother trying to match anonymous symbols
+                continue
+
             if target_symbol.addr != address:
                 reason = f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}\n"
                 reason += f"mismatch was found in {object_file}, but it may have been earlier than that."
@@ -94,7 +98,7 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
                 break
 
     if reason is None:
-        print("🗺️  no mapfile errors found!")
+        print("🗺️  no mapfile errors found")
     else:
         print("surrounding context:")
         CONTEXT_WINDOW = 2
@@ -141,6 +145,47 @@ def discover_yamls(debug_info: DebugInfo):
 
     return exe_info_by_name
 
+def run_bin_diff(debug_info: DebugInfo, exe_info_by_name: dict[str, ExecutableInfo]):
+    serial = debug_info.serial
+    mismatching_files = []
+
+    for name, exe_info in exe_info_by_name.items():
+        target_path = exe_info.target_path
+        bin_path = relative_to_name(target_path.as_posix(), ROM, include_base=False)
+
+        target_path = Path(ROM) / serial / bin_path
+        base_path = Path(BUILD) / serial / target_path.name
+
+        if target_path.name == serial:
+            target_path = Path(target_path.as_posix() + ".rom")
+            base_path   = Path(base_path.as_posix() + ".rom")
+
+        result = run(["cmp", target_path, base_path], capture_output=True)
+
+        if result.returncode:
+            mismatching_files.append((exe_info, result.stdout.decode().strip()))
+
+    match len(mismatching_files):
+        case 1:
+            info, cmp_output = mismatching_files.pop()
+
+            print(f"🔴 {cmp_output}")
+            if cmp_output:
+                file_offset = int(findall(r"char (\d+)", cmp_output).pop())
+                vram_addr = info.to_vram(file_offset)
+                print(f"\t@ vram address 0x{vram_addr:X} / file offset 0x{file_offset:X}")
+
+                all_syms_sorted: list[SplatSymbol] = list(sorted(info.syms.values(), key=lambda sym : sym.addr))
+                first_mismatching_symbol_index = bisect_left(all_syms_sorted, vram_addr, key=lambda sym : sym.addr)
+                first_mismatching_symbol = all_syms_sorted[first_mismatching_symbol_index - 1]
+                print(f"\tperhaps this belongs to {first_mismatching_symbol.name} at 0x{first_mismatching_symbol.addr:X}?")
+
+        case 0:
+            print("🟣 no mismatches found")
+
+        case _:
+            print(f"🔴 {len(mismatching_files)} mismatching files")
+
 def debug_nonmatching(args: DebugArgs):
     project = args.project
     serial = PROJECT_CONFIGURATIONS[project]
@@ -153,3 +198,5 @@ def debug_nonmatching(args: DebugArgs):
 
     mapfile_path = Path(BUILD) / serial / f"{serial}.xMAP"
     parse_mw_mapfile(mapfile_path, exe_info_by_name)
+
+    run_bin_diff(debug_info, exe_info_by_name)
