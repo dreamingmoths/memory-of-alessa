@@ -15,16 +15,13 @@ int doni_anime_adr_list[10] = {
     0x00000000, 
     0x00028458, 
     0x0004A60C, 
-    0x0000BC24,
-};
-
+    0x0000BC24
+}; // size: 0x28, address: 0x34C300
 
 // @todo: migrate rodata
 
 extern /* static */ AnimeInfo oni_anim[16]; // size: 0xC0, address: 0x396EA0
 extern /* static */ AnimeInfo d_oni_anim[10]; // size: 0x78, address: 0x396F60
-//extern /* static */ int doni_anime_adr_list[10]; // size: 0x28, address: 0x34C300
-
 
 static int EnemyONIInit(SubCharacter* scp);
 static void EnemyONIFunction(SubCharacter* scp);
