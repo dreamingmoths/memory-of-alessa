@@ -4,6 +4,8 @@
 #include "SH2_common/sh2dt.h"
 #include "Event/event.h"
 
+#include "vec.h"
+
 // @todo: migrate data
 
 extern /* static */ EnANIME_DATA EnREDAnime[11]; 
@@ -13,7 +15,7 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
 /* static */ void enREDCtrlEvent(EnLOCAL_DATA* dp);
-
+/* static */ void enREDCtrlWander(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlHand(void);
 
 /* static */ void enREDCtrlAttack(EnLOCAL_DATA* dp);
@@ -32,11 +34,11 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp);
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDInitData); // matched https://decomp.me/scratch/N1mXg
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlMain);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlMain); // matched https://decomp.me/scratch/IGw2E
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched https://decomp.me/scratch/jZmHW
 
 /* static */ void enREDCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
     if (enCheckSleepOut(dp)) {
@@ -90,7 +92,40 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic);
     return;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlWander);
+/* static */ void enREDCtrlWander(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x20
+    int t; // r2
+    if (enCheckDamage(dp)) {
+        if (enREDSetDamage(dp)) {
+            ENEMY_STEP(7);
+            return;
+        }
+        if (enCheckSpray(dp)) {
+            ENEMY_STEP(6);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enREDAnimeSet(dp, 1);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    enREDGetWalkSpeed(dp);
+    
+    shSinCosV_Scale(&vec, dp->scp->rot.y, 1500.0f);
+    vu0_add_vector(&vec, &dp->scp->pos, &vec);
+    enSetPath(dp, &vec, &dp->scp->pos);
+    enMoveAngle(&dp->path, enREDGetRotSpeed());
+    dp->scp->rot.y = dp->path.angle;
+    
+    t = enREDCanSeePlayer(dp);
+    if (t >= 2) {
+        ENEMY_STEP(4);
+    } else if (t == 1) {
+        ENEMY_STEP(1);
+    }
+    enREDSoundLife(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlChase);
 
