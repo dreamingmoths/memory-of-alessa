@@ -2,6 +2,7 @@
 #define CHARA_ADMIN_H
 
 #include "Chacter/character.h"
+#include "Event/event.h"
 #include "Event/chara_data_load.h"
 
 typedef struct CharaAdmin_RoomDistance {

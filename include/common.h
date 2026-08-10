@@ -271,6 +271,7 @@ extern float fmodf(float, float);
 extern float sqrtf(float);
 extern u_int fptoui(float);
 extern double dpdiv(double, double);
+extern int fptosi(float);
 extern void qsort(int*, int, int, int (*)(void*, void*));
 
 #endif

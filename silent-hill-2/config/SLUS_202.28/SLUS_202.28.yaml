@@ -625,6 +625,8 @@ segments:
       - { vram: 0x0491820, type: bss,  name: bss_0x0491820 }
       - { vram: 0x0e3c250, type: .bss, name: GFW/sh2gfw_GSCTL_man }
       - { vram: 0x0e40280, type: bss,  name: bss_0x0e40280 }
+      - { vram: 0x1133148, type: .bss, name: Event/demoview }
+      - { vram: 0x1133c30, type: bss,  name: bss_0x1133c30 }
       - { vram: 0x1159230, type: .bss, name: Multi_thr/filesys/fileserv }
       - { vram: 0x1159238, type: bss,  name: bss_0x1159238 }
       - { vram: 0x116d788, type: .bss, name: Event/title }

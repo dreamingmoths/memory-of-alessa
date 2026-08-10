@@ -37,6 +37,42 @@ typedef struct DramaDemo_PlayInfo {
     float add_pos_z; // offset 0x24, size 0x4
 } DramaDemo_PlayInfo;
 
+typedef struct DramaDemo_AnimInfo {
+    // total size: 0x28
+    char name[32]; // offset 0x0, size 0x20
+    short kind; // offset 0x20, size 0x2
+    short id; // offset 0x22, size 0x2
+    short start; // offset 0x24, size 0x2
+    short end; // offset 0x26, size 0x2
+} DramaDemo_AnimInfo;
+
+typedef struct /* @anon6 */ {
+    // total size: 0x360
+    float frame; // offset 0x0, size 0x4
+    struct /* @anon2 */ {
+        // total size: 0x30
+        sceVu0FVECTOR position; // offset 0x0, size 0x10
+        sceVu0FVECTOR interest; // offset 0x10, size 0x10
+        float roll; // offset 0x20, size 0x4
+        float plane; // offset 0x24, size 0x4
+    } camera; // offset 0x10, size 0x30
+    struct /* @anon3 */ {
+        // total size: 0x60
+        sceVu0FVECTOR position; // offset 0x0, size 0x10
+        sceVu0FVECTOR interest; // offset 0x10, size 0x10
+        float roll; // offset 0x20, size 0x4
+        sceVu0FVECTOR color; // offset 0x30, size 0x10
+        float falloff[2]; // offset 0x40, size 0x8
+        float cone[2]; // offset 0x48, size 0x8
+        signed int visible; // offset 0x50, size 0x4
+    } light[6]; // offset 0x40, size 0x240
+    struct /* @anon4 */ {
+        // total size: 0x20
+        sceVu0FVECTOR position; // offset 0x0, size 0x10
+        signed int visible; // offset 0x10, size 0x4
+    } character[7]; // offset 0x280, size 0xE0
+} DdsFrame;
+
 int DramaDemoMain(DramaDemo_PlayInfo* info);
 void DramaDemoSkipLast(DramaDemo_PlayInfo* info);
 void DramaDemoFade(void);
