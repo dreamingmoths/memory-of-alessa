@@ -1,7 +1,8 @@
 #ifndef DEMOVIEW_H
 #define DEMOVIEW_H
 
-#include "common.h"
+#include "sh2_common.h"
+#include "Chacter/character.h"
 
 #define DRAMA_DEMO_9  0x9
 #define DRAMA_DEMO_D  0xD
@@ -13,6 +14,53 @@
 #define DRAMA_DEMO_42 0x42
 #define DRAMA_DEMO_4A 0x4A
 #define DRAMA_DEMO_4E 0x4E
+
+#define DdsGetFlag(_flag) GET_BIT(demo_status, _flag)
+#define DdsSetFlag(_flag) SET_BIT(demo_status, _flag)
+#define DdsUnsetFlag(_flag) UNSET_BIT(demo_status, _flag)
+
+#define DDS_FLAG_0                   0
+#define DDS_FLAG_FLOAT32             1
+#define DDS_FLAG_START               2
+#define DDS_FLAG_SUBTITLES_SHOWN     3
+#define DDS_FLAG_4                   4
+#define DDS_FLAG_5                   5
+#define DDS_FLAG_6                   6
+#define DDS_FLAG_7                   7
+#define DDS_FLAG_8                   8
+#define DDS_FLAG_9                   9
+
+#define DDS_PLAY_KEY_BREAK           11
+#define DDS_PLAY_KEY_16              16
+#define DDS_PLAY_KEY_17              17
+#define DDS_PLAY_KEY_18              18
+#define DDS_PLAY_KEY_19              19
+#define DDS_PLAY_KEY_20              20
+
+#define DDS_PLAY_CAMERA_POSITION     3
+#define DDS_PLAY_CAMERA_INTEREST     4
+#define DDS_PLAY_CAMERA_ROTATION     5
+#define DDS_PLAY_CAMERA_ROLL         6
+#define DDS_PLAY_CAMERA_PLANE        7
+#define DDS_PLAY_CAMERA_8            8
+#define DDS_PLAY_CAMERA_9            9
+#define DDS_PLAY_CAMERA_10           10
+#define DDS_PLAY_CAMERA_11           11
+
+#define DDS_PLAY_LIGHT_VISIBLE       1
+#define DDS_PLAY_LIGHT_INVISIBLE     2
+#define DDS_PLAY_LIGHT_POSITION      3
+#define DDS_PLAY_LIGHT_INTEREST      4
+#define DDS_PLAY_LIGHT_ROTATION      5
+#define DDS_PLAY_LIGHT_COLOR         8
+#define DDS_PLAY_LIGHT_FALLOFF       9
+#define DDS_PLAY_LIGHT_CONE          10
+#define DDS_PLAY_LIGHT_11            11
+
+#define DDS_PLAY_CHARACTER_VISIBLE   1
+#define DDS_PLAY_CHARACTER_INVISIBLE 2
+#define DDS_PLAY_CHARACTER_POSITION  3
+#define DDS_PLAY_CHARACTER_11        11
 
 // total size: 0x4
 typedef struct DramaDemo_MessageTime {

@@ -29,8 +29,8 @@
 #include "Chacter/m3_red.h"
 #include "Chacter/m3_bos.h"
 
-#include "Event/event.h"
 #include "Event/demoview.h"
+#include "Event/event.h"
 #include "Event/picture.h"
 #include "Event/chara_admin.h"
 #include "Event/chara_data_load.h"
@@ -648,11 +648,10 @@ DramaDemo_MessageTime* sbt_msg_time; // size: 0x4, address: 0x1133160
 int sbt_str_no;                      // size: 0x4, address: 0x1133158
 static float sbt_timer = 0.0f;       // size: 0x4, address: 0x1133148
 
-static inline float fast_fptosi(float x) {
-    asm volatile("cvt.w.s %0, %0; cvt.s.w %0, %0": "+f"(x));
-    return x;
-}
 
+/* ================ inlines & macros ================ */
+
+#define DdsReadByte() (*(((s_char*) adr_dds)++))
 static inline void DdsSkipBytes(int size) {
     (s_char*) adr_dds += size;
 }
@@ -660,7 +659,6 @@ static inline void DdsReadString(s_char* buf) {
     strncpy(buf, (s_char*) adr_dds, 16);
     DdsSkipBytes(16);
 }
-#define DdsReadByte() (*(((s_char*) adr_dds)++))
 
 static short DdsReadShort(void) {
     u_char c_work[2];
@@ -668,7 +666,12 @@ static short DdsReadShort(void) {
     c_work[0] = DdsReadByte();
     c_work[1] = DdsReadByte();
     
-    return *(short *)c_work;
+    return *(short*) c_work;
+}
+
+static inline float fast_fptosi(float x) {
+    asm volatile("cvt.w.s %0, %0; cvt.s.w %0, %0": "+f"(x));
+    return x;
 }
 
 // @note: very similar to GetSF in anime.c.
@@ -705,6 +708,8 @@ static float DdsReadFloat4(void) {
     return *(float *)c_work;
 }
 
+/* ================ code ================ */
+
 #line 230
 int DramaDemoMain(DramaDemo_PlayInfo* info) {
     static float stop_counter; // @ 0x01133150
@@ -724,18 +729,18 @@ int DramaDemoMain(DramaDemo_PlayInfo* info) {
     demo_number = info->demo_no;
     
     if (info->stream_no != 0) {
-        if (!GET_BIT(demo_status, 7)) {
+        if (!DdsGetFlag(DDS_FLAG_7)) {
             if (!(shSdStat() & 0xF0)) shSdCall(info->stream_no, 0, 0, 0);
             shResetDF();
-            SET_BIT(demo_status, 7);
-        } else if (!GET_BIT(demo_status, 8) && demo_frame >= info->stream_start) {
+            DdsSetFlag(DDS_FLAG_7);
+        } else if (!DdsGetFlag(DDS_FLAG_8) && demo_frame >= info->stream_start) {
             // @todo: add macros
             if ((shSdStat() & 0xF0) == 0x40) {
                 stop_counter += shGetDTreal();
                 printf("Stream read stop: %5.3f\n", stop_counter);
                 shSdCall(SH2_SOUND_1015, 0, 0, 0);
                 shResetDF();
-                SET_BIT(demo_status, 8);
+                DdsSetFlag(DDS_FLAG_8);
             } else {
                 stop_counter += shGetDTreal();
                 shSetDFZero();
@@ -745,7 +750,7 @@ int DramaDemoMain(DramaDemo_PlayInfo* info) {
 
     
     ret = DdsPlay(info);
-    if (!GET_BIT(demo_status, 9) && shPadTrigger(0, key_config.skip)) {
+    if (!DdsGetFlag(DDS_FLAG_9) && shPadTrigger(0, key_config.skip)) {
         ret = 1;
         fontClear();
         shSdCall(SH2_SOUND_1012, 0, 0, 0);
@@ -821,9 +826,9 @@ static int DramaDemoInit(DramaDemo_PlayInfo* info /* r18 */) {
             DdsPlayLight(c_work - 2);
         else DdsPlayCharacter(c_work - total_light - 2);
     }
-    if (GET_BIT(demo_status, 2)) {
+    if (DdsGetFlag(DDS_FLAG_START)) {
         DramaDemoAnimationStart(info->adr_anim);
-        UNSET_BIT(demo_status, 2);
+        DdsUnsetFlag(DDS_FLAG_START);
     }
     memcpy(&last, &next, sizeof(DdsFrame));
     
@@ -949,9 +954,9 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     DramaDemoFade();
     
     if(fptosi(last.frame) < fptosi(demo_frame)) {
-        if (GET_BIT(demo_status, 2)) {
+        if (DdsGetFlag(DDS_FLAG_START)) {
             DramaDemoAnimationStart(info->adr_anim);
-            UNSET_BIT(demo_status, 2);
+            DdsUnsetFlag(DDS_FLAG_START);
         }
     
         
@@ -971,9 +976,9 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
         
         
         
-        UNSET_BIT(demo_status, 0);
+        DdsUnsetFlag(DDS_FLAG_0);
         while (true) {
-            UNSET_BIT(demo_status, 1);
+            DdsUnsetFlag(DDS_FLAG_FLOAT32);
         
             s_work = DdsReadShort();
             DdsSkipBytes(-2);
@@ -1002,9 +1007,9 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
                 
                 fontClear();
                 demo_msg_no++;
-                UNSET_BIT(demo_status, 3);
+                DdsUnsetFlag(DDS_SUBTITLES_SHOWN);
             }
-            if ((int) msg_frame > ((int) info->adr_msg_time[demo_msg_no].start) && !(GET_BIT(demo_status, 3))) {
+            if ((int) msg_frame > ((int) info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_SUBTITLES_SHOWN))) {
                 
                 fontMessageNum(msg_buffer, info->msg_start + demo_msg_no);
                 demo_status |= 8;
@@ -1092,10 +1097,10 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
 
     
     last.frame = demo_frame;
-    if (GET_BIT(demo_status, 5) && (((shSdStat() & 0xF0) == 0x10) || ((shSdStat() & 0xF0) == 0x50))) {
+    if (DdsGetFlag(DDS_FLAG_5) && (((shSdStat() & 0xF0) == 0x10) || ((shSdStat() & 0xF0) == 0x50))) {
         
         shResetDF();
-        UNSET_BIT(demo_status, 5);
+        DdsUnsetFlag(DDS_FLAG_5);
     }
     if (demo_frame < total_demo_frame) {
         demo_frame += 30.0f * shGetDT();
@@ -1121,20 +1126,20 @@ void DdsPlayKey(void) {
     while (1) {
         c_work = DdsReadByte();
         switch (c_work) {
-            case 16:
-                SET_BIT(demo_status, 0);
-                SET_BIT(demo_status, 1);
+            case DDS_PLAY_KEY_16:
+                DdsSetFlag(DDS_FLAG_0);
+                DdsSetFlag(DDS_FLAG_FLOAT32);
                 break;
-            case 17:
-                SET_BIT(demo_status, 2);
+            case DDS_PLAY_KEY_17:
+                DdsSetFlag(DDS_FLAG_START);
                 break;
-            case 20:
-                SET_BIT(demo_status, 4);
+            case DDS_PLAY_KEY_20:
+                DdsSetFlag(DDS_FLAG_4);
                 break;
             case 18:
             case 19:
                 break;
-            case 11 /* 0xB (break?) */:
+            case DDS_PLAY_KEY_BREAK /* 0xB (break?) */:
                 return;
         }
     }
@@ -1149,8 +1154,8 @@ static void DdsPlayCamera(void) {
     while (1) {
         c_work = DdsReadByte();
         switch (c_work) {
-            case 3:
-                if (GET_BIT(demo_status, 1)) {
+            case DDS_PLAY_CAMERA_POSITION:
+                if (DdsGetFlag(DDS_FLAG_FLOAT32)) {
                     for (i = 0; i < 3; i++) {
                         next.camera.position[i] = base.camera.position[i] = DdsReadFloat4();
 
@@ -1163,8 +1168,8 @@ static void DdsPlayCamera(void) {
                 }
                 break;
             
-            case 4:
-                if (GET_BIT(demo_status, 1)) {
+            case DDS_PLAY_CAMERA_INTEREST:
+                if (DdsGetFlag(DDS_FLAG_FLOAT32)) {
                     for (i = 0; i < 3; i++) {
                         next.camera.interest[i] = base.camera.interest[i] = DdsReadFloat4();
                     
@@ -1177,7 +1182,7 @@ static void DdsPlayCamera(void) {
                 }
                 break;
             
-            case 5:
+            case DDS_PLAY_CAMERA_ROTATION:
                 camera_rotation[0] = DdsReadFloat2();
                 camera_rotation[1] = DdsReadFloat2();
                 camera_rotation[2] = DdsReadFloat2();
@@ -1187,24 +1192,25 @@ static void DdsPlayCamera(void) {
                 
                 break;
             
-            case 6:
+            case DDS_PLAY_CAMERA_ROLL:
                 next.camera.roll = DdsReadFloat2();
                 break;
             
-            case 7:
+            case DDS_PLAY_CAMERA_PLANE:
                 next.camera.plane = DdsReadFloat4();
                 break;
         
             
-            case 8:
-            case 9:
-            case 10:
-            case 11:
+            case DDS_PLAY_CAMERA_8:
+            case DDS_PLAY_CAMERA_9:
+            case DDS_PLAY_CAMERA_10:
+            case DDS_PLAY_CAMERA_11:
             default:
                 return;
         }
     }
 }
+
 
 #line 772
 static void DdsPlayLight(int no /* r16 */) {
@@ -1215,8 +1221,8 @@ static void DdsPlayLight(int no /* r16 */) {
     while (1) {
         c_work = DdsReadByte();
         switch (c_work) {
-            case 3:
-                if (GET_BIT(demo_status, 1)) {
+            case DDS_PLAY_LIGHT_POSITION:
+                if (DdsGetFlag(DDS_FLAG_FLOAT32)) {
                     for (i = 0; i < 3; i++) {
                         next.light[no].position[i] = base.light[no].position[i] = DdsReadFloat4();
                     }
@@ -1226,8 +1232,8 @@ static void DdsPlayLight(int no /* r16 */) {
                     }
                 }
                 break;
-            case 4:
-                if (GET_BIT(demo_status, 1)) {
+            case DDS_PLAY_LIGHT_INTEREST:
+                if (DdsGetFlag(DDS_FLAG_FLOAT32)) {
                     for (i = 0; i < 3; i++) {
                         next.light[no].interest[i] = base.light[no].interest[i] = DdsReadFloat4();
                     }
@@ -1237,33 +1243,33 @@ static void DdsPlayLight(int no /* r16 */) {
                     }
                 }
                 break;
-            case 5:
+            case DDS_PLAY_LIGHT_ROTATION:
                 light_rotation[0] = DdsReadFloat2();
                 light_rotation[1] = DdsReadFloat2();
                 light_rotation[2] = DdsReadFloat2();
                 light_rotation[3] = 0;
                 RotationToInterest(next.light[no].position, light_rotation, next.light[no].interest, NULL);
                 break;
-            case 8:
+            case DDS_PLAY_LIGHT_COLOR:
                 next.light[no].color[0] = DdsReadFloat2();
                 next.light[no].color[1] = DdsReadFloat2();
                 next.light[no].color[2] = DdsReadFloat2();
                 break;
-            case 9:
+            case DDS_PLAY_LIGHT_FALLOFF:
                 next.light[no].falloff[0] = DdsReadFloat2();
                 next.light[no].falloff[1] = DdsReadFloat2();
                 break;
-            case 10:
+            case DDS_PLAY_LIGHT_CONE:
                 next.light[no].cone[0] = DdsReadFloat2();
                 next.light[no].cone[1] = DdsReadFloat2();
                 break;
-            case 1:
+            case DDS_PLAY_LIGHT_VISIBLE:
                 next.light[no].visible = true;
                 break;
-            case 2:
+            case DDS_PLAY_LIGHT_INVISIBLE:
                 next.light[no].visible = false;
                 break;
-            case 11:
+            case DDS_PLAY_LIGHT_11:
             default:
                 return;
         }
@@ -1278,14 +1284,14 @@ static void DdsPlayCharacter(int no /* r8 */) {
     while (1) {
         c_work = DdsReadByte();
         switch (c_work) {
-            case 1:
+            case DDS_PLAY_CHARACTER_VISIBLE:
                 next.character[no].visible = true;
                 break;
-            case 2:
+            case DDS_PLAY_CHARACTER_INVISIBLE:
                 next.character[no].visible = false;
                 break;
-            case 3:
-                if (GET_BIT(demo_status, 1)) {
+            case DDS_PLAY_CHARACTER_POSITION:
+                if (DdsGetFlag(DDS_FLAG_FLOAT32)) {
                     for (i = 0; i < 3; i++) {
                         next.character[no].position[i] = base.character[no].position[i] = DdsReadFloat4();
                         
@@ -1297,7 +1303,7 @@ static void DdsPlayCharacter(int no /* r8 */) {
                 }
                 break;
             default:
-            case 11:
+            case DDS_PLAY_CHARACTER_11:
                 return;
         }
     }
@@ -1317,12 +1323,12 @@ void DramaDemoSkipLast(DramaDemo_PlayInfo * info /* r16 */) {
     
     if(fptosi(last.frame) < fptosi(demo_frame)) {
         while (true) {
-            if (GET_BIT(demo_status, 2)) {
+            if (DdsGetFlag(DDS_FLAG_START)) {
                 DramaDemoAnimationStart(info->adr_anim);
-                UNSET_BIT(demo_status, 2);
+                DdsUnsetFlag(DDS_FLAG_START);
             }
 
-            UNSET_BIT(demo_status, 0);
+            DdsUnsetFlag(DDS_FLAG_0);
         
             s_work = DdsReadShort();
             DdsSkipBytes(-2);
@@ -1332,7 +1338,7 @@ void DramaDemoSkipLast(DramaDemo_PlayInfo * info /* r16 */) {
             memcpy(&last, &next, sizeof(DdsFrame));
             DdsSkipBytes(2);
             while (1) {
-                UNSET_BIT(demo_status, 1);
+                DdsUnsetFlag(DDS_FLAG_FLOAT32);
                 node_no = DdsReadByte();
                 if (node_no == 0xFF) break;
                 if (node_no == 0) DdsPlayKey();
@@ -1458,19 +1464,19 @@ void SubtitlesManager(void) {
                     return;
                 }
                 shSdCall(SH2_SOUND_1015, 0, 0, 0);
-                UNSET_BIT(demo_status, 3);
+                DdsUnsetFlag(DDS_FLAG_SUBTITLES_SHOWN);
             }
             sbt_timer += 30.0f * shGetDT();
             if (playing.subtitles) {
                 if ((int) sbt_timer > sbt_msg_time->end) {
                     fontClear();
                     sbt_msg_time++;
-                    UNSET_BIT(demo_status, 3);
+                    DdsUnsetFlag(DDS_FLAG_SUBTITLES_SHOWN);
                 }
-                if (((int) sbt_timer > sbt_msg_time->start) && !GET_BIT(demo_status, 3)) {
+                if (((int) sbt_timer > sbt_msg_time->start) && !DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN)) {
                     fontMessageNum(msg_buffer, sbt_msg_no);
                     sbt_msg_no++;
-                    SET_BIT(demo_status, 3);
+                    DdsSetFlag(DDS_FLAG_SUBTITLES_SHOWN);
                 }
             }
         }
