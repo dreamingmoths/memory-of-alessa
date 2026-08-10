@@ -402,6 +402,8 @@ segments:
       - [0x1b6c30, data,    data_0x1b6c30]
       # - [0x1b87c0, .data,   sound/sh_sound]
       - [0x1b9ae0, data,    data_0x1b9ae0]
+      - [0x1ba780, .data,   Event/demoview]
+      - [0x1bb3d8, data,    data_0x1bb3d8]
       - [0x1bb580, .data,   Font/font]
       - [0x1bb5c0, data,    data_0x1bb5c0]
       - [0x23bf80, .data,   Event/title]

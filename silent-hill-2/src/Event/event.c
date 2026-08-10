@@ -5,6 +5,7 @@
 #include "GFW/sh2gfw_LightSet.h"
 #include "Chacter_Draw/sh2_JmsSpot_Man.h"
 #include "SH2_common/playing_info.h"
+#include "Event/demoview.h"
 
 static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
 static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */);

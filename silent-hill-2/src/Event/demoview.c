@@ -57,42 +57,596 @@ static void DdsPlayCamera(void);
 static void DdsPlayLight(int no);
 static void DdsPlayCharacter(int no);
 
-/* ========= data ========= */
+/* ================ data ================ */
 
-static DramaDemo_AnimInfo anim_info[79]; // size: 0xC58, address: 0x2BA080
+static DramaDemo_AnimInfo anim_info[79] = {
+    {
+        /* .name = */                  "hhh_jms_pos",
+        /* .kind = */                  HHH_JMS_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 1000,
+        /* .end = */                   1165
+    },
+    {
+        /* .name = */                  "hhl_jms_pos",
+        /* .kind = */                  HHL_JMS_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 1166,
+        /* .end = */                   1187
+    },
+    {
+        /* .name = */                  "hll_jms_pos",
+        /* .kind = */                  HLL_JMS_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 952,
+        /* .end = */                   972
+    },
+    {
+        /* .name = */                  "lll_jms_pos",
+        /* .kind = */                  LLL_JMS_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 973,
+        /* .end = */                   979
+    },
+    {
+        /* .name = */                  "hhh_mar_pos",
+        /* .kind = */                  HHH_MAR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 3000,
+        /* .end = */                   3029
+    },
+    {
+        /* .name = */                  "lll_mar_pos",
+        /* .kind = */                  LLL_MAR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 42,
+        /* .end = */                   46
+    },
+    {
+        /* .name = */                  "lau_pos",
+        /* .kind = */                  LAU_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 2500,
+        /* .end = */                   2540
+    },
+    {
+        /* .name = */                  "hhh_edi_pos",
+        /* .kind = */                  HHH_EDI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 4503,
+        /* .end = */                   4527
+    },
+    {
+        /* .name = */                  "lll_edi_pos",
+        /* .kind = */                  EN_LLL_EDI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6801,
+        /* .end = */                   6801
+    },
+    {
+        /* .name = */                  "agl_pos",
+        /* .kind = */                  AGL_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 3500,
+        /* .end = */                   3531
+    },
+    {
+        /* .name = */                  "mry_pos",
+        /* .kind = */                  MRY_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 4002,
+        /* .end = */                   4020
+    },
+    {
+        /* .name = */                  "mxx_pos",
+        /* .kind = */                  HHH_MXX_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 4102,
+        /* .end = */                   4110
+    },
+    {
+        /* .name = */                  "inu_pos",
+        /* .kind = */                  INU_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 4901,
+        /* .end = */                   4902
+    },
+    {
+        /* .name = */                  "boat_pos",
+        /* .kind = */                  BOAT_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 56,
+        /* .end = */                   58
+    },
+    {
+        /* .name = */                  "scu_pos",
+        /* .kind = */                  EN_SCU_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6003,
+        /* .end = */                   6009
+    },
+    {
+        /* .name = */                  "pap_pos",
+        /* .kind = */                  EN_PAP_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6602,
+        /* .end = */                   6607
+    },
+    {
+        /* .name = */                  "red_pos",
+        /* .kind = */                  EN_RED_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6300,
+        /* .end = */                   6349
+    },
+    {
+        /* .name = */                  "mkn_1_pos",
+        /* .kind = */                  EN_MKN_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6102,
+        /* .end = */                   6104
+    },
+    {
+        /* .name = */                  "mkn_2_pos",
+        /* .kind = */                  EN_MKN_CHARA_KIND,
+        /* .id = */                    1,
+        /* .start = */                 6105,
+        /* .end = */                   6107
+    },
+    {
+        /* .name = */                  "ike_1_pos",
+        /* .kind = */                  EN_IKE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6502,
+        /* .end = */                   6506
+    },
+    {
+        /* .name = */                  "ike_2_pos",
+        /* .kind = */                  EN_IKE_CHARA_KIND,
+        /* .id = */                    1,
+        /* .start = */                 6507,
+        /* .end = */                   6511
+    },
+    {
+        /* .name = */                  "oni_pos",
+        /* .kind = */                  EN_ONI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6352,
+        /* .end = */                   6353
+    },
+    {
+        /* .name = */                  "oni_1_pos",
+        /* .kind = */                  EN_ONI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6354,
+        /* .end = */                   6356
+    },
+    {
+        /* .name = */                  "oni_2_pos",
+        /* .kind = */                  EN_ONI_CHARA_KIND,
+        /* .id = */                    1,
+        /* .start = */                 6357,
+        /* .end = */                   6359
+    },
+    {
+        /* .name = */                  "bos_pos",
+        /* .kind = */                  EN_BOS_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 6701,
+        /* .end = */                   6720
+    },
+    {
+        /* .name = */                  "dmr_pos",
+        /* .kind = */                  ITEM_DMR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10163,
+        /* .end = */                   10164
+    },
+    {
+        /* .name = */                  "dm2_pos",
+        /* .kind = */                  ITEM_DM2_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10165,
+        /* .end = */                   10166
+    },
+    {
+        /* .name = */                  "i_keycou_pos",
+        /* .kind = */                  ITEM_I_KEYCOU_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10001,
+        /* .end = */                   10001
+    },
+    {
+        /* .name = */                  "i_radio_pos",
+        /* .kind = */                  ITEM_I_RADIO_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10002,
+        /* .end = */                   10018
+    },
+    {
+        /* .name = */                  "i_kakuzai_pos",
+        /* .kind = */                  ITEM_I_KAKUZAI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10019,
+        /* .end = */                   10024
+    },
+    {
+        /* .name = */                  "i_flight_pos",
+        /* .kind = */                  ITEM_I_FLIGHT_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10035,
+        /* .end = */                   10040
+    },
+    {
+        /* .name = */                  "i_bear_pos",
+        /* .kind = */                  ITEM_I_BEAR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10025,
+        /* .end = */                   10030
+    },
+    {
+        /* .name = */                  "i_bear2_pos",
+        /* .kind = */                  ITEM_I_BEAR2_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10031,
+        /* .end = */                   10034
+    },
+    {
+        /* .name = */                  "i_letter_pos",
+        /* .kind = */                  ITEM_I_LETTER_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10041,
+        /* .end = */                   10048
+    },
+    {
+        /* .name = */                  "i_handgun_pos",
+        /* .kind = */                  ITEM_I_HANDGUN_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10064,
+        /* .end = */                   10066
+    },
+    {
+        /* .name = */                  "i_magazine_pos",
+        /* .kind = */                  ITEM_I_MAGAZINE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10067,
+        /* .end = */                   10069
+    },
+    {
+        /* .name = */                  "i_lring_pos",
+        /* .kind = */                  ITEM_I_LRING_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10075,
+        /* .end = */                   10076
+    },
+    {
+        /* .name = */                  "i_purse_pos",
+        /* .kind = */                  ITEM_I_PURSE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10096,
+        /* .end = */                   10096
+    },
+    {
+        /* .name = */                  "i_j_light_pos",
+        /* .kind = */                  ITEM_I_J_LIGHT_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10100,
+        /* .end = */                   10112
+    },
+    {
+        /* .name = */                  "i_keyspe_pos",
+        /* .kind = */                  ITEM_I_KEYSPE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10097,
+        /* .end = */                   10099
+    },
+    {
+        /* .name = */                  "i_mtablet_1_pos",
+        /* .kind = */                  ITEM_I_MTABLET_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10122,
+        /* .end = */                   10123
+    },
+    {
+        /* .name = */                  "i_mtablet_2_pos",
+        /* .kind = */                  ITEM_I_MTABLET_CHARA_KIND,
+        /* .id = */                    1,
+        /* .start = */                 10124,
+        /* .end = */                   10125
+    },
+    {
+        /* .name = */                  "i_mdrug_pos",
+        /* .kind = */                  ITEM_I_MDRUG_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10120,
+        /* .end = */                   10121
+    },
+    {
+        /* .name = */                  "i_needle_pos",
+        /* .kind = */                  ITEM_I_NEEDLE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10126,
+        /* .end = */                   10126
+    },
+    {
+        /* .name = */                  "i_keyelevator_p",
+        /* .kind = */                  ITEM_I_KEYELEVATOR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10127,
+        /* .end = */                   10127
+    },
+    {
+        /* .name = */                  "i_key_clock_pos",
+        /* .kind = */                  ITEM_I_KEY_CLOCK_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10129,
+        /* .end = */                   10131
+    },
+    {
+        /* .name = */                  "i_photo_pos",
+        /* .kind = */                  ITEM_I_PHOTO_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10150,
+        /* .end = */                   10159
+    },
+    {
+        /* .name = */                  "i_knife_pos",
+        /* .kind = */                  ITEM_I_KNIFE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10140,
+        /* .end = */                   10149
+    },
+    {
+        /* .name = */                  "i_juice_pos",
+        /* .kind = */                  ITEM_I_JUICE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10188,
+        /* .end = */                   10188
+    },
+    {
+        /* .name = */                  "i_video_pos",
+        /* .kind = */                  ITEM_I_VIDEO_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10220,
+        /* .end = */                   10220
+    },
+    {
+        /* .name = */                  "i_colt_pos",
+        /* .kind = */                  ITEM_I_COLT_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10175,
+        /* .end = */                   10187
+    },
+    {
+        /* .name = */                  "i_hari_pos",
+        /* .kind = */                  ITEM_I_HARI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10213,
+        /* .end = */                   10214
+    },
+    {
+        /* .name = */                  "i_letterm_pos",
+        /* .kind = */                  ITEM_I_LETTERM_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10228,
+        /* .end = */                   10240
+    },
+    {
+        /* .name = */                  "i_headphone_pos",
+        /* .kind = */                  ITEM_I_HEADPHONE_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10246,
+        /* .end = */                   10246
+    },
+    {
+        /* .name = */                  "b_tel_pos",
+        /* .kind = */                  ITEM_B_TEL_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10049,
+        /* .end = */                   10054
+    },
+    {
+        /* .name = */                  "b_d00_pos",
+        /* .kind = */                  ITEM_B_D00_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10055,
+        /* .end = */                   10060
+    },
+    {
+        /* .name = */                  "b_d01_pos",
+        /* .kind = */                  ITEM_B_D01_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10113,
+        /* .end = */                   10119
+    },
+    {
+        /* .name = */                  "b_d02_pos",
+        /* .kind = */                  ITEM_B_D02_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10085,
+        /* .end = */                   10094
+    },
+    {
+        /* .name = */                  "b_d03_pos",
+        /* .kind = */                  ITEM_B_D03_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10077,
+        /* .end = */                   10078
+    },
+    {
+        /* .name = */                  "b_d05_pos",
+        /* .kind = */                  ITEM_B_D05_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10132,
+        /* .end = */                   10134
+    },
+    {
+        /* .name = */                  "b_rei_pos",
+        /* .kind = */                  ITEM_B_REI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10070,
+        /* .end = */                   10072
+    },
+    {
+        /* .name = */                  "b_doo_pos",
+        /* .kind = */                  ITEM_B_DOO_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10061,
+        /* .end = */                   10063
+    },
+    {
+        /* .name = */                  "b_pia_pos",
+        /* .kind = */                  ITEM_B_PIA_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10079,
+        /* .end = */                   10084
+    },
+    {
+        /* .name = */                  "b_ami_pos",
+        /* .kind = */                  ITEM_B_AMI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10095,
+        /* .end = */                   10095
+    },
+    {
+        /* .name = */                  "b_rop_pos",
+        /* .kind = */                  ITEM_B_ROP_CHARA_KIND,
+        /* .id = */                    6,
+        /* .start = */                 10128,
+        /* .end = */                   10128
+    },
+    {
+        /* .name = */                  "b_clo_pos",
+        /* .kind = */                  ITEM_B_CLO_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10136,
+        /* .end = */                   10139
+    },
+    {
+        /* .name = */                  "b_tan_pos",
+        /* .kind = */                  ITEM_B_TAN_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10215,
+        /* .end = */                   10216
+    },
+    {
+        /* .name = */                  "b_dor_pos",
+        /* .kind = */                  ITEM_B_DOR_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10217,
+        /* .end = */                   10219
+    },
+    {
+        /* .name = */                  "b_d08_pos",
+        /* .kind = */                  ITEM_B_D08_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10189,
+        /* .end = */                   10196
+    },
+    {
+        /* .name = */                  "b_piz_pos",
+        /* .kind = */                  ITEM_B_PIZ_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10197,
+        /* .end = */                   10204
+    },
+    {
+        /* .name = */                  "b_bol_pos",
+        /* .kind = */                  ITEM_B_BOL_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10205,
+        /* .end = */                   10212
+    },
+    {
+        /* .name = */                  "b_ori_pos",
+        /* .kind = */                  ITEM_ORI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10221,
+        /* .end = */                   10221
+    },
+    {
+        /* .name = */                  "b_d06_pos",
+        /* .kind = */                  ITEM_B_D06_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10167,
+        /* .end = */                   10170
+    },
+    {
+        /* .name = */                  "b_sti_pos",
+        /* .kind = */                  ITEM_B_STI_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10171,
+        /* .end = */                   10174
+    },
+    {
+        /* .name = */                  "b_d10_pos",
+        /* .kind = */                  ITEM_B_D10_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10222,
+        /* .end = */                   10227
+    },
+    {
+        /* .name = */                  "b_hul_pos",
+        /* .kind = */                  ITEM_B_HUL_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10242,
+        /* .end = */                   10243
+    },
+    {
+        /* .name = */                  "b_cha_pos",
+        /* .kind = */                  ITEM_B_CHA_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10244,
+        /* .end = */                   10245
+    },
+    {
+        /* .name = */                  "mx2_pos",
+        /* .kind = */                  ITEM_MX2_EARLY_DEMO_CHARA_KIND, /* @note: this model notably changed character kinds. in retail, she has 0x439 */
+        /* .id = */                    0,
+        /* .start = */                 10241,
+        /* .end = */                   10241
+    },
+    {
+        /* .name = */                  "b_do4_pos",
+        /* .kind = */                  ITEM_B_DO4_CHARA_KIND,
+        /* .id = */                    0,
+        /* .start = */                 10160,
+        /* .end = */                   10162
+    }
+};
 
-/* ========= bss ========= */
 
-int demo_status; // size: 0x4, address: 0x1133C28
-float demo_frame; // size: 0x4, address: 0x1133C20
+/* ================ bss ================ */
+
+int demo_status;        // size: 0x4, address: 0x1133C28
+float demo_frame;       // size: 0x4, address: 0x1133C20
 float total_demo_frame; // size: 0x4, address: 0x1133C18
-int demo_number; // size: 0x4, address: 0x1133C10
-int demo_counter; // size: 0x4, address: 0x1133C08
+int demo_number;        // size: 0x4, address: 0x1133C10
+int demo_counter;       // size: 0x4, address: 0x1133C08
 
-int sbt_msg_no;       // size: 0x4, address: 0x1133C00
+int sbt_msg_no; // size: 0x4, address: 0x1133C00
 
-DdsFrame last; // size: 0x360, address: 0x11338A0
-DdsFrame next; // size: 0x360, address: 0x1133540
-DdsFrame base; // size: 0x360, address: 0x11331E0
+DdsFrame last;            // size: 0x360, address: 0x11338A0
+DdsFrame next;            // size: 0x360, address: 0x1133540
+DdsFrame base;            // size: 0x360, address: 0x11331E0
 SubCharacter* chara_p[7]; // size: 0x1C, address: 0x11331C0
 
-
-void* adr_dds; // size: 0x4, address: 0x11331B0
-short total_light; // size: 0x2, address: 0x11331A8
-short point_light; // size: 0x2, address: 0x11331A0
-short spot_light; // size: 0x2, address: 0x1133198
+void* adr_dds;        // size: 0x4, address: 0x11331B0
+short total_light;    // size: 0x2, address: 0x11331A8
+short point_light;    // size: 0x2, address: 0x11331A0
+short spot_light;     // size: 0x2, address: 0x1133198
 short infinite_light; // size: 0x2, address: 0x1133190
 int character_number; // size: 0x4, address: 0x1133188
 
-u_short demo_anim_no; // size: 0x2, address: 0x1133180
-u_short demo_msg_no; // size: 0x2, address: 0x1133178
+u_short demo_anim_no;  // size: 0x2, address: 0x1133180
+u_short demo_msg_no;   // size: 0x2, address: 0x1133178
 u_short demo_voice_no; // size: 0x2, address: 0x1133170
 
 float msg_frame; // size: 0x4, address: 0x1133168
 
 DramaDemo_MessageTime* sbt_msg_time; // size: 0x4, address: 0x1133160
-int sbt_str_no; // size: 0x4, address: 0x1133158
-float sbt_timer = 0.0f; // size: 0x4, address: 0x1133148
+int sbt_str_no;                      // size: 0x4, address: 0x1133158
+static float sbt_timer = 0.0f;       // size: 0x4, address: 0x1133148
 
 static inline float fast_fptosi(float x) {
     asm volatile("cvt.w.s %0, %0; cvt.s.w %0, %0": "+f"(x));
@@ -199,6 +753,7 @@ int DramaDemoMain(DramaDemo_PlayInfo* info) {
     return ret;
 }
 
+#line 308
 static int DramaDemoInit(DramaDemo_PlayInfo* info /* r18 */) {
     sceVu0FVECTOR dummy[2]; // r29+0x40
     s_char buf[32]; // r29+0x60

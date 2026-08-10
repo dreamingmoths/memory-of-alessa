@@ -24,26 +24,26 @@ typedef struct DramaDemo_MessageTime {
 // total size: 0x28
 typedef struct DramaDemo_PlayInfo {
     // Members
-    int demo_no; // offset 0x0, size 0x4
-    char* adr_dds_top; // offset 0x4, size 0x4
-    short* adr_anim; // offset 0x8, size 0x4
-    DramaDemo_MessageTime * adr_msg_time; // offset 0xC, size 0x4
-    short msg_start; // offset 0x10, size 0x2
-    short voice_sd_no; // offset 0x12, size 0x2
-    int* adr_voice; // offset 0x14, size 0x4
-    int stream_no; // offset 0x18, size 0x4
-    float stream_start; // offset 0x1C, size 0x4
-    float add_pos_x; // offset 0x20, size 0x4
-    float add_pos_z; // offset 0x24, size 0x4
+    int demo_no;                         // offset 0x0, size 0x4
+    char* adr_dds_top;                   // offset 0x4, size 0x4
+    short* adr_anim;                     // offset 0x8, size 0x4
+    DramaDemo_MessageTime* adr_msg_time; // offset 0xC, size 0x4
+    short msg_start;                     // offset 0x10, size 0x2
+    short voice_sd_no;                   // offset 0x12, size 0x2
+    int* adr_voice;                      // offset 0x14, size 0x4
+    int stream_no;                       // offset 0x18, size 0x4
+    float stream_start;                  // offset 0x1C, size 0x4
+    float add_pos_x;                     // offset 0x20, size 0x4
+    float add_pos_z;                     // offset 0x24, size 0x4
 } DramaDemo_PlayInfo;
 
 typedef struct DramaDemo_AnimInfo {
     // total size: 0x28
     char name[32]; // offset 0x0, size 0x20
-    short kind; // offset 0x20, size 0x2
-    short id; // offset 0x22, size 0x2
-    short start; // offset 0x24, size 0x2
-    short end; // offset 0x26, size 0x2
+    short kind;    // offset 0x20, size 0x2
+    short id;      // offset 0x22, size 0x2
+    short start;   // offset 0x24, size 0x2
+    short end;     // offset 0x26, size 0x2
 } DramaDemo_AnimInfo;
 
 typedef struct /* @anon6 */ {
@@ -53,24 +53,24 @@ typedef struct /* @anon6 */ {
         // total size: 0x30
         sceVu0FVECTOR position; // offset 0x0, size 0x10
         sceVu0FVECTOR interest; // offset 0x10, size 0x10
-        float roll; // offset 0x20, size 0x4
-        float plane; // offset 0x24, size 0x4
-    } camera; // offset 0x10, size 0x30
+        float roll;             // offset 0x20, size 0x4
+        float plane;            // offset 0x24, size 0x4
+    } camera;                   // offset 0x10, size 0x30
     struct /* @anon3 */ {
         // total size: 0x60
         sceVu0FVECTOR position; // offset 0x0, size 0x10
         sceVu0FVECTOR interest; // offset 0x10, size 0x10
-        float roll; // offset 0x20, size 0x4
-        sceVu0FVECTOR color; // offset 0x30, size 0x10
-        float falloff[2]; // offset 0x40, size 0x8
-        float cone[2]; // offset 0x48, size 0x8
-        signed int visible; // offset 0x50, size 0x4
-    } light[6]; // offset 0x40, size 0x240
+        float roll;             // offset 0x20, size 0x4
+        sceVu0FVECTOR color;    // offset 0x30, size 0x10
+        float falloff[2];       // offset 0x40, size 0x8
+        float cone[2];          // offset 0x48, size 0x8
+        int visible;            // offset 0x50, size 0x4
+    } light[6];                 // offset 0x40, size 0x240
     struct /* @anon4 */ {
         // total size: 0x20
         sceVu0FVECTOR position; // offset 0x0, size 0x10
-        signed int visible; // offset 0x10, size 0x4
-    } character[7]; // offset 0x280, size 0xE0
+        int visible;            // offset 0x10, size 0x4
+    } character[7];             // offset 0x280, size 0xE0
 } DdsFrame;
 
 int DramaDemoMain(DramaDemo_PlayInfo* info);
@@ -80,15 +80,33 @@ void DramaDemoFade(void);
 void SubtitlesExec(DramaDemo_MessageTime* msg_time, int msg_no, int str_no, float timer);
 void SubtitlesManager(void);
 
-extern int sbt_msg_no;
-extern DramaDemo_MessageTime* sbt_msg_time;
-extern int sbt_str_no;
-extern int demo_status;
-extern float demo_frame; // size: 0x4, address: 0x1133C20
-extern float total_demo_frame;
+extern int demo_status;        // size: 0x4, address: 0x1133C28
+extern float demo_frame;       // size: 0x4, address: 0x1133C20
+extern float total_demo_frame; // size: 0x4, address: 0x1133C18
+extern int demo_number;        // size: 0x4, address: 0x1133C10
+extern int demo_counter;       // size: 0x4, address: 0x1133C08
 
-extern int demo_number;
+extern int sbt_msg_no; // size: 0x4, address: 0x1133C00
 
-extern u_short msg_buffer[];
+extern DdsFrame last;            // size: 0x360, address: 0x11338A0
+extern DdsFrame next;            // size: 0x360, address: 0x1133540
+extern DdsFrame base;            // size: 0x360, address: 0x11331E0
+extern SubCharacter* chara_p[7]; // size: 0x1C, address: 0x11331C0
+
+extern void* adr_dds;        // size: 0x4, address: 0x11331B0
+extern short total_light;    // size: 0x2, address: 0x11331A8
+extern short point_light;    // size: 0x2, address: 0x11331A0
+extern short spot_light;     // size: 0x2, address: 0x1133198
+extern short infinite_light; // size: 0x2, address: 0x1133190
+extern int character_number; // size: 0x4, address: 0x1133188
+
+extern u_short demo_anim_no;  // size: 0x2, address: 0x1133180
+extern u_short demo_msg_no;   // size: 0x2, address: 0x1133178
+extern u_short demo_voice_no; // size: 0x2, address: 0x1133170
+
+extern float msg_frame; // size: 0x4, address: 0x1133168
+
+extern DramaDemo_MessageTime* sbt_msg_time; // size: 0x4, address: 0x1133160
+extern int sbt_str_no;                      // size: 0x4, address: 0x1133158
 
 #endif // DEMOVIEW_H
