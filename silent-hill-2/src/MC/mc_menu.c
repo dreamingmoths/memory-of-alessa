@@ -1,10 +1,37 @@
 #include "sh2_common.h"
 #include "SH2_common/sh2sys.h"
+#include "SH2_common/data_load.h"
+#include "SH2_common/mem_share.h"
+#include "SH2_common/pad.h"
+#include "SH2_common/sh2dt.h"
 #include "MC/mc.h"
 #include "MC/mc_menu.h"
+#include "Fog/spack.h"
+#include "Font/font.h"
 #include "Font/fj_man.h"
 #include "Effect/screen_effect.h"
+#include "sound/sh_sound.h"
+#include "Multi_thr/filesys/fcread.h"
+#include "Multi_thr/dma/dma1cmd.h"
+#include "data/daily.thu/data_menu_mc.h"
+#include "shGs/sh2gfw_GS_NewLoopEnv.h"
 
+static int mcCheckTimer(void);
+
+static int mcTellYesNo(void);
+
+static int mcPutMes(short n, short x, short y, short align, short align2);
+static void mcPutMes2(short n, short x, short y);
+static void mcPutBigFont(short n, short y);
+
+static void mcDmaKick(void);
+static void mcLoadMenuData(void);
+static void mcSoundCursor(void);
+static void mcSoundDecide(void);
+static void mcSoundSelect(void);
+static void mcSoundCancel(void);
+static void mcSoundError(void);
+static void mcSoundStart(void);
 
 int mcSaveMenu(void) {
     int i;
@@ -400,21 +427,75 @@ INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcLoadMenu);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcAfterLoadMenu);
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcCheckTimer);
+static int mcCheckTimer(void) {
+    if (((mcw->menu_timer -= shGetDF()) <= 0) ||
+        (shPadPress(0, key_config.enter | key_config.cancel | 0xF00) != 0) ||
+        (shPadPress(0, PAD_KEY_7) < 0x20) ||
+        (0xA0 < shPadPress(0, PAD_KEY_7))) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcMenuControl);
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcTellYesNo);
+static int mcTellYesNo(void) {
+    int n; // r16        
+    if (shPadRepeat(0, PAD_KEY_DPAD_LEFT) || shPadRepeat(0, PAD_KEY_DPAD_RIGHT)) {
+        mcSoundCursor();
+        if (mcw->menu_yesno == 1) {
+            mcw->menu_yesno = 2;
+        } else {
+            mcw->menu_yesno = 1;
+        }
+    }
+    if (shPadTrigger(0, key_config.enter)) {
+        n = mcw->menu_yesno;
+        mcSoundDecide();
+        mcw->menu_yesno = 0;
+        return n;
+    }
+    if (shPadTrigger(0, key_config.cancel)) {
+        mcSoundCancel();
+        mcw->menu_yesno = 0;
+        return 2;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSelectData);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcGetBlinkAlpha);
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcPutMes);
+static int mcPutMes(short n, short x, short y, short align, short align2) {
+    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+        return fontPrintWord(fontGetMesAdr(msg_buffer, n), x, y, align, align2);
+    }
+    
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcPutMes2);
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcPutBigFont);
+static void mcPutMes2(short n, short x, short y) {
+    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+        fontAllCenterOn();
+        fontAllCenter2On();
+        fontPrintStr(fontGetMesAdr(msg_buffer, n), x, y);
+        fontAllCenterOff();
+        fontAllCenter2Off();
+    }
+}
+
+static void mcPutBigFont(short n, short y) {
+    u_int bak; // r17    
+    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+        bak = font.flag;
+        font.flag = 0x100;
+        fontPrintStrWide(fontGetMesAdr(msg_buffer, n), 0x100, y, 0xB4, 0xB4);
+        
+        font.flag = bak;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcDrawMenu);
 
@@ -434,21 +515,46 @@ INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcDrawBG);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcDrawBGWord);
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcDmaKick);
+static void mcDmaKick(void) {
+    d1cSend(spkDmaKick());
+    d1cSend(fontTexLoad(sh2gfw_Get_BaseTBP0for2D(), FONT_TEX_CLUT_ADR));
+    d1cSend(fontFlush());
+    spkResetOT2();
+    fontClear();
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcLoadMenuData);
+static void mcLoadMenuData(void) {
+    mc.status &= 0xFF9F;  
+    if ((mcw->fid[0] = DataLoadMessage(SH2_MES_FILE_M_CARD)) == -2) {
+        
+        mc.status |= 0x20;
+    }
+    mcw->fid[1] = FcRead(data_menu_mc_savebg_raw, MemShare_gp_data_buf);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundCursor);
+static void mcSoundCursor(void) {
+    SeCall(10000, 1.0f, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundDecide);
+static void mcSoundDecide(void) {
+    SeCall(10002, 1.0f, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundSelect);
+static void mcSoundSelect(void) {
+    SeCall(10004, 1.0f, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundCancel);
+static void mcSoundCancel(void) {
+    SeCall(10003, 1.0f, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundError);
+static void mcSoundError(void) {
+    SeCall(10005, 1.0f, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSoundStart);
+static void mcSoundStart(void) {
+    SeCall(15002, 1.0f, 0);
+}
 
 INCLUDE_RODATA("asm/nonmatchings/MC/mc_menu", @1933);
 

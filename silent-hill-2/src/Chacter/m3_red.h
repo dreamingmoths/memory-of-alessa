@@ -4,6 +4,10 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
+#define RED_ANIM_START      5300
+#define D_RED_ANIM_START    6300
+#define RED_PLAY_ANIM_6301  6301
+
 void shCharacterSetEnemyREDLow(SubCharacter* scp);
 void shCharacterSetWeaponRED(SubCharacter* scp, int on_off);
 int shCharacterEnemyREDAnimeSet(SubCharacter* scp, int anime_id);

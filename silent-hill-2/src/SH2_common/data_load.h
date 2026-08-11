@@ -5,6 +5,14 @@
 
 #define SH2_BUFPAGE_SIZE 4096
 
+#define SH2_MES_FILE_COMMON  0
+#define SH2_MES_FILE_ITEM    1
+#define SH2_MES_FILE_OPTION  2
+#define SH2_MES_FILE_MEMO    3
+#define SH2_MES_FILE_M_CARD  4
+#define SH2_MES_FILE_RESULT  5
+#define SH2_MES_FILE_STAGE   6
+
 int DataLoadMessage(int msg /* r2 */);
 void shMemCopy(void* ds /* r18 */, void* sr /* r17 */, int datasize /* r16 */);
 

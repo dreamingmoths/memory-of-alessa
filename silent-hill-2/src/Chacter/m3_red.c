@@ -6,7 +6,15 @@
 #include "sce/libvu0.h"
 #include "vec.h"
 
-#define D_RED_ANIM_START 6300
+int dred_anime_adr_list[7] = {
+    0x00000000, 
+    0x00000000,
+    0x00000000, 
+    0x00010A90, 
+    0x00066C74, 
+    0x00000000, 
+    0x00000000
+}; // size: 0x1C, address: 0x2A93A0
 
 // @todo: general clean up
 
@@ -14,9 +22,9 @@
 
 extern /* static */ AnimeInfo red_anim[12]; // size: 0x90, address: 0x0
 extern /* static */ AnimeInfo d_red_anim[7]; // size: 0x54, address: 0x0
-extern /* static */ int dred_anime_adr_list[7]; // size: 0x1C, address: 0x2A93A0
+// extern /* static */ int dred_anime_adr_list[7]; // size: 0x1C, address: 0x2A93A0
 
-static int EnemyREDInit(SubCharacter* scp); // not sure about the argument here
+static int EnemyREDInit(SubCharacter* scp);
 static void EnemyREDFunction(SubCharacter* scp);
 
 static int EnemyREDInit(SubCharacter* scp) {
@@ -43,7 +51,7 @@ static void EnemyREDFunction(SubCharacter* scp) {
                     
                     SCAnimeTypeSwitch(scp, 1);
                     shCharacterEnemyREDAnimeSetP(scp,
-                                                 0x189D,
+                                                 RED_PLAY_ANIM_6301,
                                                  1);
 
 
@@ -65,7 +73,7 @@ static void EnemyREDFunction(SubCharacter* scp) {
                     }
 
                     
-                    scp->battle.target = shCharacterGetSubCharacter(0x100, -1);
+                    scp->battle.target = shCharacterGetSubCharacter(LLL_JMS_CHARA_KIND, -1);
                 }
                 
                 volatile_vec_copy(&scp->pos, &pos);                
@@ -116,7 +124,7 @@ int shCharacterEnemyREDAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r1
     AnimeInfo* aip; // r18
     
     if (shCharacterGetModelID(scp) == EN_RED_CHARA_KIND) {
-        aip = &red_anim[anime_id - 0x14B4];
+        aip = &red_anim[anime_id - RED_ANIM_START];
         shCharacterAnimeSet(scp,
                             0,
                             (s_char) ((comp == 1) ? 4 : 2),

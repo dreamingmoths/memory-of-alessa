@@ -111,8 +111,8 @@ static float GetSF(void* adr) {
 
     sp = adr;
     value = *sp;
-    sign = ((value >> 15) & 0b1);
-    exp = (value >> 10) & 0b11111;
+    sign  = (value >> 15) & 0b1;
+    exp   = (value >> 10) & 0b11111;
     coeff = value & 0b1111111111;
 
     if ((exp + 112 == 0) && ((coeff << 13) == 0)) {

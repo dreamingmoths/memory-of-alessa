@@ -65,5 +65,3 @@ MWLD_FLAGS := \
 	-noinhibit-exec $(MWLD_OVERLAY_FLAGS)
 
 BSS_ALIGNMENT := 16
-
-CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge --categories-path $(CONFIG)/categories.json

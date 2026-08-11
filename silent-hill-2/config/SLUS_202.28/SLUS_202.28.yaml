@@ -212,7 +212,7 @@ segments:
       - [0x120990, c,   Chacter/m3_maria]
       - [0x120e00, c,   Chacter/m3_tyu]
       - [0x121210, asm, Chacter/m3_bos]
-      - [0x121750, asm, Chacter/m3_oni]
+      - [0x121750, c,   Chacter/m3_oni]
       - [0x121c30, asm, sound/snd_select]
       - [0x122340, asm, Chacter/m3_nik]
       - [0x122560, c,   Multi_thr/loadinit/loadinit]
@@ -378,7 +378,7 @@ segments:
       - [0x1a7b00, .data,   Chacter/anime]
       - [0x1a7b10, data,    data_1a7b10]
       - [0x1a93e0, data,    data_0x1a93e0]
-      - [0x1a9ac0, .data,   Chacter/m3_red]
+      - [0x1a9aa0, .data,   Chacter/m3_red]
       - [0x1a9ad0, .data,   Chacter/m3_sc]
       - [0x1a9ae0, data,    data_0x1a9ae0]
       # - [0x1a9b10, .data,   Chacter/m3_wep]
@@ -402,6 +402,8 @@ segments:
       - [0x1b6c30, data,    data_0x1b6c30]
       # - [0x1b87c0, .data,   sound/sh_sound]
       - [0x1b9ae0, data,    data_0x1b9ae0]
+      - [0x1ba780, .data,   Event/demoview]
+      - [0x1bb3d8, data,    data_0x1bb3d8]
       - [0x1bb580, .data,   Font/font]
       - [0x1bb5c0, data,    data_0x1bb5c0]
       - [0x23bf80, .data,   Event/title]
@@ -416,6 +418,8 @@ segments:
       - [0x24c960, data,    data_0x24c960]
       - [0x24c980, .data,   Chacter/m3_tyu]
       - [0x24c990, data,    data_0x24c990]
+      - [0x24ca00, .data,   Chacter/m3_oni]
+      - [0x24ca40, data,    data_0x24ca40]
       - [0x24cbc0, .data,   Chacter/m3_maria_sub]
       - [0x24cd90, data,    data_0x24cd90]
       - [0x24cff8, .data,   Multi_thr/scf/ps2_scf]
@@ -623,6 +627,8 @@ segments:
       - { vram: 0x0491820, type: bss,  name: bss_0x0491820 }
       - { vram: 0x0e3c250, type: .bss, name: GFW/sh2gfw_GSCTL_man }
       - { vram: 0x0e40280, type: bss,  name: bss_0x0e40280 }
+      - { vram: 0x1133148, type: .bss, name: Event/demoview }
+      - { vram: 0x1133c30, type: bss,  name: bss_0x1133c30 }
       - { vram: 0x1159230, type: .bss, name: Multi_thr/filesys/fileserv }
       - { vram: 0x1159238, type: bss,  name: bss_0x1159238 }
       - { vram: 0x116d788, type: .bss, name: Event/title }

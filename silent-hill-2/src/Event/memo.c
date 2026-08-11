@@ -65,7 +65,7 @@ static void MemoInit(void) { // not line matched (need to add macros/inlines)
                 list_point = 0;
             }
             disp_point = 0;
-            DataLoadMessage(3);
+            DataLoadMessage(SH2_MES_FILE_MEMO);
             FcRead(data_pic_etc_p_memo_tex, (void*)get_gp_data_buf_addr());
             Sh2sys.step[4]++;
             Sh2sys.step[5] = 0;

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 from constants import ASM, SRC
-from os import stat
+from os import stat, remove
 from io import TextIOBase
 
 def normalize_object_path(path: Path, prefix_path: Path):
@@ -45,6 +45,13 @@ def ensure_path_and_write(output_path: Path, contents: str):
     output_path.parent.mkdir(exist_ok=True, parents=True)
     with open(output_path, "w") as f:
         f.write(contents)
+
+def append_to_file(output_path: Path, contents: str):
+    with open(output_path, "a") as f:
+        f.write(contents)
+
+def remove_file(path: Path):
+    remove(path)
 
 def get_file_size(file_path: Path):
     return stat(file_path).st_size

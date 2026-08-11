@@ -429,6 +429,7 @@
 #define ITEM_B_POP_CHARA_KIND                                                         0x531
 #define ITEM_3SK_CHARA_KIND                                                           0x532
 #define ITEM_XAG_CHARA_KIND                                                           0x534
+#define ITEM_MX2_EARLY_DEMO_CHARA_KIND                                                0x537
 #define ITEM_S00_CHARA_KIND                                                           0x53b
 #define ITEM_S01_CHARA_KIND                                                           0x53c
 #define ITEM_S02_CHARA_KIND                                                           0x53d

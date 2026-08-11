@@ -208,7 +208,6 @@ typedef struct Stage_Data {
     int reserve_11;                      // offset 0x40, size 0x4
 } Stage_Data;
 
-extern int sbt_msg_no;       // size: 0x4, address: 0x1133C00
 extern int ev_cancel;        // size: 0x4, address: 0x11263B0
 extern int ev_active;        // size: 0x4, address: 0x1126380
 extern int ev_s_step;        // size: 0x4, address: 0x11263B8

@@ -32,9 +32,9 @@ static float GetSF(void* adr) {
     int i;
     FloatOrInt fi;
 
-    sp    = adr;
+    sp = adr;
     value = *sp;
-    sign  = ((value >> 15) & 0b1);
+    sign  = (value >> 15) & 0b1;
     exp   = (value >> 10) & 0b11111;
     coeff = value & 0b1111111111;
 

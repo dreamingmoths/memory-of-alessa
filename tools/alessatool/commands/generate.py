@@ -16,7 +16,9 @@ import os
 import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
-from utils import ensure_path_and_write, normalize_object_path, to_expected_path
+
+from utils import append_to_file, ensure_path_and_write, normalize_object_path, to_expected_path
+from constants import INTERMEDIATE_D_NAME
 
 import splat.scripts.split as split
 import splat.util.options as splat_options
@@ -44,6 +46,7 @@ class GenerationArgs:
     build_path: Path
     verbose: bool
     no_lcf: bool
+    no_dependencies: bool
     no_objdiff: bool
     use_cache: bool
     yamls: list[str]
@@ -80,7 +83,8 @@ def split_yaml(args: GenerationArgs) -> None:
             use_cache=args.use_cache,
             make_full_disasm_for_code=args.make_full_disasm_for_code
         )
-        generate_linker_dependencies(args)
+        if not args.no_dependencies:
+            generate_linker_dependencies(args)
     finally:
         os.chdir(old_cwd)
 
@@ -103,20 +107,28 @@ def generate_linker_dependencies(args: GenerationArgs):
     build_path = args.build_path
     path_strs = []
 
-    output = f"{(build_path / clean_up_path(splat_options.opts.elf_path)).as_posix()}:"
+    elf_path = splat_options.opts.elf_path
+    ld_script_path = splat_options.opts.ld_script_path
+    output = f"{(build_path / clean_up_path(elf_path)).as_posix()}:"
+    main_exe_output = ""
 
     for entry in linker_writer.dependencies_entries:
         if entry.object_path is None:
             continue
         path_str = normalize_object_path(entry.object_path, build_path)
         path_strs.append(path_str)
+
         output += f" \\\n    {path_str}"
+        main_exe_output += f"    {path_str} \\\n"
 
     output += "\n"
+
     for path_str in path_strs:
         output += f"{path_str}:\n"
-    
-    ensure_path_and_write(splat_options.opts.ld_script_path.with_suffix(".d"), output)
+
+    output_path = ld_script_path.with_suffix(".d")
+    ensure_path_and_write(output_path, output)
+    append_to_file(ld_script_path.parent / INTERMEDIATE_D_NAME, main_exe_output)
 
 def generate_lcf(args: GenerationArgs):
     '''

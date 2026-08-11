@@ -1,6 +1,7 @@
 #include "sh2_common.h"
 #include "SH2_common/pad.h"
 #include "SH2_common/playing_info.h"
+#include "SH2_common/data_load.h"
 
 #include "sce/libgraph.h"
 
@@ -105,19 +106,19 @@ void option_mainmain(void) {
                 if (!t.fade) {
                     if (((shPadTrigger(0, PAD_KEY_DPAD_RIGHT)) || ((shPadPress(0, 0x40) > 0xC0) && !t.ana_x)) && (playing.language == 1)) {
                         playing.language = 0;
-                        DataLoadMessage(2);
+                        DataLoadMessage(SH2_MES_FILE_OPTION);
                         fsSync(0, -1);
                     } else if ((shPadTrigger(0, PAD_KEY_DPAD_RIGHT)) || ((shPadPress(0, 0x40) > 0xC0) && !t.ana_x)) {
                         playing.language++;
-                        DataLoadMessage(2);
+                        DataLoadMessage(SH2_MES_FILE_OPTION);
                         fsSync(0, -1);
                     } else if (((shPadTrigger(0, PAD_KEY_DPAD_LEFT)) || ((shPadPress(0, 0x40) <= 0x3f) && !t.ana_x)) && (!(playing.language))) {
                         playing.language = 1;
-                        DataLoadMessage(2);
+                        DataLoadMessage(SH2_MES_FILE_OPTION);
                         fsSync(0, -1);
                     } else if ((shPadTrigger(0, PAD_KEY_DPAD_LEFT)) || ((shPadPress(0, 0x40) <= 0x3f) && !t.ana_x)) {
                         playing.language--;
-                        DataLoadMessage(2);
+                        DataLoadMessage(SH2_MES_FILE_OPTION);
                         fsSync(0, -1);
                     }
                     if ((shPadTrigger(0, PAD_KEY_DPAD_LEFT)) || (shPadTrigger(0, PAD_KEY_DPAD_RIGHT)) || ((shPadPress(0, 0x40) <= 0x3f) && !t.ana_x) || ((shPadPress(0, 0x40) > 0xC0) && !t.ana_x)) {

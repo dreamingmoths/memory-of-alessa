@@ -92,8 +92,8 @@ typedef int (func_t)(func2_t*);
 /* static */ int connectPlayableInit(void) {
     ConnectCharaWorkWeapon();
     LightSpotOnOffSet();
-    DataLoadMessage(0);
-    DataLoadMessage(6);
+    DataLoadMessage(SH2_MES_FILE_COMMON);
+    DataLoadMessage(SH2_MES_FILE_STAGE);
     return 1;
 }
 

@@ -18,8 +18,6 @@ void func_01F6D9D0_town_00(void);
 void func_01F6D9F0_town_00(void);
 void func_01F6DA00_town_00(void);
 
-Town00Struct state_town_00; // 0x01F6E000
-
 extern void PlayerEventMove(float*);
 extern int func_0016C1C0(int);
 extern int func_00190690(void);

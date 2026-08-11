@@ -63,49 +63,49 @@ int DataLoadMessage(int msg /* r2 */) {
 
     
     switch (msg) {        
-        case 0:
+        case SH2_MES_FILE_COMMON:
             if (file_common_438[playing.language] != msg_station_on_memory_445) {
                 fid = FcRead(file_common_438[playing.language], msg_station);
                 msg_station_on_memory_445 = file_common_438[playing.language];
             }
             break;
         
-        case 1:
+        case SH2_MES_FILE_ITEM:
             if (file_item_439[playing.language] != msg_buffer_on_memory_446) {
                 fid = FcRead(file_item_439[playing.language], msg_buffer);
                 msg_buffer_on_memory_446 = file_item_439[playing.language];
             }
             break;
         
-        case 2:
+        case SH2_MES_FILE_OPTION:
             if (file_option_440[playing.language] != msg_buffer_on_memory_446) {
                 fid = FcRead(file_option_440[playing.language], msg_buffer);
                 msg_buffer_on_memory_446 = file_option_440[playing.language];
             }
             break;
         
-        case 3:
+        case SH2_MES_FILE_MEMO:
             if (file_memo_441[playing.language] != msg_buffer_on_memory_446) {
                 fid = FcRead(file_memo_441[playing.language], msg_buffer);
                 msg_buffer_on_memory_446 = file_memo_441[playing.language];
             }
             break;
         
-        case 4:
+        case SH2_MES_FILE_M_CARD:
             if (file_m_card_442[playing.language] != msg_buffer_on_memory_446) {
                 fid = FcRead(file_m_card_442[playing.language], msg_buffer);
                 msg_buffer_on_memory_446 = file_m_card_442[playing.language];
             }
             break;
         
-        case 5:
+        case SH2_MES_FILE_RESULT:
             if (file_result_443[playing.language] != msg_buffer_on_memory_446) {
                 fid = FcRead(file_result_443[playing.language], msg_buffer);
                 msg_buffer_on_memory_446 = file_result_443[playing.language];
             }
             break;
 
-        case 6:
+        case SH2_MES_FILE_STAGE:
             if (file_stage_444[playing.stage][playing.language] != msg_buffer_on_memory_446) {
                 
                 fid = FcRead(file_stage_444[playing.stage][playing.language], msg_buffer);
