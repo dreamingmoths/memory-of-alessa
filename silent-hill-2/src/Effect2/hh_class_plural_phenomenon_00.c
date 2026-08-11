@@ -10,11 +10,11 @@ static u_int ObjectInstance_BLOOD_STICK_00_Search_and_Post(ImpactQueue_Element* 
 
 #line 100
 static u_int Object_Initialize(HH_Object_Plural_Phenomenon_00* pThis /* r2 */) {
-    u_int result; // r2
+    u_int result = true; // r2
     
     pThis->Timer = 0.0f;
     
-    return true;
+    return result;
 }
 
 #line 119
