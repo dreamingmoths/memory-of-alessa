@@ -1309,7 +1309,7 @@ static void DdsPlayCharacter(int no /* r8 */) {
     }
 }
 
-void DramaDemoSkipLast(DramaDemo_PlayInfo * info /* r16 */) {
+void DramaDemoSkipLast(DramaDemo_PlayInfo* info /* r16 */) {
     sceVu0FVECTOR position; // r29+0x40
     sceVu0FVECTOR interest; // r29+0x50
     float roll; // r29+0x60
