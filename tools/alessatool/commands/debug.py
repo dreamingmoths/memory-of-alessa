@@ -93,7 +93,8 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
 
             if target_symbol.addr != address:
                 reason = f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}\n"
-                reason += f"mismatch was found in {object_file}, but it may have been earlier than that."
+                reason += f"maybe {target_symbol.name} needs to be aligned?\n"
+                reason += f"otherwise, the mismatch was found in {object_file}, but it may have been earlier than that."
                 trace_index = index
                 break
 
@@ -178,7 +179,7 @@ def run_bin_diff(debug_info: DebugInfo, exe_info_by_name: dict[str, ExecutableIn
                 all_syms_sorted: list[SplatSymbol] = list(sorted(info.syms.values(), key=lambda sym : sym.addr))
                 first_mismatching_symbol_index = bisect_left(all_syms_sorted, vram_addr, key=lambda sym : sym.addr)
                 first_mismatching_symbol = all_syms_sorted[first_mismatching_symbol_index - 1]
-                print(f"\tperhaps this belongs to {first_mismatching_symbol.name} at 0x{first_mismatching_symbol.addr:X}?")
+                print(f"\tthe symbol before that address is {first_mismatching_symbol.name} at 0x{first_mismatching_symbol.addr:X}")
 
         case 0:
             print("🟣 no mismatches found")
