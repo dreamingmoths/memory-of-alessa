@@ -268,7 +268,7 @@ segments:
       - [0x159110, asm, Effect2/hh_class_glass_piece_00]
       - [0x159ce0, c,   Effect2/hh_class_manager]
       - [0x15ad80, c,   Effect2/hh_class_object_execute]
-      - [0x15b560, asm, Effect2/hh_class_plural_phenomenon_00]
+      - [0x15b560, c,   Effect2/hh_class_plural_phenomenon_00]
       - [0x15b930, asm, Effect2/hh_class_raise_dust_phenomenon_00]
       - [0x15bee0, c,   Effect2/hh_class_water_00]
       - [0x15ce40, c,   Effect2/hh_class_water_01]
@@ -435,7 +435,8 @@ segments:
       - [0x26edf0, .data,   Effect2/hh_class_blood_stick_00]
       - [0x26ee10, data,    data_0x26ee10]
       - [0x26f410, .data,   Effect2/hh_class_object_execute]
-      - [0x26f448, data,    data_0x26f448]
+      - [0x26f450, .data,   Effect2/hh_class_plural_phenomenon_00]
+      - [0x26f460, data,    Effect2/hh_class_raise_dust_phenomenon_00]
       - [0x26f480, .data,   Effect2/hh_class_water_00]
       - [0x26f530, .data,   Effect2/hh_class_water_01]
       - [0x26fa30, .data,   Effect2/hh_class_water_02]
@@ -455,7 +456,22 @@ segments:
       - [0x275180, .data,   Effect2/hh_class_water_07]
       - [0x275828, .data,   Effect2/hh_class_water_08]
       - [0x275f00, .data,   Effect2/hh_class_water_09]
-      - [0x276258, data,    data_0x276258]
+      - [0x276260, data,    Enemy/en_insect] # vram: 0x00375B60
+      - [0x2762B0, data,    sh2shd/sh2shd_shadow_env] # vram: 0x00375BB0¿
+      - [0x2764E0, data,    Effect2/hh_class_fire_phenomenon_00] # vram: 0x00375DE0
+      - [0x277110, data,    Effect2/hh_class_flame_00] # vram: 0x00376A10
+      - [0x278550, data,    Effect2/hh_class_flame_01] # vram: 0x00377E50
+      - [0x279990, data,    Effect2/hh_class_smoke_00] # vram: 0x00379290
+      - [0x27A060, data,    Effect2/hh_class_water_pool_00] # vram: 0x00379960
+      - [0x27A5A0, data,    Chacter/m3_play_event] # vram: 0x00379EA0
+      - [0x27A630, data,    Chacter/m3_play_efect] # vram: 0x00379F30
+      - [0x27A6F0, data,    Effect2/hh_class_flame_02] # vram: 0x00379FF0
+      - [0x27BB30, data,    Effect2/hh_class_plural_phenomenon_01] # vram: 0x0037B430
+      - [0x27BBA0, data,    movie/pss_common] # vram: 0x0037B4A0
+      - [0x27BBA8, data,    movie/pss_cscvu1] # vram: 0x0037B4A8
+      - [0x27BBC0, data,    movie/pss_disp] # vram: 0x0037B4C0
+      - [0x27BBF0, data,    movie/pss_main] # vram: 0x0037B4F0
+      - [0x27BBF8, data,    movie/pss_strfile] # vram: 0x0037B4F8
       - [0x27bc08, .data,   movie/pss_videodec]
       - [0x27bc10, data,    data_0x27bc10]
       - [0x27bfd8, .data,   sound/sh_sd_call]
