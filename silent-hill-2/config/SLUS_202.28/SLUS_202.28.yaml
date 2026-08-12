@@ -319,7 +319,7 @@ segments:
       - [0x182bf0, asm, Effect2/hh_class_smoke_00]
       - [0x1835c0, asm, Effect2/hh_class_water_pool_00]
       - [0x183e40, c,   Chacter/m3_play_event]
-      - [0x184830, asm, Chacter/m3_play_efect]
+      - [0x184830, c,   Chacter/m3_play_efect]
       - [0x1869a0, asm, LoadBg/loadbg_1x1]
       - [0x186ae0, asm, Effect2/hh_class_flame_02]
       - [0x187590, asm, Effect2/hh_class_plural_phenomenon_01]
