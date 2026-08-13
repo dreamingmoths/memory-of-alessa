@@ -13,6 +13,9 @@
 #include "sound/sh_sd_call.h"
 #include "sound/sh_sound.h"
 
+#define SE_JMS_START 11000
+#define SE_JMS_END   19908
+
 static void shJamesEffectFoot(int type);
 static int shJamesSoundOn(SubCharacter* this, float vol, int se_name, int idk);
 static void PlayerCheckSoundLower(void);
@@ -92,7 +95,7 @@ static void shJamesEffectFoot(int type) {
 }
 
 static int shJamesSoundOn(SubCharacter* this, float vol, int se_name, int idk) {
-    ASSERT_ON_LINE(((0x2AF8 <= se_name) && (0x4DC4 >= se_name)), 189);
+    ASSERT_ON_LINE((se_name >= SE_JMS_START && se_name <= SE_JMS_END), 189);
     SeCallPos(se_name, vol, &this->pos, 0);
     return 0;
 }
