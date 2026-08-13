@@ -73,7 +73,7 @@ Because we have debug information in Silent Hill 2 from a 2001 demo release, the
 filenames listed in its YAML are exactly the same as the original filenames
 found in that release. These YAMLs help us produce assembly (`.s`) files that
 are found in `silent-hill-3/config/SLUS_206.22/asm` and
-`silent-hill-3/config/SLUS_202.28/asm`, respectively.
+`silent-hill-2/config/SLUS_202.28/asm`, respectively.
 
 ### step 2: assembly files → binary (again)
 

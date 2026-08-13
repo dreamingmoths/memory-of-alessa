@@ -464,7 +464,7 @@ segments:
       - [0x279990, data,    Effect2/hh_class_smoke_00] # vram: 0x00379290
       - [0x27A060, data,    Effect2/hh_class_water_pool_00] # vram: 0x00379960
       - [0x27A5A0, data,    Chacter/m3_play_event] # vram: 0x00379EA0
-      - [0x27A630, data,    Chacter/m3_play_efect] # vram: 0x00379F30
+      - [0x27A630, .data,    Chacter/m3_play_efect] # vram: 0x00379F30
       - [0x27A6F0, data,    Effect2/hh_class_flame_02] # vram: 0x00379FF0
       - [0x27BB30, data,    Effect2/hh_class_plural_phenomenon_01] # vram: 0x0037B430
       - [0x27BBA0, data,    movie/pss_common] # vram: 0x0037B4A0
@@ -608,7 +608,8 @@ segments:
       - [0x29bf50, .rodata, sh2shd/sh2shd_shadow_env]
       - [0x29bfd0, rodata,  rodata_0x29bfd0]
       - [0x29c140, .rodata, Chacter/m3_play_event]
-      - [0x29c170, rodata,  rodata_0x29c170]
+      - [0x29c170, .rodata,  Chacter/m3_play_efect]
+      #- [0x29c170, rodata,  rodata_0x29c170]
       - [0x29c350, .rodata, movie/movie_main]
       - [0x29c380, rodata,  rodata_0x29c380]
       - [0x29c5b0, .rodata, movie/pss_read]
