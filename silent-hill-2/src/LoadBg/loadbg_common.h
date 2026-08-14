@@ -2,6 +2,7 @@
 #define LOADBG_COMMON_H
 
 #include "sh2_common.h"
+#include "data/fs_structs.h"
 
 // total size: 0xBC
 typedef struct _loadBgCommon_Info_T {
@@ -29,5 +30,11 @@ typedef struct _loadBgCommon_Info_T {
 } loadBgCommon_Info_T;
 
 extern loadBgCommon_Info_T _loadBgCommon_Info[1]; // size: 0xBC, address: 0x36D750
+
+int _loadBgCommon_LoadData(void* loadbuf, fsFileIndex* file, int limit);
+int BPOSfromFPOS(float f);
+float FPOSfromBPOS(int i);
+int loadBgCommon_SetInfo(int glb_crd, float px, float pz);
+int loadBgCommon_HideMapBlockOutdoor(int mapid);
 
 #endif // LOADBG_COMMON_H
