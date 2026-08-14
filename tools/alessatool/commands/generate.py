@@ -168,7 +168,8 @@ def generate_lcf(args: GenerationArgs):
 
         block = []
 
-
+        # assumes that there is a .lit4 section, and that it comes before
+        # .sdata. @todo: take into account the section_order in the yaml?
         if section_type == ".lit4":
             block += [
                 "\t\t.    = ALIGN(0x80);",

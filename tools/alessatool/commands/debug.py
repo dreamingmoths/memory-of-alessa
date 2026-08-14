@@ -135,7 +135,7 @@ def discover_yamls(debug_info: DebugInfo):
         vram_start = first_code_segment["vram"]
 
         syms = dict()
-        info = ExecutableInfo(syms=syms, target_path=target_path, to_vram=lambda x, start=file_start, vram=vram_start : x - start + vram)
+        info = ExecutableInfo(syms=syms, target_path=target_path, to_vram=lambda x, start=file_start, vram=vram_start : x + vram)
         exe_info_by_name[name] = info
 
         sym_paths = "symbol_addrs_path" in yaml_opts and yaml_opts["symbol_addrs_path"] or "symbol_addrs.txt"
@@ -172,7 +172,11 @@ def run_bin_diff(debug_info: DebugInfo, exe_info_by_name: dict[str, ExecutableIn
 
             print(f"🔴 {cmp_output}")
             if cmp_output:
-                file_offset = int(findall(r"char (\d+)", cmp_output).pop())
+                maybe_offset = findall(r"(\d+)", cmp_output)
+                if len(maybe_offset) == 0:
+                    return
+
+                file_offset = int(maybe_offset[-2])
                 vram_addr = info.to_vram(file_offset)
                 print(f"\t@ vram address 0x{vram_addr:X} / file offset 0x{file_offset:X}")
 
