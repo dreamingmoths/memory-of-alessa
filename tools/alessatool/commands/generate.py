@@ -171,13 +171,14 @@ def generate_lcf(args: GenerationArgs):
 
         if section_type == ".lit4":
             block += [
-                "\t\t_gp\t= ALIGN(128) + 0x7FF0;",
+                "\t\t.    = ALIGN(0x80);",
+                "\t\t_gp  = . + 0x7FF0;",
                 "",
             ]
 
         elif section_type == ".sbss":
             block += [
-                "\t\t_fbss\t= .;",
+                "\t\t_fbss = .;",
                 "",
             ] + block
 
