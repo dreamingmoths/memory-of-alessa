@@ -262,6 +262,19 @@ static inline void mat_copy_3x3(void* dst, void* src) {
                  : : "r"(dst), "r"(src) : "t6", "t7");
 }
 
+static inline int float_floor(float x) {
+    int out;
+    asm("mfc1 %1, %0;\
+          addi t7, zero, 1\n\
+          slt %1, %1, zero\n\
+          cvt.w.s %0, %0;\
+          movz t7, zero, %1;\
+          mfc1 %1, %0;\
+          sub %1, %1, t7"
+        : "+f"(x), "+r"(out)::"t7");
+    return out;
+}
+
 extern float asinf(float);
 extern float fabsf(float);
 extern float cosf(float);
