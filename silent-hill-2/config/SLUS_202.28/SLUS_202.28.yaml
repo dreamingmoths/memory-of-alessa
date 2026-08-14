@@ -17,6 +17,7 @@ options:
   reloc_addrs_path: reloc_addrs.txt
   migrate_rodata_to_functions: True
   pair_rodata_to_text: True
+  section_order: [".text", ".vutext", ".data", ".rodata", ".lit4", ".sdata", ".bss"]
 segments:
   - [0x0]
   - name: engine
@@ -622,7 +623,8 @@ segments:
       - [0x29cb80, rodata,  rodata_0x29cb80]
       - [0x29cce0, .rodata, now_loading]
       - [0x29cd00, rodata,  rodata_0x29cd00]
-      - [0x2c8400, sdata,   sdata_0x2c8400]
+      - [0x2c8380, lit4,    lit4]
+      - [0x2c8400, sdata,   sdata]
       - { vram: 0x03c7d80, type: bss,  name: bss_0x03c7d80 }
       - { vram: 0x03c7e00, type: .bss, name: Chacter/anime }
       - { vram: 0x03c7ea0, type: bss,  name: bss_0x03c7ea0 }

@@ -57,7 +57,6 @@ SECTIONS
 
 	.main	:
 	{
-		_gp = 0x3d09f0;
 		.	= ALIGN(0x80);
 
 		### 🔴 code 🔴 ###
@@ -67,7 +66,6 @@ SECTIONS
 
 	.building_b_03.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_b_03_start = .;
 		. = ALIGN(0x80);
 		building_b_03_overlay_header.s.o (.data)
@@ -87,7 +85,6 @@ SECTIONS
 
 	.mall_f_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__mall_f_01_start = .;
 		. = ALIGN(0x80);
 		mall_f_01_overlay_header.s.o (.data)
@@ -107,7 +104,6 @@ SECTIONS
 
 	.mall_b_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__mall_b_00_start = .;
 		. = ALIGN(0x80);
 		mall_b_00_overlay_header.s.o (.data)
@@ -127,7 +123,6 @@ SECTIONS
 
 	.mall_b_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__mall_b_01_start = .;
 		. = ALIGN(0x80);
 		mall_b_01_overlay_header.s.o (.data)
@@ -147,7 +142,6 @@ SECTIONS
 
 	.mall_b_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__mall_b_02_start = .;
 		. = ALIGN(0x80);
 		mall_b_02_overlay_header.s.o (.data)
@@ -167,7 +161,6 @@ SECTIONS
 
 	.subway_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__subway_00_start = .;
 		. = ALIGN(0x80);
 		subway_00_overlay_header.s.o (.data)
@@ -187,7 +180,6 @@ SECTIONS
 
 	.subway_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__subway_01_start = .;
 		. = ALIGN(0x80);
 		subway_01_overlay_header.s.o (.data)
@@ -209,7 +201,6 @@ SECTIONS
 
 	.building_b_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_b_01_start = .;
 		. = ALIGN(0x80);
 		building_b_01_overlay_header.s.o (.data)
@@ -229,7 +220,6 @@ SECTIONS
 
 	.sewer_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__sewer_00_start = .;
 		. = ALIGN(0x80);
 		sewer_00_overlay_header.s.o (.data)
@@ -251,7 +241,6 @@ SECTIONS
 
 	.sewer_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__sewer_01_start = .;
 		. = ALIGN(0x80);
 		sewer_01_overlay_header.s.o (.data)
@@ -271,7 +260,6 @@ SECTIONS
 
 	.hospital_f_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_f_00_start = .;
 		. = ALIGN(0x80);
 		hospital_f_00_overlay_header.s.o (.data)
@@ -293,7 +281,6 @@ SECTIONS
 
 	.building_f_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_f_00_start = .;
 		. = ALIGN(0x80);
 		building_f_00_overlay_header.s.o (.data)
@@ -308,7 +295,6 @@ SECTIONS
 
 	.building_f_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_f_01_start = .;
 		. = ALIGN(0x80);
 		building_f_01_overlay_header.s.o (.data)
@@ -328,7 +314,6 @@ SECTIONS
 
 	.building_f_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_f_02_start = .;
 		. = ALIGN(0x80);
 		building_f_02_overlay_header.s.o (.data)
@@ -343,7 +328,6 @@ SECTIONS
 
 	.mall_f_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__mall_f_00_start = .;
 		. = ALIGN(0x80);
 		mall_f_00_overlay_header.s.o (.data)
@@ -363,7 +347,6 @@ SECTIONS
 
 	.subway_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__subway_02_start = .;
 		. = ALIGN(0x80);
 		subway_02_overlay_header.s.o (.data)
@@ -385,7 +368,6 @@ SECTIONS
 
 	.building_b_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_b_02_start = .;
 		. = ALIGN(0x80);
 		building_b_02_overlay_header.s.o (.data)
@@ -405,7 +387,6 @@ SECTIONS
 
 	.building_b_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__building_b_00_start = .;
 		. = ALIGN(0x80);
 		building_b_00_overlay_header.s.o (.data)
@@ -425,7 +406,6 @@ SECTIONS
 
 	.city_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__city_00_start = .;
 		. = ALIGN(0x80);
 		city_00_overlay_header.s.o (.data)
@@ -445,7 +425,6 @@ SECTIONS
 
 	.apart_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__apart_00_start = .;
 		. = ALIGN(0x80);
 		apart_00_overlay_header.s.o (.data)
@@ -465,7 +444,6 @@ SECTIONS
 
 	.car_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__car_00_start = .;
 		. = ALIGN(0x80);
 		car_00_overlay_header.s.o (.data)
@@ -485,7 +463,6 @@ SECTIONS
 
 	.motel_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__motel_00_start = .;
 		. = ALIGN(0x80);
 		motel_00_overlay_header.s.o (.data)
@@ -505,7 +482,6 @@ SECTIONS
 
 	.town_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__town_00_start = .;
 		. = ALIGN(0x80);
 		town_00_overlay_header.s.o (.data)
@@ -525,7 +501,6 @@ SECTIONS
 
 	.heaven_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__heaven_00_start = .;
 		. = ALIGN(0x80);
 		heaven_00_overlay_header.s.o (.data)
@@ -541,7 +516,6 @@ SECTIONS
 
 	.construct_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__construct_00_start = .;
 		. = ALIGN(0x80);
 		construct_00_overlay_header.s.o (.data)
@@ -561,7 +535,6 @@ SECTIONS
 
 	.hospital_f_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_f_01_start = .;
 		. = ALIGN(0x80);
 		hospital_f_01_overlay_header.s.o (.data)
@@ -581,7 +554,6 @@ SECTIONS
 
 	.hospital_f_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_f_02_start = .;
 		. = ALIGN(0x80);
 		hospital_f_02_overlay_header.s.o (.data)
@@ -603,7 +575,6 @@ SECTIONS
 
 	.hospital_f_03.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_f_03_start = .;
 		. = ALIGN(0x80);
 		hospital_f_03_overlay_header.s.o (.data)
@@ -625,7 +596,6 @@ SECTIONS
 
 	.hospital_turning_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_turning_00_start = .;
 		. = ALIGN(0x80);
 		hospital_turning_00_overlay_header.s.o (.data)
@@ -647,7 +617,6 @@ SECTIONS
 
 	.hospital_b_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_b_00_start = .;
 		. = ALIGN(0x80);
 		hospital_b_00_overlay_header.s.o (.data)
@@ -669,7 +638,6 @@ SECTIONS
 
 	.hospital_b_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_b_01_start = .;
 		. = ALIGN(0x80);
 		hospital_b_01_overlay_header.s.o (.data)
@@ -689,7 +657,6 @@ SECTIONS
 
 	.hospital_b_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__hospital_b_02_start = .;
 		. = ALIGN(0x80);
 		hospital_b_02_overlay_header.s.o (.data)
@@ -711,7 +678,6 @@ SECTIONS
 
 	.amusement_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__amusement_00_start = .;
 		. = ALIGN(0x80);
 		amusement_00_overlay_header.s.o (.data)
@@ -731,7 +697,6 @@ SECTIONS
 
 	.amusement_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__amusement_01_start = .;
 		. = ALIGN(0x80);
 		amusement_01_overlay_header.s.o (.data)
@@ -753,7 +718,6 @@ SECTIONS
 
 	.church_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__church_02_start = .;
 		. = ALIGN(0x80);
 		church_02_overlay_header.s.o (.data)
@@ -776,7 +740,6 @@ SECTIONS
 
 	.church_00.bin	:
 	{
-		_gp = 0x3d09f0;
 		__church_00_start = .;
 		. = ALIGN(0x80);
 		church_00_overlay_header.s.o (.data)
@@ -796,7 +759,6 @@ SECTIONS
 
 	.church_01.bin	:
 	{
-		_gp = 0x3d09f0;
 		__church_01_start = .;
 		. = ALIGN(0x80);
 		church_01_overlay_header.s.o (.data)
@@ -818,7 +780,6 @@ SECTIONS
 
 	.amusement_02.bin	:
 	{
-		_gp = 0x3d09f0;
 		__amusement_02_start = .;
 
 		. = ALIGN(0x80);
@@ -842,7 +803,6 @@ SECTIONS
 
 	.church_03.bin	:
 	{
-		_gp = 0x3d09f0;
 		__church_03_start = .;
 		. = ALIGN(0x80);
 		church_03_overlay_header.s.o (.data)
@@ -862,7 +822,6 @@ SECTIONS
 
 	.overlay_align.bin	:
 	{
-		_gp = 0x3d09f0;
 		__overlay_align_start = .;
 		. = ALIGN(0x10);
 		overlay_align_overlay_header.s.o (.data)

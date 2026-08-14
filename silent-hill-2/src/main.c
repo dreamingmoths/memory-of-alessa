@@ -49,10 +49,10 @@ int main(int argc, char** argv) {
     
     check_build_environment(*argv);
 
-    Sh2sys.step[0] = 0, Sh2sys.step[1] = 0,
-    Sh2sys.step[2] = 0, Sh2sys.step[3] = 0,
-    Sh2sys.step[4] = 0, Sh2sys.step[5] = 0,
-    Sh2sys.step[6] = 0, Sh2sys.step[7] = 0;
+    sh2sys_set_0(0);
+
+
+
 
     
     dbFlowStartCheck(1);
@@ -67,24 +67,15 @@ int main(int argc, char** argv) {
             dbFlowSetCheckPointOnLine("before hot init", 154);
             if (systemHotInit() != 0) {
                 dbSwitchDispEnable(db_test_dvd);
-                Sh2sys.step[0] = 3, Sh2sys.step[1] = 0,
-                Sh2sys.step[2] = 0, Sh2sys.step[3] = 0,
-                Sh2sys.step[4] = 0, Sh2sys.step[5] = 0,
-                Sh2sys.step[6] = 0, Sh2sys.step[7] = 0;
+                sh2sys_set_0(3);
                 switch (step) {                      
-                case 0:   
-                                    Sh2sys.step[1] = 1,
-                Sh2sys.step[2] = 0, Sh2sys.step[3] = 0,
-                Sh2sys.step[4] = 0, Sh2sys.step[5] = 0,
-                Sh2sys.step[6] = 0, Sh2sys.step[7] = 0;
-                    break;
-                case 1:   
-                case 2:
-                                    Sh2sys.step[1] = 6,
-                Sh2sys.step[2] = 0, Sh2sys.step[3] = 0,
-                Sh2sys.step[4] = 0, Sh2sys.step[5] = 0,
-                Sh2sys.step[6] = 0, Sh2sys.step[7] = 0;
-                    break;
+                    case 0:   
+                        sh2sys_set_1(1);
+                        break;
+                    case 1:   
+                    case 2:
+                        sh2sys_set_1(6);
+                        break;
                 }
             }
             dbFlowSetCheckPointOnLine("after hot init", 173);
@@ -112,14 +103,7 @@ void GameKeyCheck(void) {
         shPadPress(0, PAD_KEY_L1) && shPadPress(0, PAD_KEY_R1)) {
         fsSync(0, -1);
         lisSync(0, -1);
-        Sh2sys.step[0] = 2;
-        Sh2sys.step[1] = 0;
-        Sh2sys.step[2] = 0;
-        Sh2sys.step[3] = 0;
-        Sh2sys.step[4] = 0;
-        Sh2sys.step[5] = 0;
-        Sh2sys.step[6] = 0;
-        Sh2sys.step[7] = 0;
+        sh2sys_set_0(2);
         Env_ctl.stat_ctl_1.ui32[0] <<= 8;
         Env_ctl.stat_ctl_1.uc8[0] = 0;
     }

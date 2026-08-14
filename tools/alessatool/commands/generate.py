@@ -166,11 +166,27 @@ def generate_lcf(args: GenerationArgs):
         if section_type == ".bss":
             alignment = args.bss_alignment
 
-        block = [
+        block = []
+
+
+        if section_type == ".lit4":
+            block += [
+                "\t\t_gp\t= ALIGN(128) + 0x7FF0;",
+                "",
+            ]
+
+        elif section_type == ".sbss":
+            block += [
+                "\t\t_fbss\t= .;",
+                "",
+            ] + block
+
+        block += [
             f"\t\t# {section_type}",
             f"\t\t__{section_type[1:]}_start = .;",
             f"\t\tALIGNALL(0x{alignment:X});",
         ]
+
         for entry in objects:
             alignment = entry.segment.ld_align_segment_start 
             if alignment is not None:

@@ -31,8 +31,6 @@ SECTIONS
 
 	.main	:
 	{
-		_gp = 0x3cfc70;
-
 		_ovl_start_addr      = 0x01F01E00;
 		## linker symbols for overlays deleted from the prototype ##
 		stage_town_west      = 0x01F07060;
@@ -85,7 +83,6 @@ SECTIONS
 
 	.aot.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_aot_start = .;
 
 		. = ALIGN(0x80);
@@ -100,7 +97,6 @@ SECTIONS
 
 	.toi.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_toi_start = .;
 
 		. = ALIGN(0x80);
@@ -120,7 +116,6 @@ SECTIONS
 
 	.xxx.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_xxx_start = .;
 
 		. = ALIGN(0x80);
@@ -135,7 +130,6 @@ SECTIONS
 
 	.aew.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_aew_start = .;
 
 		. = ALIGN(0x80);
@@ -150,7 +144,6 @@ SECTIONS
 
 	.aee.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_aee_start = .;
 
 		. = ALIGN(0x80);
@@ -170,7 +163,6 @@ SECTIONS
 
 	.ast.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_ast_start = .;
 
 		. = ALIGN(0x80);
@@ -190,7 +182,6 @@ SECTIONS
 
 	.aey.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_aey_start = .;
 
 		. = ALIGN(0x80);
@@ -210,7 +201,6 @@ SECTIONS
 
 	.aex.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_aex_start = .;
 
 		. = ALIGN(0x80);
@@ -230,7 +220,6 @@ SECTIONS
 
 	.awy.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_awy_start = .;
 
 		. = ALIGN(0x80);
@@ -245,7 +234,6 @@ SECTIONS
 
 	.awx.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_awx_start = .;
 
 		. = ALIGN(0x80);
@@ -267,7 +255,6 @@ SECTIONS
 
 	.fst.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_fst_start = .;
 
 		. = ALIGN(0x80);
@@ -288,7 +275,6 @@ SECTIONS
 
 	.twe.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_twe_start = .;
 
 		. = ALIGN(0x80);
@@ -308,7 +294,6 @@ SECTIONS
 
 	.obs.bin :
 	{
-		_gp = 0x3cfc70;
 		__gx_obs_start = .;
 
 		. = ALIGN(0x80);
