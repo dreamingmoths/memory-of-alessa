@@ -95,7 +95,7 @@ static void shJamesEffectFoot(int type) {
 }
 
 static int shJamesSoundOn(SubCharacter* this, float vol, int se_name, int idk) {
-    ASSERT_ON_LINE((se_name >= SE_JMS_START && se_name <= SE_JMS_END), 189);
+    ASSERT_ON_LINE(se_name >= SE_JMS_START && se_name <= SE_JMS_END, 189);
     SeCallPos(se_name, vol, &this->pos, 0);
     return 0;
 }
