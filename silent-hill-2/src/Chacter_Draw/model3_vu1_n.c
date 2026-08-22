@@ -3,6 +3,7 @@
 #include "sce/libdma.h"
 #include "sce/libvifpk.h"
 
+#include "ee.h"
 #include "gs.h"
 
 #include "GFW/sh2gfw_Init_ModelDrawData.h"

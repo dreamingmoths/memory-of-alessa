@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ee.h"
 #include "sce/libgraph.h"
 #include "GFW/sh3gfw_GSCTL_man.h"
 

@@ -20,6 +20,15 @@
 #define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 #define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
 
+// Convert a reflex angle (> 180deg, or < -180deg) to the range [-PI, PI].
+#define REFLEX_ANGLE(out, value) do { \
+    float ret; \
+    if (value > PI) ret = value-TAU; \
+    else if (value < -PI) ret = value+TAU; \
+    else ret = value; \
+    out = ret; \
+} while (0);
+
 static inline float float_abs(float x) {
     asm("abs.s %0, %0" : "+f"(x));
     return x;

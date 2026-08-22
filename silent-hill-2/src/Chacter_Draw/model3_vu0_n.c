@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "ee.h"
 #include "sce/eestruct.h"
 #include "sce/eeregs.h"
 #include "sce/libgraph.h"
