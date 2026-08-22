@@ -30042,8 +30042,8 @@ rom:0x0C0018 reloc:MIPS_HI16                           symbol:"rodata_79_0x00391
 rom:0x0C001C reloc:MIPS_LO16                           symbol:"rodata_79_0x00391AD0"
 rom:0x0C0068 reloc:MIPS_HI16                           symbol:"@80_0x00391AE0"
 rom:0x0C006C reloc:MIPS_LO16                           symbol:"@80_0x00391AE0"
-rom:0x0C0070 reloc:MIPS_HI16                           symbol:"@81"
-rom:0x0C0074 reloc:MIPS_LO16                           symbol:"@81"
+rom:0x0C0070 reloc:MIPS_HI16                           symbol:"@81_0x00391B00"
+rom:0x0C0074 reloc:MIPS_LO16                           symbol:"@81_0x00391B00"
 rom:0x0C0078 reloc:MIPS_26                             symbol:printf
 rom:0x0C00B4 reloc:MIPS_HI16                           symbol:"@90_0x00391B40"
 rom:0x0C00B8 reloc:MIPS_LO16                           symbol:"@90_0x00391B40"

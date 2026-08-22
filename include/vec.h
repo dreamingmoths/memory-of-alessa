@@ -88,6 +88,15 @@ static inline void vec_add_xyz(void* x, void* y, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
+static inline void vec_add_alt(void* x, void* y, void* out) {
+    asm("\
+        lqc2 vf4, 0(%1)\n\
+        lqc2 vf5, 0(%0)\n\
+        vadd.xyzw vf4, vf4, vf5\n\
+        sqc2 vf4, 0(%2)"
+        : "+r"(x), "+r"(y), "+r"(out));
+}
+
 static inline void vec_sub(void* x, void* y, void* out) {
     asm("\
         lqc2 vf4, 0(%0)\n\
@@ -268,7 +277,25 @@ static inline float vec_length(float* a) {
 static inline float vec3_dot_product(void* v, void* w) {
     float d;
 
-    asm("\
+    asm ("\
+        lwc1 %0, 0(%1)\n\
+        lwc1 f8, 0(%2)\n\
+        lwc1 f9, 4(%1)\n\
+        lwc1 f10, 4(%2)\n\
+        mula.s %0, f8\n\
+        lwc1 %0, 8(%1)\n\
+        lwc1 f8, 8(%2)\n\
+        madda.s f9, f10\n\
+        madd.s %0, %0, f8"
+        : "+f"(d) : "r"(v), "r"(w) : "f8", "f9", "f10");
+
+    return d;
+}
+
+static inline float sh3_vec3_dot_product(void* v, void* w) {
+    float d;
+
+    asm volatile("\
         lwc1 %0, 0(%1)\n\
         lwc1 f8, 0(%2)\n\
         lwc1 f9, 4(%1)\n\

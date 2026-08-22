@@ -2,6 +2,8 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/playing_info.h"
 
+#include "vec.h"
+
 #include "Chacter/character.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/sh2_battle_list.h"

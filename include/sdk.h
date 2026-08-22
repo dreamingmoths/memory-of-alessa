@@ -7,7 +7,6 @@
 
 #include "types.h"
 
-extern void* memcpy(void* __dest, void* __src, u_int __n);
 extern float asinf(float);
 extern float fabsf(float);
 extern float cosf(float);

@@ -47,21 +47,20 @@ static u_int Object_Initialize(HH_Object_Water_10* pThis /* r16 */) {
     return result;
 }
 
+// Range: 0x25EFB0 -> 0x25F820
+static u_long _GifTag[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5A0
+static u_long _GifTag_Tri[2] = {
+    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5B0
+static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f};                                                   // @ 0x0036F5C0
+static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x0036F5D0
+static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F5E0
+static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F5F0
+static float amb_alpha_72 = 32.0f;                                                                          // @ 0x0036F600
+static float light_alpha_73 = 128.0f;                                                                       // @ 0x0036F608                                                                               // @ 0x0036F640
 static u_int Object_Draw(HH_Object_Water_10* pThis /* r22 */, float* pGrid_Y_Value /* r21 */, float* WorldLocation /* r17 */, u_int Grid_X_Max /* r20 */, u_int Grid_Z_Max /* r18 */) {
-    // Range: 0x25EFB0 -> 0x25F820
-    static u_long _GifTag[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5A0
-    static u_long _GifTag_Tri[2] = {
-        SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-        GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)}; // @ 0x0036F5B0
-    static float Light_Base[4] = {16.0f, 16.0f, 16.0f, 0.0f};                                                   // @ 0x0036F5C0
-    static float Amb_Base[4] = {64.0f, 64.0f, 64.0f, 0.0f};                                                     // @ 0x0036F5D0
-    static float Ambient_Color2[4] = {19.0f, 19.0f, 19.0f, 255.0f};                                             // @ 0x0036F5E0
-    static float SpecularRgba[4] = {255.0f, 255.0f, 255.0f, 64.0f};                                             // @ 0x0036F5F0
-    static float amb_alpha_72 = 32.0f;                                                                          // @ 0x0036F600
-    static float light_alpha_73 = 128.0f;                                                                       // @ 0x0036F608                                                                               // @ 0x0036F640
-
     u_int result = 0;               // r2
     sceVif1Packet* pPk;             // r16
     u_int vertex_num;               // r2

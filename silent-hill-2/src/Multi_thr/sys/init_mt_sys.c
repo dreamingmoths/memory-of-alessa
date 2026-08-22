@@ -25,10 +25,10 @@ const char rodata_79_0x00391AD0[] = "SLUS_202.28";
 
 INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @80_0x00391AE0);
 
-INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @81);
+INCLUDE_RODATA("asm/nonmatchings/Multi_thr/sys/init_mt_sys", @81_0x00391B00);
 
 void check_build_environment(char* bootfilename /* r16 */) {
-    verbose(1, "init_mt_sys.c:174> CODE:%d\n", 0x4F04);
+    verbose(1, "init_mt_sys.c:174> CODE:%d\n", 20228);
     verbose(1, "init_mt_sys.c:175> BOOT:%s\n", rodata_79_0x00391AD0);
     verbose(1, "init_mt_sys.c:176> MC FILE:%s\n", "BASLUS-20228");
     check_code_and_data_size();

@@ -279,4 +279,4 @@ void map_DATA_LOAD(int arg0) {
     return;
 }
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_all_sysinit", init_GSandVU); // I will leave this for now, I am tired of moving structs
+INCLUDE_ASM("asm/nonmatchings/sh2gfw_all_sysinit", init_GSandVU); 
