@@ -121,7 +121,7 @@ MWCCGAP_PATCH_VERSION_FILE := $(TOOLS)/mwccgap/mwccgap.patch
 
 ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@" \
-		-u __FILE__ -d __FILE__=\"$(<F)\" -d NON_MATCHING=1
+		-u __FILE__ -d __FILE__=\"$(<F)\" -d NON_MATCHING=1 -d HOLY_CANDLE=1
 else
 	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS) \
 		 -u __FILE__ -d __FILE__=\"$(<F)\"

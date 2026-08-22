@@ -1,6 +1,8 @@
 #ifndef ALESSA_MATH_H
 #define ALESSA_MATH_H
 
+#include "sdk.h"
+
 /**
  * miscellaneous math + float helpers used in sh2+3.
  */
@@ -28,6 +30,48 @@
     else ret = value; \
     out = ret; \
 } while (0);
+
+static inline float reflex_angle(float x) {
+    float result;
+    if (x > 0.0f) {
+        result = fmodf(x, TAU);
+        if (result > PI)
+            result -= TAU;
+    } else {
+        result = fmodf(x, -TAU);
+        if (result < -PI)
+            result += TAU;
+    }
+    return result;
+}
+
+static inline int clamp(int b, int i) {
+    asm("slt $t7, %1, %0; movn %0, %1, $t7" : "=r"(b) : "r"(i) :);
+    return b;
+}
+
+static inline int clamp_max(int b, int i) {
+    asm("slt $t7, %0, %1; movn %0, %1, $t7" : "=r"(b) : "r"(i) :);
+    return b;
+}
+
+static inline int clamp_n_reverse(int value, u_int n) {
+    int result = value >> n;
+    if (value < 0)
+        result = (value + ((1 << n) - 1)) >> n;
+    return result;
+}
+static inline int clamp_n(int value, int n) {
+    int result = value & ((1 << n) - 1);
+    if (value < 0 && result != 0)
+        result -= (1 << n);
+    return result;
+}
+
+static inline int int_abs(int b) {
+    asm("slt $t7, %0, $zero; neg $t6, %0; movn %0, $t6, $t7" : "=r"(b) :);
+    return b;
+}
 
 static inline float float_abs(float x) {
     asm("abs.s %0, %0" : "+f"(x));

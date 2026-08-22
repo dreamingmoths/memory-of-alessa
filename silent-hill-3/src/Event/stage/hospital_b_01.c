@@ -1,14 +1,18 @@
 #include "hospital_b_01.h"
-#include "sce/libvu0.h"
 #include "vec.h"
+#include "sce/libvu0.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_01", func_01F6D680_hospital_b_01);
 
+#ifdef HOLY_CANDLE
 void func_01F6D740_hospital_b_01(void) {
     if (GET_BIT(D_1D31698, 6)) {                
         func_0016D170(0x3A98, &D_01F6EBB0_hospital_b_01, 0, 0, 1.0f, 5000.0f, D_01F6EBC0_hospital_b_01);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_01", func_01F6D740_hospital_b_01);
+#endif
 
 int func_01F6D7A0_hospital_b_01(void) {
     switch (D_01F6EBA8_hospital_b_01) {
