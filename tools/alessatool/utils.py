@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from constants import ASM, SRC
 from os import stat, remove
@@ -64,9 +64,21 @@ class SplatSymbol:
     name: str
     addr: int
     addr_hex: str
-    duplicated: bool
+    duplicate_by_name: bool
+    duplicate_by_addr: bool
 
-def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, syms: dict[SplatSymbol] | None = None) -> str:
+@dataclass
+class SplatSymbolAddrsAtlas:
+    syms: list[SplatSymbol] = field(default_factory=list)
+    syms_by_name: dict[str, SplatSymbol] = field(default_factory=dict)
+    syms_by_addr: dict[int, SplatSymbol] = field(default_factory=dict)
+
+def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, atlas: SplatSymbolAddrsAtlas = None) -> SplatSymbolAddrsAtlas:
+    atlas = atlas or SplatSymbolAddrsAtlas()
+    syms = atlas.syms
+    syms_by_name = atlas.syms_by_name
+    syms_by_addr = atlas.syms_by_addr
+
     with open(symbol_addrs, "r") as symbol_addrs_file:
         symbol_addrs_lines: list[str] = symbol_addrs_file.readlines()
 
@@ -83,12 +95,24 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, syms: dict[SplatSymbol] 
             addr_hex = addr_hex.strip().replace("0x", "").upper()
             addr = int(addr_hex, 16)
 
-            duplicated = name in syms
-            syms[name] = SplatSymbol(
+            duplicate_by_name = name in syms_by_name
+            if duplicate_by_name:
+                syms_by_name[name].duplicate_by_name = True
+
+            duplicate_by_addr = addr in syms_by_addr
+            if duplicate_by_addr:
+                syms_by_addr[addr].duplicate_by_addr = True
+
+            splat_symbol = SplatSymbol(
                 name=name,
                 addr=addr,
                 addr_hex=addr_hex,
-                duplicated=duplicated
+                duplicate_by_name=duplicate_by_name,
+                duplicate_by_addr=duplicate_by_addr,
             )
+            syms_by_name[name] = splat_symbol
+            syms_by_addr[addr] = splat_symbol
 
-    return syms
+            syms.append(splat_symbol)
+
+    return atlas

@@ -319,6 +319,12 @@ def main():
         default="silent-hill-3",
         help="name of the project to debug (e.g., `silent-hill-2`)"
     )
+    debug_parser.add_argument(
+        "--all",
+        action="store_true",
+        default=False,
+        help="print all mismatches"
+    )
     debug_parser.set_defaults(func=debug)
 
     util_parser = subparsers.add_parser(
