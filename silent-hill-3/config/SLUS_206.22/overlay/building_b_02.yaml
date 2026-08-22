@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/building_b_02_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, building_b_02_overlay_header]
   - name: building_b_02
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x80
     subsegments:
+      - [0x0, databin, building_b_02_overlay_header]
       - [0x80, c, Event/stage/building_b_02]
       - [0xC80, data, building_b_02_data]
       - { vram: 0x1F6EF00, type: bss, name: building_b_02_bss }

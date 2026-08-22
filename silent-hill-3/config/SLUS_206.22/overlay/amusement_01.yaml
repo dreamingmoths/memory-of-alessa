@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/amusement_01_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, amusement_01_overlay_header]
   - name: amusement_01
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x180
     subsegments:
+      - [0x0, databin, amusement_01_overlay_header]
       - [0x80,   c,       Event/stage/amusement_01]
       - [0x3D00, data,    amusement_01_data]
       - [0x7580, .rodata, Event/stage/amusement_01]

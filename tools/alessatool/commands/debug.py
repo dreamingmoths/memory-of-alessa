@@ -231,7 +231,7 @@ def run_bin_diff(debug_args: DebugArgs, debug_info: DebugInfo, exe_info_by_name:
             maybe_offset = findall(r"(\d+)", cmp_output)
             mismatch_count = len(maybe_offset) // 3
             max_index = print_all and 3 * mismatch_count or 3
-            mismatch_count_statement = mismatch_count > 1 and "{mismatch_count} bytes differ" or "only 1 byte!"
+            mismatch_count_statement = mismatch_count > 1 and f"{mismatch_count} bytes differ" or "only 1 byte!"
 
             print(f"🔴 {info.name} :: {mismatching_entry.base_path.as_posix()} :: {mismatching_entry.target_path.as_posix()} ({mismatch_count_statement})")
 

@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/apart_00_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, apart_00_overlay_header]
   - name: apart_00
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x80
     subsegments:
+      - [0x0, databin, apart_00_overlay_header]
       - [0x80, c, Event/stage/apart_00]
       - [0x1600, data, apart_00_data]
       - { vram: 0x1F70000, type: bss, name: apart_00_bss }

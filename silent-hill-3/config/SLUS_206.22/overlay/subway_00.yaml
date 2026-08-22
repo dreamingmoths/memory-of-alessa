@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/subway_00_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, subway_00_overlay_header]
   - name: subway_00
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x80
     subsegments:
+      - [0x0, databin, subway_00_overlay_header]
       - [0x80, c, Event/stage/subway_00]
       - [0xF80, data, subway_00_data]
       - { vram: 0x1F6F600, type: bss, name: subway_00_bss }

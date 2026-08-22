@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/mall_b_00_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, mall_b_00_overlay_header]
   - name: mall_b_00
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x100
     subsegments:
+      - [0x0, databin, mall_b_00_overlay_header]
       - [0x80, c, Event/stage/mall_b_00]
       - [0x2800, data, mall_b_00_data]
       - { vram: 0x1F71680, type: bss, name: mall_b_00_bss }

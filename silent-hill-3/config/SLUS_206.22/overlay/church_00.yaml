@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/church_00_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, church_00_overlay_header]
   - name: church_00
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x80
     subsegments:
+      - [0x0, databin, church_00_overlay_header]
       - [0x80, c, Event/stage/church_00]
       - [0x800, data, church_00_data]
       - { vram: 0x1F6E600, type: bss, name: church_00_bss }

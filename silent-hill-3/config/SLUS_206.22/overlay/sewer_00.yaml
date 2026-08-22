@@ -17,14 +17,13 @@ options:
   undefined_syms_auto_path: linkers/sewer_00_undefined_syms_auto.main.txt
   symbol_name_format: $VRAM_$SEG
 segments:
-
-  - [0, databin, sewer_00_overlay_header]
   - name: sewer_00
     type: code
-    vram: 0x1F6D680
-    start: 0x80
+    vram: 0x1F6D600
+    start: 0x0
     bss_size: 0x80
     subsegments:
+      - [0x0, databin, sewer_00_overlay_header]
       - [0x80, c, Event/stage/sewer_00]
       - [0xF00, data, sewer_00_data]
       - [0x2700, .rodata, Event/stage/sewer_00]
