@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "sce/libvifpk.h"
+#include "sce/libvu0.h"
 #include "taskman/shtskman.h"
 
 // total size: 0x18

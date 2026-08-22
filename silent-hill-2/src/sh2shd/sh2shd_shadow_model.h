@@ -2,6 +2,7 @@
 #define SH2SHD_SHADOW_MODEL_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 #include "sh2shd/sh2shd_structs.h"
 #include "GFW/sh2_GsAllEnv.h"

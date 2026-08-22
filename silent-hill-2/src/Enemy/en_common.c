@@ -1,4 +1,5 @@
 #include "Enemy/en_common.h"
+#include "sce/libvu0.h"
 #include "Enemy/en_effect.h"
 #include "Enemy/en_arm.h"
 

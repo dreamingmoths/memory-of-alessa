@@ -1,6 +1,8 @@
 #ifndef ALESSA_VEC_H
 #define ALESSA_VEC_H
 
+#include "sce/libvu0.h"
+
 /**
  * miscellaneous vector + matrix helpers used in sh2+3.
  */

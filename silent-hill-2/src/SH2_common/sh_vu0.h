@@ -2,6 +2,7 @@
 #define SH_VU0_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 
 float shAngleRegulate(float);
 float shAtanV(void*);

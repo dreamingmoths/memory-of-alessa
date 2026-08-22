@@ -2,6 +2,7 @@
 #define SH2_COMMON_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 
 #pragma fast_fptosi off
 

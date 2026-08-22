@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 /* apply a 4x4 matrix to a vector */
 asm void ktVu0ApplyMatrixXYZ1(register float* v0, register sceVu0FMATRIX m0, register float* v1)  {

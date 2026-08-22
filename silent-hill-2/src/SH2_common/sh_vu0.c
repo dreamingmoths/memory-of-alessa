@@ -1,4 +1,5 @@
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 
 INCLUDE_ASM("asm/nonmatchings/SH2_common/sh_vu0", shAngleRegulate);
 

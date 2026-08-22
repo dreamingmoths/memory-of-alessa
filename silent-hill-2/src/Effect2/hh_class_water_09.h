@@ -3,6 +3,7 @@
 
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_water_common.h"
+#include "sce/libvu0.h"
 
 #define HH_WATER_09_GRID_INDEX_GET(_x, _z) x_grid_max* (_z) + (_x)
 

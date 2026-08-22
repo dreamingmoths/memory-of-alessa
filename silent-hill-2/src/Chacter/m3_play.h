@@ -2,6 +2,7 @@
 #define M3_PLAY_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 
 void player_flg_on(u_int* type, u_int status);

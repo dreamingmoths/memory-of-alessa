@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sce/libgraph.h"
+#include "sce/libvu0.h"
 
 #include "Lens/lens_flare.h"
 #include "Lens/lens_th_draw.h"

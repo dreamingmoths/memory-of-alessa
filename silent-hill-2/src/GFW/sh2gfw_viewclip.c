@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "GFW/sh2_DrawEnvData.h"
 #include "view/vb_main.h"
 #include "view/vw_main.h"

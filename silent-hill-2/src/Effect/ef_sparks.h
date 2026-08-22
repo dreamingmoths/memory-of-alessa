@@ -2,6 +2,7 @@
 #define EF_SPARKS_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "Effect/ef_common.h"
 
 // total size: 0x60

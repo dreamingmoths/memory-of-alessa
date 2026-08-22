@@ -1,4 +1,5 @@
 #include "model3_vu1_n.h"
+#include "sce/libvu0.h"
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", Model3LoadMpg1);
 

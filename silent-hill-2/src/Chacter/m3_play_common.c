@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/pad.h"
 #include "SH2_common/sh2dt.h"

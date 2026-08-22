@@ -1,4 +1,5 @@
 #include "Chacter/m3_wep.h"
+#include "sce/libvu0.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_play.h"

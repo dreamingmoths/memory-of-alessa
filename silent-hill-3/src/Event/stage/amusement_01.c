@@ -2,6 +2,7 @@
 #include "vec.h"
 #include "Font/font.h"
 #include "SH3_common/sh3dt.h"
+#include "sce/libvu0.h"
 #include "SH3_common/sh_vu0.h"
 #include "Chacter/chara_list.h"
 

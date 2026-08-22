@@ -2,6 +2,7 @@
 #define EF_FLAME_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Effect/ef_common.h"
 #include "Effect/ef_sparks.h"
 

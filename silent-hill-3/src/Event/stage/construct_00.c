@@ -1,4 +1,5 @@
 #include "construct_00.h"
+#include "sce/libvu0.h"
 
 UNCURSE_CONSTRUCT_STAR();
 

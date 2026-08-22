@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sce/libvu0.h"
 #include "shared/Fog/fog.h"
 #include "Fog/fog.h"
 #include "SH3_common/sh_vu0.h"

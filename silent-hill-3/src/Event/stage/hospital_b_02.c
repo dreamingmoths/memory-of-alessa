@@ -1,4 +1,5 @@
 #include "hospital_b_02.h"
+#include "sce/libvu0.h"
 #include "Chacter/m3_sc_anime.h"
 
 int func_01F6D680_hospital_b_02(void) {

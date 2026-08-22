@@ -1,4 +1,5 @@
 #include "hospital_f_00.h"
+#include "sce/libvu0.h"
 
 int func_01F6D680_hospital_f_00(void) {
     if (!GET_BIT(D_1D31680, 2)) {

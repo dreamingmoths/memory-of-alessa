@@ -3,6 +3,7 @@
 
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_water_common.h"
+#include "sce/libvu0.h"
 
 #pragma divbyzerocheck off
 

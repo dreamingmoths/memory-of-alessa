@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sce/libvu0.h"
 #include "hh_class_blood_pool_phenomenon.h"
 
 static TimeTable_Infomeation _Time_Table[5] = {

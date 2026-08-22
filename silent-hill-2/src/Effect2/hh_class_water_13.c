@@ -9,6 +9,7 @@
 #include "Event/event.h"
 #include "SH2_common/pad.h"
 #include "sce/libgraph.h"
+#include "sce/libvu0.h"
 #include "sce/libvifpk.h"
 
 #pragma divbyzerocheck off

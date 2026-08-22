@@ -2,6 +2,7 @@
 #define M3_SC_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 #include "Chacter_Draw/clani.h"
 #include "Chacter/item_screen_obj.h"

@@ -3,6 +3,7 @@
 
 #include "Chacter/m3_sc.h"
 #include "common.h"
+#include "sce/libvu0.h"
 
 void func_0013D250(int, int*, float);
 void func_0013D280(int);

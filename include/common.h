@@ -11,7 +11,6 @@
 #include "math.h"
 #include "sdk.h"
 #include "ee.h"
-#include "sce/libvu0.h"
 
 #ifdef DEBUG
 #define debugPrintf(...) printf(__VA_ARGS__)

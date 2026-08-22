@@ -2,6 +2,7 @@
 #define VC_UTIL_H
 
 #include "view/vc_main.h"
+#include "sce/libvu0.h"
 #include "view/vc_play.h"
 
 void vcInitCamera(VC_ROAD_DATA** roadarray_list);

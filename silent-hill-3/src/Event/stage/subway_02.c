@@ -1,4 +1,5 @@
 #include "subway_02.h"
+#include "sce/libvu0.h"
 #include "vec.h"
 
 int func_01F6D680_subway_02(void)

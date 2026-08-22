@@ -2,6 +2,7 @@
 #define VC_NEWEST_H
 
 #include "view/vc_main.h"
+#include "sce/libvu0.h"
 
 void vcEndProcessingVC_WORK(void);
 void vcEndProcessingOldNearRoad(VC_NEAR_ROAD_DATA* near_rd_p, VC_WORK* w_p);

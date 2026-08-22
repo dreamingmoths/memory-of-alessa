@@ -2,6 +2,7 @@
 #define MODEL3_SUB_N_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "model_common.h"
 
 typedef struct ModelWork {

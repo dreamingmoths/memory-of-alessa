@@ -1,6 +1,7 @@
 #include "vw_main.h"
 #include "vec.h"
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 
 #line 52
 void vwInitViewInfo(void) {

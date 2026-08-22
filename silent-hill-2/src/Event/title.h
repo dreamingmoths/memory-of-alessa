@@ -2,6 +2,7 @@
 #define TITLE_H
 
 #include "Event/picture.h"
+#include "sce/libvu0.h"
 
 #define SH2_TITLE_DATA_MODE_0 0
 #define SH2_TITLE_DATA_MODE_1 1

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sce/libvifpk.h"
+#include "sce/libvu0.h"
 #include "sce/eestruct.h"
 #include "sce/libdma.h"
 #include "Chacter_Draw/vifot/sh_kt_vif0pkbuf.h"

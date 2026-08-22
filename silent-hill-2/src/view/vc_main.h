@@ -2,6 +2,7 @@
 #define VC_MAIN_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 
 // SH1-style CLAMP macro, used a lot in SH1 code, but most of SH2 uses `float_clamp`?

@@ -2,6 +2,7 @@
 #define CHARACTER_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter_Draw/clani.h"
 
 typedef struct shBattleArea {

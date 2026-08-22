@@ -1,6 +1,7 @@
 #include "Enemy/en_red.h"
 #include "Font/fj_man.h"
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 #include "SH2_common/sh2dt.h"
 #include "Event/event.h"
 

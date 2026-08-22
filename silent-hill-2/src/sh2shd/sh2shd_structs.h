@@ -2,6 +2,7 @@
 #define SH2SHD_STRUCTS_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 #define LIGHT_KIND_NONE -1
 #define LIGHT_KIND_0 0x0

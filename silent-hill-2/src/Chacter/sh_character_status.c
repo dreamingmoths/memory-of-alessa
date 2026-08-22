@@ -9,6 +9,7 @@
 #include "sh2shd/sh2shd_shadow_model.h"
 
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 
 #include "vec.h"
 

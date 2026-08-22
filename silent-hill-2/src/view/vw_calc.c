@@ -1,5 +1,6 @@
 #include "vw_calc.h"
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 #include "SH2_common/sh2dt.h"
 #include "vec.h"
 

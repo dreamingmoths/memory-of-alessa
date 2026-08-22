@@ -1,5 +1,6 @@
 #ifndef FOG_SHARED_H
 #define FOG_SHARED_H
+#include "sce/libvu0.h"
 
 #define WALL_MAX 188
 #define PART_MAX 700

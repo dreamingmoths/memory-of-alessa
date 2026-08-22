@@ -1,6 +1,7 @@
 #include "vc_newest.h"
 #include "vec.h"
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 
 #line 25
 void vcEndProcessingVC_WORK(void) {

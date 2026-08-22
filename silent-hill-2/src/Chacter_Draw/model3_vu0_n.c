@@ -1,6 +1,7 @@
 #include "sh2_common.h"
 #include "ee.h"
 #include "sce/eestruct.h"
+#include "sce/libvu0.h"
 #include "sce/eeregs.h"
 #include "sce/libgraph.h"
 #include "model3_vu0_n.h"

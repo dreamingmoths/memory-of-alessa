@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 #include "Event/event.h"
 #include "Event/event_sub.h"

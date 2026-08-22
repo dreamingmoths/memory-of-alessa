@@ -2,6 +2,7 @@
 #define SUBWAY_01_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "Chacter/m3_sc.h"
 
 typedef struct

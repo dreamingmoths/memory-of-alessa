@@ -1,4 +1,5 @@
 #include "cl_calc.h"
+#include "sce/libvu0.h"
 
 /*
     p = pl->p;

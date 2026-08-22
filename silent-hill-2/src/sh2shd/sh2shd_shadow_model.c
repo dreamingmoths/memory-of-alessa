@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "GFW/sh2_GsAllEnv.h"
 #include "sh2shd/sh2shd_structs.h"
 #include "Heap/utilheap.h"

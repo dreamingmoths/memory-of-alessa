@@ -2,6 +2,7 @@
 #define VW_MAIN_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "view/vb_main.h"
 
 typedef struct _VW_VIEW_WORK {

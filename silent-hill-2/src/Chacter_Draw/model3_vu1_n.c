@@ -1,6 +1,7 @@
 #include "sh2_common.h"
 
 #include "sce/libdma.h"
+#include "sce/libvu0.h"
 #include "sce/libvifpk.h"
 
 #include "ee.h"

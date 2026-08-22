@@ -2,6 +2,7 @@
 #define MODEL3_STRUCTS_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 typedef struct Model3Junk {
     // total size: 0x1C0

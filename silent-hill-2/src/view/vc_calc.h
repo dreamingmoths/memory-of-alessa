@@ -2,6 +2,7 @@
 #define VC_CALC_H
 
 #include "view/vc_main.h"
+#include "sce/libvu0.h"
 
 // @todo: check float*/float[] types
 float vcRetNearRatioSwitchAreaInXZPos(VC_NEAR_ROAD_DATA cur_near_road, sceVu0FVECTOR chr_pos, sceVu0FVECTOR cam_tgt_pos);

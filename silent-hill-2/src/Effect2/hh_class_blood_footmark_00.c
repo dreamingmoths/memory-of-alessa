@@ -3,6 +3,7 @@
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_texture.h"
 #include "sce/libvifpk.h"
+#include "sce/libvu0.h"
 
 extern int rand(void);
 

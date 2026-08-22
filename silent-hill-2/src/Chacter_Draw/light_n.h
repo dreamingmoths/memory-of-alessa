@@ -1,5 +1,6 @@
 #ifndef LIGHT_N_H
 #define LIGHT_N_H
+#include "sce/libvu0.h"
 
 typedef struct Light {
     // total size: 0xA0

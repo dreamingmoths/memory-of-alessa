@@ -1,4 +1,5 @@
 #include "Effect2/hh_class_wrapper.h"
+#include "sce/libvu0.h"
 #include "GFW/sh2_DrawEnvData.h"
 #include "view/vb_main.h"
 #include "Event/item.h"

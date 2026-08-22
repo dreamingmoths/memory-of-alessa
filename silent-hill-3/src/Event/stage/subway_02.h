@@ -2,6 +2,7 @@
 #define SUBWAY_02_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "Chacter/m3_sc.h"
 
 #define SUBWAY_TRAIN_CAR_1        0x3E // savepoint

@@ -2,6 +2,7 @@
 #define DEMOVIEW_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 
 #define DRAMA_DEMO_9  0x9

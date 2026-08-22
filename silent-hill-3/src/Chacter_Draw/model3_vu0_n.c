@@ -1,4 +1,5 @@
 #include "model3_vu0_n.h"
+#include "sce/libvu0.h"
 
 static void InitTriangleNormal(TriangleNormal* p) {
     int qwc = 12;

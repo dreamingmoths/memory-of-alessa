@@ -2,6 +2,7 @@
 #define M3_MARIA_SUB_H
 
 #include "Chacter/character.h"
+#include "sce/libvu0.h"
 
 typedef struct MariaSoundInfo {
     // total size: 0x8

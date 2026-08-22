@@ -2,6 +2,7 @@
 #define MALL_F_00
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "Chacter/m3_sc.h"
 #include "Event/stg_name.h"
 

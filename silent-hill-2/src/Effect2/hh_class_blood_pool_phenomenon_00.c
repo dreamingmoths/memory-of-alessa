@@ -1,4 +1,5 @@
 #include "hh_class_blood_pool_phenomenon_00.h"
+#include "sce/libvu0.h"
 #include "hh_effect_object_def.h"
 
 extern int rand(void);

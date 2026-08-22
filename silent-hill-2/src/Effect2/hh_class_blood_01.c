@@ -4,6 +4,7 @@
 #include "hh_effect_object_def.h"
 #include "hh_effect_object_texture.h"
 #include "sce/libvifpk.h"
+#include "sce/libvu0.h"
 
 extern int rand(void);
 

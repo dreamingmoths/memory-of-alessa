@@ -9,6 +9,7 @@
 #include "Effect2/hh_class_object_execute.h"
 
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 
 #include "sound/sh_sd_call.h"
 #include "sound/sh_sound.h"

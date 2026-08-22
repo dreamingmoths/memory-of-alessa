@@ -2,6 +2,7 @@
 #define VB_MAIN_H
 
 #include "view/camera_dat.h"
+#include "sce/libvu0.h"
 
 typedef struct _VbCOORDINATE {
     // total size: 0x140

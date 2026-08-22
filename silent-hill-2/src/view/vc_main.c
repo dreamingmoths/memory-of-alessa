@@ -8,6 +8,7 @@
 #include "Chacter/sh_character_status.h"
 #include "Event/event.h"
 #include "SH2_common/playing_info.h"
+#include "sce/libvu0.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 #include "vec.h"

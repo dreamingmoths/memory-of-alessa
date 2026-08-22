@@ -2,6 +2,7 @@
 #define SH_KT_VU0_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 /* apply a 4x4 matrix to a vector */
 void ktVu0ApplyMatrixXYZ1(float* v0, sceVu0FMATRIX m0, float* v1);

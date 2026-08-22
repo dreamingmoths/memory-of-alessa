@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_math_wrapper.h"
 #include "Effect2/hh_class_water_splash_phenomenon_00.h"

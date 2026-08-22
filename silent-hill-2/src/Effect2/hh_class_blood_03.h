@@ -2,6 +2,7 @@
 #define HH_CLASS_BLOOD_03_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 #include "hh_class_manager.h"
 
 typedef struct HH_Object_Blood_03 {

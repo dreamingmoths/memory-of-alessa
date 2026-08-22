@@ -1,4 +1,5 @@
 #include "hospital_b_01.h"
+#include "sce/libvu0.h"
 #include "vec.h"
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_01", func_01F6D680_hospital_b_01);

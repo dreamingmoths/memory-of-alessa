@@ -6,6 +6,7 @@
 #include "Chacter/m3_sc.h"
 
 #include "SH3_common/sh3dt.h"
+#include "sce/libvu0.h"
 #include "SH3_common/sh_vu0.h"
 
 extern void func_001603E0(int, int);

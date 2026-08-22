@@ -2,6 +2,7 @@
 #define HH_CLASS_WRAPPER_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 
 #define PRIMITIVE_X_RANGE 1024.0f
 #define PRIMITIVE_Y_RANGE 1024.0f

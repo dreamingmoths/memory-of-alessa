@@ -1,6 +1,7 @@
 #include "model3_sub_n.h"
 #include "model_common.h"
 #include "sce/libdma.h"
+#include "sce/libvu0.h"
 #include "sce/eestruct.h"
 #include "sce/eeregs.h"
 #include "sce/libgraph.h"

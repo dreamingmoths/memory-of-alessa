@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sce/libvu0.h"
 #include "GFW/sh3gfw_viewclip.h"
 #include "GFW/sh3_DrawEnvData.h"
 #include "vec.h"

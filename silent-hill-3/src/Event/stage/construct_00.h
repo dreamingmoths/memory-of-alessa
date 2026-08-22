@@ -2,6 +2,7 @@
 #define CONSTRUCT_00_H
 
 #include "common.h"
+#include "sce/libvu0.h"
 
 void func_0013D250(int, int*, float); // wrong (?)
 int func_0016C540(int*, int*);

@@ -1,4 +1,5 @@
 #include "Effect2/hh_class_wrapper.h"
+#include "sce/libvu0.h"
 #include "Effect2/hh_math_wrapper.h"
 
 #define PRIMITIVE_X_RANGE 1024.0f

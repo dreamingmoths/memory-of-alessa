@@ -1,5 +1,6 @@
 #include "vc_util.h"
 #include "SH2_common/sh_vu0.h"
+#include "sce/libvu0.h"
 #include "SH2_common/sh2sys.h"
 #include "common.h"
 #include "vec.h"

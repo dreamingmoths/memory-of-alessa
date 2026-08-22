@@ -1,6 +1,8 @@
 #ifndef SH_VU0_H
 #define SH_VU0_H
 
+#include "sce/libvu0.h"
+
 float sh_ecossin(float);
 
 float shAtan_asm(float);

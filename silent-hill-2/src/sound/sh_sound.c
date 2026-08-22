@@ -19,6 +19,7 @@
 #include "shared/Fog/fog.h" // added only for float_sign, should be probably moved somewhere else
 
 #include "SH2_common/playing_info.h"
+#include "sce/libvu0.h"
 #include "SH2_common/sh_vu0.h"
 
 #include "SH2_common/sh2dt.h"

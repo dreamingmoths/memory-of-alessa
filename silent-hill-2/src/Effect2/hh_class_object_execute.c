@@ -6,6 +6,7 @@
 #include "Event/stg_name.h"
 #include "Chacter/character.h"
 #include "common.h"
+#include "sce/libvu0.h"
 
 static void Prefix_Operation(void);
 

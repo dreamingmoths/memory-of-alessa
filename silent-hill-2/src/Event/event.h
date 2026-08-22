@@ -2,6 +2,7 @@
 #define EVENT_H
 
 #include "sh2_common.h"
+#include "sce/libvu0.h"
 #include "Chacter/character.h"
 #include "Event/item.h"
 

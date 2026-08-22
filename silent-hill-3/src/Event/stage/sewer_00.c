@@ -1,4 +1,5 @@
 #include "sewer_00.h"
+#include "sce/libvu0.h"
 
 int func_01F6D680_sewer_00(void) {
   int ret;
