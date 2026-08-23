@@ -74,10 +74,13 @@
 #define SH2_PLAYABLE_MAIN_MOVIE_MAIN   14
 #define SH2_PLAYABLE_MAIN_PAUSE        15
 
+static int LoadBgSync(int mode, int nonblock);
+
 char* get_gp_data_buf_addr(void) {
     return MemShare_gp_data_buf;
 }
 
+#line 124
 int GameMain(void) {
     int synctype = 0, fonton;
 
@@ -358,7 +361,8 @@ int GameMain(void) {
     return synctype;
 }
 
-int LoadBgSync(int mode, int nonblock) {
+#line 407
+static int LoadBgSync(int mode, int nonblock) {
     int halt;
     int rest;
     int require;
