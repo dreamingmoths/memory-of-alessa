@@ -359,17 +359,17 @@ int GameMain(void) {
 }
 
 int LoadBgSync(int mode, int nonblock) {
-    int halt; // r16
-    int rest; // r19
-    int require; // r29+0x58
-    int loading; // r29+0x5C
+    int halt;
+    int rest;
+    int require;
+    int loading;
     do {
         halt = 0;
         require = 0;
         loading = 0;
         
         halt += loadBgAll_PrepareAround(&loading, &require);
-        switch (mode) {                                 /* irregular */
+        switch (mode) {
             case 0:
                 break;
             case 2:
