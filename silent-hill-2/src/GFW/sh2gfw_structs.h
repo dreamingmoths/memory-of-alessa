@@ -164,4 +164,18 @@ typedef struct sh2gfw_TRANS_MAN { // @note: idk if this belongs here
     u_char used_TRgifnum[4]; // offset 0x24C, size 0x4
 } sh2gfw_TRANS_MAN;
 
+typedef struct sh2gfw_Model_Header {
+    // total size: 0x40
+    u_char NoTextureID; // offset 0x0, size 0x1
+    u_char padc[3]; // offset 0x1, size 0x3
+    u_int chara_id; // offset 0x4, size 0x4
+    u_int texnum; // offset 0x8, size 0x4
+    u_int toTexHead_offset; // offset 0xC, size 0x4
+    u_int toClutsHead_offset; // offset 0x10, size 0x4
+    u_int toModel_offset; // offset 0x14, size 0x4
+    int toKg1_offset; // offset 0x18, size 0x4
+    int padi; // offset 0x1C, size 0x4
+    void* pTexMAN[8]; // offset 0x20, size 0x20
+} sh2gfw_Model_Header;
+
 #endif // SH2GFW_STRUCTS_H

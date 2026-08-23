@@ -869,6 +869,7 @@ segments:
       - [0x29a230, .rodata, Event/stage/stg_tgs_trial]
       - [0x29a280, rodata,  rodata_0x29a280]
       - [0x29a700, .rodata, Chacter/bg_chara]
+      - [0x29a850, rodata,  Effect2/hh_class_glass_break_phenomenon_00]
       - [0x29a870, .rodata, Effect2/hh_class_manager]
       - [0x29a8a0, .rodata, Effect2/hh_class_water_02]
       - [0x29a8c0, .rodata, Effect2/hh_class_water_11]
