@@ -1,4 +1,5 @@
 #include "now_loading.h"
+#include "Effect/screen_effect.h"
 
 void NowLoadingEnable(void) {
     D_01F01DD0 = 1;

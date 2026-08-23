@@ -48013,8 +48013,8 @@ rom:0x10BA2C reloc:MIPS_26                             symbol:LoadBgEventListCnt
 rom:0x10BA40 reloc:MIPS_HI16                           symbol:ev_p_step
 rom:0x10BA44 reloc:MIPS_LO16                           symbol:ev_p_step
 rom:0x10BA78 reloc:MIPS_26                             symbol:dbfntlocate
-rom:0x10BA80 reloc:MIPS_HI16                           symbol:"@1084_0x00395FE0"
-rom:0x10BA84 reloc:MIPS_LO16                           symbol:"@1084_0x00395FE0"
+rom:0x10BA80 reloc:MIPS_HI16                           symbol:"rodata_1084_0x00395FE0"
+rom:0x10BA84 reloc:MIPS_LO16                           symbol:"rodata_1084_0x00395FE0"
 rom:0x10BA90 reloc:MIPS_26                             symbol:dbfntprintf
 rom:0x10BAD4 reloc:MIPS_26                             symbol:WaitSemaPss
 rom:0x10BADC reloc:MIPS_26                             symbol:RadioNoise

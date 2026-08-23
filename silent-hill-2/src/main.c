@@ -4,6 +4,7 @@
 #include "GFW/sh2_DrawEnvData.h"
 #include "DBG/dbflow.h"
 #include "main.h"
+#include "gamemain.h"
 
 int main(int argc, char** argv) {
     int db_test_dvd;

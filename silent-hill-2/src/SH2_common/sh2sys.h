@@ -14,6 +14,15 @@ typedef struct _SH2_SYS {
 
 extern SH2_SYS Sh2sys;
 
+static inline void sh2sys_step_1(void) {
+    Sh2sys.step[1]++;
+    Sh2sys.step[2] = 0;
+    Sh2sys.step[3] = 0;
+    Sh2sys.step[4] = 0;
+    Sh2sys.step[5] = 0;
+    Sh2sys.step[6] = 0;
+    Sh2sys.step[7] = 0;
+}
 static inline void sh2sys_step_2() {
     Sh2sys.step[2]++;
     Sh2sys.step[3] = 0;
