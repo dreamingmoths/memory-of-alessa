@@ -53,7 +53,7 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         mapfile_lines = mapfile_file.readlines()
 
     current_filename = None
-    reason = ""
+    reason = []
     trace_index = -1
 
     for index, line in enumerate(mapfile_lines):
@@ -95,8 +95,8 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             try:
                 target_address = int(target_address_hex, 16)
                 if target_address != address:
-                    reason += f"{symbol_name} was placed at vram address 0x{address:X}\n"
-                    reason += f"the mismatch was found in {object_file}, but it may have been earlier than that"
+                    reason += [f"{symbol_name} was placed at vram address 0x{address:X}"]
+                    reason += [f"mismatch found in {object_file}, but it may have been earlier than that"]
                     trace_index = index
             except:
                 pass
@@ -109,8 +109,8 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
                 continue
 
             if target_symbol.addr != address:
-                reason += f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}\n"
-                reason += f"the mismatch was found in {object_file}, but it may have been earlier than that"
+                reason += [f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}"]
+                reason += [f"mismatch found in {object_file}, but it may have been earlier than that"]
                 trace_index = index
 
         syms_by_name = exe_info_by_name[current_filename].atlas.syms_by_name
@@ -125,14 +125,14 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
                 continue
 
             if target_symbol.addr != address:
-                reason += f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}\n"
-                reason += f"the mismatch was found in {object_file}, but it may have been earlier than that"
+                reason += [f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X}"]
+                reason += [f"mismatch found in {object_file}, but it may have been earlier than that"]
                 trace_index = index
 
         if trace_index >= 0:
             break
 
-    if not reason:
+    if trace_index == -1:
         print("🗺️  no mapfile errors found")
     else:
         print("surrounding context:")
@@ -144,7 +144,7 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             print(f"{i}:\t{line}".strip())
         print("...")
 
-        print(f"🗺️  first mismatch: {reason}")
+        print(f"🗺️  mapfile notes: \n\t{"\n\t".join(reason)}")
 
 def discover_yamls(debug_info: DebugInfo):
     root = debug_info.root
