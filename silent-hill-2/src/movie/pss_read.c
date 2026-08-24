@@ -4,9 +4,6 @@
 #include "movie/pss_readbuf.h"
 #include "movie/movie.h"
 
-extern VideoDec videoDec;
-extern AudioDec audioDec;
-
 static int copy2area(u_char *pd0, int d0, u_char *pd1, int d1,
     u_char *ps0, int s0, u_char *ps1, int s1);
 

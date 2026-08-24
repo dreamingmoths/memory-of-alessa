@@ -92,4 +92,6 @@ void audioDecReset(AudioDec *ad);
 void audioDecPause(AudioDec *ad);
 void audioDecResume(AudioDec *ad);
 
+extern AudioDec audioDec;
+
 #endif // PSS_AUDIODEC_H

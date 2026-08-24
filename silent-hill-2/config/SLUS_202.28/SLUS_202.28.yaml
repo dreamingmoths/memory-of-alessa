@@ -536,7 +536,7 @@ segments:
       - [0x188dd0, asm, movie/pss_common]
       - [0x188ee0, c,   movie/pss_cscvu1]
       - [0x18a220, c,   movie/pss_disp]
-      - [0x18b210, asm, movie/pss_main]
+      - [0x18b210, c,   movie/pss_main]
       - [0x18c3d0, c,   movie/pss_read]
       - [0x18c790, c,   movie/pss_readbuf]
       - [0x18c9f0, c,   movie/pss_strfile]
