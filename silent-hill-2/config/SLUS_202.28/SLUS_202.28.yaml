@@ -890,6 +890,7 @@ segments:
       #- [0x29c170, rodata,  rodata_0x29c170]
       - [0x29c350, .rodata, movie/movie_main]
       - [0x29c380, rodata,  rodata_0x29c380]
+      - [0x29c450, .rodata, movie/pss_main]
       - [0x29c5b0, .rodata, movie/pss_read]
       - [0x29c5c8, rodata,  rodata_0x29c5c8]
       - [0x29c640, .rodata, movie/pss_vibuf]
