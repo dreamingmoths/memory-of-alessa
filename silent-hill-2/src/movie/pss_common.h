@@ -44,4 +44,10 @@ typedef struct _PSS_SUBTITLE_CTRL {
 
 extern PSS_SUBTITLE_CTRL pssSubTitleCtrl;
 
+void PssBreakPoint(void);
+
+int WaitSemaPss(void);
+
+int SignalSemaPss(void);
+
 #endif // PSS_COMMON_H

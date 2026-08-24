@@ -12,7 +12,7 @@ extern int sd_stat(void);
 extern void sd_vsync(void);
 
 // M:\select\sound\sd0712\ee\sd_call.c
-extern int sd_call(int call /* r19 */, int direct /* r18 */, int dist /* r17 */, int pitch /* r16 */);
+extern int sd_call(int call /* r19 */, int direct /* r18 */, int dist /* r17 */, int pitch /* r16 */, ...);
 
 // M:\select\sound\sd0712\ee\sd_call.c
 extern int sd_se_stop(int call /* r2 */);

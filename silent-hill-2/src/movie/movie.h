@@ -8,10 +8,10 @@
 #define min(x, y) (((x) > (y)) ? (y) : (x))
 #define max(x, y) (((x) > (y))? (x): (y))
 
-#define STACK_SIZE    (16*1024)
-#define DEF_STACK_SIZE    2048
-#define DEF_PRIORITY       0x24
-#define IOP_BUFF_SIZE (12288*2) // 512 * 48
+#define STACK_SIZE      (16*1024)
+#define DEF_STACK_SIZE  2048
+#define DEF_PRIORITY    0x24
+#define IOP_BUFF_SIZE   (12288*2) // 512 * 48
 
 extern struct /* @anon25 */ {
     // total size: 0x34
