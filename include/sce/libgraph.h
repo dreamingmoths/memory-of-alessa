@@ -257,6 +257,7 @@ typedef struct {
 void sceGsResetGraph(short mode, short inter, short omode, short ffmode);
 sceGsGParam* sceGsGetGParam(void);
 void sceGsResetPath(void);
+void sceGsSetHalfOffset(sceGsDrawEnv1 *draw, short centerx, short centery, short halfoff);
 
 void sceGsPutDispEnv(sceGsDispEnv* disp);
 int sceGsSetDefClear(sceGsClear* cp, short ztest, short x, short y, short w, short h, u_char r, u_char g, u_char b, u_char a, u_int z);

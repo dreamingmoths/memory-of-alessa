@@ -3,6 +3,7 @@
 #include "sce/eekernel.h"
 
 #include "movie/movie.h"
+#include "movie/pss_common.h"
 #include "movie/pss_videodec.h"
 #include "movie/pss_audiodec.h"
 #include "movie/pss_readbuf.h"
@@ -11,39 +12,6 @@
 
 #include "data/fs_structs.h"
 
-typedef struct _PssCommonWork {
-    // total size: 0x13B00
-    u_char* mpegWorkp; // offset 0x0, size 0x4
-    ReadBuf* readBufp; // offset 0x4, size 0x4
-    u_long128* viBufDatap; // offset 0x8, size 0x4
-    TimeStamp timeStamp[VIBUF_TS_SIZE] __attribute__((aligned(64))); // offset 0x40, size 0x3000
-    VoData* voBufDatap; // offset 0x3040, size 0x4
-    u_char audioBuff[IOP_BUFF_SIZE * 2] __attribute__((aligned(64))); // offset 0x3080, size 0xC000
-    u_int* tagInterDatap; // offset 0xF080, size 0x4
-    int videoDecTh; // offset 0xF084, size 0x4
-    int defaultTh; // offset 0xF088, size 0x4
-    s_char defStack[DEF_STACK_SIZE] __attribute__((aligned(64))); // offset 0xF0C0, size 0x800
-    s_char videoDecStack[STACK_SIZE] __attribute__((aligned(64))); // offset 0xF8C0, size 0x4000
-    sceGsDBuff db; // offset 0x138C0, size 0x230
-} PssCommonWork;
-extern PssCommonWork* pss_common_work;
-
-extern struct /* @anon25 */ {
-    // total size: 0x34
-    int status; // offset 0x0, size 0x4
-    int ctrl; // offset 0x4, size 0x4
-    fsFileIndex * file; // offset 0x8, size 0x4
-    int readrest; // offset 0xC, size 0x4
-    int writerest; // offset 0x10, size 0x4
-    int isPaused; // offset 0x14, size 0x4
-    int isStarted; // offset 0x18, size 0x4
-    short proceed_zero_count; // offset 0x1C, size 0x2
-    int cnt; // offset 0x20, size 0x4
-    int stFrame; // offset 0x24, size 0x4
-    int movieabort; // offset 0x28, size 0x4
-    int framecnt; // offset 0x2C, size 0x4
-    int maskon; // offset 0x30, size 0x4
-} pssExecCtrl; // size: 0x34, address: 0x1217B10
 
 extern int intc_gs_changed; // size: 0x4, address: 0x1217FC8
 extern int handler_endimage(int); // size: 0x0, address: 0x28A520

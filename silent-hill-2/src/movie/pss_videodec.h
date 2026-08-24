@@ -4,7 +4,7 @@
 #include "sh2_common.h"
 #include "sce/mpeg/videodec.h"
 #include "shared/movie/cscvu1.h"
-#include "pss_vobuf.h"
+#include "movie/pss_vobuf.h"
 
 typedef struct
 { // 0xb8
