@@ -87046,6 +87046,8 @@ rom:0x18BF78 reloc:MIPS_HI16                           symbol:defMain
 rom:0x18BF7C reloc:MIPS_LO16                           symbol:defMain
 rom:0x18BF88 reloc:MIPS_HI16                           symbol:pss_common_work
 rom:0x18BF8C reloc:MIPS_LO16                           symbol:pss_common_work
+rom:0x18BFB8 reloc:MIPS_HI16                           symbol:_gp
+rom:0x18BFBC reloc:MIPS_LO16                           symbol:_gp
 rom:0x18BFD4 reloc:MIPS_26                             symbol:CreateThread
 rom:0x18BFE0 reloc:MIPS_HI16                           symbol:pss_common_work
 rom:0x18BFE4 reloc:MIPS_LO16                           symbol:pss_common_work

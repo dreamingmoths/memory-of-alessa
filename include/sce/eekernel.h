@@ -23,6 +23,21 @@ typedef struct
     u_int option;
 } SemaParam;
 
+typedef struct ThreadParam {
+    int     status;
+    void    (*entry)(void *);
+    void    *stack;
+    int     stackSize;
+    void    *gpReg;
+    int     initPriority;
+    int     currentPriority;
+    u_int   attr;
+    u_int   option;
+    int     waitType;
+    int     waitId;
+    int     wakeupCount;
+} ThreadParam;
+
 int CreateSema(SemaParam* param);
 int SignalSema(int);
 int iSignalSema(int);
