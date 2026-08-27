@@ -2,8 +2,14 @@
 #define LOADBG_EVENT_H
 
 #include "common.h"
+#include "LoadBg/loadbg_mem.h"
 
-void LoadBgEventInit(void* adr /* r2 */, u_int size /* r2 */);
-void LoadBgEventFileLoad(union fsFileIndex* fileid /* r18 */, void* adr /* r17 */);
+void LoadBgEventInit(void* adr, u_int size);
+void LoadBgEventFileLoad(fsFileIndex* fileid, void* adr);
+void LoadBgEventLoadSync(void);
+int LoadBgEventListCnt(void);
+int LoadBgEventLoadCnt(void);
+int LoadBgEventIsLoad(void);
+void LoadBgEventDispose(void);
 
 #endif // LOADBG_EVENT_H
