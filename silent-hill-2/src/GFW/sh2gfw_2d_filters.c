@@ -1,9 +1,12 @@
 #include "sh2_common.h"
 #include "SH2_common/sh2dt.h"
 
+#include "sce/eeregs.h"
+
 #include "Event/event.h"
 
-#include "sh2gfw_2d_filters.h"
+#include "GFW/sh2_DrawEnvData.h"
+#include "GFW/sh2gfw_2d_filters.h"
 
 #define SH2_GS_FILTER_KIND_BLUR 2
 #define SH2_GS_FILTER_KIND_GLOW_BLUR 3
@@ -30,6 +33,7 @@
 
 static void sh2gfw_Copy_FrameToWork(Q_WORDDATA** ppqwd);
 
+extern Q_WORDDATA CalcTex_buffer[2304]; // size: 0x9000, address: 0xE40280
 extern double fabs(double);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Copy_FrameToWork);
@@ -42,7 +46,75 @@ INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Filter_Dark_Blur);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Filter_Glow_Blur);
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_test_MakeNoise);
+/*
+Numerical Recipes ranqd1, Chapter 7.1, §An Even Quicker Generator, Eq. 7.1.6 parameters
+https://library.sciencemadness.org/lanl1_a/lib-www/numerica/f7-1.pdf
+https://en.wikipedia.org/wiki/Linear_congruential_generator
+*/
+#line 572
+void sh2gfw_test_MakeNoise(void) {
+    u_int* noise_data1; // r2   
+    u_int* noise_data2; // r2
+    u_int ira; // r2
+    u_int irc; // r2
+    u_int imsk; // r2
+    u_int itmp; // r4
+    u_int isd; // r7
+    int i; // r8
+
+    isd = Env_ctl.random_seeds.ui32[0];
+
+
+
+
+    
+    for (i = 0xFFF; i >= 0; i--) {
+        ira = 0x19660D;
+        irc = 0x3C6EF35F;
+
+
+
+
+
+
+
+
+
+        
+        isd  = isd * ira + irc;
+        itmp = isd >> 24;
+
+        isd  = isd * ira + irc;
+        itmp = (itmp << 8) | (isd >> 24);
+
+        isd  = isd * ira + irc;
+        itmp = (itmp << 8) | (isd >> 24);
+
+        isd  = isd * ira + irc;
+        itmp = (itmp << 8) | (isd >> 24);
+
+        *((int*)SCRATCHPAD_START + i) = itmp;
+    
+    }
+    Env_ctl.random_seeds.ui32[0] = isd;
+    
+    do {
+        /* wait */
+    } while (*D8_CHCR & 0x100);
+    
+    *D8_QWC = 0x400;
+    *(Q_WORDDATA**)D8_MADR = CalcTex_buffer;
+    *D8_SADR = 0;
+    *D8_CHCR = 0x100;
+    
+    
+    while (*D8_CHCR & 0x100) {
+        for (i = 0; i < 3; i++) isd++; // ??
+    }
+
+
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Black_Clear);
 
