@@ -109,7 +109,7 @@ segments:
       - { start: 0x00075eb0,    type: asm,        name: GFW/sh2_set_drawenv                              }
       - { start: 0x00076690,    type: asm,        name: GFW/sh2_shadow_filters                           }
       - { start: 0x000771c0,    type: asm,        name: GFW/sh2_shadow_main                              }
-      - { start: 0x000773e0,    type: asm,        name: GFW/sh2gfw_2d_filters                            }
+      - { start: 0x000773e0,    type: c,          name: GFW/sh2gfw_2d_filters                            }
       - { start: 0x0007bde0,    type: c,          name: GFW/sh2gfw_GSCTL_man                             }
       - { start: 0x0007bfa0,    type: c,          name: GFW/sh2gfw_Init_ModelDrawData                    }
       - { start: 0x0007d9a0,    type: asm,        name: GFW/sh2gfw_LightSet                              }
@@ -638,7 +638,8 @@ segments:
       - { start: 0x001abcc0,    type: data,       name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x001abd10,    type: data,       name: GFW/sh2_get_drawenv                              }
       - { start: 0x001abd50,    type: data,       name: GFW/sh2_set_drawenv                              }
-      - { start: 0x001abd60,    type: data,       name: GFW/sh2gfw_2d_filters                            }
+      - { start: 0x001abd60,    type: data,       name: GFW/sh2gfw_2d_filters_data                       }
+      - { start: 0x001abdf0,    type: .data,      name: GFW/sh2gfw_2d_filters                            }
       - { start: 0x001abe10,    type: data,       name: GFW/sh2gfw_LightSet                              }
       - { start: 0x001abe40,    type: data,       name: GFW/sh2gfw_Texpacket                             }
       - { start: 0x001abe50,    type: data,       name: GFW/sh2gfw_globaldef                             }
@@ -820,7 +821,7 @@ segments:
       - { start: 0x0028f328,    type: rodata,     name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x0028f720,    type: rodata,     name: GFW/sh2_get_drawenv                              }
       - { start: 0x0028f760,    type: rodata,     name: GFW/sh2_set_drawenv                              }
-      - { start: 0x0028f7c0,    type: rodata,     name: GFW/sh2gfw_2d_filters                            }
+      - { start: 0x0028f7c0,    type: .rodata,    name: GFW/sh2gfw_2d_filters                            }
       - { start: 0x0028f820,    type: .rodata,    name: GFW/sh2gfw_Init_ModelDrawData                    }
       - { start: 0x0028fc70,    type: rodata,     name: GFW/sh2gfw_Texpacket_rodata                      }
       - { start: 0x0028fcc0,    type: rodata,     name: GFW/sh2gfw_packetVU                              }

@@ -10,8 +10,8 @@ typedef struct FilterWork {
     int Flg; // offset 0x4, size 0x4
     int Kind_History; // offset 0x8, size 0x4
     int mode; // offset 0xC, size 0x4
-    union Q_WORDDATA FilterData[8]; // offset 0x10, size 0x80
-    union Q_WORDDATA CopyFilterColor; // offset 0x90, size 0x10
+    Q_WORDDATA FilterData[8]; // offset 0x10, size 0x80
+    Q_WORDDATA CopyFilterColor; // offset 0x90, size 0x10
 } FilterWork;
 
 // total size: 0x30
@@ -52,18 +52,38 @@ typedef struct FilterParams {
     char S2_baseIX; // offset 0x2D, size 0x1
 } FilterParams;
 
-void sh2gfw_Reset_FilterCommand(void);
-void* sh2gfw_Get_FilterCommandParams(void);
-void sh2gfw_Set_FadeIn_Black(float ra /* r20 */);
-void sh2gfw_Set_FadeIn_Red(float ra /* r20 */);
-void sh2gfw_Set_FadeIn_White(float ra /* r20 */);
-void sh2gfw_Set_FadeOutRetain_Black(float ra /* r20 */);
-void sh2gfw_Set_FadeOutRetain_Red(double ra /* r20 */);
-void sh2gfw_Set_FadeOutRetain_White(float ra /* r20 */);
-void sh2gfw_Set_FadeOut_Black(float ra /* r20 */);
-void sh2gfw_Set_FadeOut_White(float ra /* r20 */);
-void sh2gfw_Set_FilterBlur(int rt /* r16 */);
+void sh2gfw_Filter_JustCopy2(Q_WORDDATA** ppqwd);
+void sh2gfw_Filter_Blur(Q_WORDDATA** ppqwd, u_int bl_ratio);
+void sh2gfw_Filter_Dark_Blur(Q_WORDDATA** ppqwd, u_int bl_ratio, u_int aref);
+void sh2gfw_Filter_Glow_Blur(Q_WORDDATA** ppqwd, u_int aref, u_int bl_ratio, u_int pam);
+void sh2gfw_test_MakeNoise(void);
 void sh2gfw_Black_Clear(void);
+void sh2gfw_SendDraw_Noise(Q_WORDDATA** ppqwd, u_int ratio, u_int pam, u_int mode, int loop);
+void sh2gfw_Swap_Soft(Q_WORDDATA** ppqwd, int mode, int CompoIt, int aref, int testval, int testmode, int unknown); // @note last arg not in dwarf
+void sh2gfw_Swap_GlowSoft(Q_WORDDATA** ppqwd, int mode, int parm, int aref, int Shift);
+void sh2gfw_FadeOut_Retain(Q_WORDDATA** ppqwd, int BorW);
+void sh2gfw_Filter_Retain(Q_WORDDATA** ppqwd);
+int sh2gfw_Fade2(Q_WORDDATA** ppqwd, int mode, int color, int flg);
+int sh2gfw_Fade3(Q_WORDDATA** ppqwd, int arg1, int* color); // @note second arg not in dwarf
+void sh2gfw_Set_FadeOutRetain_Black(float ra);
+void sh2gfw_Set_FadeOut_Black(float ra);
+void sh2gfw_Set_FadeOutRetain_White(float ra);
+// void sh2gfw_Set_FadeOutRetain_Red(float ra); @note commented out for screen_effect.c in sh2 proto
+void sh2gfw_Set_FadeOut_White(float ra);
+void sh2gfw_Set_FadeIn_Black(float ra);
+void sh2gfw_Set_FadeIn_White(float ra);
+void sh2gfw_Set_FadeIn_Red(float ra);
+void sh2gfw_Set_FilterBlur(int rt);
+void sh2gfw_Set_PauseRetain(void);
+void sh2gfw_Reset_PauseRetain(void);
+void sh2gfw_Reset_FilterCommand(void);
+int sh2gfw_Get_FilterCommand(void);
+void* sh2gfw_Get_FilterCommandParams(void);
+int sh2gfw_Set_CaptureNowFB(void);
+void Exec_PostDraw_OVfunc(void);
+int Check_Filter_Soft(void);
+void DemoFadeDraw2(void);
+void Make_Filter_Packet(void* pb);
 
 extern FilterWork shGsFilterWork;
 

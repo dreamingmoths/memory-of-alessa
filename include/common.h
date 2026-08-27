@@ -70,7 +70,7 @@ typedef union Q_WORDDATA {
     s_char sc8[16];  // offset 0x0, size 0x10
     u_long ul64[2];  // offset 0x0, size 0x8
     u_long128 ul128; // offset 0x0, size 0x10
-} Q_WORDDATA;
+} Q_WORDDATA __attribute__((aligned(16)));
 
 typedef struct {
     float x;
