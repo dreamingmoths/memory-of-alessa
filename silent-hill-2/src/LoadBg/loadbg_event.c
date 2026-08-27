@@ -5,6 +5,7 @@ static loadBgMem_File* getfilelist(void);
 static loadBgMem_Sect* getfreesect(void);
 static loadBgMem_Sect* getsect(void* adr);
 static loadBgMem_Sect* setsect(void* adr, int size);
+static void addsectlist(loadBgMem_Sect* sect);
 
 static void initwork(void) {
     memset(d.filelist, 0, sizeof(d.filelist));
@@ -60,7 +61,7 @@ static loadBgMem_Sect* setsect(void* adr, int size) {
     return p;
 }
 
-void addsectlist(loadBgMem_Sect* sect) {
+static void addsectlist(loadBgMem_Sect* sect) {
     int i;
     loadBgMem_Sect** l = d.SectList;     
     
