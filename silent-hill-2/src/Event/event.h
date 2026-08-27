@@ -180,30 +180,32 @@ typedef struct Enemy_List {
     unsigned short condition; // offset 0x12, size 0x2
 } Enemy_List;
 
+// total size: 0x10
+typedef struct /* @anon2 */ {
+    // Members
+    void (*SpecDraw)(void);          // offset 0x0, size 0x4
+    void (*PreDraw)(void);           // offset 0x4, size 0x4
+    void (*PostDraw)(void);          // offset 0x8, size 0x4
+    void (*CharaDraw_Hook)(void);    // offset 0xC, size 0x4
+} GfwFunc;
+
 // total size: 0x44
 typedef struct Stage_Data {
     // Members
-    struct Event_List* ev_list;       // offset 0x0, size 0x4
-    u_char* ev_pos;                   // offset 0x4, size 0x4
-    int (**ev_prog)(void);            // offset 0x8, size 0x4
-    struct Item_List* gi_list;        // offset 0xC, size 0x4
-    struct Model_List* mdl_list;      // offset 0x10, size 0x4
-    struct Enemy_List* en_list;       // offset 0x14, size 0x4
-    void (*stage_init)(void);         // offset 0x18, size 0x4
-    void (*room_init)(void);          // offset 0x1C, size 0x4
-    void (*alltime_func)(void);       // offset 0x20, size 0x4
-    int glb_crd;                      // offset 0x24, size 0x4
-    int pc_model;                     // offset 0x28, size 0x4
-    struct _AnimeInfo* stg_anim_info; // offset 0x2C, size 0x4
-    int (*bgm_control)(void);         // offset 0x30, size 0x4
-    // total size: 0x10
-    struct /* @anon2 */ {
-        // Members
-        void (*SpecDraw)(void);          // offset 0x0, size 0x4
-        void (*PreDraw)(void);           // offset 0x4, size 0x4
-        void (*PostDraw)(void);          // offset 0x8, size 0x4
-        void (*CharaDraw_Hook)(void);    // offset 0xC, size 0x4
-    }* gfw_func;                         // offset 0x34, size 0x4
+    struct Event_List* ev_list;          // offset 0x0, size 0x4
+    u_char* ev_pos;                      // offset 0x4, size 0x4
+    int (**ev_prog)(void);               // offset 0x8, size 0x4
+    struct Item_List* gi_list;           // offset 0xC, size 0x4
+    struct Model_List* mdl_list;         // offset 0x10, size 0x4
+    struct Enemy_List* en_list;          // offset 0x14, size 0x4
+    void (*stage_init)(void);            // offset 0x18, size 0x4
+    void (*room_init)(void);             // offset 0x1C, size 0x4
+    void (*alltime_func)(void);          // offset 0x20, size 0x4
+    int glb_crd;                         // offset 0x24, size 0x4
+    int pc_model;                        // offset 0x28, size 0x4
+    struct _AnimeInfo* stg_anim_info;    // offset 0x2C, size 0x4
+    int (*bgm_control)(void);            // offset 0x30, size 0x4
+    GfwFunc* gfw_func;                   // offset 0x34, size 0x4
     int (*chara_data_clear)(void);       // offset 0x38, size 0x4
     void (*sound_call_after_load)(void); // offset 0x3C, size 0x4
     int reserve_11;                      // offset 0x40, size 0x4

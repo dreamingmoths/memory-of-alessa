@@ -1,4 +1,7 @@
 #include "sh2_common.h"
+#include "SH2_common/sh2dt.h"
+
+#include "Event/event.h"
 
 #include "sh2gfw_2d_filters.h"
 
@@ -22,7 +25,12 @@
 #define SH2_GS_FILTER_KIND_COPY_AND_RESET 22
 #define SH2_GS_FILTER_KIND_RETAIN 23
 
+// @todo: how did they write this?
+#define SH2_FIO_RATIO 4.269999980926514
+
 static void sh2gfw_Copy_FrameToWork(Q_WORDDATA** ppqwd);
+
+extern double fabs(double);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Copy_FrameToWork);
 
@@ -52,44 +60,176 @@ INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Fade2);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Fade3);
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeOutRetain_Black);
+void sh2gfw_Set_FadeOutRetain_Black(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeOut_Black);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADEOUT_RETAIN_BORW1;
+    shGsFilterWork.mode = shGsFilterWork.GsFilterKind;
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeOutRetain_White);
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = 10.0f * ra;
+    pfp->FO_timer = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeOutRetain_Red);
+void sh2gfw_Set_FadeOut_Black(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeOut_White);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADE2_COLOR1;
+    shGsFilterWork.mode = shGsFilterWork.GsFilterKind;
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeIn_Black);
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = ra;
+    pfp->FO_timer = 0;
+    pfp->Max_Timer = ra * shGetFPS();
+}
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeIn_White);
+void sh2gfw_Set_FadeOutRetain_White(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FadeIn_Red);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADEOUT_RETAIN_BORW0;
+    shGsFilterWork.mode = shGsFilterWork.GsFilterKind;
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_FilterBlur);
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = 10.0f * ra;
+    pfp->FO_timer = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_PauseRetain);
+void sh2gfw_Set_FadeOutRetain_Red(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Reset_PauseRetain);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADEOUT_RETAIN_BORW2;
+    shGsFilterWork.mode = shGsFilterWork.GsFilterKind;
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Reset_FilterCommand);
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = 10.0f * ra;
+    pfp->FO_timer = 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Get_FilterCommand);
+void sh2gfw_Set_FadeOut_White(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Get_FilterCommandParams);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADE2_COLOR0;
+    shGsFilterWork.mode = shGsFilterWork.GsFilterKind;
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Set_CaptureNowFB);
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = ra;
+    pfp->FO_timer = 0;
+    pfp->Max_Timer = ra * shGetFPS();
+}
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", Exec_PostDraw_OVfunc);
+void sh2gfw_Set_FadeIn_Black(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", Check_Filter_Soft);
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADE2_19;
+    shGsFilterWork.mode = 19;
+
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = ra;
+    pfp->FO_timer = 0;
+    pfp->Max_Timer = ra * shGetFPS();
+}
+
+void sh2gfw_Set_FadeIn_White(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
+
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADE2_20;
+    shGsFilterWork.mode = 20;
+
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = ra;
+    pfp->FO_timer = 0;
+    pfp->Max_Timer = ra * shGetFPS();
+}
+
+void sh2gfw_Set_FadeIn_Red(float ra) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
+
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_FADE3;
+    shGsFilterWork.mode = 21;
+
+    pfp->FIO_ratio = SH2_FIO_RATIO * fabs(ra);
+    pfp->TargetSec = ra;
+    pfp->FO_timer = 0;
+    pfp->Max_Timer = ra * shGetFPS();
+}
+
+void sh2gfw_Set_FilterBlur(int rt) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
+
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_BLUR;
+    pfp->blurRatio = (s8) rt;
+}
+
+void sh2gfw_Set_PauseRetain(void) {
+    if (shGsFilterWork.GsFilterKind != SH2_GS_FILTER_KIND_RETAIN) {
+        sh2gfw_Get_FilterCommandParams();
+
+        shGsFilterWork.Kind_History = shGsFilterWork.GsFilterKind;
+        shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_RETAIN;
+    }
+}
+
+void sh2gfw_Reset_PauseRetain(void) {
+    if (shGsFilterWork.GsFilterKind == SH2_GS_FILTER_KIND_RETAIN) {
+        sh2gfw_Get_FilterCommandParams();
+
+        shGsFilterWork.GsFilterKind = shGsFilterWork.Kind_History;
+        shGsFilterWork.Kind_History = SH2_GS_FILTER_KIND_RETAIN;
+    }
+}
+
+void sh2gfw_Reset_FilterCommand(void) {
+    int mm; // r16
+    int kk; // r17
+    int ss; // r18
+    FilterParams* pfp; // r19
+
+    mm = shGsFilterWork.mode;
+    kk = shGsFilterWork.GsFilterKind;
+    pfp = sh2gfw_Get_FilterCommandParams();
+    ss = pfp->sw_flg;
+
+    memset(&shGsFilterWork, 0, sizeof(shGsFilterWork));
+    shGsFilterWork.mode = mm;
+    shGsFilterWork.Kind_History = kk;
+    pfp->sw_flg = ss;
+}
+
+int sh2gfw_Get_FilterCommand(void) {
+    return shGsFilterWork.GsFilterKind;
+}
+
+void* sh2gfw_Get_FilterCommandParams(void) {
+    return shGsFilterWork.FilterData;
+}
+
+int sh2gfw_Set_CaptureNowFB(void) {
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
+
+    shGsFilterWork.GsFilterKind = SH2_GS_FILTER_KIND_COPY_AND_RESET;
+    pfp->sw_flg = 1;
+
+    return 0x3400;
+}
+
+void Exec_PostDraw_OVfunc(void) {
+    if (stage == NULL) return;
+    if (stage->gfw_func == NULL) return;
+    if (stage->gfw_func->PostDraw == NULL) return;
+    stage->gfw_func->PostDraw();
+}
+
+int Check_Filter_Soft(void) {
+    if (shGsFilterWork.GsFilterKind >= SH2_GS_FILTER_KIND_SWAP_SOFT && shGsFilterWork.GsFilterKind <= SH2_GS_FILTER_KIND_SWAP_SOFT_10) {
+        return !shGsFilterWork.mode;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", DemoFadeDraw2);
 
 void Make_Filter_Packet(void* pb) {
-    Q_WORDDATA* qwd = (Q_WORDDATA*) pb;
+    Q_WORDDATA* qwd = pb;
     FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
     if (pfp->sw_flg != 0) {
@@ -196,7 +336,11 @@ void Make_Filter_Packet(void* pb) {
             break;
     }
 
-    if (shGsFilterWork.mode >= 19 && shGsFilterWork.mode < 22 && shGsFilterWork.GsFilterKind < 14 && shGsFilterWork.GsFilterKind != 0) {
+    if (shGsFilterWork.mode >= SH2_GS_FILTER_KIND_FADE2_19            && 
+        shGsFilterWork.mode <= SH2_GS_FILTER_KIND_FADE3               && 
+        shGsFilterWork.GsFilterKind < SH2_GS_FILTER_KIND_FADE2_COLOR1 && 
+        shGsFilterWork.GsFilterKind != 0
+    ) {
         switch (shGsFilterWork.mode) {
             case SH2_GS_FILTER_KIND_FADE2_19:
                 sh2gfw_Fade2(&qwd, 1, 1, 1);
