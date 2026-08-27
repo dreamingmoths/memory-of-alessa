@@ -153,29 +153,3 @@ void LoadBgEventDispose(void) {
     initwork();
     
 }
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @45_0x0039C060);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @46_0x0039C080);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @69_0x0039C090);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @84_0x0039C0B0);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @85_0x0039C0D0);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @112_0x0039C0E0);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @113_0x0039C110);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @153_0x0039C120);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @154_0x0039C150);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @180_0x0039C170);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @181);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @182);
-
-// INCLUDE_RODATA("asm/nonmatchings/LoadBg/loadbg_event", @183);
