@@ -89,17 +89,16 @@ INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", Check_Filter_Soft);
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", DemoFadeDraw2);
 
 void Make_Filter_Packet(void* pb) {
-    Q_WORDDATA* qwd; // r29+0x20
-    FilterParams* pfp; // r16
+    Q_WORDDATA* qwd = (Q_WORDDATA*) pb;
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
 
-    qwd = (Q_WORDDATA* ) pb;
-    pfp = sh2gfw_Get_FilterCommandParams();
     if (pfp->sw_flg != 0) {
         d2sSync(0, -1);
         d1sSync(0, -1);
         sh2gfw_Copy_FrameToWork(&qwd);
         pfp->sw_flg = 0;
     }
+
     switch (shGsFilterWork.GsFilterKind) {
         case SH2_GS_FILTER_KIND_SWAP_SOFT:
             sh2gfw_Filter_JustCopy2(&qwd);
