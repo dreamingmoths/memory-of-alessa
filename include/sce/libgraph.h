@@ -23,9 +23,9 @@
 
 #define SCE_GS_PRIM_POINT		(0)
 #define SCE_GS_PRIM_LINE		(1)
-#define SCE_GS_PRIM_LINESTRIP		(2)
+#define SCE_GS_PRIM_LINESTRIP	(2)
 #define SCE_GS_PRIM_TRI			(3)
-#define SCE_GS_PRIM_TRISTRIP		(4)
+#define SCE_GS_PRIM_TRISTRIP	(4)
 #define SCE_GS_PRIM_TRIFAN		(5)
 #define SCE_GS_PRIM_SPRITE		(6)
 #define SCE_GS_PRIM_IIP			(1<<3)
@@ -37,6 +37,11 @@
 #define SCE_GS_PRIM_CTXT1		(0)
 #define SCE_GS_PRIM_CTXT2		(1<<9)
 #define SCE_GS_PRIM_FIX			(1<<10)
+
+#define SCE_GS_DEPTH_NEVER		(0)
+#define SCE_GS_DEPTH_ALWAYS		(1)
+#define SCE_GS_DEPTH_GEQUAL		(2)
+#define SCE_GS_DEPTH_GREATER	(3)
 
 #define SCE_GS_MODULATE			(0)
 #define SCE_GS_DECAL			(1)

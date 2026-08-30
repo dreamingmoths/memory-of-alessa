@@ -43,8 +43,6 @@ extern fsFileIndex data_chr_mkn_mkn_mdl[1]; // size: 0x8, address: 0x3A0FE8
 extern Q_WORDDATA ANIME_DATA[1024]; // size: 0x4000, address: 0x618A80
 extern sh2gfw_ModelDraw_MAN UniModelDW_Man; // size: 0x94, address: 0x616E00
 
-#define SH2_MODEL_DRAWWORK_COUNT ((int) (sizeof(ModelDW_Man) / sizeof(sh2gfw_ModelDraw_MAN)))
-
 void sh2gfw_srInit_ModelDrawWork(void) {
     int i; // r16
 

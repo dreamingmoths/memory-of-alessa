@@ -21,6 +21,7 @@
 #define CLAMP_MIN(_val, _min) do { (_val) = (_val) > (_min) ? (_min) : (_val); } while (0);
 #define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 #define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
+#define Q4(x) (int)((x) * 16)
 
 // Convert a reflex angle (> 180deg, or < -180deg) to the range [-PI, PI].
 #define REFLEX_ANGLE(out, value) do { \
