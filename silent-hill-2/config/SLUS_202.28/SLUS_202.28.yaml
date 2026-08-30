@@ -638,8 +638,7 @@ segments:
       - { start: 0x001abcc0,    type: data,       name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x001abd10,    type: data,       name: GFW/sh2_get_drawenv                              }
       - { start: 0x001abd50,    type: data,       name: GFW/sh2_set_drawenv                              }
-      - { start: 0x001abd60,    type: data,       name: GFW/sh2gfw_2d_filters_data                       }
-      - { start: 0x001abdf0,    type: .data,      name: GFW/sh2gfw_2d_filters                            }
+      - { start: 0x001abd60,    type: .data,      name: GFW/sh2gfw_2d_filters                            }
       - { start: 0x001abe10,    type: data,       name: GFW/sh2gfw_LightSet                              }
       - { start: 0x001abe40,    type: data,       name: GFW/sh2gfw_Texpacket                             }
       - { start: 0x001abe50,    type: data,       name: GFW/sh2gfw_globaldef                             }

@@ -35,13 +35,13 @@
 #define SH2_GS_FILTER_KIND_COPY_AND_RESET       22
 #define SH2_GS_FILTER_KIND_RETAIN               23
 
-extern Q_WORDDATA Noise_Packet[160]; // size: 0xA00, address: 0x616020
-
 // @todo: how did they write this?
 #define SH2_FIO_RATIO 4.269999980926514
 
 static void sh2gfw_Copy_FrameToWork(Q_WORDDATA** ppqwd);
 
+/* @todo: find homes for these */
+extern Q_WORDDATA Noise_Packet[160]; // size: 0xA00, address: 0x616020
 extern Q_WORDDATA CalcTex_buffer[2304]; // size: 0x9000, address: 0xE40280
 extern double fabs(double);
 
@@ -58,7 +58,7 @@ static inline void copy_defaultenv(Q_WORDDATA* qwd, int index) {
 void sh2gfw_Copy_FrameToWork(Q_WORDDATA** ppqwd) {
     int id = 0;
     Q_WORDDATA* qwd = *ppqwd;
-    int idd[3] = {2, 1, 0};
+    int idd[3] = {2, 0, 1};
 
     SET_DMATAG(qwd, id, DMAcnt | 8, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(8, 0));
     SET_GIFTAG(qwd, id, SCE_GIF_SET_TAG(7, SCE_GS_TRUE, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
@@ -183,9 +183,7 @@ void sh2gfw_Filter_Blur(Q_WORDDATA** ppqwd, u_int bl_ratio) {
     qwd[id].ul64[0] = SCE_GS_SET_TEX1(0, 0, 0, 0, 0, 0, 0); qwd[id++].ul64[1] = SCE_GS_TEX1_1;
     SET_ADDRESS_DATA(qwd, id, SCE_GS_CLAMP_1, SCE_GS_SET_CLAMP(SCE_GS_CLAMP, SCE_GS_CLAMP, 0, 0, 0, 0));
     SET_ADDRESS_DATA(qwd, id, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(SCE_GS_ALPHA_CS, SCE_GS_ALPHA_CD, SCE_GS_ALPHA_AS, SCE_GS_ALPHA_CD, 0));
-    {
-        shGsDrawEnv* env = &shGs_AllEnv.DrawEnv[idd[shGs_AllEnv.loop3]]; /* ?inline? */ qwd[id++].ul128 = env->frame_mskalpha.ul128;
-    }
+    copy_drawenv_frame_mskalpha(qwd + id++, idd[shGs_AllEnv.loop3]);
 
     SET_DMATAG(qwd, id, DMAcnt | 8, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(8, 0));
     qwd[id].ul64[0] = SCE_GIF_SET_TAG(1, SCE_GS_TRUE, SCE_GS_TRUE, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, /* Texture Mapping */ SCE_GS_TRUE, 0, /* Alpha Blend */ SCE_GS_TRUE, 0, /* Use ST */ SCE_GS_TRUE, 0, 0), SCE_GIF_PACKED, 7);
@@ -204,7 +202,7 @@ void sh2gfw_Filter_Blur(Q_WORDDATA** ppqwd, u_int bl_ratio) {
 void sh2gfw_Filter_Dark_Blur(Q_WORDDATA** ppqwd, u_int bl_ratio, u_int aref) {
     int id = 0;
     int tx, ty;
-    int idd[3] = {2, 1, 0};
+    int idd[3] = {2, 0, 1};
     Q_WORDDATA* qwd = *ppqwd;
 
     SET_DMATAG(qwd, id, DMAcnt | 9, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(9, 0));
@@ -243,7 +241,7 @@ static inline void qword_copy_ul128(Q_WORDDATA* dst, Q_WORDDATA* src) {
 void sh2gfw_Filter_Glow_Blur(Q_WORDDATA** ppqwd, u_int aref, u_int bl_ratio, u_int pam) {
     int id = 0;
     int tx, ty;
-    int idd[3] = {2, 1, 0};
+    int idd[3] = {2, 0, 1};
     Q_WORDDATA* qwd = *ppqwd;
 
     SET_DMATAG(qwd, id, DMAcnt | 9, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(9, 0));
@@ -368,16 +366,70 @@ void sh2gfw_Black_Clear(void) {
 }
 
 
+int sh2gfw_2d_filters_data_990 [3] = {2, 0, 1};
+int sh2gfw_2d_filters_data_1005[3] = {2, 0, 1};
+
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_SendDraw_Noise);
 
+int sh2gfw_2d_filters_data_1047[3] = {2, 0, 1};
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Swap_Soft);
 
+int sh2gfw_2d_filters_data_1125[3] = {2, 0, 1};
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Swap_GlowSoft);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_FadeOut_Retain);
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Filter_Retain);
+void sh2gfw_Filter_Retain(Q_WORDDATA** ppqwd) {
+    int id = 0;
+    int tx;
+    int ty;
+    Q_WORDDATA* qwd;
 
+    FilterParams* pfp = sh2gfw_Get_FilterCommandParams();
+    int colr, colg, colb;
+    int pr, pg, pb;
+
+    pr = pg = pb = 0;    
+    tx = ty = 0;
+    qwd = *ppqwd;
+
+    SET_DMATAG(qwd, id, DMAcnt | 7, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(7, 0));
+    
+    SET_GIFTAG(qwd, id, SCE_GIF_SET_TAG(6, SCE_GS_TRUE, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
+    SET_ADDRESS_DATA(qwd, id, SCE_GS_TEXFLUSH, 0);
+    SET_ADDRESS_DATA(qwd, id, SCE_GS_TEST_1, SCE_GS_SET_TEST(SCE_GS_FALSE, SCE_GS_ALPHA_ALWAYS, 0, 0, 0, 1, SCE_GS_TRUE, SCE_GS_DEPTH_ALWAYS));
+    SET_ADDRESS_DATA(qwd, id, SCE_GS_ZBUF_1, SCE_GS_SET_ZBUF(0xE0000 / 2048, SCE_GS_PSMZ16S, SCE_GS_TRUE));
+    qwd[id].ul64[0] = SCE_GS_SET_TEX1(0, 0, 0, 0, 0, 0, 0); qwd[id++].ul64[1] = SCE_GS_TEX1_1;
+    SET_ADDRESS_DATA(qwd, id, SCE_GS_TEX0_1, SCE_GS_SET_TEX0(sh2gfw_GetNowDispFBP(&shGs_AllEnv) << 5, 8, SCE_GS_PSMCT32, /* 512 */ 9, /* 512 */ 9, 1, SCE_GS_MODULATE, 0, SCE_GS_PSMCT32, 0, 0, 0));
+    SET_ADDRESS_DATA(qwd, id, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(SCE_GS_ALPHA_ZERO, SCE_GS_ALPHA_CS, SCE_GS_ALPHA_FIX, SCE_GS_ALPHA_CD, 128));
+
+    if (pfp->FO_timer != 0) {
+        colr = colg = colb = 0x80;
+    } else {
+        
+        colr = Env_ctl.CopyFilterColor.uc8[0];
+        colg = Env_ctl.CopyFilterColor.uc8[1];
+        colb = Env_ctl.CopyFilterColor.uc8[2];
+    }
+
+    SET_DMATAG(qwd, id, DMAcnt | 7, 0, SCE_VIF1_SET_NOP(0), SCE_VIF1_SET_DIRECT(7, 0));
+    qwd[id].ul64[0] = SCE_GIF_SET_TAG(1, 1, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0), SCE_GIF_PACKED, 6);
+    qwd[id++].ul64[1] = GIF_REGLIST(SCE_GS_UV, SCE_GS_RGBAQ, SCE_GS_XYZ2, SCE_GS_UV, SCE_GS_RGBAQ, SCE_GS_XYZ2);
+    qwd[id].ul64[0] = SH_GIF_PACK_UV(0, 0); qwd[id++].ul64[1] = 0;
+    SET_QWORD_U32(qwd, id, colr, colb, colb, 128);
+    // X = 0 and Y = 0 coords assuming the window coords are now 512x512
+    SH_GIF_SET_XYZ(qwd, id, tx + Q4(1792.0f), ty + Q4(1792.0f), 1, SCE_GS_FALSE);
+    qwd[id].ul64[0] = SH_GIF_PACK_UV(Q4(512.0f), Q4(512.0f)); qwd[id++].ul64[1] = 0; 
+    SET_QWORD_U32(qwd, id, colr, colg, colb, 128);
+    // X = 512 and Y = 512 coords assuming the window coords are now 512x512
+    SH_GIF_SET_XYZ(qwd, id, tx + Q4(2304.0f), ty + Q4(2304.0f), 1, SCE_GS_FALSE);
+    SET_DMA_RET(qwd + id); id++;
+
+    *ppqwd = qwd + id;
+    pfp->FO_timer++;
+}
+
+int sh2gfw_2d_filters_data_colordata[4] = {255, 255, 255, 255};
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Fade2);
 
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_2d_filters", sh2gfw_Fade3);

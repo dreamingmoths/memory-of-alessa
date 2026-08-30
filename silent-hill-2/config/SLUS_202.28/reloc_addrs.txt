@@ -18414,8 +18414,8 @@ rom:0x077EE0 reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x077EE4 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x077FA4 reloc:MIPS_HI16           addend:+0x1630  symbol:shGs_AllEnv
 rom:0x077FA8 reloc:MIPS_LO16           addend:+0x1630  symbol:shGs_AllEnv
-rom:0x07801C reloc:MIPS_HI16                           symbol:"@901"
-rom:0x078020 reloc:MIPS_LO16                           symbol:"@901"
+rom:0x07801C reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_901"
+rom:0x078020 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_901"
 rom:0x0780CC reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x0780D0 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x0780D4 reloc:MIPS_26                             symbol:sh2gfw_GetNowDispFBP
@@ -18498,8 +18498,8 @@ rom:0x078600 reloc:MIPS_LO16           addend:+0xA0    symbol:Noise_Packet
 rom:0x078604 reloc:MIPS_HI16                           symbol:Noise_Packet
 rom:0x078608 reloc:MIPS_LO16                           symbol:Noise_Packet
 rom:0x07860C reloc:MIPS_26                             symbol:d1cSend
-rom:0x07864C reloc:MIPS_HI16                           symbol:"@990_0x002AB6A0"
-rom:0x078650 reloc:MIPS_LO16                           symbol:"@990_0x002AB6A0"
+rom:0x07864C reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_990"
+rom:0x078650 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_990"
 rom:0x0787BC reloc:MIPS_HI16                           symbol:CalcTex_buffer
 rom:0x0787C0 reloc:MIPS_LO16                           symbol:CalcTex_buffer
 rom:0x078890 reloc:MIPS_HI16           addend:+0x308   symbol:Env_ctl
@@ -18508,8 +18508,8 @@ rom:0x078998 reloc:MIPS_HI16           addend:+0xC     symbol:shGs_AllEnv
 rom:0x07899C reloc:MIPS_LO16           addend:+0xC     symbol:shGs_AllEnv
 rom:0x0789B4 reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x0789B8 reloc:MIPS_LO16                           symbol:shGs_AllEnv
-rom:0x0789DC reloc:MIPS_HI16                           symbol:"@1005"
-rom:0x0789E0 reloc:MIPS_LO16                           symbol:"@1005"
+rom:0x0789DC reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_1005"
+rom:0x0789E0 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_1005"
 rom:0x078A88 reloc:MIPS_HI16           addend:+0xC     symbol:shGs_AllEnv
 rom:0x078A8C reloc:MIPS_LO16           addend:+0xC     symbol:shGs_AllEnv
 rom:0x078AA4 reloc:MIPS_HI16                           symbol:shGs_AllEnv
@@ -18519,8 +18519,8 @@ rom:0x078AC8 reloc:MIPS_LO16           addend:+0x3D5   symbol:Env_ctl
 rom:0x078C88 reloc:MIPS_HI16           addend:+0x1610  symbol:shGs_AllEnv
 rom:0x078C8C reloc:MIPS_LO16           addend:+0x1610  symbol:shGs_AllEnv
 rom:0x078C90 reloc:MIPS_26                             symbol:sh2gfw_setREF_tagchain
-rom:0x078D2C reloc:MIPS_HI16                           symbol:"@1047_0x002AB6C0"
-rom:0x078D30 reloc:MIPS_LO16                           symbol:"@1047_0x002AB6C0"
+rom:0x078D2C reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_1047"
+rom:0x078D30 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_1047"
 rom:0x078D4C reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x078D50 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x078D58 reloc:MIPS_26                             symbol:sh2gfw_GetTexTBP0
@@ -18531,8 +18531,8 @@ rom:0x078D90 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x078DC4 reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x078DC8 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x078DD0 reloc:MIPS_26                             symbol:sh2gfw_GetTexTBP0
-rom:0x0794A0 reloc:MIPS_HI16                           symbol:"@1125"
-rom:0x0794A4 reloc:MIPS_LO16                           symbol:"@1125"
+rom:0x0794A0 reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_1125"
+rom:0x0794A4 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_1125"
 rom:0x0794C4 reloc:MIPS_HI16                           symbol:shGs_AllEnv
 rom:0x0794C8 reloc:MIPS_LO16                           symbol:shGs_AllEnv
 rom:0x0794D0 reloc:MIPS_26                             symbol:sh2gfw_GetTexTBP0
@@ -18568,8 +18568,8 @@ rom:0x07A340 reloc:MIPS_HI16           addend:+0x3E1   symbol:Env_ctl
 rom:0x07A344 reloc:MIPS_LO16           addend:+0x3E1   symbol:Env_ctl
 rom:0x07A348 reloc:MIPS_HI16           addend:+0x3E2   symbol:Env_ctl
 rom:0x07A34C reloc:MIPS_LO16           addend:+0x3E2   symbol:Env_ctl
-rom:0x07A49C reloc:MIPS_HI16                           symbol:"@1317"
-rom:0x07A4A0 reloc:MIPS_LO16                           symbol:"@1317"
+rom:0x07A49C reloc:MIPS_HI16                           symbol:"sh2gfw_2d_filters_data_colordata"
+rom:0x07A4A0 reloc:MIPS_LO16                           symbol:"sh2gfw_2d_filters_data_colordata"
 rom:0x07A4B0 reloc:MIPS_26                             symbol:sh2gfw_Get_FilterCommandParams
 rom:0x07A4C8 reloc:MIPS_26                             symbol:sh2gfw_Filter_JustCopy2
 rom:0x07A540 reloc:MIPS_26                             symbol:sh2gfw_Filter_Retain
