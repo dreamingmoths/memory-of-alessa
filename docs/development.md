@@ -78,11 +78,6 @@ alessatool annotate --asm-path silent-hill-2/config/SLUS_202.28/asm/Chacter_Draw
 
 See `alessatool annotate -h` or `alessatool -h` for more information.
 
-### matching code
-
-To match code, you may use [decomp.me](https://decomp.me). Find an assembly
-file located in `silent-hill-3/config/SLUS_206.22/asm` 
-
 ## general workflow & `make` commands
 
 Usual development can be thought of in two distinct phases:
