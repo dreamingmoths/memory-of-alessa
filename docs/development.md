@@ -30,12 +30,12 @@ After running `make`, there will be assembly files located at
 `build/SLUS_206.22`. The build process should link back to a 100% matching ELF
 of Silent Hill 3, along with its 40 overlays.
 
-Note the Makefile is a work in progress. You may often need to clean the build
-for it to rebuild properly, e.g.:
+Before submitting contributions, we recommend building from clean to ensure
+everything is in order.
 
 ```sh
 make clean # cleans up all generated files
-make -j8   # re-runs the build with 8 parallel jobs
+make       # re-runs the build with maximum parallel jobs
 ```
 
 Since this project is dedicated to Silent Hill 3, why a shared repo?
@@ -65,60 +65,6 @@ As of June 21st, 2026, this command should also properly link back into a
 matching build of Silent Hill 2. It will create assembly files at
 `silent-hill-2/config/SLUS_202.28/asm`.
 
-### ghidra bsim workflow
-
-[Ghidra](https://github.com/NationalSecurityAgency/ghidra) makes the dual
-decompilation approach significantly more viable through its [BSim
-plugin](https://ghidra.re/ghidra_docs/GhidraClass/BSim/README.html), which
-allows us to search for similar functions. It works like so:
-
-1. Find an interesting function in SH2. Make use of Ghidra BSim to look for a
-   similar function in SH3. (Follow the tutorial linked above to get BSim set
-   up.)
-
-2. Decompile a function from SH2.
-
-3. Use the result as a starting point for decompiling the SH3 function, editing
-   it until it matches.
-
-### `make` commands
-
-For a local [`objdiff`](https://github.com/encounter/objdiff) workflow, generate
-the expected files with the following command.
-
-```sh
-make report
-```
-
-You may also use the project-specific commands `make sh2-report` and `make sh3-report`.
-
-To quickly clean the build folder and rebuild all object files, run
-
-```sh
-make rebuild -j
-```
-
-though most of the time you may only need `make -j`.
-
-There are a couple of ways to clean the SH2 directory.
-
-```sh
-# pass the `PROJECT` build argument
-make PROJECT=silent-hill-2 clean
-
-# run the alias
-make sh2-clean
-```
-
-To clean generated files in both projects, run
-
-```sh
-make clean
-```
-
-or to really delete all setup and reset, run `make death`. This shouldn't be
-necessary in most cases though.
-
 ### `alessatool` commands
 
 To make full use of the debug information from Silent Hill 2, we need to add the
@@ -137,14 +83,99 @@ See `alessatool annotate -h` or `alessatool -h` for more information.
 To match code, you may use [decomp.me](https://decomp.me). Find an assembly
 file located in `silent-hill-3/config/SLUS_206.22/asm` 
 
-#### sh3 compiler flags
+## general workflow & `make` commands
+
+Usual development can be thought of in two distinct phases:
+
+1. Linking phase. Here we are making sure that the code builds properly and
+   links into a matching executable that can run on a PlayStation 2.
+2. Diffing phase. In this phase we are decompiling the code, typically with
+   [objdiff](https://github.com/encounter/objdiff) when running locally or using
+   [decomp.me](https://decomp.me/).
+
+The linking phase is the default as it helps ensure everything is working
+correctly. The following commands are recommended during the linking phase.
 
 ```sh
--O3,p -sym=off,noelf -sdatathreshold 0
+make sh3-build
+make sh2-build
 ```
 
-#### sh2 compiler flags
+Note that you can get faster, incremental builds by leaving out the `-build`
+part of the command, e.g.
 
 ```sh
--O2,p -sym=on -str readonly -sdatathreshold 0 -enum min
+make
+make sh2
 ```
+
+however these will not always work correctly.*
+
+To enter the diffing phase, run one of the following commands to generate the
+expected files.
+
+```sh
+make sh3-report
+make sh2-report
+```
+
+Once these files have been generated, you may open the objdiff gui from the root
+of the repository. It will watch for changes to the source files and
+automatically rebuild as necessary, though changes to any configuration files
+such as the Splat YAML will require the report command to be repeated manually.
+
+```sh
+# make sure objdiff is on PATH, or pass the full path to the executable
+objdiff-linux-x86_64
+objdiff-macos-arm64
+```
+
+In general, build files for both Silent Hill 2 and 3 can be on disk
+simultaneously without overwriting each other, with the exception of the objdiff
+configuration that is named `objdiff.json` so it can be easily picked up by
+objdiff.
+
+Before submitting or merging a pull request, please ensure the project builds
+from a clean environment.
+
+```sh
+make clean
+make sh2
+make sh3
+```
+
+Here are some other useful commands.
+
+```sh
+make compiler-info > out.log # logs the mwcc help to a file
+make linker-info             # logs the mwld help
+make overlays-lowercase      # renames overlay filenames
+make debug                   # runs `alessatool debug`
+make death                   # really resets most things (!?)
+
+make VERBOSE=1               # see what commands are being run
+make PROJECT=silent-hill-2   # you may always pass `PROJECT=` instead of `sh2-`
+make NPROC=1                 # build without parallelism
+```
+
+(*) In particular, `make sh3` will not always work when moving from the diffing
+phase to the linking phase, because the linked C objects are different from the
+ones used to generate the report. They also may not always rebuild properly
+because the Makefile does not use generated dependency (.d) files from MWCC.
+This is why `make sh3-build` is preferred when speed is not highest priority.
+
+### ghidra bsim workflow
+
+[Ghidra](https://github.com/NationalSecurityAgency/ghidra) makes the dual
+decompilation approach significantly more viable through its [BSim
+plugin](https://ghidra.re/ghidra_docs/GhidraClass/BSim/README.html), which
+allows us to search for similar functions. It works like so:
+
+1. Find an interesting function in SH2. Make use of Ghidra BSim to look for a
+   similar function in SH3. (Follow the tutorial linked above to get BSim set
+   up.)
+
+2. Decompile a function from SH2.
+
+3. Use the result as a starting point for decompiling the SH3 function, editing
+   it until it matches.
