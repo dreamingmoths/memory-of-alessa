@@ -35,8 +35,10 @@ GENERATE_LCF ?= 1
 GENERATE_REPORT ?= 0
 
 VERBOSE ?= 0
+TQDM_DISABLE ?= 1
+
 NPROC ?= $(call get_nproc)
-MAKEFLAGS += -j$(NPROC)
+MAKE_OPTIONS ?= -j$(NPROC)
 ###############################################################
 SHELL := /bin/sh
 ARCH := $(shell uname -m)
@@ -44,7 +46,6 @@ KERNEL := $(shell uname -s)
 PLATFORM := $(if $(filter $(KERNEL),Darwin),macos,linux)
 OS := $(PLATFORM)-$(subst _,-,$(ARCH))
 
-MAKE := make
 GIT := git
 PYTHON := python3
 PIP := $(PYTHON) -m pip
@@ -61,6 +62,13 @@ INCLUDE = $(PROJECT)/include
 SRC = $(PROJECT)/src
 COMMON_INCLUDE = include
 
+Q := @
+ifeq ($(VERBOSE),1)
+	Q :=
+endif
+
+MAKE += MAKE_OPTIONS=""
+MAKEFLAGS += $(MAKE_OPTIONS)
 include $(PROJECT)/Makefile
 ###############################################################
 BINARIES := $(SERIAL) $(OVERLAYS)
@@ -87,7 +95,6 @@ SPLAT_FILES := $(SPLAT_CONFIG) $(wildcard $(CONFIG)/*.txt)
 OVERLAY_SPLAT_FILES = $(CONFIG)/overlay/%_symbol_addrs.txt
 LINKER_TEMPLATE := $(INCLUDE)/$(SERIAL).inc.lcf
 ###############################################################
-
 BINUTILS_FLAVOR := mips-ps2-decompals
 BINUTILS := $(TOOLS)/binutils-$(BINUTILS_FLAVOR)
 BINUTILS_VERSION_FILE := $(BINUTILS)/version-0-10
@@ -145,7 +152,8 @@ CREATE_OBJDIFF_CONFIG = $(ALESSATOOL) merge objdiff \
 
 ALESSATOOL := $(PYTHON) $(TOOLS)/alessatool/alessatool.py --verbose
 ALESSATOOL_OVERLAY_LOCK := $(OVERLAY_SOURCE_DIR)/.lock
-GENERATE := $(ALESSATOOL) generate \
+GENERATE := $(Q)TQDM_DISABLE=$(TQDM_DISABLE) \
+	$(ALESSATOOL) generate \
 	--template-path $(LINKER_TEMPLATE) \
 	--lcf-output-path $(LINKERS)/$(SERIAL).lcf \
 	--build-path $(BUILD) \
@@ -174,7 +182,8 @@ GENERATE_EXPECTED := $(GENERATE) --no-lcf --make-full-disasm-for-code
 CHECK_MATCH_PERCENT :=
 ifneq ($(NON_MATCHING),1)
 ifneq ($(LINK),0)
-	CHECK_MATCH_PERCENT = @$(TOOLS)/scripts/diff.sh $(SERIAL) $(CONFIG) $(BUILD) $(OBJCOPY)
+	CHECK_MATCH_PERCENT = @$(TOOLS)/scripts/diff.sh $(SERIAL) $(CONFIG) $(BUILD) $(OBJCOPY) \
+		|| $(ALESSATOOL) debug --project=$(PROJECT)
 endif
 endif
 
@@ -186,45 +195,40 @@ WIBO_HOST := https://github.com/decompals/wibo/releases/download/1.0.1
 COMPILERS_HOST := https://github.com/decompme/compilers/releases/download/compilers
 BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releases/download/v0.10
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
-
-Q := @
-ifeq ($(VERBOSE),1)
-	Q :=
-endif
 ###############################################################
 all: $(TARGETS)
 
 setup: $(SETUP)
 
 report: $(SETUP) $(OBJDIFF) $(OBJDIFF_CONFIG)
-	$(MAKE) clean-quick
+	@$(MAKE) clean-quick
 	@$(MAKE) expected
 	@$(OBJDIFF) report generate -o $(BUILD)/report.json
 
 build:
-	$(MAKE) clean-quick
-	$(MAKE)
+	@$(MAKE) clean-quick
+	@$(MAKE)
 
 sh3:
-	$(MAKE) PROJECT="silent-hill-3"
+	@$(MAKE) PROJECT="silent-hill-3"
 
 sh2:
-	$(MAKE) PROJECT="silent-hill-2"
+	@$(MAKE) PROJECT="silent-hill-2"
 
 sh3-build:
-	$(MAKE) PROJECT="silent-hill-3" build
+	@$(MAKE) PROJECT="silent-hill-3" build
 
 sh2-build:
-	$(MAKE) PROJECT="silent-hill-2" build
+	@$(MAKE) PROJECT="silent-hill-2" build
 
 sh3-report:
-	$(MAKE) PROJECT="silent-hill-3" report
+	@$(MAKE) PROJECT="silent-hill-3" report
 
 sh2-report:
-	$(MAKE) PROJECT="silent-hill-2" report
+	@$(MAKE) PROJECT="silent-hill-2" report
 
 sh3-clean:
-	$(MAKE) PROJECT="silent-hill-3" clean-project
+	@$(MAKE) PROJECT="silent-hill-3" clean-project
 
 sh2-clean:
 	$(MAKE) PROJECT="silent-hill-2" clean-project
@@ -264,7 +268,7 @@ debug:
 	@echo "$(SOURCE_PREREQS)"
 	@echo "$(TARGETS)"
 	@echo "$(BINARIES:%=$(LINKERS)/%.d)"
-	@echo "NPROC=$(NPROC)"
+	@echo "$(NPROC)"
 	@echo '---'
 
 diff:
@@ -272,9 +276,9 @@ diff:
 
 expected: $(YAMLS)
 	@mkdir -p "$(@D)"
-	$(MAKE) $(OBJDIFF_CONFIG)
-	$(MAKE) NON_MATCHING=1 $(call get_c_objects)
-	$(MAKE) $(call get_asm_objects)
+	@$(MAKE) $(OBJDIFF_CONFIG)
+	@$(MAKE) NON_MATCHING=1 $(call get_c_objects)
+	@$(MAKE) $(call get_asm_objects)
 
 compiler-info:
 	$(WIBO) $(MWCC) -help
