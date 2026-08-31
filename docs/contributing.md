@@ -67,8 +67,9 @@ Submitting changes to the repository looks like so:
    information).
 2. Find the `INCLUDE_ASM` line where the function is referenced and replace it with the decompiled code.
 3. Update or create any other files as needed, including header files.
-4. Recommended: Run `make clean`, then `make sh3-report -j`. Open objdiff from the root directory of this repository and check the status of the functions.
-5. Run `make clean`, then `make -j` to make sure the build is passing.
+4. Recommended: Run `make clean`, then `make sh3-report`. Open objdiff from the
+   root directory of this repository and check the status of the functions.
+5. Run `make clean`, then `make` to make sure the build is passing.
 
 Once that's done, feel free to [submit a pull request](https://github.com/dreamingmoths/memory-of-alessa/pulls)! Please try
 your best to submit changes that keep the build matching, but if you run into
