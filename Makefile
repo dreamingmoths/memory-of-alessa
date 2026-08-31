@@ -33,7 +33,10 @@ PROJECT ?= silent-hill-3
 NON_MATCHING ?= 0
 GENERATE_LCF ?= 1
 GENERATE_REPORT ?= 0
+
 VERBOSE ?= 0
+NPROC ?= $(call get_nproc)
+MAKEFLAGS += -j$(NPROC)
 ###############################################################
 SHELL := /bin/sh
 ARCH := $(shell uname -m)
@@ -261,6 +264,7 @@ debug:
 	@echo "$(SOURCE_PREREQS)"
 	@echo "$(TARGETS)"
 	@echo "$(BINARIES:%=$(LINKERS)/%.d)"
+	@echo "NPROC=$(NPROC)"
 	@echo '---'
 
 diff:
@@ -293,7 +297,7 @@ $(LINKERS)/%.d: $(CONFIG)/%.yaml $(SPLAT_FILES) $(SETUP)
 	$(GENERATE) $(GENERATE_FLAGS) $(SPLAT_CONFIG) $<
 
 $(TARGET_EXECUTABLE): $(SETUP) $(OVERLAY_TARGETS) $(LINKER_SCRIPT)
-	@echo "* linking with mwld..."
+	@echo "* linking..."
 	$(Q)$(LD)
 	$(CHECK_MATCH_PERCENT)
 
@@ -374,6 +378,11 @@ $(patsubst $(ASM)/%.s,$(BUILD)/asm/%.s.o, \
 	$(shell find $(ASM) \
 		-type d \( -name matchings -o -name nonmatchings \) \
 		-prune -false -o -type f -name '*.s'))
+endef
+define get_nproc
+$(strip $(if $(filter $(PLATFORM),linux), \
+	 		 $(shell nproc), \
+	 		 $(shell sysctl -n hw.logicalcpu)))
 endef
 ###############################################################
 PHONY_TARGETS := \
