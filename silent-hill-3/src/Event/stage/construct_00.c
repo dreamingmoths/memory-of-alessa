@@ -37,7 +37,9 @@ int func_01F6D680_construct_00(void) {
     return ret;
 }
 
+#pragma supress_warnings on
 UNCURSE_CONSTRUCT_MOON();
+#pragma supress_warnings off
 
 int func_01F6D7E0_construct_00(void) { //check 3th floor sign
     float volume, zero;

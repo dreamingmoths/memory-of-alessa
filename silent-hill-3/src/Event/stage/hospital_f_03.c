@@ -1,6 +1,8 @@
 #include "hospital_f_03.h"
 
+#pragma supress_warnings on
 UNCURSE_HOSPITAL_MOON();
+#pragma supress_warnings off
 
 int func_01F6D680_hospital_f_03(void) {
     int ret;
