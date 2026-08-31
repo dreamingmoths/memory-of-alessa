@@ -185,17 +185,61 @@ OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
 ###############################################################
 all: $(TARGETS)
 
+setup: $(SETUP)
+
 report: $(SETUP) $(OBJDIFF) $(OBJDIFF_CONFIG)
+	$(MAKE) clean-quick
 	@$(MAKE) expected
 	@$(OBJDIFF) report generate -o $(BUILD)/report.json
 
-split: $(D_FILES) $(SPLAT_FILES)
-
-setup: $(SETUP)
-
-rebuild:
-	rm -rf $(BUILD)
+build:
+	$(MAKE) clean-quick
 	$(MAKE)
+
+sh3:
+	$(MAKE) PROJECT="silent-hill-3"
+
+sh2:
+	$(MAKE) PROJECT="silent-hill-2"
+
+sh3-build:
+	$(MAKE) PROJECT="silent-hill-3" build
+
+sh2-build:
+	$(MAKE) PROJECT="silent-hill-2" build
+
+sh3-report:
+	$(MAKE) PROJECT="silent-hill-3" report
+
+sh2-report:
+	$(MAKE) PROJECT="silent-hill-2" report
+
+sh3-clean:
+	$(MAKE) PROJECT="silent-hill-3" clean-project
+
+sh2-clean:
+	$(MAKE) PROJECT="silent-hill-2" clean-project
+
+clean:
+	@$(MAKE) PROJECT=silent-hill-3 clean-project
+	@$(MAKE) PROJECT=silent-hill-2 clean-project
+
+clean-build:
+	@$(MAKE) PROJECT=silent-hill-3 clean-project-build
+	@$(MAKE) PROJECT=silent-hill-2 clean-project-build
+
+clean-quick:
+	rm -f $(OBJDIFF_CONFIG)
+	rm -rf $(BUILD)/src
+
+clean-project-build:
+	rm -rf $(BUILD)
+
+clean-project:
+	rm -rf $(ASM)
+	rm -rf $(ASSETS)
+	rm -rf $(BUILD)
+	rm -rf $(LINKERS)
 
 death:
 	@$(MAKE) clean
@@ -228,51 +272,13 @@ compiler-info:
 linker-info:
 	$(WIBO) $(MWLD) -help
 
-alessatool:
-	$(ALESSATOOL)
-
 binutils: $(AS)
-
-clean:
-	@$(MAKE) PROJECT=silent-hill-3 clean-project
-	@$(MAKE) PROJECT=silent-hill-2 clean-project
-
-clean-build:
-	@$(MAKE) PROJECT=silent-hill-3 clean-project-build
-	@$(MAKE) PROJECT=silent-hill-2 clean-project-build
-
-clean-project-build:
-	rm -rf $(BUILD)
-
-clean-project:
-	rm -rf $(ASM)
-	rm -rf $(ASSETS)
-	rm -rf $(BUILD)
-	rm -rf $(LINKERS)
 
 extract: $(SOURCE_OVERLAY_ARCHIVE)
 	$(ALESSATOOL) $(EXTRACT)
 
 overlays-lowercase:
 	$(ALESSATOOL) util lowercase --folder-path $(ROM)/overlay
-
-sh3:
-	$(MAKE) PROJECT="silent-hill-3"
-
-sh2:
-	$(MAKE) PROJECT="silent-hill-2"
-
-sh3-report:
-	$(MAKE) PROJECT="silent-hill-3" report
-
-sh2-report:
-	$(MAKE) PROJECT="silent-hill-2" report
-
-sh3-clean:
-	$(MAKE) PROJECT="silent-hill-3" clean-project
-
-sh2-clean:
-	$(MAKE) PROJECT="silent-hill-2" clean-project
 ###############################################################
 $(LINKERS)/%.d: $(CONFIG)/overlay/%.yaml $(OVERLAY_SPLAT_FILES) $(SETUP)
 	$(GENERATE) $(GENERATE_OVERLAY_FLAGS) $(SPLAT_CONFIG) $<
@@ -362,11 +368,13 @@ $(patsubst $(ASM)/%.s,$(BUILD)/asm/%.s.o, \
 endef
 ###############################################################
 PHONY_TARGETS := \
-	alessatool binutils clean clean-build clean-project \
-	clean-project-build compiler-info death debug deep-clean \
-	diff expected extract heaven hell linker-info progress \
+	alessatool binutils build clean clean-build \
+	clean-quick clean-project clean-project-build \
+	compiler-info death debug deep-clean diff expected \
+	extract heaven hell linker-info progress \
 	overlays-lowercase rebuild report setup sh2 sh3 \
-	sh2-clean sh3-clean sh2-report sh3-report split
+	sh2-build sh3-build sh2-clean sh3-clean \
+	sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)
 ifeq ($(filter $(PHONY_TARGETS) $(OBJDIFF_CONFIG),$(MAKECMDGOALS)),)
 -include $(BINARIES:%=$(LINKERS)/%.d)
