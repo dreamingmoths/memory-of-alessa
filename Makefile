@@ -69,6 +69,7 @@ endif
 
 MAKE += MAKE_OPTIONS=""
 MAKEFLAGS += $(MAKE_OPTIONS)
+
 include $(PROJECT)/Makefile
 ###############################################################
 BINARIES := $(SERIAL) $(OVERLAYS)
