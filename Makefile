@@ -33,6 +33,7 @@ PROJECT ?= silent-hill-3
 NON_MATCHING ?= 0
 GENERATE_LCF ?= 1
 GENERATE_REPORT ?= 0
+VERBOSE ?= 0
 ###############################################################
 SHELL := /bin/sh
 ARCH := $(shell uname -m)
@@ -182,6 +183,11 @@ WIBO_HOST := https://github.com/decompals/wibo/releases/download/1.0.1
 COMPILERS_HOST := https://github.com/decompme/compilers/releases/download/compilers
 BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releases/download/v0.10
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
+
+Q := @
+ifeq ($(VERBOSE),1)
+	Q :=
+endif
 ###############################################################
 all: $(TARGETS)
 
@@ -287,16 +293,19 @@ $(LINKERS)/%.d: $(CONFIG)/%.yaml $(SPLAT_FILES) $(SETUP)
 	$(GENERATE) $(GENERATE_FLAGS) $(SPLAT_CONFIG) $<
 
 $(TARGET_EXECUTABLE): $(SETUP) $(OVERLAY_TARGETS) $(LINKER_SCRIPT)
-	$(LD)
+	@echo "* linking with mwld..."
+	$(Q)$(LD)
 	$(CHECK_MATCH_PERCENT)
 
 $(BUILD)/%.c.o: $(PROJECT)/%.c
 	@mkdir -p "$(@D)"
-	$(CC)
+	@echo "* $(@)"
+	$(Q)$(CC)
 
 $(BUILD)/%.s.o: $(CONFIG)/%.s
 	@mkdir -p "$(@D)"
-	$(AS) $(AS_FLAGS) -o "$@" "$<"
+	@echo "* $(@)"
+	$(Q)$(AS) $(AS_FLAGS) -o "$@" "$<"
 
 $(LINKER_SCRIPT): $(SPLAT_CONFIG) $(CONFIG)/$(SERIAL).yaml $(LINKER_TEMPLATE)
 	$(GENERATE) $(GENERATE_FLAGS) $(SPLAT_CONFIG) $(CONFIG)/$(SERIAL).yaml
