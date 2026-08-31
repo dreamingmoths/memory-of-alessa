@@ -155,9 +155,10 @@ make NPROC=1                 # build without parallelism
 
 (*) In particular, `make sh3` will not always work when moving from the diffing
 phase to the linking phase, because the linked C objects are different from the
-ones used to generate the report. They also may not always rebuild properly
-because the Makefile does not use generated dependency (.d) files from MWCC.
-This is why `make sh3-build` is preferred when speed is not highest priority.
+ones used to generate the report. It also may not always detect source file
+changes as the Makefile currently only uses dependency (.d) files from Splat and
+not the compiler. This is why `make sh3-build` is preferred when speed is not
+highest priority.
 
 ### ghidra bsim workflow
 
