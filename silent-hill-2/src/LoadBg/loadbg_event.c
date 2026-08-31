@@ -7,6 +7,8 @@ static loadBgMem_Sect* getsect(void* adr);
 static loadBgMem_Sect* setsect(void* adr, int size);
 static void addsectlist(loadBgMem_Sect* sect);
 
+// @todo: migrate bss
+
 static void initwork(void) {
     memset(d.filelist, 0, sizeof(d.filelist));
     d.SectList[0] = 0;
@@ -67,7 +69,7 @@ static void addsectlist(loadBgMem_Sect* sect) {
     
     for (i = 0; ((i < 100) && (*l != NULL)); i++, l++) {
     }
-    ASSERT_ON_LINE(!(*l && i == 100), 112);
+    ASSERT_ON_LINE(!(*l && i==100)), 112);
     *l = sect;
     
     *(l + 1) = 0;
