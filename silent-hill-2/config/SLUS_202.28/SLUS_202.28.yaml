@@ -545,7 +545,7 @@ segments:
       - { start: 0x0018dc60,    type: c,          name: movie/pss_videodec                               }
       - { start: 0x0018e590,    type: asm,        name: movie/pss_vobuf                                  }
       - { start: 0x0018e7b0,    type: asm,        name: Chacter_Draw/sh2_JmsSpot_Man                     }
-      - { start: 0x0018f7c0,    type: asm,        name: LoadBg/loadbg_event                              }
+      - { start: 0x0018f7c0,    type: c,          name: LoadBg/loadbg_event                              }
       - { start: 0x0018fe00,    type: asm,        name: LoadBg/loadbg_chara                              }
       - { start: 0x001909d0,    type: c,          name: Chacter/player_result                            }
       - { start: 0x001913a0,    type: c,          name: sound/sh_sd_call                                 }
@@ -1017,7 +1017,7 @@ segments:
       - { start: 0x0029c610,    type: rodata,     name: movie/pss_strfile_rodata                         }
       - { start: 0x0029c640,    type: .rodata,    name: movie/pss_vibuf                                  }
       - { start: 0x0029c660,    type: .rodata,    name: movie/pss_videodec                               }
-      - { start: 0x0029c760,    type: rodata,     name: LoadBg/loadbg_event                              }
+      - { start: 0x0029c760,    type: .rodata,    name: LoadBg/loadbg_event                              }
       - { start: 0x0029c8d8,    type: rodata,     name: LoadBg/loadbg_chara                              }
       - { start: 0x0029ca80,    type: .rodata,    name: Chacter/player_result                            }
       - { start: 0x0029cb00,    type: .rodata,    name: Effect2/hh_memory_manage                         }
