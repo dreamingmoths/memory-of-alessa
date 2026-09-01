@@ -1,5 +1,7 @@
 #include "mall_b_01.h"
 
+#include "Chacter/m3_sc.h"
+
 INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6D680_mall_b_01);
 
 void func_01F6D740_mall_b_01(void) {
@@ -30,7 +32,49 @@ int func_01F6D7A0_mall_b_01(void) {
     return 0; 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6D860_mall_b_01);
+int func_01F6D860_mall_b_01(void) {
+    if (!GET_BIT(D_1D31654, 0x19)) {
+        func_00190A20(2);
+        SET_BIT(D_1D31654, 0x19);
+    }
+
+    if (!GET_BIT(D_1D31654, 0x1A)) {
+        if (!func_0016C1C0(36)) {
+            return 0;
+        }
+        if (!func_0016CB70()) {
+            SET_BIT(D_1D31654, 0x1A);
+            SET_BIT(D_1D31654, 0x1B);
+            SeCall(1.0f, 0.0f, 0x300E);
+        }
+    } 
+    else if (GET_BIT(D_1D31654, 0x1B)) {
+        if (!func_0016C1C0(38)) {
+            return 0;
+        }
+        if (!func_0016CB70()) {
+            UNSET_BIT(D_1D31654, 0x1B);
+            SeCall(1.0f, 0.0f, 0x300E);
+            if (GET_BIT(D_01D31640, 0x1F) && !GET_BIT(D_1D31654, 0x1C)) {
+                SET_BIT(D_1D31654, 0x1C);
+            }
+        }
+    } 
+    else {
+        if (!func_0016C1C0(37)) {
+            return 0;
+        }
+        if (!func_0016CB70()) {
+            SET_BIT(D_1D31654, 0x1B);
+            SeCall(1.0f, 0.0f, 0x300E);
+        }
+    }
+
+    func_00190A20(0);
+    UNSET_BIT(D_1D31654, 0x19);
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6DA50_mall_b_01);
 
@@ -69,7 +113,20 @@ int func_01F6E500_mall_b_01(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6E520_mall_b_01);
+void func_01F6E520_mall_b_01(void) {
+    int* id;
+
+    if ((u_char)(GetActionLevel()) <= 1) {
+        return;
+    }
+    
+    id = &D_01F727B0_mall_b_01;       
+
+    while (*id != NULL) {
+        shCharacter_Manage_Delete(NUMB_BODY_CHARA_KIND, *id);
+        ++id;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6E580_mall_b_01);
 
