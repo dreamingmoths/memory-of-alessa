@@ -38,4 +38,12 @@ unk_struct* func_00190AC0();
 void func_01F6DF60_mall_b_01(void*);
 void func_01F6E0F0_mall_b_01();
 
+int SeCall(float, float, int);
+int func_0016CB70(void);
+int func_0016C1C0(int);
+extern u_int D_01D31640;
+
+int GetActionLevel(void);
+extern int D_01F727B0_mall_b_01;
+
 #endif
