@@ -76,7 +76,11 @@ source tools/scripts/env.sh # will make `alessatool` available
 alessatool annotate --asm-path silent-hill-2/config/SLUS_202.28/asm/Chacter_Draw/model3_sub_n.s
 ```
 
-See `alessatool annotate -h` or `alessatool -h` for more information.
+See `alessatool annotate --help` for more information.
+
+There are more commands, for example `alessatool debug` command may be helpful
+for troubleshooting issues with the build. Run `alessatool --help` for a list of
+all commands.
 
 ## general workflow & `make` commands
 
