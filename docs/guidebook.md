@@ -1,0 +1,172 @@
+# guidebook
+
+This document attempts to describe in detail our overall approach to
+decompilation and the tools we use along the way. It assumes you've read both
+[contributing.md](contributing.md) and [development.md](development.md).
+
+## tooling
+
+The following is a list of tools we recommend to get started working in this
+repository.
+
+1. [objdiff gui](#objdiff-gui)
+2. [ghidra](#ghidra)
+3. [decomp-toolkit](#decomp-toolkit)
+4. [alessatool](#alessatool)
+4. [hex editors & more](#hex-editors--more)
+
+### objdiff gui
+
+*link*: [*https://github.com/encounter/objdiff/releases*](https://github.com/encounter/objdiff/releases)
+
+The command-line `objdiff` is automatically installed by `make` in this
+repository, but you'll need to obtain the gui separately. Objdiff is meant to be
+used with the `make report` commands. Please see
+[development.md](development.md) for more information.
+
+### ghidra
+
+*link*: [*https://github.com/NationalSecurityAgency/ghidra/releases*](https://github.com/NationalSecurityAgency/ghidra/releases)
+
+For more information on Ghidra, see [#working-in-ghidra](#working-in-ghidra).
+
+- PlayStation 2 extension: [chaoticgd/ghidra-emotionengine-reloaded](github.com/chaoticgd/ghidra-emotionengine-reloaded)
+
+- When working on Silent Hill 2, we recommend this extension for the DWARF
+information: [zoikun/ghidra-dwarf1](https://github.com/zoikun/ghidra-dwarf1)
+
+- When working on Silent Hill 3, [alessatool/ghidra/LoadSymbolAddrs.py](tools/alessatool/ghidra/LoadSymbolAddrs.py) can add our symbols to a Ghidra project. To use our Ghidra scripts, start Ghidra with PyGhidra (via `pyghidraRun`).
+
+- When working on both Silent Hill 2 and 3, we recommend setting up a BSim database by reading [this tutorial](https://ghidra.re/ghidra_docs/GhidraClass/BSim/README.html).
+
+### decomp-toolkit
+
+*link*: [*https://github.com/encounter/decomp-toolkit#dwarf-dump*](https://github.com/encounter/decomp-toolkit#dwarf-dump)
+
+This is for Silent Hill 2 or other games with DWARF debugging info, for the
+  `dwarf dump` command. 
+  
+```sh
+dtk dwarf dump SLUS_202.28 -o debug.c
+```
+
+Due to performance concerns, it may be good to open `debug.c` in a text editor
+such as Sublime Text rather than an IDE, or otherwise turn off code analysis
+when the file is open.
+
+
+### alessatool
+
+*link*: [*tools/alessatool*](https://github.com/dreamingmoths/memory-of-alessa/tree/main/tools/alessatool)
+
+[alessatool](https://github.com/dreamingmoths/memory-of-alessa/tree/main/tools/alessatool) is our in-house command line utility.
+
+It's used to orchestrate the build along with the Makefile, and it also has a couple of useful commands.
+
+#### `alessatool annotate`
+
+
+
+```sh
+tools/scripts/env.sh
+alessatool 
+```
+
+### hex editors & more
+
+- [hexed.it](https://hexed.it/) for hex viewing, editing, and conversions.
+
+- [ImHex](https://imhex.werwolv.net/) for its binary diffing support, or [vbindiff](https://linux.die.net/man/1/vbindiff).
+    - When diffing with ImHex, it's recommended to use the `.rom` files, e.g.
+      `rom/SLUS_206.22/SLUS_206.22.rom` and `build/SLUS_206.22/SLUS_206.22.rom`
+      and try the different comparison algorithms.
+    - Note that `alessatool debug`, objdiff, and Ghidra can be used to compare binaries as well (for example, inspect a nonmatching `SLUS_202.28` in Ghidra).
+
+- [kaitai ide](https://ide.kaitai.io/) online for inspecting file formats.
+    - Silent Hill 1-3 file formats: https://github.com/dreamingmoths/silent-hill-museum/tree/main/ksy
+    - Silent Hill 1 file formats: https://github.com/shdecompilations/silent-hill-decomp/tree/master/docs/file_formats
+    - ELF spec: https://formats.kaitai.io/elf/
+
+- [silenthillmuseum](https://silenthillmuseum.org/) for inspecting Silent Hill models.
+
+- The MetroWerks CodeWarrior IDE targeting PlayStation 2 has been archived.
+
+- decomp websites:
+    - [decomp.me](https://decomp.me)
+    - [decomp.wiki](https://decomp.wiki)
+    - [decomp.dev](https://decomp.dev)
+
+## working in ghidra
+
+This section will hopefully be filled out more soon. We would also like to have Ghidra scripts to automate some of the setup.
+
+### necessary extensions
+
+These were listed above, but are listed again for convenience.
+
+- [chaoticgd/ghidra-emotionengine-reloaded](github.com/chaoticgd/ghidra-emotionengine-reloaded)
+- [zoikun/ghidra-dwarf1](https://github.com/zoikun/ghidra-dwarf1)
+
+### setting up ghidra
+
+Start Ghidra via `support/pyghidraRun` (or `support/pyghidraRun.bat` on Windows)
+in the Ghidra folder. Add `SLUS_206.22` or `SLUS_202.28` to a Ghidra project and
+open it in the code browser tool. 
+
+The first thing to do in either game is add the BSS section. The BSS section is
+a large region of memory that is set to zero on startup. In these games, these
+zeros are not stored in the binary but rather initialized by the entrypoint
+function in `crt0` before the `main` function is called.
+
+That can be done with the green chip icon ("Display Memory Map") shown below.
+
+<div align="center">
+  <img alt="'Display Memory Map' is the green chip icon in Ghidra" src="https://i.imgur.com/2fFxILH.png">
+</div>
+
+The start and size of BSS can be obtained from the Splat YAML. For example, in [SLUS_202.28.yaml](../silent-hill-2/config/SLUS_202.28/SLUS_202.28.yaml), `bss_size` is `0x1b3a080`, and the first bss split is at `0x03c7d80`.
+
+Press the green plus button and add the BSS as shown (these numbers are for Silent Hill 3):
+
+<div align="center">
+  <img alt="Entering the starting address and length of the BSS section" src="https://i.imgur.com/HCLhZKw.png">
+</div>
+
+Then run the analysis by going to `Analysis > Auto-Analyze`, making sure
+DWARF1 is checked if working on Silent Hill 2. After a few minutes, the project should be a lot more recognizable.
+
+### adding overlays
+
+Overlays are external files that are loaded in memory dynamically at runtime by
+the main executable. Overlays can be added to Ghidra through a similar process
+as the above steps for adding the BSS section.
+
+Go to `File > Add To Program...` and find an overlay to add, e.g.
+`hospital_f_02.bin`. The base address is the `vram_start` in the YAML, and the
+file offset for MetroWerks overlays should generally always be `0x80`, so enter
+that and then use the length it recommends.
+
+<div align="center">
+  <img alt="Adding overlay options including base address, file offset, and length" src="https://i.imgur.com/cO93oMH.png">
+</div>
+
+Once it's added, open the memory map again and make sure the executable permission ("X") is checked on for the new overlay region. Then running the analysis should catch the overlay functions.
+
+### running scripts
+
+For Silent Hill 3, follow the instructions below to load symbols from our project. (For Silent Hill 2 only, this section may be skipped.)
+
+To the left of the green chip icon is the green play button ("Display Script Manager"). Alternatively, open it with `Window > Script Manager`.
+
+Find the "Manage Script Directories" button:
+
+<div align="center">
+  <img alt="'Manage Script Directories' button" src="https://i.imgur.com/6g0TiP5.png">
+</div>
+
+Add `tools/alessatool/ghidra` as a directory. The "Memory of Alessa" scripts folder should appear in the left sidebar.
+
+Click `LoadSymbolAddrs.py` and run it with the play button. It should open a file dialog, navigate to and select `silent-hill-3/config/SLUS_206.22/symbol_addrs.txt`. It may also be helpful to re-run it for `sdk_symbol_addrs.txt` and the rest.
+
+After rerunning the analysis, the symbols should be loaded in.
+
