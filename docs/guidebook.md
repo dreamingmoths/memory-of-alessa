@@ -179,8 +179,8 @@ as the above steps for adding the BSS section.
 
 Go to `File > Add To Program...` and find an overlay to add, e.g.
 `hospital_f_02.bin`. The base address is the `vram_start` in the YAML, and the
-file offset for MetroWerks overlays should generally always be `0x80`, so enter
-that and then use the length it recommends.
+file offset for MetroWerks overlays should generally be `0x80`, so enter that
+and then use the length it recommends.
 
 <div align="center">
   <img alt="Adding overlay options including base address, file offset, and length" src="https://i.imgur.com/cO93oMH.png">
