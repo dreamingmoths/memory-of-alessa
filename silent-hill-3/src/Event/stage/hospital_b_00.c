@@ -420,7 +420,7 @@ int func_01F6E6C0_hospital_b_00(void) {
         D_01F70608_hospital_b_00 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F70608_hospital_b_00 += shGetDT();
     switch (D_01F70600_hospital_b_00) {    
@@ -428,7 +428,7 @@ int func_01F6E6C0_hospital_b_00(void) {
             if (D_01F70608_hospital_b_00 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F70600_hospital_b_00++;
         case 1:
             if (D_01F70608_hospital_b_00 < 1.5f) {

@@ -70,7 +70,7 @@ int func_01F6E5E0_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
     PlayerResultTimerCountUp();
     func_0029FA30();
     if (arg0->unk8AC == arg0->unk8A8) {
-        SeCall(0x3AFF, 0.0f, 1.0f);
+        SeCall(15103, 0.0f, 1.0f);
         return 2;
     }
     temp_s1 = func_01F6E4E0_hospital_b_02();
@@ -88,7 +88,7 @@ int func_01F6E5E0_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
             arg0->unk8AC &= ~(0xF << temp_t0);
             arg0->unk8AC |= a1;
             arg0->unk8A4 = 0.2f;
-            SeCall(0x3AFC, 0.0f, 1.0f);
+            SeCall(15100, 0.0f, 1.0f);
         }
     }
     return 0;
@@ -228,7 +228,7 @@ int func_01F6F780_hospital_b_02(void) {
         D_01F74108_hospital_b_02 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F74108_hospital_b_02 += shGetDT();
     switch (D_01F74100_hospital_b_02) {
@@ -236,7 +236,7 @@ int func_01F6F780_hospital_b_02(void) {
             if (D_01F74108_hospital_b_02 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F74100_hospital_b_02 += 1;
         case 1:
             if (D_01F74108_hospital_b_02 < 1.5f) {
@@ -270,7 +270,7 @@ int func_01F6F930_hospital_b_02(void) {
         D_01F74118_hospital_b_02 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F74118_hospital_b_02 += shGetDT();
     switch (D_01F74110_hospital_b_02) {
@@ -278,7 +278,7 @@ int func_01F6F930_hospital_b_02(void) {
             if (D_01F74118_hospital_b_02 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F74110_hospital_b_02 += 1;
         case 1:
             if (D_01F74118_hospital_b_02 < 1.5f) {
@@ -326,7 +326,7 @@ void func_01F6FBA0_hospital_b_02(void) {
         }
 
         if (var_f0 <= 1000.0f) {
-            SeCall(0x3B01, -0.7853982f, (1000.0f - var_f0) / 1000.0f);
+            SeCall(15105, -0.7853982f, (1000.0f - var_f0) / 1000.0f);
             D_01F74148_hospital_b_02 = 1;
         }    
     }    

@@ -11,7 +11,7 @@ int func_01F6D680_construct_00(void) {
         case 0:
             func_00190A20(2);
         
-            SeCall(0x32CA, 0.0f, 1.0f); // I hate you SeCall
+            SeCall(13002, 0.0f, 1.0f); // I hate you SeCall
         
             func_0013D250(0, &D_01F6F8B0_construct_00, 1.0f);
             D_01F6FA38_construct_00 = 0.0f;
@@ -63,7 +63,7 @@ int func_01F6D7E0_construct_00(void) { //check 3th floor sign
             D_01F6FA00_construct_00 += 1;
             func_0016C3C0();
     
-            SeCall(0x4A52, 0.0f, 1.0f);
+            SeCall(19026, 0.0f, 1.0f);
         default:
             if (func_0016C1C0(3) == 0) {
                 return 0;
@@ -93,7 +93,7 @@ int func_01F6D8D0_construct_00(void) { //check 4th floor
             }
             D_01F6FA08_construct_00 += 1;
             func_0016C3C0();
-            SeCall(0x4A52, 0.0f, 1.0f);
+            SeCall(19026, 0.0f, 1.0f);
         
         default:
             if (func_0016C1C0(3) == 0) {
@@ -139,7 +139,7 @@ int func_01F6D9C0_construct_00(void) {
                 if (func_001C2580(2) == 0) {
                     return 0;
                 }
-                SeCall(0x32C8, 0.0f, 1.0f);
+                SeCall(13000, 0.0f, 1.0f);
                 D_01F6FA30_construct_00 = 2;
                 
             default:
@@ -185,7 +185,7 @@ int func_01F6DBC0_construct_00(void) {
                 return 0;
             }
             func_00317490(0x18, 0.2f);
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             D_1D31664[0] |= 0x10000000;
             D_01F6FA20_construct_00 = 2;
     
@@ -253,7 +253,7 @@ int func_01F6DD90_construct_00(void) {
             }
             
             func_00190000(&sp20, sp20[5]);
-            SeCall(0x32C9, 0.0f, 1.0f);
+            SeCall(13001, 0.0f, 1.0f);
             D_01F6FA18_construct_00 += 1;
         
     }

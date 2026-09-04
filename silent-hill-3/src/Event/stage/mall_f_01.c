@@ -136,7 +136,7 @@ int func_01F6DA70_mall_f_01(void)
             }
 
             func_0016C3C0();
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             ItemGet(5);
             SET_BIT(D_1D3164C, 25);
             func_00317490(5, 0.2f);

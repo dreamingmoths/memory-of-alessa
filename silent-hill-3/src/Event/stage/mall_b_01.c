@@ -53,7 +53,7 @@ int func_01F6D860_mall_b_01(void) {
         if (!func_0016CB70()) {
             SET_BIT(D_1D31654, 0x1A);
             SET_BIT(D_1D31654, 0x1B);
-            SeCall(0x300E, 0.0f, 1.0f);
+            SeCall(12302, 0.0f, 1.0f);
         }
     } 
     else if (GET_BIT(D_1D31654, 0x1B)) {
@@ -62,7 +62,7 @@ int func_01F6D860_mall_b_01(void) {
         }
         if (!func_0016CB70()) {
             UNSET_BIT(D_1D31654, 0x1B);
-            SeCall(0x300E, 0.0f, 1.0f);
+            SeCall(12302, 0.0f, 1.0f);
             if (GET_BIT(D_01D31640, 0x1F) && !GET_BIT(D_1D31654, 0x1C)) {
                 SET_BIT(D_1D31654, 0x1C);
             }
@@ -74,7 +74,7 @@ int func_01F6D860_mall_b_01(void) {
         }
         if (!func_0016CB70()) {
             SET_BIT(D_1D31654, 0x1B);
-            SeCall(0x300E, 0.0f, 1.0f);
+            SeCall(12302, 0.0f, 1.0f);
         }
     }
 

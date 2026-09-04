@@ -124,7 +124,7 @@ int func_01F6D820_mall_b_02(void) {
             func_00317490(0x2F, 0.2f);
             D_1D31658 |= 2;
             func_0016C3C0();
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
 
         default:
             if (!func_0016C1C0(0x21)) {
@@ -178,7 +178,7 @@ int func_01F6DA80_mall_b_02(void) {
     switch (D_01F6E8B0_mall_b_02) {
         case 0:
             func_0018FE60((u_long128*)&sp10);
-            SeCall(0x3070, 0.0f, 1.0f);
+            SeCall(12400, 0.0f, 1.0f);
             func_001C2290(3, 0.5f);
             func_0016C1A0();
             D_1D31658 |= 8;

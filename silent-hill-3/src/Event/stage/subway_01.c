@@ -94,7 +94,7 @@ int func_01F6D720_subway_01(void)
         case 0:
             func_00190A20(2);
             func_001C2290(3, 0.5f);
-            SeCall(0x3139, 0.0f, 1.0f);
+            SeCall(12601, 0.0f, 1.0f);
             func_01F6E2D0_subway_01();
             func_0013D250(0, &D_01F70180_subway_01, 1.0f);
             D_01F70700_subway_01 = 1;
@@ -216,7 +216,7 @@ int func_01F6DBE0_subway_01(void)
             }
 
             D_1D31648 |= 0x40000;
-            SeCall(0x3139, 0.0f, 1.0f);
+            SeCall(12601, 0.0f, 1.0f);
             ++D_01F70700_subway_01;
             /* fallthrough */
         case 1:
@@ -684,7 +684,7 @@ void func_01F6E960_subway_01(void)
             switch (D_01F70720_subway_01)
             {
                 case 0:
-                    SeCall(0x3139, 0.0f, 0.2f);
+                    SeCall(12601, 0.0f, 0.2f);
                     D_01F70730_subway_01 = 0.0f;
                     ++D_01F70720_subway_01;
                     break;
@@ -693,7 +693,7 @@ void func_01F6E960_subway_01(void)
 
                     if (D_01F70730_subway_01 > 20.0f)
                     {
-                        SeCall(0x3139, 0.0f, 0.6f);
+                        SeCall(12601, 0.0f, 0.6f);
                         ++D_01F70720_subway_01;
                     }
 
@@ -736,7 +736,7 @@ void func_01F6E960_subway_01(void)
 
                     if (D_01F70728_subway_01 > 50.0f)
                     {
-                        SeCall(0x3139, 0.0f, 0.6f);
+                        SeCall(12601, 0.0f, 0.6f);
                         ++D_01F70708_subway_01;
                     }
 
@@ -757,7 +757,7 @@ void func_01F6E960_subway_01(void)
                 case 4:
                     D_01F70708_subway_01 = 5;
                     D_01F70728_subway_01 = 0.0f;
-                    SeCall(0x3139, 0.0f, 0.6f);
+                    SeCall(12601, 0.0f, 0.6f);
                     break;
                 case 5:
                     D_01F70728_subway_01 += shGetDT();

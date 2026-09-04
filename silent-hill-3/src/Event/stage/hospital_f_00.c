@@ -326,7 +326,7 @@ int func_01F6E050_hospital_f_00(void) {
             if (func_0016C1C0(0x37) != 0) {
                 func_0016C3C0();
                 temp_s0->unkA8 = 5U;
-                SeCall(0x3840, 0.0f, 1.0f);
+                SeCall(14400, 0.0f, 1.0f);
             }
             break;
         case 5:
@@ -336,7 +336,7 @@ int func_01F6E050_hospital_f_00(void) {
             } else {
                 temp_s0->unkB0 = 0;
                 temp_s0->unkA8 = 6U;
-                SeCall(0x2B21, 0.0f, 1.0f);
+                SeCall(11041, 0.0f, 1.0f);
             }
             func_01F6E030_hospital_f_00(temp_s0);
             func_0016BC00(1);
@@ -415,7 +415,7 @@ int func_01F6E490_hospital_f_00(void) {
         D_01F6FA90_hospital_f_00 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     
     D_01F6FA90_hospital_f_00 += shGetDT();
@@ -426,7 +426,7 @@ int func_01F6E490_hospital_f_00(void) {
             if (D_01F6FA90_hospital_f_00 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6FA88_hospital_f_00 += 1;
         
         case 1:

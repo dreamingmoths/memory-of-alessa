@@ -87,14 +87,14 @@ int func_01F6D980_sewer_00(void) {
     func_00190A20(2);
     D_01F6FE60_sewer_00++;
     func_00317420(0x34);
-    SeCall(0x2B21, 0.0f, 1.0f);
+    SeCall(11041, 0.0f, 1.0f);
   case 1:
     if (func_0016C1C0(0x45) == 0) {
       return 0;
     }
     func_0016C3C0();
     D_01F6FE60_sewer_00++;
-    SeCall(0x2B21, 0.0f, 1.0f);
+    SeCall(11041, 0.0f, 1.0f);
     func_00317490(0x34, 0.2f);
   case 2:
     if (func_0016C1C0(0x46) == 0) {
@@ -140,7 +140,7 @@ int func_01F6DAB0_sewer_00(void) {
           func_0013D250(0, D_01F6F9F0_sewer_00, 1.0f);
           D_1D31664 |= 4;
           func_00316C50(0);
-          SeCall(0x3200, 0.0f, 1.0f);
+          SeCall(12800, 0.0f, 1.0f);
           D_01F6FE30_sewer_00 = func_0016E0F0();
           continue;
         }

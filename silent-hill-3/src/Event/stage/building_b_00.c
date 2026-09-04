@@ -24,7 +24,7 @@ int func_01F6D9B0_building_b_00(void) {
             }
             func_00317490(0x3A, 0.2f);
             func_0016C3C0();
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             ItemGet(0x3A);
             D_1D31670[0] |= 0x1000;
             D_01F6FB00_building_b_00 += 1;
@@ -61,7 +61,7 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
         D_1D31670[0] |= 0x400000;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F6FB10_building_b_00 += shGetDT();
     switch (D_01F6FB08_building_b_00) {
@@ -70,7 +70,7 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
             if (D_01F6FB10_building_b_00 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6FB08_building_b_00 += 1;
         
         case 1:

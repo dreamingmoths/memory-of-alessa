@@ -26,7 +26,7 @@ int func_01F6D680_hospital_f_03(void) {
             }
             
             func_00317490(0xC, 0.2f);        
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             D_1D31680 |= 0x80;
             D_01F70910_hospital_f_03 = 2;  
         

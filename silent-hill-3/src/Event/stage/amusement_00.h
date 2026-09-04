@@ -45,7 +45,7 @@ int func_001C2580(int);
 void func_001EC590(int);
 void func_00258910(void);
 void func_00316C50(int);
-int SeCall(int arg2, float arg1, float arg0);
+extern int SeCall(int, float, float);
 
 extern int D_01F72830_amusement_00;
 extern int D_01F72890_amusement_00;

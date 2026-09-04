@@ -194,7 +194,7 @@ int func_01F6FBA0_hospital_f_01(void) { //when you enter the elevator from the s
         D_01F71690_hospital_f_01 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F71690_hospital_f_01 += shGetDT();
     switch (D_01F71688_hospital_f_01) {
@@ -202,7 +202,7 @@ int func_01F6FBA0_hospital_f_01(void) { //when you enter the elevator from the s
             if (D_01F71690_hospital_f_01 < 0.5f) {
                 return ret;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F71688_hospital_f_01 += 1;
         case 1:
             if (D_01F71690_hospital_f_01 < 1.5f) {

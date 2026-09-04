@@ -261,7 +261,7 @@ int func_01F6DEF0_mall_f_00(void)
         D_01F6FBD8_mall_f_00 = shRandF();
         SET_BIT(D_1D3164C, 18);
         func_00190A20(2);
-        SeCall(0x2EE0, 0.0f, 1.0f);
+        SeCall(12000, 0.0f, 1.0f);
     }
 
     switch (D_01F6FBE8_mall_f_00)
@@ -272,7 +272,7 @@ int func_01F6DEF0_mall_f_00(void)
                 return 0;
             }
 
-            SeCall(0x2EE1, 0.0f, 1.0f);
+            SeCall(12001, 0.0f, 1.0f);
             D_01F6FBE0_mall_f_00 = 0.0f;
             ++D_01F6FBE8_mall_f_00;
             /* fallthrough */

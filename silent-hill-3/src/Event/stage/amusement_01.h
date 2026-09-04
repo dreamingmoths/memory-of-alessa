@@ -293,16 +293,16 @@ extern float D_01F74CF0_amusement_01;
 
 // @hack thanks `func_0015DCD0` :')
 /* begin candles, holy rituals to bend float arguments to our will */
-#define UNCURSE_AMUSEMENT_BLOOD()                       \
-void blood_candle_amusement_01(float a0, float a1) {    \
-    sceVu0FVECTOR sp10;                                 \
-    do {                                                \
-        do {                                            \
-            SeCall(666, 0.0f, a0);                      \
-            SeCall(666, 0.0f, a1);                      \
-            SeCall(666, 0.0f, a1);                      \
-        } while(1);                                     \
-    } while (0);                                        \
+#define UNCURSE_AMUSEMENT_BLOOD()                         \
+void blood_candle_amusement_01(float a0, float a1) {      \
+    sceVu0FVECTOR sp10;                                   \
+    do {                                                  \
+        do {                                              \
+            SeCall(a0, 0.0f, 666);                        \
+            SeCall(a1, 0.0f, 666);                        \
+            SeCall(a1, 0.0f, 666);                        \
+        } while(1);                                       \
+    } while (0);                                          \
 }
 
 #define UNCURSE_AMUSEMENT_MOON()                          \

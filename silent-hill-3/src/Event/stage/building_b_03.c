@@ -58,7 +58,7 @@ int func_01F6E700_building_b_03(void) {
         D_1D31670[0] |= 0x400000; 
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F6FC08_building_b_03 += shGetDT();
     switch (D_01F6FC00_building_b_03) {
@@ -66,7 +66,7 @@ int func_01F6E700_building_b_03(void) {
             if (D_01F6FC08_building_b_03 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6FC00_building_b_03 += 1;
         case 1:
             if (D_01F6FC08_building_b_03 < 1.5f) {

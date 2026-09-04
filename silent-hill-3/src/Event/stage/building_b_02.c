@@ -56,7 +56,7 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
         D_1D31670 |= 0x400000;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(0x4A59, 0.0f, 1.0f);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F6EF08_building_b_02 += shGetDT();
 
@@ -66,7 +66,7 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
             if (D_01F6EF08_building_b_02 < 0.5f) {
                 return 0;
             }
-            SeCall(0x4A58, 0.0f, 1.0f);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6EF00_building_b_02 += 1;
         
         case 1:

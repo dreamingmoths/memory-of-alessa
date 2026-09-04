@@ -206,7 +206,7 @@ void func_01F6E050_amusement_02() {
 
     switch (RoomName()) {
         case 0xEA:
-            SeCall(0x4A48, 0.0f, 1.0f);
+            SeCall(19016, 0.0f, 1.0f);
             return;
         default:
             return;

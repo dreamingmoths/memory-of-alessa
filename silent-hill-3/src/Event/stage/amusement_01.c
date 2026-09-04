@@ -370,7 +370,7 @@ void func_01F6E2A0_amusement_01(void) {
             func_01F70750_amusement_01();
 
             // spikes falling noise
-            SeCall(0x3BCA, 0.0f, 1.0f);
+            SeCall(15306, 0.0f, 1.0f);
             /* fallthrough */
 
         case 1:
@@ -459,7 +459,7 @@ void func_01F6E2A0_amusement_01(void) {
 
             func_001C2B80(1, &matrix);
             D_01F74DC0_amusement_01 = matrix[3][1];
-            D_01F74D88_amusement_01 = SeCall(0x3BCB, 0.0f, 1.0f);
+            D_01F74D88_amusement_01 = SeCall(15307, 0.0f, 1.0f);
             /* fallthrough */
 
         case 5:
@@ -960,7 +960,7 @@ int func_01F6FC80_amusement_01(void) {
             D_01F74C88_amusement_01 = 2;
             D_1D3169C |= 0x8000;
             ItemGet(0x46U);
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             func_00317490(0x46, 0.2f);
         case 2:
             if (func_0016C1C0(0xBF) == 0) {
@@ -994,7 +994,7 @@ int func_01F6FDC0_amusement_01(void) {
             D_01F74C88_amusement_01 = 2;
             D_1D3169C |= 0x10000;
             ItemGet(0x47U);
-            SeCall(0x2B21, 0.0f, 1.0f);
+            SeCall(11041, 0.0f, 1.0f);
             func_00317490(0x47, 0.2f);
             /* fallthrough */
         case 2:
@@ -1030,7 +1030,7 @@ int func_01F6FED0_amusement_01(void) {
         if (func_001C2580(2) == 0) {
             return 0;
         }
-        SeCall(0x3BC4, 0.0f, 1.0f);
+        SeCall(15300, 0.0f, 1.0f);
         D_01F74C88_amusement_01 = 2;
         func_001C2290(5, 0.8f);
     case 2:
@@ -1103,9 +1103,9 @@ int func_01F701B0_amusement_01(void) {
         case 0:
             func_00190A20(2);
             D_1D3169C |= 0x100000;
-            SeCall(0x3BC5, 0.0f, 1.0f);
+            SeCall(15301, 0.0f, 1.0f);
             if (GET_BIT(D_1D3169C, 0x15)) {
-                SeCall(0x4A3B, 0.0f, 1.0f);
+                SeCall(19003, 0.0f, 1.0f);
             }
             D_01F74C88_amusement_01++;
             /* fallthrough */
@@ -1130,9 +1130,9 @@ int func_01F702A0_amusement_01(void) {
         case 0:
             func_00190A20(2);
             D_1D3169C |= 0x200000;
-            SeCall(0x3BC5, 0.0f, 1.0f);
+            SeCall(15301, 0.0f, 1.0f);
             if (GET_BIT(D_1D3169C, 0x14)) {
-                SeCall(0x4A3B, 0.0f, 1.0f);
+                SeCall(19003, 0.0f, 1.0f);
             }
             D_01F74C88_amusement_01++;
             /* fallthrough */
