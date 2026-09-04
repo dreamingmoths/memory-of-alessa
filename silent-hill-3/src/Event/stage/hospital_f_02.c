@@ -128,6 +128,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_02", func_01F6DEC0_hospital
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_02", func_01F6E200_hospital_f_02);
 
+#ifdef HOLY_CANDLE
 int func_01F6E3A0_hospital_f_02(void) {
     int ret;
 
@@ -138,7 +139,7 @@ int func_01F6E3A0_hospital_f_02(void) {
         D_01F6FF88_hospital_f_02 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(1.0f, 0.0f, 0x4A59);
+        SeCall(0x4A59, 0.0f, 1.0f);
     }
     D_01F6FF88_hospital_f_02 += shGetDT();
     switch (D_01F6FF80_hospital_f_02) { 
@@ -146,7 +147,7 @@ int func_01F6E3A0_hospital_f_02(void) {
             if (D_01F6FF88_hospital_f_02 < 0.5f) {
                 return 0;
             }
-            SeCall(1.0f, 0.0f, 0x4A58);
+            SeCall(0x4A58, 0.0f, 1.0f);
             D_01F6FF80_hospital_f_02 += 1;
         case 1:
             if (D_01F6FF88_hospital_f_02 < 1.5f) {
@@ -164,6 +165,9 @@ int func_01F6E3A0_hospital_f_02(void) {
         }
     return ret;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_02", func_01F6E3A0_hospital_f_02);
+#endif
 
 int func_01F6E550_hospital_f_02(void) {
     if (!GET_BIT(D_1D31688, 0x13)) {

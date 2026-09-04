@@ -24,7 +24,7 @@ void func_0012CFE0(int);
 void func_0029F330(float*, float*);
 int func_002A47C0(float, float);
 void ItemGet(u_int);
-void SeCall(float, float, int);
+void SeCall(int, float, float);
 int func_001646C0(void);
 void func_0016C9C0(void);
 void func_0019A940(void);

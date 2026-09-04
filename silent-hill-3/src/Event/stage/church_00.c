@@ -3,6 +3,7 @@
 
 UNCURSE_CHURCH();
 
+#ifdef HOLY_CANDLE
 int func_01F6D680_church_00(void)
 {
     int s0 = 0;
@@ -66,7 +67,7 @@ int func_01F6D680_church_00(void)
             if (func_001646C0() != 0) {
                 s0 = 1;
             } else {
-                SeCall(1.0f, 0.0f, 0x4A38);
+                SeCall(0x4A38, 0.0f, 1.0f);
             }
             D_01F6E600_church_00++;
             func_0019A940();
@@ -79,7 +80,7 @@ int func_01F6D680_church_00(void)
         }
         D_01F6E600_church_00++;
         func_0019A940();
-        SeCall(1.0f, 0.0f, 0x4A39);
+        SeCall(0x4A39, 0.0f, 1.0f);
 
     case 3:
         if (func_0019A9B0(3.0f) != 0) {
@@ -97,6 +98,9 @@ int func_01F6D680_church_00(void)
 
     return s0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/church_00", func_01F6D680_church_00);
+#endif
 
 int func_01F6D9C0_church_00(int arg0) {
 

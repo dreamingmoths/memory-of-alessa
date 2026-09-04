@@ -36,7 +36,7 @@ void func_00317420(int);
 int func_00190A20(int);
 int func_0016C1C0(int);
 int func_00168440(void);
-void SeCall(float, float, int);
+void SeCall(int, float, float);
 void ItemGet(u_int);
 void func_00317490(int, float);
 void func_003174B0(float);

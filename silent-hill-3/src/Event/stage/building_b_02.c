@@ -44,6 +44,7 @@ void func_01F6DB60_building_b_02(void) { //I will debug it later
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6DC70_building_b_02);
 
+#ifdef HOLY_CANDLE
 int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_building_b_03
     int var_s0;
 
@@ -55,7 +56,7 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
         D_1D31670 |= 0x400000;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(1.0f, 0.0f, 0x4A59);
+        SeCall(0x4A59, 0.0f, 1.0f);
     }
     D_01F6EF08_building_b_02 += shGetDT();
 
@@ -65,7 +66,7 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
             if (D_01F6EF08_building_b_02 < 0.5f) {
                 return 0;
             }
-            SeCall(1.0f, 0.0f, 0x4A58);
+            SeCall(0x4A58, 0.0f, 1.0f);
             D_01F6EF00_building_b_02 += 1;
         
         case 1:
@@ -86,6 +87,9 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
     }
     return var_s0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6DE10_building_b_02);
+#endif
 
 void func_01F6DFD0_building_b_02(void) {
     

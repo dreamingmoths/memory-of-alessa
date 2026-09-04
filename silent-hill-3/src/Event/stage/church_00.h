@@ -30,7 +30,7 @@ int func_001C2580(int);
 void func_00300390(void);
 void func_00316C50(int);
 void func_01F6DCF0_church_00(Q*, int*, Q*, int*, int*);
-int SeCall(float, float, int);
+int SeCall(int, float, float);
 float shGetDT(void);
 
 extern short D_01F6E550_church_00[];
@@ -61,11 +61,11 @@ void uncurse(float a0, float a1, float a2, float a3, u_int a4, void* a5) { \
     float x;                                                               \
     float y;                                                               \
     do {                                                                   \
-        SeCall(1.0f, 0.0f, 19000);                                         \
+        SeCall(19000, 0.0f, 1.0f);                                         \
         do {                                                               \
-            SeCall(a0, 0.0f, 19000);                                       \
-            SeCall(a1, 0.0f, 19000);                                       \
-            SeCall(a1, 0.0f, 19000);                                       \
+            SeCall(19000, 0.0f, a0);                                       \
+            SeCall(19000, 0.0f, a1);                                       \
+            SeCall(19000, 0.0f, a1);                                       \
         } while(1);                                                        \
     } while (0);                                                           \
 }

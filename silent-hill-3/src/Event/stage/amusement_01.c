@@ -343,6 +343,7 @@ int func_01F6E220_amusement_01(void) {
     return audioIsPlaying;
 }
 
+#ifdef HOLY_CANDLE
 void func_01F6E2A0_amusement_01(void) {
     SubCharacter* heather;
     sceVu0FMATRIX matrix;
@@ -369,7 +370,7 @@ void func_01F6E2A0_amusement_01(void) {
             func_01F70750_amusement_01();
 
             // spikes falling noise
-            SeCall(1.0f, 0.0f, 0x3BCA);
+            SeCall(0x3BCA, 0.0f, 1.0f);
             /* fallthrough */
 
         case 1:
@@ -406,7 +407,7 @@ void func_01F6E2A0_amusement_01(void) {
             y_1 = matrix[3][1] + D_01F74DC0_amusement_01;
             matrix[3][1] = y_1;
             
-            if (!(y_1 <= -1200.0f)) {
+            if (y_1 > -1200.0f) {
                 if (needs_crouch != 0) {
                     matrix[3][1] = -1000.0f;
                     D_01F74C90_amusement_01 = 3;
@@ -458,7 +459,7 @@ void func_01F6E2A0_amusement_01(void) {
 
             func_001C2B80(1, &matrix);
             D_01F74DC0_amusement_01 = matrix[3][1];
-            D_01F74D88_amusement_01 = SeCall(1.0f, 0.0f, 0x3BCB);
+            D_01F74D88_amusement_01 = SeCall(0x3BCB, 0.0f, 1.0f);
             /* fallthrough */
 
         case 5:
@@ -497,6 +498,9 @@ void func_01F6E2A0_amusement_01(void) {
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F6E2A0_amusement_01);
+#endif
 
 int func_01F6E710_amusement_01(void) {
     int audioIsPlaying;
@@ -941,6 +945,7 @@ int func_01F6FB50_amusement_01(void) {
     return 1;
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6FC80_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {              /* irregular */
         case 0:
@@ -955,7 +960,7 @@ int func_01F6FC80_amusement_01(void) {
             D_01F74C88_amusement_01 = 2;
             D_1D3169C |= 0x8000;
             ItemGet(0x46U);
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(0x2B21, 0.0f, 1.0f);
             func_00317490(0x46, 0.2f);
         case 2:
             if (func_0016C1C0(0xBF) == 0) {
@@ -974,7 +979,11 @@ int func_01F6FC80_amusement_01(void) {
             return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F6FC80_amusement_01);
+#endif
 
+#ifdef HOLY_CANDLE
 int func_01F6FDC0_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
         case 0:
@@ -985,7 +994,7 @@ int func_01F6FDC0_amusement_01(void) {
             D_01F74C88_amusement_01 = 2;
             D_1D3169C |= 0x10000;
             ItemGet(0x47U);
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(0x2B21, 0.0f, 1.0f);
             func_00317490(0x47, 0.2f);
             /* fallthrough */
         case 2:
@@ -1001,11 +1010,15 @@ int func_01F6FDC0_amusement_01(void) {
             return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F6FDC0_amusement_01);
+#endif
 
 #pragma supress_warnings on
 UNCURSE_AMUSEMENT_MOON();
 #pragma supress_warnings off
 
+#ifdef HOLY_CANDLE
 int func_01F6FED0_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
     case 0:
@@ -1017,7 +1030,7 @@ int func_01F6FED0_amusement_01(void) {
         if (func_001C2580(2) == 0) {
             return 0;
         }
-        SeCall(1.0f, 0.0f, 0x3BC4);
+        SeCall(0x3BC4, 0.0f, 1.0f);
         D_01F74C88_amusement_01 = 2;
         func_001C2290(5, 0.8f);
     case 2:
@@ -1036,6 +1049,9 @@ int func_01F6FED0_amusement_01(void) {
         return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F6FED0_amusement_01);
+#endif
 
 int func_01F70000_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
@@ -1081,14 +1097,15 @@ int func_01F70000_amusement_01(void) {
     }
 }
 
+#ifdef HOLY_CANDLE
 int func_01F701B0_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
         case 0:
             func_00190A20(2);
             D_1D3169C |= 0x100000;
-            SeCall(1.0f, 0.0f, 0x3BC5);
+            SeCall(0x3BC5, 0.0f, 1.0f);
             if (GET_BIT(D_1D3169C, 0x15)) {
-                SeCall(1.0f, 0.0f, 0x4A3B);
+                SeCall(0x4A3B, 0.0f, 1.0f);
             }
             D_01F74C88_amusement_01++;
             /* fallthrough */
@@ -1103,15 +1120,19 @@ int func_01F701B0_amusement_01(void) {
             return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F701B0_amusement_01);
+#endif
 
+#ifdef HOLY_CANDLE
 int func_01F702A0_amusement_01(void) {
     switch (D_01F74C88_amusement_01) {
         case 0:
             func_00190A20(2);
             D_1D3169C |= 0x200000;
-            SeCall(1.0f, 0.0f, 0x3BC5);
+            SeCall(0x3BC5, 0.0f, 1.0f);
             if (GET_BIT(D_1D3169C, 0x14)) {
-                SeCall(1.0f, 0.0f, 0x4A3B);
+                SeCall(0x4A3B, 0.0f, 1.0f);
             }
             D_01F74C88_amusement_01++;
             /* fallthrough */
@@ -1126,6 +1147,9 @@ int func_01F702A0_amusement_01(void) {
             return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_01", func_01F702A0_amusement_01);
+#endif
 
 void func_01F70390_amusement_01(void) {
     func_01F703B0_amusement_01(20.0f, 40.0f);

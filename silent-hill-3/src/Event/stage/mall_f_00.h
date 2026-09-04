@@ -50,7 +50,7 @@ void func_00316C50(int);
 void func_0016ECE0(int);
 float shRandF(void);
 int func_00190A20(int);
-void SeCall(float, float, int);
+void SeCall(int, float, float);
 float shGetDT(void);
 int func_0016C1C0(int);
 void func_0016C3C0(void);

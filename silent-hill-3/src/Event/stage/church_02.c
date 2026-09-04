@@ -34,7 +34,7 @@ int func_01F6D7B0_church_02(void) {
         case 0:
             D_1D316AC[0] |= 0x20000000;
             func_00190A20(2);
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(0x2B21, 0.0f, 1.0f);
             D_1D316A4[0] |= 0x02000000;
             ItemGet(0x4B);
             func_00317490(0x4B, 0.2f);
@@ -52,14 +52,14 @@ int func_01F6D7B0_church_02(void) {
             if (func_001C2580(2) == 0) {
                 return 0;
             }
-            SeCall(0.5f, 0.0f, 0x4A38);
+            SeCall(0x4A38, 0.0f, 0.5f);
             func_0019A940();
             D_01F77580_church_02++;
         case 3:
             if (func_0019A9B0(1.2f) == 0) {
                 return 0;
             }
-            SeCall(0.5f, 0.0f, 0x4A39);
+            SeCall(0x4A39, 0.0f, 0.5f);
             D_01F77580_church_02++;
         case 4:
             if (func_0016C540(&D_01F76A40_church_02, &D_01F76AA0_church_02) == 0) {
@@ -69,7 +69,7 @@ int func_01F6D7B0_church_02(void) {
             if (func_001646C0() != 0) {
                 D_01F77580_church_02 += 2;
             } else {
-                SeCall(0.5f, 0.0f, 0x4A38);
+                SeCall(0x4A38, 0.0f, 0.5f);
             }
             func_0019A940();
             D_01F77580_church_02++;
@@ -77,7 +77,7 @@ int func_01F6D7B0_church_02(void) {
             if (func_0019A9B0(1.2f) == 0) {
                 return 0;
             }
-            SeCall(0.5f, 0.0f, 0x4A39);
+            SeCall(0x4A39, 0.0f, 0.5f);
             D_01F77580_church_02++;
             func_0019A940();
         case 6:
@@ -86,7 +86,7 @@ int func_01F6D7B0_church_02(void) {
             }
             D_01F77580_church_02++;
         case 7:
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(0x2B21, 0.0f, 1.0f);
             func_001C2290(5, 1.2f);
             D_1D316A4[0] |= 0x04000000;
             ItemGet(0x4C);
