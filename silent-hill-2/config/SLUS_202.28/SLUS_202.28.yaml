@@ -495,7 +495,7 @@ segments:
       - { start: 0x00169790,    type: c,          name: Effect2/hh_class_wrapper                         }
       - { start: 0x0016a310,    type: c,          name: Effect2/hh_dbg_wrapper                           }
       - { start: 0x0016a4b0,    type: c,          name: Effect2/hh_effect_object_def                     }
-      - { start: 0x0016ab10,    type: asm,        name: Effect2/hh_effect_object_texture                 }
+      - { start: 0x0016ab10,    type: c,          name: Effect2/hh_effect_object_texture                 }
       - { start: 0x0016b9c0,    type: c,          name: Effect2/hh_math_wrapper                          }
       - { start: 0x0016bae0,    type: asm,        name: Effect2/hh_packet                                }
       - { start: 0x0016c1c0,    type: c,          name: Multi_thr/filesys/fcread                         }
@@ -992,7 +992,7 @@ segments:
       - { start: 0x0029a900,    type: .rodata,    name: Effect2/hh_class_water_15                        }
       - { start: 0x0029a920,    type: .rodata,    name: Effect2/hh_dbg_wrapper                           }
       - { start: 0x0029a960,    type: .rodata,    name: Effect2/hh_effect_object_def                     }
-      - { start: 0x0029a990,    type: rodata,     name: Effect2/hh_effect_object_texture                 }
+      - { start: 0x0029a990,    type: .rodata,    name: Effect2/hh_effect_object_texture                 }
       - { start: 0x0029ac00,    type: rodata,     name: Effect2/hh_packet                                }
       - { start: 0x0029ace0,    type: .rodata,    name: Multi_thr/filesys/fcread                         }
       - { start: 0x0029ad10,    type: rodata,     name: Chacter/m3_boat                                  }
