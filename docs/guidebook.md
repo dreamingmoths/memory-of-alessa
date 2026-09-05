@@ -206,3 +206,57 @@ Click `LoadSymbolAddrs.py` and run it with the play button. It should open a fil
 
 After rerunning the analysis, the symbols should be loaded in.
 
+## matching
+
+This yet another section to be filled out in more detail. For now it contains
+only some specific details, soon hopefully it'll be a more thorough guide on
+matching code in this repository.
+
+### what is a holy candle? 🕯️
+
+"Holy candle" is our catch-all term to describe a certain class of issues when
+matching code with MWCCPS2, as well as our "solutions" to the problem. Much like
+the hauntings in Silent Hill 4, these issues arise seemingly randomly with no
+clear pattern. A matched function that seems okay now may un-match later without
+rhyme or reason when a different function in the same C file changes, or a
+header file it includes is updated.
+
+<div align="center">
+  <img src="https://i.imgur.com/fezm6Hp.png" alt="holy candle from Silent Hill 4" width="150">
+
+  _A holy candle from Silent Hill 4._
+</div>
+
+Specifically, holy candle issues have to do with instruction scheduling when
+float arguments are involved. A function can have its instructions reordered by
+MWCC by changing _other_ code in the translation unit. It seems to be affected
+by some cursed set of unknown variables such as how many floats are in the
+function above it.
+
+Here is an example: https://decomp.me/scratch/Lm1hV
+
+This scratch linked above doesn't match, though the resulting assembly has
+equivalent behavior. However, when added to the repo, it may magically match.
+
+Examples from _Resident Evil: Code Veronica X_:
+ - https://decomp.me/scratch/NIx9k
+ - https://decomp.me/scratch/Dsjcc
+
+More examples from our repo:
+
+- The `Object_Draw` functions in `hh_class_water_*.c`.
+- Search for `#ifdef HOLY_CANDLE`, or `uncurse` hacks.
+
+If this behavior is encountered while working in the project, please feel free to wrap the function in `#ifdef HOLY_CANDLE`, e.g.
+
+```c
+#ifdef HOLY_CANDLE
+/* ... code here ... */
+#else
+INCLUDE_ASM("asm/nonmatchings/Font/font", fontPushButton);
+#endif
+```
+
+When the time comes, all hauntings will be exorcised through rituals.
+
+(@todo: Document this behavior on the [decomp wiki](https://decomp.wiki).)
