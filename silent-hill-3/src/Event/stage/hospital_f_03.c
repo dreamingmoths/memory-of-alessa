@@ -4,6 +4,7 @@
 UNCURSE_HOSPITAL_MOON();
 #pragma supress_warnings off
 
+#ifdef HOLY_CANDLE
 int func_01F6D680_hospital_f_03(void) {
     int ret;
 
@@ -25,7 +26,7 @@ int func_01F6D680_hospital_f_03(void) {
             }
             
             func_00317490(0xC, 0.2f);        
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(11041, 0.0f, 1.0f);
             D_1D31680 |= 0x80;
             D_01F70910_hospital_f_03 = 2;  
         
@@ -55,6 +56,9 @@ int func_01F6D680_hospital_f_03(void) {
     }
     return ret;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_03", func_01F6D680_hospital_f_03);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_03", func_01F6D840_hospital_f_03);
 

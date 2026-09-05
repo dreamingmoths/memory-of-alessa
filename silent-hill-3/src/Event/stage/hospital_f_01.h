@@ -27,7 +27,7 @@ int func_002A47C0(float, float);
 int GetExtraNewGame(void);
 int GetRiddleLevel(void);
 int RoomName(void);
-int SeCall(float, float, int);
+int SeCall(int, float, float);
 float shGetDT(void);
 int shRandI(void);
 void func_001DE5B0(int*, int, int);

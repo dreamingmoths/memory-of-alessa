@@ -4,6 +4,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6D680_building
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6D7C0_building_b_00);
 
+#ifdef HOLY_CANDLE
 int func_01F6D9B0_building_b_00(void) {
     if (!GET_FLAG(D_1D31670, 0xB)) {
         func_00317420(0x3A);
@@ -23,7 +24,7 @@ int func_01F6D9B0_building_b_00(void) {
             }
             func_00317490(0x3A, 0.2f);
             func_0016C3C0();
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(11041, 0.0f, 1.0f);
             ItemGet(0x3A);
             D_1D31670[0] |= 0x1000;
             D_01F6FB00_building_b_00 += 1;
@@ -38,6 +39,9 @@ int func_01F6D9B0_building_b_00(void) {
     func_00190A20(0);
     return 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6D9B0_building_b_00);
+#endif
 
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6DB00_building_b_00);
@@ -46,6 +50,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6DC40_building
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6DD70_building_b_00);
 
+#ifdef HOLY_CANDLE
 int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others similar functions
     int var_s0;
 
@@ -56,7 +61,7 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
         D_1D31670[0] |= 0x400000;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(1.0f, 0.0f, 0x4A59);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F6FB10_building_b_00 += shGetDT();
     switch (D_01F6FB08_building_b_00) {
@@ -65,7 +70,7 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
             if (D_01F6FB10_building_b_00 < 0.5f) {
                 return 0;
             }
-            SeCall(1.0f, 0.0f, 0x4A58);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6FB08_building_b_00 += 1;
         
         case 1:
@@ -86,6 +91,9 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
     }
     return var_s0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6E0B0_building_b_00);
+#endif
 
 
 void func_01F6E270_building_b_00(void) {

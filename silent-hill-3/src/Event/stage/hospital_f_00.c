@@ -274,6 +274,7 @@ void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
     func_001DE5B0(func_01F6DFF0_hospital_f_00, arg0, 1);
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6E050_hospital_f_00(void) {
     float var_f12;
     float var_f12_2;
@@ -325,7 +326,7 @@ int func_01F6E050_hospital_f_00(void) {
             if (func_0016C1C0(0x37) != 0) {
                 func_0016C3C0();
                 temp_s0->unkA8 = 5U;
-                SeCall(1.0f, 0.0f, 0x3840);
+                SeCall(14400, 0.0f, 1.0f);
             }
             break;
         case 5:
@@ -335,7 +336,7 @@ int func_01F6E050_hospital_f_00(void) {
             } else {
                 temp_s0->unkB0 = 0;
                 temp_s0->unkA8 = 6U;
-                SeCall(1.0f, 0.0f, 0x2B21);
+                SeCall(11041, 0.0f, 1.0f);
             }
             func_01F6E030_hospital_f_00(temp_s0);
             func_0016BC00(1);
@@ -373,6 +374,9 @@ int func_01F6E050_hospital_f_00(void) {
     }
     return 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_00", func_01F6E050_hospital_f_00);
+#endif
 
 
 void func_01F6E3C0_hospital_f_00(void) {
@@ -399,6 +403,7 @@ void func_01F6E3C0_hospital_f_00(void) {
     }
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6E490_hospital_f_00(void) {
     int ret;
 
@@ -410,7 +415,7 @@ int func_01F6E490_hospital_f_00(void) {
         D_01F6FA90_hospital_f_00 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(1.0f, 0.0f, 0x4A59);
+        SeCall(19033, 0.0f, 1.0f);
     }
     
     D_01F6FA90_hospital_f_00 += shGetDT();
@@ -421,7 +426,7 @@ int func_01F6E490_hospital_f_00(void) {
             if (D_01F6FA90_hospital_f_00 < 0.5f) {
                 return 0;
             }
-            SeCall(1.0f, 0.0f, 0x4A58);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F6FA88_hospital_f_00 += 1;
         
         case 1:
@@ -441,6 +446,9 @@ int func_01F6E490_hospital_f_00(void) {
     }
     return ret;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_00", func_01F6E490_hospital_f_00);
+#endif
 
 void func_01F6E640_hospital_f_00(void) {
 

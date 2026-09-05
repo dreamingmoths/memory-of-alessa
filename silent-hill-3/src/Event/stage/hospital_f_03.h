@@ -21,7 +21,7 @@ void func_00317420(u_int);
 void func_00317490(int, float);
 void func_003174B0(float);
 int func_001DE5B0(int*, int, int);
-int SeCall(float, float, int);
+int SeCall(int, float, float);
 int shRandI(void);
 int func_01F6E3B0_hospital_f_03(void);
 int func_01F6E440_hospital_f_03(void*);

@@ -241,14 +241,14 @@ int func_01F6E590_amusement_00(void) {
     switch (D_01F72D80_amusement_00) {
     case 0:
         func_00190A20(2);
-        SeCall(1.0f, 0.0f, 0x4A51);
+        SeCall(19025, 0.0f, 1.0f);
         D_01F72D80_amusement_00++;
     case 1:
         if (func_0016C1C0(0x3F) == 0) {
             return 0;
         }
         func_001C2290(0.5f, 3);
-        SeCall(1.0f, 0.0f, 0x4A4F);
+        SeCall(19023, 0.0f, 1.0f);
         D_01F72D80_amusement_00++;
     case 2:
         if (func_001C2580(2) == 0) {

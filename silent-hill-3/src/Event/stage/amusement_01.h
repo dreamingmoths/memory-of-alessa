@@ -121,7 +121,7 @@ extern u_char GetActionLevel(void);
 extern int D_01F713D0_amusement_01;
 extern u_int D_1D3169C;
 
-extern int SeCall(float, float, int);
+extern int SeCall(int, float, float);
 
 extern int RoomName(void);
 extern void func_001C2A60(int, float);
@@ -293,16 +293,16 @@ extern float D_01F74CF0_amusement_01;
 
 // @hack thanks `func_0015DCD0` :')
 /* begin candles, holy rituals to bend float arguments to our will */
-#define UNCURSE_AMUSEMENT_BLOOD()                       \
-void blood_candle_amusement_01(float a0, float a1) {    \
-    sceVu0FVECTOR sp10;                                 \
-    do {                                                \
-        do {                                            \
-            SeCall(a0, 0.0f, 666);                      \
-            SeCall(a1, 0.0f, 666);                      \
-            SeCall(a1, 0.0f, 666);                      \
-        } while(1);                                     \
-    } while (0);                                        \
+#define UNCURSE_AMUSEMENT_BLOOD()                         \
+void blood_candle_amusement_01(float a0, float a1) {      \
+    sceVu0FVECTOR sp10;                                   \
+    do {                                                  \
+        do {                                              \
+            SeCall(a0, 0.0f, 666);                        \
+            SeCall(a1, 0.0f, 666);                        \
+            SeCall(a1, 0.0f, 666);                        \
+        } while(1);                                       \
+    } while (0);                                          \
 }
 
 #define UNCURSE_AMUSEMENT_MOON()                          \

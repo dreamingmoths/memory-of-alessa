@@ -25,7 +25,7 @@ extern void func_003174B0(float);
 extern int func_00168440(void);
 extern int func_0016C1C0(int);
 extern void func_00317490(int, float);
-extern int SeCall(float, float, int);
+extern int SeCall(int, float, float);
 extern void func_00317420(int);
 extern void func_0016C3C0(void);
 extern void func_0018FE60(u_long128*);
@@ -103,6 +103,7 @@ int func_01F6D680_mall_b_02(void) {
     return ret;
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6D820_mall_b_02(void) {
     if (!(D_1D31658 & 1)) {
         func_00317420(0x2F);
@@ -123,7 +124,7 @@ int func_01F6D820_mall_b_02(void) {
             func_00317490(0x2F, 0.2f);
             D_1D31658 |= 2;
             func_0016C3C0();
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(11041, 0.0f, 1.0f);
 
         default:
             if (!func_0016C1C0(0x21)) {
@@ -136,6 +137,9 @@ int func_01F6D820_mall_b_02(void) {
     D_1D31658 &= ~1;
     return 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_02", func_01F6D820_mall_b_02);
+#endif
 
 int func_01F6D970_mall_b_02(void) {
     if (!((D_1D31658 >> 2) & 1)) {
@@ -167,13 +171,14 @@ int func_01F6D970_mall_b_02(void) {
     return 1;
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6DA80_mall_b_02(void) {
     sceVu0FVECTOR  sp10;
 
     switch (D_01F6E8B0_mall_b_02) {
         case 0:
             func_0018FE60((u_long128*)&sp10);
-            SeCall(1.0f, 0.0f, 0x3070);
+            SeCall(12400, 0.0f, 1.0f);
             func_001C2290(3, 0.5f);
             func_0016C1A0();
             D_1D31658 |= 8;
@@ -197,6 +202,9 @@ int func_01F6DA80_mall_b_02(void) {
             return 1;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_02", func_01F6DA80_mall_b_02);
+#endif
 
 int func_01F6DBC0_mall_b_02(void) {
     unk_01F6E890_mall_b_02_struct* p = &D_01F6E890_mall_b_02;   

@@ -111,6 +111,7 @@ int func_01F6DA20_mall_f_01(void)
     return ret;
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6DA70_mall_f_01(void)
 {
     if (!GET_BIT(D_1D3164C, 24))
@@ -135,7 +136,7 @@ int func_01F6DA70_mall_f_01(void)
             }
 
             func_0016C3C0();
-            SeCall(1.0f, 0.0f, 0x2B21);
+            SeCall(11041, 0.0f, 1.0f);
             ItemGet(5);
             SET_BIT(D_1D3164C, 25);
             func_00317490(5, 0.2f);
@@ -156,6 +157,9 @@ int func_01F6DA70_mall_f_01(void)
 
     return 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_f_01", func_01F6DA70_mall_f_01);
+#endif
 
 int func_01F6DBD0_mall_f_01(void)
 {

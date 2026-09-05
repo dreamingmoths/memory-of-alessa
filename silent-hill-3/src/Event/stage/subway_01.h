@@ -54,7 +54,7 @@ short RoomName(void);
 void func_001908A0(float*, float*);
 void func_001DC9E0(SubCharacter*, int);
 void func_001C2290(int, float);
-void SeCall(float, float, int);
+void SeCall(int, float, float);
 void func_0013D250(int, int*, float);
 int func_0016C540(int*, int*);
 float func_001643C0(void);

@@ -409,6 +409,7 @@ void func_01F6E5B0_hospital_b_00(void) {
     }
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6E6C0_hospital_b_00(void) {
     int ret;
     
@@ -419,7 +420,7 @@ int func_01F6E6C0_hospital_b_00(void) {
         D_01F70608_hospital_b_00 = 0.0f;
         func_001C2290(3, 1.5f);
         func_0016C1A0();
-        SeCall(1.0f, 0.0f, 0x4A59);
+        SeCall(19033, 0.0f, 1.0f);
     }
     D_01F70608_hospital_b_00 += shGetDT();
     switch (D_01F70600_hospital_b_00) {    
@@ -427,7 +428,7 @@ int func_01F6E6C0_hospital_b_00(void) {
             if (D_01F70608_hospital_b_00 < 0.5f) {
                 return 0;
             }
-            SeCall(1.0f, 0.0f, 0x4A58);
+            SeCall(19032, 0.0f, 1.0f);
             D_01F70600_hospital_b_00++;
         case 1:
             if (D_01F70608_hospital_b_00 < 1.5f) {
@@ -445,6 +446,9 @@ int func_01F6E6C0_hospital_b_00(void) {
         }
     return ret;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_00", func_01F6E6C0_hospital_b_00);
+#endif
 
 void func_01F6E880_hospital_b_00(void) {
 

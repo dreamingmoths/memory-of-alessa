@@ -39,6 +39,7 @@ int func_01F6D7A0_mall_b_01(void) {
     return 0; 
 }
 
+#ifdef HOLY_CANDLE
 int func_01F6D860_mall_b_01(void) {
     if (!GET_BIT(D_1D31654, 0x19)) {
         func_00190A20(2);
@@ -52,7 +53,7 @@ int func_01F6D860_mall_b_01(void) {
         if (!func_0016CB70()) {
             SET_BIT(D_1D31654, 0x1A);
             SET_BIT(D_1D31654, 0x1B);
-            SeCall(1.0f, 0.0f, 0x300E);
+            SeCall(12302, 0.0f, 1.0f);
         }
     } 
     else if (GET_BIT(D_1D31654, 0x1B)) {
@@ -61,7 +62,7 @@ int func_01F6D860_mall_b_01(void) {
         }
         if (!func_0016CB70()) {
             UNSET_BIT(D_1D31654, 0x1B);
-            SeCall(1.0f, 0.0f, 0x300E);
+            SeCall(12302, 0.0f, 1.0f);
             if (GET_BIT(D_01D31640, 0x1F) && !GET_BIT(D_1D31654, 0x1C)) {
                 SET_BIT(D_1D31654, 0x1C);
             }
@@ -73,7 +74,7 @@ int func_01F6D860_mall_b_01(void) {
         }
         if (!func_0016CB70()) {
             SET_BIT(D_1D31654, 0x1B);
-            SeCall(1.0f, 0.0f, 0x300E);
+            SeCall(12302, 0.0f, 1.0f);
         }
     }
 
@@ -82,6 +83,9 @@ int func_01F6D860_mall_b_01(void) {
     
     return 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6D860_mall_b_01);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_b_01", func_01F6DA50_mall_b_01);
 

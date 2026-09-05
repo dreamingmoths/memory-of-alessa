@@ -41,7 +41,7 @@ void func_00317490(int, float);
 void func_003174B0(float);
 int RoomName(void);
 u_char GetActionLevel(void);
-int SeCall(float, float, int);
+int SeCall(int, float, float);
 
 extern int D_01F6F8F0_sewer_00[];
 extern int D_01F6F850_sewer_00[];
