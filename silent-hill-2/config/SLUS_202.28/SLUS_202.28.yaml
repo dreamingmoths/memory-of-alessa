@@ -1061,7 +1061,7 @@ segments:
       - { vram:  0x00419f88,    type: bss,        name: Chacter_Draw/model3_vu0_n_bss                    }
       - { vram:  0x00419fa0,    type: .bss,       name: Chacter_Draw/model3_vu0_n                        }
       - { vram:  0x00419fa8,    type: bss,        name: bss_0x0419fa8                                    }
-      - { vram:  0x0041ac68,    type: bss,        name: Chacter_Draw/model3_vu1_n                        }
+      - { vram:  0x0041ac68,    type: .bss,       name: Chacter_Draw/model3_vu1_n                        }
       - { vram:  0x0041bf10,    type: .bss,       name: Chacter_Draw/model_common                        }
       - { vram:  0x00438588,    type: bss,        name: Chacter_Draw/sh2gfw_CharacterOT                  }
       - { vram:  0x004896c0,    type: bss,        name: Chacter_Draw/sh2gfw_Draw_Character               }

@@ -21,19 +21,22 @@
 #include "Chacter_Draw/model3_structs.h"
 #include "Chacter_Draw/vifot/sh_kt_vif1pkbuf.h"
 
-extern SprData spr_data_mem; // size: 0x200, address: 0x41ACC0
-extern AllData all_data_db[2]; // size: 0x1000, address: 0x41AF00
-extern SprData* spr_data;
-extern u_int xitop_0x0041BF08;
-extern u_int prev_xtop;
-extern u_int muga;
-
-#define xitop xitop_0x0041BF08
-
 #define SHADING_TYPE_1            1
 #define SHADING_TYPE_LAMBERTIAN_2 2
 #define SHADING_TYPE_LAMBERTIAN_3 3
 #define SHADING_TYPE_LAMBERTIAN_4 4
+
+/* bss */
+static u_int muga = 0;
+static u_int xitop;
+static u_int prev_xtop;
+static AllData all_data_db[2];
+static int all_data_page;
+static AllData* all_data;
+static SprData spr_data_mem;
+
+/* @todo migrate data */
+extern SprData* spr_data;
 
 static void InitAllDataOne(AllData* p);
 static void InitSprData(SprData* p);
@@ -55,11 +58,11 @@ static void DrawParts1(sh_Model* model, ModelWork* work);
 extern u_long128 model3_mpg1_view_load[];
 extern void* __model3_mpg1_view_end;
 void Model3LoadMpg1(void) {
-    extern /* static */ int initialized_867; // @ 0x0041AC70
-    extern /* static */ u_long128 packet_buffer_866[4]; // @ 0x0041AC80
+    static int initialized = 0; // @ 0x0041AC70
+    static u_long128 packet_buffer_866[4]; // @ 0x0041AC80
     Q_WORDDATA* qwd; // r2
 
-    if (initialized_867 == 0) {
+    if (initialized == 0) {
         qwd = UNCACHED_POINTER(packet_buffer_866);
         qwd->ui32[0] = DMAcall;
         qwd->ui32[1] = (u_int) model3_mpg1_view_load;
@@ -69,7 +72,7 @@ void Model3LoadMpg1(void) {
         qwd->ui32[4] = DMAend;
         qwd->ui32[5] = 0;
         qwd->ul64[3] = 0;
-        initialized_867 = 1;
+        initialized = 1;
     }
     d1cSend(packet_buffer_866);
 }
@@ -240,14 +243,14 @@ static void InitSprData(SprData* p /* r2 */) {
 }
 
 static void InitData1(void) {
-    extern /* static */ int initialized_928; // @ 0x0041AC78
+    static int initialized; // @ 0x0041AC78
     sceDmaChan* toSPR; // r2
 
-    if (initialized_928 == 0) {
+    if (initialized == 0) {
         InitAllDataOne(all_data_db);
         InitAllDataOne(&all_data_db[1]);
         InitSprData(&spr_data_mem);
-        initialized_928 = 1;
+        initialized = 1;
     }
     do {
 
@@ -291,7 +294,7 @@ static void MakeLambertShadingPacket(Part* part /* r20 */, sceVif1Packet* pk /* 
         sceVif1PkCnt(pk, 0);
         sceVif1PkAddCode(pk, SCE_VIF1_SET_ITOP(xitop, 0));
         sceVif1PkAddCode(pk, SCE_VIF1_SET_MSCAL(8, 0));
-        xitop_0x0041BF08 ^= (1 << 9);
+        xitop ^= (1 << 9);
     }
 
     for (i = 0; i < n_extras; i++) {
@@ -611,7 +614,7 @@ static void DrawParts1(sh_Model* model /* r19 */, ModelWork* work /* r16 */) {
     void* pktop; // r20
     prev_xtop = 1;
     
-    xitop_0x0041BF08 = 496;
+    xitop = 496;
     MakeData1();
     sceVif1PkInit(pk, UNCACHED_POINTER(packet_buffer));
     

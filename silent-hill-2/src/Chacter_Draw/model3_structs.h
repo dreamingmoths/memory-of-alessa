@@ -167,7 +167,7 @@ typedef struct AllData {
     EDrawData edraw __attribute__((aligned(64))); // offset 0x600, size 0x80
     SDrawData sdraw __attribute__((aligned(64))); // offset 0x680, size 0x90
     SDrawData bdraw __attribute__((aligned(64))); // offset 0x740, size 0x90
-} AllData;
+} AllData __attribute__((aligned(64)));
 
 
 #endif // MODEL3_STRUCTS_H
