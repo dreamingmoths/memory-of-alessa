@@ -8238,7 +8238,7 @@ rom:0x02DFF4 reloc:MIPS_HI16                           symbol:xitop_0x0041BF08
 rom:0x02DFF8 reloc:MIPS_LO16                           symbol:xitop_0x0041BF08
 rom:0x02E000 reloc:MIPS_HI16                           symbol:xitop_0x0041BF08
 rom:0x02E004 reloc:MIPS_LO16                           symbol:xitop_0x0041BF08
-rom:0x02E04C reloc:MIPS_26                             symbol:MakeLambertShadingPacket_VU1
+rom:0x02E04C reloc:MIPS_26                             symbol:MakeLambertShadingPacket
 rom:0x02E05C reloc:MIPS_HI16                           symbol:"@1290"
 rom:0x02E060 reloc:MIPS_LO16                           symbol:"@1290"
 rom:0x02E064 reloc:MIPS_HI16                           symbol:"@1103_0x0038D9F8"
