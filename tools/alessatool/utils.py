@@ -66,6 +66,7 @@ class SplatSymbol:
     addr_hex: str
     duplicate_by_name: bool
     duplicate_by_addr: bool
+    attributes: dict | None
 
 @dataclass
 class SplatSymbolAddrsAtlas:
@@ -73,7 +74,9 @@ class SplatSymbolAddrsAtlas:
     syms_by_name: dict[str, SplatSymbol] = field(default_factory=dict)
     syms_by_addr: dict[int, SplatSymbol] = field(default_factory=dict)
 
-def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, atlas: SplatSymbolAddrsAtlas = None) -> SplatSymbolAddrsAtlas:
+def parse_symbol_addrs(symbol_addrs: Path | TextIOBase,
+                       atlas: SplatSymbolAddrsAtlas = None,
+                       parse_attributes = False) -> SplatSymbolAddrsAtlas:
     atlas = atlas or SplatSymbolAddrsAtlas()
     syms = atlas.syms
     syms_by_name = atlas.syms_by_name
@@ -103,12 +106,32 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, atlas: SplatSymbolAddrsA
             if duplicate_by_addr:
                 syms_by_addr[addr].duplicate_by_addr = True
 
+            attributes = None
+
+            if parse_attributes:
+                attributes = dict()
+                key_value_pairs = comment.strip().split()
+                for pair in key_value_pairs:
+                    if ":" not in pair:
+                        continue
+
+                    (key, value) = pair.split(":")
+                    if not key or not value:
+                        continue
+
+                    value = value.startswith("0x") \
+                        and int(value, 16) \
+                        or value.isnumeric() \
+                        and int(value) or value
+                    attributes[key] = value
+
             splat_symbol = SplatSymbol(
                 name=name,
                 addr=addr,
                 addr_hex=addr_hex,
                 duplicate_by_name=duplicate_by_name,
                 duplicate_by_addr=duplicate_by_addr,
+                attributes=attributes
             )
             syms_by_name[name] = splat_symbol
             syms_by_addr[addr] = splat_symbol
@@ -116,3 +139,46 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase, atlas: SplatSymbolAddrsA
             syms.append(splat_symbol)
 
     return atlas
+
+key_weights = dict(
+    type=1,
+    size=2,
+    align=3,
+    default=666,
+    allow_duplicated=999,
+)
+get_key_weight = lambda key : key in key_weights and key_weights[key] or key_weights["default"]
+
+def _filter_and_sort_items(items):
+    items = filter(lambda item : item[0] and item[1], items)
+    items = sorted(items, key=lambda item : get_key_weight(item[0]))
+    return items
+
+def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True):
+    symbol_addrs_lines = []
+
+    for symbol in atlas.syms:
+        attributes = symbol.attributes or dict()
+
+        if symbol.duplicate_by_addr or symbol.duplicate_by_name:
+            attributes["allow_duplicated"] = True
+        else:
+            attributes["allow_duplicated"] = None
+
+        if align and (not "type" in attributes or attributes["type"] != "func"):
+            if   symbol.addr & 0x7F == 0:
+                attributes["align"] = 128
+            elif symbol.addr & 0x3F == 0:
+                attributes["align"] = 64
+            elif symbol.addr & 0x0F == 0:
+                attributes["align"] = 16
+
+        line = f"{symbol.name:<64} = 0x{symbol.addr:08x};"
+        if attributes:
+            items = _filter_and_sort_items(attributes.items())
+            attributes = " ".join(map(lambda item : ":".join(map(lambda value : str(value), item)), items))
+            line += f" // {attributes}"
+
+        symbol_addrs_lines.append(line)
+
+    return "\n".join(symbol_addrs_lines) + "\n"
