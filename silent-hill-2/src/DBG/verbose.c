@@ -8,11 +8,11 @@
 
 extern int vsprintf(char*, const char*, va_list);
 
-int verbose(int level /* r2 */, char* format /* r29+0x420 */, ...) {
-    int len; // r2
-    char buf[1024]; // r29+0x10
+int verbose(int level, char* format, ...) {
+    int len;
+    char buf[1024];
     va_list argp;
-    va_start(argp, format); // r2
+    va_start(argp, format);
 
     if (level <= 0) level = 1;
 
@@ -24,10 +24,10 @@ int verbose(int level /* r2 */, char* format /* r29+0x420 */, ...) {
         
         
         len = vsprintf(buf, format, argp);
-        if (len >= 0x400u) {
+        if (len >= 1024u) {
             printf(DEBUG_TEXT("verbose strbuf overflow!!\n")
                    DEBUG_TEXT("%s")
-                   DEBUG_TEXT("halted by error\n", &buf));
+                   DEBUG_TEXT("halted by error\n", buf));
             
             
             BLOCK_WHILE(1);
