@@ -94,6 +94,8 @@ segments:
       - { start: 0x0005db10,    type: c,          name: Enemy/en_red                                     }
       - { start: 0x00060ab0,    type: asm,        name: Enemy/en_scu                                     }
       - { start: 0x00065700,    type: asm,        name: Enemy/en_tyu                                     }
+      - { start: auto,          type: c,          name: Exec_Env/exec_env                                }
+      - { start: auto,          type: c,          name: Exec_Env/local_env                               }
       - { start: 0x00068ed0,    type: c,          name: Fog/fog                                          }
       - { start: 0x0006cfa0,    type: asm,        name: Fog/fogdata                                      }
       - { start: 0x0006ee60,    type: asm,        name: Fog/sh2gfw_fogtest_main                          }
@@ -183,7 +185,7 @@ segments:
       - { start: 0x000c5a20,    type: c,          name: SH2_common/pad                                   }
       - { start: 0x000c6500,    type: c,          name: DBG/dbfntprint                                   }
       - { start: 0x000c6b90,    type: c,          name: Chacter/sh2_character_manage                     }
-      - { start: 0x000c71a0,    type: asm,        name: DBG/verbose                                      }
+      - { start: 0x000c71a0,    type: c,          name: DBG/verbose                                      }
       - { start: 0x000c7290,    type: c,          name: Event/chizu                                      }
       - { start: 0x000cb1f0,    type: c,          name: Event/chara_admin                                }
       - { start: 0x000cd7b0,    type: asm,        name: Fog/spkTexMan                                    }
@@ -629,8 +631,8 @@ segments:
       - { start: 0x001ab0a0,    type: data,       name: Enemy/en_red                                     }
       - { start: 0x001ab2a0,    type: data,       name: Enemy/en_scu                                     }
       - { start: 0x001ab998,    type: data,       name: Enemy/en_tyu                                     }
-      - { start: 0x001abac0,    type: data,       name: Exec_Env/exec_env                                }
-      - { start: 0x001abae0,    type: data,       name: Exec_Env/local_env                               }
+      - { start: 0x001abac0,    type: .data,      name: Exec_Env/exec_env                                }
+      - { start: 0x001abae0,    type: .data,      name: Exec_Env/local_env                               }
       - { start: 0x001abb00,    type: data,       name: Fog/fog                                          }
       - { start: 0x001abc30,    type: data,       name: Fog/fogdata                                      }
       - { start: 0x001abc68,    type: data,       name: SH2_common/sh_vu0                                }
@@ -816,8 +818,8 @@ segments:
       - { start: 0x0028ee10,    type: .rodata,    name: Enemy/en_red                                     }
       - { start: 0x0028eeb0,    type: rodata,     name: Enemy/en_scu                                     }
       - { start: 0x0028efa0,    type: rodata,     name: Enemy/en_tyu                                     }
-      - { start: 0x0028eff0,    type: rodata,     name: unaff_0038E8F0                                   }
-      - { start: 0x0028eff8,    type: rodata,     name: unaff_0038E8F8                                   }
+      - { start: 0x0028eff0,    type: .rodata,    name: Exec_Env/exec_env                                }
+      - { start: 0x0028eff8,    type: .rodata,    name: Exec_Env/local_env                               }
       - { start: 0x0028f010,    type: .rodata,    name: Fog/fog                                          }
       - { start: 0x0028f0d0,    type: rodata,     name: Fog/spack_rodata                                 }
       - { start: 0x0028f328,    type: rodata,     name: GFW/gfw_test/kari_probe_draw                     }
@@ -866,7 +868,7 @@ segments:
       - { start: 0x00292d60,    type: .rodata,    name: SH2_common/pad                                   }
       - { start: 0x00292d80,    type: rodata,     name: DBG/dbfntprint_rodata                            }
       - { start: 0x00292df0,    type: rodata,     name: Chacter/sh2_character_manage_rodata              }
-      - { start: 0x00292e40,    type: rodata,     name: DBG/verbose                                      }
+      - { start: 0x00292e40,    type: .rodata,    name: DBG/verbose                                      }
       - { start: 0x00292ea0,    type: .rodata,    name: Event/chizu                                      }
       - { start: 0x00293250,    type: .rodata,    name: Event/chara_admin                                }
       - { start: 0x002933f0,    type: rodata,     name: Fog/spkTexMan                                    }
@@ -1079,8 +1081,8 @@ segments:
       - { vram:  0x005506a0,    type: bss,        name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: bss,        name: Enemy/en_draw                                    }
       - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
-      - { vram:  0x00552650,    type: bss,        name: Exec_Env/exec_env                                }
-      - { vram:  0x005526a8,    type: bss,        name: Exec_Env/local_env                               }
+      - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }
+      - { vram:  0x005526a8,    type: .bss,       name: Exec_Env/local_env                               }
       - { vram:  0x005526c0,    type: bss,        name: Fog/fog                                          }
       - { vram:  0x00581580,    type: bss,        name: Fog/fogdata                                      }
       - { vram:  0x00584580,    type: bss,        name: SH2_common/sh_vu0                                }

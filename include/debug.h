@@ -27,8 +27,10 @@ do { \
     } \
 } while (0)
 
-#define DEBUG_LOG(...) printf(__FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__)
-#define DEBUG_LOG_ON_LINE(line, ...) printf(__FILE__ ":" #line "> " __VA_ARGS__)
+#define DEBUG_TEXT(...) __FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__
+#define DEBUG_TEXT_ON_LINE(line, ...) __FILE__ ":" #line "> " __VA_ARGS__
+#define DEBUG_LOG(...) printf(DEBUG_TEXT(...))
+#define DEBUG_LOG_ON_LINE(line, ...) printf(DEBUG_TEXT_ON_LINE(line, __VA_ARGS__))
 
 #define VERBOSE(level, ...) { \
     verbose(level, __FILE__ ":" ASSTR(__LINE__) "> " __VA_ARGS__); \
