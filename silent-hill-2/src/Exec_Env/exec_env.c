@@ -14,4 +14,3 @@ int execEnv_verbose_level      = 0;             // size: 0x4, address: 0x552688
 int execEnv_sound_data_from_hd = 0;             // size: 0x4, address: 0x552690
 int execEnv_auto_exit_time     = 0;             // size: 0x4, address: 0x552698
 int execEnv_debug_flag         = 0;             // size: 0x4, address: 0x5526A0
-
