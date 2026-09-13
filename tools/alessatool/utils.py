@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from constants import ASM, SRC
+from constants import ASM, READELF_PATH, SRC
 from os import stat, remove
 from io import TextIOBase
+from subprocess import run
 
 def normalize_object_path(path: Path, prefix_path: Path):
     '''
@@ -63,7 +64,6 @@ def hex_format(number: int) -> str:
 class SplatSymbol:
     name: str
     addr: int
-    addr_hex: str
     duplicate_by_name: bool
     duplicate_by_addr: bool
     attributes: dict | None
@@ -73,6 +73,32 @@ class SplatSymbolAddrsAtlas:
     syms: list[SplatSymbol] = field(default_factory=list)
     syms_by_name: dict[str, SplatSymbol] = field(default_factory=dict)
     syms_by_addr: dict[int, SplatSymbol] = field(default_factory=dict)
+
+def insert_into_atlas(atlas: SplatSymbolAddrsAtlas, name: str, addr: int, attributes=None):
+    syms = atlas.syms
+    syms_by_addr = atlas.syms_by_addr
+    syms_by_name = atlas.syms_by_name
+
+    duplicate_by_name = name in syms_by_name
+    if duplicate_by_name:
+        syms_by_name[name].duplicate_by_name = True
+
+    duplicate_by_addr = addr in syms_by_addr
+    if duplicate_by_addr:
+        syms_by_addr[addr].duplicate_by_addr = True
+
+    splat_symbol = SplatSymbol(
+        name=name,
+        addr=addr,
+        duplicate_by_name=duplicate_by_name,
+        duplicate_by_addr=duplicate_by_addr,
+        attributes=attributes
+    )
+
+    syms_by_name[name] = splat_symbol
+    syms_by_addr[addr] = splat_symbol
+
+    syms.append(splat_symbol)
 
 def parse_symbol_addrs(symbol_addrs: Path | TextIOBase,
                        atlas: SplatSymbolAddrsAtlas = None,
@@ -98,14 +124,6 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase,
             addr_hex = addr_hex.strip().replace("0x", "").upper()
             addr = int(addr_hex, 16)
 
-            duplicate_by_name = name in syms_by_name
-            if duplicate_by_name:
-                syms_by_name[name].duplicate_by_name = True
-
-            duplicate_by_addr = addr in syms_by_addr
-            if duplicate_by_addr:
-                syms_by_addr[addr].duplicate_by_addr = True
-
             attributes = None
 
             if parse_attributes:
@@ -125,18 +143,7 @@ def parse_symbol_addrs(symbol_addrs: Path | TextIOBase,
                         and int(value) or value
                     attributes[key] = value
 
-            splat_symbol = SplatSymbol(
-                name=name,
-                addr=addr,
-                addr_hex=addr_hex,
-                duplicate_by_name=duplicate_by_name,
-                duplicate_by_addr=duplicate_by_addr,
-                attributes=attributes
-            )
-            syms_by_name[name] = splat_symbol
-            syms_by_addr[addr] = splat_symbol
-
-            syms.append(splat_symbol)
+            insert_into_atlas(atlas, name, addr, attributes)
 
     return atlas
 
@@ -182,3 +189,127 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True):
         symbol_addrs_lines.append(line)
 
     return "\n".join(symbol_addrs_lines) + "\n"
+
+READELF_FLAGS = ["-s", "--wide"]
+
+def read_symtab(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
+    proc = run([Path(readelf_path), *READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    if proc.returncode != 0:
+        raise Exception(proc.stderr.decode())
+    return proc.stdout.decode()
+
+def parse_symtab_as_atlas(symtab_str: str) -> SplatSymbolAddrsAtlas:
+    symtab_lines = symtab_str.splitlines()
+    symtab = SplatSymbolAddrsAtlas()
+
+    for line in symtab_lines:
+        line = line.replace("<processor specific>: ", "")
+        columns = line.split()
+
+        if len(columns) != 8:
+            continue
+
+        (number, address, size, typeof, bind, visibility, sh_index, name) = columns
+
+        if not number[0].isnumeric():
+            continue
+
+        attributes = dict(
+            size=int(size, size.startswith("0x") and 16 or 10),
+            type=typeof == "FUNC" and "func" or None
+        )
+
+        insert_into_atlas(symtab, name, int(address, 16), attributes)
+
+    return symtab
+
+def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
+    IGNORE_RODATA = True
+    TRANSFORM_SYMBOLS = True
+    VERBOSE = False
+    FIX_ISSUES = True
+
+    if TRANSFORM_SYMBOLS:
+        undollar = lambda name, target :                    \
+                "$" in name                                 \
+                    and target.endswith(name.split("$")[1]) \
+                        and name.replace("$", "_")          \
+                        or name.split("$")[0]               \
+                    or name
+
+        transform_source_symbol_name =                   \
+            lambda name, target : undollar(name, target) \
+                .replace(".", "_")
+
+        transform_target_symbol_name = \
+            lambda name : name         \
+                .replace(".", "_")     \
+                .replace("$", "_")     \
+                .rsplit("_0x", maxsplit=1)[0]
+    else:
+        transform_source_symbol_name = lambda name : name
+        transform_target_symbol_name = lambda name : name
+
+    source_syms = source.syms
+    source_syms_by_addr = source.syms_by_addr
+    source_syms_by_name = source.syms_by_name
+
+    target_syms = target.syms
+    target_syms_by_addr = target.syms_by_addr
+    target_syms_by_name = target.syms_by_name
+
+    for source_sym in source_syms:
+        source_sym_name = source_sym.name
+        source_sym_addr = source_sym.addr
+
+        if not source_sym.duplicate_by_addr:
+            if source_sym_addr in target_syms_by_addr:
+                target_sym = target_syms_by_addr[source_sym_addr]
+
+                target_sym_name = target_sym.name
+                target_sym_addr = target_sym.addr
+
+                if target_sym.duplicate_by_addr:
+                    print("".join([
+                        f"🟠 {source_sym_name} is the unique symbol at 0x{source_sym_addr:X}, ",
+                        f"but {target_sym_name} is duplicated in target",
+                    ]))
+                    continue
+
+                transformed_target_name = transform_target_symbol_name(target_sym_name)
+                transformed_source_name = transform_source_symbol_name(source_sym_name, transformed_target_name) 
+
+                if transformed_target_name != transformed_source_name \
+                    and (not source_sym.name.startswith("@") or not IGNORE_RODATA):
+                    print("".join([
+                        f"🟠 {source_sym_name} is the unique symbol at 0x{source_sym_addr:X}, ",
+                        f"but target has {target_sym_name} (transformed: {transformed_target_name} vs {transformed_source_name})",
+                    ]))
+                    continue
+
+                if VERBOSE:
+                    print(f"✅ address verified for {target_sym_name}!")
+
+                if target_sym.attributes and "size" in target_sym.attributes:
+                    target_size: int = target_sym.attributes["size"]
+                else:
+                    target_size = 0
+
+                if source_sym.attributes and "size" in source_sym.attributes:
+                    source_size: int = source_sym.attributes["size"]
+                else:
+                    source_size = 0
+
+                if source_size and target_size != source_size:
+                    print("".join([
+                        f"🔴 size mismatch: {target_size} != {source_size} ",
+                        f"({transformed_target_name} vs {transformed_source_name})",
+                    ]))
+
+                    if FIX_ISSUES and source_size:
+                        if not target_sym.attributes:
+                            target_sym.attributes = dict()
+                        target_sym.attributes["size"] = source_size
+                        print(target_sym)
+
+                    continue
