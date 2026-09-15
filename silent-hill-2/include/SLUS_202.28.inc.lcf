@@ -1,19 +1,20 @@
 MEMORY
 {
-	main	(RWX) : ORIGIN = 0x0100000,	LENGTH = 0x0
-	aee.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aee.bin
-	aew.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aew.bin
-	aex.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aex.bin
-	aey.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aey.bin
-	aot.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > aot.bin
-	ast.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > ast.bin
-	awx.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > awx.bin
-	awy.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > awy.bin
-	fst.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > fst.bin
-	obs.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > obs.bin
-	toi.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > toi.bin
-	twe.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > twe.bin
-	xxx.bin (RWX) : ORIGIN = 0x1F01E00, LENGTH = 0x0 > xxx.bin
+	main	(RWX) : ORIGIN = 0x0100000,	  LENGTH = 0x0
+	heap	(RW)  : ORIGIN = 0x1FA0000,   LENGTH = 0x0
+	aee.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > aee.bin
+	aew.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > aew.bin
+	aex.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > aex.bin
+	aey.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > aey.bin
+	aot.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > aot.bin
+	ast.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > ast.bin
+	awx.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > awx.bin
+	awy.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > awy.bin
+	fst.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > fst.bin
+	obs.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > obs.bin
+	toi.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > toi.bin
+	twe.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > twe.bin
+	xxx.bin (RWX) : ORIGIN = 0x1F01E00,   LENGTH = 0x0 > xxx.bin
 }
 
 KEEP_SECTION
@@ -28,6 +29,10 @@ KEEP_SECTION
 
 SECTIONS
 {
+	_heap_size = 0x10000;
+	_stack = 0x1FB0000;
+	_stack_size	= 0x4ff00;
+	_root = 0x1000b0;
 
 	.main	:
 	{
@@ -76,10 +81,19 @@ SECTIONS
 		.	= ALIGN(0x80);
 
 		### 🔴 code 🔴 ###
-
 		. = ALIGN(0x80);
+		__bss_end	= .;
+		__bss_size	= __bss_end - __bss_start;
+		.	= ALIGN(0x80);
+
 	}	>	main
 
+	.heap	:
+	{
+		#	to get the address for heap
+		end	= .;
+		_end	= .;
+	}	>	heap
 
 	.aot.bin :
 	{

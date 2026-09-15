@@ -17,7 +17,7 @@ options:
   reloc_addrs_path: reloc_addrs.txt
   migrate_rodata_to_functions: True
   pair_rodata_to_text: True
-  section_order: [".text", ".vutext", ".data", ".rodata", ".lit4", ".sdata", ".bss"]
+  section_order: [".text", ".vutext", ".data", ".rodata", ".lit4", ".sdata", ".sbss", ".bss"]
 segments:
   - [0x0]
   - name: engine
@@ -195,214 +195,214 @@ segments:
       - { start: 0x000ce240,    type: c,          name: Item/otn_itemmain                                }
       - { start: 0x000db910,    type: c,          name: FilesList/fileslist_bg                           }
       - { start: 0x000db9a0,    type: asm,        name: Enemy/en_fly                                     }
-      - { start: 0x000dbdc0,    type: asm,        name: unaff_001DB6C0, ld_align_segment_start: 0x8      }
+      - { start: 0x000dbdc0,    type: asm,        name: unaff_001DB6C0, ld_align_segment_start: 8        }
       - { start: 0x000dc570,    type: asm,        name: Multi_thr/kernel/wrap_printf                     }
       - { start: 0x000dc5b0,    type: asm,        name: MWCC/gcc_wrapper                                 }
-      - { start: 0x000dc6a8,    type: asm,        name: sdk/lib_001DBFA8                                 }
-      - { start: 0x000dc6c8,    type: asm,        name: sdk/lib_001DBFC8                                 }
-      - { start: 0x000dc6e0,    type: asm,        name: sdk/lib_001DBFE0                                 }
-      - { start: 0x000dc718,    type: asm,        name: sdk/lib_001DC018                                 }
-      - { start: 0x000dc738,    type: asm,        name: sdk/lib_001DC038                                 }
-      - { start: 0x000dc770,    type: asm,        name: sdk/lib_001DC070                                 }
-      - { start: 0x000dc830,    type: asm,        name: sdk/lib_001DC130                                 }
-      - { start: 0x000dc888,    type: asm,        name: sdk/lib_001DC188                                 }
-      - { start: 0x000ddc70,    type: asm,        name: sdk/lib_001DD570                                 }
-      - { start: 0x000ddc80,    type: asm,        name: sdk/lib_001DD580                                 }
-      - { start: 0x000ddd88,    type: asm,        name: sdk/lib_001DD688                                 }
-      - { start: 0x000ddfe0,    type: asm,        name: sdk/lib_001DD8E0                                 }
-      - { start: 0x000de018,    type: asm,        name: sdk/lib_001DD918                                 }
-      - { start: 0x000de050,    type: asm,        name: sdk/lib_001DD950                                 }
-      - { start: 0x000de170,    type: asm,        name: sdk/lib_001DDA70                                 }
-      - { start: 0x000de600,    type: asm,        name: sdk/lib_001DDF00                                 }
-      - { start: 0x000de660,    type: asm,        name: sdk/lib_001DDF60                                 }
-      - { start: 0x000dea38,    type: asm,        name: sdk/lib_001DE338                                 }
-      - { start: 0x000dead0,    type: asm,        name: sdk/lib_001DE3D0                                 }
-      - { start: 0x000ded40,    type: asm,        name: sdk/lib_001DE640                                 }
-      - { start: 0x000dee30,    type: asm,        name: sdk/lib_001DE730                                 }
-      - { start: 0x000dee90,    type: asm,        name: sdk/lib_001DE790                                 }
-      - { start: 0x000defe0,    type: asm,        name: sdk/lib_001DE8E0                                 }
-      - { start: 0x000df018,    type: asm,        name: sdk/lib_001DE918                                 }
-      - { start: 0x000df9e8,    type: asm,        name: sdk/lib_001DF2E8                                 }
-      - { start: 0x000dfa28,    type: asm,        name: sdk/lib_001DF328                                 }
-      - { start: 0x000dfb08,    type: asm,        name: sdk/lib_001DF408                                 }
-      - { start: 0x000dfba0,    type: asm,        name: sdk/lib_001DF4A0                                 }
-      - { start: 0x000dfc50,    type: asm,        name: sdk/lib_001DF550                                 }
-      - { start: 0x000dfd58,    type: asm,        name: sdk/lib_001DF658                                 }
-      - { start: 0x000dfe18,    type: asm,        name: sdk/lib_001DF718                                 }
-      - { start: 0x000dfe28,    type: asm,        name: sdk/lib_001DF728                                 }
-      - { start: 0x000e0e48,    type: asm,        name: sdk/lib_001E0748                                 }
-      - { start: 0x000e1870,    type: asm,        name: sdk/lib_001E1170                                 }
-      - { start: 0x000e18b0,    type: asm,        name: sdk/lib_001E11B0                                 }
-      - { start: 0x000e1910,    type: asm,        name: sdk/lib_001E1210                                 }
-      - { start: 0x000e1e80,    type: asm,        name: sdk/lib_001E1780                                 }
-      - { start: 0x000e2018,    type: asm,        name: sdk/lib_001E1918                                 }
-      - { start: 0x000e2060,    type: asm,        name: sdk/lib_001E1960                                 }
-      - { start: 0x000e20a8,    type: asm,        name: sdk/lib_001E19A8                                 }
-      - { start: 0x000e20e0,    type: asm,        name: sdk/lib_001E19E0                                 }
-      - { start: 0x000e2298,    type: asm,        name: sdk/lib_001E1B98                                 }
-      - { start: 0x000e22f8,    type: asm,        name: sdk/lib_001E1BF8                                 }
-      - { start: 0x000e2328,    type: asm,        name: sdk/lib_001E1C28                                 }
-      - { start: 0x000e2350,    type: asm,        name: sdk/lib_001E1C50                                 }
-      - { start: 0x000e2378,    type: asm,        name: sdk/lib_001E1C78                                 }
-      - { start: 0x000e24d8,    type: asm,        name: sdk/lib_001E1DD8                                 }
-      - { start: 0x000e2828,    type: asm,        name: sdk/lib_001E2128                                 }
-      - { start: 0x000e28a8,    type: asm,        name: sdk/lib_001E21A8                                 }
-      - { start: 0x000e2980,    type: asm,        name: sdk/lib_001E2280                                 }
-      - { start: 0x000e2a10,    type: asm,        name: sdk/lib_001E2310                                 }
-      - { start: 0x000e2b80,    type: asm,        name: sdk/lib_001E2480                                 }
-      - { start: 0x000e2cb0,    type: asm,        name: sdk/lib_001E25B0                                 }
-      - { start: 0x000e2e40,    type: asm,        name: sdk/lib_001E2740                                 }
-      - { start: 0x000e2f88,    type: asm,        name: sdk/lib_001E2888                                 }
-      - { start: 0x000e30a0,    type: asm,        name: sdk/lib_001E29A0                                 }
-      - { start: 0x000e31d8,    type: asm,        name: sdk/lib_001E2AD8                                 }
-      - { start: 0x000e3390,    type: asm,        name: sdk/lib_001E2C90                                 }
-      - { start: 0x000e3550,    type: asm,        name: sdk/lib_001E2E50                                 }
-      - { start: 0x000e44a8,    type: asm,        name: sdk/lib_001E3DA8                                 }
-      - { start: 0x000e4718,    type: asm,        name: sdk/lib_001E4018                                 }
-      - { start: 0x000e4970,    type: asm,        name: sdk/lib_001E4270                                 }
-      - { start: 0x000e4be8,    type: asm,        name: sdk/lib_001E44E8                                 }
-      - { start: 0x000e5930,    type: asm,        name: sdk/lib_001E5230                                 }
-      - { start: 0x000e7250,    type: asm,        name: sdk/lib_001E6B50                                 }
-      - { start: 0x000e7e60,    type: asm,        name: sdk/lib_001E7760                                 }
-      - { start: 0x000e7eb8,    type: asm,        name: sdk/lib_001E77B8                                 }
-      - { start: 0x000e7f18,    type: asm,        name: sdk/lib_001E7818                                 }
-      - { start: 0x000e8028,    type: asm,        name: sdk/lib_001E7928                                 }
-      - { start: 0x000e9460,    type: asm,        name: sdk/lib_001E8D60                                 }
-      - { start: 0x000e9640,    type: asm,        name: sdk/lib_001E8F40                                 }
-      - { start: 0x000e9710,    type: asm,        name: sdk/lib_001E9010                                 }
-      - { start: 0x000e97a8,    type: asm,        name: sdk/lib_001E90A8                                 }
-      - { start: 0x000e9840,    type: asm,        name: sdk/lib_001E9140                                 }
-      - { start: 0x000e98f8,    type: asm,        name: sdk/lib_001E91F8                                 }
-      - { start: 0x000e99f0,    type: asm,        name: sdk/lib_001E92F0                                 }
-      - { start: 0x000e9ae0,    type: asm,        name: sdk/lib_001E93E0                                 }
-      - { start: 0x000ea590,    type: asm,        name: sdk/lib_001E9E90                                 }
-      - { start: 0x000eac80,    type: asm,        name: sdk/lib_001EA580                                 }
-      - { start: 0x000eace0,    type: asm,        name: sdk/lib_001EA5E0                                 }
-      - { start: 0x000eadd0,    type: asm,        name: sdk/lib_001EA6D0                                 }
-      - { start: 0x000eaec8,    type: asm,        name: sdk/lib_001EA7C8                                 }
-      - { start: 0x000eaf60,    type: asm,        name: sdk/lib_001EA860                                 }
-      - { start: 0x000eb040,    type: asm,        name: sdk/lib_001EA940                                 }
-      - { start: 0x000eb6a8,    type: asm,        name: sdk/lib_001EAFA8                                 }
-      - { start: 0x000eb708,    type: asm,        name: sdk/lib_001EB008                                 }
-      - { start: 0x000ebcd8,    type: asm,        name: sdk/lib_001EB5D8                                 }
-      - { start: 0x000ec218,    type: asm,        name: sdk/lib_001EBB18                                 }
-      - { start: 0x000ecf10,    type: asm,        name: sdk/lib_001EC810                                 }
-      - { start: 0x000edaf0,    type: asm,        name: sdk/lib_001ED3F0                                 }
-      - { start: 0x000edc10,    type: asm,        name: sdk/lib_001ED510                                 }
-      - { start: 0x000edc78,    type: asm,        name: sdk/lib_001ED578                                 }
-      - { start: 0x000edee8,    type: asm,        name: sdk/lib_001ED7E8                                 }
-      - { start: 0x000edfa8,    type: asm,        name: sdk/lib_001ED8A8                                 }
-      - { start: 0x000ee070,    type: asm,        name: sdk/lib_001ED970                                 }
-      - { start: 0x000ee258,    type: asm,        name: sdk/lib_001EDB58                                 }
-      - { start: 0x000ee360,    type: asm,        name: sdk/lib_001EDC60                                 }
-      - { start: 0x000ee448,    type: asm,        name: sdk/lib_001EDD48                                 }
-      - { start: 0x000ee6e0,    type: asm,        name: sdk/lib_001EDFE0                                 }
-      - { start: 0x000ee740,    type: asm,        name: sdk/lib_001EE040                                 }
-      - { start: 0x000ee7d8,    type: asm,        name: sdk/lib_001EE0D8                                 }
-      - { start: 0x000eeaf0,    type: asm,        name: sdk/lib_001EE3F0                                 }
-      - { start: 0x000eeb30,    type: asm,        name: sdk/lib_001EE430                                 }
-      - { start: 0x000eebb8,    type: asm,        name: sdk/lib_001EE4B8                                 }
-      - { start: 0x000eebd8,    type: asm,        name: sdk/lib_001EE4D8                                 }
-      - { start: 0x000eef48,    type: asm,        name: sdk/lib_001EE848                                 }
-      - { start: 0x000ef200,    type: asm,        name: sdk/lib_001EEB00                                 }
-      - { start: 0x000efa90,    type: asm,        name: sdk/lib_001EF390                                 }
-      - { start: 0x000efdc8,    type: asm,        name: sdk/lib_001EF6C8                                 }
-      - { start: 0x000f0048,    type: asm,        name: sdk/lib_001EF948                                 }
-      - { start: 0x000f03a8,    type: asm,        name: sdk/lib_001EFCA8                                 }
-      - { start: 0x000f0708,    type: asm,        name: sdk/lib_001F0008                                 }
-      - { start: 0x000f08e8,    type: asm,        name: sdk/lib_001F01E8                                 }
-      - { start: 0x000f0e08,    type: asm,        name: sdk/lib_001F0708                                 }
-      - { start: 0x000f1780,    type: asm,        name: sdk/lib_001F1080                                 }
-      - { start: 0x000f1ec8,    type: asm,        name: sdk/lib_001F17C8                                 }
-      - { start: 0x000f2e28,    type: asm,        name: sdk/lib_001F2728                                 }
-      - { start: 0x000f6398,    type: asm,        name: sdk/lib_001F5C98                                 }
-      - { start: 0x000f65f8,    type: asm,        name: sdk/lib_001F5EF8                                 }
-      - { start: 0x000f6f90,    type: asm,        name: sdk/lib_001F6890                                 }
-      - { start: 0x000f7240,    type: asm,        name: sdk/lib_001F6B40                                 }
-      - { start: 0x000f72a0,    type: asm,        name: sdk/lib_001F6BA0                                 }
-      - { start: 0x000f7318,    type: asm,        name: sdk/lib_001F6C18                                 }
-      - { start: 0x000f7838,    type: asm,        name: sdk/lib_001F7138                                 }
-      - { start: 0x000f7b40,    type: asm,        name: sdk/lib_001F7440                                 }
-      - { start: 0x000f7f70,    type: asm,        name: sdk/lib_001F7870                                 }
-      - { start: 0x000f8310,    type: asm,        name: sdk/lib_001F7C10                                 }
-      - { start: 0x000f85f8,    type: asm,        name: sdk/lib_001F7EF8                                 }
-      - { start: 0x000f8848,    type: asm,        name: sdk/lib_001F8148                                 }
-      - { start: 0x000f90d8,    type: asm,        name: sdk/lib_001F89D8                                 }
-      - { start: 0x000f94b8,    type: asm,        name: sdk/lib_001F8DB8                                 }
-      - { start: 0x000f95f0,    type: asm,        name: sdk/lib_001F8EF0                                 }
-      - { start: 0x000f9840,    type: asm,        name: sdk/lib_001F9140                                 }
-      - { start: 0x000fa3a8,    type: asm,        name: sdk/lib_001F9CA8                                 }
-      - { start: 0x000fa580,    type: asm,        name: sdk/lib_001F9E80                                 }
-      - { start: 0x000fa6d8,    type: asm,        name: sdk/lib_001F9FD8                                 }
-      - { start: 0x000fb028,    type: asm,        name: sdk/lib_001FA928                                 }
-      - { start: 0x000fb130,    type: asm,        name: sdk/lib_001FAA30                                 }
-      - { start: 0x000fb2f0,    type: asm,        name: sdk/lib_001FABF0                                 }
-      - { start: 0x000fb3f8,    type: asm,        name: sdk/lib_001FACF8                                 }
-      - { start: 0x000fb430,    type: asm,        name: sdk/lib_001FAD30                                 }
-      - { start: 0x000fb608,    type: asm,        name: sdk/lib_001FAF08                                 }
-      - { start: 0x000fb630,    type: asm,        name: sdk/lib_001FAF30                                 }
-      - { start: 0x000fb830,    type: asm,        name: sdk/lib_001FB130                                 }
-      - { start: 0x000fb928,    type: asm,        name: sdk/lib_001FB228                                 }
-      - { start: 0x000fbbd0,    type: asm,        name: sdk/lib_001FB4D0                                 }
-      - { start: 0x000fbcb8,    type: asm,        name: sdk/lib_001FB5B8                                 }
-      - { start: 0x000fbcd8,    type: asm,        name: sdk/lib_001FB5D8                                 }
-      - { start: 0x000fbdc0,    type: asm,        name: sdk/lib_001FB6C0                                 }
-      - { start: 0x000fbeb0,    type: asm,        name: sdk/lib_001FB7B0                                 }
-      - { start: 0x000fbfc0,    type: asm,        name: sdk/lib_001FB8C0                                 }
-      - { start: 0x000fc0c0,    type: asm,        name: sdk/lib_001FB9C0                                 }
-      - { start: 0x000fc1c0,    type: asm,        name: sdk/lib_001FBAC0                                 }
-      - { start: 0x000fc2e8,    type: asm,        name: sdk/lib_001FBBE8                                 }
-      - { start: 0x000fc428,    type: asm,        name: sdk/lib_001FBD28                                 }
-      - { start: 0x000fc930,    type: asm,        name: sdk/lib_001FC230                                 }
-      - { start: 0x000fca48,    type: asm,        name: sdk/lib_001FC348                                 }
-      - { start: 0x000fe200,    type: asm,        name: sdk/lib_001FDB00                                 }
-      - { start: 0x00102f68,    type: asm,        name: sdk/lib_00202868                                 }
-      - { start: 0x00103688,    type: asm,        name: sdk/lib_00202F88                                 }
-      - { start: 0x00103898,    type: asm,        name: sdk/lib_00203198                                 }
-      - { start: 0x00104670,    type: asm,        name: sdk/lib_00203F70                                 }
-      - { start: 0x00105240,    type: asm,        name: sdk/lib_00204B40                                 }
-      - { start: 0x00105e10,    type: asm,        name: sdk/lib_00205710                                 }
-      - { start: 0x00105e30,    type: asm,        name: sdk/lib_00205730                                 }
-      - { start: 0x001071d8,    type: asm,        name: sdk/lib_00206AD8                                 }
-      - { start: 0x001071e8,    type: asm,        name: sdk/lib_00206AE8                                 }
-      - { start: 0x001071f8,    type: asm,        name: sdk/lib_00206AF8                                 }
-      - { start: 0x00107250,    type: asm,        name: sdk/lib_00206B50                                 }
-      - { start: 0x001072c8,    type: asm,        name: sdk/lib_00206BC8                                 }
-      - { start: 0x001072e0,    type: asm,        name: sdk/lib_00206BE0                                 }
-      - { start: 0x00107388,    type: asm,        name: sdk/lib_00206C88                                 }
-      - { start: 0x001073b0,    type: asm,        name: sdk/lib_00206CB0                                 }
-      - { start: 0x001073c0,    type: asm,        name: sdk/lib_00206CC0                                 }
-      - { start: 0x00107418,    type: asm,        name: sdk/lib_00206D18                                 }
-      - { start: 0x00107470,    type: asm,        name: sdk/lib_00206D70                                 }
-      - { start: 0x00107508,    type: asm,        name: sdk/lib_00206E08                                 }
-      - { start: 0x00107578,    type: asm,        name: sdk/lib_00206E78                                 }
-      - { start: 0x001075d0,    type: asm,        name: sdk/lib_00206ED0                                 }
-      - { start: 0x001075e8,    type: asm,        name: sdk/lib_00206EE8                                 }
-      - { start: 0x00107600,    type: asm,        name: sdk/lib_00206F00                                 }
-      - { start: 0x00107618,    type: asm,        name: sdk/lib_00206F18                                 }
-      - { start: 0x001076e0,    type: asm,        name: sdk/lib_00206FE0                                 }
-      - { start: 0x001076f0,    type: asm,        name: sdk/lib_00206FF0                                 }
-      - { start: 0x00107700,    type: asm,        name: sdk/lib_00207000                                 }
-      - { start: 0x00107758,    type: asm,        name: sdk/lib_00207058                                 }
-      - { start: 0x001077b0,    type: asm,        name: sdk/lib_002070B0                                 }
-      - { start: 0x00107848,    type: asm,        name: sdk/lib_00207148                                 }
-      - { start: 0x001078b8,    type: asm,        name: sdk/lib_002071B8                                 }
-      - { start: 0x00107910,    type: asm,        name: sdk/lib_00207210                                 }
-      - { start: 0x00107968,    type: asm,        name: sdk/lib_00207268                                 }
-      - { start: 0x00107998,    type: asm,        name: sdk/lib_00207298                                 }
-      - { start: 0x001079b0,    type: asm,        name: sdk/lib_002072B0                                 }
-      - { start: 0x00107a58,    type: asm,        name: sdk/lib_00207358                                 }
-      - { start: 0x00107a70,    type: asm,        name: sdk/lib_00207370                                 }
-      - { start: 0x00107af0,    type: asm,        name: sdk/lib_002073F0                                 }
-      - { start: 0x00107b08,    type: asm,        name: sdk/lib_00207408                                 }
-      - { start: 0x00107b20,    type: asm,        name: sdk/lib_00207420                                 }
-      - { start: 0x00107b38,    type: asm,        name: sdk/lib_00207438                                 }
-      - { start: 0x00107b88,    type: asm,        name: sdk/lib_00207488                                 }
-      - { start: 0x00107bb0,    type: asm,        name: sdk/lib_002074B0                                 }
-      - { start: 0x00107be0,    type: asm,        name: sdk/lib_002074E0                                 }
-      - { start: 0x00108590,    type: asm,        name: sdk/lib_00207E90                                 }
-      - { start: 0x001088d8,    type: asm,        name: sdk/lib_002081D8                                 }
-      - { start: 0x00108af8,    type: asm,        name: sdk/lib_002083F8                                 }
+      - { start: 0x000dc6a8,    type: asmtu,      name: sdk/lib_001DBFA8                                 }
+      - { start: 0x000dc6c8,    type: asmtu,      name: sdk/lib_001DBFC8                                 }
+      - { start: 0x000dc6e0,    type: asmtu,      name: sdk/lib_001DBFE0                                 }
+      - { start: 0x000dc718,    type: asmtu,      name: sdk/lib_001DC018                                 }
+      - { start: 0x000dc738,    type: asmtu,      name: sdk/lib_001DC038                                 }
+      - { start: 0x000dc770,    type: asmtu,      name: sdk/lib_001DC070                                 }
+      - { start: 0x000dc830,    type: asmtu,      name: sdk/lib_001DC130                                 }
+      - { start: 0x000dc888,    type: asmtu,      name: sdk/lib_001DC188                                 }
+      - { start: 0x000ddc70,    type: asmtu,      name: sdk/lib_001DD570                                 }
+      - { start: 0x000ddc80,    type: asmtu,      name: sdk/lib_001DD580                                 }
+      - { start: 0x000ddd88,    type: asmtu,      name: sdk/lib_001DD688                                 }
+      - { start: 0x000ddfe0,    type: asmtu,      name: sdk/lib_001DD8E0                                 }
+      - { start: 0x000de018,    type: asmtu,      name: sdk/lib_001DD918                                 }
+      - { start: 0x000de050,    type: asmtu,      name: sdk/lib_001DD950                                 }
+      - { start: 0x000de170,    type: asmtu,      name: sdk/lib_001DDA70                                 }
+      - { start: 0x000de600,    type: asmtu,      name: sdk/lib_001DDF00                                 }
+      - { start: 0x000de660,    type: asmtu,      name: sdk/lib_001DDF60                                 }
+      - { start: 0x000dea38,    type: asmtu,      name: sdk/lib_001DE338                                 }
+      - { start: 0x000dead0,    type: asmtu,      name: sdk/lib_001DE3D0                                 }
+      - { start: 0x000ded40,    type: asmtu,      name: sdk/lib_001DE640                                 }
+      - { start: 0x000dee30,    type: asmtu,      name: sdk/lib_001DE730                                 }
+      - { start: 0x000dee90,    type: asmtu,      name: sdk/lib_001DE790                                 }
+      - { start: 0x000defe0,    type: asmtu,      name: sdk/lib_001DE8E0                                 }
+      - { start: 0x000df018,    type: asmtu,      name: sdk/lib_001DE918                                 }
+      - { start: 0x000df9e8,    type: asmtu,      name: sdk/lib_001DF2E8                                 }
+      - { start: 0x000dfa28,    type: asmtu,      name: sdk/lib_001DF328                                 }
+      - { start: 0x000dfb08,    type: asmtu,      name: sdk/lib_001DF408                                 }
+      - { start: 0x000dfba0,    type: asmtu,      name: sdk/lib_001DF4A0                                 }
+      - { start: 0x000dfc50,    type: asmtu,      name: sdk/lib_001DF550                                 }
+      - { start: 0x000dfd58,    type: asmtu,      name: sdk/lib_001DF658                                 }
+      - { start: 0x000dfe18,    type: asmtu,      name: sdk/lib_001DF718                                 }
+      - { start: 0x000dfe28,    type: asmtu,      name: sdk/lib_001DF728                                 }
+      - { start: 0x000e0e48,    type: asmtu,      name: sdk/lib_001E0748                                 }
+      - { start: 0x000e1870,    type: asmtu,      name: sdk/lib_001E1170                                 }
+      - { start: 0x000e18b0,    type: asmtu,      name: sdk/lib_001E11B0                                 }
+      - { start: 0x000e1910,    type: asmtu,      name: sdk/lib_001E1210                                 }
+      - { start: 0x000e1e80,    type: asmtu,      name: sdk/lib_001E1780                                 }
+      - { start: 0x000e2018,    type: asmtu,      name: sdk/lib_001E1918                                 }
+      - { start: 0x000e2060,    type: asmtu,      name: sdk/lib_001E1960                                 }
+      - { start: 0x000e20a8,    type: asmtu,      name: sdk/lib_001E19A8                                 }
+      - { start: 0x000e20e0,    type: asmtu,      name: sdk/lib_001E19E0                                 }
+      - { start: 0x000e2298,    type: asmtu,      name: sdk/lib_001E1B98                                 }
+      - { start: 0x000e22f8,    type: asmtu,      name: sdk/lib_001E1BF8                                 }
+      - { start: 0x000e2328,    type: asmtu,      name: sdk/lib_001E1C28                                 }
+      - { start: 0x000e2350,    type: asmtu,      name: sdk/lib_001E1C50                                 }
+      - { start: 0x000e2378,    type: asmtu,      name: sdk/lib_001E1C78                                 }
+      - { start: 0x000e24d8,    type: asmtu,      name: sdk/lib_001E1DD8                                 }
+      - { start: 0x000e2828,    type: asmtu,      name: sdk/lib_001E2128                                 }
+      - { start: 0x000e28a8,    type: asmtu,      name: sdk/lib_001E21A8                                 }
+      - { start: 0x000e2980,    type: asmtu,      name: sdk/lib_001E2280                                 }
+      - { start: 0x000e2a10,    type: asmtu,      name: sdk/lib_001E2310                                 }
+      - { start: 0x000e2b80,    type: asmtu,      name: sdk/lib_001E2480                                 }
+      - { start: 0x000e2cb0,    type: asmtu,      name: sdk/lib_001E25B0                                 }
+      - { start: 0x000e2e40,    type: asmtu,      name: sdk/lib_001E2740                                 }
+      - { start: 0x000e2f88,    type: asmtu,      name: sdk/lib_001E2888                                 }
+      - { start: 0x000e30a0,    type: asmtu,      name: sdk/lib_001E29A0                                 }
+      - { start: 0x000e31d8,    type: asmtu,      name: sdk/lib_001E2AD8                                 }
+      - { start: 0x000e3390,    type: asmtu,      name: sdk/lib_001E2C90                                 }
+      - { start: 0x000e3550,    type: asmtu,      name: sdk/lib_001E2E50                                 }
+      - { start: 0x000e44a8,    type: asmtu,      name: sdk/lib_001E3DA8                                 }
+      - { start: 0x000e4718,    type: asmtu,      name: sdk/lib_001E4018                                 }
+      - { start: 0x000e4970,    type: asmtu,      name: sdk/lib_001E4270                                 }
+      - { start: 0x000e4be8,    type: asmtu,      name: sdk/lib_001E44E8                                 }
+      - { start: 0x000e5930,    type: asmtu,      name: sdk/lib_001E5230                                 }
+      - { start: 0x000e7250,    type: asmtu,      name: sdk/lib_001E6B50                                 }
+      - { start: 0x000e7e60,    type: asmtu,      name: sdk/lib_001E7760                                 }
+      - { start: 0x000e7eb8,    type: asmtu,      name: sdk/lib_001E77B8                                 }
+      - { start: 0x000e7f18,    type: asmtu,      name: sdk/lib_001E7818                                 }
+      - { start: 0x000e8028,    type: asmtu,      name: sdk/lib_001E7928                                 }
+      - { start: 0x000e9460,    type: asmtu,      name: sdk/lib_001E8D60                                 }
+      - { start: 0x000e9640,    type: asmtu,      name: sdk/lib_001E8F40                                 }
+      - { start: 0x000e9710,    type: asmtu,      name: sdk/lib_001E9010                                 }
+      - { start: 0x000e97a8,    type: asmtu,      name: sdk/lib_001E90A8                                 }
+      - { start: 0x000e9840,    type: asmtu,      name: sdk/lib_001E9140                                 }
+      - { start: 0x000e98f8,    type: asmtu,      name: sdk/lib_001E91F8                                 }
+      - { start: 0x000e99f0,    type: asmtu,      name: sdk/lib_001E92F0                                 }
+      - { start: 0x000e9ae0,    type: asmtu,      name: sdk/lib_001E93E0                                 }
+      - { start: 0x000ea590,    type: asmtu,      name: sdk/lib_001E9E90                                 }
+      - { start: 0x000eac80,    type: asmtu,      name: sdk/lib_001EA580                                 }
+      - { start: 0x000eace0,    type: asmtu,      name: sdk/lib_001EA5E0                                 }
+      - { start: 0x000eadd0,    type: asmtu,      name: sdk/lib_001EA6D0                                 }
+      - { start: 0x000eaec8,    type: asmtu,      name: sdk/lib_001EA7C8                                 }
+      - { start: 0x000eaf60,    type: asmtu,      name: sdk/lib_001EA860                                 }
+      - { start: 0x000eb040,    type: asmtu,      name: sdk/lib_001EA940                                 }
+      - { start: 0x000eb6a8,    type: asmtu,      name: sdk/lib_001EAFA8                                 }
+      - { start: 0x000eb708,    type: asmtu,      name: sdk/lib_001EB008                                 }
+      - { start: 0x000ebcd8,    type: asmtu,      name: sdk/lib_001EB5D8                                 }
+      - { start: 0x000ec218,    type: asmtu,      name: sdk/lib_001EBB18                                 }
+      - { start: 0x000ecf10,    type: asmtu,      name: sdk/lib_001EC810                                 }
+      - { start: 0x000edaf0,    type: asmtu,      name: sdk/lib_001ED3F0                                 }
+      - { start: 0x000edc10,    type: asmtu,      name: sdk/lib_001ED510                                 }
+      - { start: 0x000edc78,    type: asmtu,      name: sdk/lib_001ED578                                 }
+      - { start: 0x000edee8,    type: asmtu,      name: sdk/lib_001ED7E8                                 }
+      - { start: 0x000edfa8,    type: asmtu,      name: sdk/lib_001ED8A8                                 }
+      - { start: 0x000ee070,    type: asmtu,      name: sdk/lib_001ED970                                 }
+      - { start: 0x000ee258,    type: asmtu,      name: sdk/lib_001EDB58                                 }
+      - { start: 0x000ee360,    type: asmtu,      name: sdk/lib_001EDC60                                 }
+      - { start: 0x000ee448,    type: asmtu,      name: sdk/lib_001EDD48                                 }
+      - { start: 0x000ee6e0,    type: asmtu,      name: sdk/lib_001EDFE0                                 }
+      - { start: 0x000ee740,    type: asmtu,      name: sdk/lib_001EE040                                 }
+      - { start: 0x000ee7d8,    type: asmtu,      name: sdk/lib_001EE0D8                                 }
+      - { start: 0x000eeaf0,    type: asmtu,      name: sdk/lib_001EE3F0                                 }
+      - { start: 0x000eeb30,    type: asmtu,      name: sdk/lib_001EE430                                 }
+      - { start: 0x000eebb8,    type: asmtu,      name: sdk/lib_001EE4B8                                 }
+      - { start: 0x000eebd8,    type: asmtu,      name: sdk/lib_001EE4D8                                 }
+      - { start: 0x000eef48,    type: asmtu,      name: sdk/lib_001EE848                                 }
+      - { start: 0x000ef200,    type: asmtu,      name: sdk/lib_001EEB00                                 }
+      - { start: 0x000efa90,    type: asmtu,      name: sdk/lib_001EF390                                 }
+      - { start: 0x000efdc8,    type: asmtu,      name: sdk/lib_001EF6C8                                 }
+      - { start: 0x000f0048,    type: asmtu,      name: sdk/lib_001EF948                                 }
+      - { start: 0x000f03a8,    type: asmtu,      name: sdk/lib_001EFCA8                                 }
+      - { start: 0x000f0708,    type: asmtu,      name: sdk/lib_001F0008                                 }
+      - { start: 0x000f08e8,    type: asmtu,      name: sdk/lib_001F01E8                                 }
+      - { start: 0x000f0e08,    type: asmtu,      name: sdk/lib_001F0708                                 }
+      - { start: 0x000f1780,    type: asmtu,      name: sdk/lib_001F1080                                 }
+      - { start: 0x000f1ec8,    type: asmtu,      name: sdk/lib_001F17C8                                 }
+      - { start: 0x000f2e28,    type: asmtu,      name: sdk/lib_001F2728                                 }
+      - { start: 0x000f6398,    type: asmtu,      name: sdk/lib_001F5C98                                 }
+      - { start: 0x000f65f8,    type: asmtu,      name: sdk/lib_001F5EF8                                 }
+      - { start: 0x000f6f90,    type: asmtu,      name: sdk/lib_001F6890                                 }
+      - { start: 0x000f7240,    type: asmtu,      name: sdk/lib_001F6B40                                 }
+      - { start: 0x000f72a0,    type: asmtu,      name: sdk/lib_001F6BA0                                 }
+      - { start: 0x000f7318,    type: asmtu,      name: sdk/lib_001F6C18                                 }
+      - { start: 0x000f7838,    type: asmtu,      name: sdk/lib_001F7138                                 }
+      - { start: 0x000f7b40,    type: asmtu,      name: sdk/lib_001F7440                                 }
+      - { start: 0x000f7f70,    type: asmtu,      name: sdk/lib_001F7870                                 }
+      - { start: 0x000f8310,    type: asmtu,      name: sdk/lib_001F7C10                                 }
+      - { start: 0x000f85f8,    type: asmtu,      name: sdk/lib_001F7EF8                                 }
+      - { start: 0x000f8848,    type: asmtu,      name: sdk/lib_001F8148                                 }
+      - { start: 0x000f90d8,    type: asmtu,      name: sdk/lib_001F89D8                                 }
+      - { start: 0x000f94b8,    type: asmtu,      name: sdk/lib_001F8DB8                                 }
+      - { start: 0x000f95f0,    type: asmtu,      name: sdk/lib_001F8EF0                                 }
+      - { start: 0x000f9840,    type: asmtu,      name: sdk/lib_001F9140                                 }
+      - { start: 0x000fa3a8,    type: asmtu,      name: sdk/lib_001F9CA8                                 }
+      - { start: 0x000fa580,    type: asmtu,      name: sdk/lib_001F9E80                                 }
+      - { start: 0x000fa6d8,    type: asmtu,      name: sdk/lib_001F9FD8                                 }
+      - { start: 0x000fb028,    type: asmtu,      name: sdk/lib_001FA928                                 }
+      - { start: 0x000fb130,    type: asmtu,      name: sdk/lib_001FAA30                                 }
+      - { start: 0x000fb2f0,    type: asmtu,      name: sdk/lib_001FABF0                                 }
+      - { start: 0x000fb3f8,    type: asmtu,      name: sdk/lib_001FACF8                                 }
+      - { start: 0x000fb430,    type: asmtu,      name: sdk/lib_001FAD30                                 }
+      - { start: 0x000fb608,    type: asmtu,      name: sdk/lib_001FAF08                                 }
+      - { start: 0x000fb630,    type: asmtu,      name: sdk/lib_001FAF30                                 }
+      - { start: 0x000fb830,    type: asmtu,      name: sdk/lib_001FB130                                 }
+      - { start: 0x000fb928,    type: asmtu,      name: sdk/lib_001FB228                                 }
+      - { start: 0x000fbbd0,    type: asmtu,      name: sdk/lib_001FB4D0                                 }
+      - { start: 0x000fbcb8,    type: asmtu,      name: sdk/lib_001FB5B8                                 }
+      - { start: 0x000fbcd8,    type: asmtu,      name: sdk/lib_001FB5D8                                 }
+      - { start: 0x000fbdc0,    type: asmtu,      name: sdk/lib_001FB6C0                                 }
+      - { start: 0x000fbeb0,    type: asmtu,      name: sdk/lib_001FB7B0                                 }
+      - { start: 0x000fbfc0,    type: asmtu,      name: sdk/lib_001FB8C0                                 }
+      - { start: 0x000fc0c0,    type: asmtu,      name: sdk/lib_001FB9C0                                 }
+      - { start: 0x000fc1c0,    type: asmtu,      name: sdk/lib_001FBAC0                                 }
+      - { start: 0x000fc2e8,    type: asmtu,      name: sdk/lib_001FBBE8                                 }
+      - { start: 0x000fc428,    type: asmtu,      name: sdk/lib_001FBD28                                 }
+      - { start: 0x000fc930,    type: asmtu,      name: sdk/lib_001FC230                                 }
+      - { start: 0x000fca48,    type: asmtu,      name: sdk/lib_001FC348                                 }
+      - { start: 0x000fe200,    type: asmtu,      name: sdk/lib_001FDB00                                 }
+      - { start: 0x00102f68,    type: asmtu,      name: sdk/lib_00202868                                 }
+      - { start: 0x00103688,    type: asmtu,      name: sdk/lib_00202F88                                 }
+      - { start: 0x00103898,    type: asmtu,      name: sdk/lib_00203198                                 }
+      - { start: 0x00104670,    type: asmtu,      name: sdk/lib_00203F70                                 }
+      - { start: 0x00105240,    type: asmtu,      name: sdk/lib_00204B40                                 }
+      - { start: 0x00105e10,    type: asmtu,      name: sdk/lib_00205710                                 }
+      - { start: 0x00105e30,    type: asmtu,      name: sdk/lib_00205730                                 }
+      - { start: 0x001071d8,    type: asmtu,      name: sdk/lib_00206AD8                                 }
+      - { start: 0x001071e8,    type: asmtu,      name: sdk/lib_00206AE8                                 }
+      - { start: 0x001071f8,    type: asmtu,      name: sdk/lib_00206AF8                                 }
+      - { start: 0x00107250,    type: asmtu,      name: sdk/lib_00206B50                                 }
+      - { start: 0x001072c8,    type: asmtu,      name: sdk/lib_00206BC8                                 }
+      - { start: 0x001072e0,    type: asmtu,      name: sdk/lib_00206BE0                                 }
+      - { start: 0x00107388,    type: asmtu,      name: sdk/lib_00206C88                                 }
+      - { start: 0x001073b0,    type: asmtu,      name: sdk/lib_00206CB0                                 }
+      - { start: 0x001073c0,    type: asmtu,      name: sdk/lib_00206CC0                                 }
+      - { start: 0x00107418,    type: asmtu,      name: sdk/lib_00206D18                                 }
+      - { start: 0x00107470,    type: asmtu,      name: sdk/lib_00206D70                                 }
+      - { start: 0x00107508,    type: asmtu,      name: sdk/lib_00206E08                                 }
+      - { start: 0x00107578,    type: asmtu,      name: sdk/lib_00206E78                                 }
+      - { start: 0x001075d0,    type: asmtu,      name: sdk/lib_00206ED0                                 }
+      - { start: 0x001075e8,    type: asmtu,      name: sdk/lib_00206EE8                                 }
+      - { start: 0x00107600,    type: asmtu,      name: sdk/lib_00206F00                                 }
+      - { start: 0x00107618,    type: asmtu,      name: sdk/lib_00206F18                                 }
+      - { start: 0x001076e0,    type: asmtu,      name: sdk/lib_00206FE0                                 }
+      - { start: 0x001076f0,    type: asmtu,      name: sdk/lib_00206FF0                                 }
+      - { start: 0x00107700,    type: asmtu,      name: sdk/lib_00207000                                 }
+      - { start: 0x00107758,    type: asmtu,      name: sdk/lib_00207058                                 }
+      - { start: 0x001077b0,    type: asmtu,      name: sdk/lib_002070B0                                 }
+      - { start: 0x00107848,    type: asmtu,      name: sdk/lib_00207148                                 }
+      - { start: 0x001078b8,    type: asmtu,      name: sdk/lib_002071B8                                 }
+      - { start: 0x00107910,    type: asmtu,      name: sdk/lib_00207210                                 }
+      - { start: 0x00107968,    type: asmtu,      name: sdk/lib_00207268                                 }
+      - { start: 0x00107998,    type: asmtu,      name: sdk/lib_00207298                                 }
+      - { start: 0x001079b0,    type: asmtu,      name: sdk/lib_002072B0                                 }
+      - { start: 0x00107a58,    type: asmtu,      name: sdk/lib_00207358                                 }
+      - { start: 0x00107a70,    type: asmtu,      name: sdk/lib_00207370                                 }
+      - { start: 0x00107af0,    type: asmtu,      name: sdk/lib_002073F0                                 }
+      - { start: 0x00107b08,    type: asmtu,      name: sdk/lib_00207408                                 }
+      - { start: 0x00107b20,    type: asmtu,      name: sdk/lib_00207420                                 }
+      - { start: 0x00107b38,    type: asmtu,      name: sdk/lib_00207438                                 }
+      - { start: 0x00107b88,    type: asmtu,      name: sdk/lib_00207488                                 }
+      - { start: 0x00107bb0,    type: asmtu,      name: sdk/lib_002074B0                                 }
+      - { start: 0x00107be0,    type: asmtu,      name: sdk/lib_002074E0                                 }
+      - { start: 0x00108590,    type: asmtu,      name: sdk/lib_00207E90                                 }
+      - { start: 0x001088d8,    type: asmtu,      name: sdk/lib_002081D8                                 }
+      - { start: 0x00108af8,    type: asmtu,      name: sdk/lib_002083F8                                 }
       - { start: 0x00109840,    type: asm,        name: MWCC/mwUtils_PS2, ld_align_segment_start: 0x10   }
       - { start: 0x00109850,    type: asm,        name: Item/item_tgs_tmp                                }
       - { start: 0x00109cc0,    type: asm,        name: Multi_thr/intc/th_vbs                            }
@@ -455,8 +455,12 @@ segments:
       - { start: 0x00148790,    type: c,          name: Event/stage/stg_tgs_trial                        }
       - { start: 0x0014c2b0,    type: asm,        name: Chacter/m3_rpjames                               }
       - { start: 0x0014ca60,    type: c,          name: Chacter/m3_rwep                                  }
-      - { start: 0x0014cac8,    type: asm,        name: sound/shd_vs_sp, ld_align_segment_start: 0x8     }
-      - { start: 0x00151530,    type: asm,        name: GFW/sh2_DrawEnvData, ld_align_segment_start: 0x10 }
+      - { start: 0x0014CAC8,    type: asmtu,      name: sdk/lib_0024C3C8, ld_align_segment_start: 8      } 
+      - { start: 0x0014CCE0,    type: asmtu,      name: sdk/lib_0024C5E0                                 } 
+      - { start: 0x0014CE40,    type: asmtu,      name: sdk/lib_0024C740                                 } 
+      - { start: 0x0014DA58,    type: asmtu,      name: sdk/lib_0024D358                                 } 
+      - { start: 0x0014e750,    type: asmtu,      name: sound/shd_vs_sp                                  }
+      - { start: 0x00151530,    type: asm,        name: GFW/sh2_DrawEnvData, ld_align_segment_start: 16  }
       - { start: 0x001521e0,    type: asm,        name: LoadBg/loadbg_camdata                            }
       - { start: 0x001522f0,    type: c,          name: LoadBg/loadbg_common                             }
       - { start: 0x00152850,    type: asm,        name: DBG/dbsw_map                                     }
@@ -672,7 +676,7 @@ segments:
       - { start: 0x001bb3d8,    type: data,       name: data_0x1bb3d8                                    }
       - { start: 0x001bb580,    type: .data,      name: Font/font                                        }
       - { start: 0x001bb5c0,    type: data,       name: data_0x1bb5c0                                    }
-      - { start: 0x001bb648,    type: data,       name: unklib_002BAF48                                  }
+      - { start: 0x001bb648,    type: data,       name: sdk/lib_002BAF48                                  }
       - { start: 0x0023b920,    type: data,       name: Multi_thr/filesys/filecmd                        }
       - { start: 0x0023bab8,    type: data,       name: Multi_thr/filesys/filepath                       }
       - { start: 0x0023bad0,    type: data,       name: Multi_thr/filesys/sh_cdvd                        }
@@ -689,12 +693,54 @@ segments:
       - { start: 0x0023c5f0,    type: data,       name: Event/chizu                                      }
       - { start: 0x0023e370,    type: .data,      name: Event/chara_admin                                }
       - { start: 0x0023e3a0,    type: data,       name: data_0x23e3a0                                    }
+      - { start: 0x0023E4F0,    type: data,       name: Fog/spkTexMan                                    }
+      - { start: 0x0023E550,    type: data,       name: DBG/dbflag                                       }
+      - { start: 0x0023E5D0,    type: data,       name: FilesList/fileslist_bg_hp                        }
+      - { start: 0x002407C8,    type: data,       name: Item/otn_itemmain                                }
+      - { start: 0x002407E0,    type: data,       name: FilesList/fileslist_bg                           }
+      - { start: 0x00240930,    type: data,       name: FilesList/fileslist_bg_ap                        }
+      - { start: 0x00241A50,    type: data,       name: FilesList/fileslist_bg_ps                        }
+      - { start: 0x00243688,    type: .data,      name: sdk/lib_001DE3D0                                 }
+      - { start: 0x00243698,    type: data,       name: sdk/libgcc/impure                                }
+      - { start: 0x00243988,    type: data,       name: sdk/lib_00343288                                 }
+      - { start: 0x002439A0,    type: .data,      name: sdk/lib_001DE918                                 }
+      # - { start: 0x002439A0,    type: data,       name: sdk/lib_003432A0                                 }
+      - { start: 0x00243E00,    type: .data,      name: sdk/lib_001E7928                                 }
+      - { start: 0x00245870,    type: .data,      name: sdk/lib_001E93E0                                 }
+      - { start: 0x00245920,    type: .data,      name: sdk/lib_001ED3F0                                 }
+      - { start: 0x00245940,    type: .data,      name: sdk/lib_001ED510                                 }
+      - { start: 0x00245960,    type: .data,      name: sdk/lib_001EE848                                 }
+      - { start: 0x002459E0,    type: data,       name: sdk/lib_003452E0                                 }
+      - { start: 0x002459F0,    type: .data,      name: sdk/lib_001EF390                                 }
+      - { start: 0x002459F8,    type: .data,      name: sdk/lib_001EF948                                 }
+      - { start: 0x00246198,    type: .data,      name: sdk/lib_001EFCA8                                 }
+      - { start: 0x002461A0,    type: .data,      name: sdk/lib_001F0708                                 }
+      - { start: 0x002461A8,    type: .data,      name: sdk/lib_001F1080                                 }
+      - { start: 0x002461B0,    type: .data,      name: sdk/lib_001F17C8                                 }
+      - { start: 0x002461B8,    type: .data,      name: sdk/lib_001F2728                                 }
+      - { start: 0x00246250,    type: .data,      name: sdk/lib_001F5C98                                 }
+      - { start: 0x00246258,    type: .data,      name: sdk/lib_001F5EF8                                 }
+      - { start: 0x00246260,    type: .data,      name: sdk/lib_001FC348                                 }
+      - { start: 0x00246278,    type: .data,      name: sdk/lib_001FDB00                                 }
+      - { start: 0x00246368,    type: .data,      name: sdk/lib_00202868                                 }
+      - { start: 0x00246380,    type: .data,      name: sdk/lib_00203198                                 }
+      - { start: 0x00246430,    type: .data,      name: sdk/lib_00204B40                                 }
+      - { start: 0x00246480,    type: data,       name: sdk/lib_00345D80                                 }
+      - { start: 0x00246D48,    type: .data,      name: sdk/lib_00205730                                 }
+      - { start: 0x00246D90,    type: .data,      name: sdk/lib_002074E0                                 }
+      - { start: 0x00246DB8,    type: .data,      name: sdk/lib_00207E90                                 }
+      - { start: 0x00246DD0,    type: .data,      name: sdk/lib_002081D8                                 }
+      - { start: 0x00246E00,    type: .data,      name: sdk/lib_002083F8                                 }
+      - { start: 0x00246E30,    type: data,       name: Item/item_tgs_tmp                                }
+      - { start: 0x00247290,    type: data,       name: Multi_thr/intc/th_vbs                            }
+      - { start: 0x002472A0,    type: data,       name: DBG/dbg_font8                                    }
+      - { start: 0x002486E0,    type: data,       name: Chacter/m3_edb                                   }
       - { start: 0x00248700,    type: .data,      name: Chacter/m3_nse                                   }
       - { start: 0x00248710,    type: data,       name: data_0x248710                                    }
       - { start: 0x0024c8c0,    type: .data,      name: jump_menu                                        }
       - { start: 0x0024c8d0,    type: data,       name: data_0x24c8d0                                    }
       - { start: 0x0024c900,    type: .data,      name: Chacter/m3_play_common                           }
-      - { start: 0x0024c960,    type: data,       name: data_0x24c960                                    }
+      - { start: 0x0024c960,    type: data,       name: Chacter/m3_maria                                 }
       - { start: 0x0024c980,    type: .data,      name: Chacter/m3_tyu                                   }
       - { start: 0x0024c990,    type: data,       name: data_0x24c990                                    }
       - { start: 0x0024ca00,    type: .data,      name: Chacter/m3_oni                                   }
@@ -706,7 +752,18 @@ segments:
       - { start: 0x0024e28c,    type: .data,      name: DBG/dbsw_sys                                     }
       - { start: 0x0024e2a8,    type: data,       name: data_0x24e2a8                                    }
       - { start: 0x0024f000,    type: .data,      name: Chacter/m3_arm                                   }
-      - { start: 0x0024f010,    type: data,       name: data_0x24f010                                    }
+      - { start: 0x24F010,      type: data,       name: Chacter/m3_mary                                  }
+      - { start: 0x24F0D0,      type: data,       name: Enemy/en_arm                                     }
+      - { start: 0x24F180,      type: data,       name: MC/mc                                            }
+      - { start: 0x24F970,      type: data,       name: MC/mc_menu                                       }
+      - { start: 0x24F9A0,      type: data,       name: Event/stage/stg_tgs_trial                        }
+      - { start: 0x256B10,      type: data,       name: unklib_00356410                                  }
+      - { start: 0x25C610,      type: data,       name: unklib_0035BF10                                  }
+      - { start: 0x262110,      type: .data,      name: sound/shd_vs_sp                                  }
+      - { start: 0x262210,      type: data,       name: GFW/sh2_DrawEnvData                              }
+      - { start: 0x26DE50,      type: data,       name: LoadBg/loadbg_common                             }
+      - { start: 0x26DF10,      type: data,       name: Multi_thr/scf/sh2_scf                            }
+      - { start: 0x26DF20,      type: data,       name: Effect2/hh_class_blood_00                        }
       - { start: 0x0026e560,    type: .data,      name: Effect2/hh_class_blood_01                        }
       - { start: 0x0026e570,    type: data,       name: data_0x26e570                                    }
       - { start: 0x0026eb70,    type: .data,      name: Effect2/hh_class_blood_03                        }
@@ -879,68 +936,68 @@ segments:
       - { start: 0x00293470,    type: rodata,     name: DBG/dbflag                                       }
       - { start: 0x00293570,    type: .rodata,    name: Item/otn_itemmain                                }
       - { start: 0x002937c0,    type: rodata,     name: unaff_001DB6C0                                   }
-      - { start: 0x00293878,    type: rodata,     name: sdk/lib_001DBFE0                                 }
+      - { start: 0x00293878,    type: .rodata,    name: sdk/lib_001DBFE0                                 }
       - { start: 0x002938a8,    type: rodata,     name: sdk/lib_003931A8                                 }
-      - { start: 0x002939b0,    type: rodata,     name: sdk/lib_001DC188                                 }
-      - { start: 0x00293a08,    type: rodata,     name: sdk/lib_001DE3D0                                 }
+      - { start: 0x002939b0,    type: .rodata,    name: sdk/lib_001DC188                                 }
+      - { start: 0x00293a08,    type: .rodata,    name: sdk/lib_001DE3D0                                 }
       - { start: 0x00293a58,    type: rodata,     name: sdk/lib_00393358                                 }
-      - { start: 0x00293a60,    type: rodata,     name: sdk/lib_001DE640                                 }
-      - { start: 0x00293aa8,    type: rodata,     name: sdk/lib_001DF728                                 }
+      - { start: 0x00293a60,    type: .rodata,    name: sdk/lib_001DE640                                 }
+      - { start: 0x00293aa8,    type: .rodata,    name: sdk/lib_001DF728                                 }
       - { start: 0x00293bd0,    type: rodata,     name: sdk/lib_003934D0                                 }
-      - { start: 0x00293bd8,    type: rodata,     name: sdk/lib_001E19E0                                 }
-      - { start: 0x00293c10,    type: rodata,     name: sdk/lib_001E2E50                                 }
-      - { start: 0x00293ce0,    type: rodata,     name: sdk/lib_001E44E8                                 }
-      - { start: 0x00293ed0,    type: rodata,     name: sdk/lib_001E5230                                 }
-      - { start: 0x002940e0,    type: rodata,     name: sdk/lib_001E6B50                                 }
-      - { start: 0x00294550,    type: rodata,     name: sdk/lib_001E7928                                 }
-      - { start: 0x00294720,    type: rodata,     name: sdk/lib_001E8D60                                 }
-      - { start: 0x00294748,    type: rodata,     name: sdk/lib_001E9140                                 }
-      - { start: 0x00294758,    type: rodata,     name: sdk/lib_001E91F8                                 }
-      - { start: 0x00294798,    type: rodata,     name: sdk/lib_001E93E0                                 }
-      - { start: 0x002947b0,    type: rodata,     name: sdk/lib_001E9E90                                 }
-      - { start: 0x002948b0,    type: rodata,     name: sdk/lib_001EA940                                 }
-      - { start: 0x002949b0,    type: rodata,     name: sdk/lib_001EB008                                 }
-      - { start: 0x00294ab0,    type: rodata,     name: sdk/lib_001EB5D8                                 }
-      - { start: 0x00294bb0,    type: rodata,     name: sdk/lib_001ED578                                 }
-      - { start: 0x00294be8,    type: rodata,     name: sdk/lib_001EDC60                                 }
-      - { start: 0x00294c18,    type: rodata,     name: sdk/lib_001EE0D8                                 }
-      - { start: 0x00294da8,    type: rodata,     name: sdk/lib_001EFCA8                                 }
-      - { start: 0x00294dd0,    type: rodata,     name: sdk/lib_001F01E8                                 }
-      - { start: 0x00294e40,    type: rodata,     name: sdk/lib_001F0708                                 }
-      - { start: 0x00294fa0,    type: rodata,     name: sdk/lib_001F2728                                 }
-      - { start: 0x00295010,    type: rodata,     name: sdk/lib_001F5EF8                                 }
-      - { start: 0x00295020,    type: rodata,     name: sdk/lib_001F6890                                 }
-      - { start: 0x00295050,    type: rodata,     name: sdk/lib_001F6C18                                 }
-      - { start: 0x002952a0,    type: rodata,     name: sdk/lib_001F7C10                                 }
-      - { start: 0x002952c0,    type: rodata,     name: sdk/lib_001F7EF8                                 }
-      - { start: 0x002952d0,    type: rodata,     name: sdk/lib_001F8148                                 }
-      - { start: 0x00295358,    type: rodata,     name: sdk/lib_001F89D8                                 }
-      - { start: 0x00295718,    type: rodata,     name: sdk/lib_001F8EF0                                 }
-      - { start: 0x00295780,    type: rodata,     name: sdk/lib_001F9140                                 }
-      - { start: 0x002957f0,    type: rodata,     name: sdk/lib_001F9CA8                                 }
-      - { start: 0x00295860,    type: rodata,     name: sdk/lib_001F9FD8                                 }
-      - { start: 0x002958b0,    type: rodata,     name: sdk/lib_001FAA30                                 }
-      - { start: 0x002958c0,    type: rodata,     name: sdk/lib_001FAD30                                 }
+      - { start: 0x00293bd8,    type: .rodata,    name: sdk/lib_001E19E0                                 }
+      - { start: 0x00293c10,    type: .rodata,    name: sdk/lib_001E2E50                                 }
+      - { start: 0x00293ce0,    type: .rodata,    name: sdk/lib_001E44E8                                 }
+      - { start: 0x00293ed0,    type: .rodata,    name: sdk/lib_001E5230                                 }
+      - { start: 0x002940e0,    type: .rodata,    name: sdk/lib_001E6B50                                 }
+      - { start: 0x00294550,    type: .rodata,    name: sdk/lib_001E7928                                 }
+      - { start: 0x00294720,    type: .rodata,    name: sdk/lib_001E8D60                                 }
+      - { start: 0x00294748,    type: .rodata,    name: sdk/lib_001E9140                                 }
+      - { start: 0x00294758,    type: .rodata,    name: sdk/lib_001E91F8                                 }
+      - { start: 0x00294798,    type: .rodata,    name: sdk/lib_001E93E0                                 }
+      - { start: 0x002947b0,    type: .rodata,    name: sdk/lib_001E9E90                                 }
+      - { start: 0x002948b0,    type: .rodata,    name: sdk/lib_001EA940                                 }
+      - { start: 0x002949b0,    type: .rodata,    name: sdk/lib_001EB008                                 }
+      - { start: 0x00294ab0,    type: .rodata,    name: sdk/lib_001EB5D8                                 }
+      - { start: 0x00294bb0,    type: .rodata,    name: sdk/lib_001ED578                                 }
+      - { start: 0x00294be8,    type: .rodata,    name: sdk/lib_001EDC60                                 }
+      - { start: 0x00294c18,    type: .rodata,    name: sdk/lib_001EE0D8                                 }
+      - { start: 0x00294da8,    type: .rodata,    name: sdk/lib_001EFCA8                                 }
+      - { start: 0x00294dd0,    type: .rodata,    name: sdk/lib_001F01E8                                 }
+      - { start: 0x00294e40,    type: .rodata,    name: sdk/lib_001F0708                                 }
+      - { start: 0x00294fa0,    type: .rodata,    name: sdk/lib_001F2728                                 }
+      - { start: 0x00295010,    type: .rodata,    name: sdk/lib_001F5EF8                                 }
+      - { start: 0x00295020,    type: .rodata,    name: sdk/lib_001F6890                                 }
+      - { start: 0x00295050,    type: .rodata,    name: sdk/lib_001F6C18                                 }
+      - { start: 0x002952a0,    type: .rodata,    name: sdk/lib_001F7C10                                 }
+      - { start: 0x002952c0,    type: .rodata,    name: sdk/lib_001F7EF8                                 }
+      - { start: 0x002952d0,    type: .rodata,    name: sdk/lib_001F8148                                 }
+      - { start: 0x00295358,    type: .rodata,    name: sdk/lib_001F89D8                                 }
+      - { start: 0x00295718,    type: .rodata,    name: sdk/lib_001F8EF0                                 }
+      - { start: 0x00295780,    type: .rodata,    name: sdk/lib_001F9140                                 }
+      - { start: 0x002957f0,    type: .rodata,    name: sdk/lib_001F9CA8                                 }
+      - { start: 0x00295860,    type: .rodata,    name: sdk/lib_001F9FD8                                 }
+      - { start: 0x002958b0,    type: .rodata,    name: sdk/lib_001FAA30                                 }
+      - { start: 0x002958c0,    type: .rodata,    name: sdk/lib_001FAD30                                 }
       - { start: 0x002958d0,    type: rodata,     name: sdk/lib_003951D0                                 }
-      - { start: 0x002958d8,    type: rodata,     name: sdk/lib_001FAF30                                 }
-      - { start: 0x002958e8,    type: rodata,     name: sdk/lib_001FB228                                 }
-      - { start: 0x00295940,    type: rodata,     name: sdk/lib_001FB7B0                                 }
-      - { start: 0x00295950,    type: rodata,     name: sdk/lib_001FB8C0                                 }
-      - { start: 0x00295958,    type: rodata,     name: sdk/lib_001FB9C0                                 }
-      - { start: 0x00295960,    type: rodata,     name: sdk/lib_001FBAC0                                 }
-      - { start: 0x00295968,    type: rodata,     name: sdk/lib_001FBBE8                                 }
-      - { start: 0x00295978,    type: rodata,     name: sdk/lib_001FBD28                                 }
-      - { start: 0x00295998,    type: rodata,     name: sdk/lib_001FC230                                 }
-      - { start: 0x002959a8,    type: rodata,     name: sdk/lib_001FC348                                 }
-      - { start: 0x00295a10,    type: rodata,     name: sdk/lib_001FDB00                                 }
-      - { start: 0x00295ca8,    type: rodata,     name: sdk/lib_00202868                                 }
-      - { start: 0x00295cc0,    type: rodata,     name: sdk/lib_00203198                                 }
-      - { start: 0x00295cf0,    type: rodata,     name: sdk/lib_00203F70                                 }
-      - { start: 0x00295d98,    type: rodata,     name: sdk/lib_00204B40                                 }
-      - { start: 0x00295ee0,    type: rodata,     name: sdk/lib_00205730                                 }
-      - { start: 0x00296038,    type: rodata,     name: sdk/lib_002074E0                                 }
-      - { start: 0x00296130,    type: rodata,     name: sdk/lib_00207E90                                 }
-      - { start: 0x00296140,    type: rodata,     name: sdk/lib_002081D8                                 }
+      - { start: 0x002958d8,    type: .rodata,    name: sdk/lib_001FAF30                                 }
+      - { start: 0x002958e8,    type: .rodata,    name: sdk/lib_001FB228                                 }
+      - { start: 0x00295940,    type: .rodata,    name: sdk/lib_001FB7B0                                 }
+      - { start: 0x00295950,    type: .rodata,    name: sdk/lib_001FB8C0                                 }
+      - { start: 0x00295958,    type: .rodata,    name: sdk/lib_001FB9C0                                 }
+      - { start: 0x00295960,    type: .rodata,    name: sdk/lib_001FBAC0                                 }
+      - { start: 0x00295968,    type: .rodata,    name: sdk/lib_001FBBE8                                 }
+      - { start: 0x00295978,    type: .rodata,    name: sdk/lib_001FBD28                                 }
+      - { start: 0x00295998,    type: .rodata,    name: sdk/lib_001FC230                                 }
+      - { start: 0x002959a8,    type: .rodata,    name: sdk/lib_001FC348                                 }
+      - { start: 0x00295a10,    type: .rodata,    name: sdk/lib_001FDB00                                 }
+      - { start: 0x00295ca8,    type: .rodata,    name: sdk/lib_00202868                                 }
+      - { start: 0x00295cc0,    type: .rodata,    name: sdk/lib_00203198                                 }
+      - { start: 0x00295cf0,    type: .rodata,    name: sdk/lib_00203F70                                 }
+      - { start: 0x00295d98,    type: .rodata,    name: sdk/lib_00204B40                                 }
+      - { start: 0x00295ee0,    type: .rodata,    name: sdk/lib_00205730                                 }
+      - { start: 0x00296038,    type: .rodata,    name: sdk/lib_002074E0                                 }
+      - { start: 0x00296130,    type: .rodata,    name: sdk/lib_00207E90                                 }
+      - { start: 0x00296140,    type: .rodata,    name: sdk/lib_002081D8                                 }
       - { start: 0x002961b0,    type: rodata,     name: DBG/shDBG_fontHandle                             }
       - { start: 0x00296230,    type: rodata,     name: Chacter/m3_edb                                   }
       - { start: 0x00296360,    type: .rodata,    name: sh2_init                                         }
@@ -1039,9 +1096,12 @@ segments:
       # ------------------------------------------    lit4   ------------------------------------------- #
       - { start: 0x002c8380,    type: lit4,       name: lit4                                             }
       # ------------------------------------------    sdata   ------------------------------------------ #
-      - { start: 0x002c8400,    type: sdata,      name: sdata                                            }
+      - { start: 0x002c8400,    type: sdata,      name: SH2_common/sh_vu0                                }
+      - { start: 0x002c8450,    type: .sdata,     name: sound/shd_vs_sp                                  }
+      # -------------------------------------------   sbss   ------------------------------------------- #
+      - { vram:  0x003c7d80,    type: .sbss,      name: sound/shd_vs_sp                                  }
       # -------------------------------------------    bss   ------------------------------------------- #
-      - { vram:  0x003c7d80,    type: bss,        name: bss_0x03c7d80                                    }
+      - { vram:  0x003c7d88,    type: bss,        name: bss_0x03c7d88                                    }
       - { vram:  0x003c7e00,    type: .bss,       name: Chacter/anime                                    }
 #     - { vram:  0x003c7e60,    type: bss,        name: Chacter/kt                                       }
       - { vram:  0x003c7ea0,    type: bss,        name: Chacter/m3_angela                                }
@@ -1146,7 +1206,28 @@ segments:
       - { vram:  0x0116dcc0,    type: bss,        name: Font/fj_man                                      }
       - { vram:  0x0116dd40,    type: bss,        name: DBG/dbflag                                       }
       - { vram:  0x0116e3d0,    type: .bss,       name: Item/otn_itemmain                                }
-      - { vram:  0x0116e670,    type: bss,        name: bss_0x116e670                                    }
+      - { vram:  0x0116e670,    type: bss,        name: Enemy/en_fly                                     }
+      - { vram:  0x0116e670,    type: bss,        name: Enemy/en_fly                                     }
+      - { vram:  0x0116E980,    type: bss,        name: crt0                                             } # GCC data
+      - { vram:  0x0116EB00,    type: .bss,       name: sdk/lib_001E7928                                 } # GCC data
+      - { vram:  0x0116EDD8,    type: .bss,       name: sdk/lib_001EBB18                                 } # GCC data
+      - { vram:  0x0116EDF0,    type: .bss,       name: sdk/lib_001EC810                                 } # GCC data
+      - { vram:  0x0116EE00,    type: .bss,       name: sdk/lib_001EFCA8                                 } # GCC data
+      - { vram:  0x0116F610,    type: .bss,       name: sdk/lib_001F0008                                 } # GCC data
+      - { vram:  0x0116F640,    type: .bss,       name: sdk/lib_001F01E8                                 } # GCC data
+      - { vram:  0x0116FA00,    type: .bss,       name: sdk/lib_001F0708                                 } # GCC data
+      - { vram:  0x0116FA80,    type: .bss,       name: sdk/lib_001F1080                                 } # GCC data
+      - { vram:  0x0116FD00,    type: .bss,       name: sdk/lib_001F17C8                                 } # GCC data
+      - { vram:  0x01171540,    type: .bss,       name: sdk/lib_001F2728                                 } # GCC data
+      - { vram:  0x011728C0,    type: .bss,       name: sdk/lib_001F5C98                                 } # GCC data
+      - { vram:  0x01172AC0,    type: .bss,       name: sdk/lib_001F5EF8                                 } # GCC data
+      - { vram:  0x01172D00,    type: .bss,       name: sdk/lib_001F6890                                 } # GCC data
+      - { vram:  0x01172D80,    type: .bss,       name: sdk/lib_001FC348                                 } # GCC data
+      - { vram:  0x01174380,    type: .bss,       name: sdk/lib_00202868                                 } # GCC data
+      - { vram:  0x011743C0,    type: .bss,       name: sdk/lib_00204B40                                 } # GCC data
+      - { vram:  0x01174E00,    type: .bss,       name: sdk/lib_00205730                                 } # GCC data
+      - { vram:  0x011751C0,    type: .bss,       name: sdk/lib_00207E90                                 } # GCC data
+      - { vram:  0x01175380,    type: .bss,       name: sdk/lib_002081D8                                 } # GCC data
       - { vram:  0x011b6a70,    type: .bss,       name: Item/otn_option                                  }
       - { vram:  0x011b6af0,    type: .bss,       name: Chacter/m3_play_common                           }
       - { vram:  0x011b6b00,    type: bss,        name: bss_0x11b6b00                                    }
@@ -1157,7 +1238,16 @@ segments:
       - { vram:  0x011e7080,    type: .bss,       name: DS_Pad/ds_sequencer                              }
       - { vram:  0x011e7850,    type: bss,        name: bss_0x11e7850                                    }
       - { vram:  0x011e7860,    type: .bss,       name: DBG/dbsw_sys                                     }
-      - { vram:  0x011e7880,    type: bss,        name: bss_0x11e7880                                    }
+      - { vram: 0x011E7880,     type: bss,        name: Event/chara_data_load                            }
+      - { vram: 0x011E8358,     type: bss,        name: MC/mc                                            }
+      - { vram: 0x011EA360,     type: bss,        name: Event/stage/stg_tgs_trial                        }
+      - { vram: 0x011EA388,     type: bss,        name: Chacter/m3_rpjames                               }
+      - { vram: 0x011EA3A0,     type: .bss,       name: sound/shd_vs_sp                                  }
+      - { vram: 0x011EACC0,     type: bss,        name: GFW/sh2_DrawEnvData                              }
+      - { vram: 0x011EACE0,     type: bss,        name: LoadBg/loadbg_camdata                            }
+      - { vram: 0x011EB500,     type: bss,        name: LoadBg/loadbg_common                             }
+      - { vram: 0x011EB510,     type: bss,        name: Chacter/bg_chara                                 }
+      - { vram: 0x011EB540,     type: bss,        name: Effect2/hh_class_glass_piece_00                  }
       - { vram:  0x011eb550,    type: .bss,       name: Effect2/hh_class_water_01                        }
       - { vram:  0x011eb570,    type: .bss,       name: Effect2/hh_class_water_02                        }
       - { vram:  0x011eb5f0,    type: .bss,       name: Effect2/hh_class_water_10                        }

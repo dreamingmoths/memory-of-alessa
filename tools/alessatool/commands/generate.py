@@ -189,6 +189,9 @@ def generate_lcf(args: GenerationArgs):
             f"\t\tALIGNALL(0x{alignment:X});",
         ]
 
+        if section_type == ".bss":
+            block += ["\t\t.    = ALIGN(0x80);"]
+
         for entry in objects:
             alignment = entry.segment.ld_align_segment_start 
             if alignment is not None:
