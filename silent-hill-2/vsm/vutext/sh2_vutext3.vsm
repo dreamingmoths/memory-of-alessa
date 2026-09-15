@@ -1,0 +1,28 @@
+/* SCE CONFIDENTIAL
+ "PlayStation 2" Programmer Tool Runtime Library Release 3.0.2
+ */
+/*
+ *               Graphics Framework Sample Program
+ *                  
+ *              ---- Scene Viewer Version 0.30 ----
+ * 
+ *      Copyright (C) 1998-2000 Sony Computer Entertainment Inc.
+ *                        All Rights Reserved.
+ *
+ *                          Name : micro.dsm
+ *
+ *            Version   Date           Design      Log
+ *  --------------------------------------------------------------------
+ *            0.30      Apr,4,2000     thatake     Beta0
+ */
+
+.include "vumacros.h"
+.global sce_micro_base
+
+.align 4
+sce_micro_base:
+DMAret *
+MPG 0, *
+.include "vu1basico.vsm" 
+.EndMPG
+.EndDmaData

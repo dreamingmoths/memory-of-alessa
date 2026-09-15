@@ -1,0 +1,422 @@
+.global shamap1_mpg1_load
+
+.DmaPackVif 0
+
+.balign 0x40
+
+/* .vudata */
+  shamap1_mpg1_load:
+    /* .dma.1 */
+    /* 007AC0 ---------------- */  DMAret *
+    /* 007AC0 A100006000000000 */  /* DMAret 0xa1 */
+
+    /* .vif.2 */
+    /* 007AC8 00000000-------- */  /* VIFnop */
+    /* 007ACC --------00000000 */  /* VIFnop */
+    /* 007AD0 00000000-------- */  /* VIFnop */
+    /* 007AD4 ---------------- */  MPG 0x0, *
+    /* 007AD4 --------0000004A */  /* MPG 0x0, 0x100 */
+
+  shamap1_mpg1_top:
+    /* .vu.5 */
+    /* 007AD8 08000040FF020000 */  NOP                                    /* | */  B          Main
+    /* 007AE0 BC060D80FF020000 */  NOP                                    /* | */  XTOP       vi13
+    /* 007AE8 01000040FF020000 */  NOP                                    /* | */  B          Init
+    /* 007AF0 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Init:
+    /* .vu.6 */
+    /* 007AF8 FA01E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01, 506(vi00)
+    /* 007B00 F8010C10FF020000 */  NOP                                    /* | */  IADDIU     vi12, vi00, 504
+    /* 007B08 FC660080FF020000 */  NOP                                    /* | */  XGKICK     vi12
+    /* 007B10 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 007B18 FA0BE003FF020000 */  NOP                                    /* | */  SQ.xyzw    vf01, 1018(vi00)
+
+  Main:
+    /* .vu.7 */
+    /* 007B20 11000110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi00, World
+    /* 007B28 00080F4AFF020000 */  NOP                                    /* | */  JALR       vi15, vi01
+    /* 007B30 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007B38 11010110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi00, Draw0
+    /* 007B40 00080F4AFF020000 */  NOP                                    /* | */  JALR       vi15, vi01
+    /* 007B48 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Main_end:
+    /* .vu.8 */
+    /* 007B50 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 007B58 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World:
+    /* .vu.9 */
+    /* 007B60 B2680280FF020000 */  NOP                                    /* | */  IADDI      vi02, vi13, 2
+    /* 007B68 00684308FF020000 */  NOP                                    /* | */  ILW.z      vi03,   0(vi13)
+    /* 007B70 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007B78 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World_loop:
+    /* .vu.10 */
+    /* 007B80 00108108FF020000 */  NOP                                    /* | */  ILW.y      vi01,   0(vi02)
+    /* 007B88 01100809FF020000 */  NOP                                    /* | */  ILW.x      vi08,   1(vi02)
+    /* 007B90 00104408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   0(vi02)
+    /* 007B98 00102508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   0(vi02)
+    /* 007BA0 25080110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi01, WorldTable
+    /* 007BA8 0040F001FF020000 */  NOP                                    /* | */  LQ.xyzw    vf16,   0(vi08)
+    /* 007BB0 0140F101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf17,   1(vi08)
+    /* 007BB8 0240F201FF020000 */  NOP                                    /* | */  LQ.xyzw    vf18,   2(vi08)
+    /* 007BC0 00080E4AFF020000 */  NOP                                    /* | */  JALR       vi14, vi01
+    /* 007BC8 0340F301FF020000 */  NOP                                    /* | */  LQ.xyzw    vf19,   3(vi08)
+    /* 007BD0 B2100280FF020000 */  NOP                                    /* | */  IADDI      vi02, vi02, 2
+    /* 007BD8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007BE0 F31F0252FF020000 */  NOP                                    /* | */  IBNE       vi02, vi03, World_loop
+    /* 007BE8 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World_end:
+    /* .vu.11 */
+    /* 007BF0 00780048FF020000 */  NOP                                    /* | */  JR         vi15
+    /* 007BF8 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  WorldTable:
+    /* .vu.12 */
+    /* 007C00 07000040FF020000 */  NOP                                    /* | */  B          World0_loop
+    /* 007C08 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C10 2C000040FF020000 */  NOP                                    /* | */  B          World1
+    /* 007C18 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C20 61000040FF020000 */  NOP                                    /* | */  B          World2
+    /* 007C28 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C30 9E000040FF020000 */  NOP                                    /* | */  B          World3
+    /* 007C38 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World0_loop:
+  World0:
+    /* .vu.13 */
+    /* 007C40 0020C801FF020000 */  NOP                                    /* | */  LQ.xyz     vf08,   0(vi04)
+    /* 007C48 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C50 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C58 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C60 3C0300803D41C801 */  ITOF4.xyz    vf08, vf08                /* | */  NOP
+    /* 007C68 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C70 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007C78 3C030080BF99E001 */  MULAw.xyzw    ACC, vf19, vf00w         /* | */  NOP
+    /* 007C80 3C030080BE90E801 */  MADDAz.xyzw   ACC, vf18, vf08z         /* | */  NOP
+    /* 007C88 3C030080BD88E801 */  MADDAy.xyzw   ACC, vf17, vf08y         /* | */  NOP
+    /* 007C90 3C0300800882E801 */  MADDx.xyzw   vf08, vf16, vf08x         /* | */  NOP
+    /* 007C98 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CA0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CA8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CB0 BC03E881FF020000 */  NOP                                    /* | */  DIV           Q, vf00w, vf08w
+    /* 007CB8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CC0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CC8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CD0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CD8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CE0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CE8 3C0300801C42C001 */  MULq.xyz     vf08, vf08, Q             /* | */  NOP
+    /* 007CF0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007CF8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D00 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D08 3C0300807D41C801 */  FTOI4.xyz    vf08, vf08                /* | */  NOP
+    /* 007D10 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D18 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D20 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D28 0040E403FF020000 */  NOP                                    /* | */  SQ.xyzw    vf08,   0(vi04)
+    /* 007D30 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D38 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D40 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D48 B2200480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 2
+    /* 007D50 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D58 DC2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, World0_loop
+    /* 007D60 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World0_end:
+    /* .vu.14 */
+    /* 007D68 00700048FF020000 */  NOP                                    /* | */  JR         vi14
+    /* 007D70 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World1:
+    /* .vu.15 */
+    /* 007D78 01108908FF020000 */  NOP                                    /* | */  ILW.y      vi09,   1(vi02)
+    /* 007D80 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D88 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D90 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007D98 0048F401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf20,   0(vi09)
+    /* 007DA0 0148F501FF020000 */  NOP                                    /* | */  LQ.xyzw    vf21,   1(vi09)
+    /* 007DA8 0248F601FF020000 */  NOP                                    /* | */  LQ.xyzw    vf22,   2(vi09)
+    /* 007DB0 0348F701FF020000 */  NOP                                    /* | */  LQ.xyzw    vf23,   3(vi09)
+
+  World1_loop:
+    /* .vu.16 */
+    /* 007DB8 0020C801FF020000 */  NOP                                    /* | */  LQ.xyz     vf08,   0(vi04)
+    /* 007DC0 0120E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   1(vi04)
+    /* 007DC8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007DD0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007DD8 3C0300803D41C801 */  ITOF4.xyz    vf08, vf08                /* | */  NOP
+    /* 007DE0 3C0300803E09E101 */  ITOF12.xyzw  vf01, vf01                /* | */  NOP
+    /* 007DE8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007DF0 3C030080BFB9E001 */  MULAw.xyzw    ACC, vf23, vf00w         /* | */  NOP
+    /* 007DF8 3C030080BEB0E801 */  MADDAz.xyzw   ACC, vf22, vf08z         /* | */  NOP
+    /* 007E00 3C030080BDA8E801 */  MADDAy.xyzw   ACC, vf21, vf08y         /* | */  NOP
+    /* 007E08 3C03008088A2E801 */  MADDx.xyzw   vf10, vf20, vf08x         /* | */  NOP
+    /* 007E10 3C030080BF99E001 */  MULAw.xyzw    ACC, vf19, vf00w         /* | */  NOP
+    /* 007E18 3C030080BE90E801 */  MADDAz.xyzw   ACC, vf18, vf08z         /* | */  NOP
+    /* 007E20 3C030080BD88E801 */  MADDAy.xyzw   ACC, vf17, vf08y         /* | */  NOP
+    /* 007E28 3C0300800882E801 */  MADDx.xyzw   vf08, vf16, vf08x         /* | */  NOP
+    /* 007E30 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E38 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E40 3C030080BD51E101 */  MULAy.xyzw    ACC, vf10, vf01y         /* | */  NOP
+    /* 007E48 3C0300800842E101 */  MADDx.xyzw   vf08, vf08, vf01x         /* | */  NOP
+    /* 007E50 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E58 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E60 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E68 BC03E881FF020000 */  NOP                                    /* | */  DIV           Q, vf00w, vf08w
+    /* 007E70 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E78 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E80 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E88 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E90 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007E98 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EA0 3C0300801C42C001 */  MULq.xyz     vf08, vf08, Q             /* | */  NOP
+    /* 007EA8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EB0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EB8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EC0 3C0300807D41C801 */  FTOI4.xyz    vf08, vf08                /* | */  NOP
+    /* 007EC8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007ED0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007ED8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EE0 0040E403FF020000 */  NOP                                    /* | */  SQ.xyzw    vf08,   0(vi04)
+    /* 007EE8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EF0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007EF8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007F00 B2200480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 2
+    /* 007F08 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007F10 D42F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, World1_loop
+    /* 007F18 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World1_end:
+    /* .vu.17 */
+    /* 007F20 00700048FF020000 */  NOP                                    /* | */  JR         vi14
+    /* 007F28 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World2:
+    /* .vu.18 */
+    /* 007F30 01108908FF020000 */  NOP                                    /* | */  ILW.y      vi09,   1(vi02)
+    /* 007F38 01104A08FF020000 */  NOP                                    /* | */  ILW.z      vi10,   1(vi02)
+    /* 007F40 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007F48 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007F50 0048F401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf20,   0(vi09)
+    /* 007F58 0148F501FF020000 */  NOP                                    /* | */  LQ.xyzw    vf21,   1(vi09)
+    /* 007F60 0248F601FF020000 */  NOP                                    /* | */  LQ.xyzw    vf22,   2(vi09)
+    /* 007F68 0348F701FF020000 */  NOP                                    /* | */  LQ.xyzw    vf23,   3(vi09)
+    /* 007F70 0050F801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf24,   0(vi10)
+    /* 007F78 0150F901FF020000 */  NOP                                    /* | */  LQ.xyzw    vf25,   1(vi10)
+    /* 007F80 0250FA01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf26,   2(vi10)
+    /* 007F88 0350FB01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf27,   3(vi10)
+
+  World2_loop:
+    /* .vu.19 */
+    /* 007F90 0020C801FF020000 */  NOP                                    /* | */  LQ.xyz     vf08,   0(vi04)
+    /* 007F98 0120E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   1(vi04)
+    /* 007FA0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007FA8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007FB0 3C0300803D41C801 */  ITOF4.xyz    vf08, vf08                /* | */  NOP
+    /* 007FB8 3C0300803E09E101 */  ITOF12.xyzw  vf01, vf01                /* | */  NOP
+    /* 007FC0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 007FC8 3C030080BFB9E001 */  MULAw.xyzw    ACC, vf23, vf00w         /* | */  NOP
+    /* 007FD0 3C030080BEB0E801 */  MADDAz.xyzw   ACC, vf22, vf08z         /* | */  NOP
+    /* 007FD8 3C030080BDA8E801 */  MADDAy.xyzw   ACC, vf21, vf08y         /* | */  NOP
+    /* 007FE0 3C03008088A2E801 */  MADDx.xyzw   vf10, vf20, vf08x         /* | */  NOP
+    /* 007FE8 3C030080BFD9E001 */  MULAw.xyzw    ACC, vf27, vf00w         /* | */  NOP
+    /* 007FF0 3C030080BED0E801 */  MADDAz.xyzw   ACC, vf26, vf08z         /* | */  NOP
+    /* 007FF8 3C030080BDC8E801 */  MADDAy.xyzw   ACC, vf25, vf08y         /* | */  NOP
+    /* 008000 3C03008008C3E801 */  MADDx.xyzw   vf12, vf24, vf08x         /* | */  NOP
+    /* 008008 3C030080BF99E001 */  MULAw.xyzw    ACC, vf19, vf00w         /* | */  NOP
+    /* 008010 3C030080BE90E801 */  MADDAz.xyzw   ACC, vf18, vf08z         /* | */  NOP
+    /* 008018 3C030080BD88E801 */  MADDAy.xyzw   ACC, vf17, vf08y         /* | */  NOP
+    /* 008020 3C0300800882E801 */  MADDx.xyzw   vf08, vf16, vf08x         /* | */  NOP
+    /* 008028 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008030 3C030080BE61E101 */  MULAz.xyzw    ACC, vf12, vf01z         /* | */  NOP
+    /* 008038 3C030080BD50E101 */  MADDAy.xyzw   ACC, vf10, vf01y         /* | */  NOP
+    /* 008040 3C0300800842E101 */  MADDx.xyzw   vf08, vf08, vf01x         /* | */  NOP
+    /* 008048 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008050 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008058 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008060 BC03E881FF020000 */  NOP                                    /* | */  DIV           Q, vf00w, vf08w
+    /* 008068 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008070 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008078 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008080 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008088 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008090 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008098 3C0300801C42C001 */  MULq.xyz     vf08, vf08, Q             /* | */  NOP
+    /* 0080A0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080A8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080B0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080B8 3C0300807D41C801 */  FTOI4.xyz    vf08, vf08                /* | */  NOP
+    /* 0080C0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080D8 0040E403FF020000 */  NOP                                    /* | */  SQ.xyzw    vf08,   0(vi04)
+    /* 0080E0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080E8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0080F8 B2200480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 2
+    /* 008100 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008108 D02F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, World2_loop
+    /* 008110 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World2_end:
+    /* .vu.20 */
+    /* 008118 00700048FF020000 */  NOP                                    /* | */  JR         vi14
+    /* 008120 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World3:
+    /* .vu.21 */
+    /* 008128 01108908FF020000 */  NOP                                    /* | */  ILW.y      vi09,   1(vi02)
+    /* 008130 01104A08FF020000 */  NOP                                    /* | */  ILW.z      vi10,   1(vi02)
+    /* 008138 01102B08FF020000 */  NOP                                    /* | */  ILW.w      vi11,   1(vi02)
+    /* 008140 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008148 0048F401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf20,   0(vi09)
+    /* 008150 0148F501FF020000 */  NOP                                    /* | */  LQ.xyzw    vf21,   1(vi09)
+    /* 008158 0248F601FF020000 */  NOP                                    /* | */  LQ.xyzw    vf22,   2(vi09)
+    /* 008160 0348F701FF020000 */  NOP                                    /* | */  LQ.xyzw    vf23,   3(vi09)
+    /* 008168 0050F801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf24,   0(vi10)
+    /* 008170 0150F901FF020000 */  NOP                                    /* | */  LQ.xyzw    vf25,   1(vi10)
+    /* 008178 0250FA01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf26,   2(vi10)
+    /* 008180 0350FB01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf27,   3(vi10)
+    /* 008188 0058FC01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf28,   0(vi11)
+    /* 008190 0158FD01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf29,   1(vi11)
+    /* 008198 0258FE01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf30,   2(vi11)
+    /* 0081A0 0358FF01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf31,   3(vi11)
+
+  World3_loop:
+    /* .vu.22 */
+    /* 0081A8 0020C801FF020000 */  NOP                                    /* | */  LQ.xyz     vf08,   0(vi04)
+    /* 0081B0 0120E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   1(vi04)
+    /* 0081B8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0081C0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0081C8 3C0300803D41C801 */  ITOF4.xyz    vf08, vf08                /* | */  NOP
+    /* 0081D0 3C0300803E09E101 */  ITOF12.xyzw  vf01, vf01                /* | */  NOP
+    /* 0081D8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0081E0 3C030080BFB9E001 */  MULAw.xyzw    ACC, vf23, vf00w         /* | */  NOP
+    /* 0081E8 3C030080BEB0E801 */  MADDAz.xyzw   ACC, vf22, vf08z         /* | */  NOP
+    /* 0081F0 3C030080BDA8E801 */  MADDAy.xyzw   ACC, vf21, vf08y         /* | */  NOP
+    /* 0081F8 3C03008088A2E801 */  MADDx.xyzw   vf10, vf20, vf08x         /* | */  NOP
+    /* 008200 3C030080BFD9E001 */  MULAw.xyzw    ACC, vf27, vf00w         /* | */  NOP
+    /* 008208 3C030080BED0E801 */  MADDAz.xyzw   ACC, vf26, vf08z         /* | */  NOP
+    /* 008210 3C030080BDC8E801 */  MADDAy.xyzw   ACC, vf25, vf08y         /* | */  NOP
+    /* 008218 3C03008008C3E801 */  MADDx.xyzw   vf12, vf24, vf08x         /* | */  NOP
+    /* 008220 3C030080BFF9E001 */  MULAw.xyzw    ACC, vf31, vf00w         /* | */  NOP
+    /* 008228 3C030080BEF0E801 */  MADDAz.xyzw   ACC, vf30, vf08z         /* | */  NOP
+    /* 008230 3C030080BDE8E801 */  MADDAy.xyzw   ACC, vf29, vf08y         /* | */  NOP
+    /* 008238 3C03008088E3E801 */  MADDx.xyzw   vf14, vf28, vf08x         /* | */  NOP
+    /* 008240 3C030080BF99E001 */  MULAw.xyzw    ACC, vf19, vf00w         /* | */  NOP
+    /* 008248 3C030080BE90E801 */  MADDAz.xyzw   ACC, vf18, vf08z         /* | */  NOP
+    /* 008250 3C030080BD88E801 */  MADDAy.xyzw   ACC, vf17, vf08y         /* | */  NOP
+    /* 008258 3C0300800882E801 */  MADDx.xyzw   vf08, vf16, vf08x         /* | */  NOP
+    /* 008260 3C030080BF71E101 */  MULAw.xyzw    ACC, vf14, vf01w         /* | */  NOP
+    /* 008268 3C030080BE60E101 */  MADDAz.xyzw   ACC, vf12, vf01z         /* | */  NOP
+    /* 008270 3C030080BD50E101 */  MADDAy.xyzw   ACC, vf10, vf01y         /* | */  NOP
+    /* 008278 3C0300800842E101 */  MADDx.xyzw   vf08, vf08, vf01x         /* | */  NOP
+    /* 008280 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008288 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008290 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008298 BC03E881FF020000 */  NOP                                    /* | */  DIV           Q, vf00w, vf08w
+    /* 0082A0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082A8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082B0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082B8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082C0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082D0 3C0300801C42C001 */  MULq.xyz     vf08, vf08, Q             /* | */  NOP
+
+    /* .vif.23 */
+    /* 0082D8 00000000-------- */  /* VIFnop */
+    /* 0082DC --------0001404A */  /* MPG 0x100, 0x40 */
+
+    /* .vu.26 */
+    /* 0082E0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082E8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0082F8 3C0300807D41C801 */  FTOI4.xyz    vf08, vf08                /* | */  NOP
+    /* 008300 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008308 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008310 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008318 0040E403FF020000 */  NOP                                    /* | */  SQ.xyzw    vf08,   0(vi04)
+    /* 008320 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008328 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008330 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008338 B2200480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 2
+    /* 008340 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008348 CC2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, World3_loop
+    /* 008350 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  World3_end:
+    /* .vu.27 */
+    /* 008358 00700048FF020000 */  NOP                                    /* | */  JR         vi14
+    /* 008360 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Draw0:
+    /* .vu.28 */
+    /* 008368 01684408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   1(vi13)
+    /* 008370 01682508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   1(vi13)
+    /* 008378 FA010A10FF020000 */  NOP                                    /* | */  IADDIU     vi10, vi00, 506
+
+  Draw0_loop:
+    /* .vu.29 */
+    /* 008380 00200609FF020000 */  NOP                                    /* | */  ILW.x      vi06,   0(vi04)
+    /* 008388 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008390 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008398 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083A0 0030E601FF020000 */  NOP                                    /* | */  LQ.xyzw    vf06,   0(vi06)
+    /* 0083A8 0150260AFF020000 */  NOP                                    /* | */  ISW.w      vi06,   1(vi10)
+    /* 0083B0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083B8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083C0 0130CA03FF020000 */  NOP                                    /* | */  SQ.xyz     vf06,   1(vi10)
+    /* 0083C8 00208708FF020000 */  NOP                                    /* | */  ILW.y      vi07,   0(vi04)
+    /* 0083D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083D8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083E0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0083E8 0038E701FF020000 */  NOP                                    /* | */  LQ.xyzw    vf07,   0(vi07)
+    /* 0083F0 0250270AFF020000 */  NOP                                    /* | */  ISW.w      vi07,   2(vi10)
+    /* 0083F8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008400 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008408 0238CA03FF020000 */  NOP                                    /* | */  SQ.xyz     vf07,   2(vi10)
+    /* 008410 00204808FF020000 */  NOP                                    /* | */  ILW.z      vi08,   0(vi04)
+    /* 008418 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008420 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008428 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008430 0040E801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf08,   0(vi08)
+    /* 008438 0350280AFF020000 */  NOP                                    /* | */  ISW.w      vi08,   3(vi10)
+    /* 008440 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008448 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008450 0340CA03FF020000 */  NOP                                    /* | */  SQ.xyz     vf08,   3(vi10)
+    /* 008458 00202908FF020000 */  NOP                                    /* | */  ILW.w      vi09,   0(vi04)
+    /* 008460 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008468 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008470 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008478 0048E901FF020000 */  NOP                                    /* | */  LQ.xyzw    vf09,   0(vi09)
+    /* 008480 0450290AFF020000 */  NOP                                    /* | */  ISW.w      vi09,   4(vi10)
+    /* 008488 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008490 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 008498 0448CA03FF020000 */  NOP                                    /* | */  SQ.xyz     vf09,   4(vi10)
+    /* 0084A0 72200480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 1
+    /* 0084A8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0084B0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0084B8 FC560080FF020000 */  NOP                                    /* | */  XGKICK     vi10
+    /* 0084C0 D72F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, Draw0_loop
+    /* 0084C8 00520A10FF020000 */  NOP                                    /* | */  IADDIU     vi10, vi10, 512
+
+  Draw0_end:
+    /* .vu.30 */
+    /* 0084D0 00780048FF020000 */  NOP                                    /* | */  JR         vi15
+    /* 0084D8 3C030080FF020000 */  NOP                                    /* | */  NOP
+.EndDmaData
+.EndMPG
+
+  .balign 0x10
+  shamap1_mpg1_end:
+  shamap1_mpg1_size:
+    /* 0084E0 40010000-------- */  .word (shamap1_mpg1_end - shamap1_mpg1_load) / 8 - 4
+    /* 0084E4 --------00000000 */  /* .word 0x00000000 */
+    /* 0084E8 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 0084F0 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 0084F8 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */

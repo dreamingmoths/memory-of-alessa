@@ -1,0 +1,49 @@
+/* SCE CONFIDENTIAL
+ "PlayStation 2" Programmer Tool Runtime Library Release 3.0
+ */
+/*
+ *                           Shift-JIS
+ *
+ *      Copyright (C) 2000 Sony Computer Entertainment Inc.
+ *                        All Rights Reserved.
+ *
+ *                            yuvfrfl.dsm
+ *                   vu1 function for yuv->rgb translation & send to GIF
+ *
+ *       Version        Date            Design      Log
+ *  --------------------------------------------------------------------
+ *			Nov.26.1999	aoki	    
+ */
+.include "vumacros.h"
+
+.global load_yuvfrfl0_mpg	; micro Program for upper field
+.global load_yuvfrfl1_mpg	; micro Program for lower field
+;.DmaPackVif 0			; TTE
+.DmaPackVif 1			; TTEON
+
+.align 7
+load_yuvfrfl0_mpg:
+DMAret *
+unpack 4, 4, V4_32, 0x0, *
+yuvfrfl0_conv:
+fxyzw  0.125, 0.875, 0.5, 0	; for #0,#4,#8,#12  (up,down,holizontal,-)
+fxyzw  0.625, 0.375, 0.5, 0	; for #2,#6,#10,#14
+.EndUnpack
+MPG 0, *
+.include "yuvfrfl0.vsm" 
+.EndMPG
+.EndDmaData
+
+.align 7
+load_yuvfrfl1_mpg:
+DMAret *
+unpack 4, 4, V4_32, 0x0, *
+yuvfrfl1_conv:
+fxyzw  0.375, 0.625, 0.5, 0	; for #1,#5,#9,#13
+fxyzw  0.875, 0.125, 0.5, 0	; for #3,#7,#11,#15
+.EndUnpack
+MPG 0, *
+.include "yuvfrfl1.vsm" 
+.EndMPG
+; --- CrCb convolution vector
+.EndDmaData

@@ -1,0 +1,60 @@
+.global model3_mpg0_clip0
+
+.vu
+
+.DmaPackVif 0
+
+.balign 0x40
+
+
+model3_mpg0_clip0:
+  Clip0:
+    /* 000000 00680110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi13, 0
+    /* 000008 01684A08FF020000 */  NOP                                    /* | */  ILW.z      vi10,   1(vi13)
+    /* 000010 01682B08FF020000 */  NOP                                    /* | */  ILW.w      vi11,   1(vi13)
+    /* 000018 00008212FF020000 */  NOP                                    /* | */  ISUBIU     vi02, vi00, 8192
+    /* 000020 00008312FF020000 */  NOP                                    /* | */  ISUBIU     vi03, vi00, 8192
+
+  Clip0_loop:
+    /* 000028 72500A80FF020000 */  NOP                                    /* | */  IADDI      vi10, vi10, 1
+    /* 000030 FF570C09FF020000 */  NOP                                    /* | */  ILW.x      vi12,  -1(vi10)
+    /* 000038 FF578D08FF020000 */  NOP                                    /* | */  ILW.y      vi13,  -1(vi10)
+    /* 000040 FF574E08FF020000 */  NOP                                    /* | */  ILW.z      vi14,  -1(vi10)
+    /* 000048 FF572F08FF020000 */  NOP                                    /* | */  ILW.w      vi15,  -1(vi10)
+    /* 000050 00602408FF020000 */  NOP                                    /* | */  ILW.w      vi04,   0(vi12)
+    /* 000058 00682508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   0(vi13)
+    /* 000060 00702608FF020000 */  NOP                                    /* | */  ILW.w      vi06,   0(vi14)
+    /* 000068 00782708FF020000 */  NOP                                    /* | */  ILW.w      vi07,   0(vi15)
+    /* 000070 B0100280FF020000 */  NOP                                    /* | */  IADD       vi02, vi02, vi02
+    /* 000078 B5100480FF020000 */  NOP                                    /* | */  IOR        vi02, vi02, vi04
+    /* 000080 B4100380FF020000 */  NOP                                    /* | */  IAND       vi02, vi02, vi03
+    /* 000088 35630280FF020000 */  NOP                                    /* | */  IOR        vi12, vi12, vi02
+    /* 000090 FF570C0BFF020000 */  NOP                                    /* | */  ISW.x      vi12,  -1(vi10)
+    /* 000098 B0100280FF020000 */  NOP                                    /* | */  IADD       vi02, vi02, vi02
+    /* 0000A0 B5100580FF020000 */  NOP                                    /* | */  IOR        vi02, vi02, vi05
+    /* 0000A8 B4100380FF020000 */  NOP                                    /* | */  IAND       vi02, vi02, vi03
+    /* 0000B0 756B0280FF020000 */  NOP                                    /* | */  IOR        vi13, vi13, vi02
+    /* 0000B8 FF578D0AFF020000 */  NOP                                    /* | */  ISW.y      vi13,  -1(vi10)
+    /* 0000C0 B0100280FF020000 */  NOP                                    /* | */  IADD       vi02, vi02, vi02
+    /* 0000C8 B5100680FF020000 */  NOP                                    /* | */  IOR        vi02, vi02, vi06
+    /* 0000D0 B4100380FF020000 */  NOP                                    /* | */  IAND       vi02, vi02, vi03
+    /* 0000D8 B5730280FF020000 */  NOP                                    /* | */  IOR        vi14, vi14, vi02
+    /* 0000E0 FF574E0AFF020000 */  NOP                                    /* | */  ISW.z      vi14,  -1(vi10)
+    /* 0000E8 B0100280FF020000 */  NOP                                    /* | */  IADD       vi02, vi02, vi02
+    /* 0000F0 B5100780FF020000 */  NOP                                    /* | */  IOR        vi02, vi02, vi07
+    /* 0000F8 B4100380FF020000 */  NOP                                    /* | */  IAND       vi02, vi02, vi03
+    /* 000100 F57B0280FF020000 */  NOP                                    /* | */  IOR        vi15, vi15, vi02
+    /* 000108 E35F0A52FF020000 */  NOP                                    /* | */  IBNE       vi10, vi11, Clip0_loop
+    /* 000110 FF572F0AFF020000 */  NOP                                    /* | */  ISW.w      vi15,  -1(vi10)
+
+  Clip0_end:
+    /* 000118 00080D10FF020040 */  NOP[E]                                 /* | */  IADDIU     vi13, vi01, 0
+    /* 000120 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000128 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+
+.balign 0x10
+model3_mpg0_clip0_size:
+    /* 000130 13000000-------- */  .word  (model3_mpg0_clip0_size - model3_mpg0_clip0) / 16
+    /* 000134 --------00000000 */  /* .word 0x00000000 */
+    /* 000138 00000000-------- */  /* .word 0x00000000 */
+    /* 00013C --------00000000 */  /* .word 0x00000000 */

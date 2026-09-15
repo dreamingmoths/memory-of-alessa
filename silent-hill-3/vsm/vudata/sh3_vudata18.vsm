@@ -1,0 +1,39 @@
+.global VU_PRG_00004E40
+
+.vu
+
+.DmaPackVif 0
+
+.balign 0x40
+
+VU_PRG_00004E40:
+    /* 004E40 BD060C80FF020000 */  NOP                                    /* | */  XITOP      vi12
+    /* 004E48 00684408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   0(vi13)
+    /* 004E50 00682508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   0(vi13)
+    /* 004E58 0160FF01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf31,   1(vi12)
+    /* 004E60 0060FE01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf30,   0(vi12)
+    /* 004E68 0320E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   3(vi04)
+    /* 004E70 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004E78 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004E80 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004E88 3C0300803E21E601 */  ITOF12.xyzw  vf06, vf04                /* | */  NOP
+    /* 004E90 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004E98 0720E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   7(vi04)
+    /* 004EA0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004EA8 3C030080BEF99F01 */  MULAz.xy      ACC, vf31, vf31z         /* | */  NOP
+
+  VU_LBL_004EB0:
+    /* 004EB0 3C0300804A319F01 */  MADDz.xy     vf05, vf06, vf31z         /* | */  NOP
+    /* 004EB8 0B20E4013E21E601 */  ITOF12.xyzw  vf06, vf04                /* | */  LQ.xyzw    vf04,  11(vi04)
+    /* 004EC0 32210480BEF99F01 */  MULAz.xy      ACC, vf31, vf31z         /* | */  IADDI      vi04, vi04, 4
+    /* 004EC8 FC2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, VU_LBL_004EB0
+    /* 004ED0 FD2F8403FF020000 */  NOP                                    /* | */  SQ.xy      vf05,  -3(vi04)
+    /* 004ED8 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 004EE0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 004EE8 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+
+  .balign 0x10
+    /* 004EF0 0B000000-------- */  .word 0x0000000B
+    /* 004EF4 --------00000000 */  /* .word 0x00000000 */
+    /* 004EF8 00000000-------- */  /* .word 0x00000000 */
+    /* 004EFC --------00000000 */  /* .word 0x00000000 */

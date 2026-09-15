@@ -1,0 +1,50 @@
+.global VU0_MIC_CAL_UTIL_DMAHEAD
+
+/* .vutext */
+  VU0_MIC_CAL_UTIL_DMAHEAD:
+    /* .dma.1 */
+    /* 000000 ---------------- */  DMAret *
+    /* 000000 1000006000000000 */  /* DMAret 0x10 */
+
+  VU0_MIC_CAL_UTIL_HEAD:
+    /* .vif.3 */
+    /* .vif.2 */
+    /* 000008 00000000-------- */  /* VIFnop */
+    /* 00000C ---------------- */  MPG 0x0, *
+    /* 00000C --------00001F4A */  /* MPG 0x0, 0x1f */
+
+    /* .vu.6 */
+    /* 000010 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000018 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000020 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000028 40000B102CAED401 */  SUB.xyz      vf24, vf21, vf20          /* | */  IADDIU     vi11, vi00, 64
+    /* 000030 3C0300806CBED601 */  SUB.xyz      vf25, vf23, vf22          /* | */  NOP
+    /* 000038 3C030080ACB6D401 */  SUB.xyz      vf26, vf22, vf20          /* | */  NOP
+    /* 000040 3C030080ECBED401 */  SUB.xyz      vf27, vf23, vf20          /* | */  NOP
+    /* 000048 3C0300802CA7D601 */  SUB.xyz      vf28, vf20, vf22          /* | */  NOP
+    /* 000050 3C0300806CAFD601 */  SUB.xyz      vf29, vf21, vf22          /* | */  NOP
+    /* 000058 3C030080FED2D801 */  OPMULA.xyz    ACC, vf26, vf24          /* | */  NOP
+    /* 000060 3C030080AEC2DA01 */  OPMSUB.xyz   vf10, vf24, vf26          /* | */  NOP
+    /* 000068 3C030080FEDAD801 */  OPMULA.xyz    ACC, vf27, vf24          /* | */  NOP
+    /* 000070 3C030080EEC2DB01 */  OPMSUB.xyz   vf11, vf24, vf27          /* | */  NOP
+    /* 000078 3C030080FEE2D901 */  OPMULA.xyz    ACC, vf28, vf25          /* | */  NOP
+    /* 000080 3C030080EECBDC01 */  OPMSUB.xyz   vf15, vf25, vf28          /* | */  NOP
+    /* 000088 3C030080FEEAD901 */  OPMULA.xyz    ACC, vf29, vf25          /* | */  NOP
+    /* 000090 3C03008019538B00 */  MULy.y       vf12, vf10, vf11y         /* | */  NOP
+    /* 000098 3C0300802ECCDD01 */  OPMSUB.xyz   vf16, vf25, vf29          /* | */  NOP
+    /* 0000A0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000A8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000B0 00580A34FF020000 */  NOP                                    /* | */  FMAND      vi10, vi11
+    /* 0000B8 3C030080597C9000 */  MULy.y       vf17, vf15, vf16y         /* | */  NOP
+    /* 0000C0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000D8 00580934FF020000 */  NOP                                    /* | */  FMAND      vi09, vi11
+    /* 0000E0 74520980FF020000 */  NOP                                    /* | */  IAND       vi09, vi10, vi09
+    /* 0000E8 744A0B80FF020000 */  NOP                                    /* | */  IAND       vi09, vi09, vi11
+    /* 0000F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0000F8 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000100 3C030080FF020000 */  NOP                                    /* | */  NOP
+.EndMPG
+    /* 000108 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+.EndDmaData

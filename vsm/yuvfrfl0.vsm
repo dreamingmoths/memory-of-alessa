@@ -1,0 +1,396 @@
+/* SCE CONFIDENTIAL
+ "PlayStation 2" Programmer Tool Runtime Library Release 3.0
+ */
+/*
+ *	Y/Cb/Cr interlaced frame data=> RGBA top field data
+ *
+ *
+ *                           Shift-JIS
+ *
+ *      Copyright (C) 2000 Sony Computer Entertainment Inc.
+ *                        All Rights Reserved.
+ *
+ *                            yuvfrfl0.vsm
+ *
+ *       Version        Date            Design      Log
+ *  --------------------------------------------------------------------
+ *			Nov.24.1999	aoki
+ */
+; ---------------------------------------------------------------------
+; VUMEM 0x7-0xa matrix  0xb trans 0xc Xloop,Yloop 0xd XYZ2-offset (at initialize)
+; VUMEM  0x7-0x159/0x15a-0x2ac/0x2ad-0x3ff triple buffer (size=0x153)
+;
+; BASE+0 giftag
+;      1-0x100 output data
+;      0x1 next base
+;      0x2 X0/Y0/Z20
+;      0x3-0x152 input data
+;
+; VI01 start0: base pointer (XTOP)  LOOPY:
+; VI02 store pointer
+; VI03 Y load pointer
+; VI04 XYZ2/X
+; VI05 Y loop counter
+; VI06 xgkick pointer
+; VI07-10 tmp (start0: Xd/Yd, LOOPY: XYZ2/X tmp, uv-rightside pointer)
+; VI11 XYZ2/Y
+; VI12 Y loop counter keep
+; VI13 initialize: matrix root, start0: Xd/Yd, start0/LOOPY: Y recover)
+; VI14 next base;
+; VI15 uv load pointer
+
+; VF01 XYZ2 register
+; VF02 mat[0]
+; VF03 mat[1]
+; VF04 mat[2]
+; VF05 mat[3]
+; VF06 Translation
+; VF07 CbCr conv-weight 1
+; VF08 CbCr work
+; :
+; VF09
+; VF10 XYZ2 int register
+; :
+; VF13
+; VF14 tmp XYZ2 register for LOOPX
+; VF15 CbCr conv-weight 2
+; VF16 RGBA work register
+; :
+; VF31
+
+; --------------------------------------------------------------------
+	; --- initialize --- (each field)
+	NOP				IADDIU VI01,VI00,0x15A	; base pointer
+	NOP				IADDIU VI13,VI00,0x7	; matrix root
+	NOP				LQ.xyzw VF07,0(VI00)	; CbCr conv-weight1(#0,4,8,12)
+	NOP				LQ.xyzw VF15,1(VI00)	; CbCr conv-weight2(#2,6,10,14)
+	NOP				LQ.xyzw VF02,0(VI13)    ; VF02-VF05=MATRIX[0-3]
+	NOP				LQ.xyzw VF03,1(VI13)    ;
+	NOP				LQ.xyzw VF04,2(VI13)    ;
+	NOP				LQ.xyzw VF05,3(VI13)    ;
+	NOP				LQ.xyzw VF06,4(VI13)    ; Trans
+
+	NOP				ILW.y VI12,5(VI13)	; Y loop counter for keep
+	NOP				LQ.xyzw VF01,6(VI13)	; XYZ2 work for store
+	NOP				MFIR.z VF01,VI00	; Z=0 (was Y recover data)
+	NOP				ILW.x VI04,6(VI13)	; XYZ2/X
+	NOP				ILW.y VI11,6(VI13)	; XYZ2/Y
+	NOP[E]				ILW.z VI13,6(VI13)	; Y recover
+	NOP				NOP
+START0_0: ; each block
+	NOP				ILW.y VI08,0x2(VI01)	; VI08 XYZ2/Yd
+	NOP				ILW.x VI07,0x2(VI01)	; VI07 XYZ2/Xd
+
+	NOP				ILW.x VI14,0x1(VI01)	; next base pointer
+	NOP				IADDIU VI06,VI01,0	; xgkick pointer
+	NOP				IADD VI11,VI11,VI08	; VI11 XYZ2/Y+=Yd
+	NOP				IADD VI04,VI04,VI07	; VI04 XYZ2/X+=Xd
+	NOP				IADDIU VI15,VI01,0xb3	; VI15 uv load pointer
+	NOP				IADDIU VI03,VI01,0x3	; VI03 Y load pointer
+	NOP				MFIR.y VF01,VI11	; VF01 set XYZ2/Y
+	NOP				IADDIU VI05,VI12,0	; VI05 Y-counter
+	NOP				IADDIU VI02,VI01,0x1	; VI02 store pointer
+
+	NOP				LQ.yz VF16,0x13(VI01)	;
+	NOP				LQ.yz VF17,0x23(VI01)	;
+	NOP				LQ.yz VF18,0x33(VI01)	;
+	NOP				LQ.yz VF19,0x43(VI01)	;
+	NOP				LQ.yz VF20,0x53(VI01)	;
+	NOP				LQ.yz VF21,0x63(VI01)	;
+	NOP				SQ.yz VF16,0x11c(VI01)	;
+	NOP				SQ.yz VF17,0x11b(VI01)	;
+	NOP				SQ.yz VF17,0x11a(VI01)	;
+	NOP				SQ.yz VF18,0x119(VI01)	;
+	NOP				SQ.yz VF18,0x118(VI01)	;
+	NOP				SQ.yz VF19,0x117(VI01)	;
+	NOP				SQ.yz VF19,0x116(VI01)	;
+	NOP				SQ.yz VF20,0x115(VI01)	;
+	NOP				SQ.yz VF20,0x114(VI01)	;
+	NOP				SQ.yz VF21,0x113(VI01)	;
+	NOP NOP
+	NOP NOP
+	NOP NOP
+LOOPY_0: ; each line
+	NOP				LQ.yz VF08, 0(VI15)     ; load uv
+	NOP				LQ.yz VF09, 16(VI15)    ;
+
+	NOP				LQ.yz VF16, 1(VI15)	;
+	NOP				LQ.yz VF17, 17(VI15)	;
+	ITOF0.yz VF08, VF08		LQ.yz VF18, 2(VI15)	;
+	ITOF0.yz VF09, VF09		LQ.yz VF19, 18(VI15)	;
+	;; -- add weight to UV sample
+        NOP       			LQ.xw VF16, 0(VI03)    ;  load Y/A
+        NOP                   		LQ.xw VF17, 1(VI03)    ;
+        MULx.yz VF08,VF08,VF07		LQ.xw VF18, 2(VI03)    ;
+        MULy.yz VF09,VF09,VF07		LQ.xw VF19, 3(VI03)    ;
+        ;; -- ItoF YUV [0-3]
+        ITOF0.xyzw VF16, VF16		LQ.yz VF20, 3(VI15)     ; load uv
+        ITOF0.xyzw VF17, VF17		LQ.yz VF21, 19(VI15)    ;
+        ITOF0.xyzw VF18, VF18		LQ.yz VF22, 4(VI15)     ;
+        ITOF0.xyzw VF19, VF19		LQ.yz VF23, 20(VI15)    ;
+	;; -- add weight to UV sample
+	MULx.yz	VF24,VF16,VF07		LQ.xw VF20, 4(VI03)     ; load Y/A
+	MULy.yz	VF25,VF17,VF07		LQ.xw VF21, 5(VI03)     ;
+	MULx.yz	VF26,VF18,VF07		LQ.xw VF22, 6(VI03)     ;
+	MULy.yz	VF27,VF19,VF07		LQ.xw VF23, 7(VI03)     ;
+	;; -- ItoF YUV [4-7]
+	ITOF0.xyzw VF20, VF20		NOP
+	ITOF0.xyzw VF21, VF21		NOP
+	ITOF0.xyzw VF22, VF22		NOP
+	ITOF0.xyzw VF23, VF23		NOP
+	;; -- add weight to UV sample
+	MULx.yz	VF28,VF20,VF07		NOP
+	MULy.yz	VF29,VF21,VF07		NOP
+	MULx.yz	VF30,VF22,VF07		NOP
+	MULy.yz	VF31,VF23,VF07		NOP
+	;; -- add vertical
+	ADD.yz VF16,VF08,VF09		NOP
+
+	ADD.yz VF18,VF24,VF25		NOP
+	ADD.yz VF20,VF26,VF27		NOP
+	ADD.yz VF22,VF28,VF29		NOP
+	ADD.yz VF24,VF30,VF31		NOP
+	;; -- add holizontal
+	ADD.yz VF17,VF16,VF18		NOP
+	ADD.yz VF19,VF18,VF20		NOP
+	ADD.yz VF21,VF20,VF22		NOP
+	ADD.yz VF23,VF22,VF24		NOP
+	;; -- *=0.5
+	MULz.yz VF17,VF17,VF07		NOP
+	MULz.yz VF19,VF19,VF07		NOP
+	MULz.yz VF21,VF21,VF07		NOP
+	MULz.yz VF23,VF23,VF07          NOP
+        ;; --- offset pixel #0-3
+        ADD.xyzw VF16,VF16,VF06		NOP
+        ADD.xyzw VF17,VF17,VF06		NOP
+        ADD.xyzw VF18,VF18,VF06		NOP
+        ADD.xyzw VF19,VF19,VF06		NOP
+	;; -- apply matrix to #0
+	MULAx.xyzw  ACC,  VF02, VF16x	NOP
+	MADDAy.xyzw ACC,  VF03, VF16y	NOP
+	MADDAz.xyzw ACC,  VF04, VF16z	NOP
+	MADDw.xyzw  VF16, VF05, VF16w	NOP
+	;; -- apply matrix to #1
+	MULAx.xyzw  ACC,  VF02, VF17x	NOP
+	MADDAy.xyzw ACC,  VF03, VF17y	NOP
+	MADDAz.xyzw ACC,  VF04, VF17z	NOP
+	MADDw.xyzw  VF17, VF05, VF17w	NOP
+	;; -- apply matrix to #2
+	MULAx.xyzw  ACC,  VF02, VF18x	NOP
+	MADDAy.xyzw ACC,  VF03, VF18y	NOP
+	MADDAz.xyzw ACC,  VF04, VF18z	NOP
+	MADDw.xyzw  VF18, VF05, VF18w	NOP
+	;; -- apply matrix to #3
+	MULAx.xyzw  ACC,  VF02, VF19x	LOI 0.5
+	MADDAy.xyzw ACC,  VF03, VF19y	NOP
+	MADDAz.xyzw ACC,  VF04, VF19z	NOP
+	MADDw.xyzw  VF19, VF05, VF19w	NOP
+	;; --- format data #0-3
+	ADDi.xyzw VF16, VF16,I 	NOP
+	ADDi.xyzw VF17, VF17,I 	NOP
+	ADDi.xyzw VF18, VF18,I 	NOP
+	ADDi.xyzw VF19, VF19,I 	NOP
+
+	MAXx.xyzw VF16, VF16,VF00       LOI 255.0
+	MAXx.xyzw VF17, VF17,VF00       NOP
+	MAXx.xyzw VF18, VF18,VF00       NOP
+	MAXx.xyzw VF19, VF19,VF00       NOP
+	;; --- FtoI RGBA [0-3]
+	MINIi.xyzw VF16, VF16, I         NOP
+	MINIi.xyzw VF17, VF17, I         NOP
+	MINIi.xyzw VF18, VF18, I         NOP
+	MINIi.xyzw VF19, VF19, I         NOP
+	;; 
+	FTOI0.xyzw VF16, VF16           NOP
+	FTOI0.xyzw VF17, VF17           NOP
+	FTOI0.xyzw VF18, VF18           NOP
+	FTOI0.xyzw VF19, VF19           NOP
+
+	;; -- offset #4-7
+	ADD.xyzw VF20,VF20,VF06		SQ.xyzw VF16, 0(VI02)   ; store RGBA [0-3]
+	ADD.xyzw VF21,VF21,VF06		SQ.xyzw VF17, 2(VI02)   ;
+	ADD.xyzw VF22,VF22,VF06		SQ.xyzw VF18, 4(VI02)   ;
+	ADD.xyzw VF23,VF23,VF06		SQ.xyzw VF19, 6(VI02)   ;
+	;; -- apply matrix to #4
+	MULAx.xyzw  ACC,  VF02, VF20x   IADDIU VI07,VI01,0x112  ; VI07=base+0x112
+	MADDAy.xyzw ACC,  VF03, VF20y   IADD VI07,VI07,VI05     ; VI07=base+0x112+YLOOP
+	MADDAz.xyzw ACC,  VF04, VF20z   NOP                     ; (base+[0x11A..0x113])
+	MADDw.xyzw  VF20, VF05, VF20w   NOP
+	;; -- apply matrix to #5
+	MULAx.xyzw  ACC,  VF02, VF21x   MOVE.yz VF09,VF24       ;
+	MADDAy.xyzw ACC,  VF03, VF21y   NOP
+	MADDAz.xyzw ACC,  VF04, VF21z   NOP
+	MADDw.xyzw  VF21, VF05, VF21w   LOI 0.5
+	;; -- apply matrix to #6
+	MULAx.xyzw  ACC,  VF02, VF22x   LQ.yz VF24, 5(VI15)     ; load uv
+	MADDAy.xyzw ACC,  VF03, VF22y   LQ.yz VF25, 21(VI15)    ;
+	MADDAz.xyzw ACC,  VF04, VF22z   LQ.yz VF26, 6(VI15)     ;
+	MADDw.xyzw  VF22, VF05, VF22w   LQ.yz VF27, 22(VI15)    ;
+	;; -- apply matrix to #7
+	MULAx.xyzw  ACC,  VF02, VF23x   LQ.xw VF24, 8(VI03)    ;  load Y/A
+	MADDAy.xyzw ACC,  VF03, VF23y   LQ.xw VF25, 9(VI03)    ;
+	MADDAz.xyzw ACC,  VF04, VF23z	LQ.xw VF26, 10(VI03)    ;
+	MADDw.xyzw  VF23, VF05, VF23w   LQ.xw VF27, 11(VI03)    ;
+	;; --- format data --
+	ADDi.xyzw VF20, VF20,I         LQ.yz VF28, 7(VI15)     ; load uv
+	ADDi.xyzw VF21, VF21,I		LQ.yz VF29, 23(VI15)    ;
+	ADDi.xyzw VF22, VF22,I		LQ.yz VF30, 2(VI07)     ; base+0x11C..0x115
+	ADDi.xyzw VF23, VF23,I         LQ.yz VF31, 0(VI07)     ; base+0x11A..0x113
+
+	MAXx.xyzw VF20, VF20,VF00       LOI 255.0
+	MAXx.xyzw VF21, VF21,VF00       NOP
+	MAXx.xyzw VF22, VF22,VF00       NOP
+	MAXx.xyzw VF23, VF23,VF00       NOP
+	;; --- FtoI RGBA [4-7]
+	MINIi.xyzw VF20, VF20, I         LQ.xw VF28, 12(VI03)    ; load Y/A
+	MINIi.xyzw VF21, VF21, I         LQ.xw VF29, 13(VI03)    ;         
+	MINIi.xyzw VF22, VF22, I         LQ.xw VF30, 14(VI03)    ;         
+	MINIi.xyzw VF23, VF23, I         LQ.xw VF31, 15(VI03)    ;         
+	;;
+	FTOI0.xyzw VF20, VF20           NOP
+	FTOI0.xyzw VF21, VF21           NOP
+	FTOI0.xyzw VF22, VF22           NOP
+	FTOI0.xyzw VF23, VF23           LOI 0.5
+        ;; -- ItoF YUV [8-11]
+        ITOF0.xyzw VF24, VF24           SQ.xyzw VF20, 8(VI02)   ; store RGBA [4-7]
+        ITOF0.xyzw VF25, VF25           SQ.xyzw VF21,10(VI02)   ;
+        ITOF0.xyzw VF26, VF26           SQ.xyzw VF22,12(VI02)   ;
+        ITOF0.xyzw VF27, VF27           SQ.xyzw VF23,14(VI02)   ;
+        ;; -- add weight to UV sample
+        MULx.yz VF16,VF24,VF07		IADDI VI05, VI05, -1    ; VI05 Y loop counter--
+        MULy.yz VF17,VF25,VF07          NOP
+        MULx.yz VF18,VF26,VF07          NOP
+        MULy.yz VF19,VF27,VF07          NOP
+        ;; -- ItoF YUV [12-15]
+        ITOF0.xyzw VF28, VF28 		MOVE.yz VF24,VF09
+        ITOF0.xyzw VF29, VF29           NOP
+        ITOF0.xyzw VF30, VF30           NOP
+        ITOF0.xyzw VF31, VF31           NOP
+        ;; -- add weight to UV sample
+        MULx.yz VF20,VF28,VF07          IADDIU VI07,VI00,1      ; VI07=1                   
+        MULy.yz VF21,VF29,VF07          IAND VI07,VI05,VI07     ; VI07=YLOOP&1             
+        MULx.yz VF22,VF30,VF07          IADD VI07,VI07,VI07     ; VI07=(YLOOP&1)<<1        
+        MULy.yz VF23,VF31,VF07          IADD VI07,VI07,VI07     ; VI07=(YLOOP&1)<<2        
+        ;; -- add vertical		                                                   
+        ADD.yz VF26,VF16,VF17		IADD VI07,VI07,VI07     ; VI07=(YLOOP&1)<<3        
+        ADD.yz VF28,VF18,VF19		IADD VI07,VI07,VI07     ; VI07=(YLOOP&1)<<4        
+        ADD.yz VF30,VF20,VF21		IADD VI15,VI15,VI07     ; uv load pointer+=16&YLOOP
+        ADD.yz VF08,VF22,VF23		NOP                     ;
+        ;; -- add holizontal
+        ADD.yz VF25,VF24,VF26		MOVE.xyzw VF10,VF01     ; set XYZ2/YZ2
+        ADD.yz VF27,VF26,VF28		MOVE.xyzw VF11,VF01     ;
+        ADD.yz VF29,VF28,VF30		MOVE.xyzw VF12,VF01     ;
+        ADD.yz VF31,VF30,VF08		MOVE.xyzw VF13,VF01     ;
+        ;; -- *=0.5
+        MULz.yz VF25,VF25,VF07		IADDIU VI07,VI04,0      ; cal XYZ2/X [0-3]
+        MULz.yz VF27,VF27,VF07		IADDIU VI08,VI04,0x10   ;
+        MULz.yz VF29,VF29,VF07		IADDIU VI09,VI04,0x20   ;
+        MULz.yz VF31,VF31,VF07		IADDIU VI10,VI04,0x30   ;
+	;; --- offset #8-11
+	ADD.xyzw VF24,VF24,VF06		MFIR.x VF10,VI07        ; set XYZ2/X
+	ADD.xyzw VF25,VF25,VF06		MFIR.x VF11,VI08        ;
+	ADD.xyzw VF26,VF26,VF06		MFIR.x VF12,VI09        ;
+	ADD.xyzw VF27,VF27,VF06		MFIR.x VF13,VI10        ;
+	;; -- apply matrix to #8
+	MULAx.xyzw  ACC,  VF02, VF24x   SQ.xyzw VF10, 1(VI02)   ; store XYZ2
+	MADDAy.xyzw ACC,  VF03, VF24y   SQ.xyzw VF11, 3(VI02)   ;
+	MADDAz.xyzw ACC,  VF04, VF24z   SQ.xyzw VF12, 5(VI02)   ;
+	MADDw.xyzw  VF24, VF05, VF24w   SQ.xyzw VF13, 7(VI02)   ;
+	;; -- apply matrix to #9
+	MULAx.xyzw  ACC,  VF02, VF25x   IADDIU VI07,VI04,0x40   ; cal XYZ2/X [4-7]
+	MADDAy.xyzw ACC,  VF03, VF25y   IADDIU VI08,VI04,0x50   ;
+	MADDAz.xyzw ACC,  VF04, VF25z   IADDIU VI09,VI04,0x60   ;
+	MADDw.xyzw  VF25, VF05, VF25w   IADDIU VI10,VI04,0x70   ;
+	;; -- apply matrix to #10
+	MULAx.xyzw  ACC,  VF02, VF26x   MFIR.x VF10,VI07        ; set XYZ2/X
+	MADDAy.xyzw ACC,  VF03, VF26y   MFIR.x VF11,VI08        ;
+	MADDAz.xyzw ACC,  VF04, VF26z   MFIR.x VF12,VI09        ;
+	MADDw.xyzw  VF26, VF05, VF26w   MFIR.x VF13,VI10        ;
+	;; -- apply matrix to #11
+	MULAx.xyzw  ACC,  VF02, VF27x   SQ.xyzw VF10, 9(VI02)   ; store XYZ2
+	MADDAy.xyzw ACC,  VF03, VF27y   SQ.xyzw VF11, 11(VI02)  ;
+	MADDAz.xyzw ACC,  VF04, VF27z   SQ.xyzw VF12, 13(VI02)  ;
+	MADDw.xyzw  VF27, VF05, VF27w   SQ.xyzw VF13, 15(VI02)  ;
+	;; --- format data --
+	ADDi.xyzw VF24, VF24,I         IADDIU VI07,VI04,0x80   ; cal XYZ2/X [8-11]
+	ADDi.xyzw VF25, VF25,I         IADDIU VI08,VI04,0x90   ;
+	ADDi.xyzw VF26, VF26,I         IADDIU VI09,VI04,0xA0   ;
+	ADDi.xyzw VF27, VF27,I         IADDIU VI10,VI04,0xB0   ;
+
+	MAXx.xyzw VF24, VF24,VF00       LOI 255.0
+	MAXx.xyzw VF25, VF25,VF00       NOP
+	MAXx.xyzw VF26, VF26,VF00       NOP
+	MAXx.xyzw VF27, VF27,VF00       NOP
+	;; --- FtoI RGBA [8-11]
+	MINIi.xyzw VF24, VF24, I		MFIR.x VF10,VI07        ; set XYZ2/X
+	MINIi.xyzw VF25, VF25, I		MFIR.x VF11,VI08        ;           
+	MINIi.xyzw VF26, VF26, I		MFIR.x VF12,VI09        ;           
+	MINIi.xyzw VF27, VF27, I		MFIR.x VF13,VI10        ;           
+	;; 
+	FTOI0.xyzw VF24, VF24           SQ.xyzw VF10, 17(VI02)  ; store XYZ2
+	FTOI0.xyzw VF25, VF25           SQ.xyzw VF11, 19(VI02)  ;
+	FTOI0.xyzw VF26, VF26           SQ.xyzw VF12, 21(VI02)  ;
+	FTOI0.xyzw VF27, VF27           SQ.xyzw VF13, 23(VI02)  ;
+	;; -- offset #12-15
+	ADD.xyzw VF28,VF28,VF06		IADDIU VI07,VI04,0xC0   ; cal XYZ2/X [12-15]
+	ADD.xyzw VF29,VF29,VF06		IADDIU VI08,VI04,0xD0   ;
+	ADD.xyzw VF30,VF30,VF06		IADDIU VI09,VI04,0xE0   ;
+	ADD.xyzw VF31,VF31,VF06		IADDIU VI10,VI04,0xF0   ;
+	;; -- apply matrix to #12
+	MULAx.xyzw  ACC,  VF02, VF28x   MFIR.x VF10,VI07        ; set XYZ2/X
+	MADDAy.xyzw ACC,  VF03, VF28y   MFIR.x VF11,VI08        ;
+	MADDAz.xyzw ACC,  VF04, VF28z   MFIR.x VF12,VI09        ;
+	MADDw.xyzw  VF28, VF05, VF28w   MFIR.x VF13,VI10        ;
+	;; -- apply matrix to #13
+	MULAx.xyzw  ACC,  VF02, VF29x   SQ.xyzw VF10, 25(VI02)  ; store XYZ2
+	MADDAy.xyzw ACC,  VF03, VF29y   SQ.xyzw VF11, 27(VI02)  ;
+	MADDAz.xyzw ACC,  VF04, VF29z   SQ.xyzw VF12, 29(VI02)  ;
+	MADDw.xyzw  VF29, VF05, VF29w   SQ.xyzw VF13, 31(VI02)  ;
+	;; -- apply matrix to #14
+	MULAx.xyzw  ACC,  VF02, VF30x   IADDIU VI11,VI11,16     ; VI11 XYZ2/Y+=16
+	MADDAy.xyzw ACC,  VF03, VF30y   IADDIU VI03,VI03,32     ; Y load pointer+=32
+	MADDAz.xyzw ACC,  VF04, VF30z   NOP                     ;
+	MADDw.xyzw  VF30, VF05, VF30w   MFIR.y VF01,VI11        ; set new XYZ2/Y
+	;; -- apply matrix to #15
+	MULAx.xyzw  ACC,  VF02, VF31x	LOI 0.5
+	MADDAy.xyzw ACC,  VF03, VF31y	NOP                     ;
+	MADDAz.xyzw ACC,  VF04, VF31z	NOP                     ;
+	MADDw.xyzw  VF31, VF05, VF31w	NOP                     ;
+	;; --- format data --
+	ADDi.xyzw VF28, VF28,I         NOP
+	ADDi.xyzw VF29, VF29,I         NOP
+	ADDi.xyzw VF30, VF30,I         NOP
+	ADDi.xyzw VF31, VF31,I         NOP
+
+	MAXx.xyzw VF28, VF28,VF00       LOI 255.0
+	MAXx.xyzw VF29, VF29,VF00       NOP
+	MAXx.xyzw VF30, VF30,VF00       NOP
+	MAXx.xyzw VF31, VF31,VF00       NOP
+	;; --- FtoI RGBA [12-15]
+	MINIi.xyzw VF28, VF28, I		NOP
+	MINIi.xyzw VF29, VF29, I         NOP  
+	MINIi.xyzw VF30, VF30, I         NOP  
+	MINIi.xyzw VF31, VF31, I         NOP  
+	;; --- FtoI RGBA [12-15]
+	FTOI0.xyzw VF28, VF28           SQ.xyzw VF24,16(VI02)   ; store RGBA [8-11]
+	FTOI0.xyzw VF29, VF29           SQ.xyzw VF25,18(VI02)   ;
+	FTOI0.xyzw VF30, VF30           SQ.xyzw VF26,20(VI02)   ;
+	FTOI0.xyzw VF31, VF31           SQ.xyzw VF27,22(VI02)   ;
+	;; --- change VF07<=>VF15 (work: VF08)
+	ADD.xyz VF08,VF07,VF00		SQ.xyzw VF28,24(VI02)   ; store RGBA [12-15]
+	ADD.xyz VF07,VF15,VF00		SQ.xyzw VF29,26(VI02)   ;
+	NOP				SQ.xyzw VF30,28(VI02)   ;
+	NOP				SQ.xyzw VF31,30(VI02)   ;
+
+	ADD.xyz VF15,VF08,VF00		IADDIU VI02,VI02,32	; store pointer+=32
+	; --- yloop branch ---
+	NOP				IBNE VI05, VI00, LOOPY_0; Y loop branch
+	NOP				NOP
+	; --- send result to GIF and stop ---
+	NOP				IADDIU VI01,VI14,0	; base=nextbase
+ 	NOP				IADD VI11,VI11,VI13	; XYZ2/Y recover
+	NOP[E]				NOP
+	NOP				NOP      ;Take care!! Don't forget.
+	NOP				XGKICK VI06		; kick
+	NOP				B START0_0
+	NOP				NOP

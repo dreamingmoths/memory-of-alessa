@@ -1,0 +1,121 @@
+.global model3_mpg0_envmap
+
+.vu
+
+.DmaPackVif 0
+
+.balign 0x40
+
+/* .vudata */
+  model3_mpg0_envmap:
+  EnvMap:
+    /* .vu.0 */
+    /* 002500 0000003FFF020080 */  NOP                                    /* | */  LOI        0.5
+    /* 002508 BD060180AC07E001 */  SUB.xyzw     vf30, vf00, vf00          /* | */  XITOP      vi01
+    /* 002510 00684408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   0(vi13)
+    /* 002518 00682508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   0(vi13)
+    /* 002520 0008E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   0(vi01)
+    /* 002528 0108E201C3F7E001 */  ADDw.xyzw    vf31, vf30, vf00w         /* | */  LQ.xyzw    vf02,   1(vi01)
+    /* 002530 0208E30162F7E001 */  ADDi.xyzw    vf29, vf30, I             /* | */  LQ.xyzw    vf03,   2(vi01)
+
+  EnvMap_loop:
+    /* .vu.1 */
+    /* 002538 32200280FF020000 */  NOP                                    /* | */  IADDI      vi02, vi04, 0
+    /* 002540 03204408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   3(vi04)
+    /* 002548 0010C401FF020000 */  NOP                                    /* | */  LQ.xyz     vf04,   0(vi02)
+    /* 002550 0110C501FF020000 */  NOP                                    /* | */  LQ.xyz     vf05,   1(vi02)
+    /* 002558 0000003FAC21C181 */  SUB.xyz      vf06, vf04, vf01          /* | */  LOI        0.5
+    /* 002560 3C030080A82AC501 */  ADD.xyz      vf10, vf05, vf05          /* | */  NOP
+    /* 002568 3C030080EA31C601 */  MUL.xyz      vf07, vf06, vf06          /* | */  NOP
+    /* 002570 3C0300803D380701 */  ADDAy.x       ACC, vf07, vf07y         /* | */  NOP
+    /* 002578 3C030080CAF90701 */  MADDz.x      vf07, vf31, vf07z         /* | */  NOP
+    /* 002580 BE036780FF020000 */  NOP                                    /* | */  RSQRT         Q, vf00w, vf07x
+    /* 002588 BF0300801C32C001 */  MULq.xyz     vf08, vf06, Q             /* | */  WAITQ
+    /* 002590 3C0300806A52C801 */  MUL.xyz      vf09, vf10, vf08          /* | */  NOP
+    /* 002598 3C030080BF41C001 */  MULAw.xyz     ACC, vf08, vf00w         /* | */  NOP
+    /* 0025A0 3C030080FC28C901 */  MSUBAx.xyz    ACC, vf05, vf09x         /* | */  NOP
+    /* 0025A8 3C030080FD28C901 */  MSUBAy.xyz    ACC, vf05, vf09y         /* | */  NOP
+    /* 0025B0 3C030080CE2AC901 */  MSUBz.xyz    vf11, vf05, vf09z         /* | */  NOP
+    /* 0025B8 3C030080FD594C01 */  ABS.xz   vf12, vf11                    /* | */  NOP
+    /* 0025C0 3C03008006600C01 */  SUBz.x       vf00, vf12, vf12z         /* | */  NOP
+    /* 0025C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0025D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0025D8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0025E0 0200012CFF020000 */  NOP                                    /* | */  FSAND      vi01, 0x2
+    /* 0025E8 0F000150FF020000 */  NOP                                    /* | */  IBEQ       vi01, vi00, EnvMap_1
+    /* 0025F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  EnvMap_0:
+    /* .vu.2 */
+    /* 0025F8 BC5B0B81FF020000 */  NOP                                    /* | */  DIV           Q, vf11x, vf11z
+    /* 002600 3C03008028584000 */  ADD.z        vf00, vf11, vf00          /* | */  NOP
+    /* 002608 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002610 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002618 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002620 0200012CFF020000 */  NOP                                    /* | */  FSAND      vi01, 0x2
+    /* 002628 03000152FF020000 */  NOP                                    /* | */  IBNE       vi01, vi00, EnvMap_01
+    /* 002630 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  EnvMap_00:
+    /* .vu.3 */
+    /* 002638 02000040FF020000 */  NOP                                    /* | */  B          EnvMap_0end
+    /* 002640 3C030080BC012300 */  MULAx.w       ACC, vf00, vf03x         /* | */  NOP
+
+  EnvMap_01:
+    /* .vu.4 */
+    /* 002648 3C030080BD012300 */  MULAy.w       ACC, vf00, vf03y         /* | */  NOP
+
+  EnvMap_0end:
+    /* .vu.5 */
+    /* 002650 BF03008061132000 */  MADDq.w      vf13, vf02, Q             /* | */  WAITQ
+    /* 002658 0D000040FF020000 */  NOP                                    /* | */  B          EnvMap_hoge
+    /* 002660 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  EnvMap_1:
+    /* .vu.6 */
+    /* 002668 BC5B4B80FF020000 */  NOP                                    /* | */  DIV           Q, vf11z, vf11x
+    /* 002670 3C03008028580001 */  ADD.x        vf00, vf11, vf00          /* | */  NOP
+    /* 002678 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002680 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002688 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 002690 0200012CFF020000 */  NOP                                    /* | */  FSAND      vi01, 0x2
+    /* 002698 03000152FF020000 */  NOP                                    /* | */  IBNE       vi01, vi00, EnvMap_11
+    /* 0026A0 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  EnvMap_10:
+    /* .vu.7 */
+    /* 0026A8 02000040FF020000 */  NOP                                    /* | */  B          EnvMap_1end
+    /* 0026B0 3C030080BE012300 */  MULAz.w       ACC, vf00, vf03z         /* | */  NOP
+
+  EnvMap_11:
+    /* .vu.8 */
+    /* 0026B8 3C030080BF012300 */  MULAw.w       ACC, vf00, vf03w         /* | */  NOP
+
+  EnvMap_1end:
+    /* .vu.9 */
+    /* 0026C0 BF03008065132000 */  MSUBq.w      vf13, vf02, Q             /* | */  WAITQ
+
+  EnvMap_hoge:
+    /* .vu.10 */
+    /* 0026C8 01682202BEEA2000 */  MULA.w        ACC, vf29, vf00          /* | */  SQ.w       vf13,   1(vi02)
+    /* 0026D0 3C03008049EB2B00 */  MADDy.w      vf13, vf29, vf11y         /* | */  NOP
+    /* 0026D8 03682202FF020000 */  NOP                                    /* | */  SQ.w       vf13,   3(vi02)
+    /* 0026E0 CA2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, EnvMap_loop
+    /* 0026E8 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  EnvMap_end:
+    /* .vu.11 */
+    /* 0026F0 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 0026F8 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  .balign 0x10
+  model3_mpg0_envmap_size:
+    /* 002700 20000000-------- */  .word (model3_mpg0_envmap_size - model3_mpg0_envmap) / 16
+    /* 002704 --------00000000 */  /* .word 0x00000000 */
+    /* 002708 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002710 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002718 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002720 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002728 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002730 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 002738 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */

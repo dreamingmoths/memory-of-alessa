@@ -1,0 +1,62 @@
+.global VU0_MIC_CAL_UTIL_DMAHEAD
+
+VU0_MIC_CAL_UTIL_DMAHEAD:
+    /* .dma.0 */
+    /* 00E900 ---------------- */  DMAret *
+    /* 00E900 1000006000000000 */  /* DMAret 0x10 */
+
+  VU0_MIC_CAL_UTIL_HEAD:
+    /* .vif.0 */
+    /* 00E908 00000000-------- */  /* VIFnop */
+    /* 00E90C ---------------- */  MPG 0x0, *
+    /* 00E90C --------00001F4A */  /* MPG 0x0, 0x1f */
+
+    /* .vu.0 */
+    /* 00E910 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E918 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E920 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E928 40000B102CAED401 */  SUB.xyz      vf24, vf21, vf20          /* | */  IADDIU     vi11, vi00, 64
+    /* 00E930 3C0300806CBED601 */  SUB.xyz      vf25, vf23, vf22          /* | */  NOP
+    /* 00E938 3C030080ACB6D401 */  SUB.xyz      vf26, vf22, vf20          /* | */  NOP
+    /* 00E940 3C030080ECBED401 */  SUB.xyz      vf27, vf23, vf20          /* | */  NOP
+    /* 00E948 3C0300802CA7D601 */  SUB.xyz      vf28, vf20, vf22          /* | */  NOP
+    /* 00E950 3C0300806CAFD601 */  SUB.xyz      vf29, vf21, vf22          /* | */  NOP
+    /* 00E958 3C030080FED2D801 */  OPMULA.xyz    ACC, vf26, vf24          /* | */  NOP
+    /* 00E960 3C030080AEC2DA01 */  OPMSUB.xyz   vf10, vf24, vf26          /* | */  NOP
+    /* 00E968 3C030080FEDAD801 */  OPMULA.xyz    ACC, vf27, vf24          /* | */  NOP
+    /* 00E970 3C030080EEC2DB01 */  OPMSUB.xyz   vf11, vf24, vf27          /* | */  NOP
+    /* 00E978 3C030080FEE2D901 */  OPMULA.xyz    ACC, vf28, vf25          /* | */  NOP
+    /* 00E980 3C030080EECBDC01 */  OPMSUB.xyz   vf15, vf25, vf28          /* | */  NOP
+    /* 00E988 3C030080FEEAD901 */  OPMULA.xyz    ACC, vf29, vf25          /* | */  NOP
+    /* 00E990 3C03008019538B00 */  MULy.y       vf12, vf10, vf11y         /* | */  NOP
+    /* 00E998 3C0300802ECCDD01 */  OPMSUB.xyz   vf16, vf25, vf29          /* | */  NOP
+    /* 00E9A0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9A8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9B0 00580A34FF020000 */  NOP                                    /* | */  FMAND      vi10, vi11
+    /* 00E9B8 3C030080597C9000 */  MULy.y       vf17, vf15, vf16y         /* | */  NOP
+    /* 00E9C0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9D8 00580934FF020000 */  NOP                                    /* | */  FMAND      vi09, vi11
+    /* 00E9E0 74520980FF020000 */  NOP                                    /* | */  IAND       vi09, vi10, vi09
+    /* 00E9E8 744A0B80FF020000 */  NOP                                    /* | */  IAND       vi09, vi09, vi11
+    /* 00E9F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 00E9F8 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 00EA00 3C030080FF020000 */  NOP                                    /* | */  NOP
+.EndMPG
+    /* 00EA08 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+.EndDmaData
+    /* 00EA10 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA18 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA20 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA28 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA30 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA38 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA40 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA48 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA50 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA58 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA60 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA68 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA70 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 00EA78 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
