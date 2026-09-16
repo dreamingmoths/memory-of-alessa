@@ -572,25 +572,15 @@ segments:
       - { start: 0x001996a0,    type: c,          name: now_loading                                      }
       # -----------------------------------------    vutext   ------------------------------------------ #
       - { start: 0x001999b0,    type: textbin,    name: pad_0x1999b0                                     }
-      - { start: 0x00199a00,    type: textbin,    name: vutext/VU0_MIC_CAL_UTIL                          }
-      - { start: 0x00199b10,    type: textbin,    name: vutext/SH2GFW_MF_LOAD                            }
-      - { start: 0x0019da20,    type: textbin,    name: vutext/shadow/Shadow_micro_code                  }
-      - { start: 0x001a0660,    type: textbin,    name: vutext/shadow/Shadow_micro_code_parallel         }
-      - { start: 0x001a2830,    type: textbin,    name: vutext/shadow/Drop_Shadow_micro_code             }
-      - { start: 0x001a30e0,    type: textbin,    name: vutext/sce/micro                                 }
-      - { start: 0x001a3670,    type: textbin,    name: vutext/SH2GFW_MF_vu0_Day_load                    }
-      - { start: 0x001a3fe0,    type: textbin,    name: vutext/SH2GFW_MF_vu0_Night_load                  }
-      - { start: 0x001a4c00,    type: textbin,    name: vutext/yuvfrfl/vu1_init                          }
-      - { start: 0x001a4c60,    type: textbin,    name: vutext/yuvfrfl/vu1_ColMatrix                     }
-      - { start: 0x001a4ca0,    type: textbin,    name: vutext/yuvfrfl/vu1_Trans                         }
-      - { start: 0x001a4cc0,    type: textbin,    name: vutext/yuvfrfl/vu1_XYZ2Offset                    }
-      - { start: 0x001a4cd0,    type: textbin,    name: vutext/yuvfrfl/vu1_ret                           }
-      - { start: 0x001a4d00,    type: textbin,    name: vutext/yuvfrfl/load_yuvfl0_mpg                   }
-      - { start: 0x001a4d80,    type: textbin,    name: vutext/yuvfrfl/load_yuvfl1_mpg                   }
-      - { start: 0x001a5700,    type: textbin,    name: vutext/yuvfrfl/load_yuvfrfl0_mpg                 }
-      - { start: 0x001a6000,    type: textbin,    name: vutext/yuvfrfl/load_yuvfrfl1_mpg                 }
-      - { start: 0x001a6900,    type: textbin,    name: vutext/yuvprg/load_yuvprg0_mpg                   }
-      - { start: 0x001a7200,    type: textbin,    name: vutext/yuvprg/load_yuvprg1_mpg                   }
+      - { start: 0x00199a00,    type: o,          name: vsm/vutext/vu0_mic_cal_util                      }
+      - { start: 0x00199b10,    type: o,          name: vsm/vutext/sh2gfw_mf_load                        }
+      - { start: 0x0019da20,    type: o,          name: vsm/vutext/shadow_micro_code                     }
+      - { start: 0x001a30e0,    type: o,          name: vsm/vutext/micro                                 }
+      - { start: 0x001a3670,    type: o,          name: vsm/vutext/sh2gfw_mf_vu0_load                    }
+      - { start: 0x001a4c00,    type: o,          name: vsm/vutext/vu1                                   }
+      - { start: 0x001a4d00,    type: o,          name: vsm/vutext/yuvfl                                 }
+      - { start: 0x001a5700,    type: o,          name: vsm/vutext/yuvfrfl                               }
+      - { start: 0x001a6900,    type: o,          name: vsm/vutext/yuvprg                                }
       # ------------------------------------------    data   ------------------------------------------- #
       - { start: 0x001a7b00,    type: .data,      name: Chacter/anime                                    }
       - { start: 0x001a7b10,    type: data,       name: Chacter/item_screen_obj                          }
@@ -819,27 +809,27 @@ segments:
       - { start: 0x0027c240,    type: data,       name: data_0x27c240                                    }
       - { start: 0x0027d8d0,    type: .data,      name: Effect2/hh_class_blood_05                        }
       - { start: 0x0027dc10,    type: data,       name: data_0x27dc10                                    }
-      - { start: 0x0027e280,    type: data,       name: vudata/model2_vu_load                            }
-      - { start: 0x00280070,    type: data,       name: vudata/model3_mpg0_clip0                         }
-      - { start: 0x00280080,    type: data,       name: vudata/model3_mpg0_clip0v                        }
-      - { start: 0x00280280,    type: data,       name: vudata/model3_mpg0_clip1                         }
-      - { start: 0x002804c0,    type: data,       name: vudata/model3_mpg0_clipv                         }
-      - { start: 0x002804c0,    type: data,       name: vudata/model3_mpg0_clipv                         }
-      - { start: 0x00280980,    type: data,       name: vudata/model3_mpg0_envmap                        }
-      - { start: 0x002809c0,    type: data,       name: vudata/model3_mpg0_lambert                       }
-      - { start: 0x00280b00,    type: data,       name: vudata/model3_mpg0_para                          }
-      - { start: 0x00280c00,    type: data,       name: vudata/model3_mpg0_pers                          }
-      - { start: 0x00280d40,    type: data,       name: vudata/model3_mpg0_persfvg                       }
-      - { start: 0x00280ec0,    type: data,       name: vudata/model3_mpg0_point                         }
-      - { start: 0x00281080,    type: data,       name: vudata/model3_mpg0_skel_load                     }
-      - { start: 0x00281600,    type: data,       name: vudata/model3_mpg0_specular                      }
-      - { start: 0x00281740,    type: data,       name: vudata/model3_mpg0_spot                          }
-      - { start: 0x00281900,    type: data,       name: vudata/model3_mpg0_venvmap                       }
-      - { start: 0x00281b40,    type: data,       name: vudata/model3_mpg0_world_load                    }
-      - { start: 0x002820c0,    type: data,       name: vudata/model3_mpg1_load                          }
-      - { start: 0x00283bc0,    type: data,       name: vudata/model3_mpg1_view_load                     }
-      - { start: 0x00285d40,    type: data,       name: vudata/shamap1_mpg1_load                         }
-      - { start: 0x00286780,    type: data,       name: vudata/shavol1_mpg1_load                         }
+      - { start: 0x0027e280,    type: data,       name: vsm/vudata/model2_vu_load                            }
+      - { start: 0x00280070,    type: data,       name: vsm/vudata/model3_mpg0_clip0                         }
+      - { start: 0x00280080,    type: data,       name: vsm/vudata/model3_mpg0_clip0v                        }
+      - { start: 0x00280280,    type: data,       name: vsm/vudata/model3_mpg0_clip1                         }
+      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                         }
+      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                         }
+      - { start: 0x00280980,    type: data,       name: vsm/vudata/model3_mpg0_envmap                        }
+      - { start: 0x002809c0,    type: data,       name: vsm/vudata/model3_mpg0_lambert                       }
+      - { start: 0x00280b00,    type: data,       name: vsm/vudata/model3_mpg0_para                          }
+      - { start: 0x00280c00,    type: data,       name: vsm/vudata/model3_mpg0_pers                          }
+      - { start: 0x00280d40,    type: data,       name: vsm/vudata/model3_mpg0_persfvg                       }
+      - { start: 0x00280ec0,    type: data,       name: vsm/vudata/model3_mpg0_point                         }
+      - { start: 0x00281080,    type: data,       name: vsm/vudata/model3_mpg0_skel_load                     }
+      - { start: 0x00281600,    type: data,       name: vsm/vudata/model3_mpg0_specular                      }
+      - { start: 0x00281740,    type: data,       name: vsm/vudata/model3_mpg0_spot                          }
+      - { start: 0x00281900,    type: data,       name: vsm/vudata/model3_mpg0_venvmap                       }
+      - { start: 0x00281b40,    type: data,       name: vsm/vudata/model3_mpg0_world_load                    }
+      - { start: 0x002820c0,    type: data,       name: vsm/vudata/model3_mpg1_load                          }
+      - { start: 0x00283bc0,    type: data,       name: vsm/vudata/model3_mpg1_view_load                     }
+      - { start: 0x00285d40,    type: data,       name: vsm/vudata/shamap1_mpg1_load                         }
+      - { start: 0x00286780,    type: data,       name: vsm/vudata/shavol1_mpg1_load                         }
       # -----------------------------------------    rodata   ------------------------------------------ #
       - { start: 0x00289700,    type: .rodata,    name: Chacter/anime                                    }
       - { start: 0x002897c0,    type: rodata,     name: Chacter/m3_angela_rodata                         }

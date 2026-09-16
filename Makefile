@@ -321,7 +321,15 @@ $(TARGET_EXECUTABLE): $(SETUP) $(OVERLAY_TARGETS) $(LINKER_SCRIPT)
 	$(Q)$(LD)
 	$(CHECK_MATCH_PERCENT)
 
+$(BUILD)/$(VSM)/%.o: $(VSM)/%.dsm
+	@mkdir -p "$(@D)"
+	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
+
 $(BUILD)/$(VSM)/%.o: $(VSM)/%.vsm
+	@mkdir -p "$(@D)"
+	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
+
+$(BUILD)/$(VSM)/%.o: $(PROJECT)/$(VSM)/%.dsm
 	@mkdir -p "$(@D)"
 	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
 
