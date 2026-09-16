@@ -23,8 +23,7 @@ KEEP_SECTION
 	.text,
 	.data,
 	.vutext,
-	.vudata,
-	.vubss
+	.vudata
 }
 
 SECTIONS

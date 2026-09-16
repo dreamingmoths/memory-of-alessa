@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from constants import ASM, READELF_PATH, SRC
+from constants import ASM, READELF_PATH, SRC, VSM
 from os import stat, remove
 from io import TextIOBase
 from subprocess import run
@@ -16,6 +16,8 @@ def normalize_object_path(path: Path, prefix_path: Path):
         path_str = relative_to_name(path_str, SRC)
     elif path_str.endswith(".s.o"):
         path_str = relative_to_name(path_str, ASM)
+    elif path_str.endswith(".o"):
+        path_str = relative_to_name(path_str, VSM)
     else:
         raise Exception(f"unhandled object file extension: {path_str}")
 

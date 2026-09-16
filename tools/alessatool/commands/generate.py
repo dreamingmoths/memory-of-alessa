@@ -18,6 +18,7 @@ from pathlib import Path
 from dataclasses import dataclass, asdict
 
 from utils import ensure_path_and_write, normalize_object_path, to_expected_path
+from constants import VSM
 
 import splat.scripts.split as split
 import splat.util.options as splat_options
@@ -197,8 +198,16 @@ def generate_lcf(args: GenerationArgs):
             if alignment is not None:
                 block.append(f"\t\tALIGNALL(0x{alignment:X});")
 
-            object_name = entry.object_path.name
-            block.append(f"\t\t{object_name} ({section_type})")
+            object_path    = entry.object_path
+            object_name    = object_path.name
+            object_type    = section_type
+            object_segment = entry.segment
+
+            if object_segment.type == "o" and object_segment.name.startswith(f"{VSM}/"):
+                # ignores .vubss
+                object_type = section_type == ".text" and ".vutext" or ".vudata"
+
+            block.append(f"\t\t{object_name} ({object_type})")
 
         lcf_blocks.append("\n".join(block))
 
