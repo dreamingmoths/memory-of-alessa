@@ -467,9 +467,10 @@ segments:
       - { start: 0x002345b0,    type: c,          name: Effect2/hh_class_0x2345b0                                        }
       - { start: 0x00234ee0,    type: asm,        name: text_0x234ee0                                                    }
       # -------------------------------------------------    vutext   -------------------------------------------------- #
-      - { start: 0x00238080,    type: textbin,    name: vutext                                                           }
+      - { start: 0x00238080,    type: o,          name: vsm/vutext/shadow_micro_code                                     }
+      # - { start: 0x0023aa80,    type: textbin,    name: vutext                                                           }
       # --------------------------------------------------    data   --------------------------------------------------- #
-      - { start: 0x0023aa80,    type: data,       name: data                                                             }
+      - { start: 0x0023d520,    type: data,       name: data                                                             }
       - { start: 0x0024d6d0,    type: .data,      name: sh3_init                                                         }
       - { start: 0x0024d838,    type: data,       name: data_0x24d838                                                    }
       - { start: 0x0024f4d8,    type: .data,      name: Chacter/m3_sc                                                    }

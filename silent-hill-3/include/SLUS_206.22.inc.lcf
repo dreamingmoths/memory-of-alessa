@@ -48,8 +48,7 @@ KEEP_SECTION
 	.rodata,
 	.data,
 	.vutext,
-	.vudata,
-	.vubss
+	.vudata
 }
 
 SECTIONS
