@@ -58,6 +58,7 @@ ASM = $(CONFIG)/asm
 ASSETS = $(CONFIG)/assets
 LINKERS = $(CONFIG)/linkers
 ROM = rom/$(SERIAL)
+VSM := vsm
 
 INCLUDE = $(PROJECT)/include
 SRC = $(PROJECT)/src
@@ -106,6 +107,9 @@ MWCCGAP_AS_FLAGS := -mno-branch-relocs
 AS_FLAGS := \
 	-EL -march=r5900 -mabi=eabi -G=0 $(MWCCGAP_AS_FLAGS) \
 	-I$(INCLUDE) -I$(CONFIG) -I$(COMMON_INCLUDE)
+
+EE_DVP_AS = $(WIBO) $(TOOLS)/ee-dvp-as.exe
+EE_DVP_AS_FLAGS := -I$(VSM)
 
 LD :=
 ifneq ($(NON_MATCHING),1)
@@ -316,6 +320,14 @@ $(TARGET_EXECUTABLE): $(SETUP) $(OVERLAY_TARGETS) $(LINKER_SCRIPT)
 	@echo "* linking..."
 	$(Q)$(LD)
 	$(CHECK_MATCH_PERCENT)
+
+$(BUILD)/$(VSM)/%.o: $(VSM)/%.vsm
+	@mkdir -p "$(@D)"
+	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
+
+$(BUILD)/$(VSM)/%.o: $(PROJECT)/$(VSM)/%.vsm
+	@mkdir -p "$(@D)"
+	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
 
 $(BUILD)/%.c.o: $(PROJECT)/%.c
 	@mkdir -p "$(@D)"
