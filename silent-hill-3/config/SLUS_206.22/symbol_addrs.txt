@@ -1263,14 +1263,7 @@ D_1D31670 = 0x1D31670; // size:0x10
 
 D_1D317C0 = 0x1D317C0; // size:0x10
 
-
-
-
-
-
-
-
-
+/* vu1 microcode symbols */
 Shadow_micro_code = 0x00337B00;
 Shadow_micro_code_parallel = 0x0033A500;
 Drop_Shadow_micro_code = 0x0033C6F0;
