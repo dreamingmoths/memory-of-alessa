@@ -468,9 +468,15 @@ segments:
       - { start: 0x00234ee0,    type: asm,        name: text_0x234ee0                                                    }
       # -------------------------------------------------    vutext   -------------------------------------------------- #
       - { start: 0x00238080,    type: o,          name: vsm/vutext/shadow_micro_code                                     }
-      # - { start: 0x0023aa80,    type: textbin,    name: vutext                                                           }
+      - { start: 0x0023aa80,    type: o,          name: vsm/vutext/sh3_vutext1                                           }
+      - { start: 0x00240170,    type: asm,        name: vsm/vutext/sh3_vutext2                                           }
+      - { start: 0x00246980,    type: o,          name: vsm/vutext/vu0_mic_cal_util                                      }
+      - { start: 0x00246b00,    type: o,          name: vsm/vutext/vu1                                                   }
+      - { start: 0x00246c00,    type: o,          name: vsm/vutext/yuvfl                                                 }
+      - { start: 0x00247600,    type: o,          name: vsm/vutext/yuvfrfl                                               }
+      - { start: 0x00248800,    type: o,          name: vsm/vutext/yuvprg                                                }
       # --------------------------------------------------    data   --------------------------------------------------- #
-      - { start: 0x0023d520,    type: data,       name: data                                                             }
+      - { start: 0x00249a00,    type: data,       name: data                                                             }
       - { start: 0x0024d6d0,    type: .data,      name: sh3_init                                                         }
       - { start: 0x0024d838,    type: data,       name: data_0x24d838                                                    }
       - { start: 0x0024f4d8,    type: .data,      name: Chacter/m3_sc                                                    }
