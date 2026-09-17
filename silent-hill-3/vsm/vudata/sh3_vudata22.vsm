@@ -1,8 +1,11 @@
 .global VU_PRG_00005900
+.global VU_LBL_00005AE0
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 
@@ -51,7 +54,7 @@ VU_PRG_00005900:
     /* 005A48 3C030080AAADD501 */  MUL.xyz      vf22, vf21, vf21          /* | */  NOP
     /* 005A50 3C03008050C62000 */  MAXx.w       vf25, vf24, vf00x         /* | */  NOP
 
-  VU_LBL_005A58:
+  VU_LBL_00005A58:
     /* 005A58 1420E4016C25E801 */  SUB.xyzw     vf21, vf04, vf08          /* | */  LQ.xyzw    vf04,  20(vi04)
     /* 005A60 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 005A68 3C030080FF020000 */  NOP                                    /* | */  NOP
@@ -64,13 +67,14 @@ VU_PRG_00005900:
     /* 005AA0 BE03778021462000 */  MADDq.w      vf24, vf08, Q             /* | */  RSQRT         Q, vf00w, vf23x
     /* 005AA8 322104803DB01601 */  ADDAy.x       ACC, vf22, vf22y         /* | */  IADDI      vi04, vi04, 4
     /* 005AB0 FDD72402CAFD1601 */  MADDz.x      vf23, vf31, vf22z         /* | */  SQ.w       vf26,  -3(vi04)
-    /* 005AB8 F32F0452AAADD501 */  MUL.xyz      vf22, vf21, vf21          /* | */  IBNE       vi04, vi05, VU_LBL_005A58
+    /* 005AB8 F32F0452AAADD501 */  MUL.xyz      vf22, vf21, vf21          /* | */  IBNE       vi04, vi05, VU_LBL_00005A58
     /* 005AC0 3C03008050C62000 */  MAXx.w       vf25, vf24, vf00x         /* | */  NOP
     /* 005AC8 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
     /* 005AD0 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 005AD8 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
 
   .balign 0x10
+  VU_LBL_00005AE0:
     /* 005AE0 1E000000-------- */  .word 0x0000001E
     /* 005AE4 --------00000000 */  /* .word 0x00000000 */
     /* 005AE8 00000000-------- */  /* .word 0x00000000 */

@@ -242,9 +242,9 @@ static void LoadProgram_Vu0(void) {
 
     sceVif0PkInit(pk, (u_long128*) READ_UNCACHED(&D_01EE30C0));
     if (model3_junk.cluster_nodes2 == 0) {
-        sceVif0PkCall(pk, &D_003B63C0, 0);
+        sceVif0PkCall(pk, &model3_mpg0_skel_load, 0);
     } else {
-        sceVif0PkCall(pk, &D_003BA2C0, 0);
+        sceVif0PkCall(pk, &VU_PRG_00005040, 0);
     }
     sceVif0PkEnd(pk, 0);
     sceVif0PkTerminate(pk);
@@ -362,7 +362,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
         sceVif0PkRefMpg(
             pk,
             xmtop,
-            &D_003B5E40,
+            &model3_mpg0_para,
             model3_mpg0_para_size,
             0
         );
@@ -402,7 +402,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
                 sceVif0PkRefMpg(
                     pk,
                     (u_short)xmtop,
-                    &D_003B6200,
+                    &model3_mpg0_point,
                     model3_mpg0_point_size,
                     0
                 );
@@ -415,7 +415,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
                 sceVif0PkRefMpg(
                     pk,
                     (u_short)xmtop,
-                    &D_003B6A80,
+                    &model3_mpg0_spot,
                     model3_mpg0_spot_size,
                     0
                 );
@@ -447,7 +447,7 @@ static void MakeLambertShadingPacket(Part * part, sceVif0Packet * pk) {
     sceVif0PkRefMpg(
         pk,
         (u_short)xmtop,
-        &D_003B5D00,
+        &model3_mpg0_lambert,
         model3_mpg0_lambert_size,
         0
     );
@@ -507,9 +507,9 @@ static void MakeClipPacket(Part* part, sceVif0Packet* pk) {
     FlipXMTOP();
 
     if (part->backclip == 0) {
-        sceVif0PkRefMpg(pk, xmtop, (u_int*)&D_003B5280, D_003B53B0, 0);
+        sceVif0PkRefMpg(pk, xmtop, (u_int*)&model3_mpg0_clip0, model3_mpg0_clip0_size, 0);
     } else {
-        sceVif0PkRefMpg(pk, xmtop, (u_int*)&D_003B55C0, D_003B57D0, 0);
+        sceVif0PkRefMpg(pk, xmtop, (u_int*)&model3_mpg0_clip1, model3_mpg0_clip1_size, 0);
 
     }
 
@@ -603,11 +603,11 @@ void MakePartPacket_0x001D5C50(Part *part)
     {
         case 0:
         case 2:
-        sceVif0PkRefMpg(pk, xmtop, &D_003BA0C0, D_003BA170, 0);
+        sceVif0PkRefMpg(pk, xmtop, &VU_PRG_00004E40, VU_LBL_00004EF0, 0);
         break;
     
         case 1:
-        sceVif0PkRefMpg(pk, xmtop, &D_003BAA00, D_003BAB50, 0);
+        sceVif0PkRefMpg(pk, xmtop, &VU_PRG_00005780, VU_LBL_000058D0, 0);
         break;
     }
 
@@ -617,7 +617,7 @@ void MakePartPacket_0x001D5C50(Part *part)
     sceVif0PkAddCode(pk, xmtop | 0x14000000);
     xitop ^= 8;
     xmtop ^= 0x80;
-    sceVif0PkRefMpg(pk, xmtop, &D_003B9F40, D_003BA080, 0);
+    sceVif0PkRefMpg(pk, xmtop, &VU_PRG_00004CC0, VU_LBL_00004E00, 0);
     sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->pers, 7U, 0x01000101U, xitop | 0x6c070000, 0);
     sceVif0PkCnt(pk, 0U);
     sceVif0PkAddCode(pk, xitop | 0x04000000);
@@ -684,7 +684,7 @@ void MakeCalcPartPacket(Part *part)
     if (part->shading_type == 4)
     {
         xmtop ^= 0x80;
-        sceVif0PkRefMpg(pk, xmtop, &D_003B6940, model3_mpg0_specular_size, 0);
+        sceVif0PkRefMpg(pk, xmtop, &model3_mpg0_specular, model3_mpg0_specular_size, 0);
         // 
         sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->smap, 4U, 0x01000101U, xitop | 0x6c040000, 0);
         sceVif0PkCnt(pk, 0U);
@@ -700,19 +700,19 @@ void MakeCalcPartPacket(Part *part)
     if (func_001C91F0() == 0)
     {
         xmtop ^= 0x80;
-        sceVif0PkRefMpg(pk, xmtop, &D_003B6080, D_003B61C0, 0);
+        sceVif0PkRefMpg(pk, xmtop, &model3_mpg0_persfvg, model3_mpg0_persfvg_size, 0);
     }
     else
     {
         xmtop ^= 0x80;
-        sceVif0PkRefMpg(pk, (u_short)xmtop, &D_003BAB80, D_003BAD60, 0);
+        sceVif0PkRefMpg(pk, (u_short)xmtop, &VU_PRG_00005900, VU_LBL_00005AE0, 0);
         sceVif0PkRef(pk, (u_int *)&pAllData_Vu0->emap, 2U, 0x01000101U, xitop | 0x6c020000, 0);
         sceVif0PkCnt(pk, 0U);
         sceVif0PkAddCode(pk, xitop | 0x04000000);
         sceVif0PkAddCode(pk, xmtop | 0x14000000);
         xitop ^= 8;
         xmtop ^= 0x80;
-        sceVif0PkRefMpg(pk, xmtop, &D_003BAD80, D_003BAEB0, 0);
+        sceVif0PkRefMpg(pk, xmtop, &VU_PRG_00005B00, VU_LBL_00005C30, 0);
         sceVif0PkAddCode(pk, 0x10000000U);
     }
 

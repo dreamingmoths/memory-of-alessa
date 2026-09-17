@@ -1,8 +1,11 @@
-.global VU_PRG_00005040
+.global VU_PRG_00005780
+.global VU_LBL_000058D0
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 
@@ -19,7 +22,7 @@ VU_PRG_00005780:
     /* 0057C8 0560EC01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf12,   5(vi12)
     /* 0057D0 3C03008043014000 */  ADDw.z       vf05, vf00, vf00w         /* | */  NOP
 
-  VU_LBL_0057D8:
+  VU_LBL_000057D8:
     /* 0057D8 0020FD01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf29,   0(vi04)
     /* 0057E0 0320E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   3(vi04)
     /* 0057E8 3C030080FF020000 */  NOP                                    /* | */  NOP
@@ -47,12 +50,13 @@ VU_PRG_00005780:
     /* 005898 0128A403FF020000 */  NOP                                    /* | */  SQ.xyw     vf05,   1(vi04)
     /* 0058A0 32210480FF020000 */  NOP                                    /* | */  IADDI      vi04, vi04, 4
     /* 0058A8 3C030080FF020000 */  NOP                                    /* | */  NOP
-    /* 0058B0 E42F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, VU_LBL_0057D8
+    /* 0058B0 E42F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, VU_LBL_000057D8
     /* 0058B8 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 0058C0 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
     /* 0058C8 3C030080FF020000 */  NOP                                    /* | */  NOP
 
   .balign 0x10
+  VU_LBL_000058D0:
     /* 0058D0 15000000-------- */  .word 0x00000015
     /* 0058D4 --------00000000 */  /* .word 0x00000000 */
     /* 0058D8 00000000-------- */  /* .word 0x00000000 */

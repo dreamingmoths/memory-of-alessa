@@ -365,7 +365,6 @@ ApplyCluster = 0x001d2360; // visibility:local
 Model3UpdateClusters = 0x001d2570;
 initialized_0x01EE2F98 = 0x01EE2F98; // size:4 allow_duplicated:True
 packet_buffer = 0x01EE2FC0; // size:32
-model3_mpg0_cluster_load = 0x003BA180;
 
 // utilheap.c
 utilHeapFree                                                                     = 0x1c1d00;
@@ -994,6 +993,7 @@ func_001B6C14 = 0x1B6C14;
 func_001DB880 = 0x1DB880;
 
 D_1F6D600 = 0x1F6D600; // ignore:true
+D_003BAF00 = 0x003BAF00; // align:128
 
 gpoutbuff_env = 0x3c8b00;
 
@@ -1267,8 +1267,47 @@ D_1D317C0 = 0x1D317C0; // size:0x10
 Shadow_micro_code = 0x00337B00;
 Shadow_micro_code_parallel = 0x0033A500;
 Drop_Shadow_micro_code = 0x0033C6F0;
-VU_PRG_0054A0 = 0x0033CFA0;
+VU_PRG_0054A0 = 0x0033cfa0;
+VU_PRG_0080F0 = 0x0033fbf0;
+VU_PRG_0094E0 = 0x00340fe0;
+VU_PRG_00B380 = 0x00342e80;
+VU_PRG_00DA60 = 0x00345560;
 VU0_MIC_CAL_UTIL_DMAHEAD = 0x00346400;
+
+model3_mpg0_clip0 = 0x003b5280;
+model3_mpg0_venvmap = 0x003b6c40;
+model3_mpg0_world_load = 0x003b6e80;
+model3_mpg0_clip0v = 0x003b53c0;
+model3_mpg0_clipv = 0x003b5800;
+model3_mpg0_clip1 = 0x003b55c0;
+model3_mpg0_specular = 0x003b6940;
+model3_mpg0_lambert = 0x003b5d00;
+model3_mpg0_para = 0x003b5e40;
+model3_mpg0_spot = 0x003b6a80;
+model3_mpg0_envmap = 0x003b5ac0;
+model3_mpg0_skel_load = 0x003b63c0;
+model3_mpg0_point = 0x003b6200;
+model3_mpg0_cluster_load = 0x003b5980;
+model3_mpg0_persfvg = 0x003b6080;
+model3_mpg0_pers = 0x003b5f40;
+model3_mpg0_persfvg_size = 0x003b61c0;
+model3_mpg0_clip1_size = 0x003b57d0;
+model3_mpg0_clip0_size = 0x003b53b0;
+
+VU_PRG_00004CC0 = 0x003b9f40;
+VU_PRG_00002180 = 0x003b7400;
+VU_PRG_00005040 = 0x003ba2c0;
+VU_PRG_00005900 = 0x003bab80;
+VU_PRG_00004E40 = 0x003ba0c0;
+VU_PRG_00004F00 = 0x003ba180;
+VU_LBL_00005AE0 = 0x003bad60;
+VU_PRG_00005B00 = 0x003bad80;
+VU_LBL_00005C30 = 0x003baeb0;
+VU_LBL_00004EF0 = 0x003ba170;
+VU_PRG_00005780 = 0x003baa00;
+VU_LBL_000058D0 = 0x003bab50;
+VU_LBL_00004E00 = 0x003ba080;
+VU_LBL_00004CA0 = 0x003b9f20;
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////// DANGER! /////////////////////////////////////////

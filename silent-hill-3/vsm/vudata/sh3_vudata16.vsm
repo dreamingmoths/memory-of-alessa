@@ -1,6 +1,9 @@
 .global VU_PRG_00002180
+.global VU_LBL_00004CA0
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 
@@ -1496,6 +1499,8 @@ VU_PRG_00002180:
     /* 004C98 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
 .EndDmaData
 .EndMPG
+
+VU_LBL_00004CA0:
     /* 004CA0 5C050000-------- */  .word 0x0000055C
     /* 004CA4 --------00000000 */  /* .word 0x00000000 */
     /* 004CA8 00000000-------- */  /* .word 0x00000000 */

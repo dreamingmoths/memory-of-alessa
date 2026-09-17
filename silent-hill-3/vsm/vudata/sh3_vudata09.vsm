@@ -1,10 +1,14 @@
 .global model3_mpg0_persfvg
+.global model3_mpg0_persfvg_size
 
 .vu
 
 .DmaPackVif 0
 
+.data
+
 .balign 0x40
+
 model3_mpg0_persfvg:
     /* 000E00 BD06098003044000 */  ADDw.z       vf16, vf00, vf00w         /* | */  XITOP      vi09
     /* 000E08 3C03008083044000 */  ADDw.z       vf18, vf00, vf00w         /* | */  NOP

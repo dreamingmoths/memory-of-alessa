@@ -1,8 +1,11 @@
 .global model3_mpg0_clip1
+.global model3_mpg0_clip1_size
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 

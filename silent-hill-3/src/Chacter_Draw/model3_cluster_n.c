@@ -17,7 +17,8 @@ static void TransferDefaultClusterNodes(Model* model);
 static void MakeApplyClusterPacket(u_long128* packet_buffer, ClusterElement* top, int n, float weight);
 static void ApplyCluster(Model* model, Cluster* cluster, float weight);
 
-extern u_long128 model3_mpg0_cluster_load[];
+// @todo: VU_PRG_00004F00?
+extern u_long128 VU_PRG_00004F00[];
 
 static void LoadProgram(void) {
     extern /* static */ int initialized;
@@ -26,7 +27,7 @@ static void LoadProgram(void) {
         sceVif0Packet packet;
         sceVif0Packet* pk = &packet;
         sceVif0PkInit(pk, (void*) READ_UNCACHED(&packet_buffer));
-        sceVif0PkCall(pk, &model3_mpg0_cluster_load, 0);
+        sceVif0PkCall(pk, &VU_PRG_00004F00, 0);
         sceVif0PkEnd(pk, 0);
         sceVif0PkTerminate(pk);
         initialized = 1;

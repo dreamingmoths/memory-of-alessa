@@ -1,8 +1,11 @@
-.global VU_PRG_00005040
+.global VU_PRG_00005B00
+.global VU_LBL_00005C30
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 
@@ -23,7 +26,7 @@ VU_PRG_00005B00:
     /* 005B68 BD060880FF020000 */  NOP                                    /* | */  XITOP      vi08
     /* 005B70 BD060780FF020000 */  NOP                                    /* | */  XITOP      vi07
 
-  VU_LBL_005B78:
+  VU_LBL_00005B78:
     /* 005B78 0020E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   0(vi04)
     /* 005B80 8000012CFF020000 */  NOP                                    /* | */  FSAND      vi01, 0x80
     /* 005B88 0220E801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf08,   2(vi04)
@@ -42,13 +45,14 @@ VU_PRG_00005B00:
     /* 005BF0 0000002A90312000 */  MAXx.w       vf06, vf06, vf00x         /* | */  FSSET      0x0
     /* 005BF8 03204408FC1AC601 */  SUBA.xyz      ACC, vf03, vf06          /* | */  ILW.z      vi04,   3(vi04)
     /* 005C00 00000B38FC32C201 */  SUBA.xyz      ACC, vf06, vf02          /* | */  FCGET      vi11
-    /* 005C08 ED2F09527C49EA01 */  FTOI0.xyzw   vf10, vf09                /* | */  IBNE       vi09, vi05, VU_LBL_005B78
+    /* 005C08 ED2F09527C49EA01 */  FTOI0.xyzw   vf10, vf09                /* | */  IBNE       vi09, vi05, VU_LBL_00005B78
     /* 005C10 0388C9039F312000 */  MINIi.w      vf06, vf06, I             /* | */  SQ.xyz     vf17,   3(vi09)
     /* 005C18 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
     /* 005C20 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 005C28 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
 
   .balign 0x10
+  VU_LBL_00005C30:
     /* 005C30 13000000-------- */  .word 0x00000013
     /* 005C34 --------00000000 */  /* .word 0x00000000 */
     /* 005C38 00000000-------- */  /* .word 0x00000000 */

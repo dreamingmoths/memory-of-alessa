@@ -1,8 +1,11 @@
 .global VU_PRG_00004E40
+.global VU_LBL_00004EF0
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 
@@ -22,17 +25,18 @@ VU_PRG_00004E40:
     /* 004EA0 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 004EA8 3C030080BEF99F01 */  MULAz.xy      ACC, vf31, vf31z         /* | */  NOP
 
-  VU_LBL_004EB0:
+  VU_LBL_00004EB0:
     /* 004EB0 3C0300804A319F01 */  MADDz.xy     vf05, vf06, vf31z         /* | */  NOP
     /* 004EB8 0B20E4013E21E601 */  ITOF12.xyzw  vf06, vf04                /* | */  LQ.xyzw    vf04,  11(vi04)
     /* 004EC0 32210480BEF99F01 */  MULAz.xy      ACC, vf31, vf31z         /* | */  IADDI      vi04, vi04, 4
-    /* 004EC8 FC2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, VU_LBL_004EB0
+    /* 004EC8 FC2F0452FF020000 */  NOP                                    /* | */  IBNE       vi04, vi05, VU_LBL_00004EB0
     /* 004ED0 FD2F8403FF020000 */  NOP                                    /* | */  SQ.xy      vf05,  -3(vi04)
     /* 004ED8 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
     /* 004EE0 3C030080FF020000 */  NOP                                    /* | */  NOP
     /* 004EE8 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
 
   .balign 0x10
+  VU_LBL_00004EF0:
     /* 004EF0 0B000000-------- */  .word 0x0000000B
     /* 004EF4 --------00000000 */  /* .word 0x00000000 */
     /* 004EF8 00000000-------- */  /* .word 0x00000000 */

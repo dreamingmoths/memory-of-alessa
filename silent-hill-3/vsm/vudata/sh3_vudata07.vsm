@@ -1,8 +1,11 @@
 .global model3_mpg0_para
+.global model3_mpg0_para_size
 
 .vu
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 

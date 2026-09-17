@@ -4,6 +4,8 @@
 
 .DmaPackVif 0
 
+.data
+
 .balign 0x40
 
 model3_mpg0_clipv:

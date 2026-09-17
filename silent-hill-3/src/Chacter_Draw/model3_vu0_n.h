@@ -261,31 +261,30 @@ typedef struct ClusterData {
 void FlipXMTOP(void);
 static void DrawParts0(ktVif1Ot2* ot /* r17 */, ModelWork* work /* r2 */, void (*make)(Part*), void (*draw)(ktVif1Ot2*, Part*, ModelWork*));
 
-extern u_int model3_mpg0_skel_load[];
 extern int initialized; // @ 0x00419FA0
 
 extern u_long128* D_01EE30C0; // packet buffer
-extern u_long128 D_003B63C0;
-extern u_long128 D_003BA2C0;
+extern u_long128 model3_mpg0_skel_load[];
+extern u_long128 VU_PRG_00005040[];
 
 extern Model3Junk model3_junk;
 
-extern int D_003B5280;
-extern u_int D_003B53B0;
-extern int D_003B55C0;
-extern u_int D_003B57D0;
+extern int model3_mpg0_clip0;
+extern u_int model3_mpg0_clip0_size;
+extern u_int model3_mpg0_clip1_size;
 
 extern int xitop;
 extern AllData_Vu0* pAllData_Vu0;
 
+// @todo: fix types
 extern u_int model3_mpg0_clip0v;
 extern u_int model3_mpg0_clip1;
 extern u_int model3_mpg0_clipv;
 
-extern u_int D_003B5D00;
-extern u_int D_003B5E40;
-extern u_int D_003B6200;
-extern u_int D_003B6A80;
+extern u_int model3_mpg0_lambert;
+extern u_int model3_mpg0_para;
+extern u_int model3_mpg0_point;
+extern u_int model3_mpg0_spot;
 
 extern u_int model3_mpg0_lambert_size;
 extern u_int model3_mpg0_para_size;
@@ -295,21 +294,21 @@ extern u_int model3_mpg0_spot_size;
 extern u_int model3_mpg0_specular_size;
 // extern u_int model3_mpg0_persfvg_size;
 // extern u_int model3_mpg0_venvmap_size;
-extern u_int D_003BAEB0;
+extern u_int VU_LBL_00005C30;
 
-extern int D_003B61C0;
-extern int D_003BAD60;
-extern u_int D_003B6940; // vutext
-extern u_int D_003B6080; // vutext
-extern u_int D_003BAB80; // vutext
-extern u_int D_003BAD80; // vutext
+extern int model3_mpg0_persfvg_size;
+extern int VU_LBL_00005AE0;
+extern u_int model3_mpg0_specular; // vutext
+extern u_int model3_mpg0_persfvg; // vutext
+extern u_int VU_PRG_00005900; // vutext
+extern u_int VU_PRG_00005B00; // vutext
 
-extern u_int D_003B9F40;
-extern u_int D_003BA080;
-extern u_int D_003BA0C0;
-extern u_int D_003BA170;
-extern u_int D_003BAA00;
-extern u_int D_003BAB50;
+extern u_int VU_PRG_00004CC0;
+extern u_int VU_LBL_00004E00;
+extern u_int VU_PRG_00004E40;
+extern u_int VU_LBL_00004EF0;
+extern u_int VU_PRG_00005780;
+extern u_int VU_LBL_000058D0;
 
 extern int func_001C91F0(void);
 extern int func_001D0EA0(void); // gets model n parts?
