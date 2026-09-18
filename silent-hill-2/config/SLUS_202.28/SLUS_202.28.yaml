@@ -809,27 +809,28 @@ segments:
       - { start: 0x0027c240,    type: data,       name: data_0x27c240                                    }
       - { start: 0x0027d8d0,    type: .data,      name: Effect2/hh_class_blood_05                        }
       - { start: 0x0027dc10,    type: data,       name: data_0x27dc10                                    }
-      - { start: 0x0027e280,    type: data,       name: vsm/vudata/model2_vu_load                            }
-      - { start: 0x00280070,    type: data,       name: vsm/vudata/model3_mpg0_clip0                         }
-      - { start: 0x00280080,    type: data,       name: vsm/vudata/model3_mpg0_clip0v                        }
-      - { start: 0x00280280,    type: data,       name: vsm/vudata/model3_mpg0_clip1                         }
-      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                         }
-      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                         }
-      - { start: 0x00280980,    type: data,       name: vsm/vudata/model3_mpg0_envmap                        }
-      - { start: 0x002809c0,    type: data,       name: vsm/vudata/model3_mpg0_lambert                       }
-      - { start: 0x00280b00,    type: data,       name: vsm/vudata/model3_mpg0_para                          }
-      - { start: 0x00280c00,    type: data,       name: vsm/vudata/model3_mpg0_pers                          }
-      - { start: 0x00280d40,    type: data,       name: vsm/vudata/model3_mpg0_persfvg                       }
-      - { start: 0x00280ec0,    type: data,       name: vsm/vudata/model3_mpg0_point                         }
-      - { start: 0x00281080,    type: data,       name: vsm/vudata/model3_mpg0_skel_load                     }
-      - { start: 0x00281600,    type: data,       name: vsm/vudata/model3_mpg0_specular                      }
-      - { start: 0x00281740,    type: data,       name: vsm/vudata/model3_mpg0_spot                          }
-      - { start: 0x00281900,    type: data,       name: vsm/vudata/model3_mpg0_venvmap                       }
-      - { start: 0x00281b40,    type: data,       name: vsm/vudata/model3_mpg0_world_load                    }
-      - { start: 0x002820c0,    type: data,       name: vsm/vudata/model3_mpg1_load                          }
-      - { start: 0x00283bc0,    type: data,       name: vsm/vudata/model3_mpg1_view_load                     }
-      - { start: 0x00285d40,    type: data,       name: vsm/vudata/shamap1_mpg1_load                         }
-      - { start: 0x00286780,    type: data,       name: vsm/vudata/shavol1_mpg1_load                         }
+      # -----------------------------------------    vudata   ------------------------------------------ #
+      - { start: 0x0027e280,    type: data,       name: vsm/vudata/model2_vu_load                        }
+      - { start: 0x0027ff40,    type: o,          name: vsm/vudata/model3_mpg0_clip0, linker_section: .data }
+      - { start: 0x00280080,    type: data,       name: vsm/vudata/model3_mpg0_clip0v                    }
+      - { start: 0x00280280,    type: data,       name: vsm/vudata/model3_mpg0_clip1                     }
+      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                     }
+      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                     }
+      - { start: 0x00280980,    type: data,       name: vsm/vudata/model3_mpg0_envmap                    }
+      - { start: 0x002809c0,    type: data,       name: vsm/vudata/model3_mpg0_lambert                   }
+      - { start: 0x00280b00,    type: data,       name: vsm/vudata/model3_mpg0_para                      }
+      - { start: 0x00280c00,    type: data,       name: vsm/vudata/model3_mpg0_pers                      }
+      - { start: 0x00280d40,    type: data,       name: vsm/vudata/model3_mpg0_persfvg                   }
+      - { start: 0x00280ec0,    type: data,       name: vsm/vudata/model3_mpg0_point                     }
+      - { start: 0x00281080,    type: data,       name: vsm/vudata/model3_mpg0_skel_load                 }
+      - { start: 0x00281600,    type: data,       name: vsm/vudata/model3_mpg0_specular                  }
+      - { start: 0x00281740,    type: data,       name: vsm/vudata/model3_mpg0_spot                      }
+      - { start: 0x00281900,    type: data,       name: vsm/vudata/model3_mpg0_venvmap                   }
+      - { start: 0x00281b40,    type: data,       name: vsm/vudata/model3_mpg0_world_load                }
+      - { start: 0x002820c0,    type: data,       name: vsm/vudata/model3_mpg1_load                      }
+      - { start: 0x00283bc0,    type: data,       name: vsm/vudata/model3_mpg1_view_load                 }
+      - { start: 0x00285d40,    type: data,       name: vsm/vudata/shamap1_mpg1_load                     }
+      - { start: 0x00286780,    type: data,       name: vsm/vudata/shavol1_mpg1_load                     }
       # -----------------------------------------    rodata   ------------------------------------------ #
       - { start: 0x00289700,    type: .rodata,    name: Chacter/anime                                    }
       - { start: 0x002897c0,    type: rodata,     name: Chacter/m3_angela_rodata                         }

@@ -545,7 +545,7 @@ segments:
       - { start: 0x0029e198,    type: .data,      name: movie/pss_videodec                                               }
       - { start: 0x0029e1c8,    type: data,       name: data_0x29e1c8                                                    }
       # -------------------------------------------------    vudata   -------------------------------------------------- #
-      - { start: 0x002b5800,    type: o,          name: vsm/vudata/sh3_vudata00,                   linker_section: .data }
+      - { start: 0x002b5800,    type: o,          name: vsm/vudata/model3_mpg0_clip0,              linker_section: .data }
       - { start: 0x002b5940,    type: o,          name: vsm/vudata/sh3_vudata01,                   linker_section: .data }
       - { start: 0x002b5b40,    type: o,          name: vsm/vudata/sh3_vudata02,                   linker_section: .data }
       - { start: 0x002b5d80,    type: o,          name: vsm/vudata/sh3_vudata03,                   linker_section: .data }
