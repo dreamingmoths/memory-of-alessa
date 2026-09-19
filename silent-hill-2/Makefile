@@ -33,4 +33,6 @@ MWLD_FLAGS := \
 	-main "entry" -map -sym on,elf \
 	-noinhibit-exec $(MWLD_OVERLAY_FLAGS)
 
+EE_DVP_AS_FLAGS := -I$(VSM) --defsym DEBUG=1
+
 BSS_ALIGNMENT := 8

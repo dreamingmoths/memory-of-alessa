@@ -109,7 +109,6 @@ AS_FLAGS := \
 	-I$(INCLUDE) -I$(CONFIG) -I$(COMMON_INCLUDE)
 
 EE_DVP_AS = $(WIBO) $(TOOLS)/ee-dvp-as.exe
-EE_DVP_AS_FLAGS := -I$(VSM)
 
 LD :=
 ifneq ($(NON_MATCHING),1)
