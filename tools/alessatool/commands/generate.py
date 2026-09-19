@@ -178,6 +178,9 @@ def generate_lcf(args: GenerationArgs):
                 "",
             ]
 
+        if section_type == ".rodata":
+            block += ["\t\t.    = ALIGN(0x80);"]
+
         elif section_type == ".sbss":
             block += [
                 "\t\t_fbss = .;",
