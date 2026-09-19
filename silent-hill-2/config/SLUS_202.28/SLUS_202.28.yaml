@@ -812,10 +812,10 @@ segments:
       # -----------------------------------------    vudata   ------------------------------------------ #
       - { start: 0x0027e280,    type: data,       name: vsm/vudata/model2_vu_load                        }
       - { start: 0x0027ff40,    type: o,          name: vsm/vudata/model3_mpg0_clip0, linker_section: .data }
-      - { start: 0x00280080,    type: data,       name: vsm/vudata/model3_mpg0_clip0v                    }
-      - { start: 0x00280280,    type: data,       name: vsm/vudata/model3_mpg0_clip1                     }
-      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                     }
-      - { start: 0x002804c0,    type: data,       name: vsm/vudata/model3_mpg0_clipv                     }
+      - { start: 0x00280080,    type: o,          name: vsm/vudata/model3_mpg0_clip0v, linker_section: .data }
+      - { start: 0x00280280,    type: o,          name: vsm/vudata/model3_mpg0_clip1, linker_section: .data }
+      - { start: 0x002804c0,    type: o,          name: vsm/vudata/model3_mpg0_clipv, linker_section: .data                     }
+      - { start: 0x00280640, type: data, name: vsm/vudata/model3_mpg0_cluster_load }
       - { start: 0x00280980,    type: data,       name: vsm/vudata/model3_mpg0_envmap                    }
       - { start: 0x002809c0,    type: data,       name: vsm/vudata/model3_mpg0_lambert                   }
       - { start: 0x00280b00,    type: data,       name: vsm/vudata/model3_mpg0_para                      }
