@@ -1,0 +1,81 @@
+.global model3_mpg0_point
+.global model3_mpg0_point_size
+
+.vu
+
+.DmaPackVif 0
+
+.data
+
+.balign 0x40
+
+model3_mpg0_point:
+    /* 000F80 BD060180FF020000 */  NOP                                    /* | */  XITOP      vi01
+
+  Point:
+    /* 000F88 00684508AC07E001 */  SUB.xyzw     vf30, vf00, vf00          /* | */  ILW.z      vi05,   0(vi13)
+    /* 000F90 0308E601FF020000 */  NOP                                    /* | */  LQ.xyzw    vf06,   3(vi01)
+    /* 000F98 0008E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   0(vi01)
+    /* 000FA0 0208E301FF020000 */  NOP                                    /* | */  LQ.xyzw    vf03,   2(vi01)
+    /* 000FA8 03284408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   3(vi05)
+    /* 000FB0 0028F601C1F1E601 */  ADDy.xyzw    vf07, vf30, vf06y         /* | */  LQ.xyzw    vf22,   0(vi05)
+    /* 000FB8 00682F0880F1E601 */  ADDx.xyzw    vf06, vf30, vf06x         /* | */  ILW.w      vi15,   0(vi13)
+    /* 000FC0 3C030080C3F7E001 */  ADDw.xyzw    vf31, vf30, vf00w         /* | */  NOP
+    /* 000FC8 0020E801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf08,   0(vi04)
+    /* 000FD0 3C030080ACB5E401 */  SUB.xyzw     vf22, vf22, vf04          /* | */  NOP
+    /* 000FD8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000FE0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000FE8 3C0300802C42E401 */  SUB.xyzw     vf08, vf08, vf04          /* | */  NOP
+    /* 000FF0 3C030080EAB5D601 */  MUL.xyz      vf23, vf22, vf22          /* | */  NOP
+    /* 000FF8 32080B80FF020000 */  NOP                                    /* | */  IADDI      vi11, vi01, 0
+    /* 001000 32080A80FF020000 */  NOP                                    /* | */  IADDI      vi10, vi01, 0
+    /* 001008 32080980EA43C801 */  MUL.xyz      vf15, vf08, vf08          /* | */  IADDI      vi09, vi01, 0
+    /* 001010 32080880FF020000 */  NOP                                    /* | */  IADDI      vi08, vi01, 0
+    /* 001018 32080780FF020000 */  NOP                                    /* | */  IADDI      vi07, vi01, 0
+    /* 001020 32080680FF020000 */  NOP                                    /* | */  IADDI      vi06, vi01, 0
+
+  Point_loop:
+    /* 001028 323809803D780F01 */  ADDAy.x       ACC, vf15, vf15y         /* | */  IADDI      vi09, vi07, 0
+    /* 001030 32280780CAFB0F01 */  MADDz.x      vf15, vf31, vf15z         /* | */  IADDI      vi07, vi05, 0
+    /* 001038 032045086A52C901 */  MUL.xyz      vf09, vf10, vf09          /* | */  ILW.z      vi05,   3(vi04)
+    /* 001040 323008805C8CC001 */  MULq.xyz     vf17, vf17, Q             /* | */  IADDI      vi08, vi06, 0
+    /* 001048 322006809CF82000 */  MULq.w       vf02, vf31, Q             /* | */  IADDI      vi06, vi04, 0
+    /* 001050 BE036F806BC6FE01 */  MAX.xyzw     vf25, vf24, vf30          /* | */  RSQRT         Q, vf00w, vf15x
+    /* 001058 032844083D480901 */  ADDAy.x       ACC, vf09, vf09y         /* | */  ILW.z      vi04,   3(vi05)
+    /* 001060 3CB3F0810AFE0901 */  MADDz.x      vf24, vf31, vf09z         /* | */  MOVE.xyzw  vf16, vf22
+    /* 001068 3C43EA813DB81701 */  ADDAy.x       ACC, vf23, vf23y         /* | */  MOVE.xyzw  vf10, vf08
+    /* 001070 0028F6016A94D101 */  MUL.xyz      vf17, vf18, vf17          /* | */  LQ.xyzw    vf22,   0(vi05)
+    /* 001078 0020E801CAFD1701 */  MADDz.x      vf23, vf31, vf23z         /* | */  LQ.xyzw    vf08,   0(vi04)
+    /* 001080 3C030080BE3A7F00 */  MULA.zw       ACC, vf07, vf31          /* | */  NOP
+    /* 001088 3C03008029366200 */  MADD.zw      vf24, vf06, vf02          /* | */  NOP
+    /* 001090 32500280ACB5E401 */  SUB.xyzw     vf22, vf22, vf04          /* | */  IADDI      vi02, vi10, 0
+    /* 001098 325803802C42E401 */  SUB.xyzw     vf08, vf08, vf04          /* | */  IADDI      vi03, vi11, 0
+    /* 0010A0 3C0300803C889100 */  ADDAx.y       ACC, vf17, vf17x         /* | */  NOP
+    /* 0010A8 0210CB010AFE9100 */  MADDz.y      vf24, vf31, vf17z         /* | */  LQ.xyz     vf11,   2(vi02)
+    /* 0010B0 0218D3015ACE1901 */  MULz.x       vf25, vf25, vf25z         /* | */  LQ.xyz     vf19,   2(vi03)
+    /* 0010B8 BE0377805BCE9900 */  MULw.y       vf25, vf25, vf25w         /* | */  RSQRT         Q, vf00w, vf23x
+    /* 0010C0 3C030080EA43C801 */  MUL.xyz      vf15, vf08, vf08          /* | */  NOP
+    /* 0010C8 32400A80BF59DF01 */  MULAw.xyz     ACC, vf11, vf31w         /* | */  IADDI      vi10, vi08, 0
+    /* 0010D0 32480B80C81AD901 */  MADDx.xyz    vf11, vf03, vf25x         /* | */  IADDI      vi11, vi09, 0
+    /* 0010D8 0130E901BF99DF01 */  MULAw.xyz     ACC, vf19, vf31w         /* | */  LQ.xyzw    vf09,   1(vi06)
+    /* 0010E0 3C83F281C91CD901 */  MADDy.xyz    vf19, vf03, vf25y         /* | */  MOVE.xyzw  vf18, vf16
+    /* 0010E8 0138F1012FC6FF01 */  MINI.xyzw    vf24, vf24, vf31          /* | */  LQ.xyzw    vf17,   1(vi07)
+    /* 0010F0 0258C2039C52C001 */  MULq.xyz     vf10, vf10, Q             /* | */  SQ.xyz     vf11,   2(vi02)
+    /* 0010F8 E57F09529CF84000 */  MULq.z       vf02, vf31, Q             /* | */  IBNE       vi09, vi15, Point_loop
+    /* 001100 0298C303EAB5D601 */  MUL.xyz      vf23, vf22, vf22          /* | */  SQ.xyz     vf19,   2(vi03)
+
+  Point_end:
+    /* 001108 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 001110 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 001118 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+
+.balign 0x10
+model3_mpg0_point_size:
+    /* 001120 1A000000-------- */  .word (model3_mpg0_point_size - model3_mpg0_point) / 16
+    /* 001124 --------00000000 */  /* .word 0x00000000 */
+    /* 001128 00000000-------- */  /* .word 0x00000000 */
+    /* 00112C --------00000000 */  /* .word 0x00000000 */
+    /* 001130 00000000-------- */  /* .word 0x00000000 */
+    /* 001134 --------00000000 */  /* .word 0x00000000 */
+    /* 001138 00000000-------- */  /* .word 0x00000000 */
+    /* 00113C --------00000000 */  /* .word 0x00000000 */

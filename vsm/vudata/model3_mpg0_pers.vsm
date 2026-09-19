@@ -1,0 +1,66 @@
+.global model3_mpg0_pers
+
+.vu
+
+.DmaPackVif 0
+
+.data
+
+.balign 0x40
+
+model3_mpg0_pers:
+    /* 000CC0 BD060980FF020000 */  NOP                                    /* | */  XITOP      vi09
+
+  Pers:
+    /* 000CC8 0068440803044000 */  ADDw.z       vf16, vf00, vf00w         /* | */  ILW.z      vi04,   0(vi13)
+    /* 000CD0 00682508FF020000 */  NOP                                    /* | */  ILW.w      vi05,   0(vi13)
+    /* 000CD8 0048FC01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf28,   0(vi09)
+    /* 000CE0 0148FD01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf29,   1(vi09)
+    /* 000CE8 0248FE01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf30,   2(vi09)
+    /* 000CF0 0348FF01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf31,   3(vi09)
+    /* 000CF8 0448E201FF020000 */  NOP                                    /* | */  LQ.xyzw    vf02,   4(vi09)
+    /* 000D00 0548E301FF020000 */  NOP                                    /* | */  LQ.xyzw    vf03,   5(vi09)
+    /* 000D08 0648E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   6(vi09)
+    /* 000D10 0748EB01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf11,   7(vi09)
+    /* 000D18 00008B12FF020000 */  NOP                                    /* | */  ISUBIU     vi11, vi00, 8192
+    /* 000D20 00007F43FF020080 */  NOP                                    /* | */  LOI        255
+    /* 000D28 BD060880FF020000 */  NOP                                    /* | */  XITOP      vi08
+
+  Pers_loop:
+    /* 000D30 0020E4015C84C001 */  MULq.xyz     vf17, vf16, Q             /* | */  LQ.xyzw    vf04,   0(vi04)
+    /* 000D38 03209001FF020000 */  NOP                                    /* | */  LQ.xy      vf16,   3(vi04)
+    /* 000D40 0038C803BFF9E001 */  MULAw.xyzw    ACC, vf31, vf00w         /* | */  SQ.xyz     vf07,   0(vi08)
+    /* 000D48 75080A8090312000 */  MAXx.w       vf06, vf06, vf00x         /* | */  IOR        vi01, vi01, vi10
+    /* 000D50 0040210ABEF0E401 */  MADDAz.xyzw   ACC, vf30, vf04z         /* | */  ISW.w      vi01,   0(vi08)
+    /* 000D58 0250E803BDE8E401 */  MADDAy.xyzw   ACC, vf29, vf04y         /* | */  SQ.xyzw    vf10,   2(vi08)
+    /* 000D60 0220E80148E1E401 */  MADDx.xyzw   vf05, vf28, vf04x         /* | */  LQ.xyzw    vf08,   2(vi04)
+    /* 000D68 0000002A9F312000 */  MINIi.w      vf06, vf06, I             /* | */  FSSET      0x0
+    /* 000D70 32480880FC1AC601 */  SUBA.xyz      ACC, vf03, vf06          /* | */  IADDI      vi08, vi09, 0
+    /* 000D78 32200980FC32C201 */  SUBA.xyz      ACC, vf06, vf02          /* | */  IADDI      vi09, vi04, 0
+    /* 000D80 BC03E5812F42EB01 */  MINI.xyzw    vf08, vf08, vf11          /* | */  DIV           Q, vf00w, vf05w
+    /* 000D88 032044087D31E701 */  FTOI4.xyzw   vf07, vf06                /* | */  ILW.z      vi04,   3(vi04)
+    /* 000D90 0388C8037C49EA01 */  FTOI0.xyzw   vf10, vf09                /* | */  SQ.xyz     vf17,   3(vi08)
+    /* 000D98 8000012C59012100 */  MULy.w       vf05, vf00, vf01y         /* | */  FSAND      vi01, 0x80
+    /* 000DA0 710001803E819001 */  ITOF12.xy    vf16, vf16                /* | */  ISUB       vi01, vi00, vi01
+    /* 000DA8 FC3B6A805042E001 */  MAXx.xyzw    vf09, vf08, vf00x         /* | */  MTIR       vi10, vf07w
+    /* 000DB0 EF2F0852BC01E101 */  MULAx.xyzw    ACC, vf00, vf01x         /* | */  IBNE       vi08, vi05, Pers_loop
+    /* 000DB8 74080B80A129E001 */  MADDq.xyzw   vf06, vf05, Q             /* | */  IAND       vi01, vi01, vi11
+
+  Pers_end:
+    /* 000DC0 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000DC8 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+.balign 0x10
+model3_mpg0_pers_size:
+    /* 000DD0 11000000-------- */  .word (model3_mpg0_pers_size - model3_mpg0_pers) / 16
+    /* 000DD4 --------00000000 */  /* .word 0x00000000 */
+    /* 000DD8 00000000-------- */  /* .word 0x00000000 */
+    /* 000DDC --------00000000 */  /* .word 0x00000000 */
+    /* 000DE0 00000000-------- */  /* .word 0x00000000 */
+    /* 000DE4 --------00000000 */  /* .word 0x00000000 */
+    /* 000DE8 00000000-------- */  /* .word 0x00000000 */
+    /* 000DEC --------00000000 */  /* .word 0x00000000 */
+    /* 000DF0 00000000-------- */  /* .word 0x00000000 */
+    /* 000DF4 --------00000000 */  /* .word 0x00000000 */
+    /* 000DF8 00000000-------- */  /* .word 0x00000000 */
+    /* 000DFC --------00000000 */  /* .word 0x00000000 */

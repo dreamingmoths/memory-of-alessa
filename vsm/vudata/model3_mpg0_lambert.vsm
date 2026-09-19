@@ -1,0 +1,71 @@
+.global model3_mpg0_lambert
+.global model3_mpg0_lambert_size
+
+.vu
+
+.DmaPackVif 0
+
+.data
+
+.balign 0x40
+
+model3_mpg0_lambert:
+    /* 000A80 03000040FF020000 */  NOP                                    /* | */  B          Lambert0
+    /* 000A88 BD060180FF020000 */  NOP                                    /* | */  XITOP      vi01
+    /* 000A90 08000040FF020000 */  NOP                                    /* | */  B          Lambert1
+    /* 000A98 BD060180FF020000 */  NOP                                    /* | */  XITOP      vi01
+
+  Lambert0:
+    /* 000AA0 0008F801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf24,   0(vi01)
+    /* 000AA8 0108F901FF020000 */  NOP                                    /* | */  LQ.xyzw    vf25,   1(vi01)
+    /* 000AB0 0208FA01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf26,   2(vi01)
+    /* 000AB8 0408FC01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf28,   4(vi01)
+    /* 000AC0 0508FD01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf29,   5(vi01)
+    /* 000AC8 0608FE01FF020040 */  NOP[E]                                 /* | */  LQ.xyzw    vf30,   6(vi01)
+    /* 000AD0 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Lambert1:
+    /* 000AD8 00684408FF020000 */  NOP                                    /* | */  ILW.z      vi04,   0(vi13)
+    /* 000AE0 0308E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   3(vi01)
+    /* 000AE8 0208E901FF020000 */  NOP                                    /* | */  LQ.xyzw    vf09,   2(vi01)
+    /* 000AF0 0008EB01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf11,   0(vi01)
+    /* 000AF8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000B00 0120E2011AC62100 */  MULz.w       vf24, vf24, vf01z         /* | */  LQ.xyzw    vf02,   1(vi04)
+    /* 000B08 0108E8015ACE2100 */  MULz.w       vf25, vf25, vf01z         /* | */  LQ.xyzw    vf08,   1(vi01)
+    /* 000B10 320802809AD62100 */  MULz.w       vf26, vf26, vf01z         /* | */  IADDI      vi02, vi01, 0
+    /* 000B18 320803806A4AEB01 */  MUL.xyzw     vf09, vf09, vf11          /* | */  IADDI      vi03, vi01, 0
+
+  Lambert1_loop:
+    /* 000B20 32180280BCC1E201 */  MULAx.xyzw    ACC, vf24, vf02x         /* | */  IADDI      vi02, vi03, 0
+    /* 000B28 32200380BDC8E201 */  MADDAy.xyzw   ACC, vf25, vf02y         /* | */  IADDI      vi03, vi04, 0
+    /* 000B30 03204408CAD0E201 */  MADDz.xyzw   vf03, vf26, vf02z         /* | */  ILW.z      vi04,   3(vi04)
+    /* 000B38 3C232580BCE1C401 */  MULAx.xyz     ACC, vf28, vf04x         /* | */  MOVE.w     vf05, vf04
+    /* 000B40 0210C601BDE8C401 */  MADDAy.xyz    ACC, vf29, vf04y         /* | */  LQ.xyz     vf06,   2(vi02)
+    /* 000B48 0238E1034AF1C401 */  MADDz.xyz    vf05, vf30, vf04z         /* | */  SQ.xyzw    vf07,   2(vi01)
+    /* 000B50 0120E2011019C001 */  MAXx.xyz     vf04, vf03, vf00x         /* | */  LQ.xyzw    vf02,   1(vi04)
+    /* 000B58 3C1B2480BF49E001 */  MULAw.xyzw    ACC, vf09, vf00w         /* | */  MOVE.w     vf04, vf03
+    /* 000B60 F7270252BD32C801 */  MADDA.xyz     ACC, vf06, vf08          /* | */  IBNE       vi02, vi04, Lambert1_loop
+    /* 000B68 32100180E929E801 */  MADD.xyzw    vf07, vf05, vf08          /* | */  IADDI      vi01, vi02, 0
+
+  Lambert1_end:
+    /* 000B70 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000B78 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+.balign 0x10
+model3_mpg0_lambert_size:
+    /* 000B80 10000000-------- */  .word (model3_mpg0_lambert_size - model3_mpg0_lambert) / 16
+    /* 000B84 --------00000000 */  /* .word 0x00000000 */
+    /* 000B88 00000000-------- */  /* .word 0x00000000 */
+    /* 000B8C --------00000000 */  /* .word 0x00000000 */
+    /* 000B90 00000000-------- */  /* .word 0x00000000 */
+    /* 000B94 --------00000000 */  /* .word 0x00000000 */
+    /* 000B98 00000000-------- */  /* .word 0x00000000 */
+    /* 000B9C --------00000000 */  /* .word 0x00000000 */
+    /* 000BA0 00000000-------- */  /* .word 0x00000000 */
+    /* 000BA4 --------00000000 */  /* .word 0x00000000 */
+    /* 000BA8 00000000-------- */  /* .word 0x00000000 */
+    /* 000BAC --------00000000 */  /* .word 0x00000000 */
+    /* 000BB0 00000000-------- */  /* .word 0x00000000 */
+    /* 000BB4 --------00000000 */  /* .word 0x00000000 */
+    /* 000BB8 00000000-------- */  /* .word 0x00000000 */
+    /* 000BBC --------00000000 */  /* .word 0x00000000 */

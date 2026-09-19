@@ -1,0 +1,75 @@
+.global model3_mpg0_persfvg
+.global model3_mpg0_persfvg_size
+
+.vu
+
+.DmaPackVif 0
+
+.data
+
+.balign 0x40
+
+model3_mpg0_persfvg:
+    /* 000E00 BD06098003044000 */  ADDw.z       vf16, vf00, vf00w         /* | */  XITOP      vi09
+    /* 000E08 3C03008083044000 */  ADDw.z       vf18, vf00, vf00w         /* | */  NOP
+    /* 000E10 0068440803014000 */  ADDw.z       vf04, vf00, vf00w         /* | */  ILW.z      vi04,   0(vi13)
+    /* 000E18 0068250802012000 */  ADDz.w       vf04, vf00, vf00z         /* | */  ILW.w      vi05,   0(vi13)
+    /* 000E20 0048FC016C00E011 */  SUB[D].xyzw     vf01, vf00, vf00       /* | */  LQ.xyzw    vf28,   0(vi09)
+    /* 000E28 0148FD01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf29,   1(vi09)
+    /* 000E30 0248FE01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf30,   2(vi09)
+    /* 000E38 0348FF01FF020000 */  NOP                                    /* | */  LQ.xyzw    vf31,   3(vi09)
+    /* 000E40 0448E201FF020000 */  NOP                                    /* | */  LQ.xyzw    vf02,   4(vi09)
+    /* 000E48 0548E301FF020000 */  NOP                                    /* | */  LQ.xyzw    vf03,   5(vi09)
+    /* 000E50 0648EB016809FC01 */  ADD.xyzw     vf05, vf01, vf28          /* | */  LQ.xyzw    vf11,   6(vi09)
+    /* 000E58 F1076212FF020000 */  NOP                                    /* | */  ISUBIU     vi02, vi00, 8177
+    /* 000E60 F0072310FF020000 */  NOP                                    /* | */  IADDIU     vi03, vi00, 4080
+    /* 000E68 00007F43FF020080 */  NOP                                    /* | */  LOI        255
+    /* 000E70 BD060880FF020000 */  NOP                                    /* | */  XITOP      vi08
+    /* 000E78 BD060780FF020000 */  NOP                                    /* | */  XITOP      vi07
+
+  Pers_loop:
+    /* 000E80 0020E401FF020000 */  NOP                                    /* | */  LQ.xyzw    vf04,   0(vi04)
+    /* 000E88 8000012CFF020000 */  NOP                                    /* | */  FSAND      vi01, 0x80
+    /* 000E90 0220E801FF020000 */  NOP                                    /* | */  LQ.xyzw    vf08,   2(vi04)
+    /* 000E98 0250E9037D31E701 */  FTOI4.xyzw   vf07, vf06                /* | */  SQ.xyzw    vf10,   2(vi09)
+    /* 000EA0 BC036481BFF9E001 */  MULAw.xyzw    ACC, vf31, vf00w         /* | */  DIV           Q, vf00w, vf04z
+    /* 000EA8 0320900129F3E401 */  MADD.xyzw    vf12, vf30, vf04          /* | */  LQ.xy      vf16,   3(vi04)
+    /* 000EB0 012092016F42EB01 */  MINI.xyzw    vf09, vf08, vf11          /* | */  LQ.xy      vf18,   1(vi04)
+    /* 000EB8 710001806AE18401 */  MUL.xy       vf05, vf28, vf04          /* | */  ISUB       vi01, vi00, vi01
+    /* 000EC0 FC3B6A80FF020000 */  NOP                                    /* | */  MTIR       vi10, vf07w
+    /* 000EC8 75080B80FF020000 */  NOP                                    /* | */  IOR        vi01, vi01, vi11
+    /* 000ED0 740802803E819001 */  ITOF12.xy    vf16, vf16                /* | */  IAND       vi01, vi01, vi02
+    /* 000ED8 0038C903BFE9E001 */  MULAw.xyzw    ACC, vf29, vf00w         /* | */  SQ.xyz     vf07,   0(vi09)
+    /* 000EE0 B4520380A129E001 */  MADDq.xyzw   vf06, vf05, Q             /* | */  IAND       vi10, vi10, vi03
+    /* 000EE8 75080A80504AE001 */  MAXx.xyzw    vf09, vf09, vf00x         /* | */  IOR        vi01, vi01, vi10
+    /* 000EF0 0048210AFF61EC01 */  CLIPw.xyzw   vf12, vf12w               /* | */  ISW.w      vi01,   0(vi09)
+    /* 000EF8 32200980DC94C001 */  MULq.xyz     vf19, vf18, Q             /* | */  IADDI      vi09, vi04, 0
+    /* 000F00 0000002A5C84C001 */  MULq.xyz     vf17, vf16, Q             /* | */  FSSET      0x0
+    /* 000F08 0320440890312000 */  MAXx.w       vf06, vf06, vf00x         /* | */  ILW.z      vi04,   3(vi04)
+    /* 000F10 00000B38FC1AC601 */  SUBA.xyz      ACC, vf03, vf06          /* | */  FCGET      vi11
+    /* 000F18 0198C903FC32C201 */  SUBA.xyz      ACC, vf06, vf02          /* | */  SQ.xyz     vf19,   1(vi09)
+    /* 000F20 EB2F09527C49EA01 */  FTOI0.xyzw   vf10, vf09                /* | */  IBNE       vi09, vi05, Pers_loop
+    /* 000F28 0388C9039F312000 */  MINIi.w      vf06, vf06, I             /* | */  SQ.xyz     vf17,   3(vi09)
+
+  Pers_end:
+    /* 000F30 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000F38 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+.balign 0x10
+model3_mpg0_persfvg_size:
+    /* 000F40 14000000-------- */  .word (model3_mpg0_persfvg_size - model3_mpg0_persfvg) / 16
+    /* 000F44 --------00000000 */  /* .word 0x00000000 */
+    /* 000F48 00000000-------- */  /* .word 0x00000000 */
+    /* 000F4C --------00000000 */  /* .word 0x00000000 */
+    /* 000F50 00000000-------- */  /* .word 0x00000000 */
+    /* 000F54 --------00000000 */  /* .word 0x00000000 */
+    /* 000F58 00000000-------- */  /* .word 0x00000000 */
+    /* 000F5C --------00000000 */  /* .word 0x00000000 */
+    /* 000F60 00000000-------- */  /* .word 0x00000000 */
+    /* 000F64 --------00000000 */  /* .word 0x00000000 */
+    /* 000F68 00000000-------- */  /* .word 0x00000000 */
+    /* 000F6C --------00000000 */  /* .word 0x00000000 */
+    /* 000F70 00000000-------- */  /* .word 0x00000000 */
+    /* 000F74 --------00000000 */  /* .word 0x00000000 */
+    /* 000F78 00000000-------- */  /* .word 0x00000000 */
+    /* 000F7C --------00000000 */  /* .word 0x00000000 */
