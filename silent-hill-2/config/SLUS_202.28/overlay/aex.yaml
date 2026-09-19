@@ -10,7 +10,7 @@ options:
    - overlay/aex_symbol_addrs.txt
    - symbol_addrs.txt
    - sdk_symbol_addrs.txt
-  reloc_addrs_path: aex_reloc_addrs.txt
+  reloc_addrs_path: overlay/aex_reloc_addrs.txt
   ld_script_path: linkers/aex.ld
   undefined_funcs_auto_path: linkers/aex_undefined_funcs_auto.main.txt
   undefined_syms_auto_path: linkers/aex_undefined_syms_auto.main.txt

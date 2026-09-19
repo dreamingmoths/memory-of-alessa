@@ -1,6 +1,6 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_stair", func_01F01E80_ast);
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_stair", stg_apart_stair_AP_Hosei_Light);
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_stair", stg_apart_stair_EvProgUseYardKey);
 

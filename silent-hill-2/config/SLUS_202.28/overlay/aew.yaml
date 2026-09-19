@@ -10,7 +10,7 @@ options:
    - overlay/aew_symbol_addrs.txt
    - symbol_addrs.txt
    - sdk_symbol_addrs.txt
-  reloc_addrs_path: aew_reloc_addrs.txt
+  reloc_addrs_path: overlay/aew_reloc_addrs.txt
   ld_script_path: linkers/aew.ld
   undefined_funcs_auto_path: linkers/aew_undefined_funcs_auto.main.txt
   undefined_syms_auto_path: linkers/aew_undefined_syms_auto.main.txt

@@ -1,8 +1,8 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w2f", func_01F01E80_awy);
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w2f", stg_apart_w2f_LinearTrim);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w2f", func_01F01EB0_awy);
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w2f", stg_apart_w2f_Parallel_Trim);
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w2f", stg_apart_w2f_EvProgReadDearTim);
 

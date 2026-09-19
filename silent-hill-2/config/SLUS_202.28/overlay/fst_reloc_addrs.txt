@@ -1,0 +1,521 @@
+rom:0x001B38 reloc:MIPS_32                             symbol:stg_forest_EvProgLastScene
+rom:0x001B34 reloc:MIPS_32                             symbol:stg_forest_EvProgGetChainsaw
+rom:0x001B30 reloc:MIPS_32                             symbol:stg_forest_EvProgGraveLookingFor
+rom:0x001B2C reloc:MIPS_32                             symbol:stg_forest_EvProgGraveSureQuiet
+rom:0x001B28 reloc:MIPS_32                             symbol:stg_forest_EvProgAngelaInGrave
+rom:0x001B24 reloc:MIPS_32                             symbol:stg_forest_EvProgFirstSaveWell
+rom:0x001B44 reloc:MIPS_32                             symbol:stg_forest_Ca10_Hakaba_Angela_SetDrawEnv
+rom:0x001C7C reloc:MIPS_32                             symbol:stg_forest_EvSoundCallAfterLoad
+rom:0x001C74 reloc:MIPS_32                             symbol:stg_forest_SpecialDrawFunctions
+rom:0x001C6C reloc:MIPS_32                             symbol:stg_forest_pjames_stage_anim
+rom:0x001C60 reloc:MIPS_32                             symbol:stg_forest_EvAllTimeFunc
+rom:0x001C5C reloc:MIPS_32                             symbol:stg_forest_EvRoomInit
+rom:0x001C58 reloc:MIPS_32                             symbol:stg_forest_EvStageInit
+rom:0x001C50 reloc:MIPS_32                             symbol:stg_forest_mdl_list
+rom:0x001C48 reloc:MIPS_32                             symbol:stg_forest_ev_prog
+rom:0x001C44 reloc:MIPS_32                             symbol:stg_forest_ev_pos
+rom:0x001C40 reloc:MIPS_32                             symbol:stg_forest_ev_list
+rom:0x000088 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00008C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0000E8 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0000EC reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0000F4 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x000100 reloc:MIPS_26                             symbol:PlayerEventAnimeSet
+rom:0x00010C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000110 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000114 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000118 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000120 reloc:MIPS_HI16                           symbol:data_pic_out_p_redpaper_tex
+rom:0x000124 reloc:MIPS_LO16                           symbol:data_pic_out_p_redpaper_tex
+rom:0x00012C reloc:MIPS_26                             symbol:EvSubFileLoadAndFadeOut
+rom:0x000144 reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x000150 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000154 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000158 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x00015C reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000160 reloc:MIPS_26                             symbol:EvSubPictureStart
+rom:0x000168 reloc:MIPS_26                             symbol:EvSubPictureDisplayOnly
+rom:0x000170 reloc:MIPS_26                             symbol:EvSubPictureEnd
+rom:0x000178 reloc:MIPS_26                             symbol:ScreenEffectFadeCheck
+rom:0x00018C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000190 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000194 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000198 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0001A4 reloc:MIPS_26                             symbol:EvSubPictureStart
+rom:0x0001AC reloc:MIPS_26                             symbol:EvSubPictureDisplayOnly
+rom:0x0001B4 reloc:MIPS_26                             symbol:EvSubPictureEnd
+rom:0x0001C0 reloc:MIPS_HI16                           symbol:key_config
+rom:0x0001C4 reloc:MIPS_LO16                           symbol:key_config
+rom:0x0001C8 reloc:MIPS_26                             symbol:shPadTrigger
+rom:0x0001DC reloc:MIPS_HI16           addend:+0x4     symbol:key_config
+rom:0x0001E0 reloc:MIPS_LO16           addend:+0x4     symbol:key_config
+rom:0x0001E4 reloc:MIPS_26                             symbol:shPadTrigger
+rom:0x0001F8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0001FC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000200 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000204 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000210 reloc:MIPS_26                             symbol:EvSubPictureStart
+rom:0x000218 reloc:MIPS_26                             symbol:EvSubPictureDisplayOnly
+rom:0x000220 reloc:MIPS_26                             symbol:EvSubPictureFilter
+rom:0x000228 reloc:MIPS_26                             symbol:EvSubPictureEnd
+rom:0x000234 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x00024C reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x000258 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00025C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000260 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000264 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000270 reloc:MIPS_26                             symbol:ScreenEffectFadeCheck
+rom:0x000284 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000288 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00028C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000290 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000298 reloc:MIPS_HI16                           symbol:game_flag
+rom:0x00029C reloc:MIPS_LO16                           symbol:game_flag
+rom:0x0002A4 reloc:MIPS_HI16                           symbol:game_flag
+rom:0x0002A8 reloc:MIPS_LO16                           symbol:game_flag
+rom:0x0002B0 reloc:MIPS_26                             symbol:SetSavePointName
+rom:0x0002C8 reloc:MIPS_26                             symbol:SeCall
+rom:0x0002D4 reloc:MIPS_HI16           addend:+0x8     symbol:Sh2sys
+rom:0x0002D8 reloc:MIPS_LO16           addend:+0x8     symbol:Sh2sys
+rom:0x0002DC reloc:MIPS_HI16           addend:+0xC     symbol:Sh2sys
+rom:0x0002E0 reloc:MIPS_LO16           addend:+0xC     symbol:Sh2sys
+rom:0x0002E4 reloc:MIPS_HI16           addend:+0x10    symbol:Sh2sys
+rom:0x0002E8 reloc:MIPS_LO16           addend:+0x10    symbol:Sh2sys
+rom:0x0002EC reloc:MIPS_HI16           addend:+0x14    symbol:Sh2sys
+rom:0x0002F0 reloc:MIPS_LO16           addend:+0x14    symbol:Sh2sys
+rom:0x0002F4 reloc:MIPS_HI16           addend:+0x18    symbol:Sh2sys
+rom:0x0002F8 reloc:MIPS_LO16           addend:+0x18    symbol:Sh2sys
+rom:0x0002FC reloc:MIPS_HI16           addend:+0x1C    symbol:Sh2sys
+rom:0x000300 reloc:MIPS_LO16           addend:+0x1C    symbol:Sh2sys
+rom:0x000304 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000308 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000310 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+// rom:0x001D9C reloc:MIPS_32                             symbol:grave_msg$1068
+// rom:0x001D98 reloc:MIPS_32                             symbol:grave_anim$1066
+rom:0x000350 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000354 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0003BC reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0003C0 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0003C8 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x0003D4 reloc:MIPS_26                             symbol:PlayerEventAnimeSet
+rom:0x0003E8 reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x0003F4 reloc:MIPS_26                             symbol:SeBgmCall
+rom:0x000400 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000404 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000408 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x00040C reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000410 reloc:MIPS_26                             symbol:ScreenEffectFadeCheck
+rom:0x000420 reloc:MIPS_26                             symbol:shSdStat
+// rom:0x000438 reloc:MIPS_HI16                           symbol:@1086
+// rom:0x00043C reloc:MIPS_LO16                           symbol:@1086
+rom:0x000458 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00045C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000460 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x00046C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000470 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000474 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000478 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000488 reloc:MIPS_HI16                           symbol:data_movie_hakaba_pss
+rom:0x00048C reloc:MIPS_LO16                           symbol:data_movie_hakaba_pss
+// rom:0x000490 reloc:MIPS_HI16                           symbol:movie_msg$1067
+// rom:0x000494 reloc:MIPS_LO16                           symbol:movie_msg$1067
+rom:0x00049C reloc:MIPS_26                             symbol:EvSubMovieReady
+rom:0x0004A8 reloc:MIPS_26                             symbol:EvSubMovieStart
+rom:0x0004BC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0004C0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0004C4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0004C8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0004D4 reloc:MIPS_26                             symbol:movieGetLastExitStatus
+rom:0x0004EC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0004F0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0004F4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0004F8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000508 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00050C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000510 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000514 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000524 reloc:MIPS_26                             symbol:EvSubMovieEnd
+rom:0x00052C reloc:MIPS_HI16                           symbol:stg_forest_dds_adr
+rom:0x000530 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr
+// rom:0x000534 reloc:MIPS_HI16           addend:+0x4     symbol:grave$1070
+// rom:0x000538 reloc:MIPS_LO16           addend:+0x4     symbol:grave$1070
+rom:0x000540 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000548 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00054C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000554 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000564 reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x000570 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000574 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000578 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x00057C reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000580 reloc:MIPS_HI16                           symbol:grave$1070
+// rom:0x000584 reloc:MIPS_LO16                           symbol:grave$1070
+rom:0x000588 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x00059C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0005A0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0005A4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0005A8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0005C0 reloc:MIPS_26                             symbol:EvSubMovieEnd
+rom:0x0005CC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0005D0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0005D4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0005D8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0005EC reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x000600 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000608 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00060C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000614 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x00061C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000620 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000628 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x000630 reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x00063C reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000648 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+rom:0x000650 reloc:MIPS_26                             symbol:shRandI
+rom:0x000664 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000668 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000670 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000674 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+// rom:0x000678 reloc:MIPS_HI16                           symbol:@1160
+// rom:0x00067C reloc:MIPS_LO16                           symbol:@1160
+rom:0x000698 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00069C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0006A0 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x0006B0 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
+rom:0x0006C4 reloc:MIPS_26                             symbol:shCharacterHumanAGLAnimeSetP
+rom:0x0006DC reloc:MIPS_HI16                           symbol:stg_forest_agl_pos_1
+rom:0x0006E0 reloc:MIPS_LO16                           symbol:stg_forest_agl_pos_1
+rom:0x0006E4 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x0006F0 reloc:MIPS_26                             symbol:SeBgmCall
+rom:0x000714 reloc:MIPS_26                             symbol:loadBgCommon_HideMapBlockOutdoor
+// rom:0x001E0C reloc:MIPS_32                             symbol:quiet_msg$1172
+// rom:0x001E08 reloc:MIPS_32                             symbol:quiet_anim$1171
+rom:0x00074C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000750 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00077C reloc:MIPS_HI16                           symbol:stg_forest_dds_adr_h
+rom:0x000780 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr_h
+// rom:0x000784 reloc:MIPS_HI16           addend:+0x4     symbol:grave$1174
+// rom:0x000788 reloc:MIPS_LO16           addend:+0x4     symbol:grave$1174
+rom:0x000790 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000798 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00079C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0007A4 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x0007B0 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0007B4 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0007B8 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0007BC reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x0007C0 reloc:MIPS_HI16                           symbol:grave$1174
+// rom:0x0007C4 reloc:MIPS_LO16                           symbol:grave$1174
+rom:0x0007C8 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x0007DC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0007E0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0007E4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0007E8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000800 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000808 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00080C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000814 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x00081C reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x000828 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000834 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+// rom:0x00083C reloc:MIPS_HI16                           symbol:@1198
+// rom:0x000840 reloc:MIPS_LO16                           symbol:@1198
+rom:0x00085C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000860 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000864 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000874 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
+rom:0x000888 reloc:MIPS_26                             symbol:shCharacterHumanAGLAnimeSetP
+rom:0x0008A0 reloc:MIPS_HI16                           symbol:stg_forest_agl_pos_1
+rom:0x0008A4 reloc:MIPS_LO16                           symbol:stg_forest_agl_pos_1
+rom:0x0008A8 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x0008B0 reloc:MIPS_26                             symbol:shRandI
+rom:0x0008C4 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0008C8 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x0008D0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0008D4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x0008E0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0008E4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x0008F0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0008F4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+// rom:0x001E6C reloc:MIPS_32                             symbol:looking_msg$1209
+// rom:0x001E68 reloc:MIPS_32                             symbol:looking_anim$1208
+rom:0x00092C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000930 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00095C reloc:MIPS_HI16                           symbol:stg_forest_dds_adr_i
+rom:0x000960 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr_i
+// rom:0x000964 reloc:MIPS_HI16           addend:+0x4     symbol:grave$1211
+// rom:0x000968 reloc:MIPS_LO16           addend:+0x4     symbol:grave$1211
+rom:0x000970 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000978 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00097C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000984 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000990 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000994 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000998 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x00099C reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x0009A0 reloc:MIPS_HI16                           symbol:grave$1211
+// rom:0x0009A4 reloc:MIPS_LO16                           symbol:grave$1211
+rom:0x0009A8 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x0009BC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0009C0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0009C4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0009C8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0009E0 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x0009E8 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0009EC reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0009F4 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x0009FC reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x000A08 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000A14 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+// rom:0x000A1C reloc:MIPS_HI16                           symbol:@1235
+// rom:0x000A20 reloc:MIPS_LO16                           symbol:@1235
+rom:0x000A3C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000A40 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000A44 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000A54 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
+rom:0x000A68 reloc:MIPS_26                             symbol:shCharacterHumanAGLAnimeSetP
+rom:0x000A80 reloc:MIPS_HI16                           symbol:stg_forest_agl_pos_1
+rom:0x000A84 reloc:MIPS_LO16                           symbol:stg_forest_agl_pos_1
+rom:0x000A88 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000A90 reloc:MIPS_26                             symbol:shRandI
+rom:0x000AA4 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000AA8 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000AB0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000AB4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000AC0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000AC4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000AD0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000AD4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+// rom:0x001EB8 reloc:MIPS_32                             symbol:anim$1245
+rom:0x001EB4 reloc:MIPS_32                             symbol:MemShare_gp_data_buf
+rom:0x001EF0 reloc:MIPS_32                             symbol:data_demo_mry_yarinaoshi_i_lau_cls
+rom:0x001EE8 reloc:MIPS_32                             symbol:data_demo_mry_yarinaoshi_i_lau_anm
+rom:0x001EE4 reloc:MIPS_32                             symbol:data_chr_lau_lau_mdl
+rom:0x000B08 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000B0C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000B5C reloc:MIPS_HI16                           symbol:MemShare_gp_data_buf
+rom:0x000B60 reloc:MIPS_LO16                           symbol:MemShare_gp_data_buf
+rom:0x000B64 reloc:MIPS_HI16                           symbol:data_demo_mry_yarinaoshi_i_mry_yarinaoshi_i_dds
+rom:0x000B68 reloc:MIPS_LO16                           symbol:data_demo_mry_yarinaoshi_i_mry_yarinaoshi_i_dds
+rom:0x000B6C reloc:MIPS_26                             symbol:FcRead
+// rom:0x000B74 reloc:MIPS_HI16                           symbol:chara_data$1247
+// rom:0x000B78 reloc:MIPS_LO16                           symbol:chara_data$1247
+rom:0x000B80 reloc:MIPS_26                             symbol:CharaDataLoadDemo
+rom:0x000B88 reloc:MIPS_HI16                           symbol:data_demo_mry_yarinaoshi_i_lll_jms_anm
+rom:0x000B8C reloc:MIPS_LO16                           symbol:data_demo_mry_yarinaoshi_i_lll_jms_anm
+rom:0x000B94 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+// rom:0x000B9C reloc:MIPS_HI16                           symbol:anim_adr$1248
+// rom:0x000BA0 reloc:MIPS_LO16                           symbol:anim_adr$1248
+rom:0x000BAC reloc:MIPS_26                             symbol:fsSync
+rom:0x000BB4 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000BB8 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000BBC reloc:MIPS_HI16                           symbol:anim_adr$1248
+// rom:0x000BC0 reloc:MIPS_LO16                           symbol:anim_adr$1248
+rom:0x000BC4 reloc:MIPS_26                             symbol:CharaDataAnimAdressExchange
+// rom:0x000BCC reloc:MIPS_HI16                           symbol:anim_adr$1248
+// rom:0x000BD0 reloc:MIPS_LO16                           symbol:anim_adr$1248
+rom:0x000BD8 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000BE0 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000BE4 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000BEC reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000BF8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000BFC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000C00 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000C04 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000C08 reloc:MIPS_HI16                           symbol:info$1246
+// rom:0x000C0C reloc:MIPS_LO16                           symbol:info$1246
+rom:0x000C10 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x000C28 reloc:MIPS_26                             symbol:ScreenEffectFadeStart
+rom:0x000C34 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000C38 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000C3C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000C40 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000C4C reloc:MIPS_26                             symbol:ScreenEffectFadeCheck
+rom:0x000C60 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000C64 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000C68 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000C6C reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000C78 reloc:MIPS_HI16                           symbol:data_movie_ending_pss
+rom:0x000C7C reloc:MIPS_LO16                           symbol:data_movie_ending_pss
+rom:0x000C88 reloc:MIPS_26                             symbol:EvSubMovieReady
+rom:0x000C94 reloc:MIPS_26                             symbol:EvSubMovieStart
+rom:0x000CA8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000CAC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000CB0 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000CB4 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000CC0 reloc:MIPS_26                             symbol:movieGetLastExitStatus
+rom:0x000CD4 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000CD8 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000CDC reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000CE0 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000CEC reloc:MIPS_26                             symbol:EvSubMovieEnd
+rom:0x000CF4 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000CF8 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000CFC reloc:MIPS_HI16                           symbol:anim_adr$1248
+// rom:0x000D00 reloc:MIPS_LO16                           symbol:anim_adr$1248
+rom:0x000D04 reloc:MIPS_26                             symbol:CharaDataAnimAdressExchange
+// rom:0x000D0C reloc:MIPS_HI16                           symbol:anim_adr$1248
+// rom:0x000D10 reloc:MIPS_LO16                           symbol:anim_adr$1248
+rom:0x000D14 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D18 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D20 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D24 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D28 reloc:MIPS_HI16           addend:+0x75    symbol:playing
+rom:0x000D2C reloc:MIPS_LO16           addend:+0x75    symbol:playing
+rom:0x000D58 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D5C reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D64 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D68 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D74 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D78 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D80 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D84 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D90 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000D94 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000D9C reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000DA0 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000DAC reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000DB0 reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000DB8 reloc:MIPS_HI16           addend:+0x4     symbol:playing
+rom:0x000DBC reloc:MIPS_LO16           addend:+0x4     symbol:playing
+rom:0x000DC0 reloc:MIPS_HI16           addend:+0x5     symbol:playing
+rom:0x000DC4 reloc:MIPS_LO16           addend:+0x5     symbol:playing
+rom:0x000DCC reloc:MIPS_HI16           addend:+0x5     symbol:playing
+rom:0x000DD0 reloc:MIPS_LO16           addend:+0x5     symbol:playing
+rom:0x000DD8 reloc:MIPS_HI16           addend:+0x8     symbol:Sh2sys
+rom:0x000DDC reloc:MIPS_LO16           addend:+0x8     symbol:Sh2sys
+rom:0x000DE0 reloc:MIPS_HI16           addend:+0xC     symbol:Sh2sys
+rom:0x000DE4 reloc:MIPS_LO16           addend:+0xC     symbol:Sh2sys
+rom:0x000DE8 reloc:MIPS_HI16           addend:+0x10    symbol:Sh2sys
+rom:0x000DEC reloc:MIPS_LO16           addend:+0x10    symbol:Sh2sys
+rom:0x000DF0 reloc:MIPS_HI16           addend:+0x14    symbol:Sh2sys
+rom:0x000DF4 reloc:MIPS_LO16           addend:+0x14    symbol:Sh2sys
+rom:0x000DF8 reloc:MIPS_HI16           addend:+0x18    symbol:Sh2sys
+rom:0x000DFC reloc:MIPS_LO16           addend:+0x18    symbol:Sh2sys
+rom:0x000E00 reloc:MIPS_HI16           addend:+0x1C    symbol:Sh2sys
+rom:0x000E04 reloc:MIPS_LO16           addend:+0x1C    symbol:Sh2sys
+rom:0x000E40 reloc:MIPS_26                             symbol:EvSubItemGetAndAnim
+rom:0x000E68 reloc:MIPS_26                             symbol:CharaDataDeleteAll
+rom:0x001F34 reloc:MIPS_32                             symbol:data_demo_haka_agl_agl_cls
+rom:0x001F30 reloc:MIPS_32                             symbol:data_chr_agl_agl_kg1
+rom:0x001F2C reloc:MIPS_32                             symbol:data_demo_haka_agl_agl_anm
+rom:0x001F28 reloc:MIPS_32                             symbol:data_chr_agl_agl_mdl
+rom:0x001F20 reloc:MIPS_32                             symbol:data_demo_haka_agl_hhh_jms_cls
+rom:0x001F1C reloc:MIPS_32                             symbol:data_chr_jms_hhh_jms_kg1
+rom:0x001F18 reloc:MIPS_32                             symbol:data_demo_haka_agl_hhh_jms_anm
+rom:0x001F14 reloc:MIPS_32                             symbol:data_chr_jms_hhh_jms_notex_mdl
+rom:0x000E88 reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x000E8C reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+// rom:0x000E9C reloc:MIPS_HI16                           symbol:chara_data$1321
+// rom:0x000EA0 reloc:MIPS_LO16                           symbol:chara_data$1321
+rom:0x000EA8 reloc:MIPS_26                             symbol:CharaDataLoadDemo
+rom:0x000EB0 reloc:MIPS_HI16                           symbol:data_demo_haka_agl_haka_agl_dds
+rom:0x000EB4 reloc:MIPS_LO16                           symbol:data_demo_haka_agl_haka_agl_dds
+rom:0x000EBC reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x000EC4 reloc:MIPS_HI16                           symbol:stg_forest_dds_adr
+rom:0x000EC8 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr
+rom:0x000ECC reloc:MIPS_HI16                           symbol:data_demo_haka_agl_haka_agl_h_dds
+rom:0x000ED0 reloc:MIPS_LO16                           symbol:data_demo_haka_agl_haka_agl_h_dds
+rom:0x000ED8 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x000EE0 reloc:MIPS_HI16                           symbol:stg_forest_dds_adr_h
+rom:0x000EE4 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr_h
+rom:0x000EE8 reloc:MIPS_HI16                           symbol:data_demo_haka_agl_haka_agl_i_dds
+rom:0x000EEC reloc:MIPS_LO16                           symbol:data_demo_haka_agl_haka_agl_i_dds
+rom:0x000EF4 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x000EFC reloc:MIPS_HI16                           symbol:stg_forest_dds_adr_i
+rom:0x000F00 reloc:MIPS_LO16                           symbol:stg_forest_dds_adr_i
+rom:0x000F0C reloc:MIPS_26                             symbol:fsSync
+rom:0x000F28 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000F2C reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000F48 reloc:MIPS_HI16                           symbol:stg_forest_agl_pos_1
+rom:0x000F4C reloc:MIPS_LO16                           symbol:stg_forest_agl_pos_1
+rom:0x000F54 reloc:MIPS_26                             symbol:CharaWorkCreate
+rom:0x000F64 reloc:MIPS_26                             symbol:shCharacterHumanAGLAnimeSetP
+rom:0x000F7C reloc:MIPS_HI16                           symbol:stg_forest_agl_pos_0
+rom:0x000F80 reloc:MIPS_LO16                           symbol:stg_forest_agl_pos_0
+rom:0x000F88 reloc:MIPS_26                             symbol:CharaWorkCreate
+rom:0x000F98 reloc:MIPS_26                             symbol:shCharacterHumanAGLAnimeSetP
+rom:0x000FCC reloc:MIPS_26                             symbol:SeCallPos
+rom:0x000FD4 reloc:MIPS_26                             symbol:shRandF
+rom:0x000FDC reloc:MIPS_HI16                           symbol:stg_forest_forest_se_x
+rom:0x000FE0 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_x
+rom:0x000FE4 reloc:MIPS_26                             symbol:shRandF
+rom:0x000FEC reloc:MIPS_HI16                           symbol:stg_forest_forest_se_y
+rom:0x000FF0 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_y
+rom:0x000FF4 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x000FF8 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+// rom:0x001018 reloc:MIPS_HI16                           symbol:@1337
+// rom:0x00101C reloc:MIPS_LO16                           symbol:@1337
+rom:0x001038 reloc:MIPS_HI16                           symbol:game_flag
+rom:0x00103C reloc:MIPS_LO16                           symbol:game_flag
+rom:0x001050 reloc:MIPS_HI16                           symbol:stg_forest_clActWallList_ca19
+rom:0x001054 reloc:MIPS_LO16                           symbol:stg_forest_clActWallList_ca19
+rom:0x001058 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x001060 reloc:MIPS_HI16                           symbol:stg_forest_clActWallList_ca20
+rom:0x001064 reloc:MIPS_LO16                           symbol:stg_forest_clActWallList_ca20
+rom:0x001068 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x00107C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001094 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00109C reloc:MIPS_HI16           addend:+0x24    symbol:Sh2sys
+rom:0x0010A0 reloc:MIPS_LO16           addend:+0x24    symbol:Sh2sys
+rom:0x0010C0 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0010DC reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0010E8 reloc:MIPS_26                             symbol:EvDispControlModelExec
+rom:0x0010F0 reloc:MIPS_26                             symbol:shGetDT
+rom:0x00112C reloc:MIPS_HI16                           symbol:stg_forest_forest_se_x
+rom:0x001130 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_x
+rom:0x001150 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x001154 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+rom:0x00115C reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x001160 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+rom:0x001184 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x001188 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+rom:0x001190 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x001194 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+rom:0x001198 reloc:MIPS_26                             symbol:shRandF
+rom:0x0011A0 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_x
+rom:0x0011A4 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_x
+rom:0x0011A8 reloc:MIPS_26                             symbol:shRandF
+rom:0x0011B0 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_y
+rom:0x0011B4 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_y
+rom:0x0011B8 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_r
+rom:0x0011BC reloc:MIPS_LO16                           symbol:stg_forest_forest_se_r
+rom:0x0011C0 reloc:MIPS_26                             symbol:shSinF
+rom:0x0011D4 reloc:MIPS_HI16                           symbol:stg_forest_forest_se_y
+rom:0x0011D8 reloc:MIPS_LO16                           symbol:stg_forest_forest_se_y
+rom:0x0011F8 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0011FC reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x001290 reloc:MIPS_26                             symbol:Se2dManageDataVolumeChange
+// rom:0x0012F4 reloc:MIPS_HI16                           symbol:@1373
+// rom:0x0012F8 reloc:MIPS_LO16                           symbol:@1373
+rom:0x00130C reloc:MIPS_26                             symbol:vwGetViewPosition
+rom:0x001314 reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x001338 reloc:MIPS_26                             symbol:EventProgressCheck
+rom:0x0013E0 reloc:MIPS_HI16                           symbol:stg_forest_FarNear
+rom:0x0013E4 reloc:MIPS_LO16                           symbol:stg_forest_FarNear
+rom:0x0013E8 reloc:MIPS_26                             symbol:stg_forest_LinearTrim
+rom:0x00140C reloc:MIPS_HI16                           symbol:stg_forest_FogParameters
+rom:0x001410 reloc:MIPS_LO16                           symbol:stg_forest_FogParameters
+rom:0x001414 reloc:MIPS_26                             symbol:stg_forest_LinearTrim
+rom:0x001438 reloc:MIPS_HI16           addend:+0x4     symbol:stg_forest_FogParameters
+rom:0x00143C reloc:MIPS_LO16           addend:+0x4     symbol:stg_forest_FogParameters
+rom:0x001440 reloc:MIPS_26                             symbol:stg_forest_LinearTrim
+rom:0x001460 reloc:MIPS_HI16           addend:+0xC     symbol:stg_forest_FogParameters
+rom:0x001464 reloc:MIPS_LO16           addend:+0xC     symbol:stg_forest_FogParameters
+rom:0x001468 reloc:MIPS_26                             symbol:stg_forest_LinearTrim
+rom:0x001488 reloc:MIPS_HI16           addend:+0x8     symbol:stg_forest_FogParameters
+rom:0x00148C reloc:MIPS_LO16           addend:+0x8     symbol:stg_forest_FogParameters
+rom:0x001490 reloc:MIPS_26                             symbol:stg_forest_LinearTrim
+rom:0x0014A0 reloc:MIPS_HI16           addend:+0x68    symbol:Env_ctl
+rom:0x0014A4 reloc:MIPS_LO16           addend:+0x68    symbol:Env_ctl
+rom:0x0014AC reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x0014B8 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x0014C4 reloc:MIPS_26                             symbol:sh2gfw_Set_FogMax
+rom:0x0014D0 reloc:MIPS_26                             symbol:fptodp
+rom:0x0014DC reloc:MIPS_26                             symbol:sh2gfw_Set_FogMin
+rom:0x0014E8 reloc:MIPS_26                             symbol:sh2gfw_Check_ParallelDemoLight
+rom:0x0014F8 reloc:MIPS_HI16                           symbol:stg_forest_Asahi_dir
+rom:0x0014FC reloc:MIPS_LO16                           symbol:stg_forest_Asahi_dir
+rom:0x001500 reloc:MIPS_HI16                           symbol:stg_forest_Asahi_col
+rom:0x001504 reloc:MIPS_LO16                           symbol:stg_forest_Asahi_col
+rom:0x00150C reloc:MIPS_26                             symbol:sh2gfw_Set_PallarelLight

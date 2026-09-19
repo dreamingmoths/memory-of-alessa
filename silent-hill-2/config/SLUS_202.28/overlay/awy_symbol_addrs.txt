@@ -1,4 +1,6 @@
 //* awy === stg_apart_w2f *//
+stg_apart_w2f_LinearTrim                                         = 0x01F01E80; // type:func
+stg_apart_w2f_Parallel_Trim                                      = 0x01F01EB0; // type:func
 stg_apart_w2f_EvProgReadDearTim                                  = 0x01F020A0; // type:func
 stg_apart_w2f_EvProgUseLyneKey                                   = 0x01F02280; // type:func
 stg_apart_w2f_EvProgGetApartStairKey                             = 0x01F022D0; // type:func

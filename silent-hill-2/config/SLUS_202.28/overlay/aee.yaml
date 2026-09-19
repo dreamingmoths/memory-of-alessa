@@ -10,7 +10,7 @@ options:
    - overlay/aee_symbol_addrs.txt
    - symbol_addrs.txt
    - sdk_symbol_addrs.txt
-  reloc_addrs_path: aee_reloc_addrs.txt
+  reloc_addrs_path: overlay/aee_reloc_addrs.txt
   ld_script_path: linkers/aee.ld
   undefined_funcs_auto_path: linkers/aee_undefined_funcs_auto.main.txt
   undefined_syms_auto_path: linkers/aee_undefined_syms_auto.main.txt

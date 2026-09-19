@@ -1,4 +1,5 @@
 //* ast === stg_apart_stair *//
+stg_apart_stair_AP_Hosei_Light                                   = 0x01F01E80;
 stg_apart_stair_EvProgUseYardKey                                 = 0x01F02100; // type:func
 stg_apart_stair_EvProgGetApartMap                                = 0x01F02150; // type:func
 stg_apart_stair_EvProgGetApartWestMap                            = 0x01F02180; // type:func

@@ -1,0 +1,961 @@
+rom:0x004974 reloc:MIPS_32                             symbol:stg_town_east_EvProgLookMemoFalled
+rom:0x004970 reloc:MIPS_32                             symbol:stg_town_east_EvProgUseApartGateKey
+rom:0x00496C reloc:MIPS_32                             symbol:stg_town_east_EvProgGetApartGateKey
+rom:0x004968 reloc:MIPS_32                             symbol:stg_town_east_EvProgBloodSwamp
+rom:0x004964 reloc:MIPS_32                             symbol:stg_town_east_EvProgFirstMonsterEnd
+rom:0x004960 reloc:MIPS_32                             symbol:stg_town_east_EvProgFirstMonsterCorpse
+rom:0x00495C reloc:MIPS_32                             symbol:stg_town_east_EvProgFirstMonsterStart
+rom:0x004958 reloc:MIPS_32                             symbol:stg_town_east_EvProgSandersBack
+rom:0x004954 reloc:MIPS_32                             symbol:stg_town_east_EvProgShadowOfSomenthing
+rom:0x005F7C reloc:MIPS_32                             symbol:stg_town_east_Monster1st_Look
+rom:0x005F78 reloc:MIPS_32                             symbol:stg_town_east_CB_1stMonster_Filter
+rom:0x005F74 reloc:MIPS_32                             symbol:stg_town_east_CB_1stMoster_FogHosei
+rom:0x005F70 reloc:MIPS_32                             symbol:stg_town_east_Draw_CB_Tonnel
+rom:0x005FB8 reloc:MIPS_32                             symbol:stg_town_east_EvCharaDataClear
+rom:0x005FB4 reloc:MIPS_32                             symbol:stg_town_east_SpecialDrawFunctions
+rom:0x005FB0 reloc:MIPS_32                             symbol:stg_town_east_EvBgmControl
+rom:0x005FAC reloc:MIPS_32                             symbol:stg_town_east_pjames_stage_anim
+rom:0x005FA0 reloc:MIPS_32                             symbol:stg_town_east_EvAllTimeFunc
+rom:0x005F9C reloc:MIPS_32                             symbol:stg_town_east_EvRoomInit
+rom:0x005F98 reloc:MIPS_32                             symbol:stg_town_east_EvStageInit
+rom:0x005F94 reloc:MIPS_32                             symbol:stg_town_east_en_list
+rom:0x005F90 reloc:MIPS_32                             symbol:stg_town_east_mdl_list
+rom:0x005F8C reloc:MIPS_32                             symbol:stg_town_east_gi_list
+rom:0x005F88 reloc:MIPS_32                             symbol:stg_town_east_ev_prog
+rom:0x005F84 reloc:MIPS_32                             symbol:stg_town_east_ev_pos
+rom:0x005F80 reloc:MIPS_32                             symbol:stg_town_east_ev_list
+rom:0x00008C reloc:MIPS_HI16                           symbol:demo_number
+rom:0x000090 reloc:MIPS_LO16                           symbol:demo_number
+rom:0x000094 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000098 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000100 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000104 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x00010C reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x000118 reloc:MIPS_26                             symbol:PlayerEventAnimeSet
+rom:0x00012C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000130 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000134 reloc:MIPS_HI16                           symbol:pos0$1080
+// rom:0x000138 reloc:MIPS_LO16                           symbol:pos0$1080
+rom:0x00013C reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000148 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00014C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000150 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000154 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000158 reloc:MIPS_26                             symbol:DramaDemoFade
+// rom:0x000160 reloc:MIPS_HI16                           symbol:cam_data$1078
+// rom:0x000164 reloc:MIPS_LO16                           symbol:cam_data$1078
+// rom:0x00016C reloc:MIPS_HI16           addend:+0x10    symbol:cam_data$1078
+// rom:0x000170 reloc:MIPS_LO16           addend:+0x10    symbol:cam_data$1078
+// rom:0x000178 reloc:MIPS_HI16           addend:+0x30    symbol:cam_data$1078
+// rom:0x00017C reloc:MIPS_LO16           addend:+0x30    symbol:cam_data$1078
+rom:0x000184 reloc:MIPS_26                             symbol:vcSetEventCamParamRefView
+rom:0x0001AC reloc:MIPS_26                             symbol:vcMoveAndSetCamera
+// rom:0x0001B4 reloc:MIPS_HI16                           symbol:pos1$1081
+// rom:0x0001B8 reloc:MIPS_LO16                           symbol:pos1$1081
+rom:0x0001BC reloc:MIPS_26                             symbol:PlayerEventMove
+rom:0x0001C4 reloc:MIPS_26                             symbol:PlayerEventMoveIsEnd
+rom:0x0001D8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0001DC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0001E0 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0001E4 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0001EC reloc:MIPS_HI16           addend:+0x8     symbol:key_config
+rom:0x0001F0 reloc:MIPS_LO16           addend:+0x8     symbol:key_config
+rom:0x0001F4 reloc:MIPS_26                             symbol:shPadTrigger
+rom:0x000208 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00020C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000210 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000214 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000220 reloc:MIPS_26                             symbol:DramaDemoFade
+rom:0x00022C reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x00023C reloc:MIPS_HI16           addend:+0xC     symbol:stg_town_east_dds_adr
+rom:0x000240 reloc:MIPS_LO16           addend:+0xC     symbol:stg_town_east_dds_adr
+// rom:0x000244 reloc:MIPS_HI16           addend:+0x4     symbol:info$1079
+// rom:0x000248 reloc:MIPS_LO16           addend:+0x4     symbol:info$1079
+// rom:0x00025C reloc:MIPS_HI16                           symbol:scu_pos$1083
+// rom:0x000260 reloc:MIPS_LO16                           symbol:scu_pos$1083
+rom:0x000268 reloc:MIPS_26                             symbol:CharaWorkCreate
+rom:0x000270 reloc:MIPS_HI16                           symbol:ev_timer
+rom:0x000274 reloc:MIPS_LO16                           symbol:ev_timer
+rom:0x00027C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000280 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000284 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000288 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x00028C reloc:MIPS_HI16                           symbol:info$1079
+// rom:0x000290 reloc:MIPS_LO16                           symbol:info$1079
+rom:0x000294 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x0002A8 reloc:MIPS_HI16           addend:+0x8     symbol:key_config
+rom:0x0002AC reloc:MIPS_LO16           addend:+0x8     symbol:key_config
+rom:0x0002B0 reloc:MIPS_26                             symbol:shPadTrigger
+rom:0x0002C4 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0002C8 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0002CC reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0002D0 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0002E0 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0002E4 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0002E8 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0002EC reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0002F8 reloc:MIPS_26                             symbol:shGetDT
+rom:0x000300 reloc:MIPS_HI16                           symbol:ev_timer
+rom:0x000304 reloc:MIPS_LO16                           symbol:ev_timer
+rom:0x00030C reloc:MIPS_HI16                           symbol:ev_timer
+rom:0x000310 reloc:MIPS_LO16                           symbol:ev_timer
+rom:0x000334 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000338 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00033C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000340 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x00034C reloc:MIPS_HI16           addend:+0x8     symbol:key_config
+rom:0x000350 reloc:MIPS_LO16           addend:+0x8     symbol:key_config
+rom:0x000354 reloc:MIPS_26                             symbol:shPadTrigger
+rom:0x000368 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00036C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000370 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000374 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000378 reloc:MIPS_HI16                           symbol:info$1079
+// rom:0x00037C reloc:MIPS_LO16                           symbol:info$1079
+rom:0x000380 reloc:MIPS_26                             symbol:DramaDemoSkipLast
+rom:0x000394 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000398 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x00039C reloc:MIPS_HI16                           symbol:pos2$1082
+// rom:0x0003A0 reloc:MIPS_LO16                           symbol:pos2$1082
+rom:0x0003A4 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x0003B0 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+rom:0x0003B8 reloc:MIPS_26                             symbol:DramaDemoFade
+rom:0x0003C4 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x0003D8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0003DC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0003E0 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0003E4 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0003F4 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000400 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000404 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000408 reloc:MIPS_HI16                           symbol:pos2$1082
+// rom:0x00040C reloc:MIPS_LO16                           symbol:pos2$1082
+rom:0x000410 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x00041C reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+rom:0x000424 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000428 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000430 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x000438 reloc:MIPS_26                             symbol:PlayerEventMoveCancel
+rom:0x000468 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00046C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0004B0 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0004B4 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0004BC reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x0004C8 reloc:MIPS_26                             symbol:PlayerEventAnimeSet
+rom:0x0004D4 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0004D8 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0004DC reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0004E0 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0004E8 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x0004FC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000500 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000504 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000508 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000514 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000518 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000530 reloc:MIPS_HI16                           symbol:pos$1188
+// rom:0x000534 reloc:MIPS_LO16                           symbol:pos$1188
+// rom:0x00053C reloc:MIPS_HI16           addend:+0x4     symbol:pos$1188
+// rom:0x000540 reloc:MIPS_LO16           addend:+0x4     symbol:pos$1188
+// rom:0x000548 reloc:MIPS_HI16           addend:+0x8     symbol:pos$1188
+// rom:0x00054C reloc:MIPS_LO16           addend:+0x8     symbol:pos$1188
+// rom:0x000550 reloc:MIPS_HI16           addend:+0xC     symbol:pos$1188
+// rom:0x000554 reloc:MIPS_LO16           addend:+0xC     symbol:pos$1188
+rom:0x000558 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00055C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000560 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000564 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000568 reloc:MIPS_HI16                           symbol:pos$1188
+// rom:0x00056C reloc:MIPS_LO16                           symbol:pos$1188
+rom:0x000570 reloc:MIPS_26                             symbol:PlayerEventMove
+rom:0x000578 reloc:MIPS_26                             symbol:PlayerEventMoveIsEnd
+rom:0x00058C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000590 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000594 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000598 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0005A4 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0005A8 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0005B0 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+// rom:0x0060CC reloc:MIPS_32                             symbol:msg$1237
+// rom:0x0060C8 reloc:MIPS_32                             symbol:anim$1236
+rom:0x0005E8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0005EC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000618 reloc:MIPS_HI16                           symbol:stg_town_east_dds_adr
+rom:0x00061C reloc:MIPS_LO16                           symbol:stg_town_east_dds_adr
+// rom:0x000620 reloc:MIPS_HI16           addend:+0x4     symbol:info$1239
+// rom:0x000624 reloc:MIPS_LO16           addend:+0x4     symbol:info$1239
+rom:0x00062C reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000634 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000638 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000640 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x00064C reloc:MIPS_HI16                           symbol:data_demo_saisho_scu_anm
+rom:0x000650 reloc:MIPS_LO16                           symbol:data_demo_saisho_scu_anm
+rom:0x000654 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x000658 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x000660 reloc:MIPS_26                             symbol:CharaDataAnimSetExtra
+rom:0x000668 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x00066C reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x00067C reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000688 reloc:MIPS_HI16           addend:+0x4     symbol:radio
+rom:0x00068C reloc:MIPS_LO16           addend:+0x4     symbol:radio
+rom:0x000694 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000698 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00069C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0006A0 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x0006A4 reloc:MIPS_HI16                           symbol:info$1239
+// rom:0x0006A8 reloc:MIPS_LO16                           symbol:info$1239
+rom:0x0006AC reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x0006C0 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x0006C4 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x0006C8 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x0006CC reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x0006E4 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x0006F8 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x00070C reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000718 reloc:MIPS_26                             symbol:ItemGet
+rom:0x000724 reloc:MIPS_26                             symbol:ItemGet
+rom:0x000730 reloc:MIPS_HI16           addend:+0x21    symbol:item
+rom:0x000734 reloc:MIPS_LO16           addend:+0x21    symbol:item
+rom:0x000738 reloc:MIPS_HI16                           symbol:stg_town_east_wp_anm
+rom:0x00073C reloc:MIPS_LO16                           symbol:stg_town_east_wp_anm
+rom:0x000740 reloc:MIPS_HI16                           symbol:stg_town_east_wp_mdl
+rom:0x000744 reloc:MIPS_LO16                           symbol:stg_town_east_wp_mdl
+rom:0x00074C reloc:MIPS_HI16                           symbol:data_chr_jms_jms_wpkaku_anm
+rom:0x000750 reloc:MIPS_LO16                           symbol:data_chr_jms_jms_wpkaku_anm
+rom:0x000754 reloc:MIPS_HI16                           symbol:data_chr_wp_wp_kakuzai_mdl
+rom:0x000758 reloc:MIPS_LO16                           symbol:data_chr_wp_wp_kakuzai_mdl
+rom:0x00075C reloc:MIPS_26                             symbol:CharaDataWeaponTranslation
+rom:0x000764 reloc:MIPS_26                             symbol:ConnectCharaWorkWeapon
+rom:0x00076C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000770 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000774 reloc:MIPS_HI16                           symbol:jms_pos$1240
+// rom:0x000778 reloc:MIPS_LO16                           symbol:jms_pos$1240
+// rom:0x00077C reloc:MIPS_HI16                           symbol:jms_rot$1241
+// rom:0x000780 reloc:MIPS_LO16                           symbol:jms_rot$1241
+rom:0x000784 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x00078C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000790 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000798 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x0007A0 reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x0007AC reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x0007B8 reloc:MIPS_HI16                           symbol:data_chr_scu_scu_anm
+rom:0x0007BC reloc:MIPS_LO16                           symbol:data_chr_scu_scu_anm
+rom:0x0007C0 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0007C4 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x0007CC reloc:MIPS_26                             symbol:CharaDataAnimSetExtra
+rom:0x0007D4 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0007D8 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+// rom:0x0007E8 reloc:MIPS_HI16                           symbol:scu_pos$1242
+// rom:0x0007EC reloc:MIPS_LO16                           symbol:scu_pos$1242
+// rom:0x0007F0 reloc:MIPS_HI16                           symbol:scu_rot$1243
+// rom:0x0007F4 reloc:MIPS_LO16                           symbol:scu_rot$1243
+rom:0x0007FC reloc:MIPS_26                             symbol:CharaAdminReCreate
+rom:0x000808 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+rom:0x000810 reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x000814 reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+rom:0x00081C reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x000820 reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+// rom:0x00614C reloc:MIPS_32                             symbol:msg_a$1271
+// rom:0x006148 reloc:MIPS_32                             symbol:anim_a$1270
+rom:0x000858 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00085C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000888 reloc:MIPS_HI16           addend:+0x4     symbol:radio
+rom:0x00088C reloc:MIPS_LO16           addend:+0x4     symbol:radio
+rom:0x000890 reloc:MIPS_HI16           addend:+0x4     symbol:stg_town_east_dds_adr
+rom:0x000894 reloc:MIPS_LO16           addend:+0x4     symbol:stg_town_east_dds_adr
+// rom:0x000898 reloc:MIPS_HI16           addend:+0x4     symbol:info_a$1273
+// rom:0x00089C reloc:MIPS_LO16           addend:+0x4     symbol:info_a$1273
+rom:0x0008A4 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x0008AC reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0008B0 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0008B8 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x0008C4 reloc:MIPS_HI16                           symbol:data_demo_saisho_scu_anm
+rom:0x0008C8 reloc:MIPS_LO16                           symbol:data_demo_saisho_scu_anm
+rom:0x0008CC reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0008D0 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x0008D8 reloc:MIPS_26                             symbol:CharaDataAnimSetExtra
+rom:0x0008E0 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0008E4 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x0008F0 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
+rom:0x000908 reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x00090C reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+rom:0x000918 reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x00091C reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+rom:0x000924 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000928 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00092C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000930 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000934 reloc:MIPS_HI16                           symbol:info_a$1273
+// rom:0x000938 reloc:MIPS_LO16                           symbol:info_a$1273
+rom:0x00093C reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x000950 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000954 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000958 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x00095C reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x00096C reloc:MIPS_26                             symbol:CharaDataDeleteOne
+rom:0x000980 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x000994 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
+rom:0x0009A4 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
+rom:0x0009BC reloc:MIPS_HI16                           symbol:data_chr_scu_scu_anm
+rom:0x0009C0 reloc:MIPS_LO16                           symbol:data_chr_scu_scu_anm
+rom:0x0009C4 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0009C8 reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x0009D0 reloc:MIPS_26                             symbol:CharaDataAnimSetExtra
+rom:0x0009D8 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0009DC reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x0009E0 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0009E4 reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x0009E8 reloc:MIPS_HI16                           symbol:jms_pos$1274
+// rom:0x0009EC reloc:MIPS_LO16                           symbol:jms_pos$1274
+// rom:0x0009F0 reloc:MIPS_HI16                           symbol:jms_rot$1275
+// rom:0x0009F4 reloc:MIPS_LO16                           symbol:jms_rot$1275
+rom:0x0009F8 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000A00 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000A04 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000A0C reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000A14 reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x000A20 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000A2C reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+// rom:0x0061CC reloc:MIPS_32                             symbol:msg_b$1303
+// rom:0x0061C8 reloc:MIPS_32                             symbol:anim_b$1302
+rom:0x00620C reloc:MIPS_32                             symbol:data_chr_tyu_tyu_anm
+rom:0x006208 reloc:MIPS_32                             symbol:data_chr_tyu_tyu_mdl
+rom:0x0061FC reloc:MIPS_32                             symbol:data_chr_scu_scu_kg1
+rom:0x0061F8 reloc:MIPS_32                             symbol:data_chr_scu_scu_anm
+rom:0x0061F4 reloc:MIPS_32                             symbol:data_chr_scu_scu_mdl
+rom:0x000A68 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000A6C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000A98 reloc:MIPS_HI16           addend:+0x8     symbol:stg_town_east_dds_adr
+rom:0x000A9C reloc:MIPS_LO16           addend:+0x8     symbol:stg_town_east_dds_adr
+// rom:0x000AA0 reloc:MIPS_HI16           addend:+0x4     symbol:info_b$1305
+// rom:0x000AA4 reloc:MIPS_LO16           addend:+0x4     symbol:info_b$1305
+rom:0x000AAC reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000AB4 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000AB8 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000AC0 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000ACC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000AD0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000AD4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000AD8 reloc:MIPS_LO16                           symbol:ev_s_step
+// rom:0x000ADC reloc:MIPS_HI16                           symbol:info_b$1305
+// rom:0x000AE0 reloc:MIPS_LO16                           symbol:info_b$1305
+rom:0x000AE4 reloc:MIPS_26                             symbol:DramaDemoMain
+rom:0x000AF8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000AFC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000B00 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000B04 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000B14 reloc:MIPS_26                             symbol:CharaDataDeleteOne
+rom:0x000B20 reloc:MIPS_26                             symbol:CharaDataDeleteOne
+rom:0x000B28 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000B2C reloc:MIPS_LO16                           symbol:sh2jms
+// rom:0x000B30 reloc:MIPS_HI16                           symbol:jms_pos$1307
+// rom:0x000B34 reloc:MIPS_LO16                           symbol:jms_pos$1307
+// rom:0x000B38 reloc:MIPS_HI16                           symbol:jms_rot$1308
+// rom:0x000B3C reloc:MIPS_LO16                           symbol:jms_rot$1308
+rom:0x000B40 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
+rom:0x000B48 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000B4C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000B54 reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
+rom:0x000B5C reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
+rom:0x000B68 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
+rom:0x000B74 reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
+rom:0x000B7C reloc:MIPS_26                             symbol:CharaDataDeleteExtra
+// rom:0x000B84 reloc:MIPS_HI16                           symbol:enemy_list$1306
+// rom:0x000B88 reloc:MIPS_LO16                           symbol:enemy_list$1306
+rom:0x000B8C reloc:MIPS_26                             symbol:CharaAdminBackLoadEnemy
+rom:0x000BC8 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000BCC reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000BE0 reloc:MIPS_HI16                           symbol:data_pic_out_p_swamp_tex
+rom:0x000BE4 reloc:MIPS_LO16                           symbol:data_pic_out_p_swamp_tex
+rom:0x000BEC reloc:MIPS_26                             symbol:EvSubPictureDisplay
+rom:0x000BFC reloc:MIPS_HI16                           symbol:data_pic_out_p_swamp_tex
+rom:0x000C00 reloc:MIPS_LO16                           symbol:data_pic_out_p_swamp_tex
+rom:0x000C08 reloc:MIPS_26                             symbol:EvSubPictureDisplay
+rom:0x000C30 reloc:MIPS_26                             symbol:EvSubItemGetAndAnim
+// rom:0x000C58 reloc:MIPS_HI16                           symbol:@1351
+// rom:0x000C5C reloc:MIPS_LO16                           symbol:@1351
+rom:0x000C80 reloc:MIPS_26                             symbol:EvSubItemUse0
+rom:0x000CA8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000CAC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000CFC reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000D00 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000D04 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x000D10 reloc:MIPS_26                             symbol:PlayerEventAnimeSet
+rom:0x000D1C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000D20 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000D24 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000D28 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000D2C reloc:MIPS_HI16                           symbol:ev_cancel
+rom:0x000D30 reloc:MIPS_LO16                           symbol:ev_cancel
+rom:0x000D3C reloc:MIPS_HI16                           symbol:ev_prog_flag_set
+rom:0x000D40 reloc:MIPS_LO16                           symbol:ev_prog_flag_set
+rom:0x000D48 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000D4C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000D50 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000D54 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000D60 reloc:MIPS_26                             symbol:PlayerEventAnimeSuccessFrame
+rom:0x000D70 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x000D74 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x000D78 reloc:MIPS_26                             symbol:shCharacterAnimePause
+rom:0x000D80 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000D84 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000DAC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000DB0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000DB4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000DB8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000DC8 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000DCC reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000DD0 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000DD4 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000E20 reloc:MIPS_HI16           addend:+0x4C    symbol:game_flag
+rom:0x000E24 reloc:MIPS_LO16           addend:+0x4C    symbol:game_flag
+rom:0x000E3C reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000E40 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000E44 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000E48 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000E58 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000E5C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000E60 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000E64 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000E70 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000E74 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000E8C reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000EA8 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000EBC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000EC0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000EC4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000EC8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x000ED0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000ED4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000EEC reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000EFC reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000F00 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000F18 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000F28 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000F2C reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000F44 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000F54 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000F58 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000F70 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000F80 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x000F84 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x000F9C reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000FAC reloc:MIPS_HI16           addend:+0x4C    symbol:game_flag
+rom:0x000FB0 reloc:MIPS_LO16           addend:+0x4C    symbol:game_flag
+rom:0x000FC8 reloc:MIPS_26                             symbol:EvSubMessage
+rom:0x000FD8 reloc:MIPS_HI16                           symbol:ev_cancel
+rom:0x000FDC reloc:MIPS_LO16                           symbol:ev_cancel
+rom:0x000FEC reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x000FF0 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x000FF4 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x000FF8 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x001004 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x001008 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x00100C reloc:MIPS_26                             symbol:shCharacterAnimeRestart
+rom:0x001018 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x00101C reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x001020 reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x001024 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x001028 reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x00102C reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x001030 reloc:MIPS_26                             symbol:shCharacterAnimeIsEnd
+rom:0x001040 reloc:MIPS_HI16                           symbol:ev_cancel
+rom:0x001044 reloc:MIPS_LO16                           symbol:ev_cancel
+rom:0x001054 reloc:MIPS_HI16                           symbol:ev_p_step
+rom:0x001058 reloc:MIPS_LO16                           symbol:ev_p_step
+rom:0x00105C reloc:MIPS_HI16                           symbol:ev_s_step
+rom:0x001060 reloc:MIPS_LO16                           symbol:ev_s_step
+rom:0x001094 reloc:MIPS_HI16                           symbol:game_flag
+rom:0x001098 reloc:MIPS_LO16                           symbol:game_flag
+rom:0x0010BC reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x0010C0 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x0010C8 reloc:MIPS_26                             symbol:SCNowPlayableEventSwitch
+rom:0x0010F0 reloc:MIPS_HI16           addend:+0xA0    symbol:game_flag
+rom:0x0010F4 reloc:MIPS_LO16           addend:+0xA0    symbol:game_flag
+rom:0x001108 reloc:MIPS_HI16           addend:+0x9C    symbol:game_flag
+rom:0x00110C reloc:MIPS_LO16           addend:+0x9C    symbol:game_flag
+rom:0x001118 reloc:MIPS_HI16           addend:+0x9C    symbol:game_flag
+rom:0x00111C reloc:MIPS_LO16           addend:+0x9C    symbol:game_flag
+rom:0x001120 reloc:MIPS_HI16           addend:+0xA0    symbol:game_flag
+rom:0x001124 reloc:MIPS_LO16           addend:+0xA0    symbol:game_flag
+rom:0x001138 reloc:MIPS_HI16           addend:+0x9C    symbol:game_flag
+rom:0x00113C reloc:MIPS_LO16           addend:+0x9C    symbol:game_flag
+rom:0x001148 reloc:MIPS_HI16           addend:+0x9C    symbol:game_flag
+rom:0x00114C reloc:MIPS_LO16           addend:+0x9C    symbol:game_flag
+rom:0x001150 reloc:MIPS_HI16           addend:+0x9C    symbol:game_flag
+rom:0x001154 reloc:MIPS_LO16           addend:+0x9C    symbol:game_flag
+rom:0x001168 reloc:MIPS_HI16           addend:+0xA0    symbol:game_flag
+rom:0x00116C reloc:MIPS_LO16           addend:+0xA0    symbol:game_flag
+rom:0x001174 reloc:MIPS_HI16           addend:+0xA0    symbol:game_flag
+rom:0x001178 reloc:MIPS_LO16           addend:+0xA0    symbol:game_flag
+rom:0x001190 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x001194 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x006290 reloc:MIPS_32                             symbol:data_demo_saisho_i_kakuzai_anm
+rom:0x00628C reloc:MIPS_32                             symbol:data_chr_item_i_kakuzai_mdl
+rom:0x00627C reloc:MIPS_32                             symbol:data_demo_saisho_i_radio_anm
+rom:0x006278 reloc:MIPS_32                             symbol:data_chr_item_i_radio_mdl
+rom:0x006270 reloc:MIPS_32                             symbol:data_demo_saisho_hhh_jms_cls
+rom:0x00626C reloc:MIPS_32                             symbol:data_chr_jms_hhh_jms_kg1
+rom:0x006268 reloc:MIPS_32                             symbol:data_demo_saisho_hhh_jms_anm
+rom:0x006264 reloc:MIPS_32                             symbol:data_chr_jms_hhh_jms_notex_mdl
+rom:0x0011B8 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0011BC reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+// rom:0x0011D0 reloc:MIPS_HI16                           symbol:chara$1527
+// rom:0x0011D4 reloc:MIPS_LO16                           symbol:chara$1527
+rom:0x0011DC reloc:MIPS_26                             symbol:CharaDataLoadDemo
+rom:0x0011E4 reloc:MIPS_HI16                           symbol:data_demo_saisho_scu_anm
+rom:0x0011E8 reloc:MIPS_LO16                           symbol:data_demo_saisho_scu_anm
+rom:0x0011F0 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x0011F8 reloc:MIPS_HI16                           symbol:stg_town_east_anim_adr
+rom:0x0011FC reloc:MIPS_LO16                           symbol:stg_town_east_anim_adr
+rom:0x001200 reloc:MIPS_HI16                           symbol:data_demo_saisho_saisho_dds
+rom:0x001204 reloc:MIPS_LO16                           symbol:data_demo_saisho_saisho_dds
+rom:0x00120C reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x001214 reloc:MIPS_HI16                           symbol:stg_town_east_dds_adr
+rom:0x001218 reloc:MIPS_LO16                           symbol:stg_town_east_dds_adr
+rom:0x00121C reloc:MIPS_HI16                           symbol:data_demo_saisho_saisho_c_dds
+rom:0x001220 reloc:MIPS_LO16                           symbol:data_demo_saisho_saisho_c_dds
+rom:0x001228 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x001230 reloc:MIPS_HI16           addend:+0x4     symbol:stg_town_east_dds_adr
+rom:0x001234 reloc:MIPS_LO16           addend:+0x4     symbol:stg_town_east_dds_adr
+rom:0x001238 reloc:MIPS_HI16                           symbol:data_demo_saisho_saisho_d_dds
+rom:0x00123C reloc:MIPS_LO16                           symbol:data_demo_saisho_saisho_d_dds
+rom:0x001244 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x00124C reloc:MIPS_HI16           addend:+0x8     symbol:stg_town_east_dds_adr
+rom:0x001250 reloc:MIPS_LO16           addend:+0x8     symbol:stg_town_east_dds_adr
+rom:0x001254 reloc:MIPS_HI16                           symbol:data_chr_jms_jms_wpkaku_anm
+rom:0x001258 reloc:MIPS_LO16                           symbol:data_chr_jms_jms_wpkaku_anm
+rom:0x001260 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x001268 reloc:MIPS_HI16                           symbol:stg_town_east_wp_anm
+rom:0x00126C reloc:MIPS_LO16                           symbol:stg_town_east_wp_anm
+rom:0x001270 reloc:MIPS_HI16                           symbol:data_chr_wp_wp_kakuzai_mdl
+rom:0x001274 reloc:MIPS_LO16                           symbol:data_chr_wp_wp_kakuzai_mdl
+rom:0x00127C reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x001284 reloc:MIPS_HI16                           symbol:stg_town_east_wp_mdl
+rom:0x001288 reloc:MIPS_LO16                           symbol:stg_town_east_wp_mdl
+rom:0x00128C reloc:MIPS_HI16                           symbol:data_demo_machi_machi_dds
+rom:0x001290 reloc:MIPS_LO16                           symbol:data_demo_machi_machi_dds
+rom:0x001298 reloc:MIPS_26                             symbol:CharaDataLoadExtra
+rom:0x0012A0 reloc:MIPS_HI16           addend:+0xC     symbol:stg_town_east_dds_adr
+rom:0x0012A4 reloc:MIPS_LO16           addend:+0xC     symbol:stg_town_east_dds_adr
+rom:0x0012B0 reloc:MIPS_26                             symbol:fsSync
+rom:0x0012BC reloc:MIPS_HI16           addend:+0x4     symbol:radio
+rom:0x0012C0 reloc:MIPS_LO16           addend:+0x4     symbol:radio
+rom:0x0012CC reloc:MIPS_HI16           addend:+0x30    symbol:radio
+rom:0x0012D0 reloc:MIPS_LO16           addend:+0x30    symbol:radio
+rom:0x0012DC reloc:MIPS_HI16           addend:+0x34    symbol:radio
+rom:0x0012E0 reloc:MIPS_LO16           addend:+0x34    symbol:radio
+rom:0x0012EC reloc:MIPS_HI16           addend:+0x38    symbol:radio
+rom:0x0012F0 reloc:MIPS_LO16           addend:+0x38    symbol:radio
+rom:0x00132C reloc:MIPS_HI16                           symbol:sh2jms
+rom:0x001330 reloc:MIPS_LO16                           symbol:sh2jms
+rom:0x001374 reloc:MIPS_26                             symbol:shGetDF
+rom:0x00137C reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001380 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001388 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x00138C reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001484 reloc:MIPS_26                             symbol:stg_town_east_EvWallSetCb49
+rom:0x001498 reloc:MIPS_26                             symbol:stg_town_east_EvWallSetCb52
+rom:0x0014AC reloc:MIPS_26                             symbol:stg_town_east_EvTapeSetCb11
+rom:0x0014C0 reloc:MIPS_26                             symbol:stg_town_east_EvTapeSetCb12
+rom:0x0014D4 reloc:MIPS_26                             symbol:stg_town_east_EvCorpseSetCb18
+rom:0x0014E8 reloc:MIPS_26                             symbol:stg_town_east_EvWallSetCb19
+rom:0x0014FC reloc:MIPS_26                             symbol:stg_town_east_EvWallSetCb20
+rom:0x001510 reloc:MIPS_26                             symbol:stg_town_east_EvWallSetCb21
+rom:0x001524 reloc:MIPS_26                             symbol:stg_town_east_EvCorpseSetCb26
+rom:0x001538 reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb27
+rom:0x00154C reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb28
+rom:0x001560 reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb29
+rom:0x001574 reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb35
+rom:0x001588 reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb36
+rom:0x00159C reloc:MIPS_26                             symbol:stg_town_east_EvSignalControlCb37
+rom:0x0015B0 reloc:MIPS_26                             symbol:stg_town_east_EvLockSetCb46
+rom:0x0015E0 reloc:MIPS_26                             symbol:EvDispControlModelExec
+rom:0x001610 reloc:MIPS_HI16           addend:+0x40    symbol:game_flag
+rom:0x001614 reloc:MIPS_LO16           addend:+0x40    symbol:game_flag
+rom:0x001634 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x001638 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x001658 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x00165C reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x001678 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001690 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0016C0 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0016C4 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x0016D8 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb18
+rom:0x0016DC reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb18
+rom:0x0016E0 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x0016F4 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00170C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001758 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001760 reloc:MIPS_HI16           addend:+0x1C    symbol:game_flag
+rom:0x001764 reloc:MIPS_LO16           addend:+0x1C    symbol:game_flag
+rom:0x001784 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00178C reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb19
+rom:0x001790 reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb19
+rom:0x001794 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x0017C8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0017D0 reloc:MIPS_HI16           addend:+0x1C    symbol:game_flag
+rom:0x0017D4 reloc:MIPS_LO16           addend:+0x1C    symbol:game_flag
+rom:0x0017F4 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0017FC reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb20
+rom:0x001800 reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb20
+rom:0x001804 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x001838 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001840 reloc:MIPS_HI16           addend:+0x1C    symbol:game_flag
+rom:0x001844 reloc:MIPS_LO16           addend:+0x1C    symbol:game_flag
+rom:0x001858 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb21
+rom:0x00185C reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb21
+rom:0x001860 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x001874 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001888 reloc:MIPS_26                             symbol:sh2shd_add_map_to_shadow_off_work
+rom:0x001898 reloc:MIPS_26                             symbol:sh2shd_off_obj
+rom:0x0018C8 reloc:MIPS_HI16           addend:+0x1C    symbol:game_flag
+rom:0x0018CC reloc:MIPS_LO16           addend:+0x1C    symbol:game_flag
+rom:0x0018E8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0018F0 reloc:MIPS_HI16           addend:+0x140   symbol:stg_town_east_clActWallList_cb49
+rom:0x0018F4 reloc:MIPS_LO16           addend:+0x140   symbol:stg_town_east_clActWallList_cb49
+rom:0x0018F8 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x001910 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001918 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb49
+rom:0x00191C reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb49
+rom:0x001920 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x001954 reloc:MIPS_26                             symbol:sh2shd_add_map_to_shadow_off_work
+rom:0x00195C reloc:MIPS_HI16           addend:+0x1C    symbol:game_flag
+rom:0x001960 reloc:MIPS_LO16           addend:+0x1C    symbol:game_flag
+rom:0x001980 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001988 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb52
+rom:0x00198C reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb52
+rom:0x001990 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x0019A0 reloc:MIPS_26                             symbol:sh2shd_off_obj
+rom:0x0019BC reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0019CC reloc:MIPS_26                             symbol:sh2shd_off_obj
+rom:0x001A04 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001A08 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001A30 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001A34 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001A50 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001A54 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001A64 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001A68 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001A6C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001A70 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001A74 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001A78 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001A88 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001A8C reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001A90 reloc:MIPS_26                             symbol:shRandI
+rom:0x001AB0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001AB4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001ABC reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001AC0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001AC4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001AC8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001AE4 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001B08 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001B30 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001B4C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001B54 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001B58 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001B5C reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001B60 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001B88 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001B8C reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001BA4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001BA8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001BB8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001BBC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001BC0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001BC4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001BE0 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001BFC reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001C34 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001C38 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001C60 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001C64 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001C80 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001C84 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001C94 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001C98 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001C9C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001CA0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001CA4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CA8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CB8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001CBC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001CC0 reloc:MIPS_26                             symbol:shRandI
+rom:0x001CE0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CE4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CEC reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CF0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x001CF4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001CF8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001D14 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001D38 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001D60 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001D7C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001D84 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001D88 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001D8C reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001D90 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001DB8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001DBC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001DD4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001DD8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001DE8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001DEC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001DF0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001DF4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001E10 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001E2C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001E60 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001E64 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001E8C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001E90 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001EAC reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001EB0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001EC0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001EC4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001EC8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x001ECC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x001EE8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001F0C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001F34 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001F50 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001F58 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x001F5C reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x001F84 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001F88 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001FA0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001FA4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001FB4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001FB8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001FBC reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x001FC0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x001FDC reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x001FF8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002034 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x002038 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x002060 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002064 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x002080 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002084 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x002094 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002098 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x00209C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0020A0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0020A4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020A8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020B8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0020BC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0020C0 reloc:MIPS_26                             symbol:shRandI
+rom:0x0020E0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020E4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020EC reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020F0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0020F4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0020F8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x002114 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002138 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002160 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00217C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002184 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002188 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x00218C reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x002190 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x0021B8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0021BC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0021D4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0021D8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0021E8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0021EC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0021F0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0021F4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x002210 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00222C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002260 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x002264 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x00228C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002290 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0022AC reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0022B0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0022C0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0022C4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0022C8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0022CC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0022E8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00230C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002334 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002350 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002358 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x00235C reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x002384 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x002388 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0023A0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0023A4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0023B4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0023B8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0023BC reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0023C0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x0023DC reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0023F8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002430 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x002434 reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x002450 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002458 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x00245C reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x002484 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002488 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0024A4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0024A8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0024C4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0024C8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0024D8 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0024DC reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0024E0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0024E4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x0024F4 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x0024F8 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x0024FC reloc:MIPS_26                             symbol:shRandI
+rom:0x00251C reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x002520 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x002528 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b2
+rom:0x00252C reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b2
+rom:0x002530 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_b
+rom:0x002534 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_b
+rom:0x002550 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002574 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x00259C reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0025B8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0025C0 reloc:MIPS_HI16                           symbol:stg_town_east_sig_timer_b
+rom:0x0025C4 reloc:MIPS_LO16                           symbol:stg_town_east_sig_timer_b
+rom:0x0025EC reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x0025F0 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x002608 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x00260C reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x00261C reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x002620 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x002624 reloc:MIPS_HI16                           symbol:stg_town_east_sig_num_a
+rom:0x002628 reloc:MIPS_LO16                           symbol:stg_town_east_sig_num_a
+rom:0x002644 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002660 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002688 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x00268C reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x0026A8 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0026C0 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x0026C8 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb11
+rom:0x0026CC reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb11
+rom:0x0026D0 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x0026F8 reloc:MIPS_HI16           addend:+0x4     symbol:game_flag
+rom:0x0026FC reloc:MIPS_LO16           addend:+0x4     symbol:game_flag
+rom:0x002718 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002730 reloc:MIPS_26                             symbol:EvDispControlModelEntry
+rom:0x002738 reloc:MIPS_HI16                           symbol:stg_town_east_clActWallList_cb12
+rom:0x00273C reloc:MIPS_LO16                           symbol:stg_town_east_clActWallList_cb12
+rom:0x002740 reloc:MIPS_26                             symbol:clAddDynamicWall
+rom:0x00279C reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x0027E0 reloc:MIPS_26                             symbol:vwGetViewPosition
+rom:0x00283C reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x002850 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x002860 reloc:MIPS_HI16           addend:+0x68    symbol:Env_ctl
+rom:0x002864 reloc:MIPS_LO16           addend:+0x68    symbol:Env_ctl
+rom:0x00287C reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x002890 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x0028A0 reloc:MIPS_HI16           addend:+0x68    symbol:Env_ctl
+rom:0x0028A4 reloc:MIPS_LO16           addend:+0x68    symbol:Env_ctl
+rom:0x0028B0 reloc:MIPS_HI16                           symbol:demo_frame
+rom:0x0028B4 reloc:MIPS_LO16                           symbol:demo_frame
+rom:0x002908 reloc:MIPS_26                             symbol:stg_town_east_LinearTrim
+rom:0x002914 reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x002944 reloc:MIPS_26                             symbol:stg_town_east_LinearTrim
+rom:0x002950 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x002960 reloc:MIPS_26                             symbol:EventProgressCheck
+rom:0x002978 reloc:MIPS_26                             symbol:vwGetViewPosition
+rom:0x002984 reloc:MIPS_HI16                           symbol:stg_town_east_ShadowPos
+rom:0x002988 reloc:MIPS_LO16                           symbol:stg_town_east_ShadowPos
+rom:0x0029C8 reloc:MIPS_HI16           addend:+0x68    symbol:Env_ctl
+rom:0x0029CC reloc:MIPS_LO16           addend:+0x68    symbol:Env_ctl
+rom:0x002A20 reloc:MIPS_26                             symbol:stg_town_east_LinearTrim
+rom:0x002A2C reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x002A5C reloc:MIPS_26                             symbol:stg_town_east_LinearTrim
+rom:0x002A68 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x002A84 reloc:MIPS_26                             symbol:sh2gfw_Set_Fogfar
+rom:0x002A98 reloc:MIPS_26                             symbol:sh2gfw_Set_FogNear
+rom:0x002AA8 reloc:MIPS_HI16           addend:+0x68    symbol:Env_ctl
+rom:0x002AAC reloc:MIPS_LO16           addend:+0x68    symbol:Env_ctl
+rom:0x002AE0 reloc:MIPS_26                             symbol:vwGetViewPosition
+rom:0x002B2C reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002B40 reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002B54 reloc:MIPS_26                             symbol:sh2gfw_Get_FilterCommandParams
+rom:0x002B60 reloc:MIPS_26                             symbol:sh2gfw_Reset_FilterCommand
+rom:0x002B6C reloc:MIPS_HI16                           symbol:shGsFilterWork
+rom:0x002B70 reloc:MIPS_LO16                           symbol:shGsFilterWork
+rom:0x002BA8 reloc:MIPS_HI16                           symbol:shGsFilterWork
+rom:0x002BAC reloc:MIPS_LO16                           symbol:shGsFilterWork
+rom:0x002BBC reloc:MIPS_26                             symbol:sh2gfw_Reset_FilterCommand
+rom:0x002BEC reloc:MIPS_HI16                           symbol:stg_town_east_OutputVertex
+rom:0x002BF0 reloc:MIPS_LO16                           symbol:stg_town_east_OutputVertex
+rom:0x002BF8 reloc:MIPS_HI16                           symbol:stg_town_east_ScissorVertex
+rom:0x002BFC reloc:MIPS_LO16                           symbol:stg_town_east_ScissorVertex
+rom:0x002C04 reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002C18 reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002C30 reloc:MIPS_26                             symbol:vwGetViewPosition
+rom:0x002C5C reloc:MIPS_HI16           addend:+0x8     symbol:stg_town_east_CB_Tonnel
+rom:0x002C60 reloc:MIPS_LO16           addend:+0x8     symbol:stg_town_east_CB_Tonnel
+// rom:0x002C84 reloc:MIPS_HI16                           symbol:env$1897
+// rom:0x002C88 reloc:MIPS_LO16                           symbol:env$1897
+// rom:0x002C8C reloc:MIPS_HI16           addend:+0x4     symbol:env$1897
+// rom:0x002C90 reloc:MIPS_LO16           addend:+0x4     symbol:env$1897
+// rom:0x002C98 reloc:MIPS_HI16           addend:+0x8     symbol:env$1897
+// rom:0x002C9C reloc:MIPS_LO16           addend:+0x8     symbol:env$1897
+// rom:0x002CA8 reloc:MIPS_HI16           addend:+0xC     symbol:env$1897
+// rom:0x002CAC reloc:MIPS_LO16           addend:+0xC     symbol:env$1897
+// rom:0x002CB0 reloc:MIPS_HI16           addend:+0x1C    symbol:env$1897
+// rom:0x002CB4 reloc:MIPS_LO16           addend:+0x1C    symbol:env$1897
+// rom:0x002CBC reloc:MIPS_HI16           addend:+0x18    symbol:env$1897
+// rom:0x002CC0 reloc:MIPS_LO16           addend:+0x18    symbol:env$1897
+// rom:0x002CC4 reloc:MIPS_HI16           addend:+0x14    symbol:env$1897
+// rom:0x002CC8 reloc:MIPS_LO16           addend:+0x14    symbol:env$1897
+// rom:0x002CD0 reloc:MIPS_HI16           addend:+0x10    symbol:env$1897
+// rom:0x002CD4 reloc:MIPS_LO16           addend:+0x10    symbol:env$1897
+rom:0x002CD8 reloc:MIPS_HI16                           symbol:shGs_AllEnv
+rom:0x002CDC reloc:MIPS_LO16                           symbol:shGs_AllEnv
+rom:0x002CE4 reloc:MIPS_26                             symbol:sh2gfw_GetTexTBP0
+// rom:0x002CF8 reloc:MIPS_HI16           addend:+0x20    symbol:env$1897
+// rom:0x002CFC reloc:MIPS_LO16           addend:+0x20    symbol:env$1897
+// rom:0x002D08 reloc:MIPS_HI16           addend:+0x24    symbol:env$1897
+// rom:0x002D0C reloc:MIPS_LO16           addend:+0x24    symbol:env$1897
+// rom:0x002D14 reloc:MIPS_HI16           addend:+0x28    symbol:env$1897
+// rom:0x002D18 reloc:MIPS_LO16           addend:+0x28    symbol:env$1897
+// rom:0x002D20 reloc:MIPS_HI16           addend:+0x38    symbol:env$1897
+// rom:0x002D24 reloc:MIPS_LO16           addend:+0x38    symbol:env$1897
+// rom:0x002D30 reloc:MIPS_HI16           addend:+0x30    symbol:env$1897
+// rom:0x002D34 reloc:MIPS_LO16           addend:+0x30    symbol:env$1897
+// rom:0x002D3C reloc:MIPS_HI16           addend:+0x48    symbol:env$1897
+// rom:0x002D40 reloc:MIPS_LO16           addend:+0x48    symbol:env$1897
+// rom:0x002D58 reloc:MIPS_HI16           addend:+0x40    symbol:env$1897
+// rom:0x002D5C reloc:MIPS_LO16           addend:+0x40    symbol:env$1897
+// rom:0x002D64 reloc:MIPS_HI16           addend:+0x50    symbol:env$1897
+// rom:0x002D68 reloc:MIPS_LO16           addend:+0x50    symbol:env$1897
+// rom:0x002D6C reloc:MIPS_HI16           addend:+0x54    symbol:env$1897
+// rom:0x002D70 reloc:MIPS_LO16           addend:+0x54    symbol:env$1897
+// rom:0x002D74 reloc:MIPS_HI16           addend:+0x58    symbol:env$1897
+// rom:0x002D78 reloc:MIPS_LO16           addend:+0x58    symbol:env$1897
+rom:0x002D8C reloc:MIPS_HI16                           symbol:stg_town_east_CB_Tonnel
+rom:0x002D90 reloc:MIPS_LO16                           symbol:stg_town_east_CB_Tonnel
+rom:0x002DAC reloc:MIPS_26                             symbol:MakeScissorPacket
+rom:0x002E3C reloc:MIPS_HI16                           symbol:shGs_AllEnv
+rom:0x002E40 reloc:MIPS_LO16                           symbol:shGs_AllEnv
+rom:0x002E48 reloc:MIPS_26                             symbol:sh2gfw_GetTexTBP0
+// rom:0x002E78 reloc:MIPS_HI16                           symbol:env$1897
+// rom:0x002E7C reloc:MIPS_LO16                           symbol:env$1897
+rom:0x002E80 reloc:MIPS_26                             symbol:d1cSend
+rom:0x002E88 reloc:MIPS_HI16                           symbol:stg_town_east_OutputVertex
+rom:0x002E8C reloc:MIPS_LO16                           symbol:stg_town_east_OutputVertex
+rom:0x002E90 reloc:MIPS_26                             symbol:d1cSend
+rom:0x002E98 reloc:MIPS_HI16                           symbol:stg_town_east_ScissorVertex
+rom:0x002E9C reloc:MIPS_LO16                           symbol:stg_town_east_ScissorVertex
+rom:0x002EA0 reloc:MIPS_26                             symbol:d1cSend
+rom:0x002EDC reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002EF0 reloc:MIPS_26                             symbol:DramaDemoNumber
+rom:0x002F48 reloc:MIPS_26                             symbol:stg_town_east_LinearTrim
+rom:0x002F60 reloc:MIPS_26                             symbol:sceVu0ScaleVector
