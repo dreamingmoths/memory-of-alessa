@@ -557,7 +557,7 @@ segments:
       - { start: 0x001913a0,    type: c,          name: sound/sh_sd_call                                 }
       - { start: 0x00191c00,    type: asm,        name: Chacter/m3_ty23                                  }
       - { start: 0x00191d20,    type: c,          name: Effect2/hh_class_blood_04                        }
-      - { start: 0x001924f0,    type: asm,        name: Effect2/hh_class_blood_pool_phenomenon_01        }
+      - { start: 0x001924f0,    type: c,          name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x00192aa0,    type: c,          name: Effect2/hh_memory_manage                         }
       - { start: 0x00192f50,    type: asm,        name: SH2_common/mem_share                             }
       - { start: 0x001937c0,    type: asm,        name: Effect2/hh_class_flame_03                        }
@@ -803,7 +803,7 @@ segments:
       - { start: 0x0027bc10,    type: data,       name: data_0x27bc10                                    }
       - { start: 0x0027bfd8,    type: .data,      name: sound/sh_sd_call                                 }
       - { start: 0x0027bfe0,    type: .data,      name: Effect2/hh_class_blood_04                        }
-      - { start: 0x0027c210,    type: data,       name: data_0x27c210                                    }
+      - { start: 0x0027c210,    type: .data,      name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x0027c230,    type: .data,      name: Effect2/hh_memory_manage                         }
       - { start: 0x0027c240,    type: data,       name: data_0x27c240                                    }
       - { start: 0x0027d8d0,    type: .data,      name: Effect2/hh_class_blood_05                        }
