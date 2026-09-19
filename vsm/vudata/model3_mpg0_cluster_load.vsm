@@ -1,0 +1,72 @@
+.global model3_mpg0_cluster_load
+
+.DmaPackVif 0
+
+.data
+
+.balign 0x40
+
+model3_mpg0_cluster_load:
+    /* 000700 ---------------- */  DMAret *
+    /* 000700 1100006000000000 */  /* DMAret 0x11 */
+
+    /* 000708 00000000-------- */  /* VIFnop */
+    /* 00070C --------00000000 */  /* VIFnop */
+    /* 000710 00000000-------- */  /* VIFnop */
+    /* 000714 ---------------- */  MPG 0x0, *
+    /* 000714 --------0000214A */  /* MPG 0x0, 0x21 */
+
+model3_mpg0_cluster_top:
+    /* 000718 03000040FF020000 */  NOP                                    /* | */  B          Setup
+    /* 000720 BD060180FF020000 */  NOP                                    /* | */  XITOP      vi01
+    /* 000728 0D000040FF020000 */  NOP                                    /* | */  B          Apply
+    /* 000730 BD060180FF020000 */  NOP                                    /* | */  XITOP      vi01
+
+  Setup:
+    /* 000738 32000280FF020000 */  NOP                                    /* | */  IADDI      vi02, vi00, 0
+    /* 000740 7C13C481FF020000 */  NOP                                    /* | */  LQI.xyz    vf04, (vi02++)
+    /* 000748 32000380FF020000 */  NOP                                    /* | */  IADDI      vi03, vi00, 0
+    /* 000750 02080110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi01, 2
+    /* 000758 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Setup_loop:
+    /* 000760 3C0300803D21C501 */  ITOF4.xyz    vf05, vf04                /* | */  NOP
+    /* 000768 7C13C481FF020000 */  NOP                                    /* | */  LQI.xyz    vf04, (vi02++)
+    /* 000770 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000778 FC0F0252FF020000 */  NOP                                    /* | */  IBNE       vi02, vi01, Setup_loop
+    /* 000780 7D2BC381FF020000 */  NOP                                    /* | */  SQI.xyz    vf05, (vi03++)
+
+  Setup_end:
+    /* 000788 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000790 3C030080FF020000 */  NOP                                    /* | */  NOP
+
+  Apply:
+    /* 000798 32000280FF020000 */  NOP                                    /* | */  IADDI      vi02, vi00, 0
+    /* 0007A0 7C13C481FF020000 */  NOP                                    /* | */  LQI.xyz    vf04, (vi02++)
+    /* 0007A8 0108E101FF020000 */  NOP                                    /* | */  LQ.xyzw    vf01,   1(vi01)
+    /* 0007B0 02080110FF020000 */  NOP                                    /* | */  IADDIU     vi01, vi01, 2
+    /* 0007B8 32000380FF020000 */  NOP                                    /* | */  IADDI      vi03, vi00, 0
+
+  Apply_loop:
+    /* 0007C0 3C0300803D21C501 */  ITOF4.xyz    vf05, vf04                /* | */  NOP
+    /* 0007C8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0007D0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0007D8 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0007E0 3C0300806A29C101 */  MUL.xyz      vf05, vf05, vf01          /* | */  NOP
+    /* 0007E8 7C13C481FF020000 */  NOP                                    /* | */  LQI.xyz    vf04, (vi02++)
+    /* 0007F0 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 0007F8 F80F0252FF020000 */  NOP                                    /* | */  IBNE       vi02, vi01, Apply_loop
+    /* 000800 7D2BC381FF020000 */  NOP                                    /* | */  SQI.xyz    vf05, (vi03++)
+
+  Apply_end:
+    /* 000808 3C030080FF020040 */  NOP[E]                                 /* | */  NOP
+    /* 000810 3C030080FF020000 */  NOP                                    /* | */  NOP
+    /* 000818 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+.EndDmaData
+.EndMPG
+
+model3_mpg0_cluster_end:
+    /* 000820 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 000828 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 000830 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */
+    /* 000838 0000000000000000 */  /* PADDING PADDING PADDING PADDING */  /* | */  /* PADDING PADDING PADDING PADDING */

@@ -7902,8 +7902,8 @@ rom:0x02C51C reloc:MIPS_HI16                           symbol:model3_mpg1_view_l
 rom:0x02C520 reloc:MIPS_LO16                           symbol:model3_mpg1_view_load
 rom:0x02C534 reloc:MIPS_HI16                           symbol:"@873_0x0038D9B0"
 rom:0x02C538 reloc:MIPS_LO16                           symbol:"@873_0x0038D9B0"
-rom:0x02C53C reloc:MIPS_HI16                           symbol:__model3_mpg1_view_end
-rom:0x02C540 reloc:MIPS_LO16                           symbol:__model3_mpg1_view_end
+rom:0x02C53C reloc:MIPS_HI16                           symbol:model3_mpg1_view_end
+rom:0x02C540 reloc:MIPS_LO16                           symbol:model3_mpg1_view_end
 rom:0x02C544 reloc:MIPS_26                             symbol:printf
 rom:0x02C560 reloc:MIPS_HI16                           symbol:initialized_867
 rom:0x02C564 reloc:MIPS_LO16                           symbol:initialized_867

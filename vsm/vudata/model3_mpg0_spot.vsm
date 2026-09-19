@@ -1,5 +1,6 @@
 .global model3_mpg0_spot
 .global model3_mpg0_spot_size
+.global Spot
 
 .vu
 

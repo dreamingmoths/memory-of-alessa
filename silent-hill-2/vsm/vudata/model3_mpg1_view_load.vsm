@@ -1,6 +1,9 @@
 .global model3_mpg1_view_load
+.global model3_mpg1_view_end
 
 .DmaPackVif 0
+
+.data
 
 .balign 0x40
 

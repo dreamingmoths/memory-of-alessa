@@ -56,7 +56,7 @@ static void DrawPart1(Part* part, sceVif1Packet* pk);
 static void DrawParts1(sh_Model* model, ModelWork* work);
 
 extern u_long128 model3_mpg1_view_load[];
-extern void* __model3_mpg1_view_end;
+extern void* model3_mpg1_view_end;
 void Model3LoadMpg1(void) {
     static int initialized = 0; // @ 0x0041AC70
     static u_long128 packet_buffer_866[4]; // @ 0x0041AC80
@@ -68,7 +68,7 @@ void Model3LoadMpg1(void) {
         qwd->ui32[1] = (u_int) model3_mpg1_view_load;
         qwd->ui32[2] = SCE_VIF1_SET_FLUSH(0);
         qwd->ui32[3] = 0;
-        printf("Model3:MPG1: %x\n", __model3_mpg1_view_end);
+        printf("Model3:MPG1: %x\n", model3_mpg1_view_end);
         qwd->ui32[4] = DMAend;
         qwd->ui32[5] = 0;
         qwd->ul64[3] = 0;

@@ -815,22 +815,22 @@ segments:
       - { start: 0x00280080,    type: o,          name: vsm/vudata/model3_mpg0_clip0v, linker_section: .data }
       - { start: 0x00280280,    type: o,          name: vsm/vudata/model3_mpg0_clip1, linker_section: .data }
       - { start: 0x002804c0,    type: o,          name: vsm/vudata/model3_mpg0_clipv, linker_section: .data                     }
-      - { start: 0x00280640, type: data, name: vsm/vudata/model3_mpg0_cluster_load }
-      - { start: 0x00280980,    type: data,       name: vsm/vudata/model3_mpg0_envmap                    }
-      - { start: 0x002809c0,    type: data,       name: vsm/vudata/model3_mpg0_lambert                   }
-      - { start: 0x00280b00,    type: data,       name: vsm/vudata/model3_mpg0_para                      }
-      - { start: 0x00280c00,    type: data,       name: vsm/vudata/model3_mpg0_pers                      }
-      - { start: 0x00280d40,    type: data,       name: vsm/vudata/model3_mpg0_persfvg                   }
-      - { start: 0x00280ec0,    type: data,       name: vsm/vudata/model3_mpg0_point                     }
-      - { start: 0x00281080,    type: data,       name: vsm/vudata/model3_mpg0_skel_load                 }
-      - { start: 0x00281600,    type: data,       name: vsm/vudata/model3_mpg0_specular                  }
-      - { start: 0x00281740,    type: data,       name: vsm/vudata/model3_mpg0_spot                      }
-      - { start: 0x00281900,    type: data,       name: vsm/vudata/model3_mpg0_venvmap                   }
-      - { start: 0x00281b40,    type: data,       name: vsm/vudata/model3_mpg0_world_load                }
-      - { start: 0x002820c0,    type: data,       name: vsm/vudata/model3_mpg1_load                      }
-      - { start: 0x00283bc0,    type: data,       name: vsm/vudata/model3_mpg1_view_load                 }
-      - { start: 0x00285d40,    type: data,       name: vsm/vudata/shamap1_mpg1_load                     }
-      - { start: 0x00286780,    type: data,       name: vsm/vudata/shavol1_mpg1_load                     }
+      - { start: 0x00280640,    type: o,          name: vsm/vudata/model3_mpg0_cluster_load, linker_section: .data                     }
+      - { start: 0x00280780,    type: o,          name: vsm/vudata/model3_mpg0_envmap, linker_section: .data  }
+      - { start: 0x002809c0,    type: o,          name: vsm/vudata/model3_mpg0_lambert, linker_section: .data                    }
+      - { start: 0x00280b00,    type: o,          name: vsm/vudata/model3_mpg0_para, linker_section: .data                       }
+      - { start: 0x00280c00,    type: o,          name: vsm/vudata/model3_mpg0_pers, linker_section: .data                       }
+      - { start: 0x00280d40,    type: o,          name: vsm/vudata/model3_mpg0_persfvg, linker_section: .data                    }
+      - { start: 0x00280ec0,    type: o,          name: vsm/vudata/model3_mpg0_point, linker_section: .data                      }
+      - { start: 0x00281080,    type: o,          name: vsm/vudata/model3_mpg0_skel_load, linker_section: .data                  }
+      - { start: 0x00281600,    type: o,          name: vsm/vudata/model3_mpg0_specular, linker_section: .data                   }
+      - { start: 0x00281740,    type: o,          name: vsm/vudata/model3_mpg0_spot, linker_section: .data                       }
+      - { start: 0x00281900,    type: o,          name: vsm/vudata/model3_mpg0_venvmap, linker_section: .data                    }
+      - { start: 0x00281b40,    type: o,          name: vsm/vudata/model3_mpg0_world_load, linker_section: .data                 }
+      - { start: 0x002820c0,    type: o,          name: vsm/vudata/model3_mpg1_load, linker_section: .data                       }
+      - { start: 0x00283bc0,    type: o,          name: vsm/vudata/model3_mpg1_view_load, linker_section: .data                  }
+      - { start: 0x00285d40,    type: o,          name: vsm/vudata/shamap1_mpg1_load, linker_section: .data                      }
+      - { start: 0x00286780,    type: o,          name: vsm/vudata/shavol1_mpg1_load, linker_section: .data                      }
       # -----------------------------------------    rodata   ------------------------------------------ #
       - { start: 0x00289700,    type: .rodata,    name: Chacter/anime                                    }
       - { start: 0x002897c0,    type: rodata,     name: Chacter/m3_angela_rodata                         }

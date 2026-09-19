@@ -1,4 +1,5 @@
 .global model3_mpg0_venvmap
+.global model3_mpg0_venvmap_size
 
 .vu
 
