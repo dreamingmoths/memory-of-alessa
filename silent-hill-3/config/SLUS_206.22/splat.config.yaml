@@ -6,6 +6,7 @@ options:
   base_path: .
   src_path: ../../src
   generated_asm_macros_directory: ../../include
+  extensions_path: ../../../tools/alessatool/splat_ext
   build_path: build
   asm_nonmatching_label_macro: ""
   global_vram_start: 0x0100000
