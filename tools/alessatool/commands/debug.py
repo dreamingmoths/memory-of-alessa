@@ -98,10 +98,11 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         object_file = object_file[1:-1]
 
         USE_DEDUPLICATED_SYMBOL_CONVENTION = True
+        use_d_label_convention = not current_filename.endswith(".bin")
         target_address_hex = None
         if USE_DEDUPLICATED_SYMBOL_CONVENTION and symbol_name.startswith("@") and "_0x" in symbol_name:
             target_address_hex = symbol_name.split("_0x")[-1]
-        elif symbol_name.startswith("D_"):
+        elif use_d_label_convention and symbol_name.startswith("D_"):
             target_address_hex = symbol_name.replace("D_", "")
 
         if target_address_hex:
