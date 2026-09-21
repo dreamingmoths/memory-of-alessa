@@ -328,9 +328,17 @@ iso: $(PS2ISO)
 		exit 1; \
 	fi
 	@$(MAKE) PROJECT=$(PROJECT) relink
-	cp -f $(BUILD)/*.bin $(ISO_BUILD_FILES)
-	cp -f $(TARGET_EXECUTABLE) $(ISO_BUILD_FILES)
+	@if [[ "$(PROJECT)" == "silent-hill-2" ]]; then \
+		echo "copying overlays..."; \
+		cp -f $(BUILD)/*.bin $(ISO_BUILD_FILES)/GX; \
+	fi
+	@echo "copying main executable..."
+	@cp -f $(TARGET_EXECUTABLE) $(ISO_BUILD_FILES)
 	$(PS2ISO) pack $(ISO)/metadata.json
+	@if [[ "$(PROJECT)" == "silent-hill-3" ]]; then \
+		echo "note: sh3 overlay repacking is not implemented yet."; \
+		echo "note: overlays were not copied."; \
+	fi
 
 overlays-lowercase:
 	$(ALESSATOOL) util lowercase --folder-path $(ROM)/overlay
