@@ -111,17 +111,29 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", shCharacterExecAnimeAll);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD1D0);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD290);
+void func_001DD290(SubCharacter* scp, void (*function)(SubCharacter*)) {
+    scp->function = function;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2A0);
+void func_001DD2A0(SubCharacter* scp, void* arg) {
+    scp->sk_top = arg;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2B0);
+void func_001DD2B0(SubCharacter* scp, int arg) {
+    scp->unkA8[0] = arg;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2C0);
+void func_001DD2C0(SubCharacter* scp, int arg) {
+    scp->unkA8[1] = arg;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2D0);
+void func_001DD2D0(SubCharacter* scp, int arg) {
+    scp->unkA8[2] = arg;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2E0);
+void func_001DD2E0(SubCharacter* scp, int arg) {
+    scp->unkA8[3] = arg;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_sc_anime", func_001DD2F0);
 
