@@ -131,9 +131,15 @@ u_short func_0013BB20(EntryRecord* pER)
     return pER->Info.pObject->Type;
 }
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB30);
+u_int func_0013BB30(EntryRecord* pER)
+{
+    return pER->unk_10;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB40);
+void func_0013BB40(EntryRecord* pER, u_int value)
+{
+    pER->unk_10 = value;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB50);
 
@@ -168,7 +174,10 @@ INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C2A0);
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C2F0);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C330);
+int func_0013C330(EntryRecord* pER)
+{
+    return 0x14 - pER->Group_Handle;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C340);
 
