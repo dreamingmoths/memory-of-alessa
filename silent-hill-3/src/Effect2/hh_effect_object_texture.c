@@ -1,8 +1,8 @@
 #include "common.h"
 
-extern f32 D_0038A3E0;
+extern float D_0038A3E0;
 
-void func_0023A0B0(f32 arg) {
+void func_0023A0B0(float arg) {
     D_0038A3E0 = arg;
 }
 
