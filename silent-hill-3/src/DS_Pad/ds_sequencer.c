@@ -176,7 +176,7 @@ INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C2F0);
 
 int func_0013C330(EntryRecord* pER)
 {
-    return 0x14 - pER->Group_Handle;
+    return 20 - pER->Group_Handle;
 }
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C340);
