@@ -62,7 +62,7 @@ pull request to improve these instructions.
 
 ### more on development
 
-See [docs/development.md](docs/development.md).
+See our [contributing.md](docs/contributing.md) and [development.md](docs/development.md).
 
 ### credits
 
