@@ -145,7 +145,7 @@ void loadBg2x2_CheckLoadWork(void) {
                 lb2x2Ctrl.load = loadBg2x2_LoadCtrl;
                 _loadBgMem_InitLoad(loadBg2x2_LoadCtrl, 
                                     0x10000, 
-                                    0x78, 
+                                    120, 
                                     loadBg2x2_LoadUnit, 
                                     loadBg2x2_RequestUnit, 
                                     addr);
@@ -378,7 +378,7 @@ int loadBg2x2_SetRequestIndoor(int roomid, int* mid4) {
             glb = (mid >> 0x10) & 0xFFFF;
             ASSERT_ON_LINE(!BgIsOut(glb), 475);
             
-            filesbg = FilesGetBgBlock(glb & 0xFF, mid & 0xFFFF);
+            filesbg = FilesGetBgBlock(glb, mid & 0xFFFF);
             
             
             sFile[n++].file = file = filesbg->cam;
