@@ -734,6 +734,7 @@ segments:
       - { start: 0x0024c990,    type: data,       name: data_0x24c990                                    }
       - { start: 0x0024ca00,    type: .data,      name: Chacter/m3_oni                                   }
       - { start: 0x0024ca40,    type: data,       name: data_0x24ca40                                    }
+      - { start: 0x0024cbb0,    type: .data,      name: DBG/dbswitch                                     }
       - { start: 0x0024cbc0,    type: .data,      name: Chacter/m3_maria_sub                             }
       - { start: 0x0024cd90,    type: data,       name: data_0x24cd90                                    }
       - { start: 0x0024cff8,    type: .data,      name: Multi_thr/scf/ps2_scf                            }
