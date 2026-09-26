@@ -1,7 +1,7 @@
 # llm policy
 
 As of September 26th, 2026, the lead maintainers of this repository have agreed
-to a no-LLM policy. While this project has always been human-led, with all code
+to a no-LLM policy. While this project has always been human-led, with the code
 and tooling painstakingly written and reviewed by the developers, this date
 marks our official arrangement to ban LLMs from the project.
 
