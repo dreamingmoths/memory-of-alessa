@@ -31,6 +31,7 @@
 #include "GFW/sh2gfw_read_process.h"
 #include "GFW/sh2gfw_blockman.h"
 #include "GFW/sh2gfw_2d_filters.h"
+#include "GFW/sh2gfw_structs.h"
 #include "GFW/gfw_test/sh2gfw_util.h"
 #include "GFW/gfw_test/sh2gfw_shcamtest.h"
 
@@ -217,7 +218,7 @@ void step_init_STAGE(void) {
     
     
     
-    sh2gfw_process_AreaDATA(stage->glb_crd << 0x10, Area_Data_Man);
+    sh2gfw_process_AreaDATA(stage->glb_crd << 16, &Area_Data_Man);
     
     
     
@@ -231,7 +232,7 @@ void step_init_STAGE(void) {
     
     bgfiles = FilesGetBgBlock((STAGE_ID) stage->glb_crd, 0);
     if (bgfiles != NULL) {
-        loadBgCAM_LoadData(0, bgfiles->cam, stage->glb_crd << 0x10);
+        loadBgCAM_LoadData(0, bgfiles->cam, stage->glb_crd << 16);
     }
 
 }

@@ -398,7 +398,7 @@ segments:
       - { start: 0x00130590,    type: asm,        name: Enemy/en_aid                                                     }
       - { start: 0x001398d0,    type: asm,        name: text_0x1398d0                                                    }
       - { start: 0x00139e10,    type: c,          name: Lens/lens_th_draw                                                }
-      - { start: 0x0013a630,    type: asm,        name: Effect2/hh_effect_object_texture                                 }
+      - { start: 0x0013a630,    type: c,          name: Effect2/hh_effect_object_texture                                 }
       - { start: 0x0013a6a0,    type: c,          name: Lens/kari_lf_draw                                                }
       - { start: 0x0013c640,    type: c,          name: Lens/lens_flare                                                  }
       - { start: 0x0013d020,    type: asm,        name: text_0x13d020                                                    }

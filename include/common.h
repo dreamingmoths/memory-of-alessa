@@ -29,14 +29,15 @@
 #define BLOCK_WHILE(_cond) do { /* wait */ } while (_cond)
 
 /* bit helpers */
-#define GET_BIT(x, i) (((x) >> (i)) & 1)
-#define SET_BIT(x, i) ((x) |= (1 << (i)))
-#define UNSET_BIT(x, i) ((x) &= ~(1 << (i)))
+#define GET_BIT(x, i) (((x) >> (i)) & 1U)
+#define SET_BIT(x, i) ((x) |= (1U << (i)))
+#define UNSET_BIT(x, i) ((x) &= ~(1U << (i)))
+#define FLIP_BIT(x, i) ((x) ^= (1U << (i)))
 
 /* bit array helpers */
-#define GET_FLAG(x, i) ((((x)[(i) >> 5]) >> ((i) & 0x1F)) & 1)
-#define SET_FLAG(x, i) (((x)[(i) >> 5]) |= (1 << ((i) & 0x1F)))
-#define UNSET_FLAG(x, i) ((x)[(i) >> 5] &= ~(1 << ((i) & 0x1F)))
+#define GET_FLAG(x, i) ((((x)[(i) >> 5]) >> ((i) & 0x1F)) & 1U)
+#define SET_FLAG(x, i) (((x)[(i) >> 5]) |= (1U << ((i) & 0x1F)))
+#define UNSET_FLAG(x, i) ((x)[(i) >> 5] &= ~(1U << ((i) & 0x1F)))
 
 #define STATIC_ASSERT(cond, msg) \
     typedef char static_assertion_##msg[(cond) ? 1 : -1]

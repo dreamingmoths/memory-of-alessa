@@ -126,21 +126,39 @@ INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BAE0);
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BAF0);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB20);
+u_short func_0013BB20(EntryRecord* pER)
+{
+    return pER->Info.pObject->Type;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB30);
+u_int func_0013BB30(EntryRecord* pER)
+{
+    return pER->unk_10;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB40);
+void func_0013BB40(EntryRecord* pER, u_int value)
+{
+    pER->unk_10 = value;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB50);
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BB90);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BBD0);
+float func_0013BBD0(EntryRecord* pER, float time)
+{
+    return pER->Time_Count += time;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BBE0);
+void func_0013BBE0(EntryRecord* pER, float time)
+{
+    pER->Time_Count = time;
+}
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BBF0);
+void func_0013BBF0(EntryRecord* pER, float ratio)
+{
+    pER->Ratio = ratio;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013BC00);
 
@@ -156,7 +174,10 @@ INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C2A0);
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C2F0);
 
-INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C330);
+int func_0013C330(EntryRecord* pER)
+{
+    return 20 - pER->Group_Handle;
+}
 
 INCLUDE_ASM("asm/nonmatchings/DS_Pad/ds_sequencer", func_0013C340);
 

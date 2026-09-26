@@ -147,4 +147,17 @@ typedef struct SHADOW_CHAR_HEAD {
     short reserve5; // offset 0xE, size 0x2
 } SHADOW_CHAR_HEAD;
 
+// total size: 0x10
+typedef struct SHADOW_OUTDOOR_HEAD {
+    // Members
+    u_short kind; // offset 0x0, size 0x2
+    short map_id; // offset 0x2, size 0x2
+    short obj_num; // offset 0x4, size 0x2
+    short reserve1; // offset 0x6, size 0x2
+    short reserve2; // offset 0x8, size 0x2
+    short reserve3; // offset 0xA, size 0x2
+    short reserve4; // offset 0xC, size 0x2
+    short reserve5; // offset 0xE, size 0x2
+} SHADOW_OUTDOOR_HEAD;
+
 #endif // SH2SHD_STRUCTS_H

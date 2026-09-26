@@ -62,7 +62,13 @@ pull request to improve these instructions.
 
 ### more on development
 
-See [docs/development.md](docs/development.md).
+See our documentation:
+
+ ✶ [contributing.md](docs/contributing.md) <br>
+ ✶ [development.md](docs/development.md) <br>
+ ✶ [guidebook.md](docs/guidebook.md) <br>
+ ✶ [style.md](docs/style.md) <br>
+ ✶ [llm-policy.md](docs/llm-policy.md) <br>
 
 ### credits
 

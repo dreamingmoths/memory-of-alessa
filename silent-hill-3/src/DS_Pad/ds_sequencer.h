@@ -34,7 +34,7 @@ typedef struct EntryRecord {
     u_int Handle;          // offset 0x4, size 0x4
     u_int Group_Handle;    // offset 0x8, size 0x4
     u_int Condition;       // offset 0xC, size 0x4
-    float unk_10;
+    u_int unk_10;            // offset 0x10, size 0x4
     float Time_Count;        // offset 0x14, size 0x4
     float Time_Max;          // offset 0x18, size 0x4
     float Ratio;             // offset 0x1C, size 0x4
