@@ -181,3 +181,4 @@ suggestions.
 - try matching functions on [decomp.me](https://decomp.me)
 - read more about [splat
 configuration](https://github.com/ethteck/splat/wiki/Configuration)
+- see our [ai + llm policy](llm-policy.md)
