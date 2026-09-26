@@ -123,29 +123,33 @@ typedef struct sh2gfw_Effect_Man {
     void* pPad; // offset 0x3C, size 0x4
 } sh2gfw_Effect_Man;
 
+
+// total size: 0x60
+typedef struct sh2gfw_Area_Data_Man {
+    // Members
+    u_int areaid; // offset 0x0, size 0x4
+    u_char use_Globalflg[7]; // offset 0x4, size 0x7
+    u_char use_Transflg[7]; // offset 0xB, size 0x7
+    u_short block_id[7]; // offset 0x12, size 0xE
+    u_char* block_man[7]; // offset 0x20, size 0x1C
+    struct sh2gfw_AREA_HEAD* pA_H; // offset 0x3C, size 0x4
+    struct sh2gfw_TEX_HEAD* global_tex; // offset 0x40, size 0x4
+    struct sh2gfw_CLUTS_HEAD* global_clut; // offset 0x44, size 0x4
+    struct sh2gfw_TEX_HEAD* global_transtex; // offset 0x48, size 0x4
+    struct sh2gfw_CLUTS_HEAD* global_transclut; // offset 0x4C, size 0x4
+    struct sh2gfw_TexMAN* gTexMAN; // offset 0x50, size 0x4
+    struct sh2gfw_TexMAN* gTranstexMAN; // offset 0x54, size 0x4
+    u_short gtex_mode; // offset 0x58, size 0x2
+    u_short gtrans_mode; // offset 0x5A, size 0x2
+    u_int pad1; // offset 0x5C, size 0x4
+} sh2gfw_Area_Data_Man; // size: 0x60, address: 0xE3C1F0
+
 // total size: 0x250
-typedef struct sh2gfw_TRANS_MAN { // @note: idk if this belongs here
+typedef struct sh2gfw_TRANS_MAN {
     // Members
     u_int blockid; // offset 0x0, size 0x4
     // total size: 0x60
-    struct /* @anon5 */ {
-        // Members
-        u_int areaid; // offset 0x0, size 0x4
-        u_char use_Globalflg[7]; // offset 0x4, size 0x7
-        u_char use_Transflg[7]; // offset 0xB, size 0x7
-        u_short block_id[7]; // offset 0x12, size 0xE
-        u_char* block_man[7]; // offset 0x20, size 0x1C
-        struct sh2gfw_AREA_HEAD* pA_H; // offset 0x3C, size 0x4
-        struct sh2gfw_TEX_HEAD* global_tex; // offset 0x40, size 0x4
-        struct sh2gfw_CLUTS_HEAD* global_clut; // offset 0x44, size 0x4
-        struct sh2gfw_TEX_HEAD* global_transtex; // offset 0x48, size 0x4
-        struct sh2gfw_CLUTS_HEAD* global_transclut; // offset 0x4C, size 0x4
-        struct sh2gfw_TexMAN* gTexMAN; // offset 0x50, size 0x4
-        struct sh2gfw_TexMAN* gTranstexMAN; // offset 0x54, size 0x4
-        u_short gtex_mode; // offset 0x58, size 0x2
-        u_short gtrans_mode; // offset 0x5A, size 0x2
-        u_int pad1; // offset 0x5C, size 0x4
-    }* pA_M; // offset 0x4, size 0x4
+    sh2gfw_Area_Data_Man* pA_M; // offset 0x4, size 0x4
     u_short objnum[4]; // offset 0x8, size 0x8
     u_int trans_clutnum; // offset 0x10, size 0x4
     u_int pad2; // offset 0x14, size 0x4
@@ -200,5 +204,9 @@ typedef struct sh2gfw_LoadModel_MEMMAN {
     u_long128* pLA_head; // offset 0x10, size 0x4
     u_long128* pCL_head; // offset 0x14, size 0x4
 } sh2gfw_LoadModel_MEMMAN;
+
+// @note: may belong elsewhere
+extern sh2gfw_Area_Data_Man Area_Data_Man;
+extern sh2gfw_TRANS_MAN sh2_TR_MAN;
 
 #endif // SH2GFW_STRUCTS_H
