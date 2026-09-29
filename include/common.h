@@ -99,8 +99,8 @@ static inline u_int reinterpret_as_u_int(float v) {
 static inline int float_floor(float x) {
     int out;
     asm("mfc1 %1, %0;\
-          addi t7, zero, 1\n\
-          slt %1, %1, zero\n\
+          addi t7, zero, 1;\
+          slt %1, %1, zero;\
           cvt.w.s %0, %0;\
           movz t7, zero, %1;\
           mfc1 %1, %0;\

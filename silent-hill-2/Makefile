@@ -20,9 +20,11 @@ SOURCE_OVERLAY_ARCHIVE :=
 
 MWCC := $(TOOLS)/mwcps2/2.4/mwccps2.exe
 MWCC_TAR := mwcps2-2.4-001213.tar.gz
-MWCC_FLAGS := -O2,p -sym=on,elf -sdatathreshold 0 -str readonly \
+MWCC_OPT_FLAGS := -O2,p
+MWCC_NONOPT_FLAGS := -sym=on,elf -sdatathreshold 0 -str readonly \
 	-d DEBUG -enum min \
 	-cwd source -i "$(SRC)" -i "$(INCLUDE)" -i "$(COMMON_INCLUDE)"
+MWCC_FLAGS := $(MWCC_OPT_FLAGS) $(MWCC_NONOPT_FLAGS)
 
 MWLD := $(TOOLS)/mwcps2/2.4/mwldps2.exe
 MWLD_TAR := mwcps2-2.4-001213.tar.gz

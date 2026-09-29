@@ -12,6 +12,21 @@
 #define DMAC_TO_SPR             9
 
 #define ExitHandler()           __asm__ volatile("sync.l; ei")
+#ifndef EI
+#define EI()                    __asm__ volatile("ei")
+#endif
+#ifndef DI
+#define DI(x) \
+{ \
+      u_int stat; \
+      do { \
+        __asm__ volatile (".p2align 3"); \
+        __asm__ volatile ("di"); \
+        __asm__ volatile ("sync.p"); \
+        __asm__ volatile ("mfc0 %0, $12" : "=r"(stat):); \
+      } while (stat & 0x00010000); \
+}
+#endif
 
 typedef struct
 {
