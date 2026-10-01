@@ -180,7 +180,7 @@ segments:
       - { start: 0x000bfc40,    type: asm,        name: Multi_thr/pad/th_pad                             }
       - { start: 0x000bff00,    type: c,          name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x000c0820,    type: c,          name: Multi_thr/boot/bootopt                           }
-      - { start: 0x000c0a70,    type: asm,        name: Multi_thr/boot/bootoptitem                       }
+      - { start: 0x000c0a70,    type: c,          name: Multi_thr/boot/bootoptitem                       }
       - { start: 0x000c1200,    type: c,          name: Event/title                                      }
       - { start: 0x000c5a20,    type: c,          name: SH2_common/pad                                   }
       - { start: 0x000c6500,    type: c,          name: DBG/dbfntprint                                   }
@@ -665,7 +665,7 @@ segments:
       - { start: 0x001bb3d8,    type: data,       name: data_0x1bb3d8                                    }
       - { start: 0x001bb580,    type: .data,      name: Font/font                                        }
       - { start: 0x001bb5c0,    type: data,       name: data_0x1bb5c0                                    }
-      - { start: 0x001bb648,    type: data,       name: sdk/lib_002BAF48                                  }
+      - { start: 0x001bb648,    type: data,       name: sdk/lib_002BAF48                                 }
       - { start: 0x0023b920,    type: data,       name: Multi_thr/filesys/filecmd                        }
       - { start: 0x0023bab8,    type: data,       name: Multi_thr/filesys/filepath                       }
       - { start: 0x0023bad0,    type: data,       name: Multi_thr/filesys/sh_cdvd                        }
@@ -676,7 +676,7 @@ segments:
       - { start: 0x0023bc88,    type: data,       name: Multi_thr/pad/th_pad                             }
       - { start: 0x0023bca0,    type: data,       name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x0023bda0,    type: data,       name: Multi_thr/boot/bootopt                           }
-      - { start: 0x0023bda0,    type: data,       name: Multi_thr/boot/bootoptitem                       }
+      - { start: 0x0023bda0,    type: .data,      name: Multi_thr/boot/bootoptitem                       }
       - { start: 0x0023bf80,    type: .data,      name: Event/title                                      }
       - { start: 0x0023c5c0,    type: data,       name: DBG/dbfntprint                                   }
       - { start: 0x0023c5f0,    type: data,       name: Event/chizu                                      }
@@ -920,7 +920,7 @@ segments:
       - { start: 0x00291f80,    type: .rodata,    name: Multi_thr/intc/syncv                             }
       - { start: 0x002920a0,    type: rodata,     name: Multi_thr/pad/th_pad                             }
       - { start: 0x00292130,    type: .rodata,    name: Multi_thr/sys/init_mt_sys                        }
-      - { start: 0x00292500,    type: rodata,     name: Multi_thr/boot/bootoptitem                       }
+      - { start: 0x00292500,    type: .rodata,    name: Multi_thr/boot/bootoptitem                       }
       - { start: 0x00292a10,    type: .rodata,    name: Event/title                                      }
       - { start: 0x00292d60,    type: .rodata,    name: SH2_common/pad                                   }
       - { start: 0x00292d80,    type: .rodata,    name: DBG/dbfntprint                                   }

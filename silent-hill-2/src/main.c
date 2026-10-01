@@ -7,6 +7,7 @@
 #include "sh2_init.h"
 #include "gamemain.h"
 #include "Multi_thr/boot/bootopt.h"
+#include "Multi_thr/boot/bootoptitem.h"
 
 int main(int argc, char** argv) {
     int db_test_dvd;
