@@ -13,35 +13,35 @@
 #pragma divbyzerocheck off
 
 static int getopt_h(void);
-static int getopt_str(char* arg);
-static int getopt_str2(char* arg, char* buf);
-static void putopt_str(char* arg, int var);
-static int getopt_I(char* arg);
-static int getopt_B(char* arg);
-static int getopt_D(char* arg);
-static int getopt_H(char* arg);
-static int getopt_v(char* arg);
-static void putopt_v(char* arg, int var);
-static int getopt_S(char* arg);
-static void putopt_S(char* arg, int var);
-static int getopt_int(char* arg, int var0);
-static void putopt_int(char* arg, int var);
-static int getopt_d(char* arg);
-static void putopt_d(char* arg, int var);
-static int getopt_X(char* arg);
-static void putopt_X(char* arg, int var);
-static int getopt_V(char* arg);
-static void putopt_V(char* arg, int var);
-static int getopt_F(char* arg);
-static void putopt_F(char* arg, int var);
-static int getopt_x(char* arg);
-static void putopt_x(char* arg, int var);
+static int getopt_str(s_char* arg);
+static int getopt_str2(s_char* arg, s_char* buf);
+static void putopt_str(s_char* arg, int var);
+static int getopt_I(s_char* arg);
+static int getopt_B(s_char* arg);
+static int getopt_D(s_char* arg);
+static int getopt_H(s_char* arg);
+static int getopt_v(s_char* arg);
+static void putopt_v(s_char* arg, int var);
+static int getopt_S(s_char* arg);
+static void putopt_S(s_char* arg, int var);
+static int getopt_int(s_char* arg, int var0);
+static void putopt_int(s_char* arg, int var);
+static int getopt_d(s_char* arg);
+static void putopt_d(s_char* arg, int var);
+static int getopt_X(s_char* arg);
+static void putopt_X(s_char* arg, int var);
+static int getopt_V(s_char* arg);
+static void putopt_V(s_char* arg, int var);
+static int getopt_F(s_char* arg);
+static void putopt_F(s_char* arg, int var);
+static int getopt_x(s_char* arg);
+static void putopt_x(s_char* arg, int var);
 
 extern /* static */ int opt_h_dummy;
-extern char optI_strbuf[256];
-extern char optB_strbuf[256];
-extern char optD_strbuf[256];
-extern char optH_strbuf[256];
+extern s_char optI_strbuf[256];
+extern s_char optB_strbuf[256];
+extern s_char optD_strbuf[256];
+extern s_char optH_strbuf[256];
 
 BootOptItem BootOptItemList[20] = {
     {
@@ -205,21 +205,21 @@ BootOptItem BootOptItemList[20] = {
 static int getopt_h(void) {
     BootOptItem* item;
     for (item = BootOptItemList; item->var != NULL; item++) {
-        char* help = item->help;
+        s_char* help = item->help;
         if (help) printf("-%c%s", item->key[0], help);
     }
     return 0;
 }
 
 
-static int getopt_str(char* arg /* r2 */) {
+static int getopt_str(s_char* arg /* r2 */) {
     return (int) arg;
 }
 
 
-static int getopt_str2(char* arg /* r2 */, char* buf /* r16 */) {
+static int getopt_str2(s_char* arg /* r2 */, s_char* buf /* r16 */) {
     int len = 0;
-    char* str = buf;
+    s_char* str = buf;
     len += UtilStrCpyL(str, arg, 255);
     if (str[len - 1] == '-') {
         len--;
@@ -242,9 +242,9 @@ static int getopt_str2(char* arg /* r2 */, char* buf /* r16 */) {
 
 
 
-static void putopt_str(char* arg /* r16 */, int var /* r2 */) {
+static void putopt_str(s_char* arg /* r16 */, int var /* r2 */) {
     int len;
-    len = UtilStrCpyL(arg, (char*) var, 255);
+    len = UtilStrCpyL(arg, (s_char*) var, 255);
     arg[len] = 0;
 }
 
@@ -253,28 +253,28 @@ static void putopt_str(char* arg /* r16 */, int var /* r2 */) {
 
 
 
-static int getopt_I(char* arg /* r2 */) {
+static int getopt_I(s_char* arg /* r2 */) {
     return getopt_str2(arg, optI_strbuf);
 }
 
 
-static int getopt_B(char* arg /* r2 */) {
+static int getopt_B(s_char* arg /* r2 */) {
     return getopt_str2(arg, optB_strbuf);
 }
 
 
-static int getopt_D(char* arg /* r2 */) {
+static int getopt_D(s_char* arg /* r2 */) {
     return getopt_str2(arg, optD_strbuf);
 }
 
 
-static int getopt_H(char* arg /* r2 */) {
+static int getopt_H(s_char* arg /* r2 */) {
     return getopt_str2(arg, optH_strbuf);
 }
 
 
 
-static int getopt_v(char* arg /* r2 */) {
+static int getopt_v(s_char* arg /* r2 */) {
     int var = *arg - '0'; // r2
     if (var < 0) var = 0;
     if (var > 9) var = 9;
@@ -283,7 +283,7 @@ static int getopt_v(char* arg /* r2 */) {
 }
 
 
-static void putopt_v(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_v(s_char* arg /* r2 */, int var /* r2 */) {
     if (var < 0) var = 0;
     if (var > 9) var = 9;
     arg[0] = var + '0';
@@ -292,7 +292,7 @@ static void putopt_v(char* arg /* r2 */, int var /* r2 */) {
 
 
 
-static int getopt_S(char* arg /* r2 */) {
+static int getopt_S(s_char* arg /* r2 */) {
     int var = *arg - '0'; // r2
     if (var < 0) var = 0;
     if (var > 1) var = 1;
@@ -301,7 +301,7 @@ static int getopt_S(char* arg /* r2 */) {
 }
 
 
-static void putopt_S(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_S(s_char* arg /* r2 */, int var /* r2 */) {
     if (var < 0) var = 0;
     if (var > 1) var = 1;
     arg[0] = var + '0';
@@ -309,7 +309,7 @@ static void putopt_S(char* arg /* r2 */, int var /* r2 */) {
 }
 
 
-static int getopt_int(char* arg /* r2 */, int var0 /* r17 */) {
+static int getopt_int(s_char* arg /* r2 */, int var0 /* r17 */) {
     int var; // r29+0x3C
     int op; // r16
     op = *arg;
@@ -343,13 +343,13 @@ static int getopt_int(char* arg /* r2 */, int var0 /* r17 */) {
 }
 
 
-static void putopt_int(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_int(s_char* arg /* r2 */, int var /* r2 */) {
     sprintf(arg, "=0x%08x", var);
 }
 
 
 
-static int getopt_d(char* arg /* r2 */) {
+static int getopt_d(s_char* arg /* r2 */) {
     int var = execEnv_debug_flag;
     int flag = getopt_int(arg, var); // @note: not in dwarf, but matches line numbers (reusing var doesn't work?)
     execEnv_debug_flag = flag;
@@ -360,24 +360,24 @@ static int getopt_d(char* arg /* r2 */) {
 }
 
 
-static void putopt_d(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_d(s_char* arg /* r2 */, int var /* r2 */) {
     putopt_int(arg, var);
 }
 
 
-static int getopt_X(char* arg /* r2 */) {
+static int getopt_X(s_char* arg /* r2 */) {
     int var = execEnv_auto_exit_time; // r2
     return getopt_int(arg, execEnv_auto_exit_time);
 }
 
 
-static void putopt_X(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_X(s_char* arg /* r2 */, int var /* r2 */) {
     putopt_int(arg, var);
 }
 
 
 
-static int getopt_V(char* arg /* r2 */) {
+static int getopt_V(s_char* arg /* r2 */) {
     int ret; // @note not in dwarf
     int var = *arg - '0'; // r2
     if (var) {
@@ -398,13 +398,13 @@ static int getopt_V(char* arg /* r2 */) {
 
 
 
-static void putopt_V(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_V(s_char* arg /* r2 */, int var /* r2 */) {
     arg[0] = (var == 3 ? 1 : 0) + '0';
     arg[1] = '\0';
 }
 
 
-static int getopt_F(char* arg /* r2 */) {
+static int getopt_F(s_char* arg /* r2 */) {
     int var; // r2
     int mode; // r2
     var = *arg - '0';
@@ -421,7 +421,7 @@ static int getopt_F(char* arg /* r2 */) {
 }
 
 
-static void putopt_F(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_F(s_char* arg /* r2 */, int var /* r2 */) {
     int mode; // r3
     int i; // r2 @note present in dwarf, unused here
     mode = var & 0xf;
@@ -438,7 +438,7 @@ static void putopt_F(char* arg /* r2 */, int var /* r2 */) {
 }
 
 
-static int getopt_x(char* arg /* r2 */) {
+static int getopt_x(s_char* arg /* r2 */) {
     int var; // r2
     int mode; // r2
     var = *arg - '0';
@@ -455,7 +455,7 @@ static int getopt_x(char* arg /* r2 */) {
 }
 
 
-static void putopt_x(char* arg /* r2 */, int var /* r2 */) {
+static void putopt_x(s_char* arg /* r2 */, int var /* r2 */) {
     int mode; // r3
     int i; // r2
     mode = var & 0xf;
