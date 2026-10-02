@@ -1,7 +1,45 @@
 #ifndef SH2_EVENT_MACROS_H
 #define SH2_EVENT_MACROS_H
 
-// Flag bit indexes used with `GET_GAME_FLAG`/`SET_GAME_FLAG`/`UNSET_GAME_FLAG`.
+/**
+ * Sets the event main step and resets exec, program, and subroutine steps.
+ */
+#define EV_MAIN_STEP(m_step)         \
+do {                                 \
+    ev_m_step = m_step;              \
+    ev_e_step = 0;                   \
+    ev_p_step = 0;                   \
+    ev_s_step = 0;                   \
+} while (0)
+
+/**
+ * Sets the event exec step and resets program and subroutine steps.
+ */
+#define EV_EXEC_STEP(e_step)         \
+do {                                 \
+    ev_e_step = e_step;              \
+    ev_p_step = 0;                   \
+    ev_s_step = 0;                   \
+} while (0)
+
+/**
+ * Sets the program step and resets the subroutine step.
+ */
+#define EV_PROG_STEP(p_step)         \
+do {                                 \
+    ev_p_step = p_step;              \
+    ev_s_step = 0;                   \
+} while (0)
+
+/**
+ * Sets only the event subroutine step.
+ */
+#define EV_SUB_STEP(s_step)          \
+do {                                 \
+    ev_s_step = s_step;              \
+} while (0)
+
+/* flag bit indices used by `GET_GAME_FLAG`/`SET_GAME_FLAG`/`UNSET_GAME_FLAG` */
 #define GAME_FLAG_7    7
 #define GAME_FLAG_8    8
 #define GAME_FLAG_9    9
@@ -100,12 +138,6 @@
 #define GAME_FLAG_1302 1302
 #define GAME_FLAG_1303 1303
 #define GAME_FLAG_1322 1322
-
-#define SET_EV_STEP(p_step, s_step) \
-do {                                \
-    ev_p_step = p_step;             \
-    ev_s_step = s_step;             \
-} while (0)
 
 #define GET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] >> ((index) & 0x1F)) & 1)
 #define SET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] |= (1 << ((index) & 0x1F))))

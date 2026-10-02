@@ -1,20 +1,12 @@
 #ifndef EVENT_SUB_H
 #define EVENT_SUB_H
 
-#include "common.h"
 #include "Chacter/character.h"
 #include "SH2_common/sh2sys.h"
 #include "SH2_common/pad.h"
+#include "Event/event.h"
 
 #include "data/fs_structs.h"
-
-#define EV_PROG_STEP(p_step) \
-do {                                 \
-    ev_p_step = p_step;              \
-    ev_s_step = 0;                   \
-} while (0)
-
-#define EV_SUB_STEP(s_step) do { ev_s_step = s_step; } while (0)
 
 // @todo: clean up
 
