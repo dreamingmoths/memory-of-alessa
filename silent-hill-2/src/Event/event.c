@@ -1,10 +1,17 @@
-#include "Event/event.h"
+#include "sh2_common.h"
+#include "SH2_common/sh_vu0.h"
+#include "SH2_common/playing_info.h"
+
 #include "Chacter/m3_sc.h"
+#include "Chacter/sh2_battle_list.h"
+
+#include "Chacter_Draw/sh2_JmsSpot_Man.h"
+
 #include "Font/font.h"
 #include "sound/sh_sound.h"
 #include "GFW/sh2gfw_LightSet.h"
-#include "Chacter_Draw/sh2_JmsSpot_Man.h"
-#include "SH2_common/playing_info.h"
+
+#include "Event/event.h"
 #include "Event/demoview.h"
 
 static int EventListElement(Event_List* el /* r2 */, int en /* r2 */);
@@ -19,7 +26,145 @@ static int EventExecChizuFail(void);
 
 extern /* static */ Event_DoorSound door_se[22];
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", FlagInit);
+#pragma divbyzerocheck off
+#define HANGING_MAN_COUNT 6
+#line 209
+void FlagInit(void) {
+    int shuffle[HANGING_MAN_COUNT]; // r29+0x30
+    int work; // r16
+    int i; // r17
+    
+    shQzero(&game_flag, sizeof(Game_Flag));
+
+    
+    if (playing.riddle_level == SH2_BATTLE_LEVEL_NORMAL   && 
+        playing.clear_end_kind & (1 << CLEAR_END_KIND_5)  && 
+        playing.clear_end_kind & (1 << CLEAR_END_KIND_6)  &&
+        playing.clear_end_kind & (1 << CLEAR_END_KIND_7)) 
+        playing.riddle_level = SH2_RIDDLE_LEVEL_EXTRA;
+
+
+    
+    work = 0;
+    for (i = 0; i < 3; i++)
+        if (playing.clear_end_kind & (1 << i)) work++;
+    if (work < 3 && work < playing.clear_end_number) {
+        if (work == 1) {
+            if (playing.clear_end_kind & (1 << CLEAR_END_KIND_0)) {
+                if (shRandI() & 1) SET_GAME_FLAG(GAME_FLAG_8);
+                else SET_GAME_FLAG(GAME_FLAG_9);
+            }
+            if (playing.clear_end_kind & (1 << CLEAR_END_KIND_1)) {
+                if (shRandI() & 1) SET_GAME_FLAG(GAME_FLAG_9);
+                else SET_GAME_FLAG(GAME_FLAG_7);
+            }
+            if (playing.clear_end_kind & (1 << CLEAR_END_KIND_2)) {
+                if (shRandI() & 1) SET_GAME_FLAG(GAME_FLAG_7);
+                SET_GAME_FLAG(GAME_FLAG_8);
+            }
+        } else {
+            if (!(playing.clear_end_kind & (1 << CLEAR_END_KIND_0)))
+                SET_GAME_FLAG(GAME_FLAG_7);
+            if (!(playing.clear_end_kind & (1 << CLEAR_END_KIND_1)))
+                SET_GAME_FLAG(GAME_FLAG_8);
+            if (!(playing.clear_end_kind & (1 << CLEAR_END_KIND_2)))
+                SET_GAME_FLAG(GAME_FLAG_9);
+        }
+    }
+    if (work > 0) SET_GAME_FLAG(GAME_FLAG_10);
+    if (work == 3 || (playing.clear_end_kind & (1 << CLEAR_END_KIND_3))) {
+        SET_GAME_FLAG(GAME_FLAG_11);
+    }
+
+    
+    game_flag.clock = shRandI() % 660;
+    if (520 < game_flag.clock) game_flag.clock += 60;
+    game_flag.clock <<= 6;
+
+    
+    for (i = 0; i < 4; i++) {
+        game_flag.safe[i] = shRandI() % 20;
+        if (i > 0 && game_flag.safe[i - 1] == game_flag.safe[i])
+            game_flag.safe[i] = (game_flag.safe[i] + 10) % 20;
+    }
+    work = (game_flag.safe[0] + shRandI() % 19) % 20;
+    for (i = 0; i < 5; i++) {
+        if ((1 << i) & work) SET_GAME_FLAG(GAME_FLAG_103 + i);
+    }
+    for (i = 0; i < 4; i++) game_flag.rotate[i] = -1;
+
+    
+    for (i = 0; i < 4; i++) {
+        game_flag.carbon      = game_flag.carbon * 16 + shRandI() % 9 + 1;
+        game_flag.guruguru[i] = shRandI() % 9;
+        game_flag.cylinder[i] = 
+            (game_flag.guruguru[i] + 1 + (shRandI() % 8)) % 9;
+    }
+
+    if (playing.riddle_level < SH2_RIDDLE_LEVEL_EASY) {
+        
+        if (game_flag.guruguru[0] == game_flag.guruguru[1]) {
+            game_flag.guruguru[1]++;
+            if (game_flag.guruguru[1] == 9) game_flag.guruguru[1] = 0;
+        }
+        game_flag.guruguru[2] = game_flag.guruguru[0];
+        game_flag.guruguru[3] = game_flag.guruguru[1];
+    }
+
+    game_flag.runaway[0] = shRandI() % 9;
+    game_flag.runaway[1] = (work = shRandI() % 8);
+    if (work >= game_flag.runaway[0]) game_flag.runaway[1]++;
+    game_flag.runaway[2] = (work = shRandI() % 7);
+    if (work >= game_flag.runaway[0]) game_flag.runaway[2]++;
+    if (work >= game_flag.runaway[1]) game_flag.runaway[2]++;
+    game_flag.runaway[3] = 0;
+
+    
+    for (i = 0; i < HANGING_MAN_COUNT; i++) shuffle[i] = i;
+    for (i = 0; i < HANGING_MAN_COUNT; i++) {
+        work = shRandI() % (HANGING_MAN_COUNT - i);
+        game_flag.hanging = game_flag.hanging * HANGING_MAN_COUNT + shuffle[i + work];
+        shuffle[i + work] = shuffle[i];
+    }
+
+    
+    work = shRandI() % 3 + 1;
+    if (work & 1) {
+        SET_GAME_FLAG(GAME_FLAG_319);
+        SET_GAME_FLAG(GAME_FLAG_323);
+    }
+    if (work & 2) {
+        SET_GAME_FLAG(GAME_FLAG_320);
+        SET_GAME_FLAG(GAME_FLAG_324);
+    }
+    work = shRandI() % 3 + 1;
+    if (work & 1) {
+        SET_GAME_FLAG(GAME_FLAG_317);
+        SET_GAME_FLAG(GAME_FLAG_321);
+    }
+    if (work & 2) {
+        SET_GAME_FLAG(GAME_FLAG_318);
+        SET_GAME_FLAG(GAME_FLAG_322);
+    }
+
+    
+    
+    work = shRandI() % 19;
+    for (i = 0; i < 5; i++)
+        if (work & (1 << i)) SET_GAME_FLAG(GAME_FLAG_406 + i);
+
+
+    
+    if (playing.riddle_level == SH2_RIDDLE_LEVEL_EASY)
+        SET_GAME_FLAG(GAME_FLAG_13);
+
+
+
+
+    
+    
+    if (!(shRandI() & 3)) SET_GAME_FLAG(GAME_FLAG_543);
+}
 
 void EventProgInit(void) {
     ev_m_step = 0;
