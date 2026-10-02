@@ -9,6 +9,7 @@
 #define SH2_RIDDLE_LEVEL_EASY         0
 #define SH2_RIDDLE_LEVEL_NORMAL       1
 #define SH2_RIDDLE_LEVEL_HARD         2
+#define SH2_RIDDLE_LEVEL_EXTRA        3
 
 /* @note: header not in symbols */
 

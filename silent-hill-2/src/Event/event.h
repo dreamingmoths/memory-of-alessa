@@ -5,101 +5,7 @@
 #include "sce/libvu0.h"
 #include "Chacter/character.h"
 #include "Event/item.h"
-
-// Flag bit indexes used with `GET_GAME_FLAG`/`SET_GAME_FLAG`/`UNSET_GAME_FLAG`.
-#define GAME_FLAG_15   15
-#define GAME_FLAG_16   16
-#define GAME_FLAG_17   17
-#define GAME_FLAG_18   18
-#define GAME_FLAG_19   19
-#define GAME_FLAG_24   24
-#define GAME_FLAG_25   25
-#define GAME_FLAG_26   26
-#define GAME_FLAG_33   33
-#define GAME_FLAG_36   36
-#define GAME_FLAG_39   39
-#define GAME_FLAG_41   41
-#define GAME_FLAG_43   43
-#define GAME_FLAG_47   47
-#define GAME_FLAG_49   49
-#define GAME_FLAG_50   50
-#define GAME_FLAG_51   51
-#define GAME_FLAG_52   52
-#define GAME_FLAG_53   53
-#define GAME_FLAG_54   54
-#define GAME_FLAG_55   55
-#define GAME_FLAG_56   56
-#define GAME_FLAG_57   57
-#define GAME_FLAG_58   58
-#define GAME_FLAG_59   59
-#define GAME_FLAG_62   62
-#define GAME_FLAG_66   66
-#define GAME_FLAG_67   67
-#define GAME_FLAG_68   68
-#define GAME_FLAG_69   69
-#define GAME_FLAG_70   70
-#define GAME_FLAG_71   71
-#define GAME_FLAG_72   72
-#define GAME_FLAG_82   82
-#define GAME_FLAG_84   84
-#define GAME_FLAG_85   85
-#define GAME_FLAG_87   87
-#define GAME_FLAG_88   88
-#define GAME_FLAG_91   91
-#define GAME_FLAG_95   95
-#define GAME_FLAG_96   96
-#define GAME_FLAG_97   97
-#define GAME_FLAG_108  108
-#define GAME_FLAG_109  109
-#define GAME_FLAG_117  117
-#define GAME_FLAG_146  146
-#define GAME_FLAG_147  147
-#define GAME_FLAG_148  148
-#define GAME_FLAG_162  162
-#define GAME_FLAG_168  168
-#define GAME_FLAG_171  171
-#define GAME_FLAG_192  192
-#define GAME_FLAG_193  193
-#define GAME_FLAG_194  194
-#define GAME_FLAG_197  197
-#define GAME_FLAG_227  227
-#define GAME_FLAG_228  228
-#define GAME_FLAG_240  240
-#define GAME_FLAG_251  251
-#define GAME_FLAG_272  272
-#define GAME_FLAG_368  368
-#define GAME_FLAG_472  472
-#define GAME_FLAG_501  501
-#define GAME_FLAG_502  502
-#define GAME_FLAG_503  503
-#define GAME_FLAG_506  506
-#define GAME_FLAG_508  508
-#define GAME_FLAG_517  517
-#define GAME_FLAG_518  518
-#define GAME_FLAG_607  607
-#define GAME_FLAG_610  610
-#define GAME_FLAG_611  611
-#define GAME_FLAG_1266 1266
-#define GAME_FLAG_1268 1268
-#define GAME_FLAG_1269 1269
-#define GAME_FLAG_1276 1276
-#define GAME_FLAG_1295 1295
-#define GAME_FLAG_1302 1302
-#define GAME_FLAG_1303 1303
-#define GAME_FLAG_1322 1322
-
-#define SET_EV_STEP(p_step, s_step) \
-do {                                \
-    ev_p_step = p_step;             \
-    ev_s_step = s_step;             \
-} while (0)
-
-#define GET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] >> ((index) & 0x1F)) & 1)
-#define SET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] |= (1 << ((index) & 0x1F))))
-#define UNSET_GAME_FLAG(index) ((game_flag.flag[(index) >> 5] &= ~(1 << ((index) & 0x1F))))
-
-#define GET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] >> ((index) & 0x1F)) & 1)
-#define SET_ENEMY_FLAG(index) ((game_flag.enemy[(index) >> 5] |= (1 << ((index) & 0x1F))))
+#include "Event/event_macros.h"
 
 // total size: 0x10
 typedef struct Event_List {
@@ -219,6 +125,7 @@ extern int ev_e_step;        // size: 0x4, address: 0x11263C8
 extern int ev_m_step;        // size: 0x4, address: 0x11263D0
 extern int ev_prog_flag_set; // size: 0x4, address: 0x11263A8
 extern float ev_timer;       // size: 0x4, address: 0x11263A0
+extern int ev_active;        // size: 0x4, address: 0x1126380
 
 extern Game_Flag game_flag;
 extern u_short msg_buffer[];
