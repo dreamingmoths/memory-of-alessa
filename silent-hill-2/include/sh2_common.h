@@ -40,14 +40,14 @@
 // have for sh3 `amusement_01`
 static inline float vec3_dist_xz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
-         lwc1 f8, 0(%1)\n\
-         lwc1 f9, 8(%0)\n\
-         lwc1 f10, 8(%1)\n\
-         sub.s %2, %2, f8\n\
-         sub.s f9, f9, f10\n\
+    asm("lwc1 %2, 0(%0);\
+         lwc1 f8, 0(%1);\
+         lwc1 f9, 8(%0);\
+         lwc1 f10, 8(%1);\
+         sub.s %2, %2, f8;\
+         sub.s f9, f9, f10;\
          mula.s %2, %2;\
-         madd.s %2, f9, f9\n\
+         madd.s %2, f9, f9;\
          sqrt.s %2, %2"
         : "+r"(v), "+r"(w), "+f"(d)::"f8", "f9", "f10");
     return d;
@@ -55,14 +55,14 @@ static inline float vec3_dist_xz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
 
 static inline float vec3_dist_xz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
-         lwc1 f8, 0(%1)\n\
-         lwc1 f9, 8(%0)\n\
-         lwc1 f10, 8(%1)\n\
-         sub.s %2, %2, f8\n\
-         sub.s f9, f9, f10\n\
+    asm("lwc1 %2, 0(%0);\
+         lwc1 f8, 0(%1);\
+         lwc1 f9, 8(%0);\
+         lwc1 f10, 8(%1);\
+         sub.s %2, %2, f8;\
+         sub.s f9, f9, f10;\
          mula.s %2, %2;\
-         madd.s %2, f9, f9\n\
+         madd.s %2, f9, f9;\
          sqrt.s %2, %2"
         : "+r"(v), "+r"(w), "+f"(d)::"f8", "f9", "f10");
     return d;

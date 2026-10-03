@@ -127,11 +127,9 @@ PS2ISO := $(TOOLS)/$(PS2ISO_BINARY)
 ISO_BUILD_FILES := $(ISO)/files
 
 MWCCGAP_ENTRYPOINT := $(TOOLS)/mwccgap/mwccgap.py
-MWCCGAP := $(PYTHON) $(MWCCGAP_ENTRYPOINT)
-MWCCGAP_FLAGS := \
+MWCCGAP := $(PYTHON) $(MWCCGAP_ENTRYPOINT) \
 	--use-wibo \
     --wibo-path="$(WIBO)" \
-    --mwcc-path="$(MWCC)" \
     --as-path=$(AS) \
     --src-dir="$(SRC)" \
 	--asm-dir-prefix="$(CONFIG)" \
@@ -145,7 +143,7 @@ ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@" \
 		-u __FILE__ -d __FILE__=\"$(<F)\" -d NON_MATCHING=1 -d HOLY_CANDLE=1
 else
-	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS) \
+	CC = MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(MWCC)" "$<" "$@" $(MWCC_FLAGS) \
 		 -u __FILE__ -d __FILE__=\"$(<F)\"
 endif
 
@@ -369,6 +367,10 @@ $(BUILD)/$(VSM)/%.o: $(VSM)/%.dsm
 $(BUILD)/$(VSM)/%.o: $(VSM)/%.vsm
 	@mkdir -p "$(@D)"
 	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
+
+$(BUILD)/src/lib/wprtfsrc.c.o: $(SRC)/lib/wprtfsrc.c
+	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(TOOLS)/mwcps2/2.3.3/mwccps2.exe" "$<" "$@" -O3,p $(MWCC_NONOPT_FLAGS) \
+		 -u __FILE__ -d __FILE__=\"$(<F)\"
 
 $(BUILD)/%.c.o: $(PROJECT)/%.c
 	@mkdir -p "$(@D)"
