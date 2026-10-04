@@ -300,6 +300,8 @@ void EventMain(void) {
     }
 }
 
+
+#ifdef NON_MATCHING
 #line 459
 static void EventMainStandard(int ev_act_on) {
     Event_List* el;
@@ -378,8 +380,13 @@ static void EventMainStandard(int ev_act_on) {
         ev_act_on = 0;
     }
 }
+#else
+const char rodata_1419_0x00390EC0[] = "event.c:528> assert:(%s)\n";
+const char rodata_1420_0x00390EE0[] = "0";
+const char rodata_padding0[] = "\0\0\0\0"; // i HATE how mwcc aligns rodata omg
+INCLUDE_ASM("asm/nonmatchings/Event/event", EventMainStandard);
+#endif
 
-INCLUDE_RODATA("asm/nonmatchings/Event/event", @1420_0x00390EE0);
 
 INCLUDE_RODATA("asm/nonmatchings/Event/event", @1583_0x00390F50);
 
@@ -465,8 +472,8 @@ static inline float float_add(float a, float b) {
 
 #line 829
 static int EventCheckLookPoint(float x, float z, Jms jms) {
-    /* static */ float pos_x;
-    /* static */ float pos_z;
+    extern /* static */ float pos_x;
+    extern /* static */ float pos_z;
     float ang; // r29+0x40
     
     pos_x = x - jms.pos_x;
@@ -1140,7 +1147,3 @@ int EventItemConditionCheck(int level, int flag) {
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", RadioNoise);
-
-INCLUDE_RODATA("asm/nonmatchings/Event/event", @2408);
-
-INCLUDE_RODATA("asm/nonmatchings/Event/event", @2409);

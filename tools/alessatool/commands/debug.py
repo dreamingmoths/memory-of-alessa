@@ -149,7 +149,7 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         return True
     else:
         if trace_index >= 0:
-            print("surrounding context:")
+            print(f"surrounding context ({mapfile_path.as_posix()}:{trace_index}):")
             CONTEXT_WINDOW = 2
 
             print("...")
