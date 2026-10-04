@@ -755,12 +755,12 @@ static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float*
 }
 
 static void shBattleAttackByEnemySlash(SubCharacter* attacker, u_short atk) {
-    sceVu0FVECTOR s_pos; // r29+128
-    sceVu0FVECTOR s_vec; // r29+144    
+    sceVu0FVECTOR s_pos; // r29+0x80
+    sceVu0FVECTOR s_vec; // r29+0x90  
     unsigned short cur_frame; // r17    
     unsigned short st; // r18    
     unsigned short ed; // r19        
-    CL_BATTLE_QUE que; // r29+160
+    CL_BATTLE_QUE que; // r29+0xA0
     cur_frame = shCharacterAnimeFrameGet(attacker);
     st = sh2_attack_list[atk].atk_start;
     ed = sh2_attack_list[atk].atk_end;
