@@ -151,7 +151,7 @@ static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result) 
             break;
     }
     
-    
+    /* @todo: add sound ID macros/enums! */
     if (se == -1) {
         if (!(scp->battle.status & 2)) {    
             switch (scp->kind) {
