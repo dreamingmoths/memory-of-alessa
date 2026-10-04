@@ -28,6 +28,7 @@
 #include "Effect2/hh_class_object_execute.h"
 
 #include "Enemy/en_edb.h"
+#include "Enemy/en_common.h"
 
 #include "Event/item.h"
 #include "Event/stg_name.h"
@@ -42,13 +43,14 @@
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
+static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result)
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec);
 static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short atk);
 static void shBattleAttackByHumanGunshotTypeB(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
-static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short atk /* r17 */);
+static void shBattleAttackByHumanFog(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByHumanFinish(SubCharacter* attacker, u_short atk);
-static void shGetEnemyAttackStartPos(SubCharacter* attacker /* r18 */, u_short atk /* r8 */, float* s_pos /* r17 */, float* s_vec /* r16 */);
+static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float* s_pos, float* s_vec);
 static void shBattleAttackByEnemySlash(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyStrike(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk);
@@ -56,8 +58,7 @@ static void shBattleAttackByEnemyBite(void);
 static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk);
-
-static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
+static void shBattleAddAttackQueue(SubCharacter* scp, u_char wep_no , u_short atk_no);
 
 
 extern /* static */ struct shAttackInfo sh2_attack_list[66];
@@ -111,9 +112,148 @@ static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u
 
 }
 
-// INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", sh2_attack_list);
+static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result) {
+    int se;
+    int type;
+    float vol; 
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetSoundDamage);
+    type = 0;
+
+    switch (result->btlid & 0xFF) {
+        case 25:
+        case 26:
+        case 27:
+        case 28:
+        case 29:
+        case 30:
+        case 31:
+        case 32:
+        case 33:
+        case 34:
+            se = 0x2B19;
+            vol = 0.8f;
+            break;
+        case 23:
+        case 24:
+            se = 0x2B26;
+            vol = 0.8f;
+            break;
+        case 8:
+        case 9:
+            return;
+        case 1:
+        case 2:
+        case 4:
+        case 6:
+            type = 1;
+        default:
+            se = -1;
+            break;
+    }
+    
+    
+    if (se == -1) {
+        if (!(scp->battle.status & 2)) {    
+            switch (scp->kind) {
+                case EN_SCU_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x2EEF;
+                    vol = 1.0f;
+                    break;
+                case EN_MKN_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x30D5;
+                    vol = 1.0f;
+                    break;
+                
+                case EN_NSE_CHARA_KIND:
+                case EN_XOO_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x2F51;
+                    vol = 1.0f;
+                    break;
+                case EN_LLL_EDI_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x471B;
+                    vol = 1.0f;
+                    break;
+                case EN_IKE_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 3) + 0x4845;
+                    vol = 1.0f;
+                    break;
+                case EN_PAP_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x477D;
+                    vol = 0.8f;
+                    break;
+                case EN_RED_CHARA_KIND:
+                case EN_ONI_CHARA_KIND:
+                    switch (result->btlid & 0xFF) {
+                        case 2:
+                        case 1:
+                            se = 0x3EEE;
+                            vol = 1.0f;
+                            break;
+                        case 12:
+                        case 13:
+                        case 14:
+                            se = 0x3EF0;
+                            vol = 1.0f;
+                            break;
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                            se = 0x3EEF;
+                            vol = 1.0f;
+                            break;
+                        default:
+                            se = ((shRandI() >> 10) % 4) + 0x3EF2;
+                            vol = 0.8f;
+                    }
+                                                    
+                    break;
+                
+                
+                case EN_TYU_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 6) + 0x2FB0;
+                    vol = 0.5f;
+                    break;
+                case EN_ARM_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x2FDE;
+                    vol = 1.0f;
+                    break;
+                case EN_BOS_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 0x49AA;
+                    vol = 0.8f;
+                    break;
+                
+                default:
+                    se = -1;
+
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (se > 0) {
+        if (type != 0) {
+            enSoundSetQueue(scp, se, vol, 0.1f);
+        } else {
+            SeCallPos(se, vol, result->pos, 0);
+        }
+    }
+
+}
 
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec) {
     EFCTSetGunFire(pos, vec);
@@ -1112,7 +1252,127 @@ int shBattleRequestNextAttackIsOk(u_short atk, u_short frame) {
 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetResult);
+void shBattleGetResult(SubCharacter* scp) {
+    CL_BATTLE_RESULT* result;
+    float damage_revise; float shock_revise;    
+    result = NULL;
+    
+    while ((result = clBattleGetResult((u_int)scp, result))->atr) {
+        switch (result->atr) {
+            
+                        
+            case 1:
+                if (result->btlid & 0xFF00) 
+                    scp->battle.atk_result = result->atr;
+                
+                
+                
+                scp->battle.target = result->obj.en;
+                
+                if ((scp->kind <= HLL_JMS_CHARA_KIND) && (sh2jms.attack_no < 0x19)) {
+                    switch ((u_char)sh2jms.weapon) {
+                        case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                            sh2jms.d_shock = 1;
+                            break;
+
+                    }                
+                }                
+                break;
+            
+            
+            case 2:
+            case 3:
+                if (sh2jms.wep_no_hit_floor == 0) {
+                    
+                    if ((scp->kind <= HLL_JMS_CHARA_KIND) && (sh2jms.attack_no < 0x19)) {
+                        switch ((u_char)sh2jms.weapon) {
+                            case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                                sh2jms.d_shock = 4;
+                                break;
+
+                        }
+                    }
+                    scp->battle.atk_result = result->atr;
+                }
+                
+                
+                if (scp->kind <= HLL_JMS_CHARA_KIND) { 
+                    if ((result->obj.pl)->pad != 0) {
+                        sh2_battle_wall_hit = sh2_attack_list[(u_char)result->btlid].ap;
+                    } else {
+                        sh2_battle_wall_hit = 0.0f;
+                    }
+                }
+                break;
+            
+            
+            
+            
+            
+            case 4:
+                if ((result->btlid & 0xFF00) == 0)
+                    break;
+                if ((scp->kind <= RINU_CHARA_KIND) && (((u_char)result->btlid >= 0x19) && ((u_char)result->btlid < 0x23))) {
+                        
+                    
+                    break;
+                }
+    
+                
+                
+                shBattleDamageRevise(&damage_revise, &shock_revise, scp, result);
+    
+                
+                
+                
+                
+                
+                if (damage_revise >= 0.0f) {
+                    scp->battle.damage += damage_revise;
+                }
+                if ((scp->battle.shock <= shock_revise) && (scp->battle.id == 0)) {
+                    scp->battle.shock = shock_revise;
+                    sceVu0CopyVector(&scp->battle.pos, result->pos);
+                    sceVu0CopyVector(&scp->battle.vec, result->vec);
+                    scp->battle.id = (u_char)result->btlid;
+                    scp->battle.kind = result->kind;
+                    
+                    scp->battle.target = result->obj.en;
+                }
+    
+                
+                
+                
+                
+                
+                
+                if ((scp->kind <= HLL_JMS_CHARA_KIND) && (PlayerChectGuardSuccess() || shBattleNoDamageHuman())) {
+                    break;
+                }
+    
+                if (damage_revise > 0.0f) {
+                    shBattleSetEffectDamage(scp, result->pos, result->vec, (u_char)result->btlid);
+                }
+    
+                shBattleSetSoundDamage(scp, result);
+                
+                
+                
+                
+                break;    
+            default:
+                scp->battle.atk_result = result->atr;
+
+        }
+    
+    }
+}
 
 void shBattleInitAttackQueue(void) {
     shQzero(&sh2_attack_queue, sizeof(shAttackQueue));
