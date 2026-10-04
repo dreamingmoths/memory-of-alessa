@@ -465,8 +465,8 @@ static inline float float_add(float a, float b) {
 
 #line 829
 static int EventCheckLookPoint(float x, float z, Jms jms) {
-    static float pos_x;
-    static float pos_z;
+    /* static */ float pos_x;
+    /* static */ float pos_z;
     float ang; // r29+0x40
     
     pos_x = x - jms.pos_x;
@@ -766,9 +766,10 @@ static int EventExecProgram(void) {
     return 0;
 }
 
+#ifdef HOLY_CANDLE
 static int EventExecDoor(void) {
     Event_List* el; // r16
-    float pos_v[4]; // r29+0x40    
+    sceVu0FVECTOR pos_v; // r29+0x40    
     char* pos_p; // r6
     int pos_t; // r2
     int st; // r17
@@ -825,6 +826,9 @@ static int EventExecDoor(void) {
     }
     return 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecDoor);
+#endif
 
 #define BEND_ANIMATION_HEIGHT_THRESHOLD 100.0f
 
@@ -837,7 +841,7 @@ static int EventExecDoor(void) {
 
 #line 1616
 static int EventExecItem(void) {
-    static EventExecItemData eei_data[7] = {
+    UNMIGRATED(/* static */ EventExecItemData eei_data[7], {
         {
             /* .msg = */      0,
             /* .chara_id = */ 0,
@@ -873,7 +877,7 @@ static int EventExecItem(void) {
             /* .chara_id = */ ITEM_X_AMPLE_CHARA_KIND,
             /* .item = */     3
         }
-    }; // @ 0x002B97E0
+    }); // @ 0x002B97E0
     Item_List* il; // r16
     int kind; // r7
 
@@ -941,7 +945,7 @@ static int EventExecItem(void) {
 #ifdef HOLY_CANDLE
 #line 1704
 static int EventExecMove(void) {
-    static short reset_stage_connect[12][2] = {
+    UNMIGRATED(/* static */ short reset_stage_connect[12][2], {
         { Stg_forest,     Stg_town_east      },
         { Stg_town_east,  Stg_apart_out      },
         { Stg_town_west,  Stg_apart_stair    },
@@ -949,10 +953,10 @@ static int EventExecMove(void) {
         { Stg_town_west,  Stg_hospital_1fe_b },
         { Stg_town_west,  Stg_society        },
         { Stg_delusion_3, Stg_prison_n       },
-    };
+    });
     
-    static short close_se; // @ 0x01126340
-    static sceVu0FVECTOR pos_v; // @ 0x01126350
+    extern /* static */ short close_se; // @ 0x01126340
+    extern /* static */ sceVu0FVECTOR pos_v; // @ 0x01126350
     
     Event_List* el; // r16
 

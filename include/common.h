@@ -46,6 +46,9 @@
 
 #define INCLUDE_ASM(FOLDER, NAME)
 #define INCLUDE_RODATA(FOLDER, NAME)
+
+#define UNMIGRATED(declaration, ...) extern declaration
+
 typedef union Q {
     u_long128 u128;  // offset 0x0, size 0x10
     u_long u64[2];   // offset 0x0, size 0x8
