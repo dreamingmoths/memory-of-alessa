@@ -1,4 +1,7 @@
 #include "sh2_common.h"
+#include "SH2_common/playing_info.h"
+#include "SH2_common/sh2sys.h"
+
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/playing_info.h"
@@ -19,6 +22,7 @@
 
 #include "Event/event.h"
 #include "Event/demoview.h"
+#include "Event/stg_overlay.h"
 
 typedef struct /* @anon3 */ {
     // total size: 0x24
@@ -47,7 +51,7 @@ static int ItemCheckLookPoint(Item_List* il);
 static int ItemListElement(Item_List* il, int en);
 static int EventCheckLookPoint(float x, float z, Jms jms);
 static int EventCheckLookLine(float x0, float z0, float x1, float z1, Jms jms);
-static void EventPositionSet(float* pos_v, char* pos_p, int pos_t);
+static void EventPositionSet(float* pos_v, s_char* pos_p, int pos_t);
 static void EventResultMovePosition(int ev_no);
 static void EventExecSubFlagSet(Event_List* el);
 static int EventExecFlag(void);
@@ -593,10 +597,10 @@ static int ItemListElement(Item_List* il /* r2 */, int en /* r2 */) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", ItemCheckLookPoint);
 
-static void EventPositionSet(float* pos_v /* r17 */, char* pos_p /* r16 */, int pos_t /* r18 */) {
-    pos_v[0] = CharToFloat4(pos_p);
-    pos_v[1] = CharToFloat2(pos_p + 4);
-    pos_v[2] = CharToFloat4(pos_p + 6);
+static void EventPositionSet(float* pos_v /* r17 */, s_char* pos_p /* r16 */, int pos_t /* r18 */) {
+    pos_v[0] = CharToFloat4(&pos_p[0]);
+    pos_v[1] = CharToFloat2(&pos_p[4]);
+    pos_v[2] = CharToFloat4(&pos_p[6]);
     switch (pos_t) {
         case 1:
             pos_v[0] += (CharToFloat2(pos_p + 10) / 2.0f);
@@ -934,7 +938,87 @@ static int EventExecItem(void) {
     return false;
 }
 
+#ifdef HOLY_CANDLE
+static int EventExecMove(void) {
+    static short reset_stage_connect[12][2] = {
+        { Stg_forest,     Stg_town_east      },
+        { Stg_town_east,  Stg_apart_out      },
+        { Stg_town_west,  Stg_apart_stair    },
+        { Stg_town_west,  Stg_hospital_1f_f  },
+        { Stg_town_west,  Stg_hospital_1fe_b },
+        { Stg_town_west,  Stg_society        },
+        { Stg_delusion_3, Stg_prison_n       },
+    };
+    
+    static short close_se; // @ 0x01126340
+    static sceVu0FVECTOR pos_v; // @ 0x01126350
+    
+    Event_List* el; // r16
+
+    s_char* pos_p; // r6
+
+    int pos_t; // r2
+    int se; // r2
+    int flg; // r2
+    int stg; // r2
+
+    int i; // r4
+
+    switch (ev_e_step) {
+        case 0:
+            el = &stage->ev_list[ev_active];
+            EventExecSubFlagSet(el);
+            flg = EventListElement(el, 22);
+            if (flg && ev_m_step != 3) SET_GAME_FLAG(flg);
+            EventResultMovePosition(ev_active);
+            pos_p = (s_char*) stage->ev_pos + EventListElement(el, 8);
+            pos_t = EventListElement(el, 9);
+            
+            
+            EventPositionSet(pos_v, pos_p, pos_t);
+            pos_v[1] += -500.0f;
+            pos_t = EventListElement(el, 18);
+            SeCallPos(door_se[pos_t].open, 1.0f, pos_v, 0);
+            close_se = door_se[pos_t].close;
+            pos_p = (s_char*) stage->ev_pos + EventListElement(el, 14);
+            pos_t = EventListElement(el, 15);
+            EventPositionSet(pos_v, pos_p, pos_t);
+            pos_v[1] += -500.0f;
+            SET_BIT(Sh2sys.main_status, 1);
+            sh2sys_set_2(1);
+            stg = EventListElement(el, 16);
+            if (stg) {
+                for (i = 0; reset_stage_connect[i][0] != 0; i++) {
+                    if ((playing.stage == reset_stage_connect[i][0]              && 
+                         stg == reset_stage_connect[i][1])                       || 
+                        (playing.stage == reset_stage_connect[i][1]              && 
+                         stg == reset_stage_connect[i][0]))
+                        SET_BIT(Sh2sys.main_status, 3);
+                }
+                playing.stage = EventListElement(el, 16);
+                sh2sys_set_3(0);
+            } else sh2sys_set_3(3);
+            if (EventListElement(el, 17)) SET_BIT(Sh2sys.main_status, 2);
+            else UNSET_BIT(Sh2sys.main_status, 2);
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            EV_EXEC_STEP(3);
+            ScreenEffectFadeStart(1, 0.0f);
+            break;
+        case 3:
+            SeCallPos(close_se, 1.0f, pos_v, 0);
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            ScreenEffectFadeStart(4, 0.0f);
+            if (ev_m_step == 3) {
+                EV_MAIN_STEP(4);
+                EventExecProgram();
+            } else return true;
+    }
+    
+    return false;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecMove);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSave);
 
