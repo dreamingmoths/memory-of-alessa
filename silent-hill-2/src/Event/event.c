@@ -833,7 +833,43 @@ static int EventExecDoor(void) {
 
 #line 1616
 static int EventExecItem(void) {
-    static EventExecItemData eei_data[7]; // @ 0x002B97E0
+    static EventExecItemData eei_data[7] = {
+        {
+            /* .msg = */      0,
+            /* .chara_id = */ 0,
+            /* .item = */     0,
+        },
+        {
+            /* .msg = */      9,
+            /* .chara_id = */ ITEM_X_HANDBUL_CHARA_KIND,
+            /* .item = */     5,
+        },
+        {
+            /* .msg = */      10,
+            /* .chara_id = */ ITEM_X_SHOTBUL_CHARA_KIND,
+            /* .item = */     7,
+        },
+        {
+            /* .msg = */      11,
+            /* .chara_id = */ ITEM_X_RIFLEBUL_CHARA_KIND,
+            /* .item = */     9,
+        },
+        {
+            /* .msg = */      12,
+            /* .chara_id = */ ITEM_X_DRINK_CHARA_KIND,
+            /* .item = */     1,
+        },
+        {
+            /* .msg = */      13,
+            /* .chara_id = */ ITEM_X_FIRSTAID_CHARA_KIND,
+            /* .item = */     2,
+        },
+        {
+            /* .msg = */      14,
+            /* .chara_id = */ ITEM_X_AMPLE_CHARA_KIND,
+            /* .item = */     3
+        }
+    }; // @ 0x002B97E0
     Item_List* il; // r16
     int kind; // r7
 
