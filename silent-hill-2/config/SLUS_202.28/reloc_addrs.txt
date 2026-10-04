@@ -26042,11 +26042,11 @@ rom:0x0AAB18 reloc:MIPS_26                             symbol:ItemListElement
 rom:0x0AAB30 reloc:MIPS_26                             symbol:ItemListElement
 rom:0x0AAB44 reloc:MIPS_HI16                           symbol:game_flag
 rom:0x0AAB48 reloc:MIPS_LO16                           symbol:game_flag
-rom:0x0AAB60 reloc:MIPS_HI16                           symbol:eei_data_2043
-rom:0x0AAB64 reloc:MIPS_LO16                           symbol:eei_data_2043
+rom:0x0AAB60 reloc:MIPS_HI16                           symbol:eei_data
+rom:0x0AAB64 reloc:MIPS_LO16                           symbol:eei_data
 rom:0x0AAB70 reloc:MIPS_26                             symbol:ItemGet
-rom:0x0AAB78 reloc:MIPS_HI16           addend:+0x2     symbol:eei_data_2043
-rom:0x0AAB7C reloc:MIPS_LO16           addend:+0x2     symbol:eei_data_2043
+rom:0x0AAB78 reloc:MIPS_HI16           addend:+0x2     symbol:eei_data
+rom:0x0AAB7C reloc:MIPS_LO16           addend:+0x2     symbol:eei_data
 rom:0x0AAB88 reloc:MIPS_HI16                           symbol:msg_station
 rom:0x0AAB8C reloc:MIPS_LO16                           symbol:msg_station
 rom:0x0AAB90 reloc:MIPS_26                             symbol:fontMessageNum
@@ -26066,8 +26066,8 @@ rom:0x0AABF4 reloc:MIPS_LO16                           symbol:ev_cancel
 rom:0x0AAC00 reloc:MIPS_26                             symbol:fontClear
 rom:0x0AAC18 reloc:MIPS_26                             symbol:SeCall
 rom:0x0AAC28 reloc:MIPS_26                             symbol:ItemListElement
-rom:0x0AAC34 reloc:MIPS_HI16           addend:+0x4     symbol:eei_data_2043
-rom:0x0AAC38 reloc:MIPS_LO16           addend:+0x4     symbol:eei_data_2043
+rom:0x0AAC34 reloc:MIPS_HI16           addend:+0x4     symbol:eei_data
+rom:0x0AAC38 reloc:MIPS_LO16           addend:+0x4     symbol:eei_data
 rom:0x0AAC44 reloc:MIPS_26                             symbol:ItemListElement
 rom:0x0AAC58 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
 rom:0x0AAC64 reloc:MIPS_HI16                           symbol:ev_e_step
