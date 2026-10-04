@@ -939,6 +939,7 @@ static int EventExecItem(void) {
 }
 
 #ifdef HOLY_CANDLE
+#line 1704
 static int EventExecMove(void) {
     static short reset_stage_connect[12][2] = {
         { Stg_forest,     Stg_town_east      },
@@ -1062,7 +1063,49 @@ static int EventExecChizuFail(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventProgressCheck);
+#line 1881
+int EventProgressCheck(void) {
+    int room; // r2
+
+    
+    ASSERT_ON_LINE(stage, 1885);
+    
+    room = RoomNameJms();
+
+    
+    if (stage->glb_crd == 6 && !GET_GAME_FLAG(GAME_FLAG_32)) {
+        return 1;
+    }
+    if (stage->glb_crd == 1 && !GET_GAME_FLAG(GAME_FLAG_36) && sh2jms.player->pos.x > -20000.0f && sh2jms.player->pos.z > -20000.0f) {
+        return 2;
+    }
+    if (stage->glb_crd == 2 && !GET_GAME_FLAG(GAME_FLAG_43)) {
+        return 3;
+    } 
+    if (GET_GAME_FLAG(GAME_FLAG_69) && !GET_GAME_FLAG(GAME_FLAG_70)) {
+        return 4;
+    }
+    if (GET_GAME_FLAG(GAME_FLAG_69) && room == 24) {
+        return 5;
+    }
+    if (stage->glb_crd == 3 && !GET_GAME_FLAG(GAME_FLAG_150)) {
+        return 6;
+    }
+    if (GET_GAME_FLAG(GAME_FLAG_150) && !GET_GAME_FLAG(GAME_FLAG_152)) {
+        return 7;
+    }
+    if (stage->glb_crd == 3 && GET_GAME_FLAG(GAME_FLAG_152) && !GET_GAME_FLAG(GAME_FLAG_157)) {
+        return 8;
+    }
+    if (stage->glb_crd == 3 && GET_GAME_FLAG(GAME_FLAG_162) && !GET_GAME_FLAG(GAME_FLAG_163)) {
+        return 9;
+    }
+    if (GET_GAME_FLAG(GAME_FLAG_379) && !GET_GAME_FLAG(GAME_FLAG_380)) {
+        return 10;
+    }
+
+    return 0;
+}
 
 int EventItemConditionCheck(int level, int flag) {
     switch (playing.battle_level) {

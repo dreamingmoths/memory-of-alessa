@@ -54,10 +54,13 @@ do {                                 \
 #define GAME_FLAG_24   24
 #define GAME_FLAG_25   25
 #define GAME_FLAG_26   26
+#define GAME_FLAG_32   32
 #define GAME_FLAG_33   33
+#define GAME_FLAG_36   36
 #define GAME_FLAG_36   36
 #define GAME_FLAG_39   39
 #define GAME_FLAG_41   41
+#define GAME_FLAG_43   43
 #define GAME_FLAG_43   43
 #define GAME_FLAG_47   47
 #define GAME_FLAG_49   49
@@ -76,6 +79,8 @@ do {                                 \
 #define GAME_FLAG_67   67
 #define GAME_FLAG_68   68
 #define GAME_FLAG_69   69
+#define GAME_FLAG_69   69
+#define GAME_FLAG_70   70
 #define GAME_FLAG_70   70
 #define GAME_FLAG_71   71
 #define GAME_FLAG_72   72
@@ -95,7 +100,12 @@ do {                                 \
 #define GAME_FLAG_146  146
 #define GAME_FLAG_147  147
 #define GAME_FLAG_148  148
+#define GAME_FLAG_150  150
+#define GAME_FLAG_152  152
+#define GAME_FLAG_157  157
 #define GAME_FLAG_162  162
+#define GAME_FLAG_162  162
+#define GAME_FLAG_163  163
 #define GAME_FLAG_168  168
 #define GAME_FLAG_171  171
 #define GAME_FLAG_192  192
@@ -117,6 +127,8 @@ do {                                 \
 #define GAME_FLAG_323  323
 #define GAME_FLAG_324  324
 #define GAME_FLAG_368  368
+#define GAME_FLAG_379  379
+#define GAME_FLAG_380  380
 #define GAME_FLAG_406  406
 #define GAME_FLAG_472  472
 #define GAME_FLAG_501  501
