@@ -16,7 +16,6 @@
 #define SCP_STATUS_BIT_NOW_PLAYABLE_EVENT  14
 #define SCP_STATUS_BIT_FREEFALL            16
 
-// E:\work\sh2(CVS全取得)\src\Chacter\m3_sc.c
 extern struct shCharacterAll sh2chara; // size: 0x6810, address: 0x3C84D0
 
 void shCharacterSetPlayer(SubCharacter* scp);

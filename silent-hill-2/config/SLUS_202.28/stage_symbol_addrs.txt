@@ -288,6 +288,18 @@ stg_apart_w1f_coin_alpha                                         = 0x01F04A20; /
 stg_apart_w1f_coin_hole                                          = 0x01F04A10; // size:0x1
 stg_apart_w1f_coin_kind                                          = 0x01F04A18; // size:0x1
 stg_apart_w1f_coin_onoff                                         = 0x01F04A08; // size:0x1
+chara_kind                                                       = 0x01F04590; // size:8 align:16
+chara_vec                                                        = 0x01F045A0; // size:160 align:16
+coin_vh                                                          = 0x01F04690; // size:1 align:16
+coin_uv                                                          = 0x01F04680; // size:6 align:128
+coin_uw                                                          = 0x01F04688; // size:1
+coin_xy                                                          = 0x01F04640; // size:60 align:64
+hole_pos                                                         = 0x01F046A0; // size:40 align:16
+jms_rot                                                          = 0x01F04900; // size:4 align:128
+jms_pos                                                          = 0x01F048F0; // size:16 align:16
+knife                                                            = 0x01F04800; // size:40 align:128
+knife_msg_mov                                                    = 0x01F047F0; // size:8 align:16
+chara_data                                                       = 0x01F04830; // size:180 align:16
 
 // stg_apart_w2f
 stg_apart_w2f_EvProgReadDearTim                                  = 0x01F020A0; // type:func

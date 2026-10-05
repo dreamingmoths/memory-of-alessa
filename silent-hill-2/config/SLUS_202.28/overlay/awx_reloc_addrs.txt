@@ -279,17 +279,17 @@ rom:0x000CE0 reloc:MIPS_HI16                           symbol:ev_p_step
 rom:0x000CE4 reloc:MIPS_LO16                           symbol:ev_p_step
 rom:0x000CE8 reloc:MIPS_HI16                           symbol:ev_s_step
 rom:0x000CEC reloc:MIPS_LO16                           symbol:ev_s_step
-// rom:0x000D00 reloc:MIPS_HI16                           symbol:chara_kind$1195
-// rom:0x000D04 reloc:MIPS_LO16                           symbol:chara_kind$1195
+rom:0x000D00 reloc:MIPS_HI16                           symbol:chara_kind
+rom:0x000D04 reloc:MIPS_LO16                           symbol:chara_kind
 rom:0x000D18 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
 rom:0x000D34 reloc:MIPS_HI16           addend:+0x10    symbol:game_flag
 rom:0x000D38 reloc:MIPS_LO16           addend:+0x10    symbol:game_flag
 rom:0x000D7C reloc:MIPS_HI16                           symbol:game_flag
 rom:0x000D80 reloc:MIPS_LO16                           symbol:game_flag
-// rom:0x000DA4 reloc:MIPS_HI16                           symbol:chara_vec$1196
-// rom:0x000DA8 reloc:MIPS_LO16                           symbol:chara_vec$1196
-// rom:0x000DB4 reloc:MIPS_HI16                           symbol:chara_kind$1195
-// rom:0x000DB8 reloc:MIPS_LO16                           symbol:chara_kind$1195
+rom:0x000DA4 reloc:MIPS_HI16                           symbol:chara_vec
+rom:0x000DA8 reloc:MIPS_LO16                           symbol:chara_vec
+rom:0x000DB4 reloc:MIPS_HI16                           symbol:chara_kind
+rom:0x000DB8 reloc:MIPS_LO16                           symbol:chara_kind
 rom:0x000DD0 reloc:MIPS_26                             symbol:CharaWorkCreate
 rom:0x000E0C reloc:MIPS_26                             symbol:ScreenEffectFadeStart
 rom:0x000E14 reloc:MIPS_HI16                           symbol:sh2jms
@@ -319,38 +319,38 @@ rom:0x000F60 reloc:MIPS_HI16                           symbol:game_flag
 rom:0x000F64 reloc:MIPS_LO16                           symbol:game_flag
 rom:0x000F9C reloc:MIPS_HI16                           symbol:game_flag
 rom:0x000FA0 reloc:MIPS_LO16                           symbol:game_flag
-// rom:0x000FD4 reloc:MIPS_HI16                           symbol:coin_xy$1417
-// rom:0x000FD8 reloc:MIPS_LO16                           symbol:coin_xy$1417
-// rom:0x000FF0 reloc:MIPS_HI16           addend:+0x2     symbol:coin_xy$1417
-// rom:0x000FF4 reloc:MIPS_LO16           addend:+0x2     symbol:coin_xy$1417
-// rom:0x001008 reloc:MIPS_HI16                           symbol:coin_xy$1417
-// rom:0x00100C reloc:MIPS_LO16                           symbol:coin_xy$1417
-// rom:0x00101C reloc:MIPS_HI16                           symbol:coin_uw$1419
-// rom:0x001020 reloc:MIPS_LO16                           symbol:coin_uw$1419
-// rom:0x001030 reloc:MIPS_HI16           addend:+0x2     symbol:coin_xy$1417
-// rom:0x001034 reloc:MIPS_LO16           addend:+0x2     symbol:coin_xy$1417
-// rom:0x001044 reloc:MIPS_HI16                           symbol:coin_vh$1420
-// rom:0x001048 reloc:MIPS_LO16                           symbol:coin_vh$1420
-// rom:0x001068 reloc:MIPS_HI16                           symbol:coin_uv$1418
-// rom:0x00106C reloc:MIPS_LO16                           symbol:coin_uv$1418
-// rom:0x001080 reloc:MIPS_HI16           addend:+0x1     symbol:coin_uv$1418
-// rom:0x001084 reloc:MIPS_LO16           addend:+0x1     symbol:coin_uv$1418
-// rom:0x001098 reloc:MIPS_HI16                           symbol:coin_uv$1418
-// rom:0x00109C reloc:MIPS_LO16                           symbol:coin_uv$1418
-// rom:0x0010B8 reloc:MIPS_HI16           addend:+0x1     symbol:coin_uv$1418
-// rom:0x0010BC reloc:MIPS_LO16           addend:+0x1     symbol:coin_uv$1418
+rom:0x000FD4 reloc:MIPS_HI16                           symbol:coin_xy
+rom:0x000FD8 reloc:MIPS_LO16                           symbol:coin_xy
+rom:0x000FF0 reloc:MIPS_HI16           addend:+0x2     symbol:coin_xy
+rom:0x000FF4 reloc:MIPS_LO16           addend:+0x2     symbol:coin_xy
+rom:0x001008 reloc:MIPS_HI16                           symbol:coin_xy
+rom:0x00100C reloc:MIPS_LO16                           symbol:coin_xy
+rom:0x00101C reloc:MIPS_HI16                           symbol:coin_uw
+rom:0x001020 reloc:MIPS_LO16                           symbol:coin_uw
+rom:0x001030 reloc:MIPS_HI16           addend:+0x2     symbol:coin_xy
+rom:0x001034 reloc:MIPS_LO16           addend:+0x2     symbol:coin_xy
+rom:0x001044 reloc:MIPS_HI16                           symbol:coin_vh
+rom:0x001048 reloc:MIPS_LO16                           symbol:coin_vh
+rom:0x001068 reloc:MIPS_HI16                           symbol:coin_uv
+rom:0x00106C reloc:MIPS_LO16                           symbol:coin_uv
+rom:0x001080 reloc:MIPS_HI16           addend:+0x1     symbol:coin_uv
+rom:0x001084 reloc:MIPS_LO16           addend:+0x1     symbol:coin_uv
+rom:0x001098 reloc:MIPS_HI16                           symbol:coin_uv
+rom:0x00109C reloc:MIPS_LO16                           symbol:coin_uv
+rom:0x0010B8 reloc:MIPS_HI16           addend:+0x1     symbol:coin_uv
+rom:0x0010BC reloc:MIPS_LO16           addend:+0x1     symbol:coin_uv
 rom:0x0010EC reloc:MIPS_HI16                           symbol:stg_apart_w1f_coin_alpha
 rom:0x0010F0 reloc:MIPS_LO16                           symbol:stg_apart_w1f_coin_alpha
 rom:0x001144 reloc:MIPS_26                             symbol:PictureDraw
 rom:0x001190 reloc:MIPS_HI16                           symbol:key_config
 rom:0x001194 reloc:MIPS_LO16                           symbol:key_config
 rom:0x001198 reloc:MIPS_26                             symbol:shPadTrigger
-// rom:0x0011C4 reloc:MIPS_HI16                           symbol:hole_pos$1460
-// rom:0x0011C8 reloc:MIPS_LO16                           symbol:hole_pos$1460
+rom:0x0011C4 reloc:MIPS_HI16                           symbol:hole_pos
+rom:0x0011C8 reloc:MIPS_LO16                           symbol:hole_pos
 rom:0x0011D4 reloc:MIPS_HI16                           symbol:ev_cursor_x
 rom:0x0011D8 reloc:MIPS_LO16                           symbol:ev_cursor_x
-// rom:0x0011F0 reloc:MIPS_HI16           addend:+0x4     symbol:hole_pos$1460
-// rom:0x0011F4 reloc:MIPS_LO16           addend:+0x4     symbol:hole_pos$1460
+rom:0x0011F0 reloc:MIPS_HI16           addend:+0x4     symbol:hole_pos
+rom:0x0011F4 reloc:MIPS_LO16           addend:+0x4     symbol:hole_pos
 rom:0x001200 reloc:MIPS_HI16                           symbol:ev_cursor_y
 rom:0x001204 reloc:MIPS_LO16                           symbol:ev_cursor_y
 rom:0x001268 reloc:MIPS_HI16                           symbol:stg_apart_w1f_coin_onoff
@@ -388,8 +388,8 @@ rom:0x001478 reloc:MIPS_HI16                           symbol:stg_apart_w1f_coin
 rom:0x00147C reloc:MIPS_LO16                           symbol:stg_apart_w1f_coin_kind
 rom:0x001480 reloc:MIPS_HI16                           symbol:stg_apart_w1f_coin_hole
 rom:0x001484 reloc:MIPS_LO16                           symbol:stg_apart_w1f_coin_hole
-// rom:0x002A0C reloc:MIPS_32                             symbol:knife_msg$1505
-// rom:0x002A08 reloc:MIPS_32                             symbol:knife_anim$1504
+rom:0x002A0C reloc:MIPS_32                             symbol:knife_msg
+rom:0x002A08 reloc:MIPS_32                             symbol:knife_anim
 rom:0x002A04 reloc:MIPS_32                             symbol:MemShare_gp_data_buf
 rom:0x002AC0 reloc:MIPS_32                             symbol:data_chr_item_ri_photo_mdl
 rom:0x002AB0 reloc:MIPS_32                             symbol:data_demo_knife_agl_i_photo_anm
@@ -416,8 +416,8 @@ rom:0x001528 reloc:MIPS_26                             symbol:CharaAdminPlayable
 rom:0x001530 reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x001534 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x00153C reloc:MIPS_26                             symbol:SCNowDemoEventSwitch
-// rom:0x001544 reloc:MIPS_HI16                           symbol:chara_data$1509
-// rom:0x001548 reloc:MIPS_LO16                           symbol:chara_data$1509
+rom:0x001544 reloc:MIPS_HI16                           symbol:chara_data
+rom:0x001548 reloc:MIPS_LO16                           symbol:chara_data
 rom:0x001550 reloc:MIPS_26                             symbol:CharaDataLoadDemo
 rom:0x001560 reloc:MIPS_26                             symbol:fsSync
 rom:0x001570 reloc:MIPS_26                             symbol:ScreenEffectFadeStart
@@ -427,8 +427,8 @@ rom:0x001584 reloc:MIPS_HI16                           symbol:ev_s_step
 rom:0x001588 reloc:MIPS_LO16                           symbol:ev_s_step
 rom:0x00158C reloc:MIPS_HI16                           symbol:data_movie_knife_pss
 rom:0x001590 reloc:MIPS_LO16                           symbol:data_movie_knife_pss
-// rom:0x001594 reloc:MIPS_HI16                           symbol:knife_msg_mov$1506
-// rom:0x001598 reloc:MIPS_LO16                           symbol:knife_msg_mov$1506
+rom:0x001594 reloc:MIPS_HI16                           symbol:knife_msg_mov
+rom:0x001598 reloc:MIPS_LO16                           symbol:knife_msg_mov
 rom:0x0015A0 reloc:MIPS_26                             symbol:EvSubMovieReady
 rom:0x0015AC reloc:MIPS_26                             symbol:EvSubMovieStart
 rom:0x0015C0 reloc:MIPS_HI16                           symbol:ev_p_step
@@ -450,8 +450,8 @@ rom:0x00163C reloc:MIPS_HI16                           symbol:ev_p_step
 rom:0x001640 reloc:MIPS_LO16                           symbol:ev_p_step
 rom:0x001644 reloc:MIPS_HI16                           symbol:ev_s_step
 rom:0x001648 reloc:MIPS_LO16                           symbol:ev_s_step
-// rom:0x00164C reloc:MIPS_HI16                           symbol:knife$1508
-// rom:0x001650 reloc:MIPS_LO16                           symbol:knife$1508
+rom:0x00164C reloc:MIPS_HI16                           symbol:knife
+rom:0x001650 reloc:MIPS_LO16                           symbol:knife
 rom:0x001654 reloc:MIPS_26                             symbol:DramaDemoMain
 rom:0x001668 reloc:MIPS_26                             symbol:shCharacterGetSubCharacter
 rom:0x001690 reloc:MIPS_26                             symbol:CharaWorkCreate
@@ -487,10 +487,10 @@ rom:0x0017EC reloc:MIPS_26                             symbol:SCNowDemoEventSwit
 rom:0x0017F4 reloc:MIPS_26                             symbol:shCharacterPlayerModelToPlayable
 rom:0x0017FC reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x001800 reloc:MIPS_LO16                           symbol:sh2jms
-// rom:0x001804 reloc:MIPS_HI16                           symbol:jms_pos$1510
-// rom:0x001808 reloc:MIPS_LO16                           symbol:jms_pos$1510
-// rom:0x00180C reloc:MIPS_HI16                           symbol:jms_rot$1511
-// rom:0x001810 reloc:MIPS_LO16                           symbol:jms_rot$1511
+rom:0x001804 reloc:MIPS_HI16                           symbol:jms_pos
+rom:0x001808 reloc:MIPS_LO16                           symbol:jms_pos
+rom:0x00180C reloc:MIPS_HI16                           symbol:jms_rot
+rom:0x001810 reloc:MIPS_LO16                           symbol:jms_rot
 rom:0x001814 reloc:MIPS_26                             symbol:shCharacterSetPosAfterDemo
 rom:0x001820 reloc:MIPS_26                             symbol:CharaAdminPlayableDisplay
 rom:0x00182C reloc:MIPS_26                             symbol:vcReturnPreAutoCamWork
@@ -590,15 +590,15 @@ rom:0x001D14 reloc:MIPS_26                             symbol:EvDispControlModel
 rom:0x001D38 reloc:MIPS_HI16           addend:+0x24    symbol:Sh2sys
 rom:0x001D3C reloc:MIPS_LO16           addend:+0x24    symbol:Sh2sys
 rom:0x001D50 reloc:MIPS_26                             symbol:DramaDemoNumber
-// rom:0x002B9C reloc:MIPS_32             addend:+0x60    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B98 reloc:MIPS_32             addend:+0x60    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B94 reloc:MIPS_32             addend:+0x58    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B90 reloc:MIPS_32             addend:+0x50    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B8C reloc:MIPS_32             addend:+0x48    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B88 reloc:MIPS_32             addend:+0x40    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B84 reloc:MIPS_32             addend:+0x38    symbol:stg_apart_w1f_TrimColorFilter
-// rom:0x002B80 reloc:MIPS_32             addend:+0x30    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B9C reloc:MIPS_32             addend:+0x60    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B98 reloc:MIPS_32             addend:+0x60    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B94 reloc:MIPS_32             addend:+0x58    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B90 reloc:MIPS_32             addend:+0x50    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B8C reloc:MIPS_32             addend:+0x48    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B88 reloc:MIPS_32             addend:+0x40    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B84 reloc:MIPS_32             addend:+0x38    symbol:stg_apart_w1f_TrimColorFilter
+rom:0x002B80 reloc:MIPS_32             addend:+0x30    symbol:stg_apart_w1f_TrimColorFilter
 rom:0x001D90 reloc:MIPS_HI16           addend:+0x76    symbol:playing
 rom:0x001D94 reloc:MIPS_LO16           addend:+0x76    symbol:playing
-// rom:0x001DA4 reloc:MIPS_HI16                           symbol:@1743
-// rom:0x001DA8 reloc:MIPS_LO16                           symbol:@1743
+rom:0x001DA4 reloc:MIPS_HI16                           symbol:jtbl_01F04980_awx
+rom:0x001DA8 reloc:MIPS_LO16                           symbol:jtbl_01F04980_awx
