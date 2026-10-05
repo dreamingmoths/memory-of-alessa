@@ -1,7 +1,7 @@
 #ifndef SH_FS_STRUCTS_H
 #define SH_FS_STRUCTS_H
 
-#include "sce/eetypes.h"
+#include "types.h"
 
 // total size: 0x10
 typedef struct fsMgcFile {

@@ -6,6 +6,10 @@
 
 #include "vec.h"
 
+#include "data/daily.thu/data_movie.h"
+#include "data/daily.thu/data_demo_knife_agl.h"
+#include "data/daily.thu/data_pic_apt.h"
+
 #include "Chacter/character.h"
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
@@ -60,30 +64,18 @@ extern /* static */ char ev_pos[302]; // size: 0x12E, address: 0x1F03D00
 extern /* static */ struct Event_List ev_list[32]; // size: 0x200, address: 0x1F03E30
 extern /* static */ struct Item_List gi_list[9]; // size: 0x90, address: 0x1F04030
 extern /* static */ int (* ev_prog[8])(); // size: 0x20, address: 0x1F040C0
-extern /* static */ struct /* @anon0 */ {
-    // total size: 0x10
-    void (* SpecDraw)(); // offset 0x0, size 0x4
-    void (* PreDraw)(); // offset 0x4, size 0x4
-    void (* PostDraw)(); // offset 0x8, size 0x4
-    void (* CharaDraw_Hook)(); // offset 0xC, size 0x4
-} gfw_func; // size: 0x10, address: 0x1F040E0
+extern /* static */ GfwFunc gfw_func; // size: 0x10, address: 0x1F040E0
 extern /* static */ Model_List mdl_list[20]; // size: 0x3C0, address: 0x1F040F0
 extern /* static */ Enemy_List en_list[5]; // size: 0x64, address: 0x1F044B0
 extern Stage_Data stage_apart_w1f; // size: 0x44, address: 0x1F04520
+
 extern /* static */ sceVu0FVECTOR stg_apart_w1f_key_lyne[2]; // size: 0x20, address: 0x1F04570
 extern /* static */ char cam_change; // size: 0x1, address: 0x1F04A00
 extern /* static */ bool stg_apart_w1f_cam_change; // size: 0x1, address: 0x1F04A00
-extern fsFileIndex data_pic_apt_p_desk_coin_coin_tex[1]; // size: 0x8, address: 0x3A1BC8
-extern fsFileIndex data_pic_apt_p_desk_coin_tex[1]; // size: 0x8, address: 0x3A1BC0
-extern fsFileIndex data_pic_apt_p_desk_hint_tex[1]; // size: 0x8, address: 0x3A1BD0
-extern float coin_alpha[3]; // size: 0xC, address: 0x1F04A20
 extern float stg_apart_w1f_coin_alpha[3]; // size: 0xC, address: 0x1F04A20
 extern bool stg_apart_w1f_coin_hole; // size: 0x1, address: 0x1F04A10
 extern bool stg_apart_w1f_coin_kind; // size: 0x1, address: 0x1F04A18
 extern bool stg_apart_w1f_coin_onoff; // size: 0x1, address: 0x1F04A08
-extern fsFileIndex data_movie_knife_pss[1]; // size: 0x8, address: 0x3A2068
-extern fsFileIndex data_demo_knife_agl_knife_agl_dds[1]; // size: 0x8, address: 0x3A1438
-extern fsFileIndex data_pic_apt_p_family_tex[1]; // size: 0x8, address: 0x3A1BF8
 extern /* static */ char coin_pad; // size: 0x1, address: 0x0
 
 #line 219
