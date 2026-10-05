@@ -9,6 +9,8 @@
 #include "Chacter/sh2_battle_list.h"
 
 #include "Event/event.h"
+#include "Event/event_sub.h"
+#include "Event/picture.h"
 #include "Event/demoview.h"
 #include "Event/chara_admin.h"
 
@@ -67,7 +69,6 @@ extern /* static */ char cam_change; // size: 0x1, address: 0x1F04A00
 extern /* static */ bool stg_apart_w1f_cam_change; // size: 0x1, address: 0x1F04A00
 extern fsFileIndex data_pic_apt_p_desk_coin_coin_tex[1]; // size: 0x8, address: 0x3A1BC8
 extern fsFileIndex data_pic_apt_p_desk_coin_tex[1]; // size: 0x8, address: 0x3A1BC0
-extern struct Playing_Info playing; // size: 0x8C, address: 0x122B310
 extern fsFileIndex data_pic_apt_p_desk_hint_tex[1]; // size: 0x8, address: 0x3A1BD0
 extern float coin_alpha[3]; // size: 0xC, address: 0x1F04A20
 extern float stg_apart_w1f_coin_alpha[3]; // size: 0xC, address: 0x1F04A20
@@ -78,9 +79,6 @@ extern fsFileIndex data_movie_knife_pss[1]; // size: 0x8, address: 0x3A2068
 extern fsFileIndex data_demo_knife_agl_knife_agl_dds[1]; // size: 0x8, address: 0x3A1438
 extern fsFileIndex data_pic_apt_p_family_tex[1]; // size: 0x8, address: 0x3A1BF8
 extern /* static */ char coin_pad; // size: 0x1, address: 0x0
-extern float ev_cursor_x;
-extern float ev_cursor_y;
-extern char* layer_adr;
 
 #line 219
 static int stg_apart_w1f_EvProgLookThreeCoin(void) {
