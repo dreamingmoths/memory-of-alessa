@@ -23,7 +23,7 @@
 #include "Multi_thr/filesys/fcread.h"
 
 /**
- * In this classic puzzle, there are 3 coin types and 5 slots.
+ * In the coin puzzle, there are 3 coin types and 5 slots.
  *
  * The three coin types are:
  *
