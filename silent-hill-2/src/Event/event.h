@@ -134,6 +134,11 @@ extern struct shPlayerWork sh2jms;
 extern Stage_Data* stage;
 extern Radio_Data radio;
 
+extern int ev_prog_flag_set;
+extern float ev_timer;
+extern float ev_cursor_x;
+extern float ev_cursor_y;
+
 void EventProgInit(void);
 void EventCancel(void);
 float CharToFloat2(char* cp);
