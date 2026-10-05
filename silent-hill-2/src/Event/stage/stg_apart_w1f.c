@@ -56,10 +56,10 @@
 /* static */ int stg_apart_w1f_EvBgmControl(void);
 /* static */ void stg_apart_w1f_TrimColorFilter(void);
 
-UNMIGRATED(/* static */ char ev_pos[302]); // size: 0x12E, address: 0x1F03D00
-UNMIGRATED(/* static */ struct Event_List ev_list[32]); // size: 0x200, address: 0x1F03E30
-UNMIGRATED(/* static */ struct Item_List gi_list[9]); // size: 0x90, address: 0x1F04030
-UNMIGRATED(/* static */ int (* ev_prog[8])()); // size: 0x20, address: 0x1F040C0
+extern /* static */ char ev_pos[302]; // size: 0x12E, address: 0x1F03D00
+extern /* static */ struct Event_List ev_list[32]; // size: 0x200, address: 0x1F03E30
+extern /* static */ struct Item_List gi_list[9]; // size: 0x90, address: 0x1F04030
+extern /* static */ int (* ev_prog[8])(); // size: 0x20, address: 0x1F040C0
 extern /* static */ struct /* @anon0 */ {
     // total size: 0x10
     void (* SpecDraw)(); // offset 0x0, size 0x4
@@ -67,12 +67,12 @@ extern /* static */ struct /* @anon0 */ {
     void (* PostDraw)(); // offset 0x8, size 0x4
     void (* CharaDraw_Hook)(); // offset 0xC, size 0x4
 } gfw_func; // size: 0x10, address: 0x1F040E0
-UNMIGRATED(/* static */ Model_List mdl_list[20]); // size: 0x3C0, address: 0x1F040F0
-UNMIGRATED(/* static */ Enemy_List en_list[5]); // size: 0x64, address: 0x1F044B0
+extern /* static */ Model_List mdl_list[20]; // size: 0x3C0, address: 0x1F040F0
+extern /* static */ Enemy_List en_list[5]; // size: 0x64, address: 0x1F044B0
 extern Stage_Data stage_apart_w1f; // size: 0x44, address: 0x1F04520
-UNMIGRATED(/* static */ sceVu0FVECTOR stg_apart_w1f_key_lyne[2]); // size: 0x20, address: 0x1F04570
-UNMIGRATED(/* static */ char cam_change); // size: 0x1, address: 0x1F04A00
-UNMIGRATED(/* static */ bool stg_apart_w1f_cam_change); // size: 0x1, address: 0x1F04A00
+extern /* static */ sceVu0FVECTOR stg_apart_w1f_key_lyne[2]; // size: 0x20, address: 0x1F04570
+extern /* static */ char cam_change; // size: 0x1, address: 0x1F04A00
+extern /* static */ bool stg_apart_w1f_cam_change; // size: 0x1, address: 0x1F04A00
 extern fsFileIndex data_pic_apt_p_desk_coin_coin_tex[1]; // size: 0x8, address: 0x3A1BC8
 extern fsFileIndex data_pic_apt_p_desk_coin_tex[1]; // size: 0x8, address: 0x3A1BC0
 extern fsFileIndex data_pic_apt_p_desk_hint_tex[1]; // size: 0x8, address: 0x3A1BD0
@@ -84,7 +84,7 @@ extern bool stg_apart_w1f_coin_onoff; // size: 0x1, address: 0x1F04A08
 extern fsFileIndex data_movie_knife_pss[1]; // size: 0x8, address: 0x3A2068
 extern fsFileIndex data_demo_knife_agl_knife_agl_dds[1]; // size: 0x8, address: 0x3A1438
 extern fsFileIndex data_pic_apt_p_family_tex[1]; // size: 0x8, address: 0x3A1BF8
-UNMIGRATED(/* static */ char coin_pad); // size: 0x1, address: 0x0
+extern /* static */ char coin_pad; // size: 0x1, address: 0x0
 
 #line 219
 /* static */ int stg_apart_w1f_EvProgLookThreeCoin(void) {
@@ -198,8 +198,8 @@ UNMIGRATED(/* static */ char coin_pad); // size: 0x1, address: 0x0
 
 #line 330
 /* static */ int stg_apart_w1f_EvProgSetThreeCoin(void) {
-    UNMIGRATED(/* static */ float chara_vec[5][2][4]); // @ 0x01F045A0
-    UNMIGRATED(/* static */ short chara_kind[4]); // @ 0x01F04590
+    extern /* static */ float chara_vec[5][2][4]; // @ 0x01F045A0
+    extern /* static */ short chara_kind[4]; // @ 0x01F04590
     int i; // r16
     int j; // r17
 
@@ -347,11 +347,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
 
 
 /* static */ int stg_apart_w1f_EvProgAngelaWithKnife(void) {
-    UNMIGRATED(/* static */ CharaData_DemoList chara_data[9]); // @ 0x01F04830
-    UNMIGRATED(/* static */ DramaDemo_MessageTime knife_msg_mov[2]); // @ 0x01F047F0
-    UNMIGRATED(/* static */ DramaDemo_PlayInfo knife); // @ 0x01F04800
-    UNMIGRATED(/* static */ sceVu0FVECTOR jms_pos); // @ 0x01F048F0
-    UNMIGRATED(/* static */ float jms_rot); // @ 0x01F04900
+    extern /* static */ CharaData_DemoList chara_data[9]; // @ 0x01F04830
+    extern /* static */ DramaDemo_MessageTime knife_msg_mov[2]; // @ 0x01F047F0
+    extern /* static */ DramaDemo_PlayInfo knife; // @ 0x01F04800
+    extern /* static */ sceVu0FVECTOR jms_pos; // @ 0x01F048F0
+    extern /* static */ float jms_rot; // @ 0x01F04900
     sceVu0FVECTOR vec; // r29+0x20
     int ret; // r16
 
