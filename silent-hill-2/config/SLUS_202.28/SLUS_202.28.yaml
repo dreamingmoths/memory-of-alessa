@@ -449,7 +449,7 @@ segments:
       - { start: 0x00139a00,    type: c,          name: Chacter/m3_mary                                  }
       - { start: 0x00139ca0,    type: c,          name: Chacter/m3_mxx                                   }
       - { start: 0x00139db0,    type: asm,        name: Enemy/en_arm                                     }
-      - { start: 0x0013b3b0,    type: asm,        name: MC/mc                                            }
+      - { start: 0x0013b3b0,    type: c,          name: MC/mc                                            }
       - { start: 0x00143370,    type: c,          name: MC/mc_menu                                       }
       - { start: 0x001480d0,    type: asm,        name: MC/savedata                                      }
       - { start: 0x00148790,    type: c,          name: Event/stage/stg_tgs_trial                        }
@@ -1034,7 +1034,7 @@ segments:
       - { start: 0x00299830,    type: rodata,     name: Chacter/m3_mary_rodata                           }
       - { start: 0x00299960,    type: rodata,     name: Chacter/m3_mxx_rodata                            }
       - { start: 0x002999f0,    type: rodata,     name: Enemy/en_arm                                     }
-      - { start: 0x00299a90,    type: rodata,     name: MC/mc                                            }
+      - { start: 0x00299a90,    type: .rodata,    name: MC/mc                                            }
       - { start: 0x0029a050,    type: .rodata,    name: MC/mc_menu                                       }
       - { start: 0x0029a160,    type: rodata,     name: MC/savedata                                      }
       - { start: 0x0029a230,    type: .rodata,    name: Event/stage/stg_tgs_trial                        }
