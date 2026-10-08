@@ -195,8 +195,8 @@ segments:
       - { start: 0x000ce240,    type: c,          name: Item/otn_itemmain                                }
       - { start: 0x000db910,    type: c,          name: FilesList/fileslist_bg                           }
       - { start: 0x000db9a0,    type: asm,        name: Enemy/en_fly                                     }
-      - { start: 0x000dbdc0,    type: asm,        name: unaff_001DB6C0                                   }
-      - { start: 0x000dc570,    type: c,          name: Multi_thr/kernel/wrap_printf                     }
+      - { start: 0x000dbdc0,    type: c,          name: lib/wprtfsrc                                    }
+      - { start: 0x000dc570,    type: asm,        name: Multi_thr/kernel/wrap_printf                     }
       - { start: 0x000dc5b0,    type: asm,        name: MWCC/gcc_wrapper                                 }
       - { start: 0x000dc6a8,    type: asmtu,      name: sdk/lib_001DBFA8,      ld_align_segment_start: 8 }
       - { start: 0x000dc6c8,    type: asmtu,      name: sdk/lib_001DBFC8                                 }
@@ -933,7 +933,7 @@ segments:
       - { start: 0x00293460,    type: .rodata,    name: DBG/dbkernel                                     }
       - { start: 0x00293470,    type: .rodata,    name: DBG/dbflag                                       }
       - { start: 0x00293570,    type: .rodata,    name: Item/otn_itemmain                                }
-      - { start: 0x002937c0,    type: rodata,     name: unaff_001DB6C0                                   }
+      - { start: 0x002937c0,    type: .rodata,    name: lib/wprtfsrc                                      }
       - { start: 0x00293878,    type: .rodata,    name: sdk/lib_001DBFE0                                 }
       - { start: 0x002938a8,    type: rodata,     name: sdk/lib_003931A8                                 }
       - { start: 0x002939b0,    type: .rodata,    name: sdk/lib_001DC188                                 }
