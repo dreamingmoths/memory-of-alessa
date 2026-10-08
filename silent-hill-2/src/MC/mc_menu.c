@@ -38,9 +38,9 @@ int mcSaveMenu(void) {
     s_char port = mcw->menu_port;
     s_char n;
 
-    if ((mc.status & (1 << MC_STATUS_FLAG_2)) == 0 || !Sh2sys.step[SH2SYS_CONNECT]) {
+    if ((mc.status & (1 << MC_STATUS_02)) == 0 || !Sh2sys.step[SH2SYS_CONNECT]) {
         mcInit();
-        mc.status |= (1 << MC_STATUS_FLAG_2);
+        mc.status |= (1 << MC_STATUS_02);
     }
 
     switch (mcw->menu_step) {
@@ -56,15 +56,15 @@ int mcSaveMenu(void) {
             break;
 
         case 1:
-            if ((mc.status & (1 << MC_STATUS_FLAG_5)) == 0) {
+            if ((mc.status & (1 << MC_STATUS_05)) == 0) {
                 if (fsSync(1, mcw->fid[0]) >= 0) {
-                    mc.status |= (1 << MC_STATUS_FLAG_5);
+                    mc.status |= (1 << MC_STATUS_05);
                 }
             } else {
                 if (fsSync(1, mcw->fid[1]) >= 0) {
-                    mc.status |= (1 << MC_STATUS_FLAG_6);
+                    mc.status |= (1 << MC_STATUS_06);
                     ScreenEffectFadeStart(12, 1.5);
-                    mc.status |= (1 << MC_STATUS_FLAG_3);
+                    mc.status |= (1 << MC_STATUS_03);
                     MCW_SET_MENU_STEP(2);
                     mcLoadIconData();
                 }
@@ -119,7 +119,7 @@ int mcSaveMenu(void) {
                         break;
 
                     case 2:
-                        mc.status |= 1 << MC_STATUS_FLAG_8;
+                        mc.status |= 1 << MC_STATUS_08;
                         MCW_SET_MENU_STEP(-1);
                         break;
 
@@ -141,7 +141,7 @@ int mcSaveMenu(void) {
 
         case 3:
             if (mcw->menu_sstep == 0) {
-                mc.status |= 1 << MC_STATUS_FLAG_8;
+                mc.status |= 1 << MC_STATUS_08;
                 mcw->menu_yesno = 2;
                 mcw->menu_info = 0x1e;
                 MCW_SET_MENU_SSTEP();
@@ -210,7 +210,7 @@ int mcSaveMenu(void) {
                     fjAssert(n < MC_MAXFILES, __FILE__, 0x1cb);
                 }
 
-                mc.status |= 1 << MC_STATUS_FLAG_8;
+                mc.status |= 1 << MC_STATUS_08;
                 mcw->menu_info = 39;
                 mcw->menu_bk = 1;
                 MCW_SET_MENU_SSTEP();
@@ -333,7 +333,7 @@ int mcSaveMenu(void) {
                 Sh2sys.soft_reset = 0;
                 mcDeleteData(port, mcw->fileinfo[mcw->menu_port][mcw->menu_num[port]].dirid,
                              mcw->fileinfo[mcw->menu_port][mcw->menu_num[port]].fileid);
-                mc.status |= 1 << MC_STATUS_FLAG_8;
+                mc.status |= 1 << MC_STATUS_08;
                 mcw->menu_info = 67;
                 MCW_SET_MENU_SSTEP();
             }
@@ -393,7 +393,7 @@ int mcSaveMenu(void) {
             }
             switch (mcTellYesNo()) {
                 case 1:
-                    mc.status |= 1 << MC_STATUS_FLAG_8;
+                    mc.status |= 1 << MC_STATUS_08;
                     mcw->menu_info = -1;
                     MCW_SET_MENU_STEP(-1);
                     break;
@@ -468,7 +468,7 @@ INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcSelectData);
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcGetBlinkAlpha);
 
 static int mcPutMes(short n, short x, short y, short align, short align2) {
-    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+    if (mc.status & (1 << MC_STATUS_05)) {
         return fontPrintWord(fontGetMesAdr(msg_buffer, n), x, y, align, align2);
     }
     
@@ -477,7 +477,7 @@ static int mcPutMes(short n, short x, short y, short align, short align2) {
 }
 
 static void mcPutMes2(short n, short x, short y) {
-    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+    if (mc.status & (1 << MC_STATUS_05)) {
         fontAllCenterOn();
         fontAllCenter2On();
         fontPrintStr(fontGetMesAdr(msg_buffer, n), x, y);
@@ -488,7 +488,7 @@ static void mcPutMes2(short n, short x, short y) {
 
 static void mcPutBigFont(short n, short y) {
     u_int bak; // r17    
-    if (mc.status & (1 << MC_STATUS_FLAG_5)) {
+    if (mc.status & (1 << MC_STATUS_05)) {
         bak = font.flag;
         font.flag = 0x100;
         fontPrintStrWide(fontGetMesAdr(msg_buffer, n), 0x100, y, 0xB4, 0xB4);
