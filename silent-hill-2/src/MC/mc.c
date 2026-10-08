@@ -842,7 +842,210 @@ static void mcJobSearchDir(void) {
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcSearchDir2);
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc", mcJobSearchDir2);
+static void mcJobSearchDir2(void) {
+    s_char port; // r16
+    int i; // r17
+    int fn; // r18
+    int f; // r18
+    int n; // r6
+    int tn; // r19
+    sceMcTblGetDir* dt; // r20
+    u_long t; // r4
+    u_long dtime; // r21
+    s_char* ename; // r6
+
+    port = mcw->job_port;
+    
+    switch (mcw->job_step) {
+        case 0:
+            mcw->port = port;
+            for (i = 0; i < 5; i++) {
+                mcw->dirstatus[port][i] = 1;
+            }
+
+            mcw->menu_num[0] = -1;
+            mcw->menu_num[1] = -1;
+            mcw->dtime[0] = mcw->dtime[1] = 0;
+            mcw->dirnum = 0;
+            mcw->files = 0;
+            mcw->filemax[port] = 0; // @note: mcJobSearchDir does not set this
+            mcw->job_step++;
+            /* fallthrough */
+        case 1:
+            mcSetDirName(mcw->dirnum);
+            mcJoinDirName(mcw->dirnum);
+            mcOpenRO(mcw->fname);
+            mcw->job_step++;
+            return;
+        case 2:
+            if (mcw->result == -4) {
+                mcw->fname[0] = 0x2F;
+                mcw->fname[1] = 0;
+                mcJoinDirName(mcw->dirnum);
+                sceMcGetDir(port, NULL, mcw->fname, 0, 20, mcw->dirtbl);
+                mcw->job_step = -2;
+                return;
+            }
+            if (mcw->result < 0) {
+                mcDirBroken();
+                return;
+            }
+            mcw->fd = mcw->result;
+            sceMcRead(mcw->fd, mcw, 1024);
+            mcw->job_step++;
+            break;
+        case 3:
+            if (mcw->result < 0) {
+                mcDirBroken();
+                break;
+            }
+            sceMcClose(mcw->fd);
+            if (mcExtDirData()) {
+                mcDirBroken();
+                break;
+            }
+            mcw->job_step++;
+            break;
+        case 4:
+            if (mcw->result < 0) {
+                mcPortError();
+                break;
+            }
+            mcSetDirName(mcw->dirnum);
+            strcat(mcw->fname, "*");
+            sceMcGetDir(port, 0, mcw->fname, 0, 20, mcw->dirtbl);
+            mcw->job_step++;
+            break;
+        case 5:
+            if (mcw->result < 0) {
+                mcPortError();
+                break;
+            }
+            mcw->tbl_files = mcw->result;
+            dt = mcw->dirtbl;
+            tn = -1;
+            f = 0;
+            if (mcw->dirdata.lastsave == -1) {
+                dtime = mcw->dtime[1];
+            } else {
+                dtime = mcw->dtime[0];
+            }
+            mcw->fname[0] = 0;
+            mcJoinDirName(mcw->dirnum);
+
+            for (i = 0; i < mcw->result; i++, dt++) {
+                ename = dt->EntryName;
+                if (ename[0] != '.') {
+                    if (cmpstr(ename, mcw->fname)) {
+                        if (dt->FileSizeByte != 1024) {
+                            f = 0;
+                        } else {
+                            f |= 1;
+                            continue;
+                        }
+                    } else if (cmpstr(ename, mc_iconsysname)) {
+                        if (dt->FileSizeByte != 964) {
+                            f = 0;
+                        } else {
+                            f |= 2;
+                            continue;
+                        }
+                    } else if (cmpstr(ename, mc_IconSys.FnameView)) {
+                        if (dt->FileSizeByte != 81592 && dt->FileSizeByte != 53656) {
+                            f = 0;
+                        } else {
+                            f |= 4;
+                            continue;
+                        }
+                    } else if (ename[0] != 'D'               || 
+                               ename[1] != 'A'               || 
+                               ename[2] != 'T'               || 
+                               ename[3] != 'A'               || 
+                               ename[4] != '-'               || 
+                               !IS_DIGIT_CHARACTER(ename[5]) || 
+                               !IS_DIGIT_CHARACTER(ename[6]) || 
+                               ename[7] != '\0') {
+                        f = 0;
+                    } else {
+                        n = CHAR_TO_INT(ename[5]) * 10 + CHAR_TO_INT(ename[6]) - 1;
+                        if (n < 0 || n >= 15) {
+                            f = 0;
+                        } else {
+                            if (mcw->dirdata.file[n].savecount != 0) {
+                                if (dt->FileSizeByte != 8192) {
+                                    mcw->dirdata.file[n].status = 1 << 7;
+                                } else {
+                                    u_long modify = *(u_long*)&dt->_Modify; // @note not in dwarf, and not in mcJobSearchDir
+                                    if (mcw->dirdata.lastsave == -1) {
+                                        if (dtime < modify) {
+                                            dtime = modify;
+                                            tn = n;
+                                        }
+                                    } else if (n == mcw->dirdata.lastsave && dtime < modify) {
+                                        dtime = modify;
+                                        tn = n;
+                                    }
+                                }
+                            }
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+            if (f != 7) {
+                mcDirBroken();
+                return;
+            }
+            mcw->dirid[port][mcw->dirnum] = mcw->dirdata.id;
+            fn = mcw->files;
+            for (i = 0; i < 15; i++) {
+                if (mcw->dirdata.file[i].savecount) {
+                    mcSetFileName(mcw->dirnum, i);
+                    if (mcGetDt(mcw->fname) == 0) {
+                        mcw->dirdata.file[i].status |= (1 << 7);
+                    }
+                    memcpy(&mcw->tmpinfo[fn], &mcw->dirdata.file[i], sizeof(MC_FILEINFO));
+                    if ((mcw->dirdata.file[i].fileid == tn) && !(mcw->dirdata.file[i].status & (1 << 7))) {
+                        /* @note another mcJobSearchDir difference */
+                        if (mcw->dirdata.lastsave == -1) {
+                            mcw->dtime[1] = dtime;
+                            mcw->menu_num[1] = fn;
+                        } else {
+                            mcw->dtime[0] = dtime;
+                            mcw->menu_num[0] = fn;
+                        }
+                    }
+                    fn++;
+                }
+            }
+            mcw->files = fn;
+            mcw->dirstatus[port][mcw->dirnum] = 5;
+            mcw->job_step = -1;
+            /* fallthrough */
+        case -1:
+            if (++mcw->dirnum < 5) {
+                mcw->job_step = 1;
+                break;
+            }
+            memcpy(mcw->fileinfo[port], mcw->tmpinfo, mcw->files * sizeof(MC_FILEINFO));
+            mcw->filemax[port] = mcw->files;
+            mcNextJob();
+            break;
+        case -2:
+            if (mcw->result > 0) {
+                mcDirBroken();
+            } else {
+                if (mcw->free[port] >= (((mcw->d_ent[port] & 1) ? 0 : 1)) + 93) {
+                    mcw->dirstatus[port][mcw->dirnum] = 2;
+                } else {
+                    mcw->dirstatus[port][mcw->dirnum] = 7;
+                }
+            }
+            mcw->job_step = -1;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcGetDt);
 
