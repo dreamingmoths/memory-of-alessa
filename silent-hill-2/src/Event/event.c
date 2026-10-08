@@ -848,7 +848,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecDoor);
 
 #line 1616
 static int EventExecItem(void) {
-    UNMIGRATED(/* static */ EventExecItemData eei_data[7], {
+    UNLINKED(/* static */ EventExecItemData eei_data[7], {
         {
             /* .msg = */      0,
             /* .chara_id = */ 0,
@@ -952,7 +952,7 @@ static int EventExecItem(void) {
 #ifdef HOLY_CANDLE
 #line 1704
 static int EventExecMove(void) {
-    UNMIGRATED(/* static */ short reset_stage_connect[12][2], {
+    UNLINKED(/* static */ short reset_stage_connect[12][2], {
         { Stg_forest,     Stg_town_east      },
         { Stg_town_east,  Stg_apart_out      },
         { Stg_town_west,  Stg_apart_stair    },

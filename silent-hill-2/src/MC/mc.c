@@ -2,6 +2,8 @@
 #include "SH2_common/mem_share.h"
 #include "MC/mc.h"
 
+extern void* memcpy(void* dest, const void* src, int count);
+
 static void mcCodec(void);
 static void mcAutoInfo(void);
 static void mcJobSaveSystemData(void);
@@ -42,13 +44,33 @@ static void mcSetExtraFileName(s_char* name);
 static int mcExtSaveData(void);
 static void mcEncodeStart(void);
 
-extern s_char sc1;
-extern s_char sc2;
+UNMIGRATED(s_char sc1);
+UNMIGRATED(s_char sc2);
+
+
+UNMIGRATED(/* static */ s_char* mc_iconsysname); // size: 0x4, address: 0x34F248
+UNMIGRATED(/* static */ struct /* @anon5 */ {
+    // total size: 0x3C4
+    u_char Head[4]; // offset 0x0, size 0x4
+    u_short Reserv1; // offset 0x4, size 0x2
+    u_short OffsLF; // offset 0x6, size 0x2
+    u_int Reserv2; // offset 0x8, size 0x4
+    u_int TransRate; // offset 0xC, size 0x4
+    int BgColor[4][4]; // offset 0x10, size 0x40
+    float LightDir[3][4]; // offset 0x50, size 0x30
+    float LightColor[3][4]; // offset 0x80, size 0x30
+    float Ambient[4]; // offset 0xB0, size 0x10
+    u_char TitleName[68]; // offset 0xC0, size 0x44
+    u_char FnameView[64]; // offset 0x104, size 0x40
+    u_char FnameCopy[64]; // offset 0x144, size 0x40
+    u_char FnameDel[64]; // offset 0x184, size 0x40
+    u_char Reserve3[512]; // offset 0x1C4, size 0x200
+} mc_IconSys); // size: 0x3C4, address: 0x34EA80
 
 INCLUDE_RODATA("asm/nonmatchings/MC/mc", @837);
 
 #line 201
-/* static */ int cmpstr(s_char* str1, s_char* str2) {
+static int cmpstr(s_char* str1, s_char* str2) {
     while (*str1 == *str2) {
         if (*str1 == '\0') return true;
         str1++;
@@ -89,7 +111,7 @@ static void print_sc1(s_char st) {
 }
 
 #line 247
-/* static */ void print_sc2(s_char st /* r2 */) {
+static void print_sc2(s_char st /* r2 */) {
     if (sc2 == st) return;
     sc2 = st;
     switch (st) {
@@ -109,13 +131,13 @@ static void print_sc1(s_char st) {
 }
 
 #line 270
-/* static */ void mcNextJob(void) {
+static void mcNextJob(void) {
     mcw->job = 0;
     mcw->job_num = (mcw->job_num + 1) % 16;
 }
 
 #line 279
-/* static */ void mcBreakJob(void) {
+static void mcBreakJob(void) {
     printf("break %d:%d result:%d\n", mcw->job, mcw->job_step, mcw->result);
     mcNextJob();
     mcw->job_num = mcw->job_end;
@@ -123,7 +145,7 @@ static void print_sc1(s_char st) {
 }
 
 #line 291
-/* static */ void mcBreakJob2(void) {
+static void mcBreakJob2(void) {
     printf("break %d:%d result:%d\n", mcw->job, mcw->job_step, mcw->result);
     mcNextJob();
     mcw->job_num = mcw->job_end;
@@ -643,7 +665,180 @@ static void mcSearchDir(s_char port) {
     mcSetJob(4, port, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/MC/mc", mcJobSearchDir);
+/* thank you so much inspectredc! */
+
+static void mcJobSearchDir(void) {
+    s_char port; // r16
+    int i; // r17
+    int fn; // r18
+    int f; // r18
+    int n; // r6
+    int tn; // r19
+    sceMcTblGetDir* dt; // r20
+    u_long t; // r3
+    u_long dtime; // r21
+    s_char* ename; // r6
+
+    port = mcw->job_port;
+    
+    switch (mcw->job_step) {
+        case 0:
+            mcw->port = port;
+            for (i = 0; i < 5; i++) {
+                mcw->dirstatus[port][i] = 1;
+            }
+
+            mcw->menu_num[0] = -1;
+            mcw->dtime[0] = 0;
+            mcw->dirnum = 0;
+            mcw->files = 0;
+            mcw->job_step++;
+            /* fallthrough */
+        case 1:
+            mcSetDirName(mcw->dirnum);
+            mcJoinDirName(mcw->dirnum);
+            mcOpenRO(mcw->fname);
+            mcw->job_step++;
+            return;
+        case 2:
+            if (mcw->result == -4) {
+                if (mcw->free[port] >= (((mcw->d_ent[port] & 1) ? 0 : 1)) + 93) {
+                    mcw->dirstatus[port][mcw->dirnum] = 2;
+                } else {
+                    mcw->dirstatus[port][mcw->dirnum] = 7;
+                }
+                mcw->job_step = -1;
+                return;
+            }
+            if (mcw->result < 0) {
+                mcDirBroken();
+                return;
+            }
+            mcw->fd = mcw->result;
+            sceMcRead(mcw->fd, mcw, 1024);
+            mcw->job_step++;
+            break;
+        case 3:
+            if (mcw->result < 0) {
+                mcDirBroken();
+                break;
+            }
+            sceMcClose(mcw->fd);
+            if (mcExtDirData()) {
+                mcDirBroken();
+                break;
+            }
+            mcw->job_step++;
+            break;
+        case 4:
+            if (mcw->result < 0) {
+                mcPortError();
+                break;
+            }
+            mcSetDirName(mcw->dirnum);
+            strcat(mcw->fname, "*");
+            sceMcGetDir(port, 0, mcw->fname, 0, 20, mcw->dirtbl);
+            mcw->job_step++;
+            break;
+        case 5:
+            if (mcw->result < 0) {
+                mcPortError();
+                break;
+            }
+            mcw->tbl_files = mcw->result;
+            dt = mcw->dirtbl;
+            tn = -1;
+            f = 0;
+            dtime = mcw->dtime[0];
+            mcw->fname[0] = 0;
+            mcJoinDirName(mcw->dirnum);
+
+            for (i = 0; i < mcw->result; i++, dt++) {
+                ename = dt->EntryName;
+                if (ename[0] != '.') {
+                    if (cmpstr(ename, mcw->fname)) {
+                        if (dt->FileSizeByte != 1024) {
+                            f = 0;
+                        } else {
+                            f |= 1;
+                            continue;
+                        }
+                    } else if (cmpstr(ename, mc_iconsysname)) {
+                        if (dt->FileSizeByte != 964) {
+                            f = 0;
+                        } else {
+                            f |= 2;
+                            continue;
+                        }
+                    } else if (cmpstr(ename, mc_IconSys.FnameView)) {
+                        if (dt->FileSizeByte != 81592 && dt->FileSizeByte != 53656) {
+                            f = 0;
+                        } else {
+                            f |= 4;
+                            continue;
+                        }
+                    } else if (ename[0] != 'D'               || 
+                               ename[1] != 'A'               || 
+                               ename[2] != 'T'               || 
+                               ename[3] != 'A'               || 
+                               ename[4] != '-'               || 
+                               !IS_DIGIT_CHARACTER(ename[5]) || 
+                               !IS_DIGIT_CHARACTER(ename[6]) || 
+                               ename[7] != '\0') {
+                        f = 0;
+                    } else {
+                        n = CHAR_TO_INT(ename[5]) * 10 + CHAR_TO_INT(ename[6]) - 1;
+                        if (n < 0 || n >= 15) {
+                            f = 0;
+                        } else {
+                            if (dt->FileSizeByte != 8192) {
+                                mcw->dirdata.file[n].status = 1 << 7;
+                            } else if (mcw->dirdata.playing.auto_load && n == mcw->dirdata.lastsave) {
+                                if (dtime < *(u_long*)&dt->_Modify) {
+                                    dtime = *(u_long*)&dt->_Modify;
+                                    tn = n;
+                                }
+                            }
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+            if (f != 7) {
+                mcDirBroken();
+                return;
+            }
+            mcw->dirid[port][mcw->dirnum] = mcw->dirdata.id;
+            fn = mcw->files;
+            for (i = 0; i < 15; i++) {
+                if (mcw->dirdata.file[i].savecount) {
+                    mcSetFileName(mcw->dirnum, i);
+                    if (mcGetDt(mcw->fname) == 0) {
+                        mcw->dirdata.file[i].status |= (1 << 7);
+                    }
+                    memcpy(&mcw->tmpinfo[fn], &mcw->dirdata.file[i], sizeof(MC_FILEINFO));
+                    if ((mcw->dirdata.file[i].fileid == tn) && !(mcw->dirdata.file[i].status & (1 << 7))) {
+                        mcw->dtime[0] = dtime;
+                        mcw->menu_num[0] = fn;
+                    }
+                    fn++;
+                }
+            }
+            mcw->files = fn;
+            mcw->dirstatus[port][mcw->dirnum] = 5;
+            /* fallthrough */
+        case -1:
+            if (++mcw->dirnum < 5) {
+                mcw->job_step = 1;
+                break;
+            }
+            memcpy(mcw->fileinfo[port], mcw->tmpinfo, mcw->files * sizeof(MC_FILEINFO));
+            mcw->filemax[port] = mcw->files;
+            mcNextJob();
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcSearchDir2);
 
