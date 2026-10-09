@@ -44,6 +44,7 @@
         mcw->menu_sstep = 0;     \
     } while (0)
 #define MCW_SET_MENU_SSTEP() do { mcw->menu_sstep++; } while (0)
+#define MCW_FREE_MAX() (IS_EVEN(mcw->d_ent[port] & 1) + 93)
 
 /**
  * Reserved offset in the memshare buf for the memory card info. 
@@ -176,6 +177,24 @@ typedef struct MC_WORK2 {
     MC_FILEINFO* loaddata;       // offset 0x41D0, size 0x4
     MC_CODEC_DATA cd;            // offset 0x41D8, size 0x50
 } MC_WORK2;
+
+typedef struct /* @anon5 */ {
+    // total size: 0x3C4
+    u_char Head[4]; // offset 0x0, size 0x4
+    u_short Reserv1; // offset 0x4, size 0x2
+    u_short OffsLF; // offset 0x6, size 0x2
+    u_int Reserv2; // offset 0x8, size 0x4
+    u_int TransRate; // offset 0xC, size 0x4
+    int BgColor[4][4]; // offset 0x10, size 0x40
+    float LightDir[3][4]; // offset 0x50, size 0x30
+    float LightColor[3][4]; // offset 0x80, size 0x30
+    float Ambient[4]; // offset 0xB0, size 0x10
+    u_char TitleName[68]; // offset 0xC0, size 0x44
+    u_char FnameView[64]; // offset 0x104, size 0x40
+    u_char FnameCopy[64]; // offset 0x144, size 0x40
+    u_char FnameDel[64]; // offset 0x184, size 0x40
+    u_char Reserve3[512]; // offset 0x1C4, size 0x200
+} McIconSys;
 
 extern MC_WORK mc;    // size: 0xC, address: 0x11E8388
 extern MC_WORK2* mcw; // size: 0x4, address: 0x11E8380

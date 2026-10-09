@@ -30,7 +30,7 @@ static void print_sc2(s_char st);
 static void mcNextJob(void);
 static void mcBreakJob(void);
 static void mcBreakJob2(void);
-static void mcPortError(); /* @note: `void` doesn't match with mcExec? */
+static void mcPortError(); /* @note `(void)` doesn't match with mcExec? */
 static void mcDirBroken(void);
 static void mcPortAbnormal(s_char port);
 static void mcOpenWO(s_char* name);
@@ -47,25 +47,8 @@ static void mcEncodeStart(void);
 UNMIGRATED(s_char sc1);
 UNMIGRATED(s_char sc2);
 
-
 UNMIGRATED(/* static */ s_char* mc_iconsysname); // size: 0x4, address: 0x34F248
-UNMIGRATED(/* static */ struct /* @anon5 */ {
-    // total size: 0x3C4
-    u_char Head[4]; // offset 0x0, size 0x4
-    u_short Reserv1; // offset 0x4, size 0x2
-    u_short OffsLF; // offset 0x6, size 0x2
-    u_int Reserv2; // offset 0x8, size 0x4
-    u_int TransRate; // offset 0xC, size 0x4
-    int BgColor[4][4]; // offset 0x10, size 0x40
-    float LightDir[3][4]; // offset 0x50, size 0x30
-    float LightColor[3][4]; // offset 0x80, size 0x30
-    float Ambient[4]; // offset 0xB0, size 0x10
-    u_char TitleName[68]; // offset 0xC0, size 0x44
-    u_char FnameView[64]; // offset 0x104, size 0x40
-    u_char FnameCopy[64]; // offset 0x144, size 0x40
-    u_char FnameDel[64]; // offset 0x184, size 0x40
-    u_char Reserve3[512]; // offset 0x1C4, size 0x200
-} mc_IconSys); // size: 0x3C4, address: 0x34EA80
+UNMIGRATED(/* static */ McIconSys mc_IconSys); // size: 0x3C4, address: 0x34EA80
 
 INCLUDE_RODATA("asm/nonmatchings/MC/mc", @837);
 
@@ -207,7 +190,7 @@ static void mcPortAbnormal(s_char port /* r2 */) {
 MC_WORK* mcInit(void) {
     mc.status = MC_STATUS_00;
 
-    mcw = (MC_WORK2* ) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS);
+    mcw = (MC_WORK2*) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS);
 
     shQzero(mcw, sizeof(MC_WORK2));
     
@@ -329,7 +312,7 @@ void mcExec(void) {
                     } else {
                         mcw->d_ent[port] &= ~1;
                     }
-                    if (mcw->free[port] < (((mcw->d_ent[port] & 1) ? 0 : 1)) + 93) {
+                    if (mcw->free[port] < MCW_FREE_MAX()) {
                         tmp = 3;
                     } else {
                         tmp = 2;
@@ -432,7 +415,7 @@ void mcExec(void) {
                 break;
             case MC_JOB_END:
                 if (mcw->result < 0 || (mc.status & (1 << MC_STATUS_01))) {
-                    mcPortError(port);
+                    mcPortError(port); // @bug maybe, `mcPortError` doesn't seem to use an argument everywhere
                 } else {
                   
                     switch (mcw->job_step++) {
@@ -702,10 +685,10 @@ static void mcJobSearchDir(void) {
             return;
         case 2:
             if (mcw->result == -4) {
-                if (mcw->free[port] >= (((mcw->d_ent[port] & 1) ? 0 : 1)) + 93) {
-                    mcw->dirstatus[port][mcw->dirnum] = 2;
+                if (mcw->free[port] >= MCW_FREE_MAX()) {
+                    mcw->dirstatus[port][mcw->dirnum] = (1 << 1);
                 } else {
-                    mcw->dirstatus[port][mcw->dirnum] = 7;
+                    mcw->dirstatus[port][mcw->dirnum] = (1 << 0) | (1 << 1) | (1 << 2);
                 }
                 mcw->job_step = -1;
                 return;
@@ -1036,7 +1019,7 @@ static void mcJobSearchDir2(void) {
             if (mcw->result > 0) {
                 mcDirBroken();
             } else {
-                if (mcw->free[port] >= (((mcw->d_ent[port] & 1) ? 0 : 1)) + 93) {
+                if (mcw->free[port] >= MCW_FREE_MAX()) {
                     mcw->dirstatus[port][mcw->dirnum] = 2;
                 } else {
                     mcw->dirstatus[port][mcw->dirnum] = 7;
