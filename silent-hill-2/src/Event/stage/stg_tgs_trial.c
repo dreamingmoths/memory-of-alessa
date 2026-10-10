@@ -1,17 +1,20 @@
-#include "sh2_common.h"
-#include "Chacter/character.h"
+#include "Event/stage/stg_tgs_trial.h"
 #include "Event/event.h"
 #include "Event/event_sub.h"
-#include "Event/stage/stg_tgs_trial.h"
-#include "SH2_common/sh2dt.h"
 #include "Event/picture.h"
-#include "Event/event_sub.h"
+
+#include "Chacter/character.h"
+
+#include "data/daily.thu/data_pic_hsp.h"
+
+#include "SH2_common/sh2dt.h"
 #include "SH2_common/sh2sys.h"
-#include "FilesList/fileslist_bg.h"
+
+#include "sound/sh_sound.h"
 
 static int EvProgBoxWithKeyCursor(void);
 static int EvProgBoxWithKeyLayer(void);
-static int EvProgBoxWithKeyOpen(int alp /* r16 */);
+static int EvProgBoxWithKeyOpen(int alp);
 
 extern /* static */ float cyl_alp; // size: 0x4, address: 0x11EA360
 extern /* static */ short tex_1051[9][4][4]; // @ 0x00355FD0
@@ -131,7 +134,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
 }
 
 #line 437
-int EvProgLouiseTakecare(void) {
+/* static */ int EvProgLouiseTakecare(void) {
     switch (ev_p_step) {
         case 0:
             if (GET_BIT(game_flag.flag[5], 31)) EV_PROG_STEP(12);
@@ -160,26 +163,25 @@ int EvProgLouiseTakecare(void) {
     return 0;
 }
 
-#ifdef NON_MATCHING
 #line 474
-static int EvProgBoxWithKey(void) {
+/* static */ int EvProgBoxWithKey(void) {
     switch (ev_p_step) {
         case 0:
             if (GET_GAME_FLAG(GAME_FLAG_197)) cyl_alp = 0.0f;
             else cyl_alp = 1.0f;
-            SCNowPlayableEventSwitch(sh2jms.player, 1);
-            ev_cursor_y = 0.0f;
-            ev_cursor_x = 0.0f;
+            SCNowPlayableEventSwitch(sh2jms.player, 1);            
+            ev_cursor_x = ev_cursor_y = 0.0f;
             EV_PROG_STEP(2);
             break;
-
-
         
         case 2:
-            if (EvSubFileLoadAndFadeOut(NULL, &data_pic_hsp_p_box_tex, &data_pic_hsp_pboxkey01_tex)) {
+            if (EvSubFileLoadAndFadeOut(NULL, 
+                                        &data_pic_hsp_p_box_tex,
+                                        &data_pic_hsp_pboxkey01_tex)) {
+                
                 if (GET_GAME_FLAG(GAME_FLAG_194)) {
                     EV_PROG_STEP(9);
-                    SeCall(0x4DBA, 1.0f, 0);
+                    SeCall(19898, 1.0f, 0);
                 } else EV_PROG_STEP(10);
             }
             break;
@@ -189,15 +191,14 @@ static int EvProgBoxWithKey(void) {
             EvSubPictureDisplayOnly();
             EvSubPictureFilter();
             EvProgBoxWithKeyLayer();
-            EvSubPictureEnd();
-            
+            EvSubPictureEnd();            
             if (EvSubItemUse0(0x20, 0x17, 0, 0, 0, 0)) {
-                SET_GAME_FLAG(GAME_FLAG_68);
+                
+                SET_GAME_FLAG(GAME_FLAG_193);
                 if (GET_GAME_FLAG(GAME_FLAG_197)) EV_PROG_STEP(12);
                 else EV_PROG_STEP(10);
             }
             break;
-
         
         case 10:
             EvSubPictureStart();
@@ -211,6 +212,7 @@ static int EvProgBoxWithKey(void) {
                 EV_PROG_STEP(7);
             }
             break;
+        
         case 7:
             EvSubPictureStart();
             EvSubPictureDisplayOnly();
@@ -223,7 +225,7 @@ static int EvProgBoxWithKey(void) {
                 (game_flag.guruguru[2] == game_flag.cylinder[2]) &&
                 (game_flag.guruguru[3] == game_flag.cylinder[3])) {
                 SET_GAME_FLAG(GAME_FLAG_197);
-                SeCall(0x4A46, 1.0f, 0);
+                SeCall(19014, 1.0f, 0);
                 EV_PROG_STEP(14);
             } else if (shPadTrigger(0, key_config.cancel)) {
                 
@@ -239,7 +241,8 @@ static int EvProgBoxWithKey(void) {
             EvSubPictureEnd();
             cyl_alp -= 0.5f * shGetDT();
             if (cyl_alp <= 0.0f) {
-                if (GET_GAME_FLAG(GAME_FLAG_193)) EV_PROG_STEP(12);
+                if (GET_GAME_FLAG(GAME_FLAG_193))
+                    EV_PROG_STEP(12);
                 else EV_PROG_STEP(16);
             }
             break;
@@ -249,13 +252,18 @@ static int EvProgBoxWithKey(void) {
             EvSubPictureDisplayOnly();
             EvSubPictureEnd();
             if ((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) {
+                
+                                
                 EV_PROG_STEP(4);
             }
             break;
         
         case 12:
-            if (EvSubFileLoadAndFadeOut(NULL, &data_pic_hsp_p_hair_tex, &data_pic_hsp_p_hair_hair_tex)) {
+            if (EvSubFileLoadAndFadeOut(NULL, 
+                                        &data_pic_hsp_p_hair_tex, 
+                                        &data_pic_hsp_p_hair_hair_tex)) {
                 ev_timer = 0.0f;
+                
                 EV_PROG_STEP(15);
             }
             break;
@@ -265,9 +273,8 @@ static int EvProgBoxWithKey(void) {
             EvSubPictureDisplayOnly();
             EvProgBoxWithKeyOpen(0x80);
             EvSubPictureEnd();
-            if ((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) {
+            if ((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) 
                 EV_PROG_STEP(17);
-            }
             break;
         
         case 17:
@@ -276,9 +283,7 @@ static int EvProgBoxWithKey(void) {
             EvProgBoxWithKeyOpen(0x80);
             EvSubPictureFilter();
             EvSubPictureEnd();
-            if (EvSubMessage(7)) {
-                EV_PROG_STEP(8);
-            }
+            if (EvSubMessage(7)) EV_PROG_STEP(8);            
             break;
         
         case 8:
@@ -289,8 +294,8 @@ static int EvProgBoxWithKey(void) {
             }
             EvSubPictureStart();
             EvSubPictureDisplayOnly();
-
-            EvProgBoxWithKeyOpen(0x80 - (int) ((128.0f * ev_timer) / 2.0f));
+            EvProgBoxWithKeyOpen(0x80 - FTOI((128.0f * ev_timer) / 2.0f));
+            
             EvSubPictureEnd();
             break;
         
@@ -300,6 +305,7 @@ static int EvProgBoxWithKey(void) {
             EvSubPictureFilter();
             EvSubPictureEnd();
             if (EvSubItemGet(0x32, 0x18)) {
+            
                 EV_PROG_STEP(4);
                 SET_GAME_FLAG(GAME_FLAG_171);
             }
@@ -307,16 +313,13 @@ static int EvProgBoxWithKey(void) {
         
         case 4:
             EvSubPictureStart();
-            EvSubPictureDisplayOnly();
-            
-            if (!GET_GAME_FLAG(GAME_FLAG_171) && !GET_GAME_FLAG(GAME_FLAG_197)) {
-                EvProgBoxWithKeyLayer();
-            }
-            
+            EvSubPictureDisplayOnly();            
+            if (!GET_GAME_FLAG(GAME_FLAG_171) && !GET_GAME_FLAG(GAME_FLAG_197)) 
+                EvProgBoxWithKeyLayer();            
             EvSubPictureEnd();
-            if (ScreenEffectFadeCheck()) {
-                EV_PROG_STEP(13);
-            }
+            if (ScreenEffectFadeCheck()) 
+                
+                EV_PROG_STEP(13);            
             break;
     
         case 13:
@@ -326,9 +329,6 @@ static int EvProgBoxWithKey(void) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgBoxWithKey);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgBoxWithKeyLayer);
 

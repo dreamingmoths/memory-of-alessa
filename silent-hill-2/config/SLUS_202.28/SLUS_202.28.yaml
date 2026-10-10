@@ -164,7 +164,7 @@ segments:
       - { start: 0x000ac650,    type: c,          name: Event/event_sub                                  }
       - { start: 0x000adf60,    type: c,          name: Event/item                                       }
       - { start: 0x000aea60,    type: asm,        name: Event/picture                                    }
-      - { start: 0x000af7a0,    type: asm,        name: Event/stg_name                                   }
+      - { start: 0x000af7a0,    type: c,          name: Event/stg_name                                   }
       - { start: 0x000b1450,    type: asm,        name: Event/vu0_func                                   }
       - { start: 0x000b1480,    type: c,          name: Event/demoview                                   }
       - { start: 0x000b3e30,    type: c,          name: Font/font                                        }
@@ -658,7 +658,7 @@ segments:
       - { start: 0x001b9da0,    type: data,       name: sh2gfw_drawloop_main                             }
       - { start: 0x001b9dc0,    type: data,       name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x001b9dd0,    type: data,       name: Event/event                                      }
-      - { start: 0x001ba050,    type: data,       name: Event/event_sub                                  }
+      - { start: 0x001ba050,    type: .data,      name: Event/event_sub                                  }
       - { start: 0x001ba0f0,    type: data,       name: Event/item                                       }
       - { start: 0x001ba1a0,    type: data,       name: Event/stg_name                                   }
       - { start: 0x001ba780,    type: .data,      name: Event/demoview                                   }
@@ -906,9 +906,9 @@ segments:
       - { start: 0x00291180,    type: rodata,     name: sh2shd/sh2shd_outdoor                            }
       - { start: 0x00291290,    type: .rodata,    name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x002915c0,    type: .rodata,    name: Event/event                                      }
-      - { start: 0x002917d0,    type: rodata,     name: Event/event_sub_rodata                           }
+      - { start: 0x002917d0,    type: .rodata,    name: Event/event_sub                                  }
       - { start: 0x00291810,    type: .rodata,    name: Event/item                                       }
-      - { start: 0x002918e0,    type: rodata,     name: Event/stg_name                                   }
+      - { start: 0x002918e0,    type: .rodata,    name: Event/stg_name                                   }
       - { start: 0x00291980,    type: .rodata,    name: Event/demoview                                   }
       - { start: 0x00291ac0,    type: .rodata,    name: Font/font                                        }
       - { start: 0x00291c20,    type: rodata,     name: Multi_thr/filesys/filecmd                        }
@@ -1235,6 +1235,7 @@ segments:
       - { vram:  0x011b6f50,    type: bss,        name: bss_0x11b6f50                                    }
       - { vram:  0x011d2260,    type: .bss,       name: Effect/ef_flame                                  }
       - { vram:  0x011d2270,    type: bss,        name: bss_0x11d2270                                    }
+      - { vram:  0x011e7060,    type: .bss,       name: Event/memo                                       }
       - { vram:  0x011e7080,    type: .bss,       name: DS_Pad/ds_sequencer                              }
       - { vram:  0x011e7850,    type: bss,        name: bss_0x11e7850                                    }
       - { vram:  0x011e7860,    type: .bss,       name: DBG/dbsw_sys                                     }

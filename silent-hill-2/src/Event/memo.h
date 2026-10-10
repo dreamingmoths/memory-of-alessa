@@ -1,8 +1,8 @@
 #ifndef MEMO_H
 #define MEMO_H
 
-#include "common.h"
-#include "FilesList/fileslist_bg.h"
+#include "sh2_common.h"
+#include "data/fs_structs.h"
 
 // total size: 0x10
 typedef struct Memo_Data { // this was anon
@@ -14,10 +14,6 @@ typedef struct Memo_Data { // this was anon
     union fsFileIndex* file0; // offset 0x8, size 0x4
     union fsFileIndex* file1; // offset 0xC, size 0x4
 } Memo_Data;
-
-extern int select;
-extern int list_point;
-extern int disp_point;
 
 extern fsFileIndex data_pic_etc_p_memo_tex[1];
 

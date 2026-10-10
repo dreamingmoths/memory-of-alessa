@@ -341,20 +341,14 @@ static void DeleteEnemyWorkOut(void) {
     shCharacter_Manage_Delete(del, 0, 0);
 }
 
-#ifdef NON_MATCHING
 int CharaAdminEnemyEntryCheck(Enemy_List* ep, int room) {
-    if (GET_ENEMY_FLAG(ep->id))
+    if (GET_ENEMY_FLAG(ep->id)) return 0;
+    if (room && room != RoomName(0, ITOF(ep->pos_x), ITOF(ep->pos_z)))
         return 0;
-    if (room && room != RoomName(0, ep->pos_x, ep->pos_z))
-        return 0;
-    if (!CharaAdminEnemyEntryCondition(ep->condition))
-        return 0;
-
+    if (!CharaAdminEnemyEntryCondition(ep->condition)) return 0;
+    
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", CharaAdminEnemyEntryCheck);
-#endif
 
 #line 801
 static int CharaAdminEnemyEntryCondition(short cond) {
