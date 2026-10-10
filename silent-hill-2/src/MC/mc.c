@@ -197,22 +197,6 @@ MC_WORK* mcInit(void) {
     return &mc;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @886_0x003994F0);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @887_0x00399520);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @888_0x00399550);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @889_0x00399570);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @902);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @924);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @934_0x003995D0);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @1077);
-
 
 #line 383
 void mcExec(void) {
@@ -636,8 +620,6 @@ int mcStartCheck(void) {
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcStartCheck2);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcCheckDir);
-
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @1094_0x00399640);
 
 INCLUDE_RODATA("asm/nonmatchings/MC/mc", @1536);
 
