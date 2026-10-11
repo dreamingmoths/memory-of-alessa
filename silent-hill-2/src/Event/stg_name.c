@@ -65,7 +65,7 @@ int RoomName(int glb_crd, float pos_x, float pos_z) {
 }
 
 static int RoomNameExtra(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x210: return 5;
         case 0x1D0: return 1;
         case 0x20E: return 6;
@@ -88,7 +88,7 @@ static int RoomNameTownEast(int tpwoin) {
 }
 
 static int RoomNameBowling(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {      
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {      
         case 0x210: return 11;
         case 0x20E: return 9;
         case 0x1D0: return 10;
@@ -97,7 +97,7 @@ static int RoomNameBowling(int tpwoin) {
 }
 
 static int RoomNameHeaven(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x210: return 0xC;
         case 0x1D0: return 0xD;                
     }    
@@ -115,7 +115,7 @@ static int RoomNameApart(int tpwoin) {
         case 0x16D:   
         case 0x16C: return 0x11;
     }                                       
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x18E: return 0xF;
         case 0x14E: return 0x10;
         case 0x1CA: return 0x13;
@@ -248,7 +248,7 @@ static int RoomNameDelusion(int tpwoin) {
         case 0x1ED:                                     
         case 0x1CD: return 0x77;
     }                                        
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x1D0: return 0x5C;
         case 0x190: return 0x5F;
         case 0x152: return 0x68;
@@ -290,7 +290,7 @@ static int RoomNameHotelFace(int tpwoin) {
         case 0x132:
         case 0x133: return 0x96;
     }
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x14E: return 0x91;
         case 0x1D0: return 0x92;
         case 0x1D2: return 0x93;
@@ -320,7 +320,7 @@ static int RoomNameHotelFace(int tpwoin) {
 }
 
 static int RoomNameHotelBack(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {                              /* irregular */
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {                              /* irregular */
         case 0x14C: return 0xAA;
         case 0x14E: return 0xAB;
         case 0x1D0: return 0xAC;
@@ -344,7 +344,7 @@ static int RoomNameHotelBack(int tpwoin) {
 }
 
 static int RoomNameLastStage(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x1D0: return 0xBC;
         case 0x210: return 0xBD;     
     }
@@ -352,7 +352,7 @@ static int RoomNameLastStage(int tpwoin) {
 }
 
 static int RoomNameMansion(int tpwoin) {
-    switch ((tpwoin - (!(tpwoin & 0x20) ? 0 : 32)) - (!(tpwoin & 1) ? 0 : 1)) {
+    switch ((tpwoin - ((tpwoin & 0x20) ? 32 : 0)) - ((tpwoin & 1) ? 1 : 0)) {
         case 0x210: return 0xC0;
         case 0x250: return 0xC1;
         case 0x1CE: return 0xC2;
