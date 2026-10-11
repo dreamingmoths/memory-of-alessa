@@ -68,27 +68,35 @@ static inline float vec3_dist_xz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     return d;
 }
 
-static inline int FTOI(float f) {
+static inline int ftoi(float f) {
     int i;
     asm ("cvt.w.s %0, %0; mfc1 %1, %0" : "f"(f), "=r"(i));
     return i;
 }
 
-static inline float ITOF(int i) {
+static inline float itof(int i) {
     float f; 
     asm ("mtc1 %1, %0; cvt.s.w %0, %0" : "=f"(f) : "r"(i));
     return f;
 }
 
-static inline int FTOI4(float x) {
+static inline int vu0_ftoi(float x) {
     int ret;
-    
+
+    #ifdef __MWERKS__
     asm {
         mfc1     ret, x
         qmtc2.ni ret, vf4
         vftoi4.x vf4, vf4
         qmfc2.ni ret, vf4
     }
+    #else
+    asm("mfc1     %0,  %1 ;\
+         qmtc2.ni %0,  vf4;\
+         vftoi4.x vf4, vf4;\
+         qmfc2.ni %0,  vf4;\
+    ": "=r"(ret): "f"(x));
+    #endif
 
     return ret;
 }

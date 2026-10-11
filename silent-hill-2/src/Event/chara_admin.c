@@ -343,7 +343,7 @@ static void DeleteEnemyWorkOut(void) {
 
 int CharaAdminEnemyEntryCheck(Enemy_List* ep, int room) {
     if (GET_ENEMY_FLAG(ep->id)) return 0;
-    if (room && room != RoomName(0, ITOF(ep->pos_x), ITOF(ep->pos_z)))
+    if (room && room != RoomName(0, itof(ep->pos_x), itof(ep->pos_z)))
         return 0;
     if (!CharaAdminEnemyEntryCondition(ep->condition)) return 0;
     

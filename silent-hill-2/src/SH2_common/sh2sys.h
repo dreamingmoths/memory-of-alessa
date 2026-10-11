@@ -18,6 +18,7 @@ extern SH2_SYS Sh2sys;
 #define SH2SYS_GAME_MAIN     1
 #define SH2SYS_PLAYABLE_MAIN 2
 #define SH2SYS_CONNECT       3
+#define SH2SYS_4             4
 
 static inline void sh2sys_step_1(void) {
     Sh2sys.step[SH2SYS_GAME_MAIN]++;
@@ -68,6 +69,12 @@ static inline void sh2sys_set_2(int value) {
 static inline void sh2sys_set_3(int value) {
     Sh2sys.step[SH2SYS_CONNECT] = value;
     Sh2sys.step[4] = 0;
+    Sh2sys.step[5] = 0;
+    Sh2sys.step[6] = 0;
+    Sh2sys.step[7] = 0;
+}
+static inline void sh2sys_set_4(int value) {
+    Sh2sys.step[SH2SYS_4] = value;
     Sh2sys.step[5] = 0;
     Sh2sys.step[6] = 0;
     Sh2sys.step[7] = 0;

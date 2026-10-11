@@ -453,7 +453,7 @@ void EvSubPictureEnd(void) { // @todo: add inlines
         shQzero(&pic, sizeof(PicDraw_Data));
         pic.r = 0; pic.g = 0; pic.b = 0; pic.status |= 0x10;
         
-        pic.a = 0x80; pic.alpha_a = 2; pic.alpha_b = 1; pic.alpha_c = 2; pic.alpha_d = 1; pic.alpha_fix = FTOI(64.0f * ev_filter); pic.status |= 0x20;
+        pic.a = 0x80; pic.alpha_a = 2; pic.alpha_b = 1; pic.alpha_c = 2; pic.alpha_d = 1; pic.alpha_fix = ftoi(64.0f * ev_filter); pic.status |= 0x20;
         pic.otp = 8;
         PictureDraw(&pic);
     }
@@ -499,8 +499,8 @@ void EvSubPictureCursor(int color) {
     picture_set_ap(&pic, cursor_adr);
     pic.otp = 9;
     picture_set_alpha(&pic, 0x80);    
-    px = FTOI4(ev_cursor_x - 5.0f);
-    py = FTOI4(ev_cursor_y - 6.0f);
+    px = vu0_ftoi(ev_cursor_x - 5.0f);
+    py = vu0_ftoi(ev_cursor_y - 6.0f);
     pic.x0 = px; pic.y0 = py; pic.x1 = px + 384; pic.y1 = py + 512; pic.status |= 2;
     
     pic.us0 = 1536; pic.vt0 = 1024; pic.us1 = 2288; pic.vt1 = 2032; pic.status |= 4;    
