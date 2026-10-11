@@ -70,13 +70,13 @@ static inline float vec3_dist_xz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
 
 static inline int ftoi(float f) {
     int i;
-    asm ("cvt.w.s %0, %0; mfc1 %1, %0" : "f"(f), "=r"(i));
+    asm("cvt.w.s %0, %0; mfc1 %1, %0" : "=f"(f), "=r"(i));
     return i;
 }
 
 static inline float itof(int i) {
     float f; 
-    asm ("mtc1 %1, %0; cvt.s.w %0, %0" : "=f"(f) : "r"(i));
+    asm("mtc1 %1, %0; cvt.s.w %0, %0" : "=f"(f) : "r"(i));
     return f;
 }
 
