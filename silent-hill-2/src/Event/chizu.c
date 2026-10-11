@@ -54,7 +54,7 @@ extern /* static */ Chizu_ConnectInfo chz_connect[36]; // size: 0x90, address: 0
 void ChizuMain(void) {
     
     
-    while (TRUE) {
+    while (true) {
         switch (Sh2sys.step[SH2SYS_CONNECT]) {
             default:
             case 0:
@@ -353,18 +353,18 @@ INCLUDE_ASM("asm/nonmatchings/Event/chizu", ChizuSelect);
 static int ChizuPossessionCheck(int chizu) {
     switch (chizu) {
         default:
-            return 1;
+            return true;
     
         case 1:
         case 2:
         case 3:
-            if (GET_GAME_FLAG(GAME_FLAG_24)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_24)) return true;
             
             break;
         case 4:
         case 5:
         case 6:
-            if (GET_GAME_FLAG(GAME_FLAG_25)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_25)) return true;
             
             break;
         
@@ -373,11 +373,11 @@ static int ChizuPossessionCheck(int chizu) {
         case 11:
             if (GET_GAME_FLAG(GAME_FLAG_26) && GET_GAME_FLAG(GAME_FLAG_25))
                 
-                return 1;        
+                return true;        
             break;
         case 7:
         case 8:
-            if (GET_GAME_FLAG(GAME_FLAG_26)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_26)) return true;
             
             break;
         case 14:
@@ -386,17 +386,17 @@ static int ChizuPossessionCheck(int chizu) {
             
         case 12:
         case 13:
-            if (GET_GAME_FLAG(GAME_FLAG_27)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_27)) return true;
             
             break;
         case 16:
         case 17:
-            if (GET_GAME_FLAG(GAME_FLAG_28)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_28)) return true;
             
             break;
         case 18:
         case 19:
-            if (GET_GAME_FLAG(GAME_FLAG_29)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_29)) return true;
             
             break;
         case 24:
@@ -404,17 +404,17 @@ static int ChizuPossessionCheck(int chizu) {
         case 26:
         case 27:
             if (!GET_GAME_FLAG(GAME_FLAG_476)) break;        
-            else if (GET_GAME_FLAG(GAME_FLAG_30)) return 1;
+            else if (GET_GAME_FLAG(GAME_FLAG_30)) return true;
         case 20:
         case 21:
         case 22:
         case 23:
-            if (GET_GAME_FLAG(GAME_FLAG_30)) return 1;            
+            if (GET_GAME_FLAG(GAME_FLAG_30)) return true;            
         case 28:
         case 29:
         case 30:
         case 31:
-            if (GET_GAME_FLAG(GAME_FLAG_31)) return 1;
+            if (GET_GAME_FLAG(GAME_FLAG_31)) return true;
             
             break;
         case 32:
@@ -422,10 +422,10 @@ static int ChizuPossessionCheck(int chizu) {
         case 34:
         case 35:
             if (GET_GAME_FLAG(GAME_FLAG_476)) 
-                if (GET_GAME_FLAG(GAME_FLAG_31)) return 1;                        
+                if (GET_GAME_FLAG(GAME_FLAG_31)) return true;                        
         case 0: break;
     }
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/chizu", ChizuFileLoad);
