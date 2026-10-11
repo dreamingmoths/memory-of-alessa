@@ -328,8 +328,8 @@ static void MemoPictureLoad(fsFileIndex* file0, fsFileIndex* file1) {
     }
     
     if (file0 != NULL) {
-        FcRead(file0, (void*)get_gp_data_buf_addr());
-        layer_adr = (char*)(get_gp_data_buf_addr() + ((FcGetFileSize(file0) + 0x7FF) & ~0x7FF));
+        FcRead(file0, (void*) get_gp_data_buf_addr());
+        layer_adr = (char*) get_gp_data_buf_addr() + ((FcGetFileSize(file0) + 0x7FF) & ~0x7FF);
     }
     if (file1 != NULL) {
         FcRead(file1, layer_adr);
@@ -340,7 +340,7 @@ static void MemoPictureBaseDraw(int rgb ) {
     PicDraw_Data pic;
     
     sh2gfw_Black_Clear();
-    PictureLoadImage((sh2gfw_AREA_HEAD *)get_gp_data_buf_addr(), 0, -1, -1);
+    PictureLoadImage((sh2gfw_AREA_HEAD*) get_gp_data_buf_addr(), 0, -1, -1);
     
     shQzero(&pic, sizeof(PicDraw_Data));
     
@@ -412,15 +412,15 @@ static void MemoPictureLayerDrawAngelRing(void) { // not line matched (need to a
     pic.clut = -1;
     pic.status |= 1;
     if (GET_GAME_FLAG(GAME_FLAG_227)) {
-        pic.x0 = 0x939;
-        pic.y0 = 0x635;
-        pic.x1 = 0xA39;
-        pic.y1 = 0x735;
+        pic.x0 = 2361;
+        pic.y0 = 1589;
+        pic.x1 = 2617;
+        pic.y1 = 1845;
         pic.status |= 2;
         pic.us0 = 0;
         pic.vt0 = 0;
-        pic.us1 = 0xF0;
-        pic.vt1 = 0xF0;
+        pic.us1 = 240;
+        pic.vt1 = 240;
         pic.status |= 4;
         pic.otp = 3;
         pic.a = 0x80;
