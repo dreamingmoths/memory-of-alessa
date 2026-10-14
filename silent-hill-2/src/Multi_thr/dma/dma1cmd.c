@@ -79,7 +79,7 @@ void d1cSubCmdFlushCache(void) {
 
 
 
-    if (d1cSubSubCmdCheckFlushCache()) FlushCache(WRITEBACK_DCACHE); //writeback_dcache
+    if (d1cSubSubCmdCheckFlushCache()) FlushCache(WRITEBACK_DCACHE);
 
 
 }
