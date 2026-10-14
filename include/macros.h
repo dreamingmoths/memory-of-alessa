@@ -44,6 +44,7 @@
 
 #define UNMIGRATED(declaration) extern declaration
 #define UNLINKED(declaration, ...) UNMIGRATED(declaration)
+#define RODATA_PAD_TO(intended_addr) const char __pad_##intended_addr[] = "\0\0\0\0"
 
 #define IS_EVEN(x) (((x) & 1) ? 0 : 1)
 
