@@ -38,8 +38,8 @@
 
 
 
-int last_regist_cid; // size: 0x4, address: 0x10138B0
-int last_flush_cid; // size: 0x4, address: 0x10138A8
+static int last_regist_cid; // size: 0x4, address: 0x10138B0
+static int last_flush_cid; // size: 0x4, address: 0x10138A8
 
 static int d2cCmdInit(void);
 
