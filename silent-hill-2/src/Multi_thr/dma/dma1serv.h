@@ -4,7 +4,7 @@
 #include "Multi_thr/dma/dma1serv.h"
 #include "Multi_thr/util/cmd_serv.h"
 
-#define DMA1_PUT(_index, ...) (((int (*)(int (*)(void), ...))(&d1sPutCmd##_index))(__VA_ARGS__))
+#define D1S_PUT_CMD(_index, ...) (((int (*)(int (*)(void), ...))(&d1sPutCmd##_index))(__VA_ARGS__))
 
 int d1sInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */);
 

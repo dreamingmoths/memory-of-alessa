@@ -1,4 +1,5 @@
 #include "dma1cmd.h"
+#include "dma1serv.h"
 
 static int last_regist_cid; // size: 0x4, address: 0x1013898
 static int last_flush_cid; // size: 0x4, address: 0x1013890
@@ -99,7 +100,7 @@ static int d1cCmdInit(void) {
 
 int d1cInit(void) {
     int ret;
-    ret = DMA1_PUT(0, d1cCmdInit);
+    ret = D1S_PUT_CMD(0, d1cCmdInit);
     d1cSubCmdUpdataLastRegistCid(ret);
     return ret;
 }
@@ -123,7 +124,7 @@ int d1cCmdSend(void* tag) {
 
 int d1cSend(void* tag) {
     int ret;
-    ret = DMA1_PUT(1, d1cCmdSend, tag);
+    ret = D1S_PUT_CMD(1, d1cCmdSend, tag);
     d1cSubCmdUpdataLastRegistCid(ret);
     return ret;
 }

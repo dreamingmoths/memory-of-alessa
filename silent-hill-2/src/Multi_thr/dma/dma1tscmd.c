@@ -13,7 +13,7 @@ int d1tscCmdSync(int d2cid) {
 }
 
 int d1tscSync(int d2cid) {
-    return DMA1_PUT(1, d1tscCmdSync, d2cid);
+    return D1S_PUT_CMD(1, d1tscCmdSync, d2cid);
 }
 
 
@@ -29,5 +29,5 @@ int d1tscCmdFinishToUseSlot(int slot) {
 }
 
 int d1tscFinishToUseSlot(int slot) {
-    return DMA1_PUT(1, d1tscCmdFinishToUseSlot, slot);
+    return D1S_PUT_CMD(1, d1tscCmdFinishToUseSlot, slot);
 }
