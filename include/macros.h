@@ -45,6 +45,6 @@
 #define UNMIGRATED(declaration) extern declaration
 #define UNLINKED(declaration, ...) UNMIGRATED(declaration)
 
-#define IS_EVEN(x) (((x) & 1) ? false : true)
+#define IS_EVEN(x) (((x) & 1) ? 0 : 1)
 
 #endif // ALESSA_MACROS_H

@@ -3,25 +3,46 @@
 
 #include "sce/eetypes.h"
 
-typedef struct
-{
-	u_char Resv2,Sec,Min,Hour;
-	u_char Day,Month;
-	u_short Year;
+typedef struct {
+    u_char Resv2, Sec, Min, Hour;
+    u_char Day, Month;
+    u_short Year;
 } sceMcStDateTime;
 
-typedef struct
-{
-	sceMcStDateTime _Create;
-	sceMcStDateTime _Modify;
-	u_int FileSizeByte;
-	u_short AttrFile;
-	u_short Reserve1;
-	u_int Reserve2;
-	u_int PdaAplNo;
-	u_char EntryName[32];
-} sceMcTblGetDir __attribute__((aligned (64)));
+typedef struct {
+    sceMcStDateTime _Create;
+    sceMcStDateTime _Modify;
+    u_int FileSizeByte;
+    u_short AttrFile;
+    u_short Reserve1;
+    u_int Reserve2;
+    u_int PdaAplNo;
+    u_char EntryName[32];
+} sceMcTblGetDir __attribute__((aligned(64)));
 
 int sceMcInit(void);
+int sceMcEnd(void);
+int sceMcGetInfo(int, int, int*, int*, int*);
+int sceMcOpen(int, int, const char*, int);
+int sceMcClose(int);
+int sceMcSeek(int, int, int);
+int sceMcRead(int, void*, int);
+int sceMcReadFast(int, void*, int);
+int sceMcWrite(int, const void*, int);
+int sceMcWriteFast(int, const void*, int);
+int sceMcFlush(int);
+int sceMcMkdir(int, int, const char*);
+int sceMcChdir(int, int, const char*, char*);
+int sceMcGetDir(int, int, const s_char*, u_int, int, sceMcTblGetDir*);
+int sceMcSetFileInfo(int, int, const char*, const char*, u_int);
+int sceMcDelete(int, int, const char*);
+int sceMcFormat(int, int);
+int sceMcUnformat(int, int);
+int sceMcGetEntSpace(int, int, const char*);
+int sceMcRename(int, int, const char*, const char*);
+int sceMcChangeThreadPriority(int);
+int sceMcGetSlotMax(int);
+int sceMcSync(int, int*, int*);
+void* sceMcGetErxEntries(void);
 
 #endif // LIB_MC_H

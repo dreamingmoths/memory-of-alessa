@@ -1,8 +1,10 @@
 #include "sh2_common.h"
 #include "SH2_common/mem_share.h"
-#include "MC/mc.h"
 
-extern void* memcpy(void* dest, const void* src, int count);
+#include "lib/cstring.h"
+#include "sce/libmc.h"
+
+#include "MC/mc.h"
 
 static void mcCodec(void);
 static void mcAutoInfo(void);
@@ -339,7 +341,7 @@ void mcExec(void) {
                             n = 4;
                         } else if (mcw->job == 2) {
                             n = mcw->portstatus[port];
-                            sceMcGetEntSpace(port, 0, ".");
+                            sceMcGetEntSpace(port, 0, "/");
                             mcw->job_step = 2;
                         } else if (mcw->free[port] < ((mcw->d_ent[port] & 1) ? 0 : 1) + 93) {
                             n = 3;
@@ -621,17 +623,19 @@ INCLUDE_ASM("asm/nonmatchings/MC/mc", mcStartCheck2);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcCheckDir);
 
-INCLUDE_RODATA("asm/nonmatchings/MC/mc", @1536);
+UNLINKED(const u_char asterisk[], "*");
+INCLUDE_RODATA("asm/nonmatchings/MC/mc", asterisk);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcJobCheckDir);
 
+#line 1255
 static void mcSearchDir(s_char port) {
     mcw->dirnum = 0;
     mcSetJob(4, port, 0);
 }
 
 /* thank you so much inspectredc! */
-
+#line 1263
 static void mcJobSearchDir(void) {
     s_char port; // r16
     int i; // r17
@@ -701,7 +705,7 @@ static void mcJobSearchDir(void) {
                 break;
             }
             mcSetDirName(mcw->dirnum);
-            strcat(mcw->fname, "*");
+            strcat(mcw->fname, asterisk);
             sceMcGetDir(port, 0, mcw->fname, 0, 20, mcw->dirtbl);
             mcw->job_step++;
             break;
@@ -807,6 +811,7 @@ static void mcJobSearchDir(void) {
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc", mcSearchDir2);
 
+#line 1439
 static void mcJobSearchDir2(void) {
     s_char port; // r16
     int i; // r17
@@ -877,7 +882,7 @@ static void mcJobSearchDir2(void) {
                 break;
             }
             mcSetDirName(mcw->dirnum);
-            strcat(mcw->fname, "*");
+            strcat(mcw->fname, asterisk);
             sceMcGetDir(port, 0, mcw->fname, 0, 20, mcw->dirtbl);
             mcw->job_step++;
             break;

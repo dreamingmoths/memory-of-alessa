@@ -70643,8 +70643,8 @@ rom:0x13D48C reloc:MIPS_LO16                           symbol:mcw
 rom:0x13D494 reloc:MIPS_26                             symbol:mcSetDirName
 rom:0x13D49C reloc:MIPS_HI16                           symbol:mcw
 rom:0x13D4A0 reloc:MIPS_LO16                           symbol:mcw
-rom:0x13D4A8 reloc:MIPS_HI16                           symbol:"@1536"
-rom:0x13D4AC reloc:MIPS_LO16                           symbol:"@1536"
+rom:0x13D4A8 reloc:MIPS_HI16                           symbol:"asterisk"
+rom:0x13D4AC reloc:MIPS_LO16                           symbol:"asterisk"
 rom:0x13D4B0 reloc:MIPS_26                             symbol:strcat
 rom:0x13D4B8 reloc:MIPS_HI16                           symbol:mcw
 rom:0x13D4BC reloc:MIPS_LO16                           symbol:mcw
@@ -70809,8 +70809,8 @@ rom:0x13E0C8 reloc:MIPS_26                             symbol:mcPortError
 rom:0x13E0DC reloc:MIPS_26                             symbol:mcSetDirName
 rom:0x13E0E4 reloc:MIPS_HI16                           symbol:mcw
 rom:0x13E0E8 reloc:MIPS_LO16                           symbol:mcw
-rom:0x13E0F0 reloc:MIPS_HI16                           symbol:"@1536"
-rom:0x13E0F4 reloc:MIPS_LO16                           symbol:"@1536"
+rom:0x13E0F0 reloc:MIPS_HI16                           symbol:"asterisk"
+rom:0x13E0F4 reloc:MIPS_LO16                           symbol:"asterisk"
 rom:0x13E0F8 reloc:MIPS_26                             symbol:strcat
 rom:0x13E100 reloc:MIPS_HI16                           symbol:mcw
 rom:0x13E104 reloc:MIPS_LO16                           symbol:mcw
@@ -70932,8 +70932,8 @@ rom:0x13E948 reloc:MIPS_26                             symbol:mcPortError
 rom:0x13E95C reloc:MIPS_26                             symbol:mcSetDirName
 rom:0x13E964 reloc:MIPS_HI16                           symbol:mcw
 rom:0x13E968 reloc:MIPS_LO16                           symbol:mcw
-rom:0x13E970 reloc:MIPS_HI16                           symbol:"@1536"
-rom:0x13E974 reloc:MIPS_LO16                           symbol:"@1536"
+rom:0x13E970 reloc:MIPS_HI16                           symbol:"asterisk"
+rom:0x13E974 reloc:MIPS_LO16                           symbol:"asterisk"
 rom:0x13E978 reloc:MIPS_26                             symbol:strcat
 rom:0x13E980 reloc:MIPS_HI16                           symbol:mcw
 rom:0x13E984 reloc:MIPS_LO16                           symbol:mcw
@@ -71401,8 +71401,8 @@ rom:0x1409DC reloc:MIPS_LO16                           symbol:mcw
 rom:0x1409E4 reloc:MIPS_26                             symbol:mcSetDirName
 rom:0x1409EC reloc:MIPS_HI16                           symbol:mcw
 rom:0x1409F0 reloc:MIPS_LO16                           symbol:mcw
-rom:0x1409F8 reloc:MIPS_HI16                           symbol:"@1536"
-rom:0x1409FC reloc:MIPS_LO16                           symbol:"@1536"
+rom:0x1409F8 reloc:MIPS_HI16                           symbol:"asterisk"
+rom:0x1409FC reloc:MIPS_LO16                           symbol:"asterisk"
 rom:0x140A00 reloc:MIPS_26                             symbol:strcat
 rom:0x140A08 reloc:MIPS_HI16                           symbol:mcw
 rom:0x140A0C reloc:MIPS_LO16                           symbol:mcw
@@ -71541,8 +71541,8 @@ rom:0x141048 reloc:MIPS_26                             symbol:mcPortError
 rom:0x14105C reloc:MIPS_26                             symbol:mcSetExtraDirName
 rom:0x141064 reloc:MIPS_HI16                           symbol:mcw
 rom:0x141068 reloc:MIPS_LO16                           symbol:mcw
-rom:0x141070 reloc:MIPS_HI16                           symbol:"@1536"
-rom:0x141074 reloc:MIPS_LO16                           symbol:"@1536"
+rom:0x141070 reloc:MIPS_HI16                           symbol:"asterisk"
+rom:0x141074 reloc:MIPS_LO16                           symbol:"asterisk"
 rom:0x141078 reloc:MIPS_26                             symbol:strcat
 rom:0x141080 reloc:MIPS_HI16                           symbol:mcw
 rom:0x141084 reloc:MIPS_LO16                           symbol:mcw
