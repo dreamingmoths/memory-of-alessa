@@ -130,11 +130,11 @@ segments:
       - { start: 0x00088a60,    type: asm,        name: Multi_thr/dma/dma1cmd                            }
       - { start: 0x00088c70,    type: c,          name: Multi_thr/dma/dma1serv                           }
       - { start: 0x00088e00,    type: asm,        name: Multi_thr/dma/dma1tscmd                          }
-      - { start: 0x00088ed0,    type: asm,        name: Multi_thr/dma/dma2cmd                            }
-      - { start: 0x00089090,    type: asm,        name: Multi_thr/dma/dma2serv                           }
-      - { start: 0x00089270,    type: asm,        name: Multi_thr/dma/dma2tscmd                          }
+      - { start: 0x00088ed0,    type: c,          name: Multi_thr/dma/dma2cmd                            }
+      - { start: 0x00089090,    type: c,          name: Multi_thr/dma/dma2serv                           }
+      - { start: 0x00089270,    type: c,          name: Multi_thr/dma/dma2tscmd                          }
       - { start: 0x000893f0,    type: asm,        name: Multi_thr/dma/sh_dma1                            }
-      - { start: 0x000897d0,    type: asm,        name: Multi_thr/dma/sh_dma2                            }
+      - { start: 0x000897d0,    type: c,          name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x00089bc0,    type: asm,        name: Multi_thr/dma/texslot                            }
       - { start: 0x00089e30,    type: c,          name: Multi_thr/util/cmd_serv                          }
       - { start: 0x0008b280,    type: asm,        name: Multi_thr/util/utilexcl                          }
@@ -163,8 +163,8 @@ segments:
       - { start: 0x000a7580,    type: c,          name: Event/event                                      }
       - { start: 0x000ac650,    type: c,          name: Event/event_sub                                  }
       - { start: 0x000adf60,    type: c,          name: Event/item                                       }
-      - { start: 0x000aea60,    type: asm,        name: Event/picture                                    }
-      - { start: 0x000af7a0,    type: asm,        name: Event/stg_name                                   }
+      - { start: 0x000aea60,    type: c,          name: Event/picture                                    }
+      - { start: 0x000af7a0,    type: c,          name: Event/stg_name                                   }
       - { start: 0x000b1450,    type: asm,        name: Event/vu0_func                                   }
       - { start: 0x000b1480,    type: c,          name: Event/demoview                                   }
       - { start: 0x000b3e30,    type: c,          name: Font/font                                        }
@@ -177,7 +177,7 @@ segments:
       - { start: 0x000bea60,    type: c,          name: Multi_thr/intc/syncv                             }
       - { start: 0x000bed80,    type: asm,        name: Multi_thr/intc/th_vbe                            }
       - { start: 0x000bef20,    type: asm,        name: Multi_thr/pad/keydata                            }
-      - { start: 0x000bfc40,    type: asm,        name: Multi_thr/pad/th_pad                             }
+      - { start: 0x000bfc40,    type: c,          name: Multi_thr/pad/th_pad                             }
       - { start: 0x000bff00,    type: c,          name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x000c0820,    type: c,          name: Multi_thr/boot/bootopt                           }
       - { start: 0x000c0a70,    type: c,          name: Multi_thr/boot/bootoptitem                       }
@@ -645,7 +645,7 @@ segments:
       - { start: 0x001b6ac0,    type: .data,      name: Lens/lens_flare                                  }
       - { start: 0x001b6b10,    type: .data,      name: Lens/lens_th_draw                                }
       - { start: 0x001b6b20,    type: data,       name: Multi_thr/dma/sh_dma1                            }
-      - { start: 0x001b6b38,    type: data,       name: Multi_thr/dma/sh_dma2                            }
+      - { start: 0x001b6b38,    type: .data,      name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x001b6b50,    type: data,       name: Multi_thr/dma/texslot                            }
       - { start: 0x001b6ba0,    type: data,       name: Multi_thr/util/utilexcl                          }
       - { start: 0x001b6bb0,    type: data,       name: Multi_thr/pad/lib_sh_pad                         }
@@ -658,7 +658,7 @@ segments:
       - { start: 0x001b9da0,    type: data,       name: sh2gfw_drawloop_main                             }
       - { start: 0x001b9dc0,    type: data,       name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x001b9dd0,    type: data,       name: Event/event                                      }
-      - { start: 0x001ba050,    type: data,       name: Event/event_sub                                  }
+      - { start: 0x001ba050,    type: .data,      name: Event/event_sub                                  }
       - { start: 0x001ba0f0,    type: data,       name: Event/item                                       }
       - { start: 0x001ba1a0,    type: data,       name: Event/stg_name                                   }
       - { start: 0x001ba780,    type: .data,      name: Event/demoview                                   }
@@ -673,7 +673,7 @@ segments:
       - { start: 0x0023bb08,    type: data,       name: Multi_thr/intc/syncv                             }
       - { start: 0x0023bb28,    type: data,       name: Multi_thr/intc/th_vbe                            }
       - { start: 0x0023bb40,    type: data,       name: Multi_thr/pad/keydata                            }
-      - { start: 0x0023bc88,    type: data,       name: Multi_thr/pad/th_pad                             }
+      - { start: 0x0023bc88,    type: .data,      name: Multi_thr/pad/th_pad                             }
       - { start: 0x0023bca0,    type: data,       name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x0023bda0,    type: data,       name: Multi_thr/boot/bootopt                           }
       - { start: 0x0023bda0,    type: .data,      name: Multi_thr/boot/bootoptitem                       }
@@ -796,7 +796,7 @@ segments:
       - { start: 0x00278550,    type: data,       name: Effect2/hh_class_flame_01                        }
       - { start: 0x00279990,    type: data,       name: Effect2/hh_class_smoke_00                        }
       - { start: 0x0027a060,    type: data,       name: Effect2/hh_class_water_pool_00                   }
-      - { start: 0x0027a5a0,    type: data,       name: Chacter/m3_play_event                            }
+      - { start: 0x0027a5a0,    type: .data,      name: Chacter/m3_play_event                            }
       - { start: 0x0027a630,    type: .data,      name: Chacter/m3_play_efect                            }
       - { start: 0x0027a6f0,    type: data,       name: Effect2/hh_class_flame_02                        }
       - { start: 0x0027bb30,    type: data,       name: Effect2/hh_class_plural_phenomenon_01            }
@@ -892,7 +892,7 @@ segments:
       - { start: 0x00290080,    type: .rodata,    name: Heap/utilheap                                    }
       - { start: 0x00290100,    type: .rodata,    name: Lens/kari_lf_draw                                }
       - { start: 0x00290160,    type: rodata,     name: Multi_thr/dma/sh_dma1                            }
-      - { start: 0x00290270,    type: rodata,     name: Multi_thr/dma/sh_dma2                            }
+      - { start: 0x00290270,    type: .rodata,    name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x00290370,    type: rodata,     name: Multi_thr/dma/texslot                            }
       - { start: 0x002903a0,    type: rodata,     name: Multi_thr/util/cmd_serv_rodata                   }
       - { start: 0x00290488,    type: rodata,     name: Multi_thr/util/utilstr                           }
@@ -906,9 +906,9 @@ segments:
       - { start: 0x00291180,    type: rodata,     name: sh2shd/sh2shd_outdoor                            }
       - { start: 0x00291290,    type: .rodata,    name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x002915c0,    type: .rodata,    name: Event/event                                      }
-      - { start: 0x002917d0,    type: rodata,     name: Event/event_sub_rodata                           }
+      - { start: 0x002917d0,    type: .rodata,    name: Event/event_sub                                  }
       - { start: 0x00291810,    type: .rodata,    name: Event/item                                       }
-      - { start: 0x002918e0,    type: rodata,     name: Event/stg_name                                   }
+      - { start: 0x002918e0,    type: .rodata,    name: Event/stg_name                                   }
       - { start: 0x00291980,    type: .rodata,    name: Event/demoview                                   }
       - { start: 0x00291ac0,    type: .rodata,    name: Font/font                                        }
       - { start: 0x00291c20,    type: rodata,     name: Multi_thr/filesys/filecmd                        }
@@ -918,7 +918,7 @@ segments:
       - { start: 0x00291de0,    type: .rodata,    name: Multi_thr/filesys/iopload                        }
       - { start: 0x00291df0,    type: .rodata,    name: Multi_thr/filesys/sh_cdvd                        }
       - { start: 0x00291f80,    type: .rodata,    name: Multi_thr/intc/syncv                             }
-      - { start: 0x002920a0,    type: rodata,     name: Multi_thr/pad/th_pad                             }
+      - { start: 0x002920a0,    type: .rodata,    name: Multi_thr/pad/th_pad                             }
       - { start: 0x00292130,    type: .rodata,    name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x00292500,    type: .rodata,    name: Multi_thr/boot/bootoptitem                       }
       - { start: 0x00292a10,    type: .rodata,    name: Event/title                                      }
@@ -1162,15 +1162,15 @@ segments:
       - { vram:  0x00e40280,    type: bss,        name: bss_0x0e40280                                    }
       - { vram:  0x00e4e6a0,    type: bss,        name: GFW/sh2gfw_parse_and_packet                      }
       - { vram:  0x00f8e700,    type: bss,        name: GFW/sh2gfw_viewclip                              }
-      - { vram:  0x00f8e708,    type: bss,        name: Heap/sh2_ch_malloc                               }
+      - { vram:  0x00f8e708,    type: .bss,       name: Heap/sh2_ch_malloc                               }
       - { vram:  0x0100e750,    type: bss,        name: Lens/kari_lf_draw                                }
       - { vram:  0x01013750,    type: bss,        name: Lens/lens_flare                                  }
       - { vram:  0x01013890,    type: bss,        name: Multi_thr/dma/dma1cmd                            }
       - { vram:  0x010138a0,    type: bss,        name: Multi_thr/dma/dma1serv                           }
-      - { vram:  0x010138a8,    type: bss,        name: Multi_thr/dma/dma2cmd                            }
-      - { vram:  0x010138b8,    type: bss,        name: Multi_thr/dma/dma2serv                           }
+      - { vram:  0x010138a8,    type: .bss,       name: Multi_thr/dma/dma2cmd                            }
+      - { vram:  0x010138b8,    type: .bss,       name: Multi_thr/dma/dma2serv                           }
       - { vram:  0x010138c0,    type: bss,        name: Multi_thr/dma/sh_dma1                            }
-      - { vram:  0x010138c8,    type: bss,        name: Multi_thr/dma/sh_dma2                            }
+      - { vram:  0x010138c8,    type: .bss,       name: Multi_thr/dma/sh_dma2                            }
       - { vram:  0x01013900,    type: bss,        name: shPad/lib_sh_pad                                 }
       - { vram:  0x01013b80,    type: bss,        name: sh2shd/sh2shd_char_jms                           }
       - { vram:  0x01013b90,    type: bss,        name: sound/sd0712/ee/sd_call                          }
@@ -1235,6 +1235,7 @@ segments:
       - { vram:  0x011b6f50,    type: bss,        name: bss_0x11b6f50                                    }
       - { vram:  0x011d2260,    type: .bss,       name: Effect/ef_flame                                  }
       - { vram:  0x011d2270,    type: bss,        name: bss_0x11d2270                                    }
+      - { vram:  0x011e7060,    type: .bss,       name: Event/memo                                       }
       - { vram:  0x011e7080,    type: .bss,       name: DS_Pad/ds_sequencer                              }
       - { vram:  0x011e7850,    type: bss,        name: bss_0x11e7850                                    }
       - { vram:  0x011e7860,    type: .bss,       name: DBG/dbsw_sys                                     }
@@ -1277,8 +1278,7 @@ segments:
       - { vram:  0x01202f70,    type: .bss,       name: Effect2/hh_class_water_09                        }
       - { vram:  0x01202f90,    type: bss,        name: Enemy/en_insect                                  }
       - { vram:  0x01202fa0,    type: bss,        name: Effect2/hh_class_water_pool_00                   }
-      - { vram:  0x01202fa8,    type: bss,        name: Chacter/m3_play_event                            }
-      - { vram:  0x01202fa8,    type: bss,        name: Chacter/m3_play_event                            }
+      - { vram:  0x01202fa8,    type: .bss,       name: Chacter/m3_play_event                            }
       - { vram:  0x01202fb0,    type: bss,        name: movie/movie_main                                 }
       - { vram:  0x01216b00,    type: bss,        name: movie/pss_audiodec                               }
       - { vram:  0x01217b00,    type: bss,        name: movie/pss_common                                 }

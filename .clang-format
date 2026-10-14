@@ -3,6 +3,7 @@ IndentWidth: 4
 ColumnLimit: 0
 PointerAlignment: Left
 AllowShortLoopsOnASingleLine: true
+AlignConsecutiveMacros: true
 AlignConsecutiveAssignments: true
 AlignOperands: true
 AlignEscapedNewlines: Left
@@ -11,7 +12,10 @@ BreakBeforeBraces: Attach
 BreakBeforeCloseBracketBracedList: true
 SortIncludes: false
 SpaceAfterCStyleCast: true
-SkipMacroDefinitionBody: true
 BinPackArguments: true
 BinPackParameters: true
 IndentCaseLabels: true
+RemoveParentheses: MultipleParentheses
+
+# uncomment as needed!
+# SkipMacroDefinitionBody: true

@@ -283,7 +283,9 @@ INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_init_part_sub);
 
 INCLUDE_ASM("asm/nonmatchings/Fog/fog", fog_part_newpos);
 
-INCLUDE_ASM("asm/nonmatchings/Fog/fog", fogResetWall);
+void fogResetWall(void) {
+    fwork.WallNum = 0;
+}
 
 void fogSetWall(void* Vector) {
     float (* wv)[4] = Vector; // r16

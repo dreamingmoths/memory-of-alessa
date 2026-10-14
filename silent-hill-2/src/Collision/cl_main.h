@@ -8,19 +8,19 @@
 
 typedef struct _CL_CHARA_LIST {
     // total size: 0xE0
-    CL_HITPOLY_COLUMN col;  // offset 0x0, size 0x30
-    CL_HITPOLY_COLUMN wcol; // offset 0x30, size 0x30
-    struct SubCharacter* sc;        // offset 0x60, size 0x4
-    sceVu0FVECTOR opos;                  // offset 0x70, size 0x10
-    sceVu0FVECTOR pos;                   // offset 0x80, size 0x10
-    sceVu0FVECTOR mvec;                  // offset 0x90, size 0x10
-    sceVu0FVECTOR wallcv;                // offset 0xA0, size 0x10
-    float mang;                     // offset 0xB0, size 0x4
-    int wflg;                       // offset 0xB4, size 0x4
-    sceVu0FVECTOR ccvec;                 // offset 0xC0, size 0x10
-    signed short movflg;            // offset 0xD0, size 0x2
-    signed short batflg;            // offset 0xD2, size 0x2
-    void (*heightfunc)(float*);     // offset 0xD4, size 0x4
+    CL_HITPOLY_COLUMN col;      // offset 0x0, size 0x30
+    CL_HITPOLY_COLUMN wcol;     // offset 0x30, size 0x30
+    struct SubCharacter* sc;    // offset 0x60, size 0x4
+    sceVu0FVECTOR opos;         // offset 0x70, size 0x10
+    sceVu0FVECTOR pos;          // offset 0x80, size 0x10
+    sceVu0FVECTOR mvec;         // offset 0x90, size 0x10
+    sceVu0FVECTOR wallcv;       // offset 0xA0, size 0x10
+    float mang;                 // offset 0xB0, size 0x4
+    int wflg;                   // offset 0xB4, size 0x4
+    sceVu0FVECTOR ccvec;        // offset 0xC0, size 0x10
+    short movflg;               // offset 0xD0, size 0x2
+    short batflg;               // offset 0xD2, size 0x2
+    void (*heightfunc)(float*); // offset 0xD4, size 0x4
 } CL_CHARA_LIST;
 typedef struct _CL_SELECT_MAP {
     // total size: 0x8
@@ -29,13 +29,13 @@ typedef struct _CL_SELECT_MAP {
 } CL_SELECT_MAP;
 typedef struct _CL_HITPOLY_PLANE {
     // total size: 0x50
-    u_char kind;        // offset 0x0, size 0x1
-    u_char shape;       // offset 0x1, size 0x1
-    unsigned short pad; // offset 0x2, size 0x2
-    u_int weight;       // offset 0x4, size 0x4
-    u_int material;     // offset 0x8, size 0x4
-    int flg;            // offset 0xC, size 0x4
-    float p[4][4];      // offset 0x10, size 0x40
+    u_char kind;    // offset 0x0, size 0x1
+    u_char shape;   // offset 0x1, size 0x1
+    u_short pad;    // offset 0x2, size 0x2
+    u_int weight;   // offset 0x4, size 0x4
+    u_int material; // offset 0x8, size 0x4
+    int flg;        // offset 0xC, size 0x4
+    float p[4][4];  // offset 0x10, size 0x40
 } CL_HITPOLY_PLANE;
 typedef struct _CL_WALLHITDAT {
     // total size: 0x50
@@ -47,14 +47,14 @@ typedef struct _CL_WALLHITDAT {
 } CL_WALLHITDAT;
 typedef struct _CL_BATTLE_RESULT {
     // total size: 0x40
-    int enable;           // offset 0x0, size 0x4
-    u_int id;             // offset 0x4, size 0x4
-    int atr;              // offset 0x8, size 0x4
-    sceVu0FVECTOR pos;    // offset 0x10, size 0x10
-    sceVu0FVECTOR vec;    // offset 0x20, size 0x10
-    unsigned short kind;  // offset 0x30, size 0x2
-    unsigned short btlid; // offset 0x32, size 0x2
-    union                 /* @anon0 */
+    int enable;        // offset 0x0, size 0x4
+    u_int id;          // offset 0x4, size 0x4
+    int atr;           // offset 0x8, size 0x4
+    sceVu0FVECTOR pos; // offset 0x10, size 0x10
+    sceVu0FVECTOR vec; // offset 0x20, size 0x10
+    u_short kind;      // offset 0x30, size 0x2
+    u_short btlid;     // offset 0x32, size 0x2
+    union              /* @anon0 */
     {
         struct SubCharacter* en;       // offset 0x0, size 0x4
         struct _CL_HITPOLY_PLANE* pl;  // offset 0x0, size 0x4
@@ -85,8 +85,8 @@ typedef struct _CL_CLDHEADER {
 
 typedef struct _CL_BATTLE_QUE {
     // total size: 0x50
-    unsigned short kind;     // offset 0x0, size 0x2
-    unsigned short btlid;    // offset 0x2, size 0x2
+    u_short kind;            // offset 0x0, size 0x2
+    u_short btlid;           // offset 0x2, size 0x2
     struct SubCharacter* sc; // offset 0x4, size 0x4
     sceVu0FVECTOR svs;       // offset 0x10, size 0x10
     sceVu0FVECTOR sve;       // offset 0x20, size 0x10
@@ -141,7 +141,7 @@ void clFrameInitCollisionData(void);
 
 void clCollectCharaPosition(void);
 
-void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col, CL_HITPOLY_COLUMN* wcol, struct SubCharacter* sc, void (* func)(void));
+void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col, CL_HITPOLY_COLUMN* wcol, struct SubCharacter* sc, void (*func)(void));
 
 void clAddDynamicWall(CL_HITPOLY_PLANE* pl);
 
@@ -155,7 +155,7 @@ void clBattleCheckExec(void);
 
 CL_SELECT_MAP* clGetHitSectListVECHIT(float* st, float* ed);
 
-int clCheckCrossLine2BoxXZ(float (* box)[4], float* st, float* ed);
+int clCheckCrossLine2BoxXZ(float (*box)[4], float* st, float* ed);
 
 int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1);
 

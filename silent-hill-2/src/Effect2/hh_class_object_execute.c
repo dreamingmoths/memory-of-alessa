@@ -5,13 +5,10 @@
 #include "Effect2/hh_packet.h"
 #include "Event/stg_name.h"
 #include "Chacter/character.h"
-#include "common.h"
 #include "sce/libvu0.h"
 
 static void Prefix_Operation(void);
-
 static void Suffix_Operation(void);
-
 static void Debug_Functions(void);
 
 static void Prefix_Operation(void) { /* empty */ }
@@ -20,7 +17,10 @@ static void Suffix_Operation(void) { /* empty */ }
 
 static void Debug_Functions(void) { /* empty*/ }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_object_execute", HH_Class_Object_Initialize);
+void HH_Class_Object_Initialize(void) {
+    HH_Effect_Object_MemoryBlock_Allocate();
+    HH_Effect_Object_AutoPost();
+}
 
 void HH_Class_Object_Execute(void) {
     if (HH_Vif1PacketBuffer_Memory_Allocate_Check()) {
@@ -44,7 +44,7 @@ void HH_Class_Object_Packet_Kick(void) {
 void HH_Effect_Object_Blood_Pool_Impact_Post(float* Location, int idk) {
     ImpactQueue_Element descriptor; // r29+0x20
 
-    int room_name  = RoomNameJms();
+    int room_name = RoomNameJms();
 
     switch (room_name) {
         case 0x63: 
@@ -127,9 +127,67 @@ void HH_Effect_Object_Blood_Splash_Impact_Post(float* Location, float* Direction
     ImpactDescriptor_Post(HH_Effect_Object_Infomeation_Get(), &descriptor);
 }
 
-float data_0x0036ED20[4] = {0.0f, 100.0f, 0.0f, 0.0f}; 
+void HH_Effect_Object_Ground_Impact_Post(float* Toe, float* Heel, u_int Foot_Kind, u_int Character_ID) {
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_object_execute", HH_Effect_Object_Ground_Impact_Post);
+    int room_name = RoomNameJms(); // r16
+    ImpactQueue_Element descriptor; // r29+0x70
+    CL_VHIT_RESULT hit_result; // r29+0xB0
+    descriptor.hInstance = 0;
+    descriptor.pResultHandle_Address = 0;
+    sceVu0CopyVector(descriptor.Option.Vector[0], Toe);
+    sceVu0CopyVector(descriptor.Option.Vector[1], Heel);
+
+    switch (room_name) { // @todo: add rooms
+        case 0x63: 
+        case 0x62:
+        case 0x80:
+        case 0x85:
+        case 0x7A:
+        case 0x7C:
+        case 0x7E:
+        case 0x82:
+        case 0xBB:
+        case 0xB6:
+        case 0xB7:
+        case 0xAB:
+        case 0xB8:
+        case 0xB9:
+        case 0x21:
+        case 0x25:
+        case 0x26:
+            descriptor.Class_Descriptor = 2;
+            descriptor.Option.Vector[0][1] -= 50.0f;
+            descriptor.Option.Vector[1][1] -= 50.0f;
+        break;
+
+        
+        default: {
+            sceVu0FVECTOR e_pos = {0.0f, 100.0f, 0.0f, 0.0f}; // r29+0xF0
+            
+            memset(&hit_result, NULL, sizeof hit_result);
+            
+            sceVu0AddVector(&e_pos, &e_pos, &descriptor.Option.Vector[0]);
+            
+            clCheckHitEyesOnlyFloor(&hit_result, NULL, &descriptor.Option.Vector[0], &e_pos);
+            
+            if (hit_result.kind == 1) {               
+                descriptor.Option.Vector[0][1] = descriptor.Option.Vector[1][1] = hit_result.hobj.wall.cp[1];
+            }
+            
+            
+            descriptor.Class_Descriptor = 1;
+            break;
+        }
+    }
+    
+    
+    
+    
+    descriptor.Option.Int_Value[0] = Foot_Kind;
+    descriptor.Option.Int_Value[1] = Character_ID;
+    ImpactDescriptor_Post(HH_Effect_Object_Infomeation_Get(), &descriptor);
+
+}
 
 void HH_Effect_Object_Ground_Impact_Post_forEnemy(float* Foot_Location, u_int Foot_Kind) {
     int room_name = RoomNameJms(); // r2

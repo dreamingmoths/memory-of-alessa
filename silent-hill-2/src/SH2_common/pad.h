@@ -2,6 +2,7 @@
 #define PAD_H
 
 #include "sh2_common.h"
+#include "shPad/lib_sh_pad.h"
 
 #define PAD_KEY_SELECT     (1 << 2)
 #define PAD_KEY_START      (1 << 3)
@@ -23,28 +24,28 @@
 // total size: 0x26
 struct shGameKeyAssign {
     // Members
-    unsigned short type;   // offset 0x0, size 0x2
-    u_char DIR_AX;         // offset 0x2, size 0x1
-    u_char DIR_AY;         // offset 0x3, size 0x1
-    u_char DIR_BX;         // offset 0x4, size 0x1
-    u_char DIR_BY;         // offset 0x5, size 0x1
-    u_char DIR_CX;         // offset 0x6, size 0x1
-    u_char DIR_CY;         // offset 0x7, size 0x1
-    unsigned short DRINK;  // offset 0x8, size 0x2
-    unsigned short RADIO;  // offset 0xA, size 0x2
-    unsigned short LIGHT;  // offset 0xC, size 0x2
-    unsigned short ITEM;   // offset 0xE, size 0x2
-    unsigned short MAP;    // offset 0x10, size 0x2
-    unsigned short DECIDE; // offset 0x12, size 0x2
-    unsigned short CANCEL; // offset 0x14, size 0x2
-    unsigned short SKIP;   // offset 0x16, size 0x2
-    unsigned short PAUSE;  // offset 0x18, size 0x2
-    unsigned short ACTION; // offset 0x1A, size 0x2
-    unsigned short DASH;   // offset 0x1C, size 0x2
-    unsigned short LSLIDE; // offset 0x1E, size 0x2
-    unsigned short RSLIDE; // offset 0x20, size 0x2
-    unsigned short READY;  // offset 0x22, size 0x2
-    unsigned short VIEW;   // offset 0x24, size 0x2
+    u_short type;   // offset 0x0, size 0x2
+    u_char DIR_AX;  // offset 0x2, size 0x1
+    u_char DIR_AY;  // offset 0x3, size 0x1
+    u_char DIR_BX;  // offset 0x4, size 0x1
+    u_char DIR_BY;  // offset 0x5, size 0x1
+    u_char DIR_CX;  // offset 0x6, size 0x1
+    u_char DIR_CY;  // offset 0x7, size 0x1
+    u_short DRINK;  // offset 0x8, size 0x2
+    u_short RADIO;  // offset 0xA, size 0x2
+    u_short LIGHT;  // offset 0xC, size 0x2
+    u_short ITEM;   // offset 0xE, size 0x2
+    u_short MAP;    // offset 0x10, size 0x2
+    u_short DECIDE; // offset 0x12, size 0x2
+    u_short CANCEL; // offset 0x14, size 0x2
+    u_short SKIP;   // offset 0x16, size 0x2
+    u_short PAUSE;  // offset 0x18, size 0x2
+    u_short ACTION; // offset 0x1A, size 0x2
+    u_short DASH;   // offset 0x1C, size 0x2
+    u_short LSLIDE; // offset 0x1E, size 0x2
+    u_short RSLIDE; // offset 0x20, size 0x2
+    u_short READY;  // offset 0x22, size 0x2
+    u_short VIEW;   // offset 0x24, size 0x2
 };
 
 // total size: 0x60
@@ -74,8 +75,6 @@ typedef struct Pad_KeyConfig {
 // @todo: clean up
 
 void shPadInit(void);
-
-void libShPadRead(int a, int b, void* c); // NOT SURE ABOUT THIS
 
 void shPadSetGameKeyAssign(void);
 void shQzero(void*, int);

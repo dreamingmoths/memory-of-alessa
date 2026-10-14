@@ -9,7 +9,7 @@ void PssBreakPoint(void) {
     /* empty */
 }
 
-static signed int CreateSemaPss(void) {
+static int CreateSemaPss(void) {
     SemaParam param; // r29+0x10
     param.initCount = 1;
     param.maxCount = 1;

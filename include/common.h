@@ -72,7 +72,7 @@ static inline int float_floor(float x) {
           movz t7, zero, %1;\
           mfc1 %1, %0;\
           sub %1, %1, t7"
-        : "+f"(x), "+r"(out)::"t7");
+        : "+f"(x), "+r"(out));
     return out;
 }
 

@@ -180,7 +180,9 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetLine);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStr);
 
-INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrNum);
+void fontPrintStrNum(u_short* str, u_short num, int x, int y) {
+    fontPrintStr(fontGetMesAdr(str, num), x, y);
+}
 
 const char rodata_954[] = "font: double stack!\n";
 

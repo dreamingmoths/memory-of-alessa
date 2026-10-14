@@ -1,9 +1,11 @@
-#include "sh2_common.h"
+#include "Chacter/bg_chara.h"
+#include "Chacter/sh2_character_manage.h"
+#include "Chacter/chara_list.h"
+#include "Chacter/chara_bound.h"
 
 #include "Event/chara_data_load.h"
 #include "Event/stg_name.h"
 
-#include "data/fs_structs.h"
 #include "Multi_thr/filesys/fcread.h"
 #include "FilesList/fileslist_bg.h"
 #include "LoadBg/loadbg_chara.h"
@@ -11,26 +13,17 @@
 #include "GFW/sh2gfw_structs.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
 
-#include "Chacter/character.h"
-#include "Chacter/sh2_character_manage.h"
-#include "Chacter/chara_list.h"
-#include "Chacter/chara_bound.h"
-#include "Chacter/bg_chara.h"
-
-typedef struct /* @anon4 */ {
-    // total size: 0x24
-    int now[2]; // offset 0x0, size 0x8
-    void* nowp[2]; // offset 0x8, size 0x8
-    int pre[2]; // offset 0x10, size 0x8
-    void* prep[2]; // offset 0x18, size 0x8
-    int cnt; // offset 0x20, size 0x4
-} BgCharaManData;
 extern sh2gfw_Model_Header* model[2]; // size: 0x8, address: 0x11EB538
 extern BgCharaManData d_0x011EB510; // size: 0x24, address: 0x11EB510
 #define d d_0x011EB510
 
+static int get_block_num(fsFileIndex* id);
+static int BgCharaRelocateItemSet(int glb_crd, int mapno, int chara_id);
+static void BgCharaRelocateItemSetXZ(int glb_crd, float x, float z, int chara_id);
+static void init(void* adr, int chara_id);
+
 #line 31
-static int get_block_num(fsFileIndex* id /* r2 */) {
+static int get_block_num(fsFileIndex* id) {
     u_long size;
     
     
@@ -44,7 +37,7 @@ static int get_block_num(fsFileIndex* id /* r2 */) {
 }
 
 #line 45
-int BgCharaGetBlockSize(fsFileIndex* id /* r2 */) {
+int BgCharaGetBlockSize(fsFileIndex* id) {
     return get_block_num(id);
 }
 
@@ -173,7 +166,7 @@ void* BgCharaIsLoad(int chara_id /* r2 */) {
 }
 
 #line 174
-static void init(void* adr /* r2 */, int chara_id /* r17 */) {
+static void init(void* adr, int chara_id) {
     SubCharacter* scp; // r16
     sh2gfw_ModelDrawInit_for_BackgroundLoad(chara_id, adr, NULL, NULL, 0);
     scp = shCharacter_Manage_GetCharacterList();
@@ -188,8 +181,8 @@ void BgCharaManInit(void) {
 }
 
 #line 194
-void BgCharaMan(int cnt /* r2 */) {
-    int i; // r16
+void BgCharaMan(int cnt) {
+    int i;
 
     d.cnt = cnt;
     if (cnt == 0) {
@@ -213,7 +206,7 @@ void BgCharaMan(int cnt /* r2 */) {
 }
 
 #line 219
-void BgCharaDelSlot(int slot /* r2 */) {
+void BgCharaDelSlot(int slot) {
     d.prep[slot] = d.nowp[slot];
     d.pre[slot] = d.now[slot];
     d.now[slot] = 0;
@@ -221,6 +214,6 @@ void BgCharaDelSlot(int slot /* r2 */) {
 }
 
 #line 227
-int BgCharaGetSlotId(int slot /* r2 */) {
+int BgCharaGetSlotId(int slot) {
     return d.now[slot];
 }

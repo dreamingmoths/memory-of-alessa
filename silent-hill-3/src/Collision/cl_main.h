@@ -3,13 +3,13 @@
 
 typedef struct _CL_HITPOLY_PLANE {
     // total size: 0x50
-    u_char kind;        // offset 0x0, size 0x1
-    u_char shape;       // offset 0x1, size 0x1
-    unsigned short pad; // offset 0x2, size 0x2
-    u_int weight;       // offset 0x4, size 0x4
-    u_int material;     // offset 0x8, size 0x4
-    int flg;            // offset 0xC, size 0x4
-    float p[4][4];      // offset 0x10, size 0x40
+    u_char kind;    // offset 0x0, size 0x1
+    u_char shape;   // offset 0x1, size 0x1
+    u_short pad;    // offset 0x2, size 0x2
+    u_int weight;   // offset 0x4, size 0x4
+    u_int material; // offset 0x8, size 0x4
+    int flg;        // offset 0xC, size 0x4
+    float p[4][4];  // offset 0x10, size 0x40
 } CL_HITPOLY_PLANE;
 
 #endif

@@ -24,7 +24,7 @@
 
 /* @todo: match rest of functions, migrate data, and clean up */
 
-static int RoomDistanceSub(struct CharaAdmin_RoomDistance* dist, short room0, short room1, u_long flag);
+static int RoomDistanceSub(CharaAdmin_RoomDistance* dist, short room0, short room1, u_long flag);
 static void DeleteEnemyWorkIn(void);
 static void DeleteEnemyWorkOut(void);
 static int RoomDistance(short room0, short room1);
@@ -207,48 +207,36 @@ static int RoomDistance(short room0 /* r7 */, short room1 /* r2 */) {
     return len;
 }
 
-#ifdef NON_MATCHING
-static int RoomDistanceSub(CharaAdmin_RoomDistance* dist /* r21 */, short room0 /* r20 */, short room1 /* r19 */, u_long flag /* r18 */) {
-    int len;  // r16
-    int work; // r2
-    int i;    // r17
-    int tmp;  // @note not in dwarf
+static int RoomDistanceSub(CharaAdmin_RoomDistance* dist, short room0, short room1, u_long flag) {
+    int len;
+    int work;
+    int i;    
 
-    if (room1 < room0) {
-        tmp   = room1;
+    
+    if (room0 > room1) {
+        work = room1;
         room1 = room0;
-        room0 = tmp;
+        room0 = work;
     }
-
-    for (i = 0; dist[i].rm0 != 0; i++)
-        if (dist[i].rm0 == room0 && dist[i].rm1 == room1)
-            return 1;
+    
+    for (i = 0; dist[i].rm0; i++)
+        if (dist[i].rm0 == room0 && dist[i].rm1 == room1) return 1;
 
     len = -1;
-    for (i = 0; dist[i].rm0 != 0; i++) {
-        if ((flag & (1 << i)))
-            continue;
-        if (room0 == dist[i].rm0)
-            work = RoomDistanceSub(dist, dist[i].rm1, room1, flag + (1 << i));
-
-        else if (room0 == dist[i].rm1)
-            work = RoomDistanceSub(dist, dist[i].rm0, room1, flag + (1 << i));
-
-        else
-            work = -1;
-        if (work == -1)
-            continue;
-
-        if (len == -1 || ((work + 1) < len))
-            len = work + 1;
+    for (i = 0; dist[i].rm0; i++) {
+        if ((flag & (1 << i))) continue;
+        if (room0 == dist[i].rm0) work = RoomDistanceSub(dist, dist[i].rm1, room1, flag + (1 << i));
+        
+        else if (room0 == dist[i].rm1) work = RoomDistanceSub(dist, dist[i].rm0, room1, flag + (1 << i));
+        
+        else work = -1;
+        if (work == -1) continue;
+            
+        if (len == -1 || ((work + 1) < len)) len = work + 1;
     }
-    if ((flag == 0) && (len == -1))
-        return 0;
+    if ((flag == 0) && (len == -1)) return 0;
     return len;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", RoomDistanceSub);
-#endif
 
 SubCharacter* CharaWorkCreate(short kind /* r20 */, short id /* r19 */, float* pos /* r18 */, float* rot /* r17 */, u_int status /* r16 */) {
     SubCharacter* scp; // r2
@@ -341,20 +329,14 @@ static void DeleteEnemyWorkOut(void) {
     shCharacter_Manage_Delete(del, 0, 0);
 }
 
-#ifdef NON_MATCHING
 int CharaAdminEnemyEntryCheck(Enemy_List* ep, int room) {
-    if (GET_ENEMY_FLAG(ep->id))
+    if (GET_ENEMY_FLAG(ep->id)) return 0;
+    if (room && room != RoomName(0, itof(ep->pos_x), itof(ep->pos_z)))
         return 0;
-    if (room && room != RoomName(0, ep->pos_x, ep->pos_z))
-        return 0;
-    if (!CharaAdminEnemyEntryCondition(ep->condition))
-        return 0;
-
+    if (!CharaAdminEnemyEntryCondition(ep->condition)) return 0;
+    
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", CharaAdminEnemyEntryCheck);
-#endif
 
 #line 801
 static int CharaAdminEnemyEntryCondition(short cond) {

@@ -421,7 +421,7 @@ int mcSaveMenu(void) {
     return 0;
 }
 
-const char __pad_0x003999c8[] = "\0\0\0\0"; /* @hack temporary fix to align rodata */
+RODATA_PAD_TO(0x003999D0);
 
 INCLUDE_ASM("asm/nonmatchings/MC/mc_menu", mcLoadMenu);
 

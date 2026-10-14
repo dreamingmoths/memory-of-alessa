@@ -192,7 +192,7 @@ static void printR_keydata(shGameKeyData* key /* r16 */) {
                  key->f.len);
 }
 
-static void printR_padport(signed int port /* r22 */, signed int slot /* r21 */, signed int pad_normalize /* r20 */, signed int pad_adjust /* r19 */, signed int dispstep /* r18 */, signed int disppad /* r17 */, signed int dispkey /* r16 */) {
+static void printR_padport(int port /* r22 */, int slot /* r21 */, int pad_normalize /* r20 */, int pad_adjust /* r19 */, int dispstep /* r18 */, int disppad /* r17 */, int dispkey /* r16 */) {
     u_char paddata[32]; // r29+0x80
     shGameKeyData key[1]; // r29+0xA8
 

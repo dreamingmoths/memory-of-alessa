@@ -135,7 +135,7 @@ static const AnimeInfo arm_anim[14] = {
 }; // @ 0x00399080
 
 // static struct _AnimeInfo d_arm_anim[1]; // size: 0xC, address: 0x0   unused???
-// static signed int darm_anime_adr_list[1]; // size: 0x4, address: 0x0 unused???
+// static int darm_anime_adr_list[1]; // size: 0x4, address: 0x0 unused???
 
 static int EnemyARMInit(SubCharacter* this);
 static void EnemyARMFunction(SubCharacter* this);

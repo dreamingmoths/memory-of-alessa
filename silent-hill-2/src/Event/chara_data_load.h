@@ -2,14 +2,15 @@
 #define CHARA_DATA_LOAD_H
 
 #include "sh2_common.h"
-#include "FilesList/fileslist_bg.h"
+#include "Chacter/character.h"
+#include "data/fs_structs.h"
 
 #define Category_null 0
 
 // total size: 0xC
 typedef struct CharaData_MemAdmin_One {
     // Members
-    union fsFileIndex* file; // offset 0x0, size 0x4
+    fsFileIndex* file; // offset 0x0, size 0x4
     u_long128* adress;       // offset 0x4, size 0x4
     int size;                // offset 0x8, size 0x4
 } CharaData_MemAdmin_One;
@@ -30,14 +31,14 @@ typedef struct CharaData_MemAdmin {
 typedef struct CharaData_ItemFile {
     // Members
     int kind;                // offset 0x0, size 0x4
-    union fsFileIndex* file; // offset 0x4, size 0x4
+    fsFileIndex* file; // offset 0x4, size 0x4
 } CharaData_ItemFile;
 
 // total size: 0xC
 typedef struct CharaData_EntryList_One {
     // Members
     int load;                // offset 0x0, size 0x4
-    union fsFileIndex* file; // offset 0x4, size 0x4
+    fsFileIndex* file; // offset 0x4, size 0x4
     u_long* adress;          // offset 0x8, size 0x4
 } CharaData_EntryList_One;
 
@@ -46,10 +47,10 @@ typedef struct CharaData_WeaponFile {
     // Members
     short equip;                       // offset 0x0, size 0x2
     short kind;                        // offset 0x2, size 0x2
-    union fsFileIndex* james_anim;     // offset 0x4, size 0x4
-    union fsFileIndex* weapon_model;   // offset 0x8, size 0x4
-    union fsFileIndex* weapon_model_r; // offset 0xC, size 0x4
-    union fsFileIndex* shadow_model;   // offset 0x10, size 0x4
+    fsFileIndex* james_anim;     // offset 0x4, size 0x4
+    fsFileIndex* weapon_model;   // offset 0x8, size 0x4
+    fsFileIndex* weapon_model_r; // offset 0xC, size 0x4
+    fsFileIndex* shadow_model;   // offset 0x10, size 0x4
 } CharaData_WeaponFile;
 
 // total size: 0x38
@@ -78,9 +79,9 @@ typedef struct CharaData_DemoList {
 typedef struct CharaData_StandardList {
     // Members
     int kind;                     // offset 0x0, size 0x4
-    union fsFileIndex* model;     // offset 0x4, size 0x4
-    union fsFileIndex* animation; // offset 0x8, size 0x4
-    union fsFileIndex* shadow;    // offset 0xC, size 0x4
+    fsFileIndex* model;     // offset 0x4, size 0x4
+    fsFileIndex* animation; // offset 0x8, size 0x4
+    fsFileIndex* shadow;    // offset 0xC, size 0x4
 } CharaData_StandardList;
 
 // total size: 0x8
@@ -90,40 +91,31 @@ typedef struct CharaData_Extra {
     int size;          // offset 0x4, size 0x4
 } CharaData_Extra;
 
+void CharaDataLoadInit(void);
+void CharaDataLoadItem(void);
+void CharaDataLoadWeapon(void);
+void CharaDataLoadEnemy(int kind);
+void CharaDataLoadStage(void);
+void CharaDataLoadRoom(int room);
+void CharaDataLoadDemo(CharaData_DemoList* dlp, int status);
+void CharaDataLoadCancel(CharaData_DemoList* dlp);
+void CharaDataWeaponTranslation(int kind, fsFileIndex* file_anm, void* adr_anm, fsFileIndex* file_mdl, void* adr_mdl);
+u_long128* CharaDataExtraTranslation(fsFileIndex* file, void* adress);
+u_long128* CharaDataAnimSetExtra(int kind, fsFileIndex* file, u_long128* adress, int free);
+u_long128* CharaDataAnimAdressExchange(SubCharacter* scp, u_long128* adr);
+u_long128* CharaDataLoadExtra(fsFileIndex* file, int status);
+void CharaDataDeleteAll(void);
+void CharaDataDeleteOne(int kind);
+void CharaDataDeleteExtra(void);
+int CharaDataFileSearch(fsFileIndex** file, int kind);
+void CharaDataBackLoadInit(void);
+void CharaDataBackInit(CharaData_DemoList* dlp);
+
 extern CharaData_MemAdmin mem_admin[32];
 extern u_char chara_data_use[1024];
 extern fsFileIndex* stage_anim;
 extern u_long128 CHRDATA[];
 extern u_long128* chara_adress;
 extern CharaData_Extra chara_data_extra[8];
-
-extern fsFileIndex data_chr_wp_jms_weapon_anm[1]; // size: 0x8, address: 0x3A1088
-extern fsFileIndex data_chr_jms_hhh_jms_kg1[1];   // size: 0x8, address: 0x3A0D68
-extern fsFileIndex data_chr_jms_lll_jms_mdl[1];   // size: 0x8, address: 0x3A0F80
-extern fsFileIndex data_chr_jms_hll_jms_mdl[1];   // size: 0x8, address: 0x3A0D90
-extern fsFileIndex data_chr_jms_rlll_jms_mdl[1];  // size: 0x8, address: 0x3A0F98
-extern fsFileIndex data_chr_jms_rhll_jms_mdl[1];  // size: 0x8, address: 0x3A0F90
-
-void CharaDataLoadInit(void);
-void CharaDataLoadItem(void);
-void CharaDataLoadWeapon(void);
-void CharaDataLoadEnemy(int kind /* r2 */);
-void CharaDataLoadStage(void);
-
-void CharaDataWeaponTranslation(int kind /* r22 */, union fsFileIndex* file_anm /* r21 */, void* adr_anm /* r20 */, union fsFileIndex* file_mdl /* r19 */, void* adr_mdl /* r23 */);
-u_long128* CharaDataExtraTranslation(union fsFileIndex* file, void* adress);
-u_long128* CharaDataAnimSetExtra(int kind, union fsFileIndex* file, u_long128* adress, int free);
-u_long128* CharaDataAnimAdressExchange(struct SubCharacter* scp, u_long128* adr);
-u_long128* CharaDataLoadExtra(union fsFileIndex* file, int status);
-
-void CharaDataLoadDemo(CharaData_DemoList* dlp, int status);
-void CharaDataLoadCancel(CharaData_DemoList* dlp);
-
-void CharaDataDeleteAll(void);
-void CharaDataDeleteOne(int kind);
-void CharaDataDeleteExtra(void);
-int CharaDataFileSearch(union fsFileIndex** file /* r2 */, int kind /* r2 */);
-void CharaDataBackLoadInit(void);
-void CharaDataBackInit(CharaData_DemoList* dlp /* r18 */);
 
 #endif // CHARA_DATA_LOAD_H

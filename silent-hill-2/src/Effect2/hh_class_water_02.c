@@ -32,7 +32,7 @@ static void Grid_Work_Initialize(HH_Object_Water_02* pThis /* r2 */) {
     memset(pThis->Area00_Grid_Y_Value, 0, sizeof(pThis->Area00_Grid_Y_Value));
 }
 
-static unsigned int Object_Initialize(HH_Object_Water_02* pThis /* r16 */) {
+static u_int Object_Initialize(HH_Object_Water_02* pThis /* r16 */) {
     u_int result = 1; // r2
     pThis->Timer = 0.0f;
     pThis->Motion_Step = 0;
@@ -43,7 +43,7 @@ static unsigned int Object_Initialize(HH_Object_Water_02* pThis /* r16 */) {
     return result;
 }
 
-static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, unsigned int* pX_Index /* r17 */, unsigned int* pZ_Index /* r16 */) {
+static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, u_int* pX_Index /* r17 */, u_int* pZ_Index /* r16 */) {
     float check_pos[4]; // r29+0x30
     sceVu0SubVector(check_pos, pElement->Option.Vector[0], pInfo->World_Location);
     *pX_Index = (u_int)(check_pos[0] / 100.0f);
@@ -83,7 +83,7 @@ static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_D
     return result * specular_coefficient;
 }
 
-static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
+static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
     float brightness = 255.0f;
 
     asm("lqc2 vf30, 0(a1);\
@@ -323,7 +323,7 @@ static u_int Object_Draw(HH_Object_Water_02* pThis /* r22 */, float* pGrid_Y_Val
     return result;
 }
 
-unsigned int HH_Class_Prefix_Water_02() {
+u_int HH_Class_Prefix_Water_02() {
     static u_int _interval_194_0x0036F4D0 = 1;        // @ 0x0036F490
     static int i = 0;                                 // @ 0x011EB580
     static u_int j = 0;                               // @ 0x011EB588
@@ -344,7 +344,7 @@ unsigned int HH_Class_Prefix_Water_02() {
     return result;
 }
 
-unsigned int HH_Class_Suffix_Water_02() {
+u_int HH_Class_Suffix_Water_02() {
     u_int result = 1;                                 // r2
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get(); // r16
     HH_Vif1PacketBuffer_GifTag_Open();
@@ -367,7 +367,7 @@ static float __arri_203_0x0036F4E8 = 40.0f;
 static float __omega_204_0x0036F4F0 = 612.0f;
 static float __v_205_0x0036F4F8 = 1200.0f;
 
-unsigned int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
+u_int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* r19 */) {
     static char tmp[80];                // @ 0x011EB5A0
     static u_int i;                     // @ 0x011EB590
     u_int result = 1;                   // r16
