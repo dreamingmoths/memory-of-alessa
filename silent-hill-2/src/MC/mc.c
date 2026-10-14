@@ -343,7 +343,7 @@ void mcExec(void) {
                             n = mcw->portstatus[port];
                             sceMcGetEntSpace(port, 0, "/");
                             mcw->job_step = 2;
-                        } else if (mcw->free[port] < ((mcw->d_ent[port] & 1) ? 0 : 1) + 93) {
+                        } else if (mcw->free[port] < MCW_FREE_MAX()) {
                             n = 3;
                         } else {
                             n = 2;}
@@ -554,12 +554,12 @@ int mcStartCheck(void) {
                 return -2;
             }
             
-            if (((p1 == 2) || (p1 == 3)) && !(mcw->menu_info & 1)) {
+            if ((p1 == 2 || p1 == 3) && !(mcw->menu_info & 1)) {
             
                 mcSearchDir(0);
                 mcw->menu_step = 2;
             }
-            if (((p2 == 2) || (p2 == 3)) && !(mcw->menu_info & 2)) {
+            if ((p2 == 2 || p2 == 3) && !(mcw->menu_info & 2)) {
                 
                 mcSearchDir(1);
                 mcw->menu_step = 2;
