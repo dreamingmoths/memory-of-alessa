@@ -3,7 +3,7 @@
 
 #include "Multi_thr/util/cmd_serv.h"
 
-#define DMA2_PUT(_index, ...) (((int (*)(int (*)(void), ...))(&d2sPutCmd##_index))(__VA_ARGS__))
+#define D2S_PUT_CMD(_index, ...) (((int (*)(int (*)(void), ...))(&d2sPutCmd##_index))(__VA_ARGS__))
 
 int d2sInit(int th_prio /* r11 */, void* stack /* r10 */, int stackSize /* r9 */, void* queue /* r16 */, int queueSize /* r2 */);
 

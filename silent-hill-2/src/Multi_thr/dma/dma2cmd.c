@@ -99,7 +99,7 @@ static int d2cCmdInit(void) {
 
 int d2cInit(void) {
 
-    int ret = DMA2_PUT(0, d2cCmdInit);
+    int ret = D2S_PUT_CMD(0, d2cCmdInit);
     d2cSubCmdUpdataLastRegistCid(ret);
     return ret;
 }

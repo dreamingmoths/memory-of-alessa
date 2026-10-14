@@ -16,7 +16,7 @@ int d2tscCmdBeginToUseSlot(int slot /* r2 */) {
 }
 
 int d2tscBeginToUseSlot(int slot /* r2 */) {
-    return DMA2_PUT(1, d2tscCmdBeginToUseSlot, slot);
+    return D2S_PUT_CMD(1, d2tscCmdBeginToUseSlot, slot);
 }
 
 
@@ -36,7 +36,7 @@ int d2tscCmdSend(int slot /* r19 */, int texid /* r18 */, void* tag /* r17 */) {
 }
 
 int d2tscSend(int slot /* r8 */, int texid /* r3 */, void* tag /* r2 */) {
-    return DMA2_PUT(3, d2tscCmdSend, slot, texid, tag);
+    return D2S_PUT_CMD(3, d2tscCmdSend, slot, texid, tag);
 }
 
 
@@ -46,5 +46,5 @@ int d2tscCmdClearSlots(void) {
 }
 
 int d2tscClearSlots(void) {
-    return DMA2_PUT(0, d2tscCmdClearSlots);
+    return D2S_PUT_CMD(0, d2tscCmdClearSlots);
 }
