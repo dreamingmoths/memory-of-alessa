@@ -1,7 +1,7 @@
-from dataclasses import dataclass
 import sys
-from traceback import print_exception
 from posixpath import abspath
+from dataclasses import dataclass
+from traceback import print_exception
 
 sys.path.append(abspath("tools/alessatool"))
 
@@ -25,7 +25,7 @@ def run_tests():
         name = result.name
 
         if result.skip:
-            print(f"🟠 {name} skipped ({result.count} tests)")
+            print(f"🟠 {bold(name)} skipped ({result.count} tests)")
             continue
 
         passing = result.passing
