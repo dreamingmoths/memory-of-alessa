@@ -4,19 +4,6 @@
 #include "common.h"
 #include "data/fs_structs.h"
 
-// total size: 0x20
-typedef struct FilesBgBlock {
-    // Members
-    fsFileIndex* map; // offset 0x0, size 0x4
-    fsFileIndex* cld; // offset 0x4, size 0x4
-    fsFileIndex* cam; // offset 0x8, size 0x4
-    fsFileIndex* kg2; // offset 0xC, size 0x4
-    fsFileIndex* tex; // offset 0x10, size 0x4
-    fsFileIndex* ex0; // offset 0x14, size 0x4
-    fsFileIndex* ex1; // offset 0x18, size 0x4
-    fsFileIndex* ex2; // offset 0x1C, size 0x4
-} FilesBgBlock;
-
 typedef enum STAGE_ID {
     BG_ID_null = 0,
     BG_ID_ap = 9,
