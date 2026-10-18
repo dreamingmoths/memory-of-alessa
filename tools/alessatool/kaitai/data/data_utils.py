@@ -5,6 +5,7 @@ from pathlib import Path
 from struct import unpack, calcsize
 from io import BytesIO
 from typing import TextIO, Type
+from re import sub
 
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
@@ -50,7 +51,6 @@ class KaitaiCFormatterOptions:
     Options to `c_print_kaitai`.
     '''
     request: StructDataMigrationRequest
-    object: KaitaiStruct
     executable_file: BytesIO
     from_vram: Callable[[int], int]
     index: int
@@ -79,6 +79,9 @@ def find_smallest_float_string(f: float):
     '''
     float_string = str(f)
     f32 = c_float(f)
+
+    if f32.value == 0:
+        return "0.0f"
 
     assert f32.value == c_float(f).value
 
@@ -128,28 +131,31 @@ def pretty_print_kaitai(object: KaitaiStruct, indent=""):
             else:
                 print(f"{indent}{attr}  => {value}")
 
-def camel_to_snake(s):
+def camel_to_snake(s: str):
     return "".join(["_" + c.lower() if c.isupper() else c for c in s]).lstrip("_")
 
-def snake_to_camel(s):
+def snake_to_camel(s: str):
     result = "".join(map(lambda s : s.capitalize(), s.split("_")))
     return result[0].lower() + result[1:]
+
+def to_kaitai_id(s: str):
+    s = camel_to_snake(s)
+    return sub(r"(\d+)", lambda m : "_" + m.group(1), s)
 
 def reflect_kaitai_structure(yaml: dict, type: Type[KaitaiStruct]):
     '''
     Get the YAML for the Kaitai type from the `.ksy` yaml.
     '''
     name = type.__name__
-    typename = camel_to_snake(name)
+    typename = to_kaitai_id(name)
     return yaml["types"][typename]
 
-def c_print_kaitai(options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE * 2)):
+def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE * 2)):
     '''
     Write a parsed KaitaiStruct out as plain old data.
     '''
     request = options.request
     executable_file = options.executable_file
-    object = options.object
 
     atlas = request.atlas
     namespace = request.namespace
@@ -163,8 +169,16 @@ def c_print_kaitai(options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE *
     not_last = index < data.count - 1
 
     object._fetch_instances()
-    type_structure = reflect_kaitai_structure(kaitai_yaml, data.type)
-    own_properties = map(lambda t : t["id"], filter(lambda t : "id" in t, type_structure["seq"]))
+    object_class = object.__class__
+    type_structure = reflect_kaitai_structure(kaitai_yaml, object.__class__)
+
+    if "instances" in type_structure:
+        first_union_member = list(type_structure["instances"].keys())[0]
+        print("🟠 warning: there is no way to choose union options yet")
+        print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
+        own_properties = [first_union_member]
+    elif "seq" in type_structure:
+        own_properties = map(lambda t : t["id"], filter(lambda t : "id" in t, type_structure["seq"]))
     stream.write(f"{indent[INDENT_SIZE:]}{{\n") # indent braces less
 
     for attr in own_properties:
@@ -189,7 +203,7 @@ def c_print_kaitai(options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE *
         elif isinstance(value, KaitaiStruct):
             # nested struct
             stream.write(f"{indent}/* .{attr_str} = */ ")
-            c_print_kaitai(value, atlas, executable_file, indent=indent+"    ")
+            c_print_kaitai(value, options, indent=indent+"    ")
 
         else:
             # something else, maybe a list, number, or string
@@ -246,11 +260,10 @@ def migrate_struct_data(request: StructDataMigrationRequest):
             options = KaitaiCFormatterOptions(
                 request=request,
                 from_vram=from_vram,
-                object=item,
                 executable_file=executable_file,
                 index=i
             )
-            c_print_kaitai(options)
+            c_print_kaitai(item, options)
             executable_file.seek(ofs)
         
         request.stream.write("});\n")
