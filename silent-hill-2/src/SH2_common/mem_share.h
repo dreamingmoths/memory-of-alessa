@@ -63,6 +63,8 @@ void* MemShareGetMovieViWorkAddr(void);
 void* MemShareGetMovieMpegWorkAddr(void);
 void* MemShareGetMovieReadWorkAddr(void);
 
+#ifndef __ALESSASTRUCT__
+// @todo: alessastruct can't deduplicate the `effect` names here yet.
 // total size: 0x90
 typedef struct MemShareCtrl {
     // Members
@@ -89,6 +91,7 @@ typedef struct MemShareCtrl {
     s_char* _bg_load[8]; // offset 0x50, size 0x20
     s_char* bg_load[8]; // offset 0x70, size 0x20
 } MemShareCtrl;
+#endif
 
 extern char MemShare_gp_data_buf[13180928]; // size: 0xC92000, address: 0x126FBC0
 

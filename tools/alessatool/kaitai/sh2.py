@@ -43,9 +43,9 @@ class Sh2(KaitaiStruct):
             pass
 
 
-    class Anon14(KaitaiStruct):
+    class Anon12(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.Anon14, self).__init__(_io)
+            super(Sh2.Anon12, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -1315,14 +1315,14 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.frame = self._io.read_f4le()
             self._unnamed1 = self._io.read_bytes(12)
-            self.camera = Sh2.DdsFrameAnon8(self._io, self, self._root)
+            self.camera = Sh2.DdsFrameAnon9(self._io, self, self._root)
             self.light = []
             for i in range(6):
-                self.light.append(Sh2.DdsFrameAnon9(self._io, self, self._root))
+                self.light.append(Sh2.DdsFrameAnon10(self._io, self, self._root))
 
             self.character = []
             for i in range(7):
-                self.character.append(Sh2.DdsFrameAnon10(self._io, self, self._root))
+                self.character.append(Sh2.DdsFrameAnon11(self._io, self, self._root))
 
 
 
@@ -1342,60 +1342,6 @@ class Sh2(KaitaiStruct):
     class DdsFrameAnon10(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.DdsFrameAnon10, self).__init__(_io)
-            self._parent = _parent
-            self._root = _root
-            self._read()
-
-        def _read(self):
-            self.position = []
-            for i in range(4):
-                self.position.append(self._io.read_f4le())
-
-            self.visible = self._io.read_s4le()
-            self._unnamed2 = self._io.read_bytes(12)
-
-
-        def _fetch_instances(self):
-            pass
-            for i in range(len(self.position)):
-                pass
-
-
-
-    class DdsFrameAnon8(KaitaiStruct):
-        def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.DdsFrameAnon8, self).__init__(_io)
-            self._parent = _parent
-            self._root = _root
-            self._read()
-
-        def _read(self):
-            self.position = []
-            for i in range(4):
-                self.position.append(self._io.read_f4le())
-
-            self.interest = []
-            for i in range(4):
-                self.interest.append(self._io.read_f4le())
-
-            self.roll = self._io.read_f4le()
-            self.plane = self._io.read_f4le()
-            self._unnamed4 = self._io.read_bytes(8)
-
-
-        def _fetch_instances(self):
-            pass
-            for i in range(len(self.position)):
-                pass
-
-            for i in range(len(self.interest)):
-                pass
-
-
-
-    class DdsFrameAnon9(KaitaiStruct):
-        def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.DdsFrameAnon9, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -1442,6 +1388,60 @@ class Sh2(KaitaiStruct):
                 pass
 
             for i in range(len(self.cone)):
+                pass
+
+
+
+    class DdsFrameAnon11(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DdsFrameAnon11, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.position = []
+            for i in range(4):
+                self.position.append(self._io.read_f4le())
+
+            self.visible = self._io.read_s4le()
+            self._unnamed2 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.position)):
+                pass
+
+
+
+    class DdsFrameAnon9(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DdsFrameAnon9, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.position = []
+            for i in range(4):
+                self.position.append(self._io.read_f4le())
+
+            self.interest = []
+            for i in range(4):
+                self.interest.append(self._io.read_f4le())
+
+            self.roll = self._io.read_f4le()
+            self.plane = self._io.read_f4le()
+            self._unnamed4 = self._io.read_bytes(8)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.position)):
+                pass
+
+            for i in range(len(self.interest)):
                 pass
 
 
@@ -2472,6 +2472,36 @@ class Sh2(KaitaiStruct):
             pass
 
 
+    class FilesBgBlock(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.FilesBgBlock, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.map = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.cld = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.cam = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.kg2 = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.tex = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.ex0 = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.ex1 = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+            self.ex2 = Sh2.Pointer(u"fs_file_index", self._io, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            self.map._fetch_instances()
+            self.cld._fetch_instances()
+            self.cam._fetch_instances()
+            self.kg2._fetch_instances()
+            self.tex._fetch_instances()
+            self.ex0._fetch_instances()
+            self.ex1._fetch_instances()
+            self.ex2._fetch_instances()
+
+
     class FilterParams(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.FilterParams, self).__init__(_io)
@@ -3395,7 +3425,7 @@ class Sh2(KaitaiStruct):
 
             _pos = self._io.pos()
             self._io.seek(0)
-            self._m_check = Sh2.FsFileAnon11(self._io, self, self._root)
+            self._m_check = Sh2.FsFileAnon7(self._io, self, self._root)
             self._io.seek(_pos)
             return getattr(self, '_m_check', None)
 
@@ -3455,9 +3485,9 @@ class Sh2(KaitaiStruct):
             return getattr(self, '_m_pack', None)
 
 
-    class FsFileAnon11(KaitaiStruct):
+    class FsFileAnon7(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.FsFileAnon11, self).__init__(_io)
+            super(Sh2.FsFileAnon7, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -3504,7 +3534,7 @@ class Sh2(KaitaiStruct):
 
             _pos = self._io.pos()
             self._io.seek(0)
-            self._m_index = Sh2.FsFileIndexAnon12(self._io, self, self._root)
+            self._m_index = Sh2.FsFileIndexAnon8(self._io, self, self._root)
             self._io.seek(_pos)
             return getattr(self, '_m_index', None)
 
@@ -3520,9 +3550,9 @@ class Sh2(KaitaiStruct):
             return getattr(self, '_m_pack', None)
 
 
-    class FsFileIndexAnon12(KaitaiStruct):
+    class FsFileIndexAnon8(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.FsFileIndexAnon12, self).__init__(_io)
+            super(Sh2.FsFileIndexAnon8, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -12162,7 +12192,7 @@ class Sh2(KaitaiStruct):
             self.param = Sh2.Pointer(u"data", self._io, self, self._root)
             self.super = Sh2.Pointer(u"vb_coordinate", self._io, self, self._root)
             self.sub = Sh2.Pointer(u"vb_coordinate", self._io, self, self._root)
-            self.r = Sh2.VbCoordinateAnon7(self._io, self, self._root)
+            self.r = Sh2.VbCoordinateAnon13(self._io, self, self._root)
             self._unnamed8 = self._io.read_bytes(12)
             self.lw = []
             for i in range(16):
@@ -12201,9 +12231,9 @@ class Sh2(KaitaiStruct):
 
 
 
-    class VbCoordinateAnon7(KaitaiStruct):
+    class VbCoordinateAnon13(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.VbCoordinateAnon7, self).__init__(_io)
+            super(Sh2.VbCoordinateAnon13, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -12620,7 +12650,7 @@ class Sh2(KaitaiStruct):
             self.cam_mv_type = self._io.read_s4le()
             self._raw_tmp = self._io.read_bytes(16)
             _io__raw_tmp = KaitaiStream(BytesIO(self._raw_tmp))
-            self.tmp = Sh2.VcRoadDataAnon13(_io__raw_tmp, self, self._root)
+            self.tmp = Sh2.VcRoadDataAnon14(_io__raw_tmp, self, self._root)
 
 
         def _fetch_instances(self):
@@ -12630,9 +12660,9 @@ class Sh2(KaitaiStruct):
             self.tmp._fetch_instances()
 
 
-    class VcRoadDataAnon13(KaitaiStruct):
+    class VcRoadDataAnon14(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.VcRoadDataAnon13, self).__init__(_io)
+            super(Sh2.VcRoadDataAnon14, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
