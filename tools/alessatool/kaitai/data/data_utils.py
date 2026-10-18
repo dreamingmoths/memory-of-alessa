@@ -91,7 +91,22 @@ def find_smallest_float_string(f: float):
             break
         size = i
 
-    return float_string[:size] + "f"
+    result = float_string[:size]
+
+    match result:
+        case "3.1415927":
+            return "PI"
+        case "-3.1415927":
+            return "-PI"
+        case "1.57079637":
+            return "QUARTER_TURN"
+        case "-1.57079637":
+            return "-QUARTER_TURN"
+
+    if "." not in result:
+        result += ".0"
+
+    return result + "f"
 
 def pretty_print_kaitai(object: KaitaiStruct, indent=""):
     '''
@@ -221,6 +236,7 @@ def migrate_struct_data(request: StructDataMigrationRequest):
         stream = KaitaiStream(executable_file)
 
         request.stream.write('#include "macros.h"\n')
+        request.stream.write('#include "math.h"\n')
         request.stream.write(f"UNLINKED({request.name}, {{\n")
 
         for i in range(data.count):

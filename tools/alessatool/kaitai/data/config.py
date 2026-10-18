@@ -14,6 +14,7 @@ SH2_DATA = [
     StructData(name="EnIKEAnime",                           type=Sh2.EnAnimeData,                      count=21                       ),
     SimpleData(name="reset_stage_connect_2170",             type="<14h",                               pattern=[12, 2], to_str=StgName),
     SimpleData(name="_Object_Class_Priority_List",          type="<49I"                                                               ),
+    StructData(name="ambush_apart",                         type=Sh2.EnAmbushData,                     count=9                        ),
 ]
 
 SH3_DATA = []
