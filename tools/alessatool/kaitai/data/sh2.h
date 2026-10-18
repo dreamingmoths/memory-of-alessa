@@ -6,6 +6,29 @@
  * used for decomp.me contextx and alessastruct.
  */
 
+ /*
+ 
+to rebuild with alessastruct:
+
+
+```sh
+alessastruct --platform=ps2 --output=tools/alessatool/kaitai/sh2.ksy  \
+    tools/alessatool/kaitai/data/sh2.h                                \
+    -- -Iinclude -Isilent-hill-2/include -Isilent-hill-2/src          \
+    -std=gnu89 -fshort-enums > alessastruct.log 2>&1
+```
+
+then:
+
+```sh
+kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir tools/alessatool/kaitai
+```
+
+
+
+ */
+#define __ALESSASTRUCT_README__
+
 #include "sh2_common.h"
 #include "SH2_common/mem_share.h"
 #include "SH2_common/pad.h"
