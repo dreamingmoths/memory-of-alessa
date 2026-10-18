@@ -48,7 +48,7 @@ def run_project_test(name: str) -> TestResult:
         count += 1
         print(bold(f"test: {data.name}"))
         try:
-            run_data_migration(DataMigrationRequest("silent-hill-2", data.name, "/dev/null"))
+            run_data_migration(DataMigrationRequest(name, data.name, "/dev/null"))
             passing += 1
         except Exception as exception:
             print(f"🔴 test failed for {data.name}")
