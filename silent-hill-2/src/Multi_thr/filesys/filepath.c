@@ -3,6 +3,10 @@
 static s_char* devstr_cdrom0 = "cdrom0:";  // size: 0x4, address: 0x33B3B8
 static s_char* devstr_host0  = "host0:";   // size: 0x4, address: 0x33B3C0
 
+static int pathname_skipcheck(s_char* filename /* r2 */);
+static int shPathMakeCd(char* fullpath /* r17 */, char* pathname /* r2 */, char* filename /* r2 */);
+static int shPathMakeHd(char* fullpath /* r18 */, char* rootpath /* r2 */, char* pathname /* r2 */, char* filename /* r17 */);
+
 #line 102
 static int pathname_skipcheck(s_char* filename /* r2 */) {
     switch (filename[0]) {
