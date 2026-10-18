@@ -1,6 +1,6 @@
 #include "Multi_thr/filesys/filepath.h"
 
-static s_char* devstr_cdrom0 = "cdrom0:"; // size: 0x4, address: 0x33B3B8
+static s_char* devstr_cdrom0 = "cdrom0:";  // size: 0x4, address: 0x33B3B8
 static s_char* devstr_host0  = "host0:";   // size: 0x4, address: 0x33B3C0
 
 #line 102
@@ -56,11 +56,11 @@ int shPathCheckExecRoot(s_char* filename) {
 static int shPathMakeCd(char* fullpath /* r17 */, char* pathname /* r2 */, char* filename /* r2 */) {
 
     char* prefix = devstr_cdrom0; // r16
-    char suffix[3] = ";1"; // r29+0x23C
-    int len; // r2
-    char* work; // r2
-    char work1[256]; // r29+0x30
-    char work2[260]; // r29+0x130
+    char suffix[3] = ";1";        // r29+0x23C
+    int len;                      // r2
+    char* work;                   // r2
+    char work1[256];              // r29+0x30
+    char work2[260];              // r29+0x130
 
     if (pathname_skipcheck(filename)) {
         UtilStrPathCatL(work1, pathname, filename, sizeof(work1));
@@ -88,9 +88,9 @@ static int shPathMakeCd(char* fullpath /* r17 */, char* pathname /* r2 */, char*
 static int shPathMakeHd(char* fullpath /* r18 */, char* rootpath /* r2 */, char* pathname /* r2 */, char* filename /* r17 */) {
 
     char* prefix = devstr_host0; // r16
-    int len = 256; // r2
-    char work1[256]; // r29+0x40
-    char work2[256]; // r29+0x140
+    int len;                     // r2
+    char work1[256];             // r29+0x40
+    char work2[256];             // r29+0x140
 
 
 
