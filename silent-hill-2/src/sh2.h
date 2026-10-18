@@ -1,6 +1,11 @@
 #ifndef __ALESSASTRUCT__
 #define __ALESSASTRUCT__
 
+/**
+ * This header is not intended to be included in project source files. It can be
+ * used for decomp.me contextx and alessastruct.
+ */
+
 #include "Chacter/character.h"
 #include "Collision/cl_main.h"
 #include "Event/event.h"
