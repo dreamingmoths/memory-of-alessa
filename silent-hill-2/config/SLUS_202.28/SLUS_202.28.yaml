@@ -559,7 +559,7 @@ segments:
       - { start: 0x00191d20,    type: c,          name: Effect2/hh_class_blood_04                        }
       - { start: 0x001924f0,    type: c,          name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x00192aa0,    type: c,          name: Effect2/hh_memory_manage                         }
-      - { start: 0x00192f50,    type: asm,        name: SH2_common/mem_share                             }
+      - { start: 0x00192f50,    type: c,          name: SH2_common/mem_share                             }
       - { start: 0x001937c0,    type: asm,        name: Effect2/hh_class_flame_03                        }
       - { start: 0x00194300,    type: asm,        name: SH2_common/result                                }
       - { start: 0x001951b0,    type: c,          name: view/vc_prio                                     }
@@ -1084,7 +1084,7 @@ segments:
       - { start: 0x0029c8d8,    type: rodata,     name: LoadBg/loadbg_chara                              }
       - { start: 0x0029ca80,    type: .rodata,    name: Chacter/player_result                            }
       - { start: 0x0029cb00,    type: .rodata,    name: Effect2/hh_memory_manage                         }
-      - { start: 0x0029cb80,    type: rodata,     name: SH2_common/mem_share                             }
+      - { start: 0x0029cb80,    type: .rodata,    name: SH2_common/mem_share                             }
       - { start: 0x0029cc20,    type: rodata,     name: SH2_common/result                                }
       - { start: 0x0029ccb0,    type: rodata,     name: pause                                            }
       - { start: 0x0029cce0,    type: .rodata,    name: now_loading                                      }
