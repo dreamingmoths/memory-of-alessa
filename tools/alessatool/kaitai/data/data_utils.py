@@ -173,7 +173,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
     type_structure = reflect_kaitai_structure(kaitai_yaml, object.__class__)
 
     if "instances" in type_structure:
-        first_union_member = list(type_structure["instances"].keys())[0]
+        first_union_member = next(iter(type_structure["instances"]))
         print("🟠 warning: there is no way to choose union options yet")
         print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
         own_properties = [first_union_member]

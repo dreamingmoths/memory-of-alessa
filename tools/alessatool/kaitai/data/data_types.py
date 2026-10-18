@@ -23,9 +23,11 @@ class SimpleData:
     address: int = -1
     executable: str = None
 
+type DataTable = list[SimpleData | StructData]
+
 @dataclass
 class ProjectDataConfig:
-    table: list[SimpleData | StructData]
+    table: DataTable
     namespace: Type[KaitaiStruct]
     library_path: Path
     chara_list_path: Path
