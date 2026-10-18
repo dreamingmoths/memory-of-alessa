@@ -173,4 +173,4 @@ void clCheckHitEyesOnlyFloorCeil(CL_VHIT_RESULT* res, float* sp, float* ep);
 
 int clPermitColumnExpansion(void);
 
-#endif CL_MAIN_H
+#endif // CL_MAIN_H

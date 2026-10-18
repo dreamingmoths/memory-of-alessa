@@ -1,5 +1,6 @@
 #ifndef FOG_SHARED_H
 #define FOG_SHARED_H
+
 #include "sce/libvu0.h"
 
 #define WALL_MAX 188
@@ -237,6 +238,9 @@ typedef struct ScratchpadFog {
     sceVu0FVECTOR Wind;
 } ScratchpadFog;
 
+#ifndef __ALESSASTRUCT__
+// @todo this function could be written in a more portable syntax, but mwcc is
+// fussing over it. >_>
 static inline float float_sign(float x) {
     asm (".set noreorder;\
          sub.s $f8, $f8;\
@@ -253,5 +257,6 @@ static inline float float_sign(float x) {
     " : "=f"(x) : "f"(x) : "f8", "t7");
     return x;
 }
+#endif
 
 #endif // FOG_SHARED_H
