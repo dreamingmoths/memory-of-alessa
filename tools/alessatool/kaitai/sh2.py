@@ -702,7 +702,9 @@ class Sh2(KaitaiStruct):
 
             self.kind = self._io.read_u2le()
             self.btlid = self._io.read_u2le()
-            self.obj = Sh2.ClBattleResultAnon6(self._io, self, self._root)
+            self._raw_obj = self._io.read_bytes(4)
+            _io__raw_obj = KaitaiStream(BytesIO(self._raw_obj))
+            self.obj = Sh2.ClBattleResultAnon6(_io__raw_obj, self, self._root)
             self._unnamed9 = self._io.read_bytes(8)
 
 
@@ -725,7 +727,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(4)
 
 
         def _fetch_instances(self):
@@ -751,7 +753,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_cl'):
                 return self._m_cl
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_cl = Sh2.Pointer(u"cl_hitpoly_column", self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_cl', None)
 
         @property
@@ -759,7 +764,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_en'):
                 return self._m_en
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_en = Sh2.Pointer(u"sub_character", self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_en', None)
 
         @property
@@ -767,7 +775,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pl'):
                 return self._m_pl
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pl = Sh2.Pointer(u"cl_hitpoly_plane", self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_pl', None)
 
 
@@ -1102,7 +1113,9 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.kind = self._io.read_s4le()
             self._unnamed1 = self._io.read_bytes(12)
-            self.hobj = Sh2.ClVhitResultAnon1(self._io, self, self._root)
+            self._raw_hobj = self._io.read_bytes(48)
+            _io__raw_hobj = KaitaiStream(BytesIO(self._raw_hobj))
+            self.hobj = Sh2.ClVhitResultAnon1(_io__raw_hobj, self, self._root)
 
 
         def _fetch_instances(self):
@@ -1118,7 +1131,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(48)
 
 
         def _fetch_instances(self):
@@ -1139,7 +1152,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_chara'):
                 return self._m_chara
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_chara = Sh2.ClVhitChara(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_chara', None)
 
         @property
@@ -1147,7 +1163,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_wall'):
                 return self._m_wall
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_wall = Sh2.ClVhitWall(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_wall', None)
 
 
@@ -1847,7 +1866,9 @@ class Sh2(KaitaiStruct):
             self.timer = self._io.read_s4le()
             self.sound_wait = self._io.read_s4le()
             self.randseed = self._io.read_s4le()
-            self._unnamed44 = Sh2.EnLocalDataAnon2(self._io, self, self._root)
+            self._raw__unnamed44 = self._io.read_bytes(64)
+            _io__raw__unnamed44 = KaitaiStream(BytesIO(self._raw__unnamed44))
+            self._unnamed44 = Sh2.EnLocalDataAnon2(_io__raw__unnamed44, self, self._root)
 
 
         def _fetch_instances(self):
@@ -1868,7 +1889,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(64)
 
 
         def _fetch_instances(self):
@@ -1944,7 +1965,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_arm'):
                 return self._m_arm
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_arm = Sh2.EnArmData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_arm', None)
 
         @property
@@ -1952,7 +1976,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_bos'):
                 return self._m_bos
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_bos = Sh2.EnBosData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_bos', None)
 
         @property
@@ -1960,7 +1987,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_edb'):
                 return self._m_edb
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_edb = Sh2.EnEdbData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_edb', None)
 
         @property
@@ -1968,7 +1998,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ike'):
                 return self._m_ike
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ike = Sh2.EnIkeData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_ike', None)
 
         @property
@@ -1976,7 +2009,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ins'):
                 return self._m_ins
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ins = Sh2.EnInsData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_ins', None)
 
         @property
@@ -1984,7 +2020,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_mkn'):
                 return self._m_mkn
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_mkn = Sh2.EnMknData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_mkn', None)
 
         @property
@@ -1992,7 +2031,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_nik'):
                 return self._m_nik
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_nik = Sh2.EnNikData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_nik', None)
 
         @property
@@ -2000,7 +2042,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_nse'):
                 return self._m_nse
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_nse = Sh2.EnNseData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_nse', None)
 
         @property
@@ -2008,7 +2053,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_oni'):
                 return self._m_oni
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_oni = Sh2.EnOniData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_oni', None)
 
         @property
@@ -2016,7 +2064,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pap'):
                 return self._m_pap
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pap = Sh2.EnPapData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_pap', None)
 
         @property
@@ -2024,7 +2075,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_red'):
                 return self._m_red
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_red = Sh2.EnRedData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_red', None)
 
         @property
@@ -2032,7 +2086,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_scu'):
                 return self._m_scu
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_scu = Sh2.EnScuData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_scu', None)
 
         @property
@@ -2040,7 +2097,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_tyu'):
                 return self._m_tyu
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_tyu = Sh2.EnTyuData(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_tyu', None)
 
 
@@ -2477,7 +2537,9 @@ class Sh2(KaitaiStruct):
             for i in range(8):
                 self.filter_data.append(Sh2.QWorddata(self._io, self, self._root))
 
-            self.copy_filter_color = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_copy_filter_color = self._io.read_bytes(16)
+            _io__raw_copy_filter_color = KaitaiStream(BytesIO(self._raw_copy_filter_color))
+            self.copy_filter_color = Sh2.QWorddata(_io__raw_copy_filter_color, self, self._root)
 
 
         def _fetch_instances(self):
@@ -3274,7 +3336,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(16)
 
 
         def _fetch_instances(self):
@@ -3320,7 +3382,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_cd'):
                 return self._m_cd
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_cd = Sh2.FsCdFile(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_cd', None)
 
         @property
@@ -3328,7 +3393,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_check'):
                 return self._m_check
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_check = Sh2.FsFileAnon11(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_check', None)
 
         @property
@@ -3336,7 +3404,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_hd'):
                 return self._m_hd
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_hd = Sh2.FsHdFile(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_hd', None)
 
         @property
@@ -3344,7 +3415,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_mgc'):
                 return self._m_mgc
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_mgc = Sh2.FsMgcFile(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_mgc', None)
 
         @property
@@ -3352,7 +3426,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_mgf'):
                 return self._m_mgf
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_mgf = Sh2.FsMgfFile(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_mgf', None)
 
         @property
@@ -3360,7 +3437,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_mgp'):
                 return self._m_mgp
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_mgp = Sh2.FsMgpFile(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_mgp', None)
 
         @property
@@ -3368,7 +3448,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pack'):
                 return self._m_pack
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pack = Sh2.U16(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_pack', None)
 
 
@@ -3399,7 +3482,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(8)
 
 
         def _fetch_instances(self):
@@ -3419,7 +3502,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_index'):
                 return self._m_index
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_index = Sh2.FsFileIndexAnon12(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_index', None)
 
         @property
@@ -3427,7 +3513,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pack'):
                 return self._m_pack
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pack = self._io.read_u8le()
+            self._io.seek(_pos)
             return getattr(self, '_m_pack', None)
 
 
@@ -4784,7 +4873,9 @@ class Sh2(KaitaiStruct):
             self.skip = self._io.read_u1()
             self.pause = self._io.read_u1()
             self._unnamed23 = self._io.read_bytes(2)
-            self._unnamed24 = Sh2.PadInfoAnon3(self._io, self, self._root)
+            self._raw__unnamed24 = self._io.read_bytes(8)
+            _io__raw__unnamed24 = KaitaiStream(BytesIO(self._raw__unnamed24))
+            self._unnamed24 = Sh2.PadInfoAnon3(_io__raw__unnamed24, self, self._root)
 
 
         def _fetch_instances(self):
@@ -4800,7 +4891,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(8)
 
 
         def _fetch_instances(self):
@@ -4821,7 +4912,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pad2d'):
                 return self._m_pad2d
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pad2d = Sh2.Pad2d(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_pad2d', None)
 
         @property
@@ -4829,7 +4923,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_pad3d'):
                 return self._m_pad3d
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_pad3d = Sh2.Pad3d(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_pad3d', None)
 
 
@@ -5125,7 +5222,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(16)
 
 
         def _fetch_instances(self):
@@ -5218,10 +5315,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_fv'):
                 return self._m_fv
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_fv = []
             for i in range(4):
                 self._m_fv.append(self._io.read_f4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_fv', None)
 
         @property
@@ -5229,10 +5329,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_iv'):
                 return self._m_iv
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_iv = []
             for i in range(4):
                 self._m_iv.append(self._io.read_s4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_iv', None)
 
         @property
@@ -5240,10 +5343,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_q'):
                 return self._m_q
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_q = []
             for i in range(4):
                 self._m_q.append(self._io.read_s4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_q', None)
 
         @property
@@ -5251,10 +5357,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_s16'):
                 return self._m_s16
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_s16 = []
             for i in range(8):
                 self._m_s16.append(self._io.read_s2le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_s16', None)
 
         @property
@@ -5262,10 +5371,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_s32'):
                 return self._m_s32
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_s32 = []
             for i in range(4):
                 self._m_s32.append(self._io.read_s4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_s32', None)
 
         @property
@@ -5273,10 +5385,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_s64'):
                 return self._m_s64
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_s64 = []
             for i in range(2):
                 self._m_s64.append(self._io.read_s8le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_s64', None)
 
         @property
@@ -5284,10 +5399,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_s8'):
                 return self._m_s8
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_s8 = []
             for i in range(16):
                 self._m_s8.append(self._io.read_s1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_s8', None)
 
         @property
@@ -5295,7 +5413,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_u128'):
                 return self._m_u128
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_u128 = Sh2.U16(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_u128', None)
 
         @property
@@ -5303,10 +5424,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_u16'):
                 return self._m_u16
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_u16 = []
             for i in range(8):
                 self._m_u16.append(self._io.read_u2le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_u16', None)
 
         @property
@@ -5314,10 +5438,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_u32'):
                 return self._m_u32
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_u32 = []
             for i in range(4):
                 self._m_u32.append(self._io.read_u4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_u32', None)
 
         @property
@@ -5325,10 +5452,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_u64'):
                 return self._m_u64
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_u64 = []
             for i in range(2):
                 self._m_u64.append(self._io.read_u8le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_u64', None)
 
         @property
@@ -5336,10 +5466,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_u8'):
                 return self._m_u8
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_u8 = []
             for i in range(16):
                 self._m_u8.append(self._io.read_u1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_u8', None)
 
 
@@ -5351,7 +5484,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(16)
 
 
         def _fetch_instances(self):
@@ -5423,10 +5556,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_fl32'):
                 return self._m_fl32
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_fl32 = []
             for i in range(4):
                 self._m_fl32.append(self._io.read_f4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_fl32', None)
 
         @property
@@ -5434,10 +5570,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_sc8'):
                 return self._m_sc8
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_sc8 = []
             for i in range(16):
                 self._m_sc8.append(self._io.read_s1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_sc8', None)
 
         @property
@@ -5445,10 +5584,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_si32'):
                 return self._m_si32
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_si32 = []
             for i in range(4):
                 self._m_si32.append(self._io.read_s4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_si32', None)
 
         @property
@@ -5456,10 +5598,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ss16'):
                 return self._m_ss16
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ss16 = []
             for i in range(8):
                 self._m_ss16.append(self._io.read_s2le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_ss16', None)
 
         @property
@@ -5467,10 +5612,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_uc8'):
                 return self._m_uc8
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_uc8 = []
             for i in range(16):
                 self._m_uc8.append(self._io.read_u1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_uc8', None)
 
         @property
@@ -5478,10 +5626,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ui32'):
                 return self._m_ui32
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ui32 = []
             for i in range(4):
                 self._m_ui32.append(self._io.read_u4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_ui32', None)
 
         @property
@@ -5489,7 +5640,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ul128'):
                 return self._m_ul128
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ul128 = Sh2.U16(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_ul128', None)
 
         @property
@@ -5497,10 +5651,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ul64'):
                 return self._m_ul64
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ul64 = []
             for i in range(2):
                 self._m_ul64.append(self._io.read_u8le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_ul64', None)
 
         @property
@@ -5508,10 +5665,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_us16'):
                 return self._m_us16
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_us16 = []
             for i in range(8):
                 self._m_us16.append(self._io.read_u2le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_us16', None)
 
 
@@ -5523,7 +5683,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(16)
 
 
         def _fetch_instances(self):
@@ -5567,10 +5727,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_c'):
                 return self._m_c
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_c = []
             for i in range(16):
                 self._m_c.append(self._io.read_u1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_c', None)
 
         @property
@@ -5578,10 +5741,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_i'):
                 return self._m_i
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_i = []
             for i in range(4):
                 self._m_i.append(self._io.read_u4le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_i', None)
 
         @property
@@ -5589,10 +5755,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_l'):
                 return self._m_l
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_l = []
             for i in range(2):
                 self._m_l.append(self._io.read_u8le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_l', None)
 
         @property
@@ -5600,7 +5769,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_q'):
                 return self._m_q
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_q = Sh2.U16(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_q', None)
 
         @property
@@ -5608,10 +5780,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_s'):
                 return self._m_s
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_s = []
             for i in range(8):
                 self._m_s.append(self._io.read_u2le())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_s', None)
 
 
@@ -7427,7 +7602,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(32)
 
 
         def _fetch_instances(self):
@@ -7457,7 +7632,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_error'):
                 return self._m_error
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_error = Sh2.SceMpegCbDataError(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_error', None)
 
         @property
@@ -7465,7 +7643,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_str'):
                 return self._m_str
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_str = Sh2.SceMpegCbDataStr(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_str', None)
 
         @property
@@ -7473,7 +7654,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_ts'):
                 return self._m_ts
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_ts = Sh2.SceMpegCbDataTimeStamp(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_ts', None)
 
         @property
@@ -7481,7 +7665,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_type'):
                 return self._m_type
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_type = self._io.read_u1()
+            self._io.seek(_pos)
             return getattr(self, '_m_type', None)
 
 
@@ -8346,7 +8533,9 @@ class Sh2(KaitaiStruct):
             self.bitw = self._io.read_u1()
             self.bith = self._io.read_u1()
             self.check = self._io.read_u2le()
-            self.giftag = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_giftag = self._io.read_bytes(16)
+            _io__raw_giftag = KaitaiStream(BytesIO(self._raw_giftag))
+            self.giftag = Sh2.QWorddata(_io__raw_giftag, self, self._root)
 
 
         def _fetch_instances(self):
@@ -8498,7 +8687,9 @@ class Sh2(KaitaiStruct):
             self.sp = self._io.read_f4le()
             self.min_range = self._io.read_f4le()
             self.max_range = self._io.read_f4le()
-            self.hit_check = Sh2.ShAttackInfoAnon5(self._io, self, self._root)
+            self._raw_hit_check = self._io.read_bytes(12)
+            _io__raw_hit_check = KaitaiStream(BytesIO(self._raw_hit_check))
+            self.hit_check = Sh2.ShAttackInfoAnon5(_io__raw_hit_check, self, self._root)
             self.atk_start = self._io.read_u1()
             self.atk_end = self._io.read_u1()
             self.sd = self._io.read_u1()
@@ -8518,7 +8709,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(12)
 
 
         def _fetch_instances(self):
@@ -8539,7 +8730,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_fight'):
                 return self._m_fight
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_fight = Sh2.ShBattleFight(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_fight', None)
 
         @property
@@ -8547,7 +8741,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_shot'):
                 return self._m_shot
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_shot = Sh2.ShBattleShot(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_shot', None)
 
 
@@ -9120,14 +9317,30 @@ class Sh2(KaitaiStruct):
             for i in range(5):
                 self.drawq2_nc.append(Sh2.QWorddata(self._io, self, self._root))
 
-            self.gifad_frame_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_frame_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_frame_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_frame_msk_rgb = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_msk_rgb = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_gifad_frame_normal = self._io.read_bytes(16)
+            _io__raw_gifad_frame_normal = KaitaiStream(BytesIO(self._raw_gifad_frame_normal))
+            self.gifad_frame_normal = Sh2.QWorddata(_io__raw_gifad_frame_normal, self, self._root)
+            self._raw_frame_normal = self._io.read_bytes(16)
+            _io__raw_frame_normal = KaitaiStream(BytesIO(self._raw_frame_normal))
+            self.frame_normal = Sh2.QWorddata(_io__raw_frame_normal, self, self._root)
+            self._raw_gifad_frame_mskalpha = self._io.read_bytes(16)
+            _io__raw_gifad_frame_mskalpha = KaitaiStream(BytesIO(self._raw_gifad_frame_mskalpha))
+            self.gifad_frame_mskalpha = Sh2.QWorddata(_io__raw_gifad_frame_mskalpha, self, self._root)
+            self._raw_frame_mskalpha = self._io.read_bytes(16)
+            _io__raw_frame_mskalpha = KaitaiStream(BytesIO(self._raw_frame_mskalpha))
+            self.frame_mskalpha = Sh2.QWorddata(_io__raw_frame_mskalpha, self, self._root)
+            self._raw_gifad_frame_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_gifad_frame_msk_dalpha = KaitaiStream(BytesIO(self._raw_gifad_frame_msk_dalpha))
+            self.gifad_frame_msk_dalpha = Sh2.QWorddata(_io__raw_gifad_frame_msk_dalpha, self, self._root)
+            self._raw_frame_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_frame_msk_dalpha = KaitaiStream(BytesIO(self._raw_frame_msk_dalpha))
+            self.frame_msk_dalpha = Sh2.QWorddata(_io__raw_frame_msk_dalpha, self, self._root)
+            self._raw_gifad_frame_msk_rgb = self._io.read_bytes(16)
+            _io__raw_gifad_frame_msk_rgb = KaitaiStream(BytesIO(self._raw_gifad_frame_msk_rgb))
+            self.gifad_frame_msk_rgb = Sh2.QWorddata(_io__raw_gifad_frame_msk_rgb, self, self._root)
+            self._raw_frame_msk_rgb = self._io.read_bytes(16)
+            _io__raw_frame_msk_rgb = KaitaiStream(BytesIO(self._raw_frame_msk_rgb))
+            self.frame_msk_rgb = Sh2.QWorddata(_io__raw_frame_msk_rgb, self, self._root)
 
 
         def _fetch_instances(self):
@@ -9230,26 +9443,44 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.giftag = Sh2.SceGifTag(self._io, self, self._root)
             self.draw = Sh2.SceGsDrawEnv1(self._io, self, self._root)
-            self.alpha1 = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_alpha1 = self._io.read_bytes(16)
+            _io__raw_alpha1 = KaitaiStream(BytesIO(self._raw_alpha1))
+            self.alpha1 = Sh2.QWorddata(_io__raw_alpha1, self, self._root)
             self.drawq2 = []
             for i in range(6):
                 self.drawq2.append(Sh2.QWorddata(self._io, self, self._root))
 
             self.clear = Sh2.SceGsClear(self._io, self, self._root)
-            self.frame = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_frame = self._io.read_bytes(16)
+            _io__raw_frame = KaitaiStream(BytesIO(self._raw_frame))
+            self.frame = Sh2.QWorddata(_io__raw_frame, self, self._root)
             self.giftag_nc = Sh2.SceGifTag(self._io, self, self._root)
             self.draw_nc = Sh2.SceGsDrawEnv1(self._io, self, self._root)
-            self.alpha1_nc = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_alpha1_nc = self._io.read_bytes(16)
+            _io__raw_alpha1_nc = KaitaiStream(BytesIO(self._raw_alpha1_nc))
+            self.alpha1_nc = Sh2.QWorddata(_io__raw_alpha1_nc, self, self._root)
             self.drawq2_nc = []
             for i in range(6):
                 self.drawq2_nc.append(Sh2.QWorddata(self._io, self, self._root))
 
-            self.gifad_frame_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_frame_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_frame_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_gifad_frame_normal = self._io.read_bytes(16)
+            _io__raw_gifad_frame_normal = KaitaiStream(BytesIO(self._raw_gifad_frame_normal))
+            self.gifad_frame_normal = Sh2.QWorddata(_io__raw_gifad_frame_normal, self, self._root)
+            self._raw_frame_normal = self._io.read_bytes(16)
+            _io__raw_frame_normal = KaitaiStream(BytesIO(self._raw_frame_normal))
+            self.frame_normal = Sh2.QWorddata(_io__raw_frame_normal, self, self._root)
+            self._raw_gifad_frame_mskalpha = self._io.read_bytes(16)
+            _io__raw_gifad_frame_mskalpha = KaitaiStream(BytesIO(self._raw_gifad_frame_mskalpha))
+            self.gifad_frame_mskalpha = Sh2.QWorddata(_io__raw_gifad_frame_mskalpha, self, self._root)
+            self._raw_frame_mskalpha = self._io.read_bytes(16)
+            _io__raw_frame_mskalpha = KaitaiStream(BytesIO(self._raw_frame_mskalpha))
+            self.frame_mskalpha = Sh2.QWorddata(_io__raw_frame_mskalpha, self, self._root)
+            self._raw_gifad_frame_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_gifad_frame_msk_dalpha = KaitaiStream(BytesIO(self._raw_gifad_frame_msk_dalpha))
+            self.gifad_frame_msk_dalpha = Sh2.QWorddata(_io__raw_gifad_frame_msk_dalpha, self, self._root)
+            self._raw_frame_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_frame_msk_dalpha = KaitaiStream(BytesIO(self._raw_frame_msk_dalpha))
+            self.frame_msk_dalpha = Sh2.QWorddata(_io__raw_frame_msk_dalpha, self, self._root)
 
 
         def _fetch_instances(self):
@@ -9286,18 +9517,42 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.giftag = Sh2.QWorddata(self._io, self, self._root)
-            self.frame = Sh2.QWorddata(self._io, self, self._root)
-            self.scissor = Sh2.QWorddata(self._io, self, self._root)
-            self.xyoffset = Sh2.QWorddata(self._io, self, self._root)
-            self.zbuf = Sh2.QWorddata(self._io, self, self._root)
-            self.test = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_normal = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_mskalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.gifad_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
-            self.frame_msk_dalpha = Sh2.QWorddata(self._io, self, self._root)
+            self._raw_giftag = self._io.read_bytes(16)
+            _io__raw_giftag = KaitaiStream(BytesIO(self._raw_giftag))
+            self.giftag = Sh2.QWorddata(_io__raw_giftag, self, self._root)
+            self._raw_frame = self._io.read_bytes(16)
+            _io__raw_frame = KaitaiStream(BytesIO(self._raw_frame))
+            self.frame = Sh2.QWorddata(_io__raw_frame, self, self._root)
+            self._raw_scissor = self._io.read_bytes(16)
+            _io__raw_scissor = KaitaiStream(BytesIO(self._raw_scissor))
+            self.scissor = Sh2.QWorddata(_io__raw_scissor, self, self._root)
+            self._raw_xyoffset = self._io.read_bytes(16)
+            _io__raw_xyoffset = KaitaiStream(BytesIO(self._raw_xyoffset))
+            self.xyoffset = Sh2.QWorddata(_io__raw_xyoffset, self, self._root)
+            self._raw_zbuf = self._io.read_bytes(16)
+            _io__raw_zbuf = KaitaiStream(BytesIO(self._raw_zbuf))
+            self.zbuf = Sh2.QWorddata(_io__raw_zbuf, self, self._root)
+            self._raw_test = self._io.read_bytes(16)
+            _io__raw_test = KaitaiStream(BytesIO(self._raw_test))
+            self.test = Sh2.QWorddata(_io__raw_test, self, self._root)
+            self._raw_gifad_normal = self._io.read_bytes(16)
+            _io__raw_gifad_normal = KaitaiStream(BytesIO(self._raw_gifad_normal))
+            self.gifad_normal = Sh2.QWorddata(_io__raw_gifad_normal, self, self._root)
+            self._raw_frame_normal = self._io.read_bytes(16)
+            _io__raw_frame_normal = KaitaiStream(BytesIO(self._raw_frame_normal))
+            self.frame_normal = Sh2.QWorddata(_io__raw_frame_normal, self, self._root)
+            self._raw_gifad_mskalpha = self._io.read_bytes(16)
+            _io__raw_gifad_mskalpha = KaitaiStream(BytesIO(self._raw_gifad_mskalpha))
+            self.gifad_mskalpha = Sh2.QWorddata(_io__raw_gifad_mskalpha, self, self._root)
+            self._raw_frame_mskalpha = self._io.read_bytes(16)
+            _io__raw_frame_mskalpha = KaitaiStream(BytesIO(self._raw_frame_mskalpha))
+            self.frame_mskalpha = Sh2.QWorddata(_io__raw_frame_mskalpha, self, self._root)
+            self._raw_gifad_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_gifad_msk_dalpha = KaitaiStream(BytesIO(self._raw_gifad_msk_dalpha))
+            self.gifad_msk_dalpha = Sh2.QWorddata(_io__raw_gifad_msk_dalpha, self, self._root)
+            self._raw_frame_msk_dalpha = self._io.read_bytes(16)
+            _io__raw_frame_msk_dalpha = KaitaiStream(BytesIO(self._raw_frame_msk_dalpha))
+            self.frame_msk_dalpha = Sh2.QWorddata(_io__raw_frame_msk_dalpha, self, self._root)
 
 
         def _fetch_instances(self):
@@ -9341,7 +9596,9 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.adr = Sh2.ShInAreaTgtInfoAnon4(self._io, self, self._root)
+            self._raw_adr = self._io.read_bytes(4)
+            _io__raw_adr = KaitaiStream(BytesIO(self._raw_adr))
+            self.adr = Sh2.ShInAreaTgtInfoAnon4(_io__raw_adr, self, self._root)
             self.distance = self._io.read_f4le()
             self.in_area = Sh2.ShInArea(self._io, self, self._root)
             self._unnamed3 = self._io.read_bytes(3)
@@ -9361,7 +9618,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(4)
 
 
         def _fetch_instances(self):
@@ -9377,7 +9634,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_scp'):
                 return self._m_scp
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_scp = Sh2.Pointer(u"sub_character", self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_scp', None)
 
 
@@ -12358,7 +12618,9 @@ class Sh2(KaitaiStruct):
             self.proj_volume = self._io.read_f4le()
             self.proj_sec = self._io.read_f4le()
             self.cam_mv_type = self._io.read_s4le()
-            self.tmp = Sh2.VcRoadDataAnon13(self._io, self, self._root)
+            self._raw_tmp = self._io.read_bytes(16)
+            _io__raw_tmp = KaitaiStream(BytesIO(self._raw_tmp))
+            self.tmp = Sh2.VcRoadDataAnon13(_io__raw_tmp, self, self._root)
 
 
         def _fetch_instances(self):
@@ -12376,7 +12638,7 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            pass
+            self._unnamed0 = self._io.read_bytes(16)
 
 
         def _fetch_instances(self):
@@ -12414,7 +12676,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_chs'):
                 return self._m_chs
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_chs = Sh2.VcChaseCamParam(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_chs', None)
 
         @property
@@ -12422,7 +12687,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_cir'):
                 return self._m_cir
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_cir = Sh2.VcLocusCircleCamParam(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_cir', None)
 
         @property
@@ -12430,10 +12698,13 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_data'):
                 return self._m_data
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_data = []
             for i in range(16):
                 self._m_data.append(self._io.read_u1())
 
+            self._io.seek(_pos)
             return getattr(self, '_m_data', None)
 
         @property
@@ -12441,7 +12712,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_fix'):
                 return self._m_fix
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_fix = Sh2.VcFixAngCamParam(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_fix', None)
 
         @property
@@ -12449,7 +12723,10 @@ class Sh2(KaitaiStruct):
             if hasattr(self, '_m_stl'):
                 return self._m_stl
 
+            _pos = self._io.pos()
+            self._io.seek(0)
             self._m_stl = Sh2.VcSettleCamParam(self._io, self, self._root)
+            self._io.seek(_pos)
             return getattr(self, '_m_stl', None)
 
 

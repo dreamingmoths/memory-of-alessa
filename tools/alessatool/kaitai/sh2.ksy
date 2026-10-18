@@ -7,107 +7,134 @@ types:
   q:
     instances:
       u128:
+        pos: 0
         type: u16
 
       u64:
+        pos: 0
         type: u8
         repeat: expr
         repeat-expr: 2
 
       u32:
+        pos: 0
         type: u4
         repeat: expr
         repeat-expr: 4
 
       u16:
+        pos: 0
         type: u2
         repeat: expr
         repeat-expr: 8
 
       u8:
+        pos: 0
         type: u1
         repeat: expr
         repeat-expr: 16
 
       s64:
+        pos: 0
         type: s8
         repeat: expr
         repeat-expr: 2
 
       s32:
+        pos: 0
         type: s4
         repeat: expr
         repeat-expr: 4
 
       s16:
+        pos: 0
         type: s2
         repeat: expr
         repeat-expr: 8
 
       s8:
+        pos: 0
         type: s1
         repeat: expr
         repeat-expr: 16
 
       q:
+        pos: 0
         type: s4
         repeat: expr
         repeat-expr: 4
 
       fv:
+        pos: 0
         type: f4
         repeat: expr
         repeat-expr: 4
 
       iv:
+        pos: 0
         type: s4
         repeat: expr
         repeat-expr: 4
 
+    seq:
+      - size: 16
+
   q_worddata:
     instances:
       ui32:
+        pos: 0
         type: u4
         repeat: expr
         repeat-expr: 4
 
       us16:
+        pos: 0
         type: u2
         repeat: expr
         repeat-expr: 8
 
       fl32:
+        pos: 0
         type: f4
         repeat: expr
         repeat-expr: 4
 
       uc8:
+        pos: 0
         type: u1
         repeat: expr
         repeat-expr: 16
 
       si32:
+        pos: 0
         type: s4
         repeat: expr
         repeat-expr: 4
 
       ss16:
+        pos: 0
         type: s2
         repeat: expr
         repeat-expr: 8
 
       sc8:
+        pos: 0
         type: s1
         repeat: expr
         repeat-expr: 16
 
       ul64:
+        pos: 0
         type: u8
         repeat: expr
         repeat-expr: 2
 
       ul128:
+        pos: 0
         type: u16
+
+    seq:
+      - size: 16
 
   vector4:
     seq:
@@ -456,14 +483,20 @@ types:
 
       - id: hobj
         type: cl_vhit_result_anon_1
+        size: 48
 
   cl_vhit_result_anon_1:
     instances:
       wall:
+        pos: 0
         type: cl_vhit_wall
 
       chara:
+        pos: 0
         type: cl_vhit_chara
+
+    seq:
+      - size: 48
 
   sh_battle_info:
     seq:
@@ -1340,47 +1373,64 @@ types:
         type: s4
 
       - type: en_local_data_anon_2
+        size: 64
 
   en_local_data_anon_2:
     instances:
       scu:
+        pos: 0
         type: en_scu_data
 
       mkn:
+        pos: 0
         type: en_mkn_data
 
       tyu:
+        pos: 0
         type: en_tyu_data
 
       red:
+        pos: 0
         type: en_red_data
 
       oni:
+        pos: 0
         type: en_oni_data
 
       nse:
+        pos: 0
         type: en_nse_data
 
       ike:
+        pos: 0
         type: en_ike_data
 
       pap:
+        pos: 0
         type: en_pap_data
 
       edb:
+        pos: 0
         type: en_edb_data
 
       arm:
+        pos: 0
         type: en_arm_data
 
       bos:
+        pos: 0
         type: en_bos_data
 
       nik:
+        pos: 0
         type: en_nik_data
 
       ins:
+        pos: 0
         type: en_ins_data
+
+    seq:
+      - size: 64
 
   ci_sub_character:
     seq:
@@ -1584,14 +1634,20 @@ types:
       - size: 2
 
       - type: pad_info_anon_3
+        size: 8
 
   pad_info_anon_3:
     instances:
       pad3d:
+        pos: 0
         type: pad_3d
 
       pad2d:
+        pos: 0
         type: pad_2d
+
+    seq:
+      - size: 8
 
   sh_player_work:
     seq:
@@ -2279,6 +2335,7 @@ types:
     seq:
       - id: adr
         type: sh_in_area_tgt_info_anon_4
+        size: 4
 
       - id: distance
         type: f4
@@ -2291,7 +2348,11 @@ types:
   sh_in_area_tgt_info_anon_4:
     instances:
       scp:
+        pos: 0
         type: pointer('sub_character')
+
+    seq:
+      - size: 4
 
   sh_battle_shot:
     seq:
@@ -2337,6 +2398,7 @@ types:
 
       - id: hit_check
         type: sh_attack_info_anon_5
+        size: 12
 
       - id: atk_start
         type: u1
@@ -2353,10 +2415,15 @@ types:
   sh_attack_info_anon_5:
     instances:
       fight:
+        pos: 0
         type: sh_battle_fight
 
       shot:
+        pos: 0
         type: sh_battle_shot
+
+    seq:
+      - size: 12
 
   sh_attack_queue_one:
     seq:
@@ -2531,19 +2598,26 @@ types:
 
       - id: obj
         type: cl_battle_result_anon_6
+        size: 4
 
       - size: 8
 
   cl_battle_result_anon_6:
     instances:
       en:
+        pos: 0
         type: pointer('sub_character')
 
       pl:
+        pos: 0
         type: pointer('cl_hitpoly_plane')
 
       cl:
+        pos: 0
         type: pointer('cl_hitpoly_column')
+
+    seq:
+      - size: 4
 
   cl_cldheader:
     seq:
@@ -3447,6 +3521,7 @@ types:
 
       - id: copy_filter_color
         type: q_worddata
+        size: 16
 
   filter_params:
     seq:
@@ -7740,6 +7815,7 @@ types:
 
       - id: giftag
         type: q_worddata
+        size: 16
 
   sh2gfw_cluts_head:
     seq:
@@ -8226,25 +8302,35 @@ types:
   fs_file:
     instances:
       check:
+        pos: 0
         type: fs_file_anon_11
 
       pack:
+        pos: 0
         type: u16
 
       cd:
+        pos: 0
         type: fs_cd_file
 
       hd:
+        pos: 0
         type: fs_hd_file
 
       mgc:
+        pos: 0
         type: fs_mgc_file
 
       mgf:
+        pos: 0
         type: fs_mgf_file
 
       mgp:
+        pos: 0
         type: fs_mgp_file
+
+    seq:
+      - size: 16
 
   fs_file_anon_11:
     seq:
@@ -8266,10 +8352,15 @@ types:
   fs_file_index:
     instances:
       index:
+        pos: 0
         type: fs_file_index_anon_12
 
       pack:
+        pos: 0
         type: u8
+
+    seq:
+      - size: 8
 
   fs_file_index_anon_12:
     seq:
@@ -8647,25 +8738,34 @@ types:
 
       - id: tmp
         type: vc_road_data_anon_13
+        size: 16
 
   vc_road_data_anon_13:
     instances:
       data:
+        pos: 0
         type: u1
         repeat: expr
         repeat-expr: 16
 
       chs:
+        pos: 0
         type: vc_chase_cam_param
 
       stl:
+        pos: 0
         type: vc_settle_cam_param
 
       fix:
+        pos: 0
         type: vc_fix_ang_cam_param
 
       cir:
+        pos: 0
         type: vc_locus_circle_cam_param
+
+    seq:
+      - size: 16
 
   vc_near_road_data:
     seq:
@@ -9805,27 +9905,35 @@ types:
 
       - id: gifad_frame_normal
         type: q_worddata
+        size: 16
 
       - id: frame_normal
         type: q_worddata
+        size: 16
 
       - id: gifad_frame_mskalpha
         type: q_worddata
+        size: 16
 
       - id: frame_mskalpha
         type: q_worddata
+        size: 16
 
       - id: gifad_frame_msk_dalpha
         type: q_worddata
+        size: 16
 
       - id: frame_msk_dalpha
         type: q_worddata
+        size: 16
 
       - id: gifad_frame_msk_rgb
         type: q_worddata
+        size: 16
 
       - id: frame_msk_rgb
         type: q_worddata
+        size: 16
 
   sh_gs_stencil_draw_env:
     seq:
@@ -9837,6 +9945,7 @@ types:
 
       - id: alpha1
         type: q_worddata
+        size: 16
 
       - id: drawq2
         type: q_worddata
@@ -9848,6 +9957,7 @@ types:
 
       - id: frame
         type: q_worddata
+        size: 16
 
       - id: giftag_nc
         type: sce_gif_tag
@@ -9857,6 +9967,7 @@ types:
 
       - id: alpha1_nc
         type: q_worddata
+        size: 16
 
       - id: drawq2_nc
         type: q_worddata
@@ -9865,59 +9976,77 @@ types:
 
       - id: gifad_frame_normal
         type: q_worddata
+        size: 16
 
       - id: frame_normal
         type: q_worddata
+        size: 16
 
       - id: gifad_frame_mskalpha
         type: q_worddata
+        size: 16
 
       - id: frame_mskalpha
         type: q_worddata
+        size: 16
 
       - id: gifad_frame_msk_dalpha
         type: q_worddata
+        size: 16
 
       - id: frame_msk_dalpha
         type: q_worddata
+        size: 16
 
   sh_gs_tiny_draw_env:
     seq:
       - id: giftag
         type: q_worddata
+        size: 16
 
       - id: frame
         type: q_worddata
+        size: 16
 
       - id: scissor
         type: q_worddata
+        size: 16
 
       - id: xyoffset
         type: q_worddata
+        size: 16
 
       - id: zbuf
         type: q_worddata
+        size: 16
 
       - id: test
         type: q_worddata
+        size: 16
 
       - id: gifad_normal
         type: q_worddata
+        size: 16
 
       - id: frame_normal
         type: q_worddata
+        size: 16
 
       - id: gifad_mskalpha
         type: q_worddata
+        size: 16
 
       - id: frame_mskalpha
         type: q_worddata
+        size: 16
 
       - id: gifad_msk_dalpha
         type: q_worddata
+        size: 16
 
       - id: frame_msk_dalpha
         type: q_worddata
+        size: 16
 
   sh_gs_all_env:
     seq:
@@ -10813,27 +10942,35 @@ types:
   qword:
     instances:
       q:
+        pos: 0
         type: u16
 
       l:
+        pos: 0
         type: u8
         repeat: expr
         repeat-expr: 2
 
       i:
+        pos: 0
         type: u4
         repeat: expr
         repeat-expr: 4
 
       s:
+        pos: 0
         type: u2
         repeat: expr
         repeat-expr: 8
 
       c:
+        pos: 0
         type: u1
         repeat: expr
         repeat-expr: 16
+
+    seq:
+      - size: 16
 
   str_file:
     seq:
@@ -10979,16 +11116,23 @@ types:
   sce_mpeg_cb_data:
     instances:
       type:
+        pos: 0
         type: u1
 
       error:
+        pos: 0
         type: sce_mpeg_cb_data_error
 
       ts:
+        pos: 0
         type: sce_mpeg_cb_data_time_stamp
 
       str:
+        pos: 0
         type: sce_mpeg_cb_data_str
+
+    seq:
+      - size: 32
 
   sce_ipu_rgb32:
     seq:
