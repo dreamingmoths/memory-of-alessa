@@ -169,7 +169,7 @@ segments:
       - { start: 0x000b1480,    type: c,          name: Event/demoview                                   }
       - { start: 0x000b3e30,    type: c,          name: Font/font                                        }
       - { start: 0x000bab70,    type: asm,        name: Multi_thr/filesys/filecmd                        }
-      - { start: 0x000bc760,    type: asm,        name: Multi_thr/filesys/filepath                       }
+      - { start: 0x000bc760,    type: c,          name: Multi_thr/filesys/filepath                       }
       - { start: 0x000bcd30,    type: c,          name: Multi_thr/filesys/fileserv                       }
       - { start: 0x000bd2c0,    type: c,          name: Multi_thr/filesys/iopload                        }
       - { start: 0x000bd3a0,    type: c,          name: Multi_thr/filesys/sh_cdvd                        }
@@ -559,7 +559,7 @@ segments:
       - { start: 0x00191d20,    type: c,          name: Effect2/hh_class_blood_04                        }
       - { start: 0x001924f0,    type: c,          name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x00192aa0,    type: c,          name: Effect2/hh_memory_manage                         }
-      - { start: 0x00192f50,    type: asm,        name: SH2_common/mem_share                             }
+      - { start: 0x00192f50,    type: c,          name: SH2_common/mem_share                             }
       - { start: 0x001937c0,    type: asm,        name: Effect2/hh_class_flame_03                        }
       - { start: 0x00194300,    type: asm,        name: SH2_common/result                                }
       - { start: 0x001951b0,    type: c,          name: view/vc_prio                                     }
@@ -660,14 +660,14 @@ segments:
       - { start: 0x001b9dd0,    type: data,       name: Event/event                                      }
       - { start: 0x001ba050,    type: .data,      name: Event/event_sub                                  }
       - { start: 0x001ba0f0,    type: data,       name: Event/item                                       }
-      - { start: 0x001ba1a0,    type: data,       name: Event/stg_name                                   }
+      - { start: 0x001ba1a0,    type: .data,      name: Event/stg_name                                   }
       - { start: 0x001ba780,    type: .data,      name: Event/demoview                                   }
       - { start: 0x001bb3d8,    type: data,       name: data_0x1bb3d8                                    }
       - { start: 0x001bb580,    type: .data,      name: Font/font                                        }
       - { start: 0x001bb5c0,    type: data,       name: data_0x1bb5c0                                    }
       - { start: 0x001bb648,    type: data,       name: sdk/lib_002BAF48                                 }
       - { start: 0x0023b920,    type: data,       name: Multi_thr/filesys/filecmd                        }
-      - { start: 0x0023bab8,    type: data,       name: Multi_thr/filesys/filepath                       }
+      - { start: 0x0023bab8,    type: .data,      name: Multi_thr/filesys/filepath                       }
       - { start: 0x0023bad0,    type: data,       name: Multi_thr/filesys/sh_cdvd                        }
       - { start: 0x0023baf8,    type: data,       name: Multi_thr/filesys/sh_chk_syscnf                  }
       - { start: 0x0023bb08,    type: data,       name: Multi_thr/intc/syncv                             }
@@ -914,7 +914,7 @@ segments:
       - { start: 0x00291ac0,    type: .rodata,    name: Font/font                                        }
       - { start: 0x00291c20,    type: rodata,     name: Multi_thr/filesys/filecmd                        }
 #     - { start: 0x00291d98,    type: rodata,     name: unaff_00391698                                   }
-      - { start: 0x00291da8,    type: rodata,     name: Multi_thr/filesys/filepath                       }
+      - { start: 0x00291d98,    type: .rodata,    name: Multi_thr/filesys/filepath                       }
       - { start: 0x00291db0,    type: .rodata,    name: Multi_thr/filesys/fileserv                       }
       - { start: 0x00291de0,    type: .rodata,    name: Multi_thr/filesys/iopload                        }
       - { start: 0x00291df0,    type: .rodata,    name: Multi_thr/filesys/sh_cdvd                        }
@@ -1084,7 +1084,7 @@ segments:
       - { start: 0x0029c8d8,    type: rodata,     name: LoadBg/loadbg_chara                              }
       - { start: 0x0029ca80,    type: .rodata,    name: Chacter/player_result                            }
       - { start: 0x0029cb00,    type: .rodata,    name: Effect2/hh_memory_manage                         }
-      - { start: 0x0029cb80,    type: rodata,     name: SH2_common/mem_share                             }
+      - { start: 0x0029cb80,    type: .rodata,    name: SH2_common/mem_share                             }
       - { start: 0x0029cc20,    type: rodata,     name: SH2_common/result                                }
       - { start: 0x0029ccb0,    type: rodata,     name: pause                                            }
       - { start: 0x0029cce0,    type: .rodata,    name: now_loading                                      }
@@ -1189,7 +1189,7 @@ segments:
       - { vram:  0x01133148,    type: .bss,       name: Event/demoview                                   }
       - { vram:  0x01133c30,    type: bss,        name: Font/font                                        }
       - { vram:  0x011591e0,    type: bss,        name: Multi_thr/filesys/filecmd                        }
-      - { vram:  0x01159208,    type: bss,        name: Multi_thr/filesys/filepath                       }
+      - { vram:  0x01159208,    type: .bss,       name: Multi_thr/filesys/filepath                       }
       - { vram:  0x01159230,    type: .bss,       name: Multi_thr/filesys/fileserv                       }
       - { vram:  0x01159238,    type: bss,        name: Multi_thr/filesys/sh_cdvd                        }
       - { vram:  0x01159280,    type: bss,        name: Multi_thr/filesys/sh_chk_syscnf                  }

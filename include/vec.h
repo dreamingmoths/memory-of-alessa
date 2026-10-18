@@ -1,4 +1,4 @@
-#ifndef ALESSA_VEC_H
+#if !defined(ALESSA_VEC_H) && !defined(__ALESSASTRUCT__)
 #define ALESSA_VEC_H
 
 #include "sce/libvu0.h"

@@ -2,6 +2,7 @@
 #define FOG_H
 
 #include "sh2_common.h"
+#include "shared/Fog/fog.h"
 
 void fogInit(void);
 

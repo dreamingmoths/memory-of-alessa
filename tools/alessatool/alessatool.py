@@ -9,6 +9,7 @@ from commands.patch import PatchArgs, patch_relocations
 from commands.merge import MergeArgs, merge_fragments
 from commands.create import CreationArgs, create_overlay_yamls
 from commands.debug import DebugArgs, debug_nonmatching
+from commands.migrate import MigrateArgs, migrate_data
 
 from commands.util import configure_util_parser
 
@@ -32,6 +33,9 @@ def create(args: CreationArgs):
 
 def debug(args: DebugArgs):
     debug_nonmatching(args)
+
+def migrate(args: MigrateArgs):
+    migrate_data(args)
 
 def main():
     parser = argparse.ArgumentParser(  
@@ -325,6 +329,29 @@ def main():
         help="print all mismatches"
     )
     debug_parser.set_defaults(func=debug)
+
+    migrate_parser = subparsers.add_parser(
+        "migrate",
+        help="migrate data to c"
+    )
+    migrate_parser.add_argument(
+        "--project",
+        default="silent-hill-3",
+        help="name of the project to debug (e.g., `silent-hill-2`)"
+    )
+    migrate_parser.add_argument(
+        "--name",
+        type=str,
+        help="name of the symbol to migrate (must be in `PROJECT_DATA_CONFIG`)"
+    )
+    migrate_parser.add_argument(
+        "--output-path",
+        type=Path,
+        default=Path("ctx.c"),
+        help="path to output file"
+    )
+    migrate_parser.set_defaults(func=migrate)
+
 
     util_parser = subparsers.add_parser(
         "util",
