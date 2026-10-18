@@ -1,11 +1,12 @@
 import sys
+from pathlib import Path
 from posixpath import abspath
 from dataclasses import dataclass
 from traceback import print_exception
 
 sys.path.append(abspath("tools/alessatool"))
 
-from kaitai.data.config import PROJECT_DATA_CONFIG, SH2_DATA, SH3_DATA
+from kaitai.data.config import PROJECT_DATA_CONFIG
 from kaitai.data.data_utils import DataMigrationRequest, run_data_migration
 
 @dataclass
@@ -25,7 +26,7 @@ def run_tests():
         name = result.name
 
         if result.skip:
-            print(f"🟠 {bold(name)} skipped ({result.count} tests)")
+            print(f"🟠 {bold(name)}: skipped ({result.count} tests)")
             continue
 
         passing = result.passing
@@ -37,24 +38,31 @@ def run_tests():
         else: text = f"{passing} passing, {failing} failing"
         print(f"{emoji} {bold(name)}: {text}")
 
-def run_project_test(name: str) -> TestResult:
-    data_config = PROJECT_DATA_CONFIG[name]
+def run_project_test(project: str) -> TestResult:
+    data_config = PROJECT_DATA_CONFIG[project]
     table = data_config.table
     if len(table) == 0:
-        return TestResult(name=name, skip=True)
+        return TestResult(name=project, skip=True)
 
     passing = count = 0
     for data in table:
         count += 1
         print(bold(f"test: {data.name}"))
         try:
-            run_data_migration(DataMigrationRequest(name, data.name, "/dev/null"))
+            run_data_migration(
+                DataMigrationRequest(
+                    project=project,
+                    name=data.name,
+                    output_path=Path("/dev/null"),
+                    silence_dev_warnings=True
+                )
+            )
             passing += 1
         except Exception as exception:
             print(f"🔴 test failed for {data.name}")
             print_exception(exception)
 
-    return TestResult(name=name, passing=passing, count=count)
+    return TestResult(name=project, passing=passing, count=count)
 
 def bold(text: str):
     return '\033[1m' + text + '\033[0m'

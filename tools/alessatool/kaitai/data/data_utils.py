@@ -22,6 +22,7 @@ class DataMigrationRequest:
     project: str
     name: str
     output_path: Path
+    silence_dev_warnings: bool
 
 @dataclass
 class SimpleDataMigrationRequest:
@@ -35,6 +36,7 @@ class SimpleDataMigrationRequest:
     data: SimpleData
     splat_yaml: dict
     executable_path: Path
+    silence_dev_warnings: bool
 
 @dataclass
 class StructDataMigrationRequest(SimpleDataMigrationRequest):
@@ -148,6 +150,9 @@ def reflect_kaitai_structure(yaml: dict, type: Type[KaitaiStruct]):
     '''
     name = type.__name__
     typename = to_kaitai_id(name)
+    if typename not in yaml["types"]:
+        # try a different way
+        typename = camel_to_snake(name)
     return yaml["types"][typename]
 
 def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE * 2)):
@@ -172,11 +177,15 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
     object_class = object.__class__
     type_structure = reflect_kaitai_structure(kaitai_yaml, object.__class__)
 
+    # union
     if "instances" in type_structure:
         first_union_member = next(iter(type_structure["instances"]))
-        print("🟠 warning: there is no way to choose union options yet")
-        print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
         own_properties = [first_union_member]
+        if not request.silence_dev_warnings:
+            print("🟠 warning: there is no way to choose union options yet")
+            print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
+
+    # struct
     elif "seq" in type_structure:
         own_properties = map(lambda t : t["id"], filter(lambda t : "id" in t, type_structure["seq"]))
     stream.write(f"{indent[INDENT_SIZE:]}{{\n") # indent braces less
@@ -290,7 +299,7 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
         file.seek(vram(sym.addr))
 
         unpacked_values = unpack(fmt, file.read(calcsize(fmt)))
-        n = len(pattern)
+        n = pattern and len(pattern) or 0
 
         if n < 2:
             stream.write(f"{{ {", ".join(map(lambda value : to_str(value), unpacked_values))} }}\n")
@@ -319,6 +328,7 @@ def run_data_migration(request: DataMigrationRequest):
     name = request.name
     project = request.project
     output_path = request.output_path
+    silence_dev_warnings = request.silence_dev_warnings
 
     serial = PROJECT_CONFIG[project]
     root = Path(project) / CONFIG / serial
@@ -348,7 +358,8 @@ def run_data_migration(request: DataMigrationRequest):
                     atlas=atlas,
                     data=data_entry,
                     splat_yaml=splat_yaml,
-                    executable_path=executable_path
+                    executable_path=executable_path,
+                    silence_dev_warnings=silence_dev_warnings
                 )
                 migrate_simple_data(request)
             elif isinstance(data_entry, StructData):
@@ -360,7 +371,8 @@ def run_data_migration(request: DataMigrationRequest):
                     splat_yaml=splat_yaml,
                     kaitai_yaml=kaitai_yaml,
                     namespace=namespace,
-                    executable_path=executable_path
+                    executable_path=executable_path,
+                    silence_dev_warnings=silence_dev_warnings
                 )
                 migrate_struct_data(request)
             else:
