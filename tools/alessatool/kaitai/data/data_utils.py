@@ -268,6 +268,12 @@ def migrate_struct_data(request: StructDataMigrationRequest):
         
         request.stream.write("});\n")
 
+def default_to_str(value):
+    if isinstance(value, bytes):
+        assert len(value) == 1
+        return str(int(value[0]))
+    return str(value)
+
 def migrate_simple_data(request: SimpleDataMigrationRequest):
     data = request.data
     stream = request.stream
@@ -275,7 +281,7 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
 
     fmt = data.type
     pattern = data.pattern
-    to_str = data.to_str or (lambda x : str(x))
+    to_str = data.to_str or default_to_str
     
     vram = get_from_vram_conversion(request.splat_yaml, rom=False)
     sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]

@@ -18,6 +18,7 @@ SH2_DATA = [
     StructData(name="ambush_apart",                         type=Sh2.EnAmbushData,                     count=9                        ),
     StructData(name="chz_crt_block",                        type=Sh2.ChizuCurrentBlock,                count=190                      ),
     StructData(name="chizu_marker_list",                    type=Sh2.ChizuMarkerList,                  count=36,        hex=False     ),
+    SimpleData(name="room_to_block",                        type="<844c",                              pattern=[211, 4]               )
 ]
 
 SH3_DATA = []
