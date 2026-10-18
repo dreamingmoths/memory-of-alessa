@@ -7473,6 +7473,59 @@ types:
 
       - size: 12
 
+  chizu_current_block:
+    seq:
+      - id: chizu
+        type: s4
+
+      - id: cp_x
+        type: f4
+
+      - id: cp_y
+        type: f4
+
+  chizu_marker_tex:
+    seq:
+      - id: u0
+        type: s2
+
+      - id: v0
+        type: s2
+
+      - id: u1
+        type: s2
+
+      - id: v1
+        type: s2
+
+  chizu_marker_list:
+    seq:
+      - id: tex
+        type: pointer('chizu_marker_tex')
+
+      - id: data
+        type: pointer('data')
+
+      - id: head
+        type: s4
+
+      - id: tail
+        type: s4
+
+  chizu_connect_info:
+    seq:
+      - id: up
+        type: s1
+
+      - id: down
+        type: s1
+
+      - id: right
+        type: s1
+
+      - id: left
+        type: s1
+
   sh2gfw_area_head:
     seq:
       - id: area_id

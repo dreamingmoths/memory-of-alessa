@@ -517,6 +517,79 @@ class Sh2(KaitaiStruct):
 
 
 
+    class ChizuConnectInfo(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ChizuConnectInfo, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.up = self._io.read_s1()
+            self.down = self._io.read_s1()
+            self.right = self._io.read_s1()
+            self.left = self._io.read_s1()
+
+
+        def _fetch_instances(self):
+            pass
+
+
+    class ChizuCurrentBlock(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ChizuCurrentBlock, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.chizu = self._io.read_s4le()
+            self.cp_x = self._io.read_f4le()
+            self.cp_y = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
+    class ChizuMarkerList(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ChizuMarkerList, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.tex = Sh2.Pointer(u"chizu_marker_tex", self._io, self, self._root)
+            self.data = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.head = self._io.read_s4le()
+            self.tail = self._io.read_s4le()
+
+
+        def _fetch_instances(self):
+            pass
+            self.tex._fetch_instances()
+            self.data._fetch_instances()
+
+
+    class ChizuMarkerTex(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ChizuMarkerTex, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.u0 = self._io.read_s2le()
+            self.v0 = self._io.read_s2le()
+            self.u1 = self._io.read_s2le()
+            self.v1 = self._io.read_s2le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class CiSubCharacter(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.CiSubCharacter, self).__init__(_io)

@@ -12,6 +12,7 @@ class StructData:
     count: int = 1
     address: int = -1
     executable: str = None
+    hex: bool = False
 
 @dataclass
 class SimpleData:

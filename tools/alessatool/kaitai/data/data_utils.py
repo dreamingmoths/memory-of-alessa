@@ -54,7 +54,6 @@ class KaitaiCFormatterOptions:
     executable_file: BytesIO
     from_vram: Callable[[int], int]
     index: int
-    hex: bool = True
 
 def read_string(file: BytesIO, offset: int) -> str:
     '''
@@ -196,7 +195,7 @@ def c_print_kaitai(options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE *
             # something else, maybe a list, number, or string
             if isinstance(value, int):
                 # number
-                if options.hex:
+                if data.hex:
                     stream.write(f"{indent}/* .{attr_str} = */ 0x{value:X},\n")
                 else:
                     stream.write(f"{indent}/* .{attr_str} = */ {value},\n")
@@ -249,8 +248,7 @@ def migrate_struct_data(request: StructDataMigrationRequest):
                 from_vram=from_vram,
                 object=item,
                 executable_file=executable_file,
-                index=i,
-                hex=True,
+                index=i
             )
             c_print_kaitai(options)
             executable_file.seek(ofs)
