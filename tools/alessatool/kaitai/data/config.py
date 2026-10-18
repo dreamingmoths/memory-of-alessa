@@ -11,6 +11,7 @@ SH2_DATA = [
     StructData(name="_MemoryPool_AssociationInfo_Table",    type=Sh2.MemoryPoolAssociationInfomeation, count=48                       ),
     StructData(name="_Object_Data_Table",                   type=Sh2.ObjectDataPoolInfomeation,        count=48                       ),
     StructData(name="item_screen_obj_data",                 type=Sh2.ShItemScreenObjectSettingData,    count=58                       ),
+    StructData(name="EnIKEAnime",                           type=Sh2.EnAnimeData,                      count=21                       ),
     SimpleData(name="reset_stage_connect_2170",             type="<14h",                               pattern=[12, 2], to_str=StgName),
     SimpleData(name="_Object_Class_Priority_List",          type="<49I"                                                               ),
 ]

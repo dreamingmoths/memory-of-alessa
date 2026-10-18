@@ -150,7 +150,7 @@ def c_print_kaitai(options: KaitaiCFormatterOptions, indent=" " * (INDENT_SIZE *
 
     object._fetch_instances()
     type_structure = reflect_kaitai_structure(kaitai_yaml, data.type)
-    own_properties = map(lambda t : t["id"], type_structure["seq"])
+    own_properties = map(lambda t : t["id"], filter(lambda t : "id" in t, type_structure["seq"]))
     stream.write(f"{indent[INDENT_SIZE:]}{{\n") # indent braces less
 
     for attr in own_properties:
