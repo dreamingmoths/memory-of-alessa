@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from kaitai.sh2 import Sh2
-from kaitai.data.data_types import DataTable, SimpleData, StructData, StgName, ProjectDataConfig
+from kaitai.data.data_types import DataTable, SimpleData, StructData, StgName, ProjectDataConfig, Pointer
 
 from constants import ALESSATOOL
 
@@ -18,7 +18,10 @@ SH2_DATA: DataTable = [
     StructData(name="chz_crt_block",                        type=Sh2.ChizuCurrentBlock,                count=190                      ),
     StructData(name="chizu_marker_list",                    type=Sh2.ChizuMarkerList,                  count=36,        hex=False     ),
     SimpleData(name="room_to_block",                        type="<844c",                              pattern=[211, 4]               ),
-    StructData(name="sh2_attack_list",                      type=Sh2.ShAttackInfo,                     count=66,                      )
+    StructData(name="sh2_attack_list",                      type=Sh2.ShAttackInfo,                     count=66,                      ),
+    StructData(name="sh2_attack_list",                      type=Sh2.ShAttackInfo,                     count=66,                      ),
+    SimpleData(name="FilesBgBlockList_ma",                  type=Pointer,                              pattern=[91],                  ),
+    StructData(name="bg_bid_ma00",                          type=Sh2.FilesBgBlock,                     count=1                        ),
 ]
 
 SH3_DATA: DataTable = []

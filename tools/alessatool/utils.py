@@ -325,7 +325,9 @@ def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
 
                     continue
 
-def get_to_vram_conversion(yaml: dict, rom=False) -> Callable[[int], int]:
+type AddressConversion = Callable[[int], int]
+
+def get_to_vram_conversion(yaml: dict, rom=False) -> AddressConversion:
     '''
     From a parsed Splat YAML, get the function converting file offsets to
     virtual addresses.
@@ -340,7 +342,7 @@ def get_to_vram_conversion(yaml: dict, rom=False) -> Callable[[int], int]:
 
     return to_vram
 
-def get_from_vram_conversion(yaml: dict, rom=False) -> Callable[[int], int]:
+def get_from_vram_conversion(yaml: dict, rom=False) -> AddressConversion:
     '''
     From a parsed Splat YAML, get the function converting virtual addresses to
     file offsets.

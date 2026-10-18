@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from ctypes import c_float
+from functools import reduce
 from pathlib import Path
 from struct import unpack, calcsize
 from io import BytesIO
@@ -9,10 +10,10 @@ from re import sub
 
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
-from kaitai.data.data_types import SimpleData, StructData
+from kaitai.data.data_types import Pointer, SimpleData, StructData
 
 from constants import CONFIG, INDENT_SIZE, PROJECT_CONFIG
-from utils import SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml
+from utils import AddressConversion, SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml
 
 @dataclass
 class DataMigrationRequest:
@@ -22,7 +23,6 @@ class DataMigrationRequest:
     project: str
     name: str
     output_path: Path
-    silence_dev_warnings: bool
 
 @dataclass
 class SimpleDataMigrationRequest:
@@ -36,7 +36,6 @@ class SimpleDataMigrationRequest:
     data: SimpleData
     splat_yaml: dict
     executable_path: Path
-    silence_dev_warnings: bool
 
 @dataclass
 class StructDataMigrationRequest(SimpleDataMigrationRequest):
@@ -54,8 +53,11 @@ class KaitaiCFormatterOptions:
     '''
     request: StructDataMigrationRequest
     executable_file: BytesIO
-    from_vram: Callable[[int], int]
+    from_vram: AddressConversion
     index: int
+
+class AlessastructDataOptions:
+    SILENCE_DEV_WARNINGS = False
 
 def read_string(file: BytesIO, offset: int) -> str:
     '''
@@ -181,7 +183,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
     if "instances" in type_structure:
         first_union_member = next(iter(type_structure["instances"]))
         own_properties = [first_union_member]
-        if not request.silence_dev_warnings:
+        if not AlessastructDataOptions.SILENCE_DEV_WARNINGS:
             print("🟠 warning: there is no way to choose union options yet")
             print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
 
@@ -198,15 +200,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
 
         if hasattr(namespace, "Pointer") and isinstance(value, getattr(namespace, "Pointer")):
             # pointer! look up the symbol name
-            adr = value.address
-            val = adr
-            if adr in atlas.syms_by_addr:
-                sym = atlas.syms_by_addr[adr]
-                val = sym.name
-                if isinstance(val, str) and val.startswith("@"):
-                    val = '"' + read_string(executable_file, from_vram(adr)) + '"'
-            elif adr == 0:
-                val = "NULL"
+            val = lookup_pointer(atlas, executable_file, from_vram, value.address)
             stream.write(f"{indent}/* .{attr_str} = */ {val},\n")
 
         elif isinstance(value, KaitaiStruct):
@@ -283,19 +277,41 @@ def default_to_str(value):
         return str(int(value[0]))
     return str(value)
 
+def make_pointer_to_str(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, from_vram: AddressConversion):
+    return lambda address : lookup_pointer(atlas, executable_file, from_vram, address)
+
+def lookup_pointer(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, from_vram: AddressConversion, address: int):
+    if address in atlas.syms_by_addr:
+        sym = atlas.syms_by_addr[address]
+        val = sym.name
+        if isinstance(val, str) and val.startswith("@"):
+            val = '"' + read_string(executable_file, from_vram(address)) + '"'
+    elif address == 0:
+        val = "NULL"
+    return val
+
 def migrate_simple_data(request: SimpleDataMigrationRequest):
     data = request.data
     stream = request.stream
     atlas = request.atlas
 
-    fmt = data.type
     pattern = data.pattern
-    to_str = data.to_str or default_to_str
-    
-    vram = get_from_vram_conversion(request.splat_yaml, rom=False)
-    sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]
 
     with open(request.executable_path, "rb") as file:
+        vram = get_from_vram_conversion(request.splat_yaml, rom=False)
+
+        is_pointer = data.type == Pointer
+        if is_pointer:
+            total = reduce(lambda a, b : a * b, pattern or [1])
+            fmt = f"<{total}L"
+            to_str = data.to_str or make_pointer_to_str(atlas, file, vram)
+        else:
+            fmt = data.type
+            to_str = data.to_str or default_to_str
+
+        assert type(fmt) == str, fmt
+
+        sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]
         file.seek(vram(sym.addr))
 
         unpacked_values = unpack(fmt, file.read(calcsize(fmt)))
@@ -328,7 +344,6 @@ def run_data_migration(request: DataMigrationRequest):
     name = request.name
     project = request.project
     output_path = request.output_path
-    silence_dev_warnings = request.silence_dev_warnings
 
     serial = PROJECT_CONFIG[project]
     root = Path(project) / CONFIG / serial
@@ -358,8 +373,7 @@ def run_data_migration(request: DataMigrationRequest):
                     atlas=atlas,
                     data=data_entry,
                     splat_yaml=splat_yaml,
-                    executable_path=executable_path,
-                    silence_dev_warnings=silence_dev_warnings
+                    executable_path=executable_path
                 )
                 migrate_simple_data(request)
             elif isinstance(data_entry, StructData):
@@ -371,8 +385,7 @@ def run_data_migration(request: DataMigrationRequest):
                     splat_yaml=splat_yaml,
                     kaitai_yaml=kaitai_yaml,
                     namespace=namespace,
-                    executable_path=executable_path,
-                    silence_dev_warnings=silence_dev_warnings
+                    executable_path=executable_path
                 )
                 migrate_struct_data(request)
             else:

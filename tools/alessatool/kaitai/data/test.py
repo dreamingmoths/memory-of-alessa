@@ -7,7 +7,7 @@ from traceback import print_exception
 sys.path.append(abspath("tools/alessatool"))
 
 from kaitai.data.config import PROJECT_DATA_CONFIG
-from kaitai.data.data_utils import DataMigrationRequest, run_data_migration
+from kaitai.data.data_utils import AlessastructDataOptions, DataMigrationRequest, run_data_migration
 
 @dataclass
 class TestResult:
@@ -17,6 +17,8 @@ class TestResult:
     skip: bool = False
 
 def run_tests():
+    configure()
+
     results: list[TestResult] = []
     for name in PROJECT_DATA_CONFIG:
         result = run_project_test(name)
@@ -49,20 +51,21 @@ def run_project_test(project: str) -> TestResult:
         count += 1
         print(bold(f"test: {data.name}"))
         try:
-            run_data_migration(
-                DataMigrationRequest(
-                    project=project,
-                    name=data.name,
-                    output_path=Path("/dev/null"),
-                    silence_dev_warnings=True
-                )
+            request = DataMigrationRequest(
+                project=project,
+                name=data.name,
+                output_path=Path("/dev/null")
             )
+            run_data_migration(request)
             passing += 1
         except Exception as exception:
             print(f"🔴 test failed for {data.name}")
             print_exception(exception)
 
     return TestResult(name=project, passing=passing, count=count)
+
+def configure():
+    AlessastructDataOptions.SILENCE_DEV_WARNINGS = True
 
 def bold(text: str):
     return '\033[1m' + text + '\033[0m'
