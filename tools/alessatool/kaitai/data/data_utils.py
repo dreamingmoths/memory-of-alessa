@@ -81,13 +81,13 @@ def find_smallest_float_string(f: float):
     float_string = str(f)
     f32 = c_float(f)
 
-    assert f32 == c_float(f)
+    assert f32.value == c_float(f).value
 
     size = len(float_string)
 
     for i in range(len(float_string), 0, -1):
         candidate = float_string[:i]
-        if c_float(candidate) != f32:
+        if c_float(float(candidate)).value != f32.value:
             break
         size = i
 

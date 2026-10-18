@@ -1,9 +1,8 @@
-
 '''
 alessatool/migrate:
 
-migrate data by symbol name. results are written to `out.c` and may require
-post-processing.
+migrate data by symbol name. results are written to `ctx.c` by default and may
+require post-processing.
 
 see `kaitai/data/config.py` for more information.
 

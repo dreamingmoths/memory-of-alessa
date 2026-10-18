@@ -13,7 +13,6 @@ from constants import READELF_PATH
 from kaitai.data.config import PROJECT_DATA_CONFIG
 from utils import atlas_diff, parse_symbol_addrs, parse_symtab_as_atlas, read_symtab, write_symbol_addrs
 
-
 def configure_util_parser(util_parser: ArgumentParser):
     subparsers = util_parser.add_subparsers(dest="subcommand")
 
