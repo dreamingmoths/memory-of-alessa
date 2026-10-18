@@ -10,18 +10,15 @@ alessatool debug --project silent-hill-2
 run `alessatool debug --help` for more information.
 '''
 
-from sys import stdout, stdin
 from pathlib import Path
 from subprocess import run
 from dataclasses import dataclass
-from typing import Callable
 from constants import *
-from struct import unpack
-from yaml import safe_load
 from re import findall
 from bisect import bisect_left
 
-from utils import SplatSymbol, SplatSymbolAddrsAtlas, parse_symbol_addrs, relative_to_name
+from utils import ExecutableInfo, SplatSymbol, \
+    get_exe_info_by_name, relative_to_name
 
 @dataclass
 class DebugArgs:
@@ -33,13 +30,6 @@ class DebugInfo:
     project: str
     serial: str
     root: Path
-
-@dataclass
-class ExecutableInfo:
-    name: str
-    atlas: SplatSymbolAddrsAtlas
-    target_path: Path
-    to_vram: Callable
 
 @dataclass
 class MismatchingFileEntry:
@@ -162,45 +152,6 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
 
         return False
 
-def discover_yamls(debug_info: DebugInfo):
-    root = debug_info.root
-    serial = debug_info.serial
-
-    exe_info_by_name: dict[str, ExecutableInfo] = dict()
-
-    for yaml_path in root.glob("**/*.yaml"):
-        with open(yaml_path) as yaml_file:
-            yaml = safe_load(yaml_file)
-
-        yaml_opts = yaml["options"]
-        if "basename" not in yaml_opts:
-            continue
-
-        target_path = Path(yaml_opts["target_path"])
-        name = yaml_opts["basename"] == serial and "main" or target_path.name
-
-        segments: list = yaml["segments"]
-        first_code_segment = list(filter(lambda s : isinstance(s, dict) and s["type"] == "code", segments))[0]
-        file_start = first_code_segment["start"]
-        vram_start = first_code_segment["vram"]
-
-        atlas = SplatSymbolAddrsAtlas()
-        info = ExecutableInfo(
-            name=name, 
-            atlas=atlas,
-            target_path=target_path,
-            to_vram=lambda x, start=file_start, vram=vram_start : x + vram
-        )
-        exe_info_by_name[name] = info
-
-        sym_paths = "symbol_addrs_path" in yaml_opts and yaml_opts["symbol_addrs_path"] or "symbol_addrs.txt"
-        sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
-
-        for sym_path in sym_paths:
-            parse_symbol_addrs(root / sym_path, atlas)
-
-    return exe_info_by_name
-
 def run_bin_diff(debug_args: DebugArgs, debug_info: DebugInfo, exe_info_by_name: dict[str, ExecutableInfo]) -> bool:
     serial = debug_info.serial
     mismatching_files: list[MismatchingFileEntry] = []
@@ -277,13 +228,13 @@ def run_bin_diff(debug_args: DebugArgs, debug_info: DebugInfo, exe_info_by_name:
 
 def debug_nonmatching(args: DebugArgs):
     project = args.project
-    serial = PROJECT_CONFIGURATIONS[project]
+    serial = PROJECT_CONFIG[project]
     root = Path(project) / CONFIG / serial
     debug_info = DebugInfo(project, serial, root)
 
     print("🐞 alessatool/debug 🐞")
 
-    exe_info_by_name = discover_yamls(debug_info)
+    exe_info_by_name = get_exe_info_by_name(root, serial)
 
     mapfile_path = Path(BUILD) / serial / f"{serial}.xMAP"
     mapfile_status = False

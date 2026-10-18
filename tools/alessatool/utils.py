@@ -1,9 +1,12 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from constants import ASM, READELF_PATH, SRC, VSM
+from yaml import safe_load as safe_load_yaml
 from os import stat, remove
 from io import TextIOBase
 from subprocess import run
+
+from constants import ASM, READELF_PATH, SRC, VSM
 
 def normalize_object_path(path: Path, prefix_path: Path):
     '''
@@ -321,3 +324,89 @@ def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
                         print(target_sym)
 
                     continue
+
+def get_to_vram_conversion(yaml: dict, rom=False) -> Callable[[int], int]:
+    '''
+    From a parsed Splat YAML, get the function converting file offsets to
+    virtual addresses.
+
+    If `rom` is `True`, return a function assuming the binary has been
+    `objcopy`'d (so do not subtract a start offset).
+    '''
+
+    vram_start, offset = _read_yaml_for_vram_conversion(yaml, rom)
+
+    to_vram=lambda x, start=offset, vram=vram_start : x + vram - start
+
+    return to_vram
+
+def get_from_vram_conversion(yaml: dict, rom=False) -> Callable[[int], int]:
+    '''
+    From a parsed Splat YAML, get the function converting virtual addresses to
+    file offsets.
+
+    If `rom` is `True`, return a function assuming the binary has been
+    `objcopy`'d (so do not subtract a start offset).
+    '''
+
+    vram_start, offset = _read_yaml_for_vram_conversion(yaml, rom)
+
+    to_vram=lambda x, start=offset, vram=vram_start : x - vram + start
+
+    return to_vram
+
+def _read_yaml_for_vram_conversion(yaml: dict, rom=False) -> tuple[int, int]:
+    segments: list = yaml["segments"]
+    first_code_segment = next(filter(lambda s : isinstance(s, dict) and s["type"] == "code", segments))
+    file_start = first_code_segment["start"]
+    vram_start = first_code_segment["vram"]
+    offset = not rom and file_start or 0
+    return vram_start, offset
+
+def load_yaml(yaml_path: Path):
+    with open(yaml_path) as yaml_file:
+        yaml = safe_load_yaml(yaml_file)
+    return yaml
+
+@dataclass
+class ExecutableInfo:
+    name: str
+    atlas: SplatSymbolAddrsAtlas
+    target_path: Path
+    yaml_path: Path
+    to_vram: Callable
+
+def get_exe_info_by_name(root: Path, main_name: str, filter=None):
+    exe_info_by_name: dict[str, ExecutableInfo] = dict()
+
+    for yaml_path in root.glob("**/*.yaml"):
+        yaml = load_yaml(yaml_path)
+
+        yaml_opts = yaml["options"]
+        if "basename" not in yaml_opts:
+            continue
+
+        basename = yaml_opts["basename"]
+        if filter and filter != basename:
+            continue
+
+        name = basename == main_name and "main" or target_path.name
+        target_path = Path(yaml_opts["target_path"])
+
+        atlas = SplatSymbolAddrsAtlas()
+        info = ExecutableInfo(
+            name=name, 
+            atlas=atlas,
+            target_path=target_path,
+            yaml_path=yaml_path,
+            to_vram=get_to_vram_conversion(yaml, rom=True)
+        )
+        exe_info_by_name[name] = info
+
+        sym_paths = "symbol_addrs_path" in yaml_opts and yaml_opts["symbol_addrs_path"] or "symbol_addrs.txt"
+        sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
+
+        for sym_path in sym_paths:
+            parse_symbol_addrs(root / sym_path, atlas)
+
+    return exe_info_by_name
