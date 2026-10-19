@@ -441,7 +441,7 @@ segments:
       - { start: 0x00130be0,    type: c,          name: Event/memo                                       }
       - { start: 0x00132c90,    type: c,          name: Effect/ef_sparks                                 }
       - { start: 0x00133550,    type: c,          name: DS_Pad/ds_sequencer                              }
-      - { start: 0x00134ec0,    type: asm,        name: DS_Pad/dss_wrapper                               }
+      - { start: 0x00134ec0,    type: c,          name: DS_Pad/dss_wrapper                               }
       - { start: 0x00135050,    type: c,          name: DBG/dbsw_all                                     }
       - { start: 0x001354a0,    type: c,          name: DBG/dbsw_sys                                     }
       - { start: 0x00136350,    type: c,          name: Event/chara_data_load                            }
