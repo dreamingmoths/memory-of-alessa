@@ -145,6 +145,6 @@ u_int HH_Class_Plural_Phenomenon_00(void* pBlock /* r2 */, ImpactQueue_Element* 
             result = 0;
             break;
     }
-    pThis->Timer += 1.0f / 30.0f;
+    pThis->Timer += TIME_STEP_30FPS;
     return result;
 }

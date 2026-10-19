@@ -357,7 +357,7 @@ u_int HH_Class_Water_20(void* pBlock, ImpactQueue_Element* pElement)
                 pThis->Step = 3;
             }
             Object_Draw(pThis, pElement, position);
-            pThis->Timer += (1.0f / 60.0f);
+            pThis->Timer += (TIME_STEP_60FPS);
             break;
         
         default:

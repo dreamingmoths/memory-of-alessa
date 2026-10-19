@@ -134,7 +134,7 @@ u_int HH_Class_Blood_FootMark_00(void* pBlock, ImpactQueue_Element* pElement) {
             break;
         case 1:
             Object_Draw(pThis, pElement);
-            pThis->Timer += 1.0/30.0;
+            pThis->Timer += TIME_STEP_30FPS;
             
             if(pThis->Timer > 10.0f){
                 pElement->Option.Float_Value[1] -= 0.01f;

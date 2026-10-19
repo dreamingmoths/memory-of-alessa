@@ -615,7 +615,7 @@ u_int HH_Class_Water_04(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                 }
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x28);
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

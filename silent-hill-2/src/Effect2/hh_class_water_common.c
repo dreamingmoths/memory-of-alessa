@@ -252,7 +252,7 @@ void HH_Class_WaterCommon_WaveElement_Time_Count(Wave_Element* pElement_Table /*
     for (i = 0; i < Element_Max; i++) {
         pElement = &pElement_Table[i];
         if (pElement->Enable != 0) {
-            pElement->Timer += 1.0f / 30.0f;
+            pElement->Timer += TIME_STEP_30FPS;
             if (pElement->Timer > pElement->Lost_Time) {
                 pElement->Enable = 0;
             }

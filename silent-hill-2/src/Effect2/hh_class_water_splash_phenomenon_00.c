@@ -91,7 +91,7 @@ u_int HH_Class_Water_Splash_Phenomenon_00(void* pBlock, ImpactQueue_Element* pEl
             break;
     }
 
-    pThis->Timer += 1.0f / 30.0f;
+    pThis->Timer += TIME_STEP_30FPS;
 
     return result;
 }

@@ -498,7 +498,7 @@ u_int HH_Class_Water_02(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                 if (HH_DBG_Wrapper_Controller_KeyAssign_Check(1u, 1u, PAD_KEY_R2) != 0) {
                     pInfo->World_Location[2] += 10.0f;
                 }
-                pThis->Timer += 1.0f / 30.0f;
+                pThis->Timer += TIME_STEP_30FPS;
             }
             break;
         }
