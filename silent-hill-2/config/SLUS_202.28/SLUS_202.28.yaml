@@ -39,7 +39,7 @@ segments:
       - { start: 0x00005550,    type: c,          name: Chacter/m3_eddie                                 }
       - { start: 0x00005830,    type: asm,        name: Chacter/m3_ike                                   }
       - { start: 0x00005d20,    type: c,          name: Chacter/m3_laura                                 }
-      - { start: 0x00005fc0,    type: asm,        name: Chacter/m3_mkn                                   }
+      - { start: 0x00005fc0,    type: c,          name: Chacter/m3_mkn                                   }
       - { start: 0x00006560,    type: asm,        name: Chacter/m3_pap                                   }
       - { start: 0x00006aa0,    type: c,          name: Chacter/m3_play                                  }
       - { start: 0x00011a70,    type: c,          name: Chacter/m3_play_2d                               }
@@ -590,7 +590,7 @@ segments:
       - { start: 0x001a8e90,    type: data,       name: Chacter/m3_eddie                                 }
       - { start: 0x001a8f70,    type: data,       name: Chacter/m3_ike                                   }
       - { start: 0x001a8fb0,    type: data,       name: Chacter/m3_laura                                 }
-      - { start: 0x001a9110,    type: data,       name: Chacter/m3_mkn                                   }
+      - { start: 0x001a9110,    type: .data,      name: Chacter/m3_mkn                                   }
       - { start: 0x001a9140,    type: data,       name: Chacter/m3_pap                                   }
       - { start: 0x001a9180,    type: data,       name: Chacter/m3_play                                  }
       - { start: 0x001a95d0,    type: data,       name: Chacter/m3_play_2d                               }
@@ -852,7 +852,7 @@ segments:
       - { start: 0x0028b040,    type: rodata,     name: Chacter/m3_eddie_rodata                          }
       - { start: 0x0028b1c0,    type: rodata,     name: Chacter/m3_ike                                   }
       - { start: 0x0028b350,    type: rodata,     name: Chacter/m3_laura_rodata                          }
-      - { start: 0x0028b570,    type: rodata,     name: Chacter/m3_mkn                                   }
+      - { start: 0x0028b570,    type: .rodata,    name: Chacter/m3_mkn                                   }
       - { start: 0x0028b780,    type: rodata,     name: Chacter/m3_pap                                   }
       - { start: 0x0028c3d0,    type: .rodata,    name: Chacter/m3_play                                  }
       - { start: 0x0028cab0,    type: .rodata,    name: Chacter/m3_play_3d                               }

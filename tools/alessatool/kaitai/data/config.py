@@ -24,6 +24,8 @@ SH2_DATA: DataTable = [
     StructData(name="lake_active_wall_list",                type=Sh2.ClHitpolyPlane,                   count=12                       ),
     StructData(name="boat_anim",                            type=Sh2.AnimeInfo,                        count=5                        ),
     StructData(name="d_boat_anim",                          type=Sh2.AnimeInfo,                        count=4                        ),
+    StructData(name="mkn_anim",                             type=Sh2.AnimeInfo,                        count=35                       ),
+    StructData(name="d_mkn_anim",                           type=Sh2.AnimeInfo,                        count=8                        )
 ]
 
 SH3_DATA: DataTable = []

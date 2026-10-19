@@ -104,6 +104,9 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             except:
                 pass
 
+        if current_filename not in exe_info_by_name:
+            continue
+
         syms_by_addr = exe_info_by_name[current_filename].atlas.syms_by_addr
         if address in syms_by_addr:
             target_symbol: SplatSymbol = syms_by_addr[address]
