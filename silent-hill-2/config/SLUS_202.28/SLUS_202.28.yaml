@@ -552,7 +552,7 @@ segments:
       - { start: 0x0018e590,    type: asm,        name: movie/pss_vobuf                                  }
       - { start: 0x0018e7b0,    type: asm,        name: Chacter_Draw/sh2_JmsSpot_Man                     }
       - { start: 0x0018f7c0,    type: c,          name: LoadBg/loadbg_event                              }
-      - { start: 0x0018fe00,    type: asm,        name: LoadBg/loadbg_chara                              }
+      - { start: 0x0018fe00,    type: c,          name: LoadBg/loadbg_chara                              }
       - { start: 0x001909d0,    type: c,          name: Chacter/player_result                            }
       - { start: 0x001913a0,    type: c,          name: sound/sh_sd_call                                 }
       - { start: 0x00191c00,    type: asm,        name: Chacter/m3_ty23                                  }
@@ -1087,7 +1087,7 @@ segments:
       - { start: 0x0029c640,    type: .rodata,    name: movie/pss_vibuf                                  }
       - { start: 0x0029c660,    type: .rodata,    name: movie/pss_videodec                               }
       - { start: 0x0029c760,    type: .rodata,    name: LoadBg/loadbg_event                              }
-      - { start: 0x0029c8d8,    type: rodata,     name: LoadBg/loadbg_chara                              }
+      - { start: 0x0029c8d8,    type: .rodata,    name: LoadBg/loadbg_chara                              }
       - { start: 0x0029ca80,    type: .rodata,    name: Chacter/player_result                            }
       - { start: 0x0029cb00,    type: .rodata,    name: Effect2/hh_memory_manage                         }
       - { start: 0x0029cb80,    type: .rodata,    name: SH2_common/mem_share                             }
@@ -1295,7 +1295,7 @@ segments:
       - { vram:  0x01217fc0,    type: bss,        name: movie/pss_main                                   }
       - { vram:  0x01219310,    type: bss,        name: LoadBg/loadbg_event                              }
       - { vram:  0x0122a330,    type: bss,        name: LoadBg/mem/loadbg_buf                            }
-      - { vram:  0x0122b2f0,    type: bss,        name: LoadBg/loadbg_chara                              }
+      - { vram:  0x0122b2f0,    type: .bss,       name: LoadBg/loadbg_chara                              }
       - { vram:  0x0122b308,    type: bss,        name: sound/sh_sd_call                                 }
       - { vram:  0x0122b3c0,    type: .bss,       name: Effect2/hh_memory_manage                         }
       - { vram:  0x0126fbc0,    type: .bss,       name: SH2_common/mem_share                             }

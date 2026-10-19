@@ -77,21 +77,6 @@ typedef struct _loadBgMem_LoadCtrl {
     struct _loadBgMem_UnitR* headR; // offset 0x14, size 0x4
 } loadBgMem_LoadCtrl;
 
-// total size: 0x1101C
-typedef struct D {
-    // Members
-    struct _loadBgMem_LoadCtrl ctrl; // offset 0x0, size 0x18
-    struct _loadBgMem_UnitL UnitLArray[1024]; // offset 0x18, size 0x4000
-    struct _loadBgMem_UnitR UnitRArray[1024]; // offset 0x4018, size 0x4000
-    struct _loadBgMem_CacheCtrl cache; // offset 0x8018, size 0x18
-    struct _loadBgMem_UnitC UnitCArray[4]; // offset 0x8030, size 0x40
-    char c_buf[32768]; // offset 0x8070, size 0x8000
-    struct loadBgMem_Sect* SectList[101]; // offset 0x10070, size 0x194
-    struct loadBgMem_Sect* infosect[2]; // offset 0x10204, size 0x8
-    struct loadBgMem_Sect SectListBuf[100]; // offset 0x1020C, size 0x7D0
-    struct loadBgMem_File filelist[100]; // offset 0x109DC, size 0x640
-} D;
-
 int _loadBgMem_CmpUnitLR(loadBgMem_UnitL* UnitL, loadBgMem_UnitR* UnitR);
 int _loadBgMem_CheckUnitC(loadBgMem_UnitC* UnitC, fsFileIndex* file, u_short unitID);
 int _loadBgMem_SyncUnitL(loadBgMem_UnitL* UnitL);
@@ -109,15 +94,13 @@ void _loadBgMem_MoveMemC2L(loadBgMem_LoadCtrl* ctrl, loadBgMem_CacheCtrl* cache,
 void _loadBgMem_MoveMemL2C(loadBgMem_LoadCtrl* ctrl, loadBgMem_CacheCtrl* cache, loadBgMem_UnitL* UnitL, loadBgMem_UnitC* UnitC);
 void _loadBgMem_SwapMemLC(loadBgMem_LoadCtrl* ctrl, loadBgMem_CacheCtrl* cache, loadBgMem_UnitL* UnitL, loadBgMem_UnitC* UnitC);
 int _loadBgMem_LoadMemR2L(loadBgMem_LoadCtrl* ctrl, loadBgMem_UnitL* UnitL, loadBgMem_UnitR* UnitR);
-int _loadBgMem_InitLoad(loadBgMem_LoadCtrl* ctrl, int UnitSize, int Units, loadBgMem_UnitL* UnitLArray, loadBgMem_UnitR* UnitRArray, char* Buffer);
-int _loadBgMem_InitCache(loadBgMem_CacheCtrl* cache, int UnitSize, int Units, loadBgMem_UnitC* UnitCArray, char* Buffer);
+int _loadBgMem_InitLoad(loadBgMem_LoadCtrl* ctrl, int UnitSize, int Units, loadBgMem_UnitL* UnitLArray, loadBgMem_UnitR* UnitRArray, s_char* Buffer);
+int _loadBgMem_InitCache(loadBgMem_CacheCtrl* cache, int UnitSize, int Units, loadBgMem_UnitC* UnitCArray, s_char* Buffer);
 int _loadBgMem_ClearRequest(loadBgMem_LoadCtrl* ctrl);
 int loadBgMem_SetRequest(loadBgMem_LoadCtrl* ctrl, loadBgMem_Sect** SectList);
 int _loadBgMem_SyncLoadUnits(loadBgMem_LoadCtrl* ctrl);
 int loadBgMem_CheckRequest(loadBgMem_LoadCtrl* ctrl, int* reqUnits);
 int _loadBgMem_CleanupNonRequest(loadBgMem_LoadCtrl* ctrl);
 int loadBgMem_LoadRequest(loadBgMem_LoadCtrl* ctrl, loadBgMem_CacheCtrl* cache, int cache_access_limit, int file_access_limit, int* cache_in_access_count, int* cache_out_access_count, int* file_access_count, int* miss_access_count);
-
-extern D d;
 
 #endif // LOADBG_MEM_H
