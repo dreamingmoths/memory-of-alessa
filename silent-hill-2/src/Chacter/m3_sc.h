@@ -15,6 +15,7 @@
 #define SCP_STATUS_BIT_NOW_DEMO_EVENT      13
 #define SCP_STATUS_BIT_NOW_PLAYABLE_EVENT  14
 #define SCP_STATUS_BIT_FREEFALL            16
+#define SCP_STATUS_BIT_17                  17
 
 extern struct shCharacterAll sh2chara; // size: 0x6810, address: 0x3C84D0
 

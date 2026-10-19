@@ -506,7 +506,7 @@ segments:
       - { start: 0x0016bae0,    type: c,          name: Effect2/hh_packet                                }
       - { start: 0x0016c1c0,    type: c,          name: Multi_thr/filesys/fcread                         }
       - { start: 0x0016c4c0,    type: asm,        name: Chacter/m3_boat_jms                              }
-      - { start: 0x0016c780,    type: asm,        name: Chacter/m3_boat                                  }
+      - { start: 0x0016c780,    type: c,          name: Chacter/m3_boat                                  }
       - { start: 0x0016f630,    type: c,          name: Chacter/lake_wave                                }
       - { start: 0x0016fbf0,    type: c,          name: Chacter/m3_inu                                   }
       - { start: 0x0016fe80,    type: c,          name: view/vc_play                                     }
@@ -781,6 +781,9 @@ segments:
       - { start: 0x00270c60,    type: .data,      name: Effect2/hh_effect_object_def                     }
       - { start: 0x00271a70,    type: data,       name: Effect2/hh_effect_object_texture                 }
       - { start: 0x00271e20,    type: data,       name: Effect2/hh_packet                                }
+      - { start: 0x00271E90,    type: .data,      name: Chacter/m3_boat                                  }
+      - { start: 0x002722A0,    type: data,       name: Chacter/m3_inu                                   }
+      - { start: 0x002722B0,    type: data,       name: FilesList/fileslist_bg_ma                        }
       - { start: 0x00272f90,    type: .data,      name: LoadBg/loadbg_cam                                }
       - { start: 0x002730b0,    type: .data,      name: LoadBg/loadbg_cld                                }
       - { start: 0x002731c0,    type: .data,      name: LoadBg/loadbg_kg2                                }
@@ -1061,7 +1064,7 @@ segments:
       - { start: 0x0029a990,    type: .rodata,    name: Effect2/hh_effect_object_texture                 }
       - { start: 0x0029ac00,    type: .rodata,    name: Effect2/hh_packet                                }
       - { start: 0x0029ace0,    type: .rodata,    name: Multi_thr/filesys/fcread                         }
-      - { start: 0x0029ad10,    type: rodata,     name: Chacter/m3_boat                                  }
+      - { start: 0x0029ad10,    type: .rodata,    name: Chacter/m3_boat                                  }
       - { start: 0x0029ad80,    type: .rodata,    name: Chacter/lake_wave                                }
       - { start: 0x0029aea0,    type: rodata,     name: Chacter/m3_inu_rodata                            }
       - { start: 0x0029aee0,    type: .rodata,    name: LoadBg/loadbg_2x2                                }
@@ -1270,7 +1273,7 @@ segments:
       - { vram:  0x01201b80,    type: bss,        name: Effect2/hh_effect_object_texture                 }
       - { vram:  0x01202258,    type: .bss,       name: Effect2/hh_packet                                }
       - { vram:  0x012022b0,    type: bss,        name: Chacter/m3_boat_jms                              }
-      - { vram:  0x012022f0,    type: bss,        name: Chacter/m3_boat                                  }
+      - { vram:  0x012022f0,    type: .bss,       name: Chacter/m3_boat                                  }
       - { vram:  0x01202580,    type: .bss,       name: Chacter/lake_wave                                }
       - { vram:  0x01202730,    type: bss,        name: view/vc_play                                     }
       - { vram:  0x01202800,    type: .bss,       name: LoadBg/loadbg_2x2                                }

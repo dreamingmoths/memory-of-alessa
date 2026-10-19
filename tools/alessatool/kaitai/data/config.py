@@ -21,6 +21,9 @@ SH2_DATA: DataTable = [
     StructData(name="sh2_attack_list",                      type=Sh2.ShAttackInfo,                     count=66,                      ),
     SimpleData(name="FilesBgBlockList_ma",                  type=Pointer,                              pattern=[91],                  ),
     StructData(name="bg_bid_ma00",                          type=Sh2.FilesBgBlock,                     count=1                        ),
+    StructData(name="lake_active_wall_list",                type=Sh2.ClHitpolyPlane,                   count=12                       ),
+    StructData(name="boat_anim",                            type=Sh2.AnimeInfo,                        count=5                        ),
+    StructData(name="d_boat_anim",                          type=Sh2.AnimeInfo,                        count=4                        ),
 ]
 
 SH3_DATA: DataTable = []

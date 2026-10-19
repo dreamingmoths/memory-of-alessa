@@ -777,6 +777,33 @@ typedef struct shMariaWork {
     u_char active_type; // offset 0x30E, size 0x1
 } shMariaWork;
 
+
+typedef enum _BOAT_STATUS {
+    BOAT_ST_BOTH = 0,
+    BOAT_ST_RIGHT = 1,
+    BOAT_ST_LEFT = 2,
+} BOAT_STATUS;
+
+typedef struct shBoatWork {
+    // total size: 0x20
+    SubCharacter* boat_p; // offset 0x0, size 0x4
+    #ifdef M2C
+    u_char status_now; // offset 0x4, size 0x1
+    u_char status_prev; // offset 0x5, size 0x1
+    #else
+    BOAT_STATUS status_now; // offset 0x4, size 0x1
+    BOAT_STATUS status_prev; // offset 0x5, size 0x1
+    #endif
+    u_int sub_st_flg; // offset 0x8, size 0x4
+    u_int anime_st_flg; // offset 0xC, size 0x4
+    u_int anime_pause; // offset 0x10, size 0x4
+    u_char anim_change; // offset 0x14, size 0x1
+    u_char anime_change_now; // offset 0x15, size 0x1
+    u_char anime_change_prev; // offset 0x16, size 0x1
+    float anime_change_timer; // offset 0x18, size 0x4
+    short anime_speed; // offset 0x1C, size 0x2
+} shBoatWork;
+
 typedef struct TextPos {
     // total size: 0x8
     u_int block_index; // offset 0x0, size 0x4
