@@ -14,10 +14,10 @@ typedef struct Queue_Element {
 // total size: 0x30
 typedef struct Queue_Object {
     // Members
-    u_int enQueue; // offset 0x0, size 0x4
-    u_int deQueue; // offset 0x4, size 0x4
-    u_int Length_Current; // offset 0x8, size 0x4
-    u_int Length_Max; // offset 0xC, size 0x4
+    u_int enQueue;            // offset 0x0, size 0x4
+    u_int deQueue;            // offset 0x4, size 0x4
+    u_int Length_Current;     // offset 0x8, size 0x4
+    u_int Length_Max;         // offset 0xC, size 0x4
     Queue_Element Element[8]; // offset 0x10, size 0x20
 } Queue_Object;
 

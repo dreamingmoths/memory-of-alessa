@@ -17,10 +17,6 @@ typedef struct HH_Object_Blood_02 {
     float Scale[4];                 // offset 0x30, size 0x10
 } HH_Object_Blood_02;
 
-
-
-
-
 u_int HH_Class_Prefix_Blood_02(void);
 u_int HH_Class_Suffix_Blood_02(void);
 u_int HH_Class_Blood_02(void* pBlock, ImpactQueue_Element* pElement);

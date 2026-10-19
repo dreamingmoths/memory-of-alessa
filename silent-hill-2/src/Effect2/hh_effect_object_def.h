@@ -9,10 +9,10 @@
 // total size: 0x30
 typedef struct MemoryPool_AssociationInfomeation {
     // Members
-    u_int Existent; // offset 0x0, size 0x4
+    u_int Existent;                            // offset 0x0, size 0x4
     Object_DataPool_Infomeation DataPool_Info; // offset 0x10, size 0x10
-    u_int LinkList_Max; // offset 0x20, size 0x4
-    int * pLinkList; // offset 0x24, size 0x4
+    u_int LinkList_Max;                        // offset 0x20, size 0x4
+    int* pLinkList;                            // offset 0x24, size 0x4
 } MemoryPool_AssociationInfomeation;
 
 static u_int MemoryPool_AllRelease(Object_DataPool_Infomeation* pPool_Info_Table, MemoryPool_AssociationInfomeation* pAssoci_Info_Table, u_int Class_Kind_Max);

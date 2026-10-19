@@ -16,10 +16,6 @@ typedef struct HH_Object_Blood_01 {
     u_int Motion_Step;              // offset 0x38, size 0x4
 } HH_Object_Blood_01;
 
-
-
-
-
 u_int HH_Class_Prefix_Blood_01(void);
 u_int HH_Class_Suffix_Blood_01(void);
 u_int HH_Class_Blood_01(void* pBlock, ImpactQueue_Element* pElement);

@@ -39,7 +39,7 @@ typedef struct Object_DataPool_Infomeation {
     u_int Block_Index_Max;                    // offset 0x4, size 0x4
     void* pBlock_Table;                       // offset 0x8, size 0x4
     Object_DataBlock_Header* pFreeBlock_List; // offset 0xC, size 0x4
-}__attribute__((aligned(16))) Object_DataPool_Infomeation;
+} __attribute__((aligned(16))) Object_DataPool_Infomeation;
 
 typedef struct Object_InstanceTable_Infomeation {
     Object_Instance* pInstanceTable;   // offset 0x0, size 0x4

@@ -3,8 +3,8 @@
 
 #include "sh2_common.h"
 
-#define MEMORY_BLOCK_PACKET 0
-#define MEMORY_BLOCK_OBJECT_WORK 1
+#define MEMORY_BLOCK_PACKET         0
+#define MEMORY_BLOCK_OBJECT_WORK    1
 #define MEMORY_BLOCK_TEXTURE_BUFFER 2
 
 extern void HH_Class_Object_Initialize(void);
