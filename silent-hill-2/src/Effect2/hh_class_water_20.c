@@ -3,6 +3,7 @@
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_texture.h"
+#include "Effect2/hh_object_vertex_info.h"
 #include "Effect2/hh_math_wrapper.h"
 #include "Effect2/hh_packet.h"
 #include "sce/libvifpk.h"

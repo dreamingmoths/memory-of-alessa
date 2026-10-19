@@ -343,7 +343,31 @@
         /* .disable = */ false,
     }
 };
-UNLINKED(/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationInfo_Table[OBJECT_CLASS_COUNT], {
+
+static int _blood_splash_02_list[1]             = {7};
+static int _blood_05_list[1]                    = {7};
+static int _fire_pheno_list[1]                  = {170};
+static int _glass_list_0x00370878[1]            = {138};
+static int _water_01_list_0x00370880[1]         = {99};
+static int _water_03_list[1]                    = {128};
+static int _water_04_list[1]                    = {133};
+static int _water_06_list[1]                    = {122};
+static int _water_07_list[1]                    = {124};
+static int _water_08_list[1]                    = {126};
+static int _water_09_list[1]                    = {130};
+static int _water_10_list[1]                    = {187};
+static int _water_11_list[1]                    = {182};
+static int _water_12_list[1]                    = {183};
+static int _water_13_list[1]                    = {171};
+static int _water_14_list[1]                    = {184};
+static int _water_15_list[1]                    = {185};
+static int _water_30_list[1]                    = {33};
+static int _water_80_list[1]                    = {14};
+static int _water_90_list[1]                    = {3};
+static int _boat_mask_list[1]                   = {14};
+
+/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationInfo_Table[OBJECT_CLASS_COUNT] = {
+{
     /* .Existent = */ 0,
     /* .DataPool_Info = */ {
         /* .Block_Size = */ 0,
@@ -870,14 +894,18 @@ UNLINKED(/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationI
     },
     /* .LinkList_Max = */ 1,
     /* .pLinkList = */ _fire_pheno_list,
-});
+}
+};
 /* static */ u_int _Object_Class_Priority_List[OBJECT_CLASS_COUNT + 1] ={
     0,  3,  4,  5,  6,  7,  8,  9,  41, 10, 12, 16, 17, 14, 
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
     36, 37, 38, 39, 40, 11, 15, 13, 18, 19, 42, 43, 44, 45,
     46, 47, 20, 21, 1,  2,  48
 };
-extern /* static */ int _AutoPost_Association_List[2][18];
+/* static */ int _AutoPost_Association_List[2][18] = {
+    { 99,  24, 128, 26, 133, 27, 122, 28, 124, 29, 126, 30, 130, 31, 187, 32, 182, 33 },
+    { 183, 34, 171, 35, 184, 36, 185, 37, 33,  38, 14,  39, 14,  22, 3,   40, 170, 42 },
+};
 extern Object_Instance* _pHierarchyTable[OBJECT_CLASS_COUNT];
 extern Object_Instance _Object_instance_table[600];
 extern Object_DataPool_Infomeation _Object_Data_Table[OBJECT_CLASS_COUNT];
