@@ -1,9 +1,19 @@
 #include "sh2_common.h"
 #include "SH2_common/playing_info.h"
 #include "SH2_common/sh_vu0.h"
+#include "SH2_common/sh2dt.h"
+
+#include "sce/eeregs.h"
+#include "vec.h"
 
 #include "Chacter/character.h"
+#include "Chacter/chara_list.h"
 #include "Chacter/sh2_battle_list.h"
+#include "Chacter/lake_wave.h"
+#include "Chacter/m3_play.h"
+#include "Chacter/m3_boat.h"
+#include "Chacter/m3_sc.h"
+#include "Chacter/player_result.h"
 
 #include "Collision/cl_main.h"
 #include "Multi_thr/pad/keydata.h"
@@ -234,6 +244,9 @@ static CL_HITPOLY_PLANE lake_active_wall_list[12] = {
 
 static int dt_0x01202578; // size: 0x4, address: 0x1202578
 static float dtf_0x01202570; // size: 0x4, address: 0x1202570
+
+#define dtf dtf_0x01202570
+#define dt dt_0x01202578
 
 shBoatWork sh2bot; // size: 0x20, address: 0x1202550
 Matrix4 boat_localworld_matrix; // size: 0x40, address: 0x1202510
@@ -670,44 +683,705 @@ void BoatSetHeight(SubCharacter* this) {
     this->eye_y = -10000.0f;
 }
 
-static void (* func_list_main_0x00371B78[3])(SubCharacter *) = {boat_both, boat_right, boat_left}; // size: 0xC, address: 0x371B78
-static int anime_change_check_1323 = -1;
-static int dboat_anime_adr_list[4] = {0x0, 33180, 79732, 0x0}; // size: 0x10, address: 0x371B90
+static void (* func_list_main[3])(SubCharacter *) = {boat_both, boat_right, boat_left}; // size: 0xC, address: 0x371B78
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckSetParameter);
+static void BoatCheckSetParameter(SubCharacter* this) {
+    CL_HITPOLY_COLUMN column; // r29+0x20
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", boat_both);
+    
+    GameBoatTimerCountUp();
+    GameBoatMaxSpeedCheck(this->spd);
+    
+    
+    sh2bot.anim_change = false;
+    if (bot_anime_flg_on(1 << 2) == 0) {
+        sh2bot.anime_change_timer -= dtf;
+        if (sh2bot.anime_change_timer < 0.0f)
+            sh2bot.anime_change_timer = 0.0f;
+    }
+    
+    
+    
+    
+    column.kind = 1;
+    column.weight = 2;
+    column.material = 6;
+    column.shape = 3;
+    
+    column.p[0][3] = sh2jms.column_atk.p[0][3] = 1.0f;
+    column.p[1][0] = sh2jms.column_atk.p[0][0] = 0.0f;
+    column.p[1][2] = sh2jms.column_atk.p[0][2] = 0.0f;
+    
+    
+    column.p[0][0] = sh2bot.boat_p->pos.x;
+    column.p[0][1] = 50.0f + sh2bot.boat_p->pos.y;
+    column.p[0][2] = sh2bot.boat_p->pos.z;
+    column.p[1][1] = -50.0f + sh2bot.boat_p->pos.y;
+    column.p[1][3] = 1650.0f;
+    
+    
+    BoatSetHeight(this);
+    
+    clSetCharaHitColumn(&column, &column, this, BoatSetHeightDummy);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", boat_right);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", boat_left);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckStatus);
+static void boat_both(void) {
+    switch (sh2bot.anime_change_now) {
+        case 0:
+            break;
+        case 1:
+            bot_st_set(1, &sh2bot);
+            break;
+        case 2:
+            bot_st_set(2, &sh2bot);
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckControl);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckAnimeSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", boat_anim_set_all);
+static void boat_right(void) {
+    switch (sh2bot.anime_change_now) {
+        case 0:
+            bot_st_set(0, &sh2bot);
+            break;
+        case 1:
+            break;
+        case 2:
+            bot_st_set(2, &sh2bot);
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckAnime);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckOarStatus);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckEffect);
+static void boat_left(void) {
+    switch (sh2bot.anime_change_now) {
+        case 0:
+            bot_st_set(0, &sh2bot);
+            break;
+        case 1:
+            bot_st_set(1, &sh2bot);
+            break;
+        case 2:
+            break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckSound);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckRollEnergy);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", BoatCheckSetFirst);
+static void BoatCheckStatus(SubCharacter* this) {
+    void (*boat_main_func)(SubCharacter*) = func_list_main[sh2bot.status_now]; // r2
+    func_list_main[sh2bot.status_now](this);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", HumanBOTFunction);
+float fabsf(float);
+float sqrtf(float);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", shCharacterSetHumanBOTLow);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", shCharacterBoatWorkInit);
+static void BoatCheckControl(SubCharacter* this) {
+    f32 var_f12;
+    s32 var_v0;
+    s32 var_v1;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", shCharacterHumanBOTAnimeSet);
+    this->spd -= 0.15f * this->spd * dtf;
+    this->rot.w -= 0.2f * this->rot.w * dtf;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_boat", shUpdateBoatJamesPosAfterAnime);
+    if (ABS_WITHIN_TOLERANCE(this->spd, 0.05f) && !straight_power)
+        this->spd = 0.0f;
+
+    if (ABS_WITHIN_TOLERANCE(this->rot.w, 0.025f) && !round_power)
+        this->rot.w = 0.0f;
+
+    pos_aspd = 1.5f * straight_power;
+    this->spd += (pos_aspd * dtf);
+    this->spd = CLAMP(this->spd, -3.0f, 4.0f);
+
+    rot_aspd = (0.25f * round_power) / (1.0f + fabsf(this->spd));
+    this->rot.w += (rot_aspd * dtf);
+    this->rot.w = CLAMP(this->rot.w, -1.5f, 1.5f);
+
+    var_f12 = this->rot.y + this->spd_roty;
+    var_f12 = GET_REFLEX_ANGLE(var_f12);
+    this->pos_spd.x = this->spd * dtf * shSinF(var_f12);
+
+    var_f12 = this->rot.y + this->spd_roty;
+    var_f12 =  GET_REFLEX_ANGLE(var_f12);
+    this->pos_spd.z = this->spd * dtf * shCosF(var_f12);
+    this->pos_spd.y = this->spd_y * dtf;
+
+    rot.y = this->rot.w * dtf;
+    pos.x = this->pos_spd.x;
+    pos.y = this->pos_spd.y;
+    pos.z = this->pos_spd.z;
+    pos.x = pos.x * 500.0f;
+    pos.y = pos.y * 500.0f;
+    pos.z = pos.z * 500.0f;
+
+    if (wv_energy_y != 0.0f) {
+        wv_timer_y += dtf;
+        if ((wv_timer_y > 2.0f)) {
+            wv_timer_y -= 2.0f;
+        }
+        wv_height_y = -wv_energy_y * sinf(PI * wv_timer_y);
+        wv_energy_y -= (0.01f * wv_energy_y);
+        var_v1 = wv_energy_y >= -0.0005f && wv_energy_y < 0.0005f ? 1 : 0;
+        if (var_v1 != 0) {
+            wv_energy_y = 0.0f;
+            wv_timer_y = 0.0f;
+            wv_height_y = 0.0f;
+        }
+    }
+
+    if (wv_energy_x != 0.0f) {
+        wv_timer_x += dtf;
+        if (wv_timer_x > 2.0f)
+            wv_timer_x -= 2.0f;
+
+        if (wv_timer_x >= 0.5f && wv_timer_x < 1.5f) wv_status_x = -1;
+        else wv_status_x = 1;
+
+        wv_shinpuku_x = sqrtf((2.0f * wv_energy_x) / 1480.4408f);
+        wv_height_x = wv_shinpuku_x * sinf(PI * wv_timer_x);
+        wv_energy_x -= (0.02f * wv_energy_x);
+        
+        if (ABS_WITHIN_TOLERANCE(wv_energy_x, 0.0005f)) {
+            wv_energy_x = 0.0f;
+            wv_timer_x = 0.0f;
+            wv_height_x = 0.0f;
+        }
+        this->rot.z = atan2f(wv_height_x, 0.5f);
+    }
+
+    if (wv_energy_z != 0.0f) {
+        wv_timer_z += dtf;
+        if (wv_timer_z > 2.0f)
+            wv_timer_z -= 2.0f;
+
+        if (wv_timer_z >= 0.5f && wv_timer_z < 1.5f) wv_status_z = -1;
+        else wv_status_z = 1;
+
+        wv_shinpuku_z = sqrtf(2.0f * wv_energy_z / 1480.4408f);
+        wv_height_z = wv_shinpuku_z * sinf(PI * wv_timer_z);
+        wv_energy_z -= 0.02f * wv_energy_z;
+
+        if (IS_IN_RANGE(wv_energy_z, -0.0005f, 0.0005f)) {
+            wv_energy_z = 0.0f;
+            wv_timer_z = 0.0f;
+            wv_height_z = 0.0f;
+        }
+        
+        this->rot.x = atan2f(wv_height_z, 2.0f);
+    }
+}
+
+
+
+static void BoatCheckAnimeSpeed(SubCharacter* scp) {
+    short purpose_speed_left; // r17
+    short purpose_speed_right; // r8
+    SubCharacter* boat_jms; // r2
+    SubCharacterDisp* scp_d; // r2
+
+    purpose_speed_left = (8.0f * (4096.0f * lstick_power));
+    purpose_speed_right = (8.0f * (4096.0f * rstick_power));
+    
+    if (int_abs(purpose_speed_left) > int_abs(anm_speed_left)) {
+        close_to_value(&anm_speed_left, purpose_speed_left, 0x40);
+    } else {
+        close_to_value(&anm_speed_left, purpose_speed_left, 0x10);
+    }
+    
+    if (int_abs(purpose_speed_right) > int_abs(anm_speed_right)) {
+        close_to_value(&anm_speed_right, purpose_speed_right, 0x40);
+    } else {
+        close_to_value(&anm_speed_right, purpose_speed_right, 0x10);
+    }
+
+    anm_speed_left = CLAMP(anm_speed_left, -0x800, 0x800);
+    anm_speed_right = CLAMP(anm_speed_right, -0x800, 0x800);
+
+    switch (sh2bot.anime_change_now) {
+        case 0:
+            shCharacterAnimeSpeedAdd(scp, sh2bot.anime_speed = (anm_speed_left + anm_speed_left) & ~1);
+            return;
+        case 1:
+            shCharacterAnimeSpeedAdd(scp, sh2bot.anime_speed = anm_speed_right * 2);
+            return;
+        case 2:
+            shCharacterAnimeSpeedAdd(scp, sh2bot.anime_speed = anm_speed_left * 2);
+            return;
+    }
+}
+
+
+
+static void boat_anim_set_all(AnimeInfo* aip, int comp_type) {
+                                                            //probably incorrect
+    shCharacterAnimeSet(sh2bot.boat_p, 0, comp_type, aip, (int)shCharacterGetAnimeAdrForPlay(sh2bot.boat_p));
+}
+
+
+
+static void BoatCheckAnime(SubCharacter* scp) {
+    static int anime_change_check = -1; // @ 0x00371B88
+    shBoatWork* w = &sh2bot; // r16
+    SubCharacterDisp* scp_d; // r17
+    AnimeInfo* aip; // r18
+
+    scp_d = (SubCharacterDisp*) w->boat_p;
+    w->anim_change = 0;
+    if (!bot_anime_flg_on(4) && (w->status_now != anime_change_check || bot_anime_flg_on(8))) {
+        switch (w->status_now) {
+            case 0:
+                aip = (AnimeInfo*) &boat_anim[1];
+                break;
+            case 1:
+                aip = (AnimeInfo*) &boat_anim[2];
+                break;
+            case 2:
+                aip = (AnimeInfo*) &boat_anim[3];
+                break;
+        }
+        boat_anim_set_all(aip, 10);
+        bot_flg_on(&w->anime_st_flg, 1 << 2);
+        anime_change_check = w->status_now;
+        mar_flg_off(&w->anime_st_flg, 1 << 3);
+        sh2bot.anim_change = 1;
+    }
+    if (scp_d->anime.comp_type < 3) {
+        bot_flg_off(&w->anime_st_flg, 1 << 1);
+    }
+    if (scp_d->anime.comp_type < 9) {
+        bot_flg_off(&w->anime_st_flg, 1 << 2);
+    } else {
+        shCharacterAnimeSpeedAddY(scp, 1 << 6);
+    }
+    if (scp_d->anime.comp_type == -1) {
+        bot_flg_on(&w->anime_pause, 1 << 0);
+        return;
+    }
+    bot_flg_off(&w->anime_pause, 1 << 0);
+}
+
+
+
+static void BoatCheckOarStatus(SubCharacter* scp) {
+    int i; // r3
+    shSkelton* top; // r4
+
+    top = scp->sk_top;
+    for (i = 0; i < 3; i++)
+        top = top->next;
+
+    volatile_vec_copy(oar_pos_left, top->src_m.d[3]);
+    top = top->next;
+    volatile_vec_copy(oar_pos_right, top->src_m.d[3]);
+    sceVu0ApplyMatrix(oar_pos_left, (sceVu0FVECTOR*) &boat_localworld_matrix, oar_pos_left);
+    sceVu0ApplyMatrix(oar_pos_right, (sceVu0FVECTOR*) &boat_localworld_matrix, oar_pos_right);
+    oar_status_left[1] = oar_status_left[0];
+    oar_status_right[1] = oar_status_right[0];
+    if ((oar_pos_left[1] > 3500.0f)) {
+        oar_status_left[0] = 1;
+    } else {
+        oar_status_left[0] = 0;
+    }
+    if ((oar_pos_right[1] > 3500.0f)) {
+        oar_status_right[0] = 1;
+        return;
+    }
+    oar_status_right[0] = 0;
+}
+
+
+
+static void BoatCheckEffect(void) {
+    int kind_l = -1; // r16
+    int kind_r = -1; // r2
+
+    if (oar_status_right[0] == 0  && oar_status_right[1] == 1) kind_r = 1;
+    if (oar_status_right[0] == 1  && oar_status_right[1] == 0) kind_r = 0;
+    if (oar_status_left[0]  == 0  && oar_status_left[1]  == 1) kind_l = 1;
+    if (oar_status_left[0]  == 1  && oar_status_left[1]  == 0) kind_l = 0;
+
+    if (kind_r != -1)
+        HH_Effect_Object_WaterSplash_Impact_Post(oar_pos_right, kind_r);
+
+    if (kind_l != -1)
+        HH_Effect_Object_WaterSplash_Impact_Post(oar_pos_left, kind_l);
+}
+
+
+
+static void BoatCheckSound(void) {
+   
+}
+
+
+static void BoatCheckRollEnergy(SubCharacter* scp) {
+    int init_check_x; // r18
+    int init_check_y; // r19
+    int init_check_z; // r16
+    float energy_x; // r20
+    float energy_y; // r21
+    float energy_z; // r22
+    shLakeWaveInfo* wip; // r17
+    float angle; // r29+0x70
+
+
+    if ((wv_energy_x == 0.0f) && (round_power != 0.0f)) init_check_x = 1;
+    else init_check_x = 0;
+    
+    if ((wv_energy_z == 0.0f) && (straight_power != 0.0f)) init_check_z = 1;
+    else init_check_z = 0;
+
+    init_check_y = 0;
+    energy_x = 0.05f * round_power;
+    energy_z = 0.05f * straight_power;
+    energy_y = 0.0f;
+
+    wip = mizTestLakeWaveMain(scp);
+    if (wip != NULL) {
+        angle = wip->distance[1] - scp->rot.y;
+        REFLEX_ANGLE(angle, angle);
+        energy_x += 2.0f * (dtf * (wip->energy * sinf(angle)));
+        energy_z += 4.0f * (dtf * (wip->energy * cosf(angle)));
+        energy_y += wip->energy * 0.05;
+        if (wv_energy_x != 0.0f) {
+            init_check_x = 0;
+        } else {
+            init_check_x = 1;
+        }
+        if (wv_energy_z != 0.0f) {
+            init_check_z = 0;
+        } else {
+            init_check_z = 1;
+        }
+        if (wv_energy_y != 0.0f) {
+            init_check_y = 0;
+        } else {
+            init_check_y = 1;
+        }
+    }
+
+    if (init_check_y != 0) {
+        wv_timer_y = 0.0f;
+        wv_energy_y += energy_y;
+    }
+
+    if (init_check_x != 0) {
+        if ((energy_x > 0.0f)) {
+            wv_timer_x = 0.0f;
+            wv_status_x = 1;
+        } else {
+            wv_timer_x = 1.0f;
+            wv_status_x = -1;
+        }
+        switch (wv_status_x) {
+            case 1:
+                wv_type_x = (u_char) (wv_height_x >= 0.0f ? 0 : 1);
+                break;
+            case -1:
+                wv_type_x = (u_char) (wv_height_x > 0.0f ? 2 : 3);
+                break;
+        }
+    }
+
+    if (init_check_z != 0) {
+        if ((energy_z > 0.0f)) {
+            wv_timer_z = 0.0f;
+            wv_status_z = 1;
+        } else {
+            wv_timer_z = 1.0f;
+            wv_status_z = -1;
+        }
+        switch (wv_status_z) {
+            case 1:
+                wv_type_x = (wv_height_z >= 0.0f ? 0 : 1) & 0xFF;
+                break;
+            case -1:
+                wv_type_x = (wv_height_z > 0.0f ? 2 : 3) & 0xFF;
+                break;
+        }
+    }
+
+    switch (wv_type_x) {
+        case 0:
+            wv_energy_x += energy_x;
+            if (wv_energy_x < 0.0f) {
+                wv_energy_x = -wv_energy_x;
+                wv_timer_x = 0.5f;
+                wv_type_x = 2;
+            }
+            break;
+        case 1:
+            wv_energy_x += energy_x;
+            if (wv_energy_x < 0.0f) {
+                wv_energy_x = -wv_energy_x;
+                wv_timer_x = 1.0f;
+                wv_type_x = 3;
+            }
+            break;
+        case 2:
+            wv_energy_x -= energy_x;
+            if (wv_energy_x < 0.0f) {
+                wv_energy_x = -wv_energy_x;
+                wv_timer_x = 0.0f;
+                wv_type_x = 0;
+            }
+            break;
+        case 3:
+            wv_energy_x -= energy_x;
+            if (wv_energy_x < 0.0f) {
+                wv_energy_x = -wv_energy_x;
+                wv_timer_x = 1.5f;
+                wv_type_x = 1;
+            }
+            break;
+    }
+    switch (wv_type_z) {
+        case 0:
+            wv_energy_z += energy_z;
+            if (wv_energy_z < 0.0f) {
+                wv_energy_z = -wv_energy_z;
+                wv_timer_z = 0.5f;
+                wv_type_z = 2;
+            }
+            break;
+
+        case 1:
+            wv_energy_z += energy_z;
+            if (wv_energy_z < 0.0f) {
+                wv_energy_z = -wv_energy_z;
+                wv_timer_z = 1.0f;
+                wv_type_z = 3;
+            }
+            break;
+
+        case 2:
+            wv_energy_z -= energy_z;
+            if (wv_energy_z < 0.0f) {
+                wv_energy_z = -wv_energy_z;
+                wv_timer_z = 0.0f;
+                wv_type_z = 0;
+            }
+            break;
+
+        case 3:
+            wv_energy_z -= energy_z;
+            if (wv_energy_z < 0.0f) {
+                wv_energy_z = -wv_energy_z;
+                wv_timer_z = 1.5f;
+                wv_type_z = 1;
+            }
+            break;
+    }
+}
+
+static void BoatCheckSetFirst(SubCharacter* this) {
+    shCharacterAnimeFrameSet(this, 60);
+}
+
+static inline void setBoatLocalWorldMatrix(SubCharacter* this) {
+    sceVu0FVECTOR vec;
+    vec[0] = this->rot.x; vec[1] = 0.0f; vec[2] = this->rot.z; vec[3] = 1.0f;
+    sceVu0RotMatrix(boat_localworld_matrix.d, kt_unit_matrix.d, vec);
+    sceVu0RotMatrixY(boat_localworld_matrix.d, boat_localworld_matrix.d, this->rot.y);
+}
+
+static inline void setBoatLocalWorldPosition(SubCharacter* this) {
+    boat_localworld_matrix.d[3][0] = this->pos.x;
+    boat_localworld_matrix.d[3][1] = this->pos.y;
+    boat_localworld_matrix.d[3][2] = this->pos.z;
+    boat_localworld_matrix.d[3][3] = 1.0f;
+}
+
+static void HumanBOTFunction(SubCharacter* this) {
+    AnimeInfo* aip; // r17
+    
+    
+    
+    int count = *T0_COUNT;
+    
+    pos.z = pos.y = pos.x = 0.0f;
+    rot.z = rot.y = rot.x = 0.0f;
+    pos_aspd = 0.0f;
+    rot_aspd = 0.0f;
+
+    switch (this->step) {
+        case 0: {
+            sceVu0FVECTOR pos; // r29+0x30
+            sceVu0FVECTOR rot; // r29+0x40
+            sceVu0FVECTOR sp50;
+            
+            volatile_vec_copy(pos, &this->pos);
+            volatile_vec_copy(rot, &this->rot);
+            
+            HumanBOTInit();
+            
+            if (PlayerNowDemoEventMode() == 0) {
+                SCAnimeTypeSwitch(this, 1);
+            
+                aip = (AnimeInfo*) &boat_anim[1];
+                shCharacterAnimeSet(this, 0, 0, aip, (int) shCharacterGetAnimeAdrForPlay(this));
+
+                
+                sh2bot.status_now = sh2bot.status_prev = 0;
+            }
+            
+            
+            volatile_vec_copy(&this->pos, pos);
+            volatile_vec_copy(&this->rot, rot);
+            
+            BoatSetHeight(this);
+            shCharacterSetPosAfterDemo(this, &this->pos.x, this->rot.y);
+            
+            this->step++;
+            
+            return;
+        }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            case 1: 
+            if (!(sh2jms.player->status & (1 << 13))) {
+                
+                
+                
+                
+                if (!(this->status & (1 << 2))) {
+                    this->step = 0;
+                    HumanBOTFunction(this);
+                }
+                
+                
+                
+                
+                dt = shGetDF();
+                dtf = shGetDT();
+                
+                
+                
+                clAddDynamicWall(lake_active_wall_list);
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                if (sh2jms.player->status & (1 << 17)) {
+                    BoatCheckKeyInput();
+                    BoatCheckSetParameter(this);
+                    BoatCheckStatus(this);
+                    BoatCheckAnime(this);
+                    BoatCheckControl(this);
+                    BoatCheckAnimeSpeed(this);
+                } else {
+                
+                    BoatCheckSetFirst(this);
+                }
+                
+                
+
+                
+                setBoatLocalWorldMatrix(this);
+                setBoatLocalWorldPosition(this);
+                
+                
+                
+                
+                
+                
+                BoatCheckOarStatus(this);
+                
+                
+                BoatCheckEffect();
+                BoatCheckSound();
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                SCRotZYXSwitch(this, true);
+                BoatCheckRollEnergy(this);
+                SCAddPos(this, &pos);
+                SCAddRot(this, &rot);
+                this->rot.y = shAngleRegulate(this->rot.y);
+                if (sh2jms.player->status & (1 << 17)) {
+                    BoatPlayerCheckControl();
+                }
+            }
+            return;
+    }
+}
+
+
+
+void shCharacterSetHumanBOTLow(SubCharacter* scp) {
+    shCharacterSetFunction(scp, HumanBOTFunction);
+    shCharacterBoatWorkInit();
+    sh2bot.boat_p = scp;
+}
+
+
+
+void shCharacterBoatWorkInit(void) {
+    shQzero(&sh2bot, sizeof(sh2bot));
+}
+
+#define BOAT_ANIME_ID_START 55
+static int dboat_anime_adr_list[4] = {0, 33180, 79732, 0}; // size: 0x10, address: 0x371B90
+
+int shCharacterHumanBOTAnimeSet(SubCharacter* scp, int anime_id) {
+    AnimeInfo* aip; // r2
+
+    if (shCharacterGetModelID(scp) == BOAT_CHARA_KIND) {
+        SCAnimeTypeSwitch(scp, 0);
+        aip = (AnimeInfo*) &d_boat_anim[anime_id - BOAT_ANIME_ID_START];
+        shCharacterAnimeSet(scp,
+                            0,
+                            2,
+                            aip,
+                            dboat_anime_adr_list[anime_id - BOAT_ANIME_ID_START] + (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - BOAT_ANIME_ID_START));
+        return 0;
+    }
+    return -1;
+}
+
+
+
+void shUpdateBoatJamesPosAfterAnime(void) {
+    shCharaInfo* cip; // r2
+
+    if (sh2jms.player->status & (1 << 17)) {
+        cip          = GetPlayerInfoForCameraCtrl();
+        cip->pos     = sh2bot.boat_p->pos;
+        cip->rot     = sh2bot.boat_p->rot;
+        cip->pos_spd = sh2bot.boat_p->pos_spd;
+        cip->rot_spd = sh2bot.boat_p->rot_spd;
+        cip->mat     = sh2bot.boat_p->mat;
+    }
+}

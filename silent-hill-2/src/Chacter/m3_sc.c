@@ -159,7 +159,7 @@ static void shCharacterInitialize(SubCharacter* scp, int id, int _model) {
     scp->rot = (Vector4){0};
 
 
-    scp->mat = kt_unit_matrix;
+    scp->mat = kt_unit_matrix.d;
 
     scp->spd_roty = 0.0f;
     scp->spd_y = 0.0f;

@@ -45,7 +45,7 @@ void GameBoatTimerCountUp(void) {
 }
 
 void GameBoatMaxSpeedCheck(float spd) {
-    if (!(spd <= playing.boat_max_speed)) {
+    if (spd > playing.boat_max_speed) {
         playing.boat_max_speed = spd;
     }
 }

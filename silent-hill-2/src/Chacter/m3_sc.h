@@ -94,6 +94,6 @@ void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height,
 
 // @todo move these out
 extern int demo_status; // correct home for this?
-extern sceVu0FMATRIX kt_unit_matrix; // correct home for this?
+extern Matrix4 kt_unit_matrix; // correct home for this?
 
 #endif

@@ -17,8 +17,11 @@
 #define SQUARE(_x) ((_x) * (_x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define CLAMP(x, min, max) ((x) < (min) ? (min) : (x) > (max) ? (max) : (x))
 #define CLAMP_MAX(_val, _max) do { (_val) = (_val) > (_max) ? (_val) : (_max); } while (0)
 #define CLAMP_MIN(_val, _min) do { (_val) = (_val) > (_min) ? (_min) : (_val); } while (0)
+#define IS_IN_RANGE(x, min, max) (((x) >= (min) && (x) < max) ? 1 : 0)
+#define ABS_WITHIN_TOLERANCE(x, range) IS_IN_RANGE(x, -range, range)
 #define COLOR_RGBA(r, g, b, a) (((a) << 24) | ((((b) << 16) | ((r) | ((g) << 8)))))
 #define COLOR_RGB(r, g, b) ((((b) << 16) | ((r) | ((g) << 8))))
 #define Q4(x) (int)((x) * 16)
@@ -31,6 +34,7 @@
     else ret = value; \
     out = ret; \
 } while (0)
+#define GET_REFLEX_ANGLE(x) (((x) > PI) != 0 ? (x) - TAU : ((x) < -PI) ? (x) + TAU : (x))
 
 static inline float reflex_angle(float x) {
     float result;
