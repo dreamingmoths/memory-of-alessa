@@ -46,7 +46,7 @@ static inline subchar_rot(SubCharacter* scp, Vector4* rot)
     stack_rot[2] = rot->z;
     stack_rot[3] = 1.0f; 
 
-    sceVu0RotMatrix(scp->mat, kt_unit_matrix, stack_rot);
+    sceVu0RotMatrix(scp->mat, kt_unit_matrix.d, stack_rot);
     sceVu0RotMatrixY(scp->mat, scp->mat, rot->y);
 }
 
@@ -183,7 +183,7 @@ static void UpdateMatrix(SubCharacter* scp, Vector4* rot, Vector4* trans) {
         
         subchar_rot(scp, rot);
     } else {
-        sceVu0RotMatrix(scp->mat, kt_unit_matrix, rot);
+        sceVu0RotMatrix(scp->mat, kt_unit_matrix.d, rot);
     }
     subchar_trans(scp, trans);
 }

@@ -59,6 +59,12 @@ static void shGetJamesLightPos_Calc_Chest(void);
 static void shGetJamesLightPos_Calc_Hand(void);
 static void shGetJamesFootPos(float* pos, float* vec, int kind);
 
+/**
+ * @note this is not a static function, but the one in `m3_boat` is, and it has
+ * a different signature.
+ */
+void close_to_value(float* now, float tgt, float mov);
+
 extern /* static */ int anime_change_check_upper; // @ 0x002A8DD0
 extern /* static */ int anime_change_check_lower; // @ 0x002A8DD8
 extern /* static */ AnimeInfo pjames_anim[34]; // size: 0x198, address: 0x0
@@ -380,11 +386,15 @@ static float PlayerCheckKeyInputStickDir(void) {
     return shAtan2(-y, x);
 }
 
+#ifdef HOLY_CANDLE
 static float PlayerCheckKeyStickClamp(float stick_val, float min, float max) {
     stick_val = (stick_val < min) ? min : ((stick_val > max) ? max : stick_val);
     return (stick_val - min) / (max - min);
 
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckKeyStickClamp);
+#endif
 
 static float PlayerCheckKeyInputStickPow(void) {
     float x, y, p; 
