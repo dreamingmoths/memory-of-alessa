@@ -377,7 +377,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
         case 22:
             ret = DramaDemoMain(&knife);
             if (shCharacterGetSubCharacter(RHHH_JMS_CHARA_KIND, 0) == NULL) {
-                vec_zero(vec);
+                shVectorZero(vec);
                 CharaWorkCreate(RHHH_JMS_CHARA_KIND, 0, vec, vec, 0);
                 CharaWorkCreate(RAGL_CHARA_KIND, 0, vec, vec, 0);
                 CharaWorkCreate(ITEM_RI_KNIFE_CHARA_KIND, 0, vec, vec, 0);

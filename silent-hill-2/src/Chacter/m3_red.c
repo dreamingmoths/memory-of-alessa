@@ -41,8 +41,8 @@ static void EnemyREDFunction(SubCharacter* scp) {
 
 
                 
-                volatile_vec_copy(&pos, &scp->pos);
-                volatile_vec_copy(&rot, &scp->rot);
+                shVectorCopy(&pos, &scp->pos);
+                shVectorCopy(&rot, &scp->rot);
                 
                 EnemyREDInit(scp);
 
@@ -76,8 +76,8 @@ static void EnemyREDFunction(SubCharacter* scp) {
                     scp->battle.target = shCharacterGetSubCharacter(LLL_JMS_CHARA_KIND, -1);
                 }
                 
-                volatile_vec_copy(&scp->pos, &pos);                
-                volatile_vec_copy(&scp->rot, &rot);
+                shVectorCopy(&scp->pos, &pos);                
+                shVectorCopy(&scp->rot, &rot);
                 
                 scp->step++;                
             }
@@ -178,7 +178,7 @@ void shGetEnemyREDAttackPos(SubCharacter* scp /* r2 */, float* s_pos /* r18 */, 
     mat.d[3][3] = 1.0f;
     
     sceVu0ApplyMatrix(&pos0[0], &lw_mat[0], &pos0[0]);
-    volatile_vec_copy(s_pos, pos0);
+    shVectorCopy(s_pos, pos0);
    
     sceVu0ApplyMatrix(&pos1[0], &mat.d[0], &wep_range[0]);
     

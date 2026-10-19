@@ -117,7 +117,7 @@ void shCharacterAnimePartsControl(shAnime3d* ap, shSkelton* stp, Vector4* rot) {
     Vector4 spB0;
     float rx, ry, rz;
 
-    vec_copy(&vec, stp->src_m.d[3]);
+    shVectorCopyNonvolatile(&vec, stp->src_m.d[3]);
 
     shQzero(stp->src_m.d[3], sizeof(stp->src_m.d[3]));
 
@@ -126,7 +126,7 @@ void shCharacterAnimePartsControl(shAnime3d* ap, shSkelton* stp, Vector4* rot) {
     _sceVu0TransposeMatrix(test_mat.d, sp70.d);
     sceVu0MulMatrix(stp->src_m.d, test_mat.d, stp->src_m.d);
 
-    vec_copy(stp->src_m.d[3], &vec);
+    shVectorCopyNonvolatile(stp->src_m.d[3], &vec);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/anime", func_0013FF50);

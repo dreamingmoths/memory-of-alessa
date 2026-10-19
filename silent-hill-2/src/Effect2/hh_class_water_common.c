@@ -19,7 +19,7 @@ static float Wave_Calculator(Wave_Element* pElement /* r16 */, float Distance /*
 
     float result = pElement->Omega * (pElement->Timer + (Distance / pElement->Verocity)); // r29+0x30
 
-    float theta = reflex_angle(result); // r29+0x30
+    float theta = shReflexAngle(result); // r29+0x30
 
     return Amplitude_ratio * pElement->Arrival * HH_MathWrapper_Sinf(theta);
 }

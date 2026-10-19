@@ -122,7 +122,7 @@ int GameMain(void) {
 
     
     if ((Sh2sys.step[SH2SYS_GAME_MAIN] == SH2_GAME_MAIN_PLAYABLE_MAIN) && (Sh2sys.step[SH2SYS_PLAYABLE_MAIN] == SH2_PLAYABLE_MAIN_PLAYABLE)) {
-        if (Sh2sys.pre_playable) shSetDF(clamp_min(3, Get_FrameRate()));
+        if (Sh2sys.pre_playable) shSetDF(shClampMin(3, Get_FrameRate()));
         else shSetDF(2);
         Sh2sys.pre_playable = 1;
     } else {

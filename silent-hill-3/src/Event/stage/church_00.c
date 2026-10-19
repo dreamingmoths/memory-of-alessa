@@ -217,9 +217,9 @@ void func_01F6DCF0_church_00(Q* arg0, int* arg1, Q* arg2, int*  arg3, int*  arg4
     sp0.s32 = D_01F6E570_church_00.s32;
     sp10.s32 = D_01F6E580_church_00.s32;
 
-    vec_copy(&arg0->u128, &sp0.u128);
+    shVectorCopyNonvolatile(&arg0->u128, &sp0.u128);
     *arg1 = 0;
-    vec_copy(&arg2->u128, &sp10.u128);
+    shVectorCopyNonvolatile(&arg2->u128, &sp10.u128);
     *arg3 = 0;
     *arg4 = 0;
 }

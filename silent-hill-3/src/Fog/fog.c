@@ -114,7 +114,7 @@ void fogInitScreen(void) {
 }
 
 void fogInitWind(void) {
-    vec_zero(fwork.WindV);
+    shVectorZero(fwork.WindV);
     fogChangeWind(fwork.WindDef);
     shFill(&fwork.GridDense, 0x3f800000 /* 1.0f */, 512);
 }
@@ -127,7 +127,7 @@ void fogInitParticle(void) {
     for (i = fwork.PartNum; i > 0; i--) {
         fog_init_part_sub(pd++);
     }
-    vec_zero(fwork.sc_degree);
+    shVectorZero(fwork.sc_degree);
     fwork.sc_degree[2] = -1.0f;
     fwork.sc_tdx = shRandF();
     fwork.sc_tdy = shRandF();
@@ -153,7 +153,7 @@ void fogSetWall(void* Vector) {
     wall->max[0] += 10.0f;
     wall->max[2] += 10.0f;
     wall->max[3] = 0.0f, wall->min[3] = 0.0f;
-    vec_zero(cv);
+    shVectorZero(cv);
     for (i = 0; i < 4; i++) {
         vec_add(cv, wv[i], cv);
     }
@@ -171,8 +171,8 @@ void fogSetObj(u_long ID, void* Center, float Size) {
         fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 634);
         od = &fwork.Obj[fwork.ObjMax++];
     }
-    vec_copy(od->pos, Center);
-    vec_zero(od->mv);
+    shVectorCopyNonvolatile(od->pos, Center);
+    shVectorZero(od->mv);
     od->pos[3] = Size;
     od->mv[3] = fwork.EscapeRange;
     od->rer = 1.0f / fwork.EscapeRange;
@@ -187,8 +187,8 @@ void fogSetObj2(u_long ID, void* Center, float Size) {
         fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 685);
         od = &fwork.Obj[fwork.ObjMax++];
     }
-    vec_copy(od->pos, Center);
-    vec_zero(od->mv);
+    shVectorCopyNonvolatile(od->pos, Center);
+    shVectorZero(od->mv);
     od->pos[3] = Size;
     od->mv[3] = fwork.EscapeRange;
     od->rer = 1.0f / fwork.EscapeRange;
@@ -300,22 +300,22 @@ void fogSetFloorY(float FloorY) {
 
 
 void fogSetWorldScreenM(void* WorldScreenM) {
-    mat_copy(fwork.WorldScreenM, WorldScreenM);
+    shMatrixCopy(fwork.WorldScreenM, WorldScreenM);
 }
 
 void fogSetWorldViewM(void* WorldViewM) {
-    mat_copy_3x3(fwork.WorldViewM, WorldViewM);
+    shMatrixCopy3d(fwork.WorldViewM, WorldViewM);
 }
 
 void fogSetWorldPosV(void* WorldPosV) {
     if (!(fwork.Flag & 0x40)) {
-        vec_copy(fwork.WorldPosV, WorldPosV);
+        shVectorCopyNonvolatile(fwork.WorldPosV, WorldPosV);
     }
 }
 
 void fogSetStayPos(void* WorldPosV) {
     fwork.Flag |= 0x40;
-    vec_copy(fwork.WorldPosV, WorldPosV);
+    shVectorCopyNonvolatile(fwork.WorldPosV, WorldPosV);
 }
 
 void fogSetStayPoint(void* StayPoint) {
@@ -323,11 +323,11 @@ void fogSetStayPoint(void* StayPoint) {
 }
 
 void fogResetStayPoint(void) {
-    vec_zero(fwork.StayPoint);
+    shVectorZero(fwork.StayPoint);
 }
 
 void fogSetCameraPosV(void* CameraPosV) {
-    vec_copy(fwork.CameraPosV, CameraPosV);
+    shVectorCopyNonvolatile(fwork.CameraPosV, CameraPosV);
 }
 
 /**
@@ -345,11 +345,11 @@ void fogSetLocalPosV(void) {
     d = vec3_length(FVector);
     if (fwork.Flag & 0x20) {
         vec_copy_reverse(fwork.LocalPosV, TVector);
-        dx = FVector[0] / float_abs(FVector[2]);
+        dx = FVector[0] / shFloatAbs(FVector[2]);
     }
     if (fwork.Flag & 0x800) {
         vec_copy_reverse(fwork.LocalPosV, TVector);
-        dx = FVector[2] / float_abs(FVector[0]);
+        dx = FVector[2] / shFloatAbs(FVector[0]);
     }
     if (d > 2000.0f) {
         sceVu0ScaleVector(FVector, FVector, 2000.0f / d);
@@ -381,7 +381,7 @@ void fogSetLocalPosV(void) {
 }
 
 void func_001EA980(void* LightPosV) {
-    vec_copy(fwork.LightPosV, LightPosV);
+    shVectorCopyNonvolatile(fwork.LightPosV, LightPosV);
     fwork.LightPosV[3] = 1.0f;
 }
 

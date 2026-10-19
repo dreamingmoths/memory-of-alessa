@@ -5,8 +5,8 @@
 
 #line 52
 void vwInitViewInfo(void) {
-    vec_zero(&vwViewPointInfo.rview.vp);
-    vec_zero(&vwViewPointInfo.rview.vr);
+    shVectorZero(&vwViewPointInfo.rview.vp);
+    shVectorZero(&vwViewPointInfo.rview.vr);
     vwViewPointInfo.rview.vr[2] = 1.0f;
 
     vwViewPointInfo.rview.rz = 0.0f;
@@ -20,12 +20,12 @@ void vwInitViewInfo(void) {
 
 #line 100
 void vwGetViewPosition(sceVu0FVECTOR pos) {
-    vec_copy(pos, vwViewPointInfo.worldpos);
+    shVectorCopyNonvolatile(pos, vwViewPointInfo.worldpos);
 }
 
 #line 119
 void vwGetViewAngle(sceVu0FVECTOR pos) {
-    vec_copy(pos, vwViewPointInfo.worldang);
+    shVectorCopyNonvolatile(pos, vwViewPointInfo.worldang);
 }
 
 #line 184
@@ -48,7 +48,7 @@ void vwSetCoordRefAndEntou(VbCOORDINATE* parent_p, sceVu0FVECTOR ref, float cam_
     view_ang[1] = shAngleRegulate(view_ang[1]);
     view_ang[2] = shAngleRegulate(view_ang[2]);
 
-    vu0_unit_matrix(vwViewPointInfo.vwcoord.coord);
+    shUnitMatrix(vwViewPointInfo.vwcoord.coord);
     vwRotMatrixYXZ(view_ang, vwViewPointInfo.vwcoord.coord);
 
     vwViewPointInfo.vwcoord.coord[3][0] = ref[0] + (cam_xz_r * shSinF(cam_ang_y));
@@ -62,7 +62,7 @@ void vwSetViewInfo(void) {
 
 
 
-    volatile_vec_copy(vwViewPointInfo.worldpos, vwViewPointInfo.vwcoord.lw[3]);
+    shVectorCopy(vwViewPointInfo.worldpos, vwViewPointInfo.vwcoord.lw[3]);
 
     vwMatrixToAngleYXZ(vwViewPointInfo.worldang, vwViewPointInfo.vwcoord.lw);
 }
@@ -71,4 +71,4 @@ void vwSetViewInfo(void) {
 void vwSetViewInfoDirectMatrix(VbCOORDINATE* pcoord, sceVu0FMATRIX cammat) {
     vwViewPointInfo.vwcoord.flg = 0;
     vwViewPointInfo.vwcoord.super = pcoord;
-    mat_copy(vwViewPointInfo.vwcoord.coord, cammat); } // @note: closing bracket needs to be here to match line number?
+    shMatrixCopy(vwViewPointInfo.vwcoord.coord, cammat); } // @note: closing bracket needs to be here to match line number?

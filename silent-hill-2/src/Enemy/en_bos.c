@@ -166,9 +166,9 @@ static void enBOSCtrlApproach(EnLOCAL_DATA* dp /* r16 */) {
         }
 
         shSinCosV_Scale(vec, enGetPlayerAngle(dp), 600.0f);
-        vu0_add_vector(pos, enGetPlayerPos(dp), vec);
+        shAddVector(pos, enGetPlayerPos(dp), vec);
         if (enCheckPlayerHitEyes(dp, pos) >= 0.0f) {
-            vu0_sub_vector(pos, enGetPlayerPos(dp), vec);
+            shSubVector(pos, enGetPlayerPos(dp), vec);
         }
 
         a                 = enCalcDirection(pos, &dp->scp->pos);
@@ -226,7 +226,7 @@ static void enBOSCtrlDistance(EnLOCAL_DATA* dp /* r16 */) {
             }
 
             shSinCosV_Scale(&vec, enGetPlayerDirection(dp), 1500.0f);
-            vu0_sub_vector(pos, enGetPlayerPos(dp), vec);
+            shSubVector(pos, enGetPlayerPos(dp), vec);
             dp->bos.rot_add = 0.05f * shAngleRegulate(enCalcDirection(&pos, &dp->scp->pos.x) - dp->path.angle);
             if ((enReduceTimer(dp) <= 0) || (enBOSCanAttackPlayer(dp) != 0)) {
                 ENEMY_STEP(ENEMY_BOS_STATE_APPROACH);
@@ -260,8 +260,8 @@ static void enBOSCtrlGenerate(EnLOCAL_DATA* dp /* r17 */) {
                 return;
             }
             tscp = enINSGetSubCharacter(tp);
-            volatile_vec_copy(&tscp->pos, &dp->scp->pos);
-            vec_zero(&tscp->rot);
+            shVectorCopy(&tscp->pos, &dp->scp->pos);
+            shVectorZero(&tscp->rot);
             a           = enGetPlayerDirection(dp);
             tscp->rot.y = a;
             enInitData(tp, tscp);
@@ -270,7 +270,7 @@ static void enBOSCtrlGenerate(EnLOCAL_DATA* dp /* r17 */) {
                 if ((tp = enEntryEnemy(15)) == NULL)
                     break;
                 tscp = enINSGetSubCharacter(tp);
-                volatile_vec_copy(&tscp->pos, &dp->scp->pos);
+                shVectorCopy(&tscp->pos, &dp->scp->pos);
                 tscp->rot.y = a;
                 enInitData(tp, tscp);
             }
@@ -310,9 +310,9 @@ static void enBOSCtrlGenerate(EnLOCAL_DATA* dp /* r17 */) {
             break;
     }
     shSinCosV_Scale(vec, enGetPlayerAngle(dp), 600.0f);
-    vu0_add_vector(pos, enGetPlayerPos(dp), vec);
+    shAddVector(pos, enGetPlayerPos(dp), vec);
     if (enCheckPlayerHitEyes(dp, &pos) >= 0.0f) {
-        vu0_sub_vector(pos, enGetPlayerPos(dp), vec);
+        shSubVector(pos, enGetPlayerPos(dp), vec);
     }
     a = enCalcDirection(&pos, &dp->scp->pos);
     a = shAngleRegulate(a - dp->path.angle);
@@ -351,8 +351,8 @@ static void enBOSCtrlAttack(EnLOCAL_DATA* dp /* r16 */) {
         case ENEMY_BOS_STATE_DISTANCE:
             shSinCosV_Scale(&vec, enGetPlayerAngle(dp), 600.0f);
 
-            vu0_add_vector(vec, enGetPlayerPos(dp), vec);
-            vu0_sub_vector(dp->vec, vec, &dp->scp->pos);
+            shAddVector(vec, enGetPlayerPos(dp), vec);
+            shSubVector(dp->vec, vec, &dp->scp->pos);
             dp->vec[3] = 0.0f;
             dp->vec[1] = 0.0f;
             enAttackCheck(dp, 59);

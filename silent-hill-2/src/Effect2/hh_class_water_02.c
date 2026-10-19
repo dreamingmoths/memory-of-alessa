@@ -336,7 +336,7 @@ u_int HH_Class_Prefix_Water_02() {
     sceVif1PkAddGsAD(pPk, SCE_GS_CLAMP_1, hh_class_water_clamp(i));
     if ((HH_DBG_Wrapper_Controller_KeyAssign_Check(1, 0, PAD_KEY_CIRCLE) != 0) && j % _interval_194_0x0036F4D0 == 0) {
         i++;
-        i = clamp_n(i, 4);
+        i = shClampN(i, 4);
     }
     j++;
     sceVif1PkAddGsAD(pPk, SCE_GS_ALPHA_1, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0x80));

@@ -110,18 +110,18 @@ void clCollectCharaPosition(void) {
 
     for (i = 0; i < clCharaListUse[clCharaListAct]; i++) {
         clCharaList[clCharaListAct][i].col.p[0][3] = 1.0f;
-        vu0_sub_vector(dif, clCharaList[clCharaListAct][i].col.p[0], clCharaList[clCharaListAct][i].opos);
+        shSubVector(dif, clCharaList[clCharaListAct][i].col.p[0], clCharaList[clCharaListAct][i].opos);
         clCharaList[clCharaListAct][i].sc->pos.x += dif[0];
         clCharaList[clCharaListAct][i].sc->pos.z += dif[2];
         clCharaList[clCharaListAct][i].sc->mat[3][0] += dif[0];
         clCharaList[clCharaListAct][i].sc->mat[3][2] += dif[2];
-        vu0_add_vector(clCharaList[clCharaListAct][i].wcol.p[0], clCharaList[clCharaListAct][i].wcol.p[0], dif);
+        shAddVector(clCharaList[clCharaListAct][i].wcol.p[0], clCharaList[clCharaListAct][i].wcol.p[0], dif);
         
         clCharaList[clCharaListAct][i].wcol.p[0][3] = 1.0f;
         clCharaList[clCharaListAct][i].heightfunc(clCharaList[clCharaListAct][i].sc);
         dif[0] = clCharaList[clCharaListAct][i].sc->b_pos.y - clCharaList[clCharaListAct][i].sc->pos.y;
 
-        if (float_abs(dif[0]) > (600.0f / shGetFPS()) && !(clCharaList[clCharaListAct][i].sc->status & (1 << SCP_STATUS_BIT_FREEFALL))) {
+        if (shFloatAbs(dif[0]) > (600.0f / shGetFPS()) && !(clCharaList[clCharaListAct][i].sc->status & (1 << SCP_STATUS_BIT_FREEFALL))) {
             dif[0] /= 2.0f;
             clCharaList[clCharaListAct][i].sc->pos.y += dif[0];
             clCharaList[clCharaListAct][i].sc->mat[3][1] += dif[0];
@@ -149,25 +149,25 @@ void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col /* r17 */, CL_HITPOLY_COLUMN* wc
     }
     memcpy(&clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].col, col, sizeof(CL_HITPOLY_COLUMN));
     memcpy(&clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].wcol, wcol, sizeof(CL_HITPOLY_COLUMN));
-    vu0_sub_vector(dif, &sc->pos, &sc->b_pos);
-    vu0_sub_vector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].pos, col->p[0], dif);
-    vu0_sub_vector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].col.p[0], col->p[0], dif);
-    volatile_vec_copy(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].opos, col->p);
+    shSubVector(dif, &sc->pos, &sc->b_pos);
+    shSubVector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].pos, col->p[0], dif);
+    shSubVector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].col.p[0], col->p[0], dif);
+    shVectorCopy(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].opos, col->p);
     clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].sc = sc;
-    vu0_sub_vector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec, &sc->pos, &sc->b_pos);
+    shSubVector(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec, &sc->pos, &sc->b_pos);
 
     if (clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[0] == 0.0f && clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[2] == 0.0f) {
         clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mang = MAX_FLOAT;
     } else {
         clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mang = shAtan2(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[0], clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].mvec[2]);
     }
-    vec_zero(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].ccvec);
+    shVectorZero(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].ccvec);
     if (func == NULL) {
         clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].heightfunc = clCollectCharaHeightNormal;
     } else {
         clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].heightfunc = func;
     }
-    vec_zero(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].wallcv);
+    shVectorZero(clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].wallcv);
     clCharaList[clCharaListAct][clCharaListUse[clCharaListAct]].wflg = 0;
     clCharaListUse[clCharaListAct] += 1;
 }
@@ -195,7 +195,7 @@ void clCollectCharaALL(void) {
             float dist; /* r29+0xE0 */
             col0 = &clCharaList[clCharaListAct][i].col;
 
-            volatile_vec_copy(clCharaList[clCharaListAct][i].pos, &col0->p);
+            shVectorCopy(clCharaList[clCharaListAct][i].pos, &col0->p);
             
             
             if (clCharaList[clCharaListAct][i].ccvec[0] == 0.0f)
@@ -206,7 +206,7 @@ void clCollectCharaALL(void) {
                 col0->p[0][0] += clCharaList[clCharaListAct][i].ccvec[0];
             
             
-            else if (float_abs(clCharaList[clCharaListAct][i].ccvec[0]) > float_abs(clCharaList[clCharaListAct][i].mvec[0]))
+            else if (shFloatAbs(clCharaList[clCharaListAct][i].ccvec[0]) > shFloatAbs(clCharaList[clCharaListAct][i].mvec[0]))
                 col0->p[0][0] += clCharaList[clCharaListAct][i].ccvec[0];
             else
                 col0->p[0][0] += clCharaList[clCharaListAct][i].mvec[0];
@@ -221,7 +221,7 @@ void clCollectCharaALL(void) {
                 col0->p[0][2] += clCharaList[clCharaListAct][i].ccvec[2];
             
             
-            else if (float_abs(clCharaList[clCharaListAct][i].ccvec[2]) > float_abs(clCharaList[clCharaListAct][i].mvec[2]))
+            else if (shFloatAbs(clCharaList[clCharaListAct][i].ccvec[2]) > shFloatAbs(clCharaList[clCharaListAct][i].mvec[2]))
                 col0->p[0][2] += clCharaList[clCharaListAct][i].ccvec[2];
             else
                 col0->p[0][2] += clCharaList[clCharaListAct][i].mvec[2];
@@ -229,14 +229,14 @@ void clCollectCharaALL(void) {
 
 
             
-            vu0_sub_vector(clCharaList[clCharaListAct][i].mvec, col0->p[0], clCharaList[clCharaListAct][i].pos);
+            shSubVector(clCharaList[clCharaListAct][i].mvec, col0->p[0], clCharaList[clCharaListAct][i].pos);
             
             
 
-            dist = vec_length(clCharaList[clCharaListAct][i].mvec);
+            dist = shVectorLength(clCharaList[clCharaListAct][i].mvec);
             dist = (col0->p[1][3] /  dist);
             if (dist < 1.0f) 
-               vu0_scale_vector(clCharaList[clCharaListAct][i].mvec, clCharaList[clCharaListAct][i].mvec, dist);
+               shScaleVector(clCharaList[clCharaListAct][i].mvec, clCharaList[clCharaListAct][i].mvec, dist);
             
 
             if (clCharaList[clCharaListAct][i].mvec[0] == 0.0f && clCharaList[clCharaListAct][i].mvec[2] == 0.0f) {
@@ -254,9 +254,9 @@ void clCollectCharaALL(void) {
             
                 clCheckBg2Chara(i);
                 if (clCharaList[clCharaListAct][i].wflg != 0)
-                   vu0_add_vector(col0->p,  col0->p, clCharaList[clCharaListAct][i].wallcv);
+                   shAddVector(col0->p,  col0->p, clCharaList[clCharaListAct][i].wallcv);
             }
-            vec_zero(clCharaList[clCharaListAct][i].ccvec);
+            shVectorZero(clCharaList[clCharaListAct][i].ccvec);
             
             for (j = 0; j < clCharaListUse[clCharaListAct]; j++) {
             
@@ -284,7 +284,7 @@ void clCollectCharaALL(void) {
                             
                             cres.cv[1] = 0.0f;
                             
-                            vu0_add_vector(col0->p[0], col0->p[0], cres.cv);
+                            shAddVector(col0->p[0], col0->p[0], cres.cv);
                             {
                             
                                 
@@ -298,7 +298,7 @@ void clCollectCharaALL(void) {
                                     wt = (col0->weight - col1->weight) + 1;
                                 
                                 
-                                vu0_scale_vector(vec1, cres.cv, 1.0f - div[wt]);
+                                shScaleVector(vec1, cres.cv, 1.0f - div[wt]);
                                 
                                 
                                 
@@ -310,10 +310,10 @@ void clCollectCharaALL(void) {
                                 
 
                                 
-                                dist = vec_length(vec1);
+                                dist = shVectorLength(vec1);
                                 dist = col0->p[1][3] / dist;
                                 if (dist < 1.0f)
-                                    vu0_scale_vector(vec1, vec1, dist);
+                                    shScaleVector(vec1, vec1, dist);
 
 
                                 clAddCollectVector(clCharaList[clCharaListAct][j].ccvec, &vec1[0]);
@@ -438,13 +438,13 @@ void clCollectCharaALL(void) {
 
 
             }
-            vec_zero(clCharaList[clCharaListAct][i].mvec);
+            shVectorZero(clCharaList[clCharaListAct][i].mvec);
             if (clCharaList[clCharaListAct][i].movflg) {
 
                 
                 clCheckBg2Chara(i);
                 if (clCharaList[clCharaListAct][i].wflg)
-                   vu0_add_vector(col0->p, col0->p, clCharaList[clCharaListAct][i].wallcv);
+                   shAddVector(col0->p, col0->p, clCharaList[clCharaListAct][i].wallcv);
             }
         }
         
@@ -458,7 +458,7 @@ void clCollectCharaALL(void) {
 static void clAddCollectVector(float* v0 /* r2 */, float* v1 /* r2 */) {
     float tv[4]; // r29
 
-    vu0_add_vector(tv, v0, v1);
+    shAddVector(tv, v0, v1);
 
     if (v0[0] > v1[0])
         tv[0] = tv[0] < v1[0] ? v1[0] : MIN(tv[0], v0[0]);
@@ -470,7 +470,7 @@ static void clAddCollectVector(float* v0 /* r2 */, float* v1 /* r2 */) {
     else
         tv[2] = tv[2] < v0[2] ? v0[2] : MIN(tv[2], v1[2]);
 
-    volatile_vec_copy(v0, tv);
+    shVectorCopy(v0, tv);
 }
 
 
@@ -494,7 +494,7 @@ static void clCheckBg2Chara(int no /* r18 */) {
     float mang; // r29+0x60
     whnum = 0;
     clCharaList[clCharaListAct][no].wflg = 0;
-    vec_zero(clCharaList[clCharaListAct][no].wallcv);
+    shVectorZero(clCharaList[clCharaListAct][no].wallcv);
     clCheckHitDynamicWallCollision(&clCharaList[clCharaListAct][no].col, &whnum);
     smap = clGetHitSectListMOVE(clCharaList[clCharaListAct][no].col.p[0]);
     smapsv = smap;
@@ -516,17 +516,17 @@ static void clCheckBg2Chara(int no /* r18 */) {
             clCheckColumn2ColumnHit(&clCharaList[clCharaListAct][no].col, &whnum, wl, cl);
         }
     }
-    vu0_sub_vector(tmp, clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].opos);
-    vu0_add_vector(tmp, &clCharaList[clCharaListAct][no].sc->pos, tmp);
-    vu0_sub_vector(tmp, tmp, &clCharaList[clCharaListAct][no].sc->b_pos);
+    shSubVector(tmp, clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].opos);
+    shAddVector(tmp, &clCharaList[clCharaListAct][no].sc->pos, tmp);
+    shSubVector(tmp, tmp, &clCharaList[clCharaListAct][no].sc->b_pos);
     if ((tmp[0] == 0.0f) && (tmp[2] == 0.0f)) {
         mang = MAX_FLOAT;
     } else {
         mang = shAtan2(tmp[0], tmp[2]);
     }
     if (clMakeWallHitCollectVector(clCharaList[clCharaListAct][no].sc, clCharaList[clCharaListAct][no].wallcv, mang, &clCharaList[clCharaListAct][no].wflg, whnum) == 0) {
-        vu0_add_vector(clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].wallcv);
-        vu0_sub_vector(clCharaList[clCharaListAct][no].wallcv, &clCharaList[clCharaListAct][no].sc->b_pos, clCharaList[clCharaListAct][no].col.p[0]);
+        shAddVector(clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].col.p[0], clCharaList[clCharaListAct][no].wallcv);
+        shSubVector(clCharaList[clCharaListAct][no].wallcv, &clCharaList[clCharaListAct][no].sc->b_pos, clCharaList[clCharaListAct][no].col.p[0]);
     }
     q4_round_trip(clCharaList[clCharaListAct][no].wallcv, clCharaList[clCharaListAct][no].wallcv);
 }
@@ -544,7 +544,7 @@ static void clCheckHitWallCollision(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
             clWallHitData[*whnum].kind = cres.chk;
             clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
             cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-            volatile_vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
+            shVectorCopy(&clWallHitData[*whnum].cv, &cres.cv);
 
             *whnum += 1;
         }
@@ -572,7 +572,7 @@ static void clCheckHitDynamicWallCollision(CL_HITPOLY_COLUMN* col, int* whnum) {
                 clWallHitData[*whnum].kind = cres.chk;
                 clWallHitData[*whnum].pl = (CL_HITPOLY_PLANE*) cres.pd;
                 cres.cv[1] = 0.0f; // zero out y value of collision vector, since this is wall collision
-                volatile_vec_copy(&clWallHitData[*whnum].cv, &cres.cv);
+                shVectorCopy(&clWallHitData[*whnum].cv, &cres.cv);
 
                 *whnum += 1;
             }
@@ -621,8 +621,8 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
                             if (clWallHitData[j].kind != 1) continue;
                             
                             
-                            vu0_add_vector(newpos, clWallHitData[j].cv, &sc->pos); 
-                            vu0_sub_vector(newpos, newpos, &sc->b_pos); 
+                            shAddVector(newpos, clWallHitData[j].cv, &sc->pos); 
+                            shSubVector(newpos, newpos, &sc->b_pos); 
                             ang0 = shAtan2(newpos[0], newpos[2]);
                             ang0 = clWallHitData[i].nang - ang0;
                             ang0 = shAngleRegulate(ang0);
@@ -695,7 +695,7 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
                         len = vec_length(&clWallHitData[i].cv);
                         len = (500.0f / shGetFPS()) / len;
                         if (len < 1.0f)
-                            vu0_scale_vector(clWallHitData[i].cv, clWallHitData[i].cv, len);
+                            shScaleVector(clWallHitData[i].cv, clWallHitData[i].cv, len);
                     }
                 }
                 sc->colis_fall_timer -= 1;
@@ -754,7 +754,7 @@ void clAddWallCollectVector(float* v0, float* v1, int* flg) {
     float tv[4];
 
     if (*flg == 0) {
-        vec_copy(v0, v1);
+        shVectorCopyNonvolatile(v0, v1);
     } else {
         vec_add(v0, v1, tv);
 
@@ -768,7 +768,7 @@ void clAddWallCollectVector(float* v0, float* v1, int* flg) {
         else
             tv[2] = tv[2] < v0[2] ? v0[2] : MIN(tv[2], v1[2]);
 
-        vec_copy(v0, &tv[0]);
+        shVectorCopyNonvolatile(v0, &tv[0]);
     }
 
     *flg += 1;
@@ -789,7 +789,7 @@ static void clCheckColumn2ColumnHit(CL_HITPOLY_COLUMN* col, int* whnum, CL_HITPO
             
             clWallHitData[*whnum].kind = 3;
             cres.cv[1] = 0.0f;
-            volatile_vec_copy(clWallHitData[*whnum].cv, cres.cv);
+            shVectorCopy(clWallHitData[*whnum].cv, cres.cv);
             *whnum += 1;
         }
     }
@@ -816,7 +816,7 @@ static void clCollectCharaHeightNormal(SubCharacter* sc) {
         pos->y = res.hobj.wall.cp[1];
         pos->y = res.hobj.wall.cp[1];
 
-        vec_copy(&sc->grnd_normal, &res.hobj.wall.nl);
+        shVectorCopyNonvolatile(&sc->grnd_normal, &res.hobj.wall.nl);
         sc->grnd_height = res.hobj.wall.cp[1];
     }
 }
@@ -861,7 +861,7 @@ void clBattleCheckExec(void) {
             case 2:
                 clCheckHitSwordWeapon(&vres, (u_int) clBattleQue[i].sc, clBattleQue[i].svs, clBattleQue[i].sve, clBattleQue[i].evs, clBattleQue[i].eve);
                 if (vres.kind != 0) {
-                    vu0_sub_vector(dirc, clBattleQue[i].eve, clBattleQue[i].sve);
+                    shSubVector(dirc, clBattleQue[i].eve, clBattleQue[i].sve);
                     clSetOneBattleResult(&clBattleQue[i], &vres, dirc);
                 }
                 break;
@@ -870,7 +870,7 @@ void clBattleCheckExec(void) {
             case 4:
                 clCheckHitGunWeapon(&vres, (u_int) clBattleQue[i].sc, clBattleQue[i].svs, clBattleQue[i].sve);
                 if (vres.kind != 0) {
-                    vu0_sub_vector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
+                    shSubVector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
                     clSetOneBattleResult(&clBattleQue[i], &vres, dirc);
                 }
                 break;
@@ -880,7 +880,7 @@ void clBattleCheckExec(void) {
                 clCheckHitGunWeapon(&vres, (u_int) clBattleQue[i].sc, clBattleQue[i].svs, clBattleQue[i].sve);
                 if (((vres.kind != 3) || ((vres.hobj.chara.sc->kind == LLL_JMS_CHARA_KIND)) || (vres.hobj.chara.sc->kind == HLL_JMS_CHARA_KIND)) && (vres.kind != 0)) {
 
-                    vu0_sub_vector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
+                    shSubVector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
                     clSetOneBattleResult(&clBattleQue[i], &vres, dirc);
                 }
                 break;
@@ -888,14 +888,14 @@ void clBattleCheckExec(void) {
             case 1:
                 clCheckHitSwordWeaponThrust((u_int) clBattleQue[i].sc, clBattleQue[i].svs, clBattleQue[i].sve, clBattleQue[i].evs, clBattleQue[i].eve);
 
-                    vu0_sub_vector(dirc, clBattleQue[i].eve, clBattleQue[i].sve);
+                    shSubVector(dirc, clBattleQue[i].eve, clBattleQue[i].sve);
                 clSetThrustBattleResult(&clBattleQue[i], dirc);
                 break;
 
             case 7:
                 clCheckHitGunWeaponThrust((u_int) clBattleQue[i].sc, clBattleQue[i].svs, clBattleQue[i].sve);
 
-                    vu0_sub_vector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
+                    shSubVector(dirc, clBattleQue[i].sve, clBattleQue[i].svs);
                 clSetThrustBattleResult(&clBattleQue[i], dirc);
                 break;
 
@@ -1006,7 +1006,7 @@ static void clSetOneBattleResult(CL_BATTLE_QUE* que /* r2 */, CL_VHIT_RESULT* vr
             clBattleResult[clUseBattleResult].atr = 2;
             clBattleResult[clUseBattleResult].kind = que->kind;
             clBattleResult[clUseBattleResult].btlid = que->btlid;
-            volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.cp);
+            shVectorCopy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.cp);
             clBattleResult[clUseBattleResult].obj.en = (vres->hobj).wall.pd;
             clUseBattleResult++;
             break;
@@ -1018,7 +1018,7 @@ static void clSetOneBattleResult(CL_BATTLE_QUE* que /* r2 */, CL_VHIT_RESULT* vr
             clBattleResult[clUseBattleResult].atr = 3;
             clBattleResult[clUseBattleResult].kind = que->kind;
             clBattleResult[clUseBattleResult].btlid = que->btlid;
-            volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.cp);
+            shVectorCopy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.cp);
             clBattleResult[clUseBattleResult].obj.en = (vres->hobj).wall.pd;
             clUseBattleResult++;
             break;
@@ -1028,7 +1028,7 @@ static void clSetOneBattleResult(CL_BATTLE_QUE* que /* r2 */, CL_VHIT_RESULT* vr
             clBattleResult[clUseBattleResult].enable = 1;
             clBattleResult[clUseBattleResult].id = (u_int) que->sc;
             clBattleResult[clUseBattleResult].atr = 1;        
-            volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.nl);
+            shVectorCopy(clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.nl);
             clBattleResult[clUseBattleResult].kind = que->kind;
             clBattleResult[clUseBattleResult].btlid = que->btlid;
             clBattleResult[clUseBattleResult].obj.en = (vres->hobj).chara.sc;
@@ -1037,8 +1037,8 @@ static void clSetOneBattleResult(CL_BATTLE_QUE* que /* r2 */, CL_VHIT_RESULT* vr
             clBattleResult[clUseBattleResult].enable = 1;
             clBattleResult[clUseBattleResult].id = (u_int) (vres->hobj).chara.sc;
             clBattleResult[clUseBattleResult].atr = 4;
-            volatile_vec_copy(&clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.nl);
-            volatile_vec_copy(&clBattleResult[clUseBattleResult].vec, vec);
+            shVectorCopy(&clBattleResult[clUseBattleResult].pos, (vres->hobj).wall.nl);
+            shVectorCopy(&clBattleResult[clUseBattleResult].vec, vec);
             clBattleResult[clUseBattleResult].kind = que->kind;
             clBattleResult[clUseBattleResult].btlid = que->btlid;
             clBattleResult[clUseBattleResult].obj.en = que->sc;
@@ -1061,7 +1061,7 @@ void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec) {
                 clBattleResult[clUseBattleResult].atr = 2;
                 clBattleResult[clUseBattleResult].kind = que->kind;
                 clBattleResult[clUseBattleResult].btlid = que->btlid;
-                volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.cp);
+                shVectorCopy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.cp);
                 clBattleResult[clUseBattleResult].obj.en = (clVHitResult[i].hobj).wall.pd;
                 clUseBattleResult++;
                 break;
@@ -1073,7 +1073,7 @@ void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec) {
                 clBattleResult[clUseBattleResult].atr = 3;
                 clBattleResult[clUseBattleResult].kind = que->kind;
                 clBattleResult[clUseBattleResult].btlid = que->btlid;
-                volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.cp);
+                shVectorCopy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.cp);
                 clBattleResult[clUseBattleResult].obj.en = (clVHitResult[i].hobj).wall.pd;
                 clUseBattleResult++;
                 break;
@@ -1090,7 +1090,7 @@ void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec) {
                     clBattleResult[clUseBattleResult].enable = 1;
                     clBattleResult[clUseBattleResult].id = (u_int) que->sc;
                     clBattleResult[clUseBattleResult].atr = 1;        
-                    volatile_vec_copy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.nl);
+                    shVectorCopy(clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.nl);
                     clBattleResult[clUseBattleResult].obj.en = clVHitResult[i].hobj.chara.sc;
                     clBattleResult[clUseBattleResult].kind = que->kind;
                     clBattleResult[clUseBattleResult].btlid = que->btlid;
@@ -1099,8 +1099,8 @@ void clSetThrustBattleResult(CL_BATTLE_QUE* que, float* vec) {
                     clBattleResult[clUseBattleResult].enable = 1;
                     clBattleResult[clUseBattleResult].id = (u_int) (clVHitResult[i].hobj).chara.sc;
                     clBattleResult[clUseBattleResult].atr = 4;
-                    volatile_vec_copy(&clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.nl);
-                    volatile_vec_copy(&clBattleResult[clUseBattleResult].vec, vec);
+                    shVectorCopy(&clBattleResult[clUseBattleResult].pos, (clVHitResult[i].hobj).wall.nl);
+                    shVectorCopy(&clBattleResult[clUseBattleResult].vec, vec);
                     clBattleResult[clUseBattleResult].kind = que->kind;
                     clBattleResult[clUseBattleResult].btlid = que->btlid;
                     clBattleResult[clUseBattleResult].obj.en = que->sc;
@@ -1120,12 +1120,12 @@ static void clCheckHitSwordWeapon(CL_VHIT_RESULT* res /* r22 */, u_int id /* r21
     sceVu0FVECTOR tmp; // r29+0xA0
 
     for (i = 0; i < 5; i++) {
-        vu0_scale_vector(st, svs, clswPerc[i]);
-        vu0_scale_vector(tmp, evs, clswPerc[4 - i]);
-        vu0_add_vector(st, st, tmp);
-        vu0_scale_vector(ed, sve, clswPerc[i]);
-        vu0_scale_vector(tmp, eve, clswPerc[4 - i]);
-        vu0_add_vector(ed, ed, tmp);
+        shScaleVector(st, svs, clswPerc[i]);
+        shScaleVector(tmp, evs, clswPerc[4 - i]);
+        shAddVector(st, st, tmp);
+        shScaleVector(ed, sve, clswPerc[i]);
+        shScaleVector(tmp, eve, clswPerc[4 - i]);
+        shAddVector(ed, ed, tmp);
         
         clCheckHitSwordVector(res, id, st, ed);
 
@@ -1228,7 +1228,7 @@ static void clCheckHitSwordVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /
                 
                 *min = dist;
                 res->kind = 1;
-                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                shVectorCopy((res->hobj).wall.cp, cres.cp);
                 clCalcPlaneEquation(pl + *ptr,(res->hobj).wall.nl);
                 (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(pl + *ptr);
             }
@@ -1258,7 +1258,7 @@ static void clCheckHitNoThruVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp 
                 
                 *min = dist;
                 res->kind = 1;
-                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                shVectorCopy((res->hobj).wall.cp, cres.cp);
                 clCalcPlaneEquation(pl + *ptr,(res->hobj).wall.nl);
                 (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(pl + *ptr);
             }
@@ -1297,7 +1297,7 @@ static void clCheckHitSwordVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, floa
                     
                     *min = dist;
                     res->kind = 1;
-                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    shVectorCopy((res->hobj).wall.cp, cres.cp);
                     clCalcPlaneEquation(&clDynamicWallList[ac].dw[i][j], (res->hobj).wall.nl);
                     (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicWallList[ac].dw[i][j]);
                 }
@@ -1333,7 +1333,7 @@ static void clCheckHitSwordVectorDynamicWallNoThru(CL_VHIT_RESULT* res /* r22 */
                     
                     *min = dist;
                     res->kind = 1;
-                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    shVectorCopy((res->hobj).wall.cp, cres.cp);
                     clCalcPlaneEquation(&clDynamicWallList[ac].dw[i][j], (res->hobj).wall.nl);
                     (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicWallList[ac].dw[i][j]);
                 }
@@ -1373,7 +1373,7 @@ static void clCheckHitSwordVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, flo
                     
                     *min = dist;
                     res->kind = 1;
-                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    shVectorCopy((res->hobj).wall.cp, cres.cp);
                     clCalcPlaneEquation(&clDynamicFloorList[ac].dw[i][j], (res->hobj).wall.nl);
                     (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicFloorList[ac].dw[i][j]);
                 }
@@ -1410,7 +1410,7 @@ static void clCheckHitSwordVectorDynamicFloorNoThru(CL_VHIT_RESULT* res /* r22 *
                     
                     *min = dist;
                     res->kind = 1;
-                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    shVectorCopy((res->hobj).wall.cp, cres.cp);
                     clCalcPlaneEquation(&clDynamicFloorList[ac].dw[i][j], (res->hobj).wall.nl);
                     (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicFloorList[ac].dw[i][j]);
                 }
@@ -1430,12 +1430,12 @@ void clCheckHitSwordWeaponThrust(u_int id /* r21 */, float* svs /* r20 */, float
     
     for (i = 0; i < 5; i++) {
     
-        vu0_scale_vector(st, svs, clswPerc[i]);
-        vu0_scale_vector(tmp, evs, clswPerc[4 - i]);
-        vu0_add_vector(st, st, tmp);
-        vu0_scale_vector(ed, sve, clswPerc[i]);
-        vu0_scale_vector(tmp, eve, clswPerc[4 - i]);
-        vu0_add_vector(ed, ed, tmp);
+        shScaleVector(st, svs, clswPerc[i]);
+        shScaleVector(tmp, evs, clswPerc[4 - i]);
+        shAddVector(st, st, tmp);
+        shScaleVector(ed, sve, clswPerc[i]);
+        shScaleVector(tmp, eve, clswPerc[4 - i]);
+        shAddVector(ed, ed, tmp);
         
         if (clCheckHitThrustSwordVector(id, st, ed)) break;
         
@@ -1582,7 +1582,7 @@ static void clCheckHitThrustGunVectorCharacter(float* sp /* r20 */, float* ep /*
             
                 
                 clVHitResult[clVHitListUse].kind = 3;
-                volatile_vec_copy((clVHitResult[clVHitListUse].hobj).wall.nl, cres.cp);
+                shVectorCopy((clVHitResult[clVHitListUse].hobj).wall.nl, cres.cp);
                 (clVHitResult[clVHitListUse].hobj).chara.sc = clCharaList[ac][i].sc;
                 clVHitListUse++;
             }
@@ -1738,8 +1738,8 @@ int clCheckCrossLine2BoxXZ(float (* box)[4] /* r19 */, float* st /* r18 */, floa
     // check if first endpoint is inside the box.
     for (i = 0; i < 4; i++) {
         // test direction of rotation. va = box wall, vb = line from box corner to first endpoint.
-        vu0_sub_vector(va, box[jyun[i + 1]], box[jyun[i]]);
-        vu0_sub_vector(vb, st, box[i]);
+        shSubVector(va, box[jyun[i + 1]], box[jyun[i]]);
+        shSubVector(vb, st, box[i]);
         outer = va[0] * vb[2] - va[2] * vb[0]; /* determinant */
         if (outer > 0.0f)
             break; // box is winding clockwise, but we have to wind counterclockwise.
@@ -1750,8 +1750,8 @@ int clCheckCrossLine2BoxXZ(float (* box)[4] /* r19 */, float* st /* r18 */, floa
     // check if second endpoint is inside the box.
     for (i = 0; i < 4; i++) {
         // test direction of rotation. va = box wall, vb = line from box corner to second endpoint.
-        vu0_sub_vector(va, box[jyun[i + 1]], box[jyun[i]]);
-        vu0_sub_vector(vb, ed, box[i]);
+        shSubVector(va, box[jyun[i + 1]], box[jyun[i]]);
+        shSubVector(vb, ed, box[i]);
         outer = va[0] * vb[2] - va[2] * vb[0]; /* determinant */
         if (outer > 0.0f)
             break;
@@ -1781,22 +1781,22 @@ int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1) {
     outer0 = bp[0] * p0[2] - bp[2] * p0[0];
     outer1 = bp[0] * p1[2] - bp[2] * p1[0];
     if (outer0 == 0.0f && outer1 == 0.0f) {
-        if ((va0[0] <= float_max(vb0[0], vb1[0])  &&
-             va0[0] >= float_min(vb0[0], vb1[0])  &&
-             va0[2] <= float_max(vb0[2], vb1[2])  &&
-             va0[2] >= float_min(vb0[2], vb1[2])) ||
-            (va1[0] <= float_max(vb0[0], vb1[0])  &&
-             va1[0] >= float_min(vb0[0], vb1[0])  &&
-             va1[2] <= float_max(vb0[2], vb1[2])  &&
-             va1[2] >= float_min(vb0[2], vb1[2])) ||
-            (vb0[0] <= float_max(va0[0], va1[0])  &&
-             vb0[0] >= float_min(va0[0], va1[0])  &&
-             vb0[2] <= float_max(va0[2], va1[2])  &&
-             vb0[2] >= float_min(va0[2], va1[2])) ||
-            (vb1[0] <= float_max(va0[0], va1[0])  &&
-             vb1[0] >= float_min(va0[0], va1[0])  &&
-             vb1[2] <= float_max(va0[2], va1[2])  &&
-             vb1[2] >= float_min(va0[2], va1[2]))
+        if ((va0[0] <= shFloatMax(vb0[0], vb1[0])  &&
+             va0[0] >= shFloatMin(vb0[0], vb1[0])  &&
+             va0[2] <= shFloatMax(vb0[2], vb1[2])  &&
+             va0[2] >= shFloatMin(vb0[2], vb1[2])) ||
+            (va1[0] <= shFloatMax(vb0[0], vb1[0])  &&
+             va1[0] >= shFloatMin(vb0[0], vb1[0])  &&
+             va1[2] <= shFloatMax(vb0[2], vb1[2])  &&
+             va1[2] >= shFloatMin(vb0[2], vb1[2])) ||
+            (vb0[0] <= shFloatMax(va0[0], va1[0])  &&
+             vb0[0] >= shFloatMin(va0[0], va1[0])  &&
+             vb0[2] <= shFloatMax(va0[2], va1[2])  &&
+             vb0[2] >= shFloatMin(va0[2], va1[2])) ||
+            (vb1[0] <= shFloatMax(va0[0], va1[0])  &&
+             vb1[0] >= shFloatMin(va0[0], va1[0])  &&
+             vb1[2] <= shFloatMax(va0[2], va1[2])  &&
+             vb1[2] >= shFloatMin(va0[2], va1[2]))
         ) {
             return 1;
         }
@@ -1832,7 +1832,7 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
     sceVu0FVECTOR pos, cpos, bcpos; // r29+0x30, r29+0x40, r29+0x50
     float dist; // r29+0x6C
     void** list; // r2
-    volatile_vec_copy(pos, bpos);
+    volatile_shVectorCopy(pos, bpos);
     pos[1] = 0.0f;
     pos[3] = 1.0f;
     vec_zero(cpos);
@@ -1858,7 +1858,7 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
             
             cpos[0] = ch->sx;
             cpos[2] = ch->sz;
-            volatile_vec_copy(bcpos, cpos); 
+            volatile_shVectorCopy(bcpos, cpos); 
             // @note: different from the rest! has no `y` computations. not an inline based on the line numbers.
             
             asm("lqc2 vf1, 0(%0)\n\
@@ -1909,7 +1909,7 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
                         use++;
                     }
                     
-                    volatile_vec_copy(cpos, bcpos); 
+                    volatile_shVectorCopy(cpos, bcpos); 
                 }
             }
         }
@@ -2301,7 +2301,7 @@ static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* 
                 
                 *min = dist;
                 res->kind = 1;
-                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                shVectorCopy((res->hobj).wall.cp, cres.cp);
                 clCalcPlaneEquation(pl + *ptr,(res->hobj).wall.nl);
                 (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(pl + *ptr);
             }
@@ -2324,7 +2324,7 @@ static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res /* r21 */, float* sp
                 
                 *min = dist;
                 res->kind = 2;
-                volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                shVectorCopy((res->hobj).wall.cp, cres.cp);
                 *(u_long128*)(&res->hobj.wall.nl) = 0;
                 (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&cl[*ptr]);
             }
@@ -2363,7 +2363,7 @@ static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float*
                 
             *min = dist;
             res->kind = 1;
-            volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+            shVectorCopy((res->hobj).wall.cp, cres.cp);
             clCalcPlaneEquation(&clDynamicWallList[ac].dw[i][j], (res->hobj).wall.nl);
             (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicWallList[ac].dw[i][j]);
 
@@ -2403,7 +2403,7 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float
                     
                     *min = dist;
                     res->kind = 1;
-                    volatile_vec_copy((res->hobj).wall.cp, cres.cp);
+                    shVectorCopy((res->hobj).wall.cp, cres.cp);
                     clCalcPlaneEquation(&clDynamicFloorList[ac].dw[i][j], (res->hobj).wall.nl);
                     (res->hobj).wall.pd = (CL_HITPOLY_HEAD*)(&clDynamicFloorList[ac].dw[i][j]);
                 }

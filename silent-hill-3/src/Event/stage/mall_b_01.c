@@ -117,8 +117,8 @@ int func_01F6DC10_mall_b_01(void) {
         case 0:
             scp = (SubCharacter*)shCharacterGetPlayer();
             scp->pos.x += -50.0f;
-            volatile_vec_copy(&vec1, &scp->pos);
-            volatile_vec_copy(&vec2, &scp->pos);
+            shVectorCopy(&vec1, &scp->pos);
+            shVectorCopy(&vec2, &scp->pos);
             vec1[0] += 1000.0f;
             vec2[0] -= 1000.0f;
             func_001E0130(NULL, vec1, vec2, 217);
@@ -165,8 +165,8 @@ int func_01F6DE60_mall_b_01(void) {
     
     scp = (SubCharacter*)shCharacterGetPlayer();
     scp->pos.x += -50.0f; 
-    volatile_vec_copy(&vec1, &scp->pos);
-    volatile_vec_copy(&vec2, &scp->pos);
+    shVectorCopy(&vec1, &scp->pos);
+    shVectorCopy(&vec2, &scp->pos);
     vec1[0] += 500.0f;
     vec2[0] -= 500.0f;
     func_001E0130(NULL, vec1, vec2, 218);
@@ -328,24 +328,24 @@ void func_01F6EB90_mall_b_01(void) {
             if (scp != NULL) {
                 func_0016CBD0(sp20, sp30, 6);
                 func_0016CC50(BG_TKA_CHARA_KIND, 0, *sp20, &sp40[0]);
-                volatile_vec_copy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
-                volatile_vec_copy(&scp->rot, &sp40);
+                shVectorCopy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
+                shVectorCopy(&scp->rot, &sp40);
             }
             
             scp = shCharacterGetSubCharacter(BG_TKA_CHARA_KIND, 0x3E);
             if (scp != NULL) {
                 func_0016CBD0(sp20, sp30, 7);
                 func_0016CC50(BG_TKA_CHARA_KIND, 0, *sp20, &sp40[0]);
-                volatile_vec_copy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
-                volatile_vec_copy(&scp->rot, &sp40);
+                shVectorCopy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
+                shVectorCopy(&scp->rot, &sp40);
             }
             
             scp = shCharacterGetSubCharacter(BG_TKA_CHARA_KIND, 0x3F);
             if (scp != NULL) {
                 func_0016CBD0(sp20, sp30, 8);
                 func_0016CC50(BG_TKA_CHARA_KIND, 0, *sp20, &sp40[0]);
-                volatile_vec_copy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
-                volatile_vec_copy(&scp->rot, &sp40);
+                shVectorCopy(&scp->pos, (sceVu0FVECTOR *) *sp20 + 3);
+                shVectorCopy(&scp->rot, &sp40);
             }
             break;
         
@@ -354,8 +354,8 @@ void func_01F6EB90_mall_b_01(void) {
             if (scp != NULL) {
                 func_0016CBD0(sp50, sp60, 4);
                 func_0016CC50(BG_TKA_CHARA_KIND, 0, *sp50, &sp70[0]);
-                volatile_vec_copy(&scp->pos, (sceVu0FVECTOR *) *sp50 + 3);
-                volatile_vec_copy(&scp->rot, &sp70);
+                shVectorCopy(&scp->pos, (sceVu0FVECTOR *) *sp50 + 3);
+                shVectorCopy(&scp->rot, &sp70);
             }
             break;
         
@@ -391,8 +391,8 @@ void func_01F6EB90_mall_b_01(void) {
             if (scp != NULL) {
                 func_0016CBD0(sp80, sp90, 5);
                 func_0016CC50(BG_TKA_CHARA_KIND, 0, *sp80, &spA0[0]);
-                volatile_vec_copy(&scp->pos, (sceVu0FVECTOR *) *sp80 + 3);
-                volatile_vec_copy(&scp->rot, &spA0);
+                shVectorCopy(&scp->pos, (sceVu0FVECTOR *) *sp80 + 3);
+                shVectorCopy(&scp->rot, &spA0);
             }
             break;
     }

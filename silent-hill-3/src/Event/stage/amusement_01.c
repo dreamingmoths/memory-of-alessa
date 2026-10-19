@@ -190,9 +190,9 @@ void func_01F6DC40_amusement_01(void) {
 }
 
 static void func_01F6DC70_amusement_01(u_long128* arg0, int* arg1, u_long128* arg2, int* arg3, int* arg4) {
-    vec_copy(arg0, &D_01F74680_amusement_01);
+    shVectorCopyNonvolatile(arg0, &D_01F74680_amusement_01);
     *arg1 = 1;
-    vec_copy(arg2, &D_01F74670_amusement_01);
+    shVectorCopyNonvolatile(arg2, &D_01F74670_amusement_01);
     *arg3 = 0;
     *arg4 = 0;
 }
@@ -207,12 +207,12 @@ static void func_01F6DCF0_amusement_01(u_long128* arg0, int* arg1, u_long128* ar
 
     func_0018FE60((u_long128*) &sp60);
     sp60[1] += -700.0f;
-    vec_copy(arg0, &D_01F74690_amusement_01[D_01F74CB0_amusement_01]);
+    shVectorCopyNonvolatile(arg0, &D_01F74690_amusement_01[D_01F74CB0_amusement_01]);
     *arg1 = 1;
     if (D_01F74CB0_amusement_01 != 2) {    
-        vec_copy(arg2, sp60);
+        shVectorCopyNonvolatile(arg2, sp60);
     } else {
-        vec_copy(arg2, D_01F74670_amusement_01);
+        shVectorCopyNonvolatile(arg2, D_01F74670_amusement_01);
     }
     *arg3 = 1;
     *arg4 = 0;
@@ -733,16 +733,16 @@ static void func_01F6F430_amusement_01(u_long128* arg0, int* arg1, u_long128* ar
     sp10 = D_01F748E0_amusement_01;
 
     if (D_01F74D18_amusement_01 != 0) {
-        vec_copy(arg0, &D_01F748B0_amusement_01);
+        shVectorCopyNonvolatile(arg0, &D_01F748B0_amusement_01);
         *arg1 = 0;
-        vec_copy(arg2, &D_01F748C0_amusement_01);
+        shVectorCopyNonvolatile(arg2, &D_01F748C0_amusement_01);
         *arg3 = 0;
         *arg4 = 0;
         D_01F74D18_amusement_01--;
     } else {
-        vec_copy(arg0, &sp0);
+        shVectorCopyNonvolatile(arg0, &sp0);
         *arg1 = 1;
-        vec_copy(arg2, &sp10);
+        shVectorCopyNonvolatile(arg2, &sp10);
         *arg3 = 1;
         *arg4 = 0;
     }
@@ -1179,10 +1179,10 @@ void func_01F703B0_amusement_01(float fparg0, float fparg1) {
     sceVu0UnitMatrix(matrix2);
     sceVu0RotMatrixY(matrix2, matrix2, TO_RAD(D_01F74CE8_amusement_01));
 
-    mat_copy(matrix3, func_001AFE30(3, 1)->matrix);
+    shMatrixCopy(matrix3, func_001AFE30(3, 1)->matrix);
     shMulMatrix(matrix2, matrix3, matrix2);
     func_001C2A80(1, matrix2);
-    mat_copy(matrix0, matrix2);
+    shMatrixCopy(matrix0, matrix2);
 
     asm("
         lq $t0, 0(%0)
@@ -1214,19 +1214,19 @@ void func_01F703B0_amusement_01(float fparg0, float fparg1) {
     sceVu0UnitMatrix(matrix5);
     shRotMatrixY(matrix5, matrix5, TO_RAD(D_01F74CF0_amusement_01));
 
-    mat_copy(matrix1, func_001AFE30(3, 2)->matrix);
+    shMatrixCopy(matrix1, func_001AFE30(3, 2)->matrix);
     shMulMatrix(matrix2, matrix4, matrix1);
     shMulMatrix(matrix2, matrix2, matrix5);
     shMulMatrix(matrix2, matrix0[0], matrix2);
     func_001C2A80(2, matrix2);
 
-    mat_copy(matrix1, func_001AFE30(3, 3)->matrix);
+    shMatrixCopy(matrix1, func_001AFE30(3, 3)->matrix);
     shMulMatrix(matrix2, matrix4, matrix1);
     shMulMatrix(matrix2, matrix2, matrix5);
     shMulMatrix(matrix2, matrix0, matrix2);
     func_001C2A80(3, matrix2);
 
-    mat_copy(matrix1, func_001AFE30(3, 4)->matrix);
+    shMatrixCopy(matrix1, func_001AFE30(3, 4)->matrix);
     shMulMatrix(matrix2, matrix4, matrix1);
     shMulMatrix(matrix2, matrix2, matrix5);
     shMulMatrix(matrix2, matrix0[0], matrix2);
@@ -1499,7 +1499,7 @@ void func_01F70A90_amusement_01(void) {
                     shRotMatrixX(&spB0, &spB0, QUARTER_TURN);
                     shRotMatrixY(&spB0, &spB0, TO_RAD(119));
                     func_0016CBD0(&sp90, &spA0, 0xE);
-                    mat_copy(sp10, sp90);
+                    shMatrixCopy(sp10, sp90);
                     sp10[3][1] -= 540.0f;
                     sp10[3][0] -= 35.0f;
                     shMulMatrix(&sp10, &sp10, &spB0);

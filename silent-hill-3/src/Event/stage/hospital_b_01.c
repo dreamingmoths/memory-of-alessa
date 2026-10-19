@@ -153,12 +153,12 @@ void func_01F6DDC0_hospital_b_01(void) {
         }
         if (!GET_BIT(D_1D31648, 0)) {
             func_0016CBD0(sp20, &sp30, 0x10);
-            mat_copy(sp40, sp20[0]);
+            shMatrixCopy(sp40, sp20[0]);
             func_001C2A80(1, sp40);
             D_1D3172C |= 0x1000;
         } else {
             func_0016CBD0(sp80, &sp90, 0x11);
-            mat_copy(spA0, sp80[0]);
+            shMatrixCopy(spA0, sp80[0]);
             func_001C2A80(1, spA0);
             clAddDynamicWall(&D_01F6E890_hospital_b_01);
             D_1D3172C &= ~0x1000;

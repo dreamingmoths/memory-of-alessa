@@ -26,13 +26,13 @@ int shCharacter_Manage_Create(short kind, short id, float* pos, float* rot, u_in
     if (scp != NULL) {
 
 
-        volatile_vec_copy(&scp->pos, pos);
+        shVectorCopy(&scp->pos, pos);
 
     
 
 
         
-        volatile_vec_copy(&scp->rot, rot);
+        shVectorCopy(&scp->rot, rot);
 
 
         scp->en_first_status = status;

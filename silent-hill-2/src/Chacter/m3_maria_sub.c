@@ -151,7 +151,7 @@ static void MariaPushedAnyoneIsOn(SubCharacter* p) {
             } else {
                 angle = shAtan2(p->pos.z - p->b_pos.z, p->pos.x - p->b_pos.x);
                 angle = shAngleRegulate(p->rot.y - angle);
-                if (float_abs(angle) < QUARTER_TURN) {
+                if (shFloatAbs(angle) < QUARTER_TURN) {
                     sh2mar.pushed_dir = 1;
                 } else
                     sh2mar.pushed_dir = -1;
@@ -946,22 +946,22 @@ static void MariaSetStraightRoot(SubCharacter* this) {
             sh2mar.tgt_pointer++;
         }
     } else {
-        volatile_vec_copy(&sp1, sh2mar.tgt_pos[sh2mar.tgt_pointer - 1]);
+        shVectorCopy(&sp1, sh2mar.tgt_pos[sh2mar.tgt_pointer - 1]);
         if ((CheckJamesLook1(&sp1[0], &ep0[0]) == 0) || (CheckJamesLook2(&ep0[0], &sp1[0]) == 0)) {
             sh2mar.tgt_pointer += 1;
         }
     }
     if (sh2mar.tgt_pointer == 5) {
         sh2mar.tgt_pointer -= 1;
-        volatile_vec_copy(&sh2mar.mar_p->pos, &sh2mar.tgt_pos[0]);
+        shVectorCopy(&sh2mar.mar_p->pos, &sh2mar.tgt_pos[0]);
     }
-    volatile_vec_copy(sh2mar.tgt_pos[sh2mar.tgt_pointer], ep0);
+    shVectorCopy(sh2mar.tgt_pos[sh2mar.tgt_pointer], ep0);
     if (sh2mar.tgt_pointer > 0) {
         for (i = 0; i <= 0; i++) {
-            volatile_vec_copy(ep1, sh2mar.tgt_pos[i + 1]);
+            shVectorCopy(ep1, sh2mar.tgt_pos[i + 1]);
             if ((MariaCheckLook1(&sp0[0], &ep1[0]) != 0) && (MariaCheckLook2(&ep1[0], &sp0[0]) != 0)) {
                 for (j = 0; j < sh2mar.tgt_pointer; j++) {
-                    volatile_vec_copy(sh2mar.tgt_pos[j], sh2mar.tgt_pos[j + 1]);
+                    shVectorCopy(sh2mar.tgt_pos[j], sh2mar.tgt_pos[j + 1]);
                 }
                 sh2mar.tgt_pointer--;
             }
@@ -1114,8 +1114,8 @@ static void MariaCheckFootLine(SubCharacter* this) {
     sceVu0FVECTOR ep;
 
     GetMariaPartsWorldMatrix(mat, 8);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.r_foot, (int) this, &sp, &ep);
@@ -1123,8 +1123,8 @@ static void MariaCheckFootLine(SubCharacter* this) {
         vec_normalize(sh2mar.r_foot.hobj.chara.cp, sh2mar.r_foot.hobj.chara.cp);
     }
     GetMariaPartsWorldMatrix(mat, 7);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.l_foot, (int) this, &sp, &ep);
@@ -1207,8 +1207,8 @@ void MariaSetHeight(SubCharacter* this) {
     sceVu0FVECTOR sp;
     sceVu0FVECTOR ep;
 
-    volatile_vec_copy(sp, &this->pos);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, &this->pos);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 1500.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.ft_floor, (int) this, &sp, &ep);
@@ -1272,7 +1272,7 @@ static void MariaCheckNeckAngle(SubCharacter* this) {
         default:
             if (sh2mar.look_tgt != NULL) {
 
-                volatile_vec_copy(pos, &sh2mar.look_tgt->pos);
+                volatile_shVectorCopy(pos, &sh2mar.look_tgt->pos);
                 pos[1] = sh2mar.look_tgt->eye_y;
 
                 tmp[0] = pos[0] - this->pos.x;
@@ -1367,8 +1367,8 @@ void GetMariaPartsWorldMatrix(float (*mat)[4], u_int parts_name) {
 
 void MariaCheckDamage(SubCharacter* this) {
     MariaPushedAnyoneIsOn(this);
-    volatile_vec_copy(&this->b_pos, &this->pos);
-    volatile_vec_copy(&this->b_rot, &this->rot);
+    shVectorCopy(&this->b_pos, &this->pos);
+    shVectorCopy(&this->b_rot, &this->rot);
     shBattleGetResult(this);
 
     if (sh2mar.hp_recover) {

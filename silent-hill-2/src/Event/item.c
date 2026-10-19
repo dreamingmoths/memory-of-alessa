@@ -46,7 +46,7 @@ void ItemGet(int kind /* r16 */) {
             break;
     }
     
-    item.number[kind] = clamp_min(item.number[kind] + work, 999);
+    item.number[kind] = shClampMin(item.number[kind] + work, 999);
     return;
 }
 

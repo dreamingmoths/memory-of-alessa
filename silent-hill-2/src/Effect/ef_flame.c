@@ -126,10 +126,10 @@ static void SetFlameVertex(u_char kind /* r2 */, float width /* r23 */, float he
     float adjustment[4][4]; // r29+0x60
     float ratio;            // r29+0xA0
 
-    vec_zero(adjustment[0]);
-    vec_zero(adjustment[1]);
-    vec_zero(adjustment[2]);
-    vec_zero(adjustment[3]);
+    shVectorZero(adjustment[0]);
+    shVectorZero(adjustment[1]);
+    shVectorZero(adjustment[2]);
+    shVectorZero(adjustment[3]);
 
     if ((kind == 0) || (kind == 1)) {
         if (camera_cut == 5) {
@@ -189,13 +189,13 @@ static void FlameLocalRot(EFCTVertexData* pVertex /* r16 */, float* rot /* r17 *
     sceVu0FMATRIX mtx; // r29+0x30
     int i;             // r4
 
-    vu0_unit_matrix(mtx);
+    shUnitMatrix(mtx);
     shRotMatrixZ(mtx, mtx, rot[2]);
     shRotMatrixY(mtx, mtx, rot[1]);
     shRotMatrixX(mtx, mtx, rot[0]); // @todo: likely inline.
 
     for (i = 0; i < 4; i++) {
-        vu0_transform_vector(pVertex[i].LocalPos, mtx);
+        shVectorTransform(pVertex[i].LocalPos, mtx);
     }
 }
 
@@ -237,7 +237,7 @@ static void SetFlameTransParam(u_char kind /* r2 */, float width /* r21 */, floa
 }
 
 static void SetFlameRotParam(u_char kind /* r2 */, float* rot /* r2 */) {
-    vec_zero(rot);
+    shVectorZero(rot);
 
     if (camera_cut == 4) {
         if (kind == 0) {
@@ -426,7 +426,7 @@ static void RenewFlameSize(EFCTObject* pObj /* r18 */, EFCTFlameObject* flame /*
             trans[0] = flame->plane[i].trans[0] * ratio;
             trans[1] = flame->plane[i].trans[1] * ratio;
             ratio2   = shSinF(PI * ((4.0f * flame->plane[i].timer) / flame->plane[i].cycle));
-            trans[2] = flame->plane[i].trans[2] * float_abs(ratio2);
+            trans[2] = flame->plane[i].trans[2] * shFloatAbs(ratio2);
         }
 
         delta_width  = flame->plane[i].width_cycle_param * ratio;
@@ -614,7 +614,7 @@ static void TinyFlameZSort2(u_int index /* r2 */, float* new_pos /* r16 */) {
 
     ASSERT_ON_LINE(new_index >= 0, 1365);
 
-    volatile_vec_copy(new_pos, behind_angela_flame_pos_buf[new_index]);
+    shVectorCopy(new_pos, behind_angela_flame_pos_buf[new_index]);
 }
 
 static float GetBehindAngelaFlameLifeTimer(u_int index /* r2 */) {

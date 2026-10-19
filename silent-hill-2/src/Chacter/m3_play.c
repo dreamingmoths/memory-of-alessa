@@ -710,8 +710,8 @@ static void PlayerCheckFootLine(SubCharacter* this) {
 
 
     GetPlayerPartsWorldMatrix(mat, 14);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.r_foot, (int) this, sp, ep);
@@ -723,8 +723,8 @@ static void PlayerCheckFootLine(SubCharacter* this) {
     
     }
     GetPlayerPartsWorldMatrix(mat, 13);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.l_foot, (int) this, sp, ep);
@@ -747,8 +747,8 @@ void PlayerSetHeight(SubCharacter* this) {
 
 
 
-    volatile_vec_copy(sp, &this->pos);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, &this->pos);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 1500.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.ft_floor, (int) this, sp, ep);
@@ -783,7 +783,7 @@ void PlayerSetHeight(SubCharacter* this) {
                     
                     rot_tmp = shAtan2(this->pos.z - this->b_pos.z, this->pos.x - this->b_pos.x);
                     rot_tmp = shAngleRegulate(this->rot.y - rot_tmp);
-                    if (float_abs(rot_tmp) < QUARTER_TURN) {
+                    if (shFloatAbs(rot_tmp) < QUARTER_TURN) {
                         sh2jms.fall_type = 0;
                     } else {
                         sh2jms.fall_type = 1;
@@ -3186,13 +3186,13 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", BoatPlayerCheckAnime);
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerFunction);
 
 void shGetJamesLightPos(float* pos, float* vec) {
-    volatile_vec_copy(pos, sh2jms.light_pos_revise);
-    volatile_vec_copy(vec, sh2jms.light_vec_revise);
+    shVectorCopy(pos, sh2jms.light_pos_revise);
+    shVectorCopy(vec, sh2jms.light_vec_revise);
 }
 
 void shGetJamesLightPosOriginal(float* pos, float* vec) {
-    volatile_vec_copy(pos, sh2jms.light_pos);
-    volatile_vec_copy(vec, sh2jms.light_vec);
+    shVectorCopy(pos, sh2jms.light_pos);
+    shVectorCopy(vec, sh2jms.light_vec);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc_Chest);
@@ -3469,7 +3469,7 @@ void PlayerCheckStraightLine(SubCharacter* this, float spd_roty) {
         me[1] = ep[1] - sp[1];
         me[2] = ep[2] - sp[2];
         me[3] = 1.0f;        
-        volatile_vec_copy(wall, sh2jms.foot.hobj.wall.nl);
+        shVectorCopy(wall, sh2jms.foot.hobj.wall.nl);
         vec_normalize(me, me);
         vec_normalize(wall, wall);
                         

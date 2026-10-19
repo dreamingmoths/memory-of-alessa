@@ -54,8 +54,8 @@ void ConnectCharaWorkJamesSet(void) {
     sceVu0FVECTOR pos; // r29+0x10
     sceVu0FVECTOR rot; // r29+0x20
 
-    vu0_unit_vector(pos);
-    vu0_unit_vector(rot);
+    shUnitVector(pos);
+    shUnitVector(rot);
     pos[0] = connect_pos[0];
     pos[1] = connect_pos[1];
     pos[2] = connect_pos[2];
@@ -98,7 +98,7 @@ void ConnectCharaWorkWeapon(void) {
     if ((id != 0) && (id != weapon[i][1]))
         CharaDataDeleteOne(WEAPON_ID_START + MIRROR_MODE_CHARA_KIND_FLAG + id);
     CharaDataLoadWeapon();
-    vu0_unit_vector(dummy);
+    shUnitVector(dummy);
     if (weapon[i][1] != 0) {
         scp = CharaWorkCreate(WEAPON_ID_START + weapon[i][1], 0, dummy, dummy, 0);
 
@@ -303,7 +303,7 @@ static void DeleteEnemyWorkOut(void) {
     float len;         // r29+0x40
     float far;         // r20
 
-    vu0_unit_vector(vec);
+    shUnitVector(vec);
     del = NULL;
     far = 16000.0f;
     scp = shCharacter_Manage_GetCharacterList();
@@ -312,7 +312,7 @@ static void DeleteEnemyWorkOut(void) {
         if ((scp->kind >> 8) == ENEMY_CHARA_KIND) {
             vec[0] = scp->pos.x - sh2jms.player->pos.x;
             vec[2] = scp->pos.z - sh2jms.player->pos.z;
-            len    = vec_length(vec);
+            len    = shVectorLength(vec);
             if (scp->battle.hp <= 0.0f)
                 len += 32000.0f;
 

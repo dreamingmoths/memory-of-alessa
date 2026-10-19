@@ -39,7 +39,7 @@
 } while (0)
 #define GET_REFLEX_ANGLE(x) (((x) > PI) != 0 ? (x) - TAU : ((x) < -PI) ? (x) + TAU : (x))
 
-static inline float reflex_angle(float x) {
+static inline float shReflexAngle(float x) {
     float result;
     if (x > 0.0f) {
         result = fmodf(x, TAU);
@@ -53,55 +53,55 @@ static inline float reflex_angle(float x) {
     return result;
 }
 
-static inline int clamp(int value, int low, int high) {
+static inline int shClamp(int value, int low, int high) {
     asm("slt $t6, %0, %1; slt $t7, %2, %0; movn %0, %1, $t6; movn %0, %2, $t7" : "=r"(value) : "r"(low), "r"(high) :);
     return value;
 }
 
-static inline int clamp_min(int b, int i) {
+static inline int shClampMin(int b, int i) {
     asm("slt $t7, %1, %0; movn %0, %1, $t7" : "=r"(b) : "r"(i) :);
     return b;
 }
 
-static inline int clamp_max(int b, int i) {
+static inline int shClampMax(int b, int i) {
     asm("slt $t7, %0, %1; movn %0, %1, $t7" : "=r"(b) : "r"(i) :);
     return b;
 }
 
-static inline int clamp_n_reverse(int value, u_int n) {
+static inline int shClampNReverse(int value, u_int n) {
     int result = value >> n;
     if (value < 0)
         result = (value + ((1 << n) - 1)) >> n;
     return result;
 }
-static inline int clamp_n(int value, int n) {
+static inline int shClampN(int value, int n) {
     int result = value & ((1 << n) - 1);
     if (value < 0 && result != 0)
         result -= (1 << n);
     return result;
 }
 
-static inline int int_abs(int b) {
+static inline int shAbs(int b) {
     asm("slt $t7, %0, $zero; neg $t6, %0; movn %0, $t6, $t7" : "=r"(b) :);
     return b;
 }
 
-static inline float float_abs(float x) {
+static inline float shFloatAbs(float x) {
     asm("abs.s %0, %0" : "+f"(x));
     return x;
 }
 
-static inline float float_clamp(float x, float lower, float upper) {
+static inline float shFloatClamp(float x, float lower, float upper) {
     asm("max.s %0, %0, %1; min.s %0, %0, %2" : "+f"(x) : "f"(lower), "f"(upper));
     return x;
 }
 
-static inline float float_min(float x, float y) {
+static inline float shFloatMin(float x, float y) {
     asm("min.s %0, %0, %1" : "+f"(x) : "f"(y) :);
     return x;
 }
 
-static inline float float_max(float x, float y) {
+static inline float shFloatMax(float x, float y) {
     asm("max.s %0, %0, %1" : "+f"(x) : "f"(y) :);
     return x;
 }

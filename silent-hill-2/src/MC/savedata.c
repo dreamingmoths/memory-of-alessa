@@ -17,7 +17,7 @@ void SetSaveData(void) {
     shQzero(&SaveDataAll, sizeof(SAVE_DATA_ALL));
     SaveDataAll.d.version = 4;
     SaveDataAll.d.scene = scene;
-    volatile_vec_copy(SaveDataAll.d.jms_pos, &sh2jms.player->pos);
+    shVectorCopy(SaveDataAll.d.jms_pos, &sh2jms.player->pos);
     SaveDataAll.d.jms_pos[3] = sh2jms.player->rot.y;
     memcpy(&SaveDataAll.d.playing, &playing, sizeof(Playing_Info));
     memcpy(&SaveDataAll.d.game_flag, &game_flag, sizeof(Game_Flag));
@@ -27,7 +27,7 @@ void SetSaveData(void) {
 }
 
 void ExtGameData(void) {
-    volatile_vec_copy(connect_pos, SaveDataAll.d.jms_pos);
+    shVectorCopy(connect_pos, SaveDataAll.d.jms_pos);
     memcpy(&playing, &SaveDataAll.d.playing, sizeof(Playing_Info));
     memcpy(&game_flag, &SaveDataAll.d.game_flag, sizeof(Game_Flag));
     memcpy(&item, &SaveDataAll.d.item, sizeof(Item));

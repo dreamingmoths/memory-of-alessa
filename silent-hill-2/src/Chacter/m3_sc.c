@@ -1615,8 +1615,8 @@ void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height,
     p = shCharacterGetSubCharacter(kind, id);
     if (p != NULL) {
         
-        volatile_vec_copy(pos, &p->pos);
-        volatile_vec_copy(normal, &p->grnd_normal);
+        shVectorCopy(pos, &p->pos);
+        shVectorCopy(normal, &p->grnd_normal);
         *height = p->grnd_height;
     }
 }

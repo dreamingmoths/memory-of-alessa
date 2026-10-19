@@ -154,8 +154,8 @@ static void EnemyARMFunction(SubCharacter* this) {
                 
                 
                 
-                volatile_vec_copy(&pos, &this->pos);
-                volatile_vec_copy(&rot, &this->rot);
+                shVectorCopy(&pos, &this->pos);
+                shVectorCopy(&rot, &this->rot);
                 
                 EnemyARMInit(this);
                 
@@ -184,8 +184,8 @@ static void EnemyARMFunction(SubCharacter* this) {
                     }
                 }
                 
-                volatile_vec_copy(&this->pos, &pos);                
-                volatile_vec_copy(&this->rot, &rot);
+                shVectorCopy(&this->pos, &pos);                
+                shVectorCopy(&this->rot, &rot);
                 
                 this->step++;
             }
@@ -250,7 +250,7 @@ void shGetEnemyARMAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
     mat.d[3][3] = 1.0f;   
        
     sceVu0ApplyMatrix(&pos0[0], &lw_mat[0], &pos0[0]);
-    volatile_vec_copy(s_pos, pos0);
+    shVectorCopy(s_pos, pos0);
    
 
     sceVu0ApplyMatrix(&pos1[0], &mat.d[0], &wep_range[0]);    

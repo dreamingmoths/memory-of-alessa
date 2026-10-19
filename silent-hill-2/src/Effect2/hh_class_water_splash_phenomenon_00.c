@@ -52,11 +52,11 @@ u_int HH_Class_Water_Splash_Phenomenon_00(void* pBlock, ImpactQueue_Element* pEl
             p_volume = sceVu0InnerProduct(src_direction, src_direction);
             p_volume = HH_MathWrapper_Sqrtf(p_volume);
             for (i = 0; i < 6U; i++) {
-                radian = reflex_angle(TO_RAD(rand() % 360));
+                radian = shReflexAngle(TO_RAD(rand() % 360));
                 alpha_randam_range = (TO_RAD(rand() % 10)) - TO_RAD(5);
                 radius_rand = 10.0f + (rand() % 30);
                 alpha = pThis->Alpha + alpha_randam_range;
-                alpha = reflex_angle(alpha);
+                alpha = shReflexAngle(alpha);
                 {
                     sceVu0FVECTOR vec = {0.0f, 0.0f, radius_rand, 1.0f}; // r29+0xE0
                     sceVu0UnitMatrix(lwm);
@@ -67,7 +67,7 @@ u_int HH_Class_Water_Splash_Phenomenon_00(void* pBlock, ImpactQueue_Element* pEl
 
                 {
                     sceVu0FVECTOR vec = {0.0f, 0.0f, p_volume, 1.0f}; // r29+0xF0
-                    alpha = reflex_angle(alpha);
+                    alpha = shReflexAngle(alpha);
                     sceVu0UnitMatrix(lwm);
                     sceVu0RotMatrixX(lwm, lwm, alpha);
                     sceVu0RotMatrixY(lwm, lwm, radian);

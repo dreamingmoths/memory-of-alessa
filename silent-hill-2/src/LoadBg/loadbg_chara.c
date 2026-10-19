@@ -165,8 +165,8 @@ static int nowpos(void) {
     if (sh2jms.player != NULL) {
         dx = 15.0f * sh2jms.pos.x;
         dz = 15.0f * sh2jms.pos.z;
-        dx = float_clamp(dx, -1000.0f, 1000.0f);
-        dz = float_clamp(dz, -1000.0f, 1000.0f);        
+        dx = shFloatClamp(dx, -1000.0f, 1000.0f);
+        dz = shFloatClamp(dz, -1000.0f, 1000.0f);        
         dx = dz = 0.0f; // wtf?
         px = sh2jms.player->pos.x + dx;
         pz = sh2jms.player->pos.z + dz;

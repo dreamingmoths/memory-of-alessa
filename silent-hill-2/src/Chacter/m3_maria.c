@@ -42,15 +42,15 @@ static void HumanMARFunction(SubCharacter* this /* r16 */) {
 
     switch (this->step) {
         case 0:
-            volatile_vec_copy(&pos, &this->pos);
-            volatile_vec_copy(&rot, &this->rot);
+            shVectorCopy(&pos, &this->pos);
+            shVectorCopy(&rot, &this->rot);
             HumanMARInit(this);
             SCAnimeTypeSwitch(this, 1);
 
             aip = &pmaria_anim_0x00396AB0[1];
             shCharacterAnimeSet(this, 0, 0, aip, (int) shCharacterGetAnimeAdrForPlay(this));
-            volatile_vec_copy(&this->pos, &pos);
-            volatile_vec_copy(&this->rot, &rot);
+            shVectorCopy(&this->pos, &pos);
+            shVectorCopy(&this->rot, &rot);
             MariaCheckSetParameterPhase2(this);
             this->step++;
             return;

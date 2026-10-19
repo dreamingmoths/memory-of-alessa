@@ -489,8 +489,8 @@ void EvSubPictureCursor(int color) {
         if (shPadPress(0, PAD_KEY_DPAD_UP))        ev_cursor_y -= 192.0f * shGetDT();
         
     }
-    ev_cursor_x = float_max(-256.0f, float_min(256.0f, ev_cursor_x));
-    ev_cursor_y = float_max(-192.0f, float_min(192.0f, ev_cursor_y));
+    ev_cursor_x = shFloatMax(-256.0f, shFloatMin(256.0f, ev_cursor_x));
+    ev_cursor_y = shFloatMax(-192.0f, shFloatMin(192.0f, ev_cursor_y));
 
     PictureLoadImage((sh2gfw_AREA_HEAD *)&cursor_adr, 8, -1, -1);
     

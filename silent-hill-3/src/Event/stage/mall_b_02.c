@@ -306,11 +306,11 @@ void func_01F6DEE0_mall_b_02(void) { // I have no idea how I matched this
         case 45:
             if ((D_01D31640 >> 0xA) & 1) {
                 func_0016CBD0(sp10, sp20, 4);
-                mat_copy(sp30, sp10[0]);    
+                shMatrixCopy(sp30, sp10[0]);    
                 func_001C2A80(1, sp30);
                 
                 func_0016CBD0(sp10, sp20, 5);
-                mat_copy(sp30, sp10[0]);    
+                shMatrixCopy(sp30, sp10[0]);    
                 func_001C2A80(2, sp30);
                 
                 func_0016CA40(1);

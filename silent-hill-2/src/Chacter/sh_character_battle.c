@@ -106,7 +106,7 @@ static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u
     if (!(atk == 53 || atk == 63 || atk == 62 || atk == 60 || atk == 59 ||
         atk == 58 || atk == 57 || atk == 55 || atk == 54 || atk == 48 ||
         atk == 47 || atk == 37 || atk == 36 || atk == 9 || atk == 8)) {
-        vec_copy(vec_tmp,vec);
+        shVectorCopyNonvolatile(vec_tmp,vec);
         HH_Effect_Object_Blood_Splash_Impact_Post(pos, vec_tmp, (u_int)scp, atk_type);        
     }
 
@@ -342,8 +342,8 @@ static void shBattleAttackByHumanGunshotTypeB(SubCharacter* attacker, u_short at
         
         shGetJamesWeaponEndPos(gunpos, gunvec);
         rot[1] = shAtan2(gunvec[2], gunvec[0]);
-        rot[0] = -shAtan2(vec_length(gunvec), gunvec[1]);
-        vu0_unit_matrix(unit);
+        rot[0] = -shAtan2(shVectorLength(gunvec), gunvec[1]);
+        shUnitMatrix(unit);
         shRotMatrixZ(mat, unit, rot[2]); shRotMatrixX(mat, mat, rot[0]); shRotMatrixY(mat, mat, rot[1]);
         
         for (i = 0; i < 10; i++) { 
@@ -519,7 +519,7 @@ void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) 
     
     
     roty = shAtan2(s_vec[2], s_vec[0]);
-    rotx = shAtan2(vec_length(s_vec), s_vec[1]);
+    rotx = shAtan2(shVectorLength(s_vec), s_vec[1]);
     
     switch (i) {
         case 0:
@@ -615,8 +615,8 @@ static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short a
             que.sve[0] = s_pos[0] + (s_vec_result[0] * max_range_1171);
             que.sve[1] = s_pos[1] + (s_vec_result[1] * max_range_1171);
             que.sve[2] = s_pos[2] + (s_vec_result[2] * max_range_1171);
-            volatile_vec_copy(sp_start, que.svs);
-            vu0_sub_vector(sp_end, que.sve, que.svs);
+            shVectorCopy(sp_start, que.svs);
+            shSubVector(sp_end, que.sve, que.svs);
         }
     }
     switch (playing.spray_pow) {
@@ -1518,7 +1518,7 @@ float shBattleGetJamesHP_Rate(void) {
 void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */) {
     sh2jms.player->battle.damage = damage;
     sh2jms.player->battle.id = id;
-    volatile_vec_copy((float *)&sh2jms.player->battle.vec, vec);
+    shVectorCopy((float *)&sh2jms.player->battle.vec, vec);
 }
 
 float shBattleEventWallHitCheck(void) {

@@ -228,7 +228,7 @@ void EventMain(void) {
     
     
     
-    item.ampoule_efficacy = float_max(0.0f, item.ampoule_efficacy - shGetDT());
+    item.ampoule_efficacy = shFloatMax(0.0f, item.ampoule_efficacy - shGetDT());
     
     
     
@@ -482,7 +482,7 @@ static int EventCheckLookPoint(float x, float z, Jms jms) {
     pos_z = z - jms.pos_z;
     
     
-    if (float_abs(pos_x) > 400.0f || float_abs(pos_z) > 400.0f)
+    if (shFloatAbs(pos_x) > 400.0f || shFloatAbs(pos_z) > 400.0f)
         return false;
 
     
@@ -492,7 +492,7 @@ static int EventCheckLookPoint(float x, float z, Jms jms) {
     
     ang = shAngleRegulate(jms.rot_y - shAtan2(z - jms.rear_z, x - jms.rear_x));
     
-    if (float_abs(ang) > TO_RAD(30)) return false;
+    if (shFloatAbs(ang) > TO_RAD(30)) return false;
     
     return true;
 }
@@ -642,7 +642,7 @@ static void EventResultMovePosition(int ev_no /* r2 */) {
     el = &stage->ev_list[ev_no];
     pos = (s_char*) &stage->ev_pos[EventListElement(el, 14)];
     pos_type = EventListElement(el, 15);
-    vec_zero_xyz(mv_pos);
+    shVectorZeroXyz(mv_pos);
     mv_pos[0] = CharToFloat4(pos);
     mv_pos[1] = CharToFloat2(pos + 4);
     mv_pos[2] = CharToFloat4(pos + 6);

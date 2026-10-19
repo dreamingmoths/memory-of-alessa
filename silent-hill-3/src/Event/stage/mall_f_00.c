@@ -210,15 +210,15 @@ int func_01F6D8D0_mall_f_00(void)
         func_0016CBD0(sp150, sp160, 7);
         func_0016CC50(0x202, 0, *sp150, &sp170);
 
-        volatile_vec_copy(&closer->pos, (sceVu0FVECTOR *) *sp150 + 3);
-        volatile_vec_copy(&closer->rot, sp170);
+        shVectorCopy(&closer->pos, (sceVu0FVECTOR *) *sp150 + 3);
+        shVectorCopy(&closer->rot, sp170);
 
         func_002F2AF0(&closer->pos, closer, 0);
         func_0016CBD0(sp150, sp160, 8);
         func_0016CC50(0x1004, 0, *sp150, &sp170);
 
-        volatile_vec_copy(&var_s2->pos, (sceVu0FVECTOR *) *sp150 + 3);
-        volatile_vec_copy(&var_s2->rot, sp170);
+        shVectorCopy(&var_s2->pos, (sceVu0FVECTOR *) *sp150 + 3);
+        shVectorCopy(&var_s2->rot, sp170);
 
         SET_BIT(D_1D316FC, 23);
         SET_BIT(D_1D316FC, 24);
@@ -409,15 +409,15 @@ void func_01F6E380_mall_f_00(void)
                 func_0016CBD0(sp30, sp40, 7);
                 func_0016CC50(0x202, 0, *sp30, &sp50);
 
-                volatile_vec_copy(&closer->pos, (sceVu0FVECTOR *) *sp30 + 3);
-                volatile_vec_copy(&closer->rot, sp50);
+                shVectorCopy(&closer->pos, (sceVu0FVECTOR *) *sp30 + 3);
+                shVectorCopy(&closer->rot, sp50);
 
                 func_002F2AF0(&closer->pos, closer, 1);
                 func_0016CBD0(sp30, sp40, 8);
                 func_0016CC50(0x1004, 0, *sp30, &sp50);
 
-                volatile_vec_copy(&var_s1->pos, (sceVu0FVECTOR *) *sp30 + 3);
-                volatile_vec_copy(&var_s1->rot, sp50);
+                shVectorCopy(&var_s1->pos, (sceVu0FVECTOR *) *sp30 + 3);
+                shVectorCopy(&var_s1->rot, sp50);
             }
 
             break;
