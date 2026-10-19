@@ -3,6 +3,7 @@
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_def.h"
 #include "Effect2/hh_effect_object_texture.h"
+#include "Effect2/hh_object_vertex_info.h"
 #include "Chacter/character.h"
 #include "sce/libvifpk.h"
 

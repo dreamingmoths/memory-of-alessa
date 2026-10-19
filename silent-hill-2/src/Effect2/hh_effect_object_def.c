@@ -1,8 +1,59 @@
 #include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_class_blood_00.h"
+#include "Effect2/hh_class_blood_01.h"
+#include "Effect2/hh_class_blood_02.h"
+#include "Effect2/hh_class_blood_03.h"
+#include "Effect2/hh_class_blood_04.h"
+#include "Effect2/hh_class_blood_05.h"
+#include "Effect2/hh_class_blood_footmark_00.h"
+#include "Effect2/hh_class_blood_pool_phenomenon_00.h"
+#include "Effect2/hh_class_blood_pool_phenomenon_01.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_00.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_01.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_02.h"
+#include "Effect2/hh_class_blood_stick_00.h"
+#include "Effect2/hh_class_boatmask.h"
+#include "Effect2/hh_class_dust_00.h"
+#include "Effect2/hh_class_fire_phenomenon_00.h"
+#include "Effect2/hh_class_flame_00.h"
+#include "Effect2/hh_class_flame_01.h"
+#include "Effect2/hh_class_flame_02.h"
+#include "Effect2/hh_class_flame_03.h"
+#include "Effect2/hh_class_glass_break_phenomenon_00.h"
+#include "Effect2/hh_class_glass_piece_00.h"
+#include "Effect2/hh_class_manager.h"
+#include "Effect2/hh_class_object_execute.h"
+#include "Effect2/hh_class_plural_phenomenon_00.h"
+#include "Effect2/hh_class_plural_phenomenon_01.h"
+#include "Effect2/hh_class_raise_dust_phenomenon_00.h"
+#include "Effect2/hh_class_smoke_00.h"
+#include "Effect2/hh_class_water_00.h"
+#include "Effect2/hh_class_water_01.h"
+#include "Effect2/hh_class_water_02.h"
+#include "Effect2/hh_class_water_03.h"
+#include "Effect2/hh_class_water_04.h"
+#include "Effect2/hh_class_water_06.h"
+#include "Effect2/hh_class_water_07.h"
+#include "Effect2/hh_class_water_08.h"
+#include "Effect2/hh_class_water_09.h"
+#include "Effect2/hh_class_water_10.h"
+#include "Effect2/hh_class_water_11.h"
+#include "Effect2/hh_class_water_12.h"
+#include "Effect2/hh_class_water_13.h"
+#include "Effect2/hh_class_water_14.h"
+#include "Effect2/hh_class_water_15.h"
+#include "Effect2/hh_class_water_20.h"
+#include "Effect2/hh_class_water_30.h"
+#include "Effect2/hh_class_water_80.h"
+#include "Effect2/hh_class_water_90.h"
+#include "Effect2/hh_class_water_common.h"
+#include "Effect2/hh_class_water_pool_00.h"
+#include "Effect2/hh_class_water_splash_phenomenon_00.h"
+#include "Effect2/hh_class_wrapper.h"
 
 #define OBJECT_CLASS_COUNT 48
 
-UNLINKED(/* static */ Object_Class _pObject_Class_List[OBJECT_CLASS_COUNT], {
+/* static */ Object_Class _pObject_Class_List[OBJECT_CLASS_COUNT] = {
     {
         /* .pPrefix = */ NULL,
         /* .pMain = */   NULL,
@@ -291,7 +342,7 @@ UNLINKED(/* static */ Object_Class _pObject_Class_List[OBJECT_CLASS_COUNT], {
         /* .pSuffix = */ HH_Class_Suffix_Smoke_00,
         /* .disable = */ false,
     }
-});
+};
 UNLINKED(/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationInfo_Table[OBJECT_CLASS_COUNT], {
     /* .Existent = */ 0,
     /* .DataPool_Info = */ {
@@ -820,12 +871,12 @@ UNLINKED(/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationI
     /* .LinkList_Max = */ 1,
     /* .pLinkList = */ _fire_pheno_list,
 });
-UNLINKED(/* static */ u_int _Object_Class_Priority_List[OBJECT_CLASS_COUNT + 1], {
+/* static */ u_int _Object_Class_Priority_List[OBJECT_CLASS_COUNT + 1] ={
     0,  3,  4,  5,  6,  7,  8,  9,  41, 10, 12, 16, 17, 14, 
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
     36, 37, 38, 39, 40, 11, 15, 13, 18, 19, 42, 43, 44, 45,
     46, 47, 20, 21, 1,  2,  48
-});
+};
 extern /* static */ int _AutoPost_Association_List[2][18];
 extern Object_Instance* _pHierarchyTable[OBJECT_CLASS_COUNT];
 extern Object_Instance _Object_instance_table[600];

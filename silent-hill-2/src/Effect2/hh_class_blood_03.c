@@ -5,6 +5,7 @@
 #include "hh_effect_object_texture.h"
 #include "sce/libvifpk.h"
 #include "sce/libvu0.h"
+#include "Effect2/hh_object_vertex_info.h"
 
 extern int rand(void);
 

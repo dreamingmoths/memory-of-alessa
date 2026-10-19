@@ -16,18 +16,9 @@ typedef struct HH_Object_Blood_01 {
     u_int Motion_Step;              // offset 0x38, size 0x4
 } HH_Object_Blood_01;
 
-typedef struct Vertex_Infomeation_List {
-    float (*pVertex_List)[4]; // offset 0x0, size 0x4
-    float (*pNormal_List)[4]; // offset 0x4, size 0x4
-    u_int Vertex_Max;         // offset 0x8, size 0x4
-    u_int Primitive_Type;     // offset 0xC, size 0x4
-} Vertex_Infomeation_List;
 
-typedef struct Motion_Table_Infomeation {
-    float diff_time;        // offset 0x0, size 0x4
-    float diff_scale_ratio; // offset 0x4, size 0x4
-    float diff_rgba_ratio;  // offset 0x8, size 0x4
-} Motion_Table_Infomeation;
+
+
 
 u_int HH_Class_Prefix_Blood_01(void);
 u_int HH_Class_Suffix_Blood_01(void);

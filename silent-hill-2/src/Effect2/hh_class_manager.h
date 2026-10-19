@@ -79,6 +79,12 @@ typedef struct Object_Group_Infomeation {
     u_int Step;                                            // offset 0x54, size 0x4
 } Object_Group_Infomeation;
 
+typedef struct Motion_Table_Infomeation {
+    float diff_time;        // offset 0x0, size 0x4
+    float diff_scale_ratio; // offset 0x4, size 0x4
+    float diff_rgba_ratio;  // offset 0x8, size 0x4
+} Motion_Table_Infomeation;
+
 u_int ImpactDescriptor_Post(Object_Group_Infomeation* pInfo, ImpactQueue_Element* pDescriptor);
 u_int Object_Group_Manager(Object_Group_Infomeation* pInfo);
 u_int Object_Group_Infomeation_Set(Object_Group_Infomeation* pInfo);

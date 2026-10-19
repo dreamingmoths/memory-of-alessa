@@ -13,6 +13,13 @@ static u_int Object_Draw(struct HH_Object_Blood_02 * pThis , struct ImpactQueue_
 extern int rand(void);
 extern float fmodf(float, float);
 
+typedef struct Vertex_Infomeation_List {
+    float (*pVertex_List)[4]; // offset 0x0, size 0x4
+    float (*pStq_List)[4];    // offset 0x4, size 0x4
+    u_int Vertex_Max;         // offset 0x8, size 0x4
+    u_int Primitive_Type;     // offset 0xC, size 0x4
+} Vertex_Infomeation_List;
+
 extern /* static */ sceVu0FMATRIX _square_00_vertex;
 extern /* static */ sceVu0FVECTOR _circle_00_vertex[10];
 extern /* static */ sceVu0FVECTOR _circle_00_stq[10];

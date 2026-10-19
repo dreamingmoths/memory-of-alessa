@@ -6,18 +6,9 @@
 #include "Effect2/hh_class_water_common.h"
 #include "sce/libvu0.h"
 
-typedef struct Motion_Table_Infomeation {
-    float diff_time;        // offset 0x0, size 0x4
-    float diff_scale_ratio; // offset 0x4, size 0x4
-    float diff_rgba_ratio;  // offset 0x8, size 0x4
-} Motion_Table_Infomeation;
 
-typedef struct Vertex_Infomeation_List {
-    float (*pVertex_List)[4]; // offset 0x0, size 0x4
-    float (*pNormal_List)[4]; // offset 0x4, size 0x4
-    u_int Vertex_Max;         // offset 0x8, size 0x4
-    u_int Primitive_Type;     // offset 0xC, size 0x4
-} Vertex_Infomeation_List;
+
+
 
 // total size: 0x40
 typedef struct HH_Object_Water_20 {

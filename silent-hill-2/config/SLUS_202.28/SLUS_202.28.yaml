@@ -778,6 +778,9 @@ segments:
       - { start: 0x00270a88,    type: .data,      name: Effect2/hh_class_water_30                        }
       - { start: 0x00270c30,    type: .data,      name: Effect2/hh_class_water_splash_phenomenon_00      }
       - { start: 0x00270c50,    type: data,       name: data_0x270c50                                    }
+      - { start: 0x00270c60,    type: .data,      name: Effect2/hh_effect_object_def                     }
+      - { start: 0x00271a70,    type: data,       name: Effect2/hh_effect_object_texture                 }
+      - { start: 0x00271e20,    type: data,       name: Effect2/hh_packet                                }
       - { start: 0x00272f90,    type: .data,      name: LoadBg/loadbg_cam                                }
       - { start: 0x002730b0,    type: .data,      name: LoadBg/loadbg_cld                                }
       - { start: 0x002731c0,    type: .data,      name: LoadBg/loadbg_kg2                                }
