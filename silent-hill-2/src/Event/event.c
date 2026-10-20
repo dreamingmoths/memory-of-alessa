@@ -24,6 +24,8 @@
 #include "Event/demoview.h"
 #include "Event/stg_overlay.h"
 
+#include "MC/savedata.h"
+
 typedef struct /* @anon3 */ {
     // total size: 0x24
     float pos_x; // offset 0x0, size 0x4
@@ -1032,7 +1034,45 @@ static int EventExecMove(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecMove);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSave);
+static int EventExecSave(void) {
+    Event_List* el;
+   
+    switch (ev_e_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, 1);
+            if (GET_GAME_FLAG(GAME_FLAG_5)) EV_EXEC_STEP(7);
+            else {
+                fontMessageNum(msg_station, 8);
+                EV_EXEC_STEP(1);
+            }
+        break;
+            
+        case 1:
+            if ((fontGetStatus() == -2) || (ev_cancel != 0)) {
+                fontClear();
+                if (ev_cancel != 0) EV_EXEC_STEP(6);
+                else {
+                    SET_GAME_FLAG(GAME_FLAG_5);
+                    EV_EXEC_STEP(7);
+                }            
+            }
+            break;
+        case 7:
+            ScreenEffectFadeStart(11, 0.0f);
+            el = &stage->ev_list[ev_active];
+            SetSavePointName(EventListElement(el, 21));
+            SeCall(10051, 1.0f, 0);
+            sh2sys_set_2(9);
+            EV_EXEC_STEP(6);
+            break;
+        
+        case 6:
+            ScreenEffectFadeStart(4, 0.0f);
+            SCNowPlayableEventSwitch(sh2jms.player, 0);
+            return 1;
+    }
+    return 0;
+}
 
 int LightSpotOnOffCheck(void) {
     if (!GET_BIT(item.flag[0], 15)) {

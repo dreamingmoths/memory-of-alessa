@@ -1,4 +1,5 @@
-#include "common.h"
+#include "sh2_common.h"
+#include "math.h"
 #include "SH2_common/playing_info.h"
 #include "DS_Pad/ds_sequencer.h"
 
@@ -54,7 +55,11 @@ void DSS_Wrapper_DualShock2_Sequencer(void) {
         
         if (_sequencer_init == 0) {
             DSR_Sequencer_Initialize();
+<<<<<<< HEAD
             DSR_Sequence_Different_Time_Set(1.0f/60.0f);
+=======
+            DSR_Sequence_Different_Time_Set(TIME_STEP_60FPS);
+>>>>>>> e9d3eeeb3ec606a7c1a08bab4ece07da49688bd6
             _sequencer_init = 1;
         }
         DSR_Sequencer();

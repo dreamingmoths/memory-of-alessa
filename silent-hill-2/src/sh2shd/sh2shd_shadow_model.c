@@ -7,6 +7,7 @@
 #include "sh2shd/sh2shd_char_jms.h"
 #include "Event/demoview.h"
 #include "Chacter/m3_sc.h"
+#include "Chacter_Draw/light_n.h"
 #include "SH2_common/map_ids.h"
 #include "vec.h"
 
@@ -132,7 +133,7 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
         } else {
             sh2shd_get_jms_shadow_env(&jms_shadow_env, light_kind, light_dir);
         }
-        if (jms_shadow_env.light_kind == LIGHT_KIND_NONE) {
+        if (jms_shadow_env.light_kind == LIGHT_KIND_UNSET) {
             jms_shadow_env.light_kind = light_kind;
         }
         if ((jms_shadow_env.light_kind == LIGHT_KIND_5) && (demo_no == 0)) {
@@ -198,7 +199,7 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
         }
     }
     switch (light_kind) {
-        case LIGHT_KIND_0:
+        case LIGHT_KIND_NONE:
             shadow_man.spot_char_num++;
             break;
         case LIGHT_KIND_6:
@@ -210,16 +211,16 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
         case LIGHT_KIND_8:
             shadow_man.spot_char_num++;
             break;
-        case LIGHT_KIND_1:
+        case LIGHT_KIND_PARALLEL:
             shadow_man.self_num++;
             break;
-        case LIGHT_KIND_2:
+        case LIGHT_KIND_POINT:
             shadow_man.self_num++;
             break;
         case LIGHT_KIND_3:
             shadow_man.self_num++;
             break;
-        case LIGHT_KIND_4:
+        case LIGHT_KIND_REFLECTION:
             shadow_man.parallel_char_num++;
             break;
         case LIGHT_KIND_5:

@@ -463,7 +463,7 @@ u_int HH_Class_Water_30(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             if (GET_GAME_FLAG(GAME_FLAG_148)) {
                 pThis->Step = HH_WATER_30_STEP_OFF;
             } else {
-                pThis->Timer += 1.0f / 30.0f;
+                pThis->Timer += TIME_STEP_30FPS;
             }
             break;
         }

@@ -261,7 +261,7 @@ u_int HH_Class_Blood_03(void* pBlock, ImpactQueue_Element* pElement){
                 }
 
                 Object_Draw(pThis, pElement, position);
-                pThis->Timer += 1.0/60.0;
+                pThis->Timer += TIME_STEP_60FPS;
             }
             break;
         case 2:

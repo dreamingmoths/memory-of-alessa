@@ -12,6 +12,8 @@
 #define TAU 6.2831855f
 #define QUARTER_TURN 1.5707964f
 #define MAX_FLOAT 3.4028235e38f
+#define TIME_STEP_30FPS (1.0f / 30.0f)
+#define TIME_STEP_60FPS (1.0f / 60.0f)
 #define RADIANS_PER_DEGREE (PI / 180.0f)
 #define TO_RAD(x) (RADIANS_PER_DEGREE * (x))
 #define SQUARE(_x) ((_x) * (_x))

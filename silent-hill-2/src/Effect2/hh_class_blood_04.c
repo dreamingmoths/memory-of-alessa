@@ -342,7 +342,7 @@ u_int HH_Class_Blood_04(void* pBlock, ImpactQueue_Element* pElement) {
                 
                 Object_Draw(pThis, pElement, &position);
                 
-                pThis->Timer += (1.0f / 60.0f);
+                pThis->Timer += TIME_STEP_60FPS;
             }
             break;
         

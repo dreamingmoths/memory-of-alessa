@@ -65,6 +65,6 @@ typedef struct sh2gfw_BLOCK_MAN {
     } blk_LightData;                      // offset 0xB60, size 0x130
 } sh2gfw_BLOCK_MAN __attribute__((aligned(16)));
 
-extern sh2gfw_BLOCK_MAN b_man;
+extern sh2gfw_BLOCK_MAN b_man[6]; // size: 0x4B60, address: 0xE49B40
 
 #endif // SH2GFW_BLOCKMAN_H
