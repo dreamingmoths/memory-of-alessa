@@ -8,12 +8,19 @@
 #include "GFW/gfw_test/sh2gfw_shcamtest.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_2d_filters.h"
+#include "GFW/sh2_shadow_main.h"
 
 #include "Multi_thr/intc/syncv.h"
 
+#include "Chacter_Draw/sh2gfw_Draw_Character.h"
+#include "Effect/ef_common.h"
+
+#include "Effect2/hh_class_object_execute.h"
 #include "Effect2/hh_effect_object_texture.h"
+
 #include "Chacter_Draw/sh2_JmsSpot_Man.h"
 #include "DBG/sh2gfw_SyncDBG.h"
+
 #include "Font/fj_man.h"
 #include "view/camera_dat.h"
 
