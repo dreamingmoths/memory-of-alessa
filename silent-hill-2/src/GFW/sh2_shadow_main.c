@@ -8,7 +8,7 @@
 #include "sh2shd/sh2shd_stencil_shadow_main.h"
 #include "GFW/sh2_shadow_main.h"
 
-extern u_int paddata2;
+UNMIGRATED(u_int paddata2);
 
 void sh2gfw_ShadowControl_Main(void) {
     int dense;
