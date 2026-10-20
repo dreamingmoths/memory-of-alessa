@@ -157,7 +157,7 @@ segments:
       - { start: 0x000a1020,    type: asm,        name: sh2shd/sh2shd_outdoor                            }
       - { start: 0x000a2350,    type: c,          name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x000a66c0,    type: asm,        name: sh2shd/sh2shd_shadow_vu1_packet                  }
-      - { start: 0x000a6d00,    type: asm,        name: sh2shd/sh2shd_stencil_shadow_main                }
+      - { start: 0x000a6d00,    type: c,          name: sh2shd/sh2shd_stencil_shadow_main                }
       - { start: 0x000a6ed0,    type: asm,        name: sh2shd/sh2shd_structs                            }
       - { start: 0x000a6ef0,    type: c,          name: view/vc_calc                                     }
       - { start: 0x000a7580,    type: c,          name: Event/event                                      }

@@ -18,14 +18,6 @@
 
 #include "view/vb_main.h"
 
-#define LIGHT_KIND_NONE       0
-#define LIGHT_KIND_PARALLEL   1
-#define LIGHT_KIND_POINT      2
-#define LIGHT_KIND_3          3
-#define LIGHT_KIND_REFLECTION 4
-#define LIGHT_KIND_5          5
-#define LIGHT_KIND_6          6
-
 #define LIGHT_FAKE_KIND_POINT 1
 #define LIGHT_FAKE_KIND_SPOT  2
 
