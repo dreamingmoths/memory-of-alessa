@@ -15,6 +15,7 @@
 #include "Chacter_Draw/sh2_JmsSpot_Man.h"
 #include "DBG/sh2gfw_SyncDBG.h"
 #include "Font/fj_man.h"
+#include "view/camera_dat.h"
 
 static void Calc_Set_Matrix(void);
 static void Spack_All_Draw(void);
@@ -179,7 +180,55 @@ INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", gs_loppstart_init);
 
 INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", kari_setdmatag_and_draw);
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Draw_Character_And_Shadow);
+void Draw_Character_And_Shadow(void) {
+    int count = *T0_COUNT;
+
+    if (Check_DrawOrder()) {
+        sh2gfw_Exec_AnimeAndCollision();
+
+        sh2gfw_Exec_Character_Draw(cam0.world_screen, true);
+
+        HH_Effect_Object_Texture_TransportPriority_Initialize();
+        HH_Effect_Object_Texture_Send();
+        HH_Class_Object_Execute();
+
+        EFCTDoTask();
+
+        HH_Effect_Object_Texture_Sync();
+        HH_Class_Object_Packet_Kick();
+
+        EFCTKickPacket();
+
+        HH_Effect_Object_Texture_Finish();
+
+        sh2gfw_test_MakeNoise();
+        
+        sh2gfw_ShadowControl_Main();
+    } else {
+        sh2gfw_Exec_AnimeAndCollision();
+        sh2gfw_Exec_Character_Draw_ShadowOnly();
+    
+        if (sh2gfw_Get_NightOrDay())
+            sh2gfw_ShadowControl_Main();
+    
+        sh2gfw_Exec_Character_Draw(cam0.world_screen, false);
+
+        HH_Effect_Object_Texture_TransportPriority_Initialize();
+        HH_Effect_Object_Texture_Send();
+        HH_Class_Object_Execute();
+
+        EFCTDoTask();
+        
+        HH_Effect_Object_Texture_Sync();
+        HH_Class_Object_Packet_Kick();
+        
+        EFCTKickPacket();
+        
+        HH_Effect_Object_Texture_Finish();
+        
+        sh2gfw_test_MakeNoise();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Spack_All_Draw);
 
