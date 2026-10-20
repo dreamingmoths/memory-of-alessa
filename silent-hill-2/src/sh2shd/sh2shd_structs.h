@@ -4,19 +4,6 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
 
-#define LIGHT_KIND_NONE -1
-#define LIGHT_KIND_0 0x0
-#define LIGHT_KIND_1 0x1
-#define LIGHT_KIND_2 0x2
-#define LIGHT_KIND_3 0x3
-#define LIGHT_KIND_4 0x4
-#define LIGHT_KIND_5 0x5
-#define LIGHT_KIND_6 0x6
-#define LIGHT_KIND_7 0x7
-#define LIGHT_KIND_8 0x8
-#define LIGHT_KIND_9 0x9
-#define LIGHT_KIND_A 0xA
-
 typedef struct SHADOW_PACKET_BUF {
     // total size: 0x8
     Q_WORDDATA* head; // offset 0x0, size 0x4
@@ -159,5 +146,12 @@ typedef struct SHADOW_OUTDOOR_HEAD {
     short reserve4; // offset 0xC, size 0x2
     short reserve5; // offset 0xE, size 0x2
 } SHADOW_OUTDOOR_HEAD;
+
+typedef struct SPOT_LIGHT {
+    // Members
+    sceVu0FVECTOR c; // offset 0x0, size 0x10
+    sceVu0FVECTOR zdir; // offset 0x10, size 0x10
+    sceVu0FVECTOR range; // offset 0x20, size 0x10
+} SPOT_LIGHT;
 
 #endif // SH2SHD_STRUCTS_H

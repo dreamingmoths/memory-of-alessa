@@ -457,7 +457,7 @@ u_int HH_Class_Water_13(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x14);
             HH_DBG_Wrapper_T0_COUNT_Delta();
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

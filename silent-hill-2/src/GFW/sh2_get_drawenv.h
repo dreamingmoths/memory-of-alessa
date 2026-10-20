@@ -11,4 +11,8 @@ float (* sh2gde_Get_BGSpotPos())[4];
 
 float (* sh2gde_Get_BGSpotDir())[4];
 
+void sh2gde_get_spotposdir(float* pos, float* dir);
+
+void sh2gde_getspotParams_for_Shadow(float* spotpos, float* spotdir, float* decayparms);
+
 #endif // SH2_GET_DRAWENV_H

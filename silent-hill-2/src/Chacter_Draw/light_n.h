@@ -1,6 +1,20 @@
 #ifndef LIGHT_N_H
 #define LIGHT_N_H
+
 #include "sce/libvu0.h"
+
+#define LIGHT_KIND_UNSET      -1
+#define LIGHT_KIND_NONE        0
+#define LIGHT_KIND_PARALLEL    1
+#define LIGHT_KIND_POINT       2
+#define LIGHT_KIND_3           3
+#define LIGHT_KIND_REFLECTION  4
+#define LIGHT_KIND_5           5
+#define LIGHT_KIND_6           6
+#define LIGHT_KIND_7           7
+#define LIGHT_KIND_8           8
+#define LIGHT_KIND_9           9
+#define LIGHT_KIND_A           10
 
 typedef struct Light {
     // total size: 0xA0

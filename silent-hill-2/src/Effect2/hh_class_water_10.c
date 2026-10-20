@@ -387,7 +387,7 @@ u_int HH_Class_Water_10(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
             if (GET_GAME_FLAG(GAME_FLAG_503)) {
                 pThis->Step = 2;
             }
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

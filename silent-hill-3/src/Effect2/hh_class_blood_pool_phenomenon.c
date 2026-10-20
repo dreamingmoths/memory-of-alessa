@@ -128,7 +128,7 @@ u_int HH_Class_Blood_Pool_Phenomenon(void* pBlock, ImpactQueue_Element* pElement
             break;
     }
 
-    pThis->Timer += 1.0f / 30.0f;
+    pThis->Timer += TIME_STEP_30FPS;
 
     return result;
 }
