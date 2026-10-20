@@ -110,7 +110,7 @@ segments:
       - { start: 0x000758d0,    type: asm,        name: GFW/sh2_get_drawenv                              }
       - { start: 0x00075eb0,    type: asm,        name: GFW/sh2_set_drawenv                              }
       - { start: 0x00076690,    type: asm,        name: GFW/sh2_shadow_filters                           }
-      - { start: 0x000771c0,    type: asm,        name: GFW/sh2_shadow_main                              }
+      - { start: 0x000771c0,    type: c,          name: GFW/sh2_shadow_main                              }
       - { start: 0x000773e0,    type: c,          name: GFW/sh2gfw_2d_filters                            }
       - { start: 0x0007bde0,    type: c,          name: GFW/sh2gfw_GSCTL_man                             }
       - { start: 0x0007bfa0,    type: c,          name: GFW/sh2gfw_Init_ModelDrawData                    }
