@@ -1,7 +1,7 @@
 #ifndef HH_EFFECT_OBJECT_TEXTURE_H
 #define HH_EFFECT_OBJECT_TEXTURE_H
 
-#include "effect2/hh_memory_manage.h"
+#include "Effect2/hh_memory_manage.h"
 #include "GFW/sh2gfw_Texpacket.h"
 #include "GFW/sh2gfw_structs.h"
 #include "fog/spkTexMan.h"
