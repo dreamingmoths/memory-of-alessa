@@ -6,12 +6,12 @@ UNMIGRATED(ktPkBuf vif0_pkbuf); // size: 0x14, address: 0x3E66E0
 
 
 #line 32
-void ktVif0PkBufInit(void* buf0, void* buf1, s32 size) {
+void ktVif0PkBufInit(void* buf0, void* buf1, int size) {
     ktPkBufInit(&vif0_pkbuf, buf0, buf1, size);
 }
 
 #line 37
-void sh2_ktVif0PkBufInit(void) {
+void sh2_ktVif0PkBufInit() {
 
     ktVif0PkBufInit(vif0_pk_buf_db, vif0_pk_buf_db[1], sizeof(vif0_pk_buf_db[0]));
 
@@ -22,11 +22,11 @@ void sh2_ktVif0PkBufInit(void) {
 }
 
 #line 50
-void* ktVif0PkBufNext(void) {
+void* ktVif0PkBufNext() {
     return ktPkBufNext(&vif0_pkbuf);
 }
 
 #line 70
-void* ktVif0PkBufCurrent(void) {
+void* ktVif0PkBufCurrent() {
     return ktPkBufCurrent(&vif0_pkbuf);
 }
