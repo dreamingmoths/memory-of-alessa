@@ -4,7 +4,7 @@
 #include "sce/libdma.h"
 
 typedef struct Vif1Work {
-    struct sceDmaChan* dma;
+    sceDmaChan* dma;
 } Vif1Work;
 
 void ktVif1Init(void);
