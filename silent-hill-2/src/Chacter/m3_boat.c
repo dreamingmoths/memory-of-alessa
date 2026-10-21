@@ -5,6 +5,7 @@
 
 #include "sce/eeregs.h"
 #include "vec.h"
+#include "sdk.h"
 
 #include "Chacter/character.h"
 #include "Chacter/chara_list.h"
@@ -242,11 +243,8 @@ static CL_HITPOLY_PLANE lake_active_wall_list[12] = {
     }
 };
 
-static int dt_0x01202578; // size: 0x4, address: 0x1202578
-static float dtf_0x01202570; // size: 0x4, address: 0x1202570
-
-#define dtf dtf_0x01202570
-#define dt dt_0x01202578
+static int dt; // size: 0x4, address: 0x1202578
+static float dtf; // size: 0x4, address: 0x1202570
 
 shBoatWork sh2bot; // size: 0x20, address: 0x1202550
 Matrix4 boat_localworld_matrix; // size: 0x40, address: 0x1202510
@@ -674,7 +672,7 @@ void BoatSetHeightDummy(void) {
 
 void BoatSetHeight(SubCharacter* this) {
     this->pos.y = 500.0f * (7.18f + wv_height_y);
-    if (sh2jms.player->status & (1 << 17)) {
+    if (sh2jms.player->status & (1 << SCP_STATUS_BIT_17)) {
         this->center_y = -10000.0f;
         this->eye_y = -10000.0f;
         return;
@@ -777,9 +775,6 @@ static void BoatCheckStatus(SubCharacter* this) {
     func_list_main[sh2bot.status_now](this);
 }
 
-float fabsf(float);
-float sqrtf(float);
-
 
 static void BoatCheckControl(SubCharacter* this) {
     f32 var_f12;
@@ -843,7 +838,7 @@ static void BoatCheckControl(SubCharacter* this) {
         if (wv_timer_x >= 0.5f && wv_timer_x < 1.5f) wv_status_x = -1;
         else wv_status_x = 1;
 
-        wv_shinpuku_x = sqrtf((2.0f * wv_energy_x) / 1480.4408f);
+        wv_shinpuku_x = sqrtf(2.0f * wv_energy_x / 1480.4408f);
         wv_height_x = wv_shinpuku_x * sinf(PI * wv_timer_x);
         wv_energy_x -= (0.02f * wv_energy_x);
         
@@ -983,7 +978,7 @@ static void BoatCheckOarStatus(SubCharacter* scp) {
     sceVu0ApplyMatrix(oar_pos_right, (sceVu0FVECTOR*) &boat_localworld_matrix, oar_pos_right);
     oar_status_left[1] = oar_status_left[0];
     oar_status_right[1] = oar_status_right[0];
-    if ((oar_pos_left[1] > 3500.0f)) {
+    if (oar_pos_left[1] > 3500.0f) {
         oar_status_left[0] = 1;
     } else {
         oar_status_left[0] = 0;
@@ -1090,7 +1085,7 @@ static void BoatCheckRollEnergy(SubCharacter* scp) {
     }
 
     if (init_check_z != 0) {
-        if ((energy_z > 0.0f)) {
+        if (energy_z > 0.0f) {
             wv_timer_z = 0.0f;
             wv_status_z = 1;
         } else {
@@ -1099,10 +1094,10 @@ static void BoatCheckRollEnergy(SubCharacter* scp) {
         }
         switch (wv_status_z) {
             case 1:
-                wv_type_x = (wv_height_z >= 0.0f ? 0 : 1) & 0xFF;
+                wv_type_z = (u_char) (wv_height_z >= 0.0f ? 0 : 1);
                 break;
             case -1:
-                wv_type_x = (wv_height_z > 0.0f ? 2 : 3) & 0xFF;
+                wv_type_z = (u_char) (wv_height_z > 0.0f ? 2 : 3);
                 break;
         }
     }
@@ -1252,13 +1247,13 @@ static void HumanBOTFunction(SubCharacter* this) {
             
             
             
-            case 1: 
-            if (!(sh2jms.player->status & (1 << 13))) {
+        case 1: 
+            if (!(sh2jms.player->status & (1 << SCP_STATUS_BIT_NOW_DEMO_EVENT))) {
                 
                 
                 
                 
-                if (!(this->status & (1 << 2))) {
+                if (!(this->status & (1 << SCP_STATUS_BIT_ANIME_TYPE))) {
                     this->step = 0;
                     HumanBOTFunction(this);
                 }
@@ -1285,7 +1280,7 @@ static void HumanBOTFunction(SubCharacter* this) {
                 
                 
                 
-                if (sh2jms.player->status & (1 << 17)) {
+                if (sh2jms.player->status & (1 << SCP_STATUS_BIT_17)) {
                     BoatCheckKeyInput();
                     BoatCheckSetParameter(this);
                     BoatCheckStatus(this);
@@ -1330,7 +1325,7 @@ static void HumanBOTFunction(SubCharacter* this) {
                 SCAddPos(this, &pos);
                 SCAddRot(this, &rot);
                 this->rot.y = shAngleRegulate(this->rot.y);
-                if (sh2jms.player->status & (1 << 17)) {
+                if (sh2jms.player->status & (1 << SCP_STATUS_BIT_17)) {
                     BoatPlayerCheckControl();
                 }
             }
@@ -1376,7 +1371,7 @@ int shCharacterHumanBOTAnimeSet(SubCharacter* scp, int anime_id) {
 void shUpdateBoatJamesPosAfterAnime(void) {
     shCharaInfo* cip; // r2
 
-    if (sh2jms.player->status & (1 << 17)) {
+    if (sh2jms.player->status & (1 << SCP_STATUS_BIT_17)) {
         cip          = GetPlayerInfoForCameraCtrl();
         cip->pos     = sh2bot.boat_p->pos;
         cip->rot     = sh2bot.boat_p->rot;
