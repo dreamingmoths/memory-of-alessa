@@ -52,7 +52,7 @@ segments:
       - { start: 0x00024170,    type: c,          name: Chacter/sh_character_status                      }
       - { start: 0x000255f0,    type: c,          name: Chacter/skelton                                  }
       - { start: 0x00025880,    type: c,          name: Chacter_Draw/vifot/sh_kt_pkbuf                   }
-      - { start: 0x000258e0,    type: asm,        name: Chacter_Draw/vifot/sh_kt_vif0                    }
+      - { start: 0x000258e0,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif0                    }
       - { start: 0x00025a20,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif0pkbuf               }
       - { start: 0x00025b00,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif1                    }
       - { start: 0x00025b50,    type: asm,        name: Chacter_Draw/vifot/sh_kt_vif1ot2                 }
