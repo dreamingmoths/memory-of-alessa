@@ -19,10 +19,10 @@ static int fsSubCmdCdCheckTrayOpen(void);
 static int fsSubCmdCdGetMedia(void);
 static int fsSubCmdCdGetMmode(int media /* r2 */);
 static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /* r16 */);
-static int strcmp__(char * s /* r2 */, char * t /* r2 */);
-static int shHdOpenC(char* fullpath /* r17 */, int mode /* r16 */);
+static int strcmp__(s_char * s /* r2 */, s_char * t /* r2 */);
+static int shHdOpenC(s_char* fullpath /* r17 */, int mode /* r16 */);
 static int shHdCloseC(int fd /* r2 */);
-static int fsSubCmdHdRead0(char* name /* r30 */, int offset /* r29+0xAC */, int size /* r23 */, void* buf /* r22 */);
+static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, int size /* r23 */, void* buf /* r22 */);
 static int fsSubCmdHdError();
 static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */);
 static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */);
@@ -45,7 +45,7 @@ static int (* ___fsSubCmdFixFuncListH[2])(fsFile *) = {___fsSubCmdHdFixFile}; //
 static int (* fsSubCmdHdRead)() = fsSubCmdHdError; // size: 0x4, address: 0x33B2A8
 static fsSubCmdStatT fs_stat = {___fsSubCmdFixFuncListC, 255};
 
-static char hdopen_lastpath[256] = {}; // size: 0x100, address: 0x33B2B0
+static s_char hdopen_lastpath[256] = {}; // size: 0x100, address: 0x33B2B0
 static int hdopen_lastmode; // size: 0x4, address: 0x11591E0
 static int hdopen_lastfd = -1; // size: 0x4, address: 0x33B3B0
 static int fsCmdParam_media_permission; // size: 0x4, address: 0x11591E8
@@ -58,7 +58,7 @@ static inline fsFile* ID_fsFile(fsFileIndex* fileidx) {
     return fileidx->index.fp;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCheckCdHdFile);
+
 static fsFile* ___fsSubCmdCheckCdHdFile(fsFile * fp /* r2 */) {
     if (fp == NULL) return NULL;
     if (fp->cd.type & 0x10) return NULL;
@@ -66,7 +66,7 @@ static fsFile* ___fsSubCmdCheckCdHdFile(fsFile * fp /* r2 */) {
     return fp;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCheckRootFile);
+
 static fsFile* ___fsSubCmdCheckRootFile(fsFile * fp /* r2 */) {
     s_char* start; // r2
     s_char* end;   // r2
@@ -95,7 +95,7 @@ static fsFile* ___fsSubCmdCheckRootFile(fsFile * fp /* r2 */) {
     return fp;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCheckCdHdFixFile);
+
 static fsFile* ___fsSubCmdCheckCdHdFixFile(fsFile* fp) {
     if (fp->check.type & 0x40) {
 
@@ -123,7 +123,7 @@ static fsFile* ___fsSubCmdCheckCdHdFixFile(fsFile* fp) {
     return fp;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdCheckFixFile);
+
 fsFile* fsCmdCheckFixFile(fsFile* fp /* r16 */) {
     fsFile* ret; // r16
 
@@ -145,7 +145,7 @@ fsFile* fsCmdCheckFixFile(fsFile* fp /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCheckCdHdExistFile);
+
 static int ___fsSubCmdCheckCdHdExistFile(fsFile* fp /* r2 */) {
 
 
@@ -169,7 +169,7 @@ static int ___fsSubCmdCheckCdHdExistFile(fsFile* fp /* r2 */) {
     return -1;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdCheckExistFile);
+
 int fsCmdCheckExistFile(fsFile* fp /* r16 */) {
     int ret; // r16
     utilExclLockOtherThread();
@@ -183,7 +183,7 @@ int fsCmdCheckExistFile(fsFile* fp /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdSetRealFile0);
+
 static fsFile* fsSubCmdSetRealFile0(fsFile* realfp /* r17 */, fsFile* fp /* r16 */) {
     fsFile* ret; // r16
     utilExclLockOtherThread();
@@ -192,7 +192,7 @@ static fsFile* fsSubCmdSetRealFile0(fsFile* realfp /* r17 */, fsFile* fp /* r16 
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdSetRealFile0);
+
 static fsFile* ___fsSubCmdSetRealFile0(fsFile* realfp /* r17 */, fsFile* fp /* r16 */) {
     fsFile* ret; // r2
     int offset; // r3
@@ -272,7 +272,7 @@ static fsFile* ___fsSubCmdSetRealFile0(fsFile* realfp /* r17 */, fsFile* fp /* r
 
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdSetRealFile);
+
 static fsFile * fsSubCmdSetRealFile(fsFile* realfp /* r18 */, fsFile* fp /* r17 */) {
     fsFile* ret; // r16
     int err = 0; // r2
@@ -287,12 +287,12 @@ static fsFile * fsSubCmdSetRealFile(fsFile* realfp /* r18 */, fsFile* fp /* r17 
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdSetRealFile);
+
 int fsCmdSetRealFile(fsFile* realfp /* r2 */, fsFile* fp /* r2 */) {
     return fsSubCmdSetRealFile(realfp, fp) == NULL;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdNullDevFixFile);
+
 static int ___fsSubCmdNullDevFixFile(fsFile * fp /* r2 */) {
     ASSERT(fp ==ID_fsFile(&data_null_dev));
 
@@ -307,10 +307,10 @@ static int ___fsSubCmdNullDevFixFile(fsFile * fp /* r2 */) {
     return 2;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCdCommonFixFile);
+
 static int ___fsSubCmdCdCommonFixFile(fsFile* fp /* r16 */) {
-    sceCdlFILE file[1]; /* r29+0x30 */
-    char fullpath[256]; // r29+0x60
+    sceCdlFILE file[1];   // r29+0x30
+    s_char fullpath[256]; // r29+0x60
     int ret; // r17
 
 
@@ -351,23 +351,23 @@ static int ___fsSubCmdCdCommonFixFile(fsFile* fp /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCd1stFixFile);
+
 static int ___fsSubCmdCd1stFixFile(fsFile* fp /* r2 */) {
     if (fp->cd.type & 1)
         return ___fsSubCmdCdCommonFixFile(fp);
     return 0;
 }
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdCdFixFile);
+
 static int ___fsSubCmdCdFixFile(fsFile* fp /* r2 */) {
     if (fp->cd.type & 5)
         return ___fsSubCmdCdCommonFixFile(fp);
     return 0;
 }
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdHdCommonFixFile);
+
 static int ___fsSubCmdHdCommonFixFile(fsFile* fp /* r16 */) {
-    signed int size; // r2
-    char fullpath[256]; // r29+0x30
-    signed int ret; // r17
+    int size;             // r2
+    s_char fullpath[256]; // r29+0x30
+    int ret;              // r17
 
     if (fp == ID_fsFile(&data_null_dev)) {
         ___fsSubCmdNullDevFixFile(fp);
@@ -401,43 +401,43 @@ static int ___fsSubCmdHdCommonFixFile(fsFile* fp /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdHd1stFixFile);
+
 static int ___fsSubCmdHd1stFixFile(fsFile* fp /* r2 */) {
     if (fp->hd.type & 2)
         return ___fsSubCmdHdCommonFixFile(fp);
     return 0;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdHdFixFile);
+
 static int ___fsSubCmdHdFixFile(fsFile* fp /* r2 */) {
     if (fp->hd.type & 10)
         return ___fsSubCmdHdCommonFixFile(fp);
     return 0;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdDiskSelectC);
+
 int fsCmdDiskSelectC() {
     fs_stat.fix_func_list = ___fsSubCmdFixFuncListC;
     return 1;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdDiskSelectCH);
+
 int fsCmdDiskSelectCH() {
     fs_stat.fix_func_list = ___fsSubCmdFixFuncListCH;
     return 1;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdDiskSelectHC);
+
 int fsCmdDiskSelectHC() {
     fs_stat.fix_func_list = ___fsSubCmdFixFuncListHC;
     return 1;
 }
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdExecDevSelect);
+
 int fsCmdExecDevSelect(int mode /* r2 */) {
     fs_stat.exec_dev = mode;
     return 1;
 }
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsSubCmdFixFile);
+
 static int ___fsSubCmdFixFile(fsFile* fp /* r17 */) {
     int (**funcp)(fsFile*); // r18
     int (*___fsFunc)(fsFile*); // r2
@@ -475,7 +475,7 @@ static int ___fsSubCmdFixFile(fsFile* fp /* r17 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdFixFile);
+
 int fsCmdFixFile(fsFile* fp /* r16 */) {
     int ret; // r16
 
@@ -490,7 +490,7 @@ int fsCmdFixFile(fsFile* fp /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdCdCheckTrayOpen);
+
 static int fsSubCmdCdCheckTrayOpen(void) {
     int stat; // r2
     u_int traycnt; // r29+0x1C
@@ -510,7 +510,7 @@ static int fsSubCmdCdCheckTrayOpen(void) {
     return stat == 32;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdCdGetMedia);
+
 static int fsSubCmdCdGetMedia(void) {
     int cur_media; // r2
 
@@ -557,7 +557,7 @@ static int fsSubCmdCdGetMedia(void) {
     return cur_media;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdCdGetMmode);
+
 static int fsSubCmdCdGetMmode(int media /* r2 */) {
     int mmode; // r2
 
@@ -571,13 +571,13 @@ static int fsSubCmdCdGetMmode(int media /* r2 */) {
     return mmode;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdCdRead);
+
 static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /* r16 */) {
     static sceCdlFILE* rmode = (sceCdlFILE*)256; // @ 0x0033B2A0
     int ret; // r4
 
     do {
-        switch (buf != NULL ? shCdReadW(lsn, sectors, buf, rmode) : shCdSeekW(lsn)) {                           /* irregular */
+        switch (buf != NULL ? shCdReadW(lsn, sectors, buf, rmode) : shCdSeekW(lsn)) {
             case 0:
                 ret = 1;
                 break;
@@ -608,7 +608,7 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 }
 
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdHdInit);
+
 int fsCmdHdInit(int enable /* r2 */) {
     if (enable) {
         shHdInit();
@@ -619,17 +619,16 @@ int fsCmdHdInit(int enable /* r2 */) {
         fsSubCmdHdRead = fsSubCmdHdError;
     }
     return 1;
-    // fs_stat.disk_emulation = 1;
 }
-static int strcmp__(char * s /* r2 */, char * t /* r2 */) {
+static int strcmp__(s_char * s /* r2 */, s_char * t /* r2 */) {
     for (; *s == *t; s++, t++) {
         if (*s == 0) return 0;
     }
     return *s - *t;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", shHdOpenC);
-static int shHdOpenC(char* fullpath /* r17 */, int mode /* r16 */) {
+
+static int shHdOpenC(s_char* fullpath /* r17 */, int mode /* r16 */) {
     if ((strcmp__(fullpath, hdopen_lastpath) != 0) || (hdopen_lastmode != mode)) {
         if (hdopen_lastpath[0]) {
             shHdClose(hdopen_lastfd);
@@ -641,22 +640,22 @@ static int shHdOpenC(char* fullpath /* r17 */, int mode /* r16 */) {
     return hdopen_lastfd;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", shHdCloseC);
+
 static int shHdCloseC(int fd /* r2 */) {
     if (hdopen_lastfd == fd)
         return 0;
     return -1;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdHdRead0);
-static int fsSubCmdHdRead0(char* name /* r30 */, int offset /* r29+0xAC */, int size /* r23 */, void* buf /* r22 */) {
+
+static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, int size /* r23 */, void* buf /* r22 */) {
     int retry; // r16
     int ret; // r17
-    char* fullpath; // r2
+    s_char* fullpath; // r2
     int fd; // r18
     int remainsize; // r19
     int readsize; // r20
-    char* readbuf; // r21
+    s_char* readbuf; // r21
     retry = 0xA;
 
 
@@ -678,8 +677,8 @@ static int fsSubCmdHdRead0(char* name /* r30 */, int offset /* r29+0xAC */, int 
 
 
             if (buf != NULL) {
-                SyncDCache(buf, (char*)buf + size);
-                InvalidDCache(buf, (char*)buf + size);
+                SyncDCache(buf, (s_char*)buf + size);
+                InvalidDCache(buf, (s_char*)buf + size);
             }
 
 
@@ -746,12 +745,12 @@ static int fsSubCmdHdRead0(char* name /* r30 */, int offset /* r29+0xAC */, int 
     } while (true); // hack, probably
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdHdError);
+
 static int fsSubCmdHdError() {
     return 0;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdRealRead);
+
 static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     if (fp ==ID_fsFile(&data_null_dev)) {
 
@@ -760,8 +759,8 @@ static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     } else if (fp->check.number) {
         return fsSubCmdCdRead(fp->cd.lsn, (fp->cd.size + 0x7ff) / 2048, buf);
     } else if (fp->hd.type & 0x80) {
-        char fullpath[256]; // r29+0x30
-        char* name; // r2
+        s_char fullpath[256]; // r29+0x30
+        s_char* name; // r2
         name = fp->hd.name;
         if (fp->hd.type & 0x20) {
             if (!shPathMakeHdDataBase(fullpath, name)) {
@@ -782,7 +781,7 @@ static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     return 0;
 
 }
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsSubCmdRead);
+
 static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */) {
     int ret; // r16
     fsFile realfp; // r29+0x20
@@ -795,7 +794,7 @@ static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", ___fsCmdRead);
+
 static int ___fsCmdRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     int ret; // r16
 
@@ -808,14 +807,14 @@ static int ___fsCmdRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdRead);
+
 int fsCmdRead(fsFile* fp /* r2 */, void* buf /* r2 */) {
     if (fp == ID_fsFile(&data_null_dev))
         ASSERT(!"can't read null.dev"); // @todo: additional string here
     return ___fsCmdRead(fp, buf);
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdReadPart);
+
 int fsCmdReadPart(fsFile* fp /* r2 */, void* buf /* r2 */, int offset /* r2 */, int size /* r2 */) {
     fsFile partfile; // r29+0x10
 
@@ -830,7 +829,7 @@ int fsCmdReadPart(fsFile* fp /* r2 */, void* buf /* r2 */, int offset /* r2 */, 
     return ___fsCmdRead(&partfile, buf);
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdSetParamForCheckDisk);
+
 int fsCmdSetParamForCheckDisk(int media_permission /* r2 */, fsFile** fplist /* r2 */, void** buflist /* r2 */, int (* check_func)(fsFile**, void**) /* r2 */) {
     fsCmdParam_media_permission = media_permission;
     fsCmdParam_fplist = fplist;
@@ -840,36 +839,11 @@ int fsCmdSetParamForCheckDisk(int media_permission /* r2 */, fsFile** fplist /* 
     return 1;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdCdCheckDisk);
+
 int fsCmdCdCheckDisk(int force_check /* r2 */) {
     return fsCmdCdCheckDisk2(force_check, fsCmdParam_media_permission, fsCmdParam_fplist, fsCmdParam_buflist, fsCmdParam_check_func);
 }
 
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @229_0x00391520);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @230);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @595_0x00391560);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @605_0x00391578);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @606_0x00391588);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @607_0x00391598);
-
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @628);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @629);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @654);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @655);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @656);
-//
-// INCLUDE_RODATA("asm/nonmatchings/Multi_thr/filesys/filecmd", @657);
-
-// INCLUDE_ASM("asm/nonmatchings/Multi_thr/filesys/filecmd", fsCmdCdCheckDisk2);
 int fsCmdCdCheckDisk2(int force_check /* r2 */, int media_permission /* r29+0xAC */, fsFile** fplist /* r22 */, void** buflist /* r21 */, int (* check_func)(fsFile**, void**) /* r30 */) {
     fsFile** fpp = NULL; // r16
     fsFile* fp = NULL; // r17
