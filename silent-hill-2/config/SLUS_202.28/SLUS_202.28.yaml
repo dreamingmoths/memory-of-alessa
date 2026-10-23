@@ -56,7 +56,7 @@ segments:
       - { start: 0x00025a20,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif0pkbuf               }
       - { start: 0x00025b00,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif1                    }
       - { start: 0x00025b50,    type: asm,        name: Chacter_Draw/vifot/sh_kt_vif1ot2                 }
-      - { start: 0x00025f10,    type: asm,        name: Chacter_Draw/vifot/sh_kt_vif1pkbuf               }
+      - { start: 0x00025f10,    type: c,          name: Chacter_Draw/vifot/sh_kt_vif1pkbuf               }
       - { start: 0x00025fc0,    type: c,          name: Chacter_Draw/clani                               }
       - { start: 0x00026760,    type: c,          name: Chacter_Draw/light_n                             }
       - { start: 0x00027f80,    type: c,          name: Chacter_Draw/model3_cluster_n                    }
