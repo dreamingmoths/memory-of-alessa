@@ -516,7 +516,7 @@ segments:
       - { start: 0x001726c0,    type: c,          name: LoadBg/loadbg_cld                                }
       - { start: 0x00172ab0,    type: c,          name: LoadBg/loadbg_kg2                                }
       - { start: 0x00172eb0,    type: c,          name: LoadBg/loadbg_map                                }
-      - { start: 0x001736f0,    type: asm,        name: LoadBg/loadbg_mem                                }
+      - { start: 0x001736f0,    type: c,          name: LoadBg/loadbg_mem                                }
       - { start: 0x001753a0,    type: asm,        name: Fog/fog_blow                                     }
       - { start: 0x00175fa0,    type: c,          name: Chacter/chara_bound                              }
       - { start: 0x00176030,    type: c,          name: Chacter/charaboundtbl                            }
@@ -1072,7 +1072,7 @@ segments:
       - { start: 0x0029b200,    type: .rodata,    name: LoadBg/loadbg_cld                                }
       - { start: 0x0029b2d0,    type: .rodata,    name: LoadBg/loadbg_kg2                                }
       - { start: 0x0029b3a0,    type: .rodata,    name: LoadBg/loadbg_map                                }
-      - { start: 0x0029b720,    type: rodata,     name: LoadBg/loadbg_mem                                }
+      - { start: 0x0029b720,    type: .rodata,    name: LoadBg/loadbg_mem                                }
       - { start: 0x0029bf50,    type: .rodata,    name: sh2shd/sh2shd_shadow_env                         }
       - { start: 0x0029bfd0,    type: rodata,     name: rodata_0x29bfd0                                  }
       - { start: 0x0029c140,    type: .rodata,    name: Chacter/m3_play_event                            }
