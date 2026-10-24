@@ -7,9 +7,9 @@ UNMIGRATED(Vif0Work vif0_work); // size: 0x4, address: 0x3E66D0
 
 #line 34
 void ktVif0Init() {
-    memset(&vif0_work, 0, 4);
+    memset(&vif0_work, 0, sizeof(vif0_work));
     
-    vif0_work.dma = sceDmaGetChan(0);
+    vif0_work.dma = sceDmaGetChan(SCE_DMA_VIF0);
 }
 
 #line 56
@@ -21,7 +21,7 @@ void ktVif0Wait() {
     
     
     
-    BLOCK_WHILE((sceDmaSync(vif0_work.dma, 0, 0)));
+    BLOCK_WHILE(sceDmaSync(vif0_work.dma, 0, 0));
 
 
 
@@ -33,7 +33,7 @@ void ktVif0Wait() {
 void ktVif0Wait2() {
     ktVif0Wait();
     
-    BLOCK_WHILE((*VIF0_STAT & 0x0F000003));
+    BLOCK_WHILE(*VIF0_STAT & 0x0F000003);
 }
 
 #line 91
