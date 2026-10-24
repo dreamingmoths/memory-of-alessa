@@ -27,14 +27,14 @@ void sh2gfw_Init_DemoLight_Work(void) {
 
 int sh2gfw_Set_DemoRefrectionHighLight(float* dir, float* col) {
     DemoLightWork.Ref = 1;
-    volatile_vec_copy(DemoLightWork.demo_RefLight_dir, dir);
-    volatile_vec_copy(DemoLightWork.demo_RefLight_col, col);
+    shVectorCopy(DemoLightWork.demo_RefLight_dir, dir);
+    shVectorCopy(DemoLightWork.demo_RefLight_col, col);
 }
 
 int sh2gfw_Get_DemoRefrectionHightLight(float* dir, float* col) {
     if (DemoLightWork.Ref != 0) {
-        volatile_vec_copy(dir, DemoLightWork.demo_RefLight_dir);
-        volatile_vec_copy(col, DemoLightWork.demo_RefLight_col);
+        shVectorCopy(dir, DemoLightWork.demo_RefLight_dir);
+        shVectorCopy(col, DemoLightWork.demo_RefLight_col);
     } else {
         return 0;
     }
@@ -94,8 +94,8 @@ int sh2gfw_Get_ParallelDemoLight(int n, float* dir, float* col) {
         
         svt = (sceVu0FVECTOR*) DemoLightWork.demo_p_light0 + n * 2;
         
-        volatile_vec_copy(dir, svt[0]);
-        volatile_vec_copy(col, svt[1]);
+        shVectorCopy(dir, svt[0]);
+        shVectorCopy(col, svt[1]);
         
         return 1;
     }
@@ -113,8 +113,8 @@ void sh2gfw_Set_DemoPointLight(int n, float* pos, float* col, float falloff_star
     pl += n;
     DemoLightWork.Point[n] = 1;
     
-    volatile_vec_copy(pl->pos, pos);
-    volatile_vec_copy(pl->col, col);
+    shVectorCopy(pl->pos, pos);
+    shVectorCopy(pl->col, col);
     pl->decay[0] = falloff_start;
     pl->decay[1] = falloff_end;
 }
@@ -130,9 +130,9 @@ int sh2gfw_Get_DemoPointLight(int n, float* pos, float* col, float* decay) {
         
         pl = (AAA*) DemoLightWork.demo_pointcol0;
         pl += n;
-        volatile_vec_copy(pos, pl->pos);
-        volatile_vec_copy(col, pl->col);
-        volatile_vec_copy(decay, pl->decay);
+        shVectorCopy(pos, pl->pos);
+        shVectorCopy(col, pl->col);
+        shVectorCopy(decay, pl->decay);
         return 1;
     }
     return 0;
@@ -144,14 +144,14 @@ int sh2gfw_Check_DemoSpotLight(void) {
 }
 
 void sh2gfw_Get_DemoSpotParm(float* svt) {
-    volatile_vec_copy(svt, &DemoLightWork.demo_spotdecay);
+    shVectorCopy(svt, &DemoLightWork.demo_spotdecay);
 
 }
 
 void sh2gfw_Get_DemoSpotPosDirCol(float* pos, float* dir, float* col) {
-    volatile_vec_copy(pos, &DemoLightWork.demo_spotpos);
-    volatile_vec_copy(dir, &DemoLightWork.demo_spotdir);
-    volatile_vec_copy(col, &DemoLightWork.demo_spotcol);
+    shVectorCopy(pos, &DemoLightWork.demo_spotpos);
+    shVectorCopy(dir, &DemoLightWork.demo_spotdir);
+    shVectorCopy(col, &DemoLightWork.demo_spotcol);
 
 
 }
@@ -160,9 +160,9 @@ void sh2gfw_Set_SpotLight(float* dir, float* pos, float* color, int unused, floa
     
     DemoLightWork.Spot = 1;
     
-    volatile_vec_copy(DemoLightWork.demo_spotpos, pos);
-    volatile_vec_copy(DemoLightWork.demo_spotdir, dir);
-    volatile_vec_copy(DemoLightWork.demo_spotcol, color);
+    shVectorCopy(DemoLightWork.demo_spotpos, pos);
+    shVectorCopy(DemoLightWork.demo_spotdir, dir);
+    shVectorCopy(DemoLightWork.demo_spotcol, color);
     
     DemoLightWork.demo_spotdecay[0] = falloff_start;
     DemoLightWork.demo_spotdecay[1] = shCosF(spread_pi);

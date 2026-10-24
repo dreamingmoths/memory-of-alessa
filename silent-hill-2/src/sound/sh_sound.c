@@ -153,7 +153,7 @@ int SeCallPos(int sd_no, float volume, float* pos, int status) {
         se_2d_manage_data[i].sd = sd_no;
         se_2d_manage_data[i].room = RoomNameJms();
         if (pos != NULL) {
-            volatile_vec_copy(se_2d_manage_data[i].pos, pos);
+            shVectorCopy(se_2d_manage_data[i].pos, pos);
             se_2d_manage_data[i].pos_on = 1;
         } else se_2d_manage_data[i].pos_on = 0;        
         se_2d_manage_data[i].vol = volume;
@@ -188,7 +188,7 @@ int SeCallPos(int sd_no, float volume, float* pos, int status) {
         if (ret != -1) {
             se_3d_channel_data[ret].sd = sd_no;
             se_3d_channel_data[ret].status = status;
-            volatile_vec_copy(se_3d_channel_data[ret].pos, pos);
+            shVectorCopy(se_3d_channel_data[ret].pos, pos);
             se_3d_channel_data[ret].vol = volume;
             se_3d_channel_data[ret].room = RoomNameJms();
             if ((status & 3) == 1) se_3d_channel_number++;            
@@ -1103,7 +1103,7 @@ void SeBgmManager(void) {
         
         sound_work.sound_ary = (SOUND_DATA*) snd_data_buffer;
         
-        if (sh2jms.player == NULL) vu0_unit_vector(sound_work.chara_pos);
+        if (sh2jms.player == NULL) shUnitVector(sound_work.chara_pos);
         else {
             sound_work.chara_pos[0] = sh2jms.player->pos.x;
             sound_work.chara_pos[1] = sh2jms.player->pos.y;
@@ -1194,11 +1194,11 @@ void SeBgmManager(void) {
             break;
     }
     if (bgm.volume > volume) {
-        bgm.volume = float_max(bgm.volume - shGetDT() / 2.0f, volume);
+        bgm.volume = shFloatMax(bgm.volume - shGetDT() / 2.0f, volume);
         shSdCall(0x3FC, ftoi(127.0f * bgm.volume), 0, 0);
     }
     else if (bgm.volume < volume) {
-        bgm.volume = float_min(bgm.volume + shGetDT() / 2.0f, volume);
+        bgm.volume = shFloatMin(bgm.volume + shGetDT() / 2.0f, volume);
         shSdCall(0x3FC, ftoi(127.0f * bgm.volume), 0, 0);
     }
 }

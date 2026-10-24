@@ -883,13 +883,13 @@ static void BoatCheckAnimeSpeed(SubCharacter* scp) {
     purpose_speed_left = (8.0f * (4096.0f * lstick_power));
     purpose_speed_right = (8.0f * (4096.0f * rstick_power));
     
-    if (int_abs(purpose_speed_left) > int_abs(anm_speed_left)) {
+    if (shAbs(purpose_speed_left) > shAbs(anm_speed_left)) {
         close_to_value(&anm_speed_left, purpose_speed_left, 0x40);
     } else {
         close_to_value(&anm_speed_left, purpose_speed_left, 0x10);
     }
     
-    if (int_abs(purpose_speed_right) > int_abs(anm_speed_right)) {
+    if (shAbs(purpose_speed_right) > shAbs(anm_speed_right)) {
         close_to_value(&anm_speed_right, purpose_speed_right, 0x40);
     } else {
         close_to_value(&anm_speed_right, purpose_speed_right, 0x10);
@@ -971,9 +971,9 @@ static void BoatCheckOarStatus(SubCharacter* scp) {
     for (i = 0; i < 3; i++)
         top = top->next;
 
-    volatile_vec_copy(oar_pos_left, top->src_m.d[3]);
+    shVectorCopy(oar_pos_left, top->src_m.d[3]);
     top = top->next;
-    volatile_vec_copy(oar_pos_right, top->src_m.d[3]);
+    shVectorCopy(oar_pos_right, top->src_m.d[3]);
     sceVu0ApplyMatrix(oar_pos_left, (sceVu0FVECTOR*) &boat_localworld_matrix, oar_pos_left);
     sceVu0ApplyMatrix(oar_pos_right, (sceVu0FVECTOR*) &boat_localworld_matrix, oar_pos_right);
     oar_status_left[1] = oar_status_left[0];
@@ -1211,8 +1211,8 @@ static void HumanBOTFunction(SubCharacter* this) {
             sceVu0FVECTOR rot; // r29+0x40
             sceVu0FVECTOR sp50;
             
-            volatile_vec_copy(pos, &this->pos);
-            volatile_vec_copy(rot, &this->rot);
+            shVectorCopy(pos, &this->pos);
+            shVectorCopy(rot, &this->rot);
             
             HumanBOTInit();
             
@@ -1227,8 +1227,8 @@ static void HumanBOTFunction(SubCharacter* this) {
             }
             
             
-            volatile_vec_copy(&this->pos, pos);
-            volatile_vec_copy(&this->rot, rot);
+            shVectorCopy(&this->pos, pos);
+            shVectorCopy(&this->rot, rot);
             
             BoatSetHeight(this);
             shCharacterSetPosAfterDemo(this, &this->pos.x, this->rot.y);

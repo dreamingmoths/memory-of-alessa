@@ -55,7 +55,7 @@ void vcSetCameraUseWarp(sceVu0FVECTOR chr_pos, float chr_ang_y) {
     sceVu0FVECTOR cam_ang;
 
 
-    shVectorZero(cam_ang); // @bug: Arrays are set but never used, vec_zero uses asm that makes compiler forget this?
+    shVectorZero(cam_ang); // @bug: Arrays are set but never used, shVectorZero uses asm that makes compiler forget this?
     cam_ang[1] = chr_ang_y;
 
 

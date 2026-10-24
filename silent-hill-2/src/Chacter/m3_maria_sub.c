@@ -1272,7 +1272,7 @@ static void MariaCheckNeckAngle(SubCharacter* this) {
         default:
             if (sh2mar.look_tgt != NULL) {
 
-                volatile_shVectorCopy(pos, &sh2mar.look_tgt->pos);
+                shVectorCopyNonvolatile(pos, &sh2mar.look_tgt->pos);
                 pos[1] = sh2mar.look_tgt->eye_y;
 
                 tmp[0] = pos[0] - this->pos.x;

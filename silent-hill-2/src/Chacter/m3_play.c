@@ -517,19 +517,19 @@ void PlayerCheckKeyInput(void) {
 
     
     
-    if (int_abs(pad[0].lstickY) < 0x26) pad[0].lstickY = 0;
-    if (int_abs(pad[0].lstickX) < 0x26) pad[0].lstickX = 0;
-    if (int_abs(pad[0].rstickY) < 0x26) pad[0].rstickY = 0;
-    if (int_abs(pad[0].rstickX) < 0x26) pad[0].rstickX = 0;
+    if (shAbs(pad[0].lstickY) < 0x26) pad[0].lstickY = 0;
+    if (shAbs(pad[0].lstickX) < 0x26) pad[0].lstickX = 0;
+    if (shAbs(pad[0].rstickY) < 0x26) pad[0].rstickY = 0;
+    if (shAbs(pad[0].rstickX) < 0x26) pad[0].rstickX = 0;
 
     if (playing.control_type == 0) {
-        asobi_x = int_abs(pad[0].lstickY) / 2;
+        asobi_x = shAbs(pad[0].lstickY) / 2;
         asobi_x = (asobi_x < 0) ? 0 : (asobi_x > 0x40) ? 0x40 : asobi_x;        
-        asobi_y = int_abs(pad[0].lstickX) / 2;
+        asobi_y = shAbs(pad[0].lstickX) / 2;
         asobi_y = (asobi_y < 0) ? 0 : (asobi_y > 0x40) ? 0x40 : asobi_y;
             
-        if (int_abs(pad[0].lstickY) < asobi_y) pad[0].lstickY = 0;        
-        if (int_abs(pad[0].lstickX) < asobi_x) pad[0].lstickX = 0;
+        if (shAbs(pad[0].lstickY) < asobi_y) pad[0].lstickY = 0;        
+        if (shAbs(pad[0].lstickX) < asobi_x) pad[0].lstickX = 0;
     } else {
         asobi_x = asobi_y = 0;
     }

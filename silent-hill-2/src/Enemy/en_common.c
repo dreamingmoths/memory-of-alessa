@@ -105,7 +105,7 @@ void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */) {
     dp->kind = kind;
     dp->scp = scp;
     dp->path.markangle = dp->path.angle = dp->scp->rot.y;
-    volatile_shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);
+    shVectorCopyNonvolatile(&dp->scp->b_pos, &dp->scp->pos);
     
     
     dp->scp->battle.status &= ~0x4F;

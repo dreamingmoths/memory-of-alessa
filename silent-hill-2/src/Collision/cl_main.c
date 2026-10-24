@@ -1832,10 +1832,10 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
     sceVu0FVECTOR pos, cpos, bcpos; // r29+0x30, r29+0x40, r29+0x50
     float dist; // r29+0x6C
     void** list; // r2
-    volatile_shVectorCopy(pos, bpos);
+    shVectorCopy(pos, bpos);
     pos[1] = 0.0f;
     pos[3] = 1.0f;
-    vec_zero(cpos);
+    shVectorZero(cpos);
     
     if (clCollisionEnable != 0) {
         
@@ -1858,7 +1858,7 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
             
             cpos[0] = ch->sx;
             cpos[2] = ch->sz;
-            volatile_shVectorCopy(bcpos, cpos); 
+            shVectorCopy(bcpos, cpos); 
             // @note: different from the rest! has no `y` computations. not an inline based on the line numbers.
             
             asm("lqc2 vf1, 0(%0)\n\
@@ -1909,7 +1909,7 @@ CL_SELECT_MAP* clGetHitSectListMOVEOutDoor(float* bpos) {
                         use++;
                     }
                     
-                    volatile_shVectorCopy(cpos, bcpos); 
+                    shVectorCopy(cpos, bcpos); 
                 }
             }
         }
