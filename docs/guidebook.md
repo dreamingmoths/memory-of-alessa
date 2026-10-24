@@ -54,6 +54,8 @@ Due to performance concerns, it may be good to open `debug.c` in a text editor
 such as Sublime Text rather than an IDE, or otherwise turn off code analysis
 when the file is open.
 
+Silent Hill 2's DWARF has a couple of quirks to look out for. See [dwarf-quirks.md](dwarf-quirks.md)
+
 
 ### alessatool
 
