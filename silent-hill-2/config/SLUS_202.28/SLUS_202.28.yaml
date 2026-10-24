@@ -68,7 +68,7 @@ segments:
       - { start: 0x0002e4c0,    type: c,          name: Chacter_Draw/model_common                        }
       - { start: 0x0002e540,    type: asm,        name: Chacter_Draw/model_n                             }
       - { start: 0x0002e580,    type: asm,        name: Chacter_Draw/sh2gfw_CharacterOT                  }
-      - { start: 0x0002e8d0,    type: asm,        name: Chacter_Draw/sh2gfw_Draw_Character               }
+      - { start: 0x0002e8d0,    type: c,          name: Chacter_Draw/sh2gfw_Draw_Character               }
       - { start: 0x0002f7a0,    type: asm,        name: Chacter_Draw/sh2gfw_md_spclmapping               }
       - { start: 0x0002fad0,    type: asm,        name: Chacter_Draw/sh2gfw_model_light                  }
       - { start: 0x00031c10,    type: c,          name: Chacter_Draw/sh_kt_vu0                           }
