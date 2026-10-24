@@ -26,17 +26,15 @@ static int fsSubCmdHdError();
 static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */);
 static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */);
 static int ___fsCmdRead(fsFile* fp /* r17 */, void* buf /* r16 */);
+static int (* ___fsSubCmdFixFuncListC[2])(fsFile *);
+static fsSubCmdStatT fs_stat = {___fsSubCmdFixFuncListC, 255};
 static int (* ___fsSubCmdFixFuncListC[2])(fsFile *) = {___fsSubCmdCdFixFile}; // size: 0x8, address: 0x33B258
 static int (* ___fsSubCmdFixFuncListCH[5])(fsFile *) = { ___fsSubCmdCd1stFixFile, ___fsSubCmdHd1stFixFile, ___fsSubCmdCdFixFile, ___fsSubCmdHdFixFile}; // size: 0x14, address: 0x33B260
 static int (* ___fsSubCmdFixFuncListHC[5])(fsFile *) = { ___fsSubCmdHd1stFixFile, ___fsSubCmdCd1stFixFile, ___fsSubCmdHdFixFile, ___fsSubCmdCdFixFile}; // size: 0x14, address: 0x33B280
 static int (* ___fsSubCmdFixFuncListH[2])(fsFile *) = {___fsSubCmdHdFixFile}; // size: 0x8, address: 0x33B298
-static int (* fsSubCmdHdRead)() = fsSubCmdHdError; // size: 0x4, address: 0x33B2A8
-static fsSubCmdStatT fs_stat = {___fsSubCmdFixFuncListC, 255};
 
 UNMIGRATED(fsFileIndex data_null_dev[1]); // size: 0x8, address: 0x39C600
-static s_char hdopen_lastpath[256] = ""; // size: 0x100, address: 0x33B2B0
 static int hdopen_lastmode = 0; // size: 0x4, address: 0x11591E0
-static int hdopen_lastfd = -1; // size: 0x4, address: 0x33B3B0
 static int fsCmdParam_media_permission = 0; // size: 0x4, address: 0x11591E8
 static fsFile** fsCmdParam_fplist = NULL; // size: 0x4, address: 0x11591F0
 static void** fsCmdParam_buflist = NULL; // size: 0x4, address: 0x11591F8
@@ -45,6 +43,8 @@ static int (* fsCmdParam_check_func)(fsFile**, void**) = NULL; // size: 0x4, add
 static inline fsFile* ID_fsFile(fsFileIndex* fileidx) {
     return fileidx->index.fp;
 }
+
+
 
 
 
@@ -996,7 +996,7 @@ static int fsSubCmdCdGetMmode(int media /* r2 */) {
 
 
 static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /* r16 */) {
-    static sceCdRMode rmode[] = {256}; // @ 0x0033B2A0
+    static sceCdRMode rmode[] = {0, 1}; // @ 0x0033B2A0
     int ret; // r4
 
 
@@ -1085,7 +1085,7 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 
 
 
-
+static int (* fsSubCmdHdRead)() = fsSubCmdHdError; // size: 0x4, address: 0x33B2A8
 
 
 
@@ -1140,8 +1140,8 @@ static int strcmp__(s_char * s /* r2 */, s_char * t /* r2 */) {
 }
 
 
-
-
+static s_char hdopen_lastpath[256] = ""; // size: 0x100, address: 0x33B2B0
+static int hdopen_lastfd = -1; // size: 0x4, address: 0x33B3B0
 
 static int shHdOpenC(s_char* fullpath /* r17 */, int mode /* r16 */) {
     if ((strcmp__(fullpath, hdopen_lastpath) != 0) || (hdopen_lastmode != mode)) {
@@ -1705,10 +1705,10 @@ int fsCmdGetTrayStat(void) {
         case 3:
 
             return 3;
-        case 2:
+        case 4:
 
             return 4;
-        case 4:
+        case 2:
         case 5:
         case 6:
         case 7:
@@ -1718,5 +1718,6 @@ int fsCmdGetTrayStat(void) {
             return 2;
     }
 }
+
 
 
