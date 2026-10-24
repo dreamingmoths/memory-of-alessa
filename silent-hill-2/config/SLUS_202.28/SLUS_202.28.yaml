@@ -140,7 +140,7 @@ segments:
       - { start: 0x0008b280,    type: asm,        name: Multi_thr/util/utilexcl                          }
       - { start: 0x0008b390,    type: asm,        name: Multi_thr/util/utilstr                           }
       - { start: 0x0008bbc0,    type: asm,        name: shPad/lib_sh_pad                                 }
-      - { start: 0x0008c760,    type: asm,        name: sh2shd/sh2shd_char_jms                           }
+      - { start: 0x0008c760,    type: c,          name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x0008f6c0,    type: c,          name: shGs/sh2gfw_GS_NewLoopEnv                        }
       - { start: 0x0008fcd0,    type: c,          name: shGs/sh2gfw_GsInit                               }
       - { start: 0x000913c0,    type: asm,        name: sound/sd0712/ee/sd_call                          }
@@ -904,7 +904,7 @@ segments:
       - { start: 0x002903a0,    type: rodata,     name: Multi_thr/util/cmd_serv_rodata                   }
       - { start: 0x00290488,    type: rodata,     name: Multi_thr/util/utilstr                           }
       - { start: 0x00290490,    type: rodata,     name: shPad/lib_sh_pad                                 }
-      - { start: 0x002904a0,    type: rodata,     name: sh2shd/sh2shd_char_jms                           }
+      - { start: 0x002904a0,    type: .rodata,    name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x00290760,    type: .rodata,    name: shGs/sh2gfw_GsInit                               }
       - { start: 0x002907d0,    type: rodata,     name: sound/sd0712/ee/sd_call                          }
       - { start: 0x00290830,    type: .rodata,    name: sound/sh_sound                                   }
