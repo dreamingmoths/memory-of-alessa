@@ -3,9 +3,7 @@
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
 #include "GFW/sh2gfw_structs.h"
 #include "GFW/sh2gfw_Texpacket.h"
-
-// @todo: find home for lil bro
-extern Q_WORDDATA CalcTex_buffer[2304];
+#include "GFW/sh2gfw_globaldef.h"
 
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/sh2gfw_Draw_Character", Init_CheckDrawChara_Work);
 
