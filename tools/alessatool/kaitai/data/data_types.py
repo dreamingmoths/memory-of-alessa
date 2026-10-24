@@ -10,10 +10,14 @@ class Pointer:
     address: int
 
 @dataclass
+class String:
+    pass
+
+@dataclass
 class StructData:
     name: str
     type: Type[KaitaiStruct]
-    count: int = 1
+    count: int
     address: int = -1
     executable: str = None
     hex: bool = False

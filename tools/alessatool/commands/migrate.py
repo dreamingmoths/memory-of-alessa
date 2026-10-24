@@ -12,12 +12,20 @@ alessatool migrate --project=silent-hill-2 --name=_pObject_Class_List
 '''
 
 from dataclasses import dataclass
+from pathlib import Path
 
 from kaitai.data.data_utils import DataMigrationRequest, run_data_migration
 
 @dataclass
-class MigrateArgs(DataMigrationRequest):
-    pass
+class MigrateArgs:
+    project: str
+    name: str
+    output_path: Path
 
 def migrate_data(args: MigrateArgs):
-    run_data_migration(args)
+    project = args.project
+    name    = args.name
+
+    with open(args.output_path, "w") as stream:
+        request = DataMigrationRequest(project=project, name=name, stream=stream)
+        run_data_migration(request)

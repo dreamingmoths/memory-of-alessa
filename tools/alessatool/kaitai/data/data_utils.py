@@ -5,15 +5,82 @@ from functools import reduce
 from pathlib import Path
 from struct import unpack, calcsize
 from io import BytesIO
+from sys import stdout
 from typing import TextIO, Type
-from re import sub
+from re import MULTILINE, finditer, sub
 
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
-from kaitai.data.data_types import Pointer, SimpleData, StructData
+from kaitai.data.data_types import Pointer, ProjectDataConfig, SimpleData, String, StructData
 
 from constants import CONFIG, INDENT_SIZE, PROJECT_CONFIG
-from utils import AddressConversion, SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml
+from kaitai.sh2 import Sh2
+from utils import AddressConversion, ExeInfoByName, SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml
+
+class DataMigrationStore:
+    '''A cache of information to be reused across data migration calls.'''
+    atlas: SplatSymbolAddrsAtlas
+    splat_yaml: dict
+    kaitai_yaml: dict
+    executable_path: Path
+
+    data_config: ProjectDataConfig
+
+    data_entry: SimpleData | StructData = None
+    project: str | None = None
+
+    exe_info_by_name: ExeInfoByName = dict()
+
+    def set_data_entry(self, entry: SimpleData | StructData):
+        self.data_entry = entry
+
+    def reset_data_entry(self): 
+        self.data_entry = None
+    
+    def set_data_entry_if_not_set(self, data_config: ProjectDataConfig, name: str):
+        if not self.data_entry:
+            table = data_config.table
+            data_entry = next(filter(lambda entry : entry.name == name, table))
+            self.data_entry = data_entry
+
+    def read(self, project: str, name: str):
+        serial = PROJECT_CONFIG[project]
+        root = Path(project) / CONFIG / serial
+
+        data_config = PROJECT_DATA_CONFIG[project]
+
+        self.reset_data_entry()
+        self.set_data_entry_if_not_set(data_config, name)
+
+        data_entry = self.data_entry
+
+        executable = data_entry.executable or serial
+        exe_info_by_name = get_exe_info_by_name(
+            root,
+            serial,
+            filter=executable,
+            exe_info_by_name=self.exe_info_by_name,
+            parse_attributes=True
+        )
+        exe_info = exe_info_by_name[executable == serial and "main" or executable]
+
+        if self.project is not None:
+            assert self.project == project, "the store is intended to hold data for only one project"
+            return
+
+        atlas = exe_info.atlas
+        executable_path = exe_info.target_path / executable
+        splat_yaml = load_yaml(exe_info.yaml_path)
+        kaitai_yaml = load_yaml(data_config.library_path)
+
+        self.project = project
+        self.exe_info_by_name = exe_info_by_name
+        self.atlas = atlas
+        self.splat_yaml = splat_yaml
+        self.kaitai_yaml = kaitai_yaml
+        self.executable_path = executable_path
+        self.data_config = data_config
+        self.data_entry = data_entry
 
 @dataclass
 class DataMigrationRequest:
@@ -22,7 +89,8 @@ class DataMigrationRequest:
     '''
     project: str
     name: str
-    output_path: Path
+    stream: TextIO
+    store: DataMigrationStore | None = None
 
 @dataclass
 class SimpleDataMigrationRequest:
@@ -57,7 +125,7 @@ class KaitaiCFormatterOptions:
     index: int
 
 class AlessastructDataOptions:
-    SILENCE_DEV_WARNINGS = False
+    TEST_ENVIRONMENT = False
 
 def read_string(file: BytesIO, offset: int) -> str:
     '''
@@ -183,7 +251,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
     if "instances" in type_structure:
         first_union_member = next(iter(type_structure["instances"]))
         own_properties = [first_union_member]
-        if not AlessastructDataOptions.SILENCE_DEV_WARNINGS:
+        if not AlessastructDataOptions.TEST_ENVIRONMENT:
             print("🟠 warning: there is no way to choose union options yet")
             print(f"\tthe first union member was chosen for {object_class.__name__}:", first_union_member)
 
@@ -281,6 +349,7 @@ def make_pointer_to_str(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, 
     return lambda address : lookup_pointer(atlas, executable_file, from_vram, address)
 
 def lookup_pointer(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, from_vram: AddressConversion, address: int):
+    val = None
     if address in atlas.syms_by_addr:
         sym = atlas.syms_by_addr[address]
         val = sym.name
@@ -288,6 +357,7 @@ def lookup_pointer(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, from_
             val = '"' + read_string(executable_file, from_vram(address)) + '"'
     elif address == 0:
         val = "NULL"
+    assert val is not None, f"could not find symbol at {address:X}"
     return val
 
 def migrate_simple_data(request: SimpleDataMigrationRequest):
@@ -298,21 +368,27 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
     pattern = data.pattern
 
     with open(request.executable_path, "rb") as file:
-        vram = get_from_vram_conversion(request.splat_yaml, rom=False)
+        from_vram = get_from_vram_conversion(request.splat_yaml, rom=False)
 
+        is_string = data.type == String
         is_pointer = data.type == Pointer
         if is_pointer:
             total = reduce(lambda a, b : a * b, pattern or [1])
             fmt = f"<{total}L"
-            to_str = data.to_str or make_pointer_to_str(atlas, file, vram)
+            to_str = data.to_str or make_pointer_to_str(atlas, file, from_vram)
         else:
             fmt = data.type
             to_str = data.to_str or default_to_str
 
+        sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]
+        if is_string:
+            stream.write('"' + read_string(file, from_vram(sym.addr)) + '"')
+            return
+
+        file.seek(from_vram(sym.addr))
+
         assert type(fmt) == str, fmt
 
-        sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]
-        file.seek(vram(sym.addr))
 
         unpacked_values = unpack(fmt, file.read(calcsize(fmt)))
         n = pattern and len(pattern) or 0
@@ -344,55 +420,48 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
 def run_data_migration(request: DataMigrationRequest):
     name = request.name
     project = request.project
-    output_path = request.output_path
-
-    serial = PROJECT_CONFIG[project]
-    root = Path(project) / CONFIG / serial
-
-    data_config = PROJECT_DATA_CONFIG[project]
-
-    table = data_config.table
-    namespace = data_config.namespace
+    stream = request.stream
 
     try:
-        data_entry = next(filter(lambda entry : entry.name == name, table))
+        store = request.store or DataMigrationStore()
 
-        executable = data_entry.executable or serial
-        exe_info_by_name = get_exe_info_by_name(root, serial, filter=executable)
-        exe_info = exe_info_by_name[executable == serial and "main" or executable]
+        store.read(project, name)
 
-        atlas = exe_info.atlas
-        executable_path = exe_info.target_path / executable
-        splat_yaml = load_yaml(exe_info.yaml_path)
-        kaitai_yaml = load_yaml(data_config.library_path)
+        atlas = store.atlas
+        data_config = store.data_config
+        data_entry = store.data_entry
+        splat_yaml = store.splat_yaml
+        executable_path = store.executable_path
+        kaitai_yaml = store.kaitai_yaml
+        namespace = data_config.namespace
 
-        with open(output_path, "w") as stream:
-            if isinstance(data_entry, SimpleData):
-                request = SimpleDataMigrationRequest(
-                    name=name,
-                    stream=stream,
-                    atlas=atlas,
-                    data=data_entry,
-                    splat_yaml=splat_yaml,
-                    executable_path=executable_path
-                )
-                migrate_simple_data(request)
-            elif isinstance(data_entry, StructData):
-                request = StructDataMigrationRequest(
-                    name=name,
-                    stream=stream,
-                    atlas=atlas,
-                    data=data_entry,
-                    splat_yaml=splat_yaml,
-                    kaitai_yaml=kaitai_yaml,
-                    namespace=namespace,
-                    executable_path=executable_path
-                )
-                migrate_struct_data(request)
-            else:
-                raise Exception(f"unexpected data config format")
+        if isinstance(data_entry, SimpleData):
+            request = SimpleDataMigrationRequest(
+                name=name,
+                stream=stream,
+                atlas=atlas,
+                data=data_entry,
+                splat_yaml=splat_yaml,
+                executable_path=executable_path
+            )
+            migrate_simple_data(request)
+        elif isinstance(data_entry, StructData):
+            request = StructDataMigrationRequest(
+                name=name,
+                stream=stream,
+                atlas=atlas,
+                data=data_entry,
+                splat_yaml=splat_yaml,
+                kaitai_yaml=kaitai_yaml,
+                namespace=namespace,
+                executable_path=executable_path
+            )
+            migrate_struct_data(request)
+        else:
+            raise Exception(f"unexpected data config format")
 
-        print(f"🟣 data template written to {output_path}")
+        if not AlessastructDataOptions.TEST_ENVIRONMENT:
+            print(f"🟣 data template written to {stream.name}")
     except StopIteration:
         print(f"🔴 could not find data entry ({name})")
     except Exception as exception:

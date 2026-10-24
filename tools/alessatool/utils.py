@@ -378,8 +378,10 @@ class ExecutableInfo:
     yaml_path: Path
     to_vram: Callable
 
-def get_exe_info_by_name(root: Path, main_name: str, filter=None):
-    exe_info_by_name: dict[str, ExecutableInfo] = dict()
+type ExeInfoByName = dict[str, ExecutableInfo]
+
+def get_exe_info_by_name(root: Path, main_name: str, filter=None, exe_info_by_name=None, parse_attributes=False):
+    exe_info_by_name: dict[str, ExecutableInfo] = exe_info_by_name or dict()
 
     for yaml_path in root.glob("**/*.yaml"):
         yaml = load_yaml(yaml_path)
@@ -409,6 +411,6 @@ def get_exe_info_by_name(root: Path, main_name: str, filter=None):
         sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
 
         for sym_path in sym_paths:
-            parse_symbol_addrs(root / sym_path, atlas)
+            parse_symbol_addrs(root / sym_path, atlas, parse_attributes=parse_attributes)
 
     return exe_info_by_name
