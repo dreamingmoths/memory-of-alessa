@@ -60,7 +60,7 @@ def run_project_test(project: str) -> TestResult:
                     store=store
                 )
                 run_data_migration(request)
-            print(bold(f"✅ test: {data.name}"))
+            print(bold(f"🟣 test: {data.name}"))
             passing += 1
         except Exception as exception:
             print(bold(f"🔴 test: {data.name} failed "))
