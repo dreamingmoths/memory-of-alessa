@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from yaml import safe_load as safe_load_yaml
+from json import load as read_json
 from os import stat, remove
 from io import TextIOBase
 from subprocess import run
@@ -189,7 +190,7 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
             elif symbol.addr & 0x0F == 0:
                 attributes["align"] = 16
 
-        line = f"{symbol.name:<64} = 0x{symbol.addr:08x};"
+        line = f"{symbol.name:<64} = 0x{symbol.addr:08X};"
         if attributes:
             items = _filter_and_sort_items(attributes.items())
             attributes = " ".join(map(lambda item : ":".join(map(lambda value : str(value), item)), items))
@@ -199,10 +200,17 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
 
     return "\n".join(symbol_addrs_lines) + "\n"
 
-READELF_FLAGS = ["-s", "--wide"]
+SYMTAB_READELF_FLAGS = ["-s", "--wide"]
+SECTION_HEADER_READELF_FLAGS = ["-S"]
 
 def read_symtab(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
-    proc = run([Path(readelf_path), *READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    proc = run([Path(readelf_path), *SYMTAB_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    if proc.returncode != 0:
+        raise Exception(proc.stderr.decode())
+    return proc.stdout.decode()
+
+def read_section_headers(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
+    proc = run([Path(readelf_path), *SECTION_HEADER_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
     if proc.returncode != 0:
         raise Exception(proc.stderr.decode())
     return proc.stdout.decode()
@@ -233,6 +241,25 @@ def parse_symtab_as_atlas(symtab_str: str) -> SplatSymbolAddrsAtlas:
         insert_into_atlas(symtab, name, int(address, 16), attributes, metadata)
 
     return symtab
+
+def parse_section_header_indices(section_headers_str: str):
+    section_headers_lines = section_headers_str.splitlines()
+
+    section_names_by_index = dict()
+
+    for line in section_headers_lines:
+        if "[" not in line: continue
+
+        columns = line[line.index("[")+1:].strip().split()
+        index = columns[0][:-1]
+
+        if not index.isnumeric(): continue
+
+        name = columns[1]
+        section_names_by_index[index] = name
+
+    return section_names_by_index
+
 
 def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     IGNORE_RODATA = True
@@ -369,6 +396,11 @@ def load_yaml(yaml_path: Path):
     with open(yaml_path) as yaml_file:
         yaml = safe_load_yaml(yaml_file)
     return yaml
+
+def load_json(json_path: Path):
+    with open(json_path) as json_file:
+        json = read_json(json_file)
+    return json
 
 @dataclass
 class ExecutableInfo:
