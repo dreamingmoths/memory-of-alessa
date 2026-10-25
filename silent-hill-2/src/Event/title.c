@@ -437,14 +437,14 @@ void titleSetDataStartPoint(void) {
                     for (i = 0; i < 3; i++) {
                         ItemGet(SH2_ITEM_05);
                     }
-                    ItemGet(SH2_ITEM_11);
+                    ItemGet(WOODEN_PLANK);
                     for (i = 0; i < 5; i++) {
                         ItemGet(HEALTH_DRINK);
                     }
                     for (i = 0; i < 1; i++) {
                         ItemGet(FIRST_AID_KIT);
                     }
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_RADIO);
                     item.equip = 4;
                     SET_GAME_FLAG(25);
                     SET_GAME_FLAG(66);
@@ -465,7 +465,7 @@ void titleSetDataStartPoint(void) {
                     for (i = 0; i < 1; i++) {
                         ItemGet(SH2_ITEM_07);
                     }
-                    ItemGet(SH2_ITEM_11);
+                    ItemGet(WOODEN_PLANK);
                     ItemGet(SH2_ITEM_12);
                     for (i = 0; i < 8; i++) {
                         ItemGet(HEALTH_DRINK);
@@ -474,7 +474,7 @@ void titleSetDataStartPoint(void) {
                         ItemGet(FIRST_AID_KIT);
                     }
                     ItemGet(SH2_ITEM_15);
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_RADIO);
                     item.equip = 4;
                     SET_GAME_FLAG(28);
                     SET_GAME_FLAG(35);
@@ -484,8 +484,8 @@ void titleSetDataStartPoint(void) {
         } else {
             switch (title_start_point) {
                 case 1:
-                    ItemGet(SH2_ITEM_11);
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(WOODEN_PLANK);
+                    ItemGet(SH2_ITEM_RADIO);
                     for (i = 0; i < 16; i++) {
                         ItemGet(HEALTH_DRINK);
                     }
@@ -493,13 +493,13 @@ void titleSetDataStartPoint(void) {
                     return;
                 case 2:
                     SET_GAME_FLAG(15);
-                    ItemGet(SH2_ITEM_11);
+                    ItemGet(WOODEN_PLANK);
                     ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 9; i++) {
                         ItemGet(SH2_ITEM_05);
                     }
                     ItemGet(SH2_ITEM_12);
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_RADIO);
                     ItemGet(SH2_ITEM_15);
                     for (i = 0; i < 16; i++) {
                         ItemGet(HEALTH_DRINK);
@@ -507,7 +507,7 @@ void titleSetDataStartPoint(void) {
                     item.equip = 4;
                     return;
                 case 3:
-                    ItemGet(SH2_ITEM_11);
+                    ItemGet(WOODEN_PLANK);
                     ItemGet(SH2_ITEM_04);
                     for (i = 0; i < 9; i++) {
                         ItemGet(SH2_ITEM_05);
@@ -517,7 +517,7 @@ void titleSetDataStartPoint(void) {
                         ItemGet(SH2_ITEM_07);
                     }
                     ItemGet(SH2_ITEM_12);
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_RADIO);
                     ItemGet(SH2_ITEM_15);
                     for (i = 0; i < 16; i++) {
                         ItemGet(HEALTH_DRINK);
@@ -538,14 +538,14 @@ void titleSetDataStartPoint(void) {
                         ItemGet(SH2_ITEM_09);
                     }
                     ItemGet(SH2_ITEM_10);
-                    ItemGet(SH2_ITEM_11);
+                    ItemGet(WOODEN_PLANK);
                     ItemGet(SH2_ITEM_12);
                     ItemGet(SH2_ITEM_13);
                     for (i = 0; i < 16; i++) {
                         ItemGet(HEALTH_DRINK);
                     }
                     ItemGet(SH2_ITEM_15);
-                    ItemGet(SH2_ITEM_16);
+                    ItemGet(SH2_ITEM_RADIO);
                     item.equip = 4;
                     break;
             }
