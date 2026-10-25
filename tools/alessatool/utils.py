@@ -190,7 +190,7 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
             elif symbol.addr & 0x0F == 0:
                 attributes["align"] = 16
 
-        line = f"{symbol.name:<64} = 0x{symbol.addr:08X};"
+        line = f"{symbol.name:<64} = 0x{symbol.addr:08x};"
         if attributes:
             items = _filter_and_sort_items(attributes.items())
             attributes = " ".join(map(lambda item : ":".join(map(lambda value : str(value), item)), items))
