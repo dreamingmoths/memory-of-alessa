@@ -166,9 +166,9 @@ static fsFile* ___fsSubCmdCheckCdHdFixFile(fsFile* fp) {
     if (fp->check.type & 0x40) {
 
         if (
-            (fp->check.type & 5)
+            (fp->check.type & 0x5)
             && (fp->check.number)
-            && (fs_stat.disk_number != 0)
+            && (fs_stat.disk_number)
         ) {
 
             fp->check.type &= 0x7f;
@@ -231,12 +231,12 @@ static int ___fsSubCmdCheckCdHdExistFile(fsFile* fp /* r2 */) {
 
         return 0;
     }
-    if (fp->cd.type & 5 && fp->cd.number) {
+    if (fp->cd.type & 0x5 && fp->cd.number) {
 
 
         return 1;
     }
-    if (fp->hd.type & 10 && fp->hd.type & 0x80) {
+    if (fp->hd.type & 0xA && fp->hd.type & 0x80) {
 
 
         return 2;
@@ -323,7 +323,7 @@ static fsFile* ___fsSubCmdSetRealFile0(fsFile* realfp /* r17 */, fsFile* fp /* r
         offset = (fp->hd.offset / 2048) * 2048;
         size = fp->hd.size;
 
-        if ((realfp->check.type & 5) && (realfp->check.number != 0)) {
+        if ((realfp->check.type & 5) && realfp->check.number) {
             int plsn; // r5
             int psize; // r2
 
@@ -486,8 +486,8 @@ static int ___fsSubCmdNullDevFixFile(fsFile * fp /* r2 */) {
     } else {
         fp->check.number &= 0;
         fp->check.type |= ~0x3F;
-        fp->check.pad1 = 0; // @todo which struct does this go to?
-        fp->check.pad2 = 0x40000000;
+        fp->mgf.offset = 0; // @todo which struct does this go to?
+        fp->mgf.size = 0x40000000;
         ret = 2;
     }
     return ret;
@@ -526,9 +526,9 @@ static int ___fsSubCmdCdCommonFixFile(fsFile* fp /* r16 */) {
 
         ret = 1;
         if (fp->check.type & 0x20) {
-            if (___shPathMakeCdDataBase(fullpath, fp->cd.name) == 0) ret = 0;
+            if (!___shPathMakeCdDataBase(fullpath, fp->cd.name)) ret = 0;
         } else {
-            if (___shPathMakeCdData(fullpath, fp->cd.name) == 0) ret = 0;
+            if (!___shPathMakeCdData(fullpath, fp->cd.name)) ret = 0;
         }
 
         if (ret) {
@@ -547,7 +547,7 @@ static int ___fsSubCmdCdCommonFixFile(fsFile* fp /* r16 */) {
 
 
 
-            if (___shCdSearchFile(file, fullpath) == 0) {
+            if (!___shCdSearchFile(file, fullpath)) {
                 fp->check.number &= 0;
                 ret = -1;
             }
@@ -585,7 +585,7 @@ static int ___fsSubCmdCdCommonFixFile(fsFile* fp /* r16 */) {
 static int ___fsSubCmdCd1stFixFile(fsFile* fp /* r2 */) {
 
 
-    if (fp->cd.type & 1)
+    if (fp->cd.type & 0x1)
         return ___fsSubCmdCdCommonFixFile(fp);
 
 
@@ -609,7 +609,7 @@ static int ___fsSubCmdCd1stFixFile(fsFile* fp /* r2 */) {
 static int ___fsSubCmdCdFixFile(fsFile* fp /* r2 */) {
 
 
-    if (fp->cd.type & 5) {
+    if (fp->cd.type & 0x5) {
         return ___fsSubCmdCdCommonFixFile(fp);
     }
 
@@ -649,9 +649,9 @@ static int ___fsSubCmdHdCommonFixFile(fsFile* fp /* r16 */) {
 
         ret = 1;
         if (fp->hd.type & 0x20) {
-            if (___shPathMakeHdDataBase(fullpath, fp->hd.name) == 0) ret = 0;
+            if (!___shPathMakeHdDataBase(fullpath, fp->hd.name)) ret = 0;
         } else {
-            if (___shPathMakeHdData(fullpath, fp->hd.name) == 0) ret = 0;
+            if (!___shPathMakeHdData(fullpath, fp->hd.name)) ret = 0;
         }
 
         if (ret) {
@@ -695,7 +695,7 @@ static int ___fsSubCmdHd1stFixFile(fsFile* fp /* r2 */) {
 
 
 
-    return fp->hd.type & 2 ? ___fsSubCmdHdCommonFixFile(fp) : 0;
+    return fp->hd.type & 0x2 ? ___fsSubCmdHdCommonFixFile(fp) : 0;
 }
 
 
@@ -723,7 +723,7 @@ static int ___fsSubCmdHdFixFile(fsFile* fp /* r2 */) {
 
 
 
-    return fp->hd.type & 10 ? ___fsSubCmdHdCommonFixFile(fp) : 0;
+    return fp->hd.type & 0xA ? ___fsSubCmdHdCommonFixFile(fp) : 0;
 }
 
 
@@ -888,40 +888,40 @@ static int fsSubCmdCdGetMedia(void) {
 
     switch (shCdGetDiskType()) {
         /* irregular */
-        case 0x14:
+        case SCECdPS2DVD:
             cur_media = 1;
             break;
-        case 0x12:
+        case SCECdPS2CD:
             cur_media = 2;
             break;
-        case 0x13:
+        case SCECdPS2CDDA:
             cur_media = 4;
             break;
-        case 0x10:
+        case SCECdPSCD:
 
             cur_media = 8;
             break;
-        case 0x11:
+        case SCECdPSCDDA:
             cur_media = 0x10;
             break;
-        case 0xFD:
+        case SCECdCDDA:
 
             cur_media = 0x20;
             break;
-        case 0xFE:
+        case SCECdDVDV:
             cur_media = 0x40;
             break;
-        case 0x0:
+        case SCECdNODISC:
 
             cur_media = 0x200;
             break;
-        case 0x1:
+        case SCECdDETCT:
             cur_media = 0x100;
             break;
-        case 0xFF:
+        case SCECdIllegalMedia:
             cur_media = 0x400;
             break;
-        case 5:
+        case SCECdUNKNOWN:
         default:
             cur_media = 0x80;
     }
@@ -1015,10 +1015,10 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 
     do {
         switch (buf != NULL ? shCdReadW(lsn, sectors, buf, rmode) : shCdSeekW(lsn)) {
-            case 0:
+            case SCECdErNO:
                 ret = 1;
                 break;
-            case 48:
+            case SCECdErREAD:
 
 
 
@@ -1033,7 +1033,7 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 
                 ret = 0;
                 break;
-            case 49:
+            case SCECdErTRMOPN:
 
 
 
@@ -1049,7 +1049,7 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 
                 ret = 0;
                 break;
-            case 1:
+            case SCECdErABRT:
 
 
 
@@ -1061,10 +1061,10 @@ static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /*
 
 
                 break;
-            case 50:
-            case 19:
-            case -1:
-            case 20:
+            case SCECdErEOM:
+            case SCECdErNORDY:
+            case SCECdErFAIL:
+            case SCECdErCUD:
 
             default:
                 ret = 0;
@@ -1144,7 +1144,7 @@ static s_char hdopen_lastpath[256] = ""; // size: 0x100, address: 0x33B2B0
 static int hdopen_lastfd = -1; // size: 0x4, address: 0x33B3B0
 
 static int shHdOpenC(s_char* fullpath /* r17 */, int mode /* r16 */) {
-    if ((strcmp__(fullpath, hdopen_lastpath) != 0) || (hdopen_lastmode != mode)) {
+    if ((strcmp__(fullpath, hdopen_lastpath)) || (hdopen_lastmode != mode)) {
         if (hdopen_lastpath[0]) {
             shHdClose(hdopen_lastfd);
         }
@@ -1175,7 +1175,7 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
     int remainsize; // r19
     int readsize; // r20
     s_char* readbuf; // r21
-    retry = 0xA;
+    retry = 10;
 
 
 
@@ -1257,7 +1257,7 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
             }
             retry -= 1;
         } while (retry > 0);
-        retry = 0x3c;
+        retry = 60;
 
 
 
