@@ -1188,7 +1188,7 @@ static void clCheckHitSwordVector(CL_VHIT_RESULT* res /* r21 */, u_int id /* r20
     clCheckHitEyeVectorCharacter(res, sp, ep, &min, id);
 }
 
-static inline vec_dist_squared(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float* ptr) {
+static inline shVectorDistanceSquared(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float* ptr) {
     asm("lqc2 vf1, 0(%0)\n\
         lqc2 vf2, 0(%1)\n\
         vsub.xyz vf3, vf1, vf2\n\
@@ -1222,7 +1222,7 @@ static void clCheckHitSwordVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /
 
         
         if (ret != 0) {
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist < *min) {
             
                 
@@ -1252,7 +1252,7 @@ static void clCheckHitNoThruVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp 
 
         
         if (ret != 0) {
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist < *min) {
             
                 
@@ -1291,7 +1291,7 @@ static void clCheckHitSwordVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, floa
     
             
             if (ret != 0) {
-                vec_dist_squared(sp, cres.cp, &dist);
+                shVectorDistanceSquared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
                     
@@ -1327,7 +1327,7 @@ static void clCheckHitSwordVectorDynamicWallNoThru(CL_VHIT_RESULT* res /* r22 */
     
             
             if (ret != 0) {
-                vec_dist_squared(sp, cres.cp, &dist);
+                shVectorDistanceSquared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
                     
@@ -1367,7 +1367,7 @@ static void clCheckHitSwordVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, flo
     
             
             if (ret != 0) {
-                vec_dist_squared(sp, cres.cp, &dist);
+                shVectorDistanceSquared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
                     
@@ -1404,7 +1404,7 @@ static void clCheckHitSwordVectorDynamicFloorNoThru(CL_VHIT_RESULT* res /* r22 *
     
             
             if (ret != 0) {
-                vec_dist_squared(sp, cres.cp, &dist);
+                shVectorDistanceSquared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
                     
@@ -1577,7 +1577,7 @@ static void clCheckHitThrustGunVectorCharacter(float* sp /* r20 */, float* ep /*
             
             if (!ret) continue;
             
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist < min) {
             
                 
@@ -2295,7 +2295,7 @@ static void clCheckHitEyeVectorWall(CL_VHIT_RESULT* res /* r21 */, float* sp /* 
 
         
         if (ret != 0) {
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist < *min) {
             
                 
@@ -2318,7 +2318,7 @@ static void clCheckHitEyeVectorBGColumn(CL_VHIT_RESULT* res /* r21 */, float* sp
         ret = clCheckSubLineToColumnPlus(&cres, sp, ep, &cl[*ptr].p[0]);
         
         if (ret != 0) {
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist < *min) {
             
                 
@@ -2357,7 +2357,7 @@ static void clCheckHitEyeVectorDynamicWall(CL_VHIT_RESULT* res /* r22 */, float*
     
             
             if (ret == 0) continue;
-            vec_dist_squared(sp, cres.cp, &dist);
+            shVectorDistanceSquared(sp, cres.cp, &dist);
             if (dist >= *min) continue;
             
                 
@@ -2397,7 +2397,7 @@ static void clCheckHitEyeVectorDynamicFloor(CL_VHIT_RESULT* res /* r22 */, float
     
             
             if (ret != 0) {
-                vec_dist_squared(sp, cres.cp, &dist);
+                shVectorDistanceSquared(sp, cres.cp, &dist);
                 if (dist < *min) {
                 
                     

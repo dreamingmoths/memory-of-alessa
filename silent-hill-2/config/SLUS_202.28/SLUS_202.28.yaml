@@ -555,7 +555,7 @@ segments:
       - { start: 0x0018fe00,    type: c,          name: LoadBg/loadbg_chara                              }
       - { start: 0x001909d0,    type: c,          name: Chacter/player_result                            }
       - { start: 0x001913a0,    type: c,          name: sound/sh_sd_call                                 }
-      - { start: 0x00191c00,    type: asm,        name: Chacter/m3_ty23                                  }
+      - { start: 0x00191c00,    type: c,          name: Chacter/m3_ty23                                  }
       - { start: 0x00191d20,    type: c,          name: Effect2/hh_class_blood_04                        }
       - { start: 0x001924f0,    type: c,          name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x00192aa0,    type: c,          name: Effect2/hh_memory_manage                         }
