@@ -263,5 +263,5 @@ void shGetEnemyARMAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
     vec[1] = pos1[1] - pos0[1];
     vec[2] = pos1[2] - pos0[2];
     vec[3] = 0.0f;
-    vec_normalize(vec, s_vec); 
+    shNormalizeVector(vec, s_vec); 
 }

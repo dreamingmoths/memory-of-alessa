@@ -553,7 +553,7 @@ void shGetEnemyMKNAttackPos(SubCharacter* scp /* r2 */, float* s_pos /* r18 */, 
     vec[2] = pos1[2] - pos0[2];
     vec[3] = 0.0f;
     
-    vec_normalize(vec, s_vec);
+    shNormalizeVector(vec, s_vec);
 }
 
 

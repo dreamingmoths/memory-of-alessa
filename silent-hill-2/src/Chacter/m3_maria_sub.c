@@ -1058,7 +1058,7 @@ static u_short MariaDamageMotionNo(SubCharacter* this) {
         roty2 = shAngleRegulate(sh2jms.player->rot.y + sh2jms.player->spd_roty);
 
     } else {
-        vec_normalize(&this->battle.vec, direction);
+        shNormalizeVector(&this->battle.vec, direction);
         roty2 = shAtan2(direction[2], direction[0]);
     }
 
@@ -1095,7 +1095,7 @@ static int MariaTouchJamesCheck(void) {
     if ((sh2mar.dist_to_jms < 365.0f) && !(sh2jms.player->spd <= 3.0f)) {
         to_jms[0] = sh2jms.player->pos.x - sh2mar.mar_p->pos.x;
         to_jms[2] = sh2jms.player->pos.z - sh2mar.mar_p->pos.z;
-        vec_normalize(to_jms, to_jms);
+        shNormalizeVector(to_jms, to_jms);
         jms_vec[0] = shSinF(sh2jms.rot_y);
         jms_vec[2] = shCosF(sh2jms.rot_y);
         if (vec3_dot_product(to_jms, jms_vec) < -0.85f) {
@@ -1120,7 +1120,7 @@ static void MariaCheckFootLine(SubCharacter* this) {
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.r_foot, (int) this, &sp, &ep);
     if (sh2jms.r_foot.kind == 1) {
-        vec_normalize(sh2mar.r_foot.hobj.chara.cp, sh2mar.r_foot.hobj.chara.cp);
+        shNormalizeVector(sh2mar.r_foot.hobj.chara.cp, sh2mar.r_foot.hobj.chara.cp);
     }
     GetMariaPartsWorldMatrix(mat, 7);
     shVectorCopy(sp, mat[3]);
@@ -1129,7 +1129,7 @@ static void MariaCheckFootLine(SubCharacter* this) {
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.l_foot, (int) this, &sp, &ep);
     if (sh2mar.l_foot.kind == 1) {
-        vec_normalize(sh2mar.l_foot.hobj.chara.cp, sh2mar.l_foot.hobj.chara.cp);
+        shNormalizeVector(sh2mar.l_foot.hobj.chara.cp, sh2mar.l_foot.hobj.chara.cp);
     }
 }
 
@@ -1303,7 +1303,7 @@ static void MariaUpdateStatusInitial(SubCharacter* this) {
     sh2mar.enemy_atk_area = shBattleCheckTargetChara(sh2mar.mar_p);
     sh2mar.enemy_around   = sh2jms.enemy_around;
     sh2mar.look_tgt       = (SubCharacter*) shBattleGetTargetChara(sh2mar.mar_p, 0);
-    sh2mar.dist_to_jms    = vec3_dist(&sh2jms.player->pos, &this->pos);
+    sh2mar.dist_to_jms    = shVectorDist(&sh2jms.player->pos, &this->pos);
     if (sh2mar.sub_status_now == 7) {
         sh2mar.tired += dt;
         sh2mar.tired = (sh2mar.tired < 0) ? 0 : ((sh2mar.tired_max < sh2mar.tired) ? sh2mar.tired_max : sh2mar.tired);

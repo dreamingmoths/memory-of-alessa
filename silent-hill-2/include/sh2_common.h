@@ -38,9 +38,10 @@
 
 // @todo: move to vec.h if possible, but arg order is different from the one we
 // have for sh3 `amusement_01`
-static inline float vec3_dist_xz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
+static inline float shVectorDistXz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
+    asm volatile(
+        "lwc1 %2, 0(%0)\n\
          lwc1 f8, 0(%1)\n\
          lwc1 f9, 8(%0)\n\
          lwc1 f10, 8(%1)\n\
@@ -53,7 +54,7 @@ static inline float vec3_dist_xz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
     return d;
 }
 
-static inline float vec3_dist_xz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+static inline float shVectorDistXz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
     asm("lwc1 %2, 0(%0)\n\
          lwc1 f8, 0(%1)\n\

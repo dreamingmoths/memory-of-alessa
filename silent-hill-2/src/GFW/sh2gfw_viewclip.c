@@ -294,7 +294,7 @@ void sh2gfw_set_objclip_matrix(void) {
     
     
     sh2gde_Get_EyeDir(tmp); tmp[1] = 0.0f;
-    vec_normalize(tmp, wvm[2]);
+    shNormalizeVector(tmp, wvm[2]);
     vec_cross_product(wvm[2], y_dirvec, wvm[0]);
     vec_copy_reverse(y_dirvec, wvm[1]); // fixed?
     vwGetViewPosition(tmp);

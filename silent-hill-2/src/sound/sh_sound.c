@@ -257,7 +257,7 @@ int SeCallPosDirection(float* pos) {
     vu0_transform_vector_alt(fv, pos0, VbWvsMatrix.wvm);
     fv[0] -= 750.0f;
     fv[1] = 0.0f;
-    vec_normalize(fv, fv);
+    shNormalizeVector(fv, fv);
     sign = float_sign(-fv[0]);
     return (sign * (70.0f - (70.0f * fv[2])));
 }

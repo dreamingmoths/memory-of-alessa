@@ -526,7 +526,7 @@ segments:
       - { start: 0x00179c50,    type: c,          name: Effect2/hh_class_water_07                        }
       - { start: 0x0017b070,    type: c,          name: Effect2/hh_class_water_08                        }
       - { start: 0x0017c4a0,    type: c,          name: Effect2/hh_class_water_09                        }
-      - { start: 0x0017d7b0,    type: asm,        name: Enemy/en_insect                                  }
+      - { start: 0x0017d7b0,    type: c,          name: Enemy/en_insect                                  }
       - { start: 0x0017ea10,    type: c,          name: sh2shd/sh2shd_shadow_env                         }
       - { start: 0x00181300,    type: asm,        name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x001816f0,    type: asm,        name: Effect2/hh_class_flame_00                        }
@@ -797,7 +797,7 @@ segments:
       - { start: 0x00275180,    type: .data,      name: Effect2/hh_class_water_07                        }
       - { start: 0x00275828,    type: .data,      name: Effect2/hh_class_water_08                        }
       - { start: 0x00275f00,    type: .data,      name: Effect2/hh_class_water_09                        }
-      - { start: 0x00276260,    type: data,       name: Enemy/en_insect                                  }
+      - { start: 0x00276260,    type: .data,      name: Enemy/en_insect                                  }
       - { start: 0x002762b0,    type: data,       name: sh2shd/sh2shd_shadow_env                         }
       - { start: 0x002764e0,    type: data,       name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x00277110,    type: data,       name: Effect2/hh_class_flame_00                        }

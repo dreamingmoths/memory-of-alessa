@@ -138,7 +138,7 @@ static inline void vec_scale_xyz(float s, void* v, void* out) {
 static inline void shVectorZero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
 static inline void shVectorZeroXyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
 
-static inline float vec_normalize(float* out, float* in) {
+static inline float shNormalizeVector(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\
         vmul.xyz vf5, vf4, vf4\n\
         vaddy.x vf5, vf5, vf5y\n\
@@ -185,7 +185,7 @@ static inline void vec_copy_vu0(void* dst, void* src) {
         : "+r"(dst), "+r"(src));
 }
 
-static inline void vec_copy_xyz(void* dst, void* src) {
+static inline void shVectorCopyXyz(void* dst, void* src) {
     asm("\
          lq t7, 0(%1)\n\
          sd t7, 0(%0)\n\
@@ -312,9 +312,10 @@ static inline float sh3_vec3_dot_product(void* v, void* w) {
     return d;
 }
 
-static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+static inline float shVectorDist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
+    asm volatile(
+        "lwc1 %2, 0(%0)\n\
          lwc1 f8, 0(%1)\n\
          lwc1 f9, 4(%0)\n\
          sub.s %2, %2, f8;\

@@ -541,7 +541,7 @@ static float stair_pos[4] = {
 };
 
 static int enBOSCheckFloor(EnLOCAL_DATA* dp /* r2 */) {
-    if (vec3_dist_xz(bed_pos, &dp->scp->pos) < bed_pos[3] || vec3_dist_xz(stair_pos, &dp->scp->pos) < stair_pos[3]) {
+    if (shVectorDistXz(bed_pos, &dp->scp->pos) < bed_pos[3] || shVectorDistXz(stair_pos, &dp->scp->pos) < stair_pos[3]) {
         return true;
     }
     return false;

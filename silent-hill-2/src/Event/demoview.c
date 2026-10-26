@@ -1056,7 +1056,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
             color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
         shSubVector(normal, interest, position);
-        vec_normalize(normal, normal);
+        shNormalizeVector(normal, normal);
         falloff_s = next.light[i].falloff[0] * frm_dcm + last.light[i].falloff[0] * (1.0f - frm_dcm);                             
         falloff_e = next.light[i].falloff[1] * frm_dcm + last.light[i].falloff[1] * (1.0f - frm_dcm);
         cone = next.light[i].cone[0] * frm_dcm + last.light[i].cone[0] * (1.0f - frm_dcm);
@@ -1073,7 +1073,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
         }
         shVectorZero(normal);
         shSubVector(normal, normal, position);
-        vec_normalize(normal, normal);
+        shNormalizeVector(normal, normal);
         normal[3] = 0;
         sh2gfw_Set_PallarelLight(normal, color, j + 1);
     }

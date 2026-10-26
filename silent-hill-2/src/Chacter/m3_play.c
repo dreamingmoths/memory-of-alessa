@@ -717,8 +717,8 @@ static void PlayerCheckFootLine(SubCharacter* this) {
     clCheckHitEyesOnlyFloor(&sh2jms.r_foot, (int) this, sp, ep);
     if (sh2jms.r_foot.kind == 1) {
          
-        vec_normalize(sh2jms.r_foot.hobj.chara.cp, sh2jms.r_foot.hobj.chara.cp);
-        // vec_normalize(sh2jms.r_foot.hobj.wall.nl, sh2jms.r_foot.hobj.wall.nl); // which one is correct?
+        shNormalizeVector(sh2jms.r_foot.hobj.chara.cp, sh2jms.r_foot.hobj.chara.cp);
+        // shNormalizeVector(sh2jms.r_foot.hobj.wall.nl, sh2jms.r_foot.hobj.wall.nl); // which one is correct?
     
     
     }
@@ -730,8 +730,8 @@ static void PlayerCheckFootLine(SubCharacter* this) {
     clCheckHitEyesOnlyFloor(&sh2jms.l_foot, (int) this, sp, ep);
     if (sh2jms.l_foot.kind == 1) {
         
-        vec_normalize(sh2jms.l_foot.hobj.chara.cp, sh2jms.l_foot.hobj.chara.cp);
-        // vec_normalize(sh2jms.l_foot.hobj.wall.nl, sh2jms.l_foot.hobj.wall.nl); // ???
+        shNormalizeVector(sh2jms.l_foot.hobj.chara.cp, sh2jms.l_foot.hobj.chara.cp);
+        // shNormalizeVector(sh2jms.l_foot.hobj.wall.nl, sh2jms.l_foot.hobj.wall.nl); // ???
     }
 }
 
@@ -3470,8 +3470,8 @@ void PlayerCheckStraightLine(SubCharacter* this, float spd_roty) {
         me[2] = ep[2] - sp[2];
         me[3] = 1.0f;        
         shVectorCopy(wall, sh2jms.foot.hobj.wall.nl);
-        vec_normalize(me, me);
-        vec_normalize(wall, wall);
+        shNormalizeVector(me, me);
+        shNormalizeVector(wall, wall);
                         
         sh2jms.inner_to_wall = vec3_dot_product(me, wall);
         
@@ -3493,7 +3493,7 @@ void PlayerCheckStraightLine(SubCharacter* this, float spd_roty) {
         
         
         
-        sh2jms.dist_to_wall = vec3_dist_xz(sh2jms.foot.hobj.wall.cp, sp);
+        sh2jms.dist_to_wall = shVectorDistXz(sh2jms.foot.hobj.wall.cp, sp);
         
         if (sh2jms.dist_to_wall < 250.0f) {            
             sh2jms.cannot_run = 1;

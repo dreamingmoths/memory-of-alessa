@@ -120,7 +120,7 @@ float vcRetCirRadiusReduction(VC_WORK* w_p) {
     float x;
     float z;
     float rate;
-    cam2chr_xz_dist = vec3_dist_xz(w_p->chara_pos, w_p->cam_pos);
+    cam2chr_xz_dist = shVectorDistXz(w_p->chara_pos, w_p->cam_pos);
     cam2chr_xz_dist /= 2.0f;
     ofs_ang_y = shAtan2(w_p->chara_pos[2] - w_p->cam_pos[2],
                         w_p->chara_pos[0] - w_p->cam_pos[0]);

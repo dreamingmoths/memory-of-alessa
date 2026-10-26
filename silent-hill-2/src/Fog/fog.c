@@ -244,10 +244,10 @@ void fogChangeWind(int wind) {
             break;
     }
     Wind[3] = 0;
-    vec_normalize(Wind, Wind);
+    shNormalizeVector(Wind, Wind);
     vec_scale(WindSpeed, Wind, Wind);
     shRandV_Scale(Wind2, 0.5f);
-    vec_normalize(Wind2, Wind2);
+    shNormalizeVector(Wind2, Wind2);
     vec_scale(WindRandom, Wind2, Wind2);
     vec_add(Wind, Wind2, Wind);
     if ((fwork.WindV[0] != 0.0f) || (fwork.WindV[1] != 0.0f) || (fwork.WindV[2] != 0.0f)) {

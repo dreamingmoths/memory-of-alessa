@@ -196,7 +196,7 @@ float PlayerEventMove(float* target /* r16 */) {
 
     
     sh2jms.event_move_mode = 1;
-    distance_990 = vec3_dist_xz_reverse(target, &sh2jms.player->pos);
+    distance_990 = shVectorDistXz_reverse(target, &sh2jms.player->pos);
     
     
     

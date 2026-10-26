@@ -601,7 +601,7 @@ static int clMakeWallHitCollectVector(SubCharacter* sc /* r21 */, float* wcv /* 
 
                 
                 clCalcPlaneEquation(clWallHitData[i].pl, clWallHitData[i].normal);
-                vec_normalize(clWallHitData[i].normal, clWallHitData[i].normal);
+                shNormalizeVector(clWallHitData[i].normal, clWallHitData[i].normal);
                 clWallHitData[i].nang = shAtan2(clWallHitData[i].normal[0], clWallHitData[i].normal[2]);
                 
                 if (mang != MAX_FLOAT) {

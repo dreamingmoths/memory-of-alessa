@@ -142,11 +142,11 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
             vec_copy_reverse(&scp->pos, chr_pos);
             chr_pos[1] = 0;
             vec_sub_reverse(chr_pos, cam_pos, cam_pos);
-            vec_normalize(cam_pos, cam_pos);
+            shNormalizeVector(cam_pos, cam_pos);
             vec_copy_reverse(light_pos, light_vec);
             light_vec[1] = 0;
             vec_sub_reverse(chr_pos, light_vec, light_vec);
-            vec_normalize(light_vec, light_vec);
+            shNormalizeVector(light_vec, light_vec);
             if (vec3_dot_product(cam_pos, light_vec) < -0.707f) {
                 vwGetViewPosition(cam_pos);
                 vec_sub_reverse(cam_pos, &scp->pos, cam_pos);

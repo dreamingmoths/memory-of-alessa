@@ -81,7 +81,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
             dp->path.markangle = enCalcDirection(&hp_roof_pos, &dp->scp->pos);
             enMoveAngle(&dp->path, enREDGetRotSpeed());
             dp->scp->rot.y = dp->path.angle;            
-            if (vec3_dist_xz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
+            if (shVectorDistXz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
                 SET_GAME_FLAG(202); // @todo: add define
             }
     }
