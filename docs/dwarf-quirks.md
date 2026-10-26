@@ -2,7 +2,9 @@
  
 The SH2 Prototype this project aims to match contains debugging information which aid in the decompilation of both SH2 and SH3. Unfortunately, said debugging information contains a few quirks as a result of the compiler. This document attempts to record observed quirks in the prototype's debugging information. 
 
-## Inversely-ordered local variable declarations
+## Functions and local variables
+
+### Inversely-ordered local variable declarations
 Local variable declarations are inverted in the DWARF. Take for example:
 
 ```c
@@ -31,7 +33,7 @@ If you have the SH2 DWARF in hand, try comparing the declarations of `ThreadPad`
 
 > Note: This was fixed in later versions of MWCC.
 
-## Omission of the static qualifier in local variables
+### Omission of the static qualifier in local variables
 When a local variable is declared as static, the static qualifier will be omitted from the variable and an address will be provided next to it. For example:
 
 ```c
@@ -56,7 +58,7 @@ signed int foo(signed int bar /* r16 */) {
 
 See [this scratch](https://decomp.me/scratch/cLsKq) and its fork for a practical example.
 
-## Omission of unused arguments
+### Omission of unused arguments
 Function arguments are omitted if they go unused within the function itself. For example:
 
 ```c
@@ -77,7 +79,7 @@ signed int foo(signed int x /* r16 */, signed int z /* r17 */) {
 
 See `loadBgAll_SetLoadRequestIndoor2x2` in [this scratch](https://decomp.me/scratch/Lzj5X) for a practical example.
 
-## Omission of unused local variables
+### Omission of unused local variables
 If a local variable goes unused, it will be omitted. For example:
 
 ```c
@@ -117,8 +119,7 @@ TAG_local_variable - obj, s0
 
 (kudos: [Mc-muffin](https://github.com/Mc-muffin))
 
----
-## Struct arguments as local variables
+### Struct arguments as local variables
 When a function has a struct for an argument, it will appear as a local variable. For example:
 
 ```c
@@ -177,7 +178,7 @@ Struct pointers are not affected by this.
 
 See [this scratch](https://decomp.me/scratch/3KRij) and compare it to the DWARF for a practical example.
 
-## Multiply-defined local variables
+### Multiply-defined local variables
 
 Scopes aren't taken into consideration in the debug info. As a result, all local variables will appear at the start of a function. In some cases, this can cause variables to be declared twice. For example:
 
@@ -211,7 +212,92 @@ signed int foo(signed int bar /* r2 */) {
 
 See [this scratch](https://decomp.me/scratch/UGzq7) and its forks for a practical example.
 
->Note: Scoped declarations aren't specific to similarly-named variables. See [this scratch.](https://decomp.me/scratch/CqUW2)
+> Note: Scoped declarations aren't specific to similarly-named variables. See [this scratch.](https://decomp.me/scratch/CqUW2)
 
----
-(TODO: document quirks regarding globals)
+### Fake namespaces
+When a function has a struct pointer for an argument and said pointer is named `this`, MWCC will incorrectly output the function as belonging to a namespace with the struct's name. For example:
+
+```c
+typedef struct foo {...} foo;
+
+void foobar(foo* this) {...}
+```
+
+This will come out in the DWARF as
+```c
+// this: r2
+void foo::foobar() {
+    /* anonymous block */ {
+        // Range: 0x00000000 -> 0x0D15EA5E
+    }
+}
+```
+non-typedef'd and anonymous structs are not immune to this.
+
+## Global variables
+
+### Unused global variables
+Unlike local variables. global variables are not omitted from the DWARF if they go unused. Instead, they'll remain and will have an address of zero besides them. For example:
+```c
+int drinks = 0;
+static int cards = 0;
+static int seals = 0;
+```
+
+If `cards` goes unused, the following variables will come out in the DWARF like so:
+```c
+signed int drinks; // size: 0x4, address: 0xDEADDEAD
+static signed int cards; // size: 0x4, address: 0x0
+static signed int seals; // size: 0x4, address: 0xDEADD00D
+```
+### BSS ordering 
+Uninitialized and zero-initialized global variables both lie in BSS but will have different ordering. For example:
+
+```c
+int exec_time;
+int sleep_time;
+int wake_time;
+int total_time;
+```
+This will come out in the DWARF as:
+```c
+signed int total_time; // size: 0x4, address: 0x98
+signed int wake_time; // size: 0x4, address: 0x9C
+signed int sleep_time; // size: 0x4, address: 0xA0
+signed int exec_time; // size: 0x4, address: 0xA4
+```
+
+But if we zero-initialize them:
+```c
+int exec_time  = 0;
+int sleep_time = 0;
+int wake_time  = 0;
+int total_time = 0;
+```
+They'll instead come out as:
+```c
+signed int exec_time; // size: 0x4, address: 0x98
+signed int sleep_time; // size: 0x4, address: 0x9C
+signed int wake_time; // size: 0x4, address: 0xA0
+signed int total_time; // size: 0x4, address: 0xA4
+```
+Notice how the declaration order has been reversed.
+
+### Omission of the static qualifier in global variables
+If a global static variable has not been initialized, MWCC will omit its static qualifier. For example:
+```c
+static int steps = 0;
+```
+This will come out in the DWARF with the static qualifier.
+```c
+static signed int steps; // size: 0x4, address: 0x84
+```
+But if we remove the zero-initialization:
+```c
+static int steps;
+```
+It'll come out as:
+```c
+signed int steps; // size: 0x4, address: 0x84
+```
+
