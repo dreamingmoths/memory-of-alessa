@@ -18,14 +18,6 @@
 
 #include "view/vb_main.h"
 
-#define LIGHT_KIND_NONE       0
-#define LIGHT_KIND_PARALLEL   1
-#define LIGHT_KIND_POINT      2
-#define LIGHT_KIND_3          3
-#define LIGHT_KIND_REFLECTION 4
-#define LIGHT_KIND_5          5
-#define LIGHT_KIND_6          6
-
 #define LIGHT_FAKE_KIND_POINT 1
 #define LIGHT_FAKE_KIND_SPOT  2
 
@@ -255,7 +247,7 @@ static void CalcInfluence(Light* l /* r16 */, float* center /* r2 */, float radi
                 float scale; // @note: not in dwarf
                 vec_normalize(diff, diff);
                 scale = vec3_dot_product(diff, l->dir);
-                l->inf_fac *= float_clamp(l->s_a * scale + l->s_b, 0.0f, 1.0f);
+                l->inf_fac *= shFloatClamp(l->s_a * scale + l->s_b, 0.0f, 1.0f);
             }
 
             l->influence  = l->intensity * f_inf;

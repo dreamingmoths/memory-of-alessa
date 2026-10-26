@@ -117,7 +117,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enREDGetWalkSpeed(dp);
     
     shSinCosV_Scale(&vec, dp->scp->rot.y, 1500.0f);
-    vu0_add_vector(&vec, &dp->scp->pos, &vec);
+    shAddVector(&vec, &dp->scp->pos, &vec);
     enSetPath(dp, &vec, &dp->scp->pos);
     enMoveAngle(&dp->path, enREDGetRotSpeed());
     dp->scp->rot.y = dp->path.angle;

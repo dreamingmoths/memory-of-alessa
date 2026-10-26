@@ -54,7 +54,7 @@ void vcCorrectCamMatAngForcibly(sceVu0FVECTOR ofs_cam_ang, VC_ROAD_DATA* road_ar
         ofs_rr_lim_ang_y = shAngleRegulate(ofs_cam_ang[1] - deflt_rr_lim_ang_y);
         if (ofs_lr_lim_ang_y >= 0.0f && ofs_rr_lim_ang_y <= 0.0f) {
             ofs_cam_ang[1] = shAngleRegulate(ofs_cam_ang[1]);
-        } else if (float_abs(ofs_lr_lim_ang_y) < float_abs(ofs_rr_lim_ang_y)) {
+        } else if (shFloatAbs(ofs_lr_lim_ang_y) < shFloatAbs(ofs_rr_lim_ang_y)) {
             ofs_cam_ang[1] = shAngleRegulate(deflt_lr_lim_ang_y);
         } else {
             ofs_cam_ang[1] = shAngleRegulate(deflt_rr_lim_ang_y);
@@ -71,7 +71,7 @@ void vcWarpForFixAngCam(VC_WORK* v_p) {
     ofs_ang_y = shAngleRegulate(v_p->cur_near_road.road_p->tmp.chs.ratio_r_xz + v_p->fix_man.add_ang_y);
 
 #line 130
-    actual_ang_y = float_abs(shAngleRegulate(v_p->chara_eye_ang_y - ofs_ang_y));
+    actual_ang_y = shFloatAbs(shAngleRegulate(v_p->chara_eye_ang_y - ofs_ang_y));
 
 
     if (actual_ang_y >= TO_RAD(135.0f) && v_p->cur_near_road.road_p->kind_id == 1) {
@@ -140,7 +140,7 @@ float vcRetCirRadiusReduction(VC_WORK* w_p) {
 
     real_r = SQRT(z * z + x * x);
 
-    rate = float_abs(shAngleRegulate(w_p->chara_eye_ang_y - ofs_ang_y) / PI);
+    rate = shFloatAbs(shAngleRegulate(w_p->chara_eye_ang_y - ofs_ang_y) / PI);
 
 
 
@@ -157,7 +157,7 @@ void vcChangeProjByDist(VC_NEAR_ROAD_DATA* near_rd_p, float mv_vec_y) {
 
 
 
-        near_rd_p->road_p->projection = 448.0f + (1.2f * float_abs(-1375.0f - mv_vec_y));
+        near_rd_p->road_p->projection = 448.0f + (1.2f * shFloatAbs(-1375.0f - mv_vec_y));
 
 
 

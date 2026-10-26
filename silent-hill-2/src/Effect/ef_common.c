@@ -338,7 +338,7 @@ void SetVertexPkData(sceVif1Packet* pck, EFCTVertexData* pVertex, u_int nVertexN
             
             
             f = calc_fog_coeff(&pVertex[i].stq[2]);
-            sceVif1PkAddGsData(pck, SCE_GS_SET_XYZF(pVertex[i].ScreenPos[0], pVertex[i].ScreenPos[1], pVertex[i].ScreenPos[2], clamp(f, 0, 255)));
+            sceVif1PkAddGsData(pck, SCE_GS_SET_XYZF(pVertex[i].ScreenPos[0], pVertex[i].ScreenPos[1], pVertex[i].ScreenPos[2], shClamp(f, 0, 255)));
         }
     }
 }

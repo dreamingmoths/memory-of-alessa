@@ -23,7 +23,7 @@ int func_01F6D680_amusement_02(void) {
                 D_1D316AC &= 0xDFFFFFFF;
                 func_00190A20(0);
                 D_01F76688_amusement_02 = 0;
-                ret = 1;
+                ret                     = 1;
             }
             break;
     }
@@ -31,7 +31,7 @@ int func_01F6D680_amusement_02(void) {
 }
 
 int func_01F6D7A0_amusement_02(void) {
-    int var_s0  = 0;
+    int var_s0 = 0;
 
     switch (D_01F76688_amusement_02) {
         case 0:
@@ -42,21 +42,21 @@ int func_01F6D7A0_amusement_02(void) {
                 func_002FE570();
             } else {
                 D_01F76688_amusement_02 = 2;
-            case 2:
-                func_0019B4B0(5);
-                func_0019B4B0(7);
+                case 2:
+                    func_0019B4B0(5);
+                    func_0019B4B0(7);
 
-                if (func_00160520(2) != 0) {
-                    func_0019B540(7);
-                    func_001C2290(2, 0.0f);
-                    func_0016D500(8, 0, 0);
-                    D_1D316AC &= 0xDFFFFFFF;
-                    D_1D316AC |= 0x04000000;
-                    func_00199830(2);
-                    func_00190A20(0);
-                    var_s0 = 1;
-                    D_01F76688_amusement_02 = 0;
-                }
+                    if (func_00160520(2) != 0) {
+                        func_0019B540(7);
+                        func_001C2290(2, 0.0f);
+                        func_0016D500(8, 0, 0);
+                        D_1D316AC &= 0xDFFFFFFF;
+                        D_1D316AC |= 0x04000000;
+                        func_00199830(2);
+                        func_00190A20(0);
+                        var_s0                  = 1;
+                        D_01F76688_amusement_02 = 0;
+                    }
             }
             break;
     }
@@ -94,8 +94,8 @@ int func_01F6D8D0_amusement_02(void) {
 
 int func_01F6D9E0_amusement_02(void) {
 
-    switch (D_01F76688_amusement_02) {              
-        case 0:    
+    switch (D_01F76688_amusement_02) {
+        case 0:
             if (!(GET_BIT(D_1D316A0, 0x19))) {
                 D_01F7AB70_amusement_02 = 0x29;
             } else {
@@ -103,27 +103,27 @@ int func_01F6D9E0_amusement_02(void) {
             }
             func_00190A20(5);
             D_01F76688_amusement_02 = 1;
-                
+
         case 1:
             if (func_00190C00() == 0) {
                 return 0;
             }
             D_01F76688_amusement_02 = 2;
-            
+
         case 2:
             if (func_0016C1C0(D_01F7AB70_amusement_02) == 0) {
                 return 0;
             }
             func_00190A20(6);
             D_01F76688_amusement_02 = 3;
-            
+
         case 3:
             if (func_00190C00() == 0) {
                 return 0;
             }
             func_00190A20(0);
             D_01F76688_amusement_02 = 0;
-            
+
         default:
             return 1;
     }
@@ -134,31 +134,31 @@ int func_01F6DAF0_amusement_02(void) {
     float temp_f2;
 
     switch (D_01F7AB68_amusement_02) {
-    case 0:
-        func_001C2290(3, 0.5f);
-        D_01F7AB68_amusement_02 += 1;
-        func_00190A20(2);
-        D_01F7AB60_amusement_02 = (D_01F7AB60_struct*) &D_01F762A0_amusement_02;
+        case 0:
+            func_001C2290(3, 0.5f);
+            D_01F7AB68_amusement_02 += 1;
+            func_00190A20(2);
+            D_01F7AB60_amusement_02 = (D_01F7AB60_struct*) &D_01F762A0_amusement_02;
 
-    case 1:
-        if (func_001C2580(2) == 0) {
-            return 0;
-        }
-        func_001603E0(2, 1);
-        D_01F7AB68_amusement_02 += 1;
-    default:
-        if (func_0016C540(&D_01F762C0_amusement_02, &D_01F76320_amusement_02) == 0) {
-            temp_f0 = func_001643C0();
-            temp_f2 = D_01F7AB60_amusement_02->unk0;
-            if (!(temp_f2 <= 0.0f) && (temp_f2 <= temp_f0)) {
-                func_0013D250(0, D_01F7AB60_amusement_02->unk4, 1.0f);
-                D_01F7AB60_amusement_02++;
+        case 1:
+            if (func_001C2580(2) == 0) {
+                return 0;
             }
-            return 0;
-        }
-        func_0013D280(0);
-        func_00190A20(0);
-        return 1;
+            func_001603E0(2, 1);
+            D_01F7AB68_amusement_02 += 1;
+        default:
+            if (func_0016C540(&D_01F762C0_amusement_02, &D_01F76320_amusement_02) == 0) {
+                temp_f0 = func_001643C0();
+                temp_f2 = D_01F7AB60_amusement_02->unk0;
+                if (!(temp_f2 <= 0.0f) && (temp_f2 <= temp_f0)) {
+                    func_0013D250(0, D_01F7AB60_amusement_02->unk4, 1.0f);
+                    D_01F7AB60_amusement_02++;
+                }
+                return 0;
+            }
+            func_0013D280(0);
+            func_00190A20(0);
+            return 1;
     }
 }
 
@@ -172,8 +172,8 @@ int func_01F6DC30_amusement_02(void) {
             func_001C2290(2, 0.0f);
             func_00190A20(2);
             D_01F76688_amusement_02 += 1;
-        } 
-    
+    }
+
     ret = func_0016C540(&D_01F76340_amusement_02, &D_01F763A0_amusement_02);
     if (ret == 0) {
         SubCharacter* temp_s1;
@@ -196,7 +196,6 @@ int func_01F6DC30_amusement_02(void) {
     }
     return ret;
 }
-
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_02", func_01F6DD80_amusement_02);
 
@@ -226,21 +225,17 @@ int func_01F6F510_amusement_02() {
     return D_01F7AB78_amusement_02;
 }
 
-
 void func_01F6F520_amusement_02(int arg0) {
     D_01F7AB50_amusement_02 = arg0;
 }
-
 
 int func_01F6F530_amusement_02(void) {
     return D_01F7AB50_amusement_02;
 }
 
-
 float func_01F6F540_amusement_02(void) {
     return D_01F76698_amusement_02;
 }
-
 
 int func_01F6F550_amusement_02(void) {
     return D_01F76690_amusement_02;
@@ -255,8 +250,10 @@ int func_01F6F560_amusement_02(int arg0) {
 
     var_s0 = 0;
 
-    if (!D_01F7AB30_amusement_02[0]) return 1;
-    if (!D_01F76710_amusement_02) return 1;
+    if (!D_01F7AB30_amusement_02[0])
+        return 1;
+    if (!D_01F76710_amusement_02)
+        return 1;
 
     switch (D_01F76688_amusement_02) {
         case 0:
@@ -266,12 +263,13 @@ int func_01F6F560_amusement_02(int arg0) {
     }
 
     switch (arg0) {
-        case 4: {            
+        case 4: {
             var_s1 = 0;
             var_s2 = 0;
             for (; var_s1 < 12; var_s1++, var_s2 += 0x14) {
-                SubCharacter *scp;
-                if (var_s1 == 4) continue;
+                SubCharacter* scp;
+                if (var_s1 == 4)
+                    continue;
                 scp = shCharacterGetSubCharacter(0x20C, D_01F763C0_amusement_02[var_s1].id);
                 if (func_001E2110(scp))
                     var_s0++;

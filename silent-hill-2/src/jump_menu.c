@@ -59,14 +59,14 @@ void CheckModeJumpDataSet(void) {
             ItemGet(SH2_ITEM_08);
             for (i = 0; i < 9; i++) ItemGet(SH2_ITEM_09);
             ItemGet(SH2_ITEM_10);
-            ItemGet(SH2_ITEM_11);
+            ItemGet(WOODEN_PLANK);
             ItemGet(SH2_ITEM_12);
             ItemGet(SH2_ITEM_13);
             ItemGet(CHAINSAW);
             for (i = 0; i < 16; i++) ItemGet(HEALTH_DRINK);           
             for (i = 0; i < 16; i++) ItemGet(FIRST_AID_KIT);            
             ItemGet(SH2_ITEM_15);
-            ItemGet(SH2_ITEM_16);
+            ItemGet(SH2_ITEM_RADIO);
             
             SET_GAME_FLAG(GAME_FLAG_32);
             SET_GAME_FLAG(GAME_FLAG_24);
@@ -89,18 +89,18 @@ void CheckModeJumpDataSet(void) {
                 SET_GAME_FLAG(GAME_FLAG_166);
                 break;
             case 7:
-                ItemGet(SH2_ITEM_11);
-                ItemGet(SH2_ITEM_16);
+                ItemGet(WOODEN_PLANK);
+                ItemGet(SH2_ITEM_RADIO);
                 for (i = 0; i < 16; i++) ItemGet(HEALTH_DRINK);                
                 item.equip = 11;
                 break;
             case 8:
                 SET_GAME_FLAG(GAME_FLAG_15);
-                ItemGet(SH2_ITEM_11);
+                ItemGet(WOODEN_PLANK);
                 ItemGet(SH2_ITEM_04);
                 for (i = 0; i < 9; i++) ItemGet(SH2_ITEM_05);                
                 ItemGet(SH2_ITEM_12);
-                ItemGet(SH2_ITEM_16);
+                ItemGet(SH2_ITEM_RADIO);
                 ItemGet(SH2_ITEM_15);
                 for (i = 0; i < 16; i++) ItemGet(HEALTH_DRINK);
                 item.equip = 4;
@@ -109,13 +109,13 @@ void CheckModeJumpDataSet(void) {
                 SET_GAME_FLAG(GAME_FLAG_10);
                 break;
             case 9:
-                ItemGet(SH2_ITEM_11);
+                ItemGet(WOODEN_PLANK);
                 ItemGet(SH2_ITEM_04);
                 for (i = 0; i < 9; i++) ItemGet(SH2_ITEM_05);    
                 ItemGet(SH2_ITEM_06);
                 for (i = 0; i < 9; i++) ItemGet(SH2_ITEM_07);                
                 ItemGet(SH2_ITEM_12);
-                ItemGet(SH2_ITEM_16);
+                ItemGet(SH2_ITEM_RADIO);
                 ItemGet(SH2_ITEM_15);
                 for (i = 0; i < 16; i++) ItemGet(HEALTH_DRINK);                
                 item.equip = 4;
@@ -129,21 +129,21 @@ void CheckModeJumpDataSet(void) {
                 ItemGet(SH2_ITEM_08);
                 for(i = 0; i < 9; i++) ItemGet(SH2_ITEM_09);                    
                 ItemGet(SH2_ITEM_10);
-                ItemGet(SH2_ITEM_11);
+                ItemGet(WOODEN_PLANK);
                 ItemGet(SH2_ITEM_12);
                 ItemGet(SH2_ITEM_13);
                 for (i = 0; i < 16; i++) ItemGet(HEALTH_DRINK);    
                 ItemGet(SH2_ITEM_15);
-                ItemGet(SH2_ITEM_16);
+                ItemGet(SH2_ITEM_RADIO);
                 item.equip = 4;
                 break;
             case 11:
                 ItemGet(SH2_ITEM_04);    
                 for (i = 0; i < 3; i++) ItemGet(SH2_ITEM_05);    
-                ItemGet(SH2_ITEM_11);    
+                ItemGet(WOODEN_PLANK);    
                 for (i = 0; i < 5; i++) ItemGet(HEALTH_DRINK);    
                 for (i = 0; i <= 0; i++) ItemGet(FIRST_AID_KIT);                
-                ItemGet(SH2_ITEM_16);    
+                ItemGet(SH2_ITEM_RADIO);    
                 item.equip = 4;
                 SET_GAME_FLAG(GAME_FLAG_25);
                 SET_GAME_FLAG(GAME_FLAG_66);
@@ -161,12 +161,12 @@ void CheckModeJumpDataSet(void) {
                 for (i = 0; i < 3; i++) ItemGet(SH2_ITEM_05);                
                 ItemGet(SH2_ITEM_06);
                 for(i = 0; i <= 0; i++) ItemGet(SH2_ITEM_07);                
-                ItemGet(SH2_ITEM_11);
+                ItemGet(WOODEN_PLANK);
                 ItemGet(SH2_ITEM_12);
                 for (i = 0; i < 8; i++) ItemGet(HEALTH_DRINK);                
                 for (i = 0; i < 2; i++) ItemGet(FIRST_AID_KIT);                
                 ItemGet(SH2_ITEM_15);
-                ItemGet(SH2_ITEM_16);
+                ItemGet(SH2_ITEM_RADIO);
                 item.equip = 4;
                 SET_GAME_FLAG(GAME_FLAG_28);
                 SET_GAME_FLAG(GAME_FLAG_35);

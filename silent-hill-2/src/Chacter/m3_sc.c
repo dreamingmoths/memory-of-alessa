@@ -46,7 +46,7 @@ static inline subchar_rot(SubCharacter* scp, Vector4* rot)
     stack_rot[2] = rot->z;
     stack_rot[3] = 1.0f; 
 
-    sceVu0RotMatrix(scp->mat, kt_unit_matrix, stack_rot);
+    sceVu0RotMatrix(scp->mat, kt_unit_matrix.d, stack_rot);
     sceVu0RotMatrixY(scp->mat, scp->mat, rot->y);
 }
 
@@ -159,7 +159,7 @@ static void shCharacterInitialize(SubCharacter* scp, int id, int _model) {
     scp->rot = (Vector4){0};
 
 
-    scp->mat = kt_unit_matrix;
+    scp->mat = kt_unit_matrix.d;
 
     scp->spd_roty = 0.0f;
     scp->spd_y = 0.0f;
@@ -183,7 +183,7 @@ static void UpdateMatrix(SubCharacter* scp, Vector4* rot, Vector4* trans) {
         
         subchar_rot(scp, rot);
     } else {
-        sceVu0RotMatrix(scp->mat, kt_unit_matrix, rot);
+        sceVu0RotMatrix(scp->mat, kt_unit_matrix.d, rot);
     }
     subchar_trans(scp, trans);
 }
@@ -1615,8 +1615,8 @@ void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height,
     p = shCharacterGetSubCharacter(kind, id);
     if (p != NULL) {
         
-        volatile_vec_copy(pos, &p->pos);
-        volatile_vec_copy(normal, &p->grnd_normal);
+        shVectorCopy(pos, &p->pos);
+        shVectorCopy(normal, &p->grnd_normal);
         *height = p->grnd_height;
     }
 }

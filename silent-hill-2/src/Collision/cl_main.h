@@ -35,7 +35,7 @@ typedef struct _CL_HITPOLY_PLANE {
     u_int weight;   // offset 0x4, size 0x4
     u_int material; // offset 0x8, size 0x4
     int flg;        // offset 0xC, size 0x4
-    float p[4][4];  // offset 0x10, size 0x40
+    sceVu0FMATRIX p;// offset 0x10, size 0x40
 } CL_HITPOLY_PLANE;
 typedef struct _CL_WALLHITDAT {
     // total size: 0x50
@@ -116,61 +116,44 @@ typedef struct _CL_HITRESULT {
 
 #define CL_BATTLE_RESULT_SIZE 65
 
-extern u_char clPermColExpFlg[210];                            // size: 0xD2, address: 0x2A9880
-extern int clCollisionEnable;                                  // size: 0x4, address: 0x4917C0
-extern int clUseBattleResult;                                  // size: 0x4, address: 0x48ABE0
-extern CL_BATTLE_RESULT clBattleResult[CL_BATTLE_RESULT_SIZE]; // size: 0x1040, address: 0x489BA0
-extern CL_DYNAMICFLOOR_LIST clDynamicFloorList[2];             // size: 0x88, address: 0x48D010
-extern CL_DYNAMICWALL_LIST clDynamicWallList[2];               // size: 0x108, address: 0x48D0A0
-extern int clCharaListUse[2];                                  // size: 0x8, address: 0x4917B0
-extern int clDynamicFloorListAct;                              // size: 0x4, address: 0x48D098
-extern int clDynamicWallListAct;                               // size: 0x4, address: 0x48D1A8
-extern int clCharaListAct;                                     // size: 0x4, address: 0x4917B8
-extern int clUseBattleQue;                                     // size: 0x4, address: 0x48BFF0
-extern CL_CHARA_LIST clCharaList[2][32];                       // size: 0x3800, address: 0x48DFB0
-extern CL_WALLHITDAT clWallHitData[32];                        // size: 0xA00, address: 0x48D5B0
-extern CL_BATTLE_QUE clBattleQue[64];                          // size: 0x1400, address: 0x48ABF0
-extern int clVHitListUse;                                      // size: 0x4, address: 0x48D000
-extern CL_VHIT_RESULT clVHitResult[64];                        // size: 0x1000, address: 0x48C000
+extern u_char clPermColExpFlg[210];                            // size: 0xD2, address: 0x2A9880 
 extern float clswPerc[5];                                      // size: 0x14, address: 0x2A9980
+
+extern CL_BATTLE_RESULT clBattleResult[CL_BATTLE_RESULT_SIZE]; // size: 0x1040, address: 0x489BA0
+extern int clUseBattleResult;                                  // size: 0x4, address: 0x48ABE0
+extern CL_BATTLE_QUE clBattleQue[64];                          // size: 0x1400, address: 0x48ABF0
+extern int clUseBattleQue;                                     // size: 0x4, address: 0x48BFF0
+extern CL_VHIT_RESULT clVHitResult[64];                        // size: 0x1000, address: 0x48C000
+extern int clVHitListUse;                                      // size: 0x4, address: 0x48D000
+extern CL_DYNAMICFLOOR_LIST clDynamicFloorList[2];             // size: 0x88, address: 0x48D010
+extern int clDynamicFloorListAct;                              // size: 0x4, address: 0x48D098
+extern CL_DYNAMICWALL_LIST clDynamicWallList[2];               // size: 0x108, address: 0x48D0A0
+extern int clDynamicWallListAct;                               // size: 0x4, address: 0x48D1A8
 extern CL_SELECT_MAP clSelectMap[128];                         // size: 0x400, address: 0x48D1B0
+extern CL_WALLHITDAT clWallHitData[32];                        // size: 0xA00, address: 0x48D5B0
+extern CL_CHARA_LIST clCharaList[2][32];                       // size: 0x3800, address: 0x48DFB0
+extern int clCharaListUse[2];                                  // size: 0x8, address: 0x4917B0
+extern int clCharaListAct;                                     // size: 0x4, address: 0x4917B8
+extern int clCollisionEnable;                                  // size: 0x4, address: 0x4917C0
 
 void clAllInitCollisionData(void);
-
 void clFrameInitCollisionData(void);
-
 void clCollectCharaPosition(void);
-
-void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col, CL_HITPOLY_COLUMN* wcol, struct SubCharacter* sc, void (*func)(void));
-
+void clSetCharaHitColumn(CL_HITPOLY_COLUMN* col, CL_HITPOLY_COLUMN* wcol, SubCharacter* sc, void (*func)(void));
 void clAddDynamicWall(CL_HITPOLY_PLANE* pl);
-
 void clAddDynamicFloor(CL_HITPOLY_PLANE* pl);
-
 void clBattleAddQue(CL_BATTLE_QUE* que);
-
 CL_BATTLE_RESULT* clBattleGetResult(u_int id, CL_BATTLE_RESULT* before);
-
 void clBattleCheckExec(void);
-
 CL_SELECT_MAP* clGetHitSectListVECHIT(float* st, float* ed);
-
 int clCheckCrossLine2BoxXZ(float (*box)[4], float* st, float* ed);
-
 int clCheckCrossLine2LineXZ(float* va0, float* va1, float* vb0, float* vb1);
-
 CL_SELECT_MAP* clGetHitSectListMOVE(float* bpos);
-
 void clCheckHitEyes(CL_VHIT_RESULT* res, u_int id, float* st, float* ed, int thru);
-
 void clCheckHitEyesOnlyFloor(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep);
-
 void clCheckHitEyesOnlyFloorThru(CL_VHIT_RESULT* res, int unknown, float* sp, float* ep);
-
 void clCheckHitEyesOnlyWall(CL_VHIT_RESULT* res, float* sp, float* ep);
-
 void clCheckHitEyesOnlyFloorCeil(CL_VHIT_RESULT* res, float* sp, float* ep);
-
 int clPermitColumnExpansion(void);
 
 #endif // CL_MAIN_H

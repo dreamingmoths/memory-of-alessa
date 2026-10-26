@@ -29,13 +29,13 @@
 
 // extern /* static */ int stg_apart_out_py; // @ 0x01F02C50
 
-extern /* static */ DramaDemo_PlayInfo stg_apart_out_info_door_a; // @ 0x01F02C70
+extern /* static */ DramaDemo_PlayInfo stg_apart_out_door_a; // @ 0x01F02C70
 
-extern /* static */ DramaDemo_PlayInfo stg_apart_out_info_door_b; // @ 0x01F02CA0
+extern /* static */ DramaDemo_PlayInfo stg_apart_out_door_b; // @ 0x01F02CA0
 
 extern /* static */ CharaData_DemoList stg_apart_out_chara_data_01F02CD0[2]; // @ 0x01F02CD0
 
-extern /* static */ DramaDemo_PlayInfo stg_apart_out_info_door_c; // @ 0x01F02D00
+extern /* static */ DramaDemo_PlayInfo stg_apart_out_door_c; // @ 0x01F02D00
 
 extern /* static */ CharaData_DemoList stg_apart_out_chara_data_01F02D30[2]; // @ 0x01F02D30
 
@@ -67,7 +67,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_out", stg_apart_out_EvProgGe
             }
             return stg_apart_out_EvProgApartEastToWest();
         case 23:
-            if (DramaDemoMain(&stg_apart_out_info_door_a)) {
+            if (DramaDemoMain(&stg_apart_out_door_a)) {
                 if (shPadTrigger(0, key_config.skip)) {
                     EV_PROG_STEP(13);
                 } else {
@@ -82,7 +82,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_out", stg_apart_out_EvProgGe
             }
             break;
         case 24:
-            ret = DramaDemoMain(&stg_apart_out_info_door_b);
+            ret = DramaDemoMain(&stg_apart_out_door_b);
             if (demo_frame > (total_demo_frame - 15.0f)) {
                 ScreenEffectFadeStart(1, 0.5f);
             }
@@ -115,7 +115,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_out", stg_apart_out_EvProgGe
             EV_PROG_STEP(24);
             /* fallthrough */
         case 24:
-            ret = DramaDemoMain(&stg_apart_out_info_door_c);
+            ret = DramaDemoMain(&stg_apart_out_door_c);
             if (demo_frame > (total_demo_frame - 15.0f)) {
                 ScreenEffectFadeStart(1, 0.5f);
             }

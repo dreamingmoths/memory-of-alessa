@@ -617,7 +617,7 @@ static float stg_forest_forest_se_r = 0.0f; // size: 0x4, address: 0x1F03E28
     }
     se_vol = 0.8f + (0.2f * stg_forest_forest_se_y * shSinF(stg_forest_forest_se_r));
     if (sh2jms.player->pos.x > -FOREST_SOUND_EFFECT_RADIUS && sh2jms.player->pos.z > -FOREST_SOUND_EFFECT_RADIUS) {
-        se_vol *= 1.0f - ((FOREST_SOUND_EFFECT_RADIUS + float_min(sh2jms.player->pos.x, sh2jms.player->pos.z)) / FOREST_SOUND_EFFECT_RADIUS);
+        se_vol *= 1.0f - ((FOREST_SOUND_EFFECT_RADIUS + shFloatMin(sh2jms.player->pos.x, sh2jms.player->pos.z)) / FOREST_SOUND_EFFECT_RADIUS);
     
         if (se_vol <= 0.0f) se_vol = 0.001f;
     }

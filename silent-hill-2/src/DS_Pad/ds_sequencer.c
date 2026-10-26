@@ -769,7 +769,7 @@ static u_int EventMessageQueue_Length_Get(void) {
 static void DSR_MUD_Initialize(void) {
     pMUD->Handle_History = 0;
     pMUD->EntryRecord_Count = 0;
-    Sequence_Different_Time_Set(1.0f / 30.0f);
+    Sequence_Different_Time_Set(TIME_STEP_30FPS);
     EventMessageQueue_Initialize();
 }
 

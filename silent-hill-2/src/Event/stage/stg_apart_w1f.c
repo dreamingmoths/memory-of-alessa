@@ -190,8 +190,8 @@ extern /* static */ char coin_pad; // size: 0x1, address: 0x0
 
 #line 330
 /* static */ int stg_apart_w1f_EvProgSetThreeCoin(void) {
-    extern /* static */ float chara_vec[5][2][4]; // @ 0x01F045A0
-    extern /* static */ short chara_kind[4]; // @ 0x01F04590
+    extern /* static */ float stg_apart_w1f_chara_vec[5][2][4]; // @ 0x01F045A0
+    extern /* static */ short stg_apart_w1f_chara_kind[4]; // @ 0x01F04590
     int i; // r16
     int j; // r17
 
@@ -312,13 +312,13 @@ extern /* static */ char coin_pad; // size: 0x1, address: 0x0
             }
 
             for (i = 0; i < 3; i++)
-                shCharacter_Manage_Delete(NULL, chara_kind[i], 0);
+                shCharacter_Manage_Delete(NULL, stg_apart_w1f_chara_kind[i], 0);
 
             if (!GET_GAME_FLAG(GAME_FLAG_142)) {
                 for (i = 0; i < 3; i++)
                     for (j = 0; j < 5; j++)
                         if (GET_GAME_FLAG(COIN_PUZZLE_FLAG(i, j)))
-                            CharaWorkCreate(chara_kind[i], 0, chara_vec[j][0], chara_vec[j][1], 0);
+                            CharaWorkCreate(stg_apart_w1f_chara_kind[i], 0, stg_apart_w1f_chara_vec[j][0], stg_apart_w1f_chara_vec[j][1], 0);
             }
             break;
         case 13:                                       
@@ -339,11 +339,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
 
 
 /* static */ int stg_apart_w1f_EvProgAngelaWithKnife(void) {
-    extern /* static */ CharaData_DemoList chara_data[9]; // @ 0x01F04830
-    extern /* static */ DramaDemo_MessageTime knife_msg_mov[2]; // @ 0x01F047F0
-    extern /* static */ DramaDemo_PlayInfo knife; // @ 0x01F04800
-    extern /* static */ sceVu0FVECTOR jms_pos; // @ 0x01F048F0
-    extern /* static */ float jms_rot; // @ 0x01F04900
+    extern /* static */ CharaData_DemoList stg_apart_w1f_chara_data_01F04830[9]; // @ 0x01F04830
+    extern /* static */ DramaDemo_MessageTime stg_apart_w1f_knife_msg_mov[2]; // @ 0x01F047F0
+    extern /* static */ DramaDemo_PlayInfo stg_apart_w1f_knife; // @ 0x01F04800
+    extern /* static */ sceVu0FVECTOR stg_apart_w1f_jms_pos_01F048F0; // @ 0x01F048F0
+    extern /* static */ float stg_apart_w1f_jms_rot_01F04900; // @ 0x01F04900
     sceVu0FVECTOR vec; // r29+0x20
     int ret; // r16
 
@@ -352,14 +352,14 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
             FcRead(data_demo_knife_agl_knife_agl_dds, MemShare_gp_data_buf);
             CharaAdminPlayableDisplay(0);
             SCNowDemoEventSwitch(sh2jms.player, true);
-            CharaDataLoadDemo(chara_data, 0);
+            CharaDataLoadDemo(stg_apart_w1f_chara_data_01F04830, 0);
             fsSync(0, -1);
             ScreenEffectFadeStart(3, 0.0f);
             EV_PROG_STEP(40);
            
 
         case 40:
-            EvSubMovieReady(data_movie_knife_pss, knife_msg_mov, 12);
+            EvSubMovieReady(data_movie_knife_pss, stg_apart_w1f_knife_msg_mov, 12);
             if (EvSubMovieStart(1)) EV_PROG_STEP(43);
             break;
 
@@ -375,9 +375,9 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
            
 
         case 22:
-            ret = DramaDemoMain(&knife);
+            ret = DramaDemoMain(&stg_apart_w1f_knife);
             if (shCharacterGetSubCharacter(RHHH_JMS_CHARA_KIND, 0) == NULL) {
-                vec_zero(vec);
+                shVectorZero(vec);
                 CharaWorkCreate(RHHH_JMS_CHARA_KIND, 0, vec, vec, 0);
                 CharaWorkCreate(RAGL_CHARA_KIND, 0, vec, vec, 0);
                 CharaWorkCreate(ITEM_RI_KNIFE_CHARA_KIND, 0, vec, vec, 0);
@@ -406,7 +406,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_w1f", stg_apart_w1f_EvProgSu
             CharaDataDeleteOne(ITEM_RI_PHOTO_CHARA_KIND);
             SCNowDemoEventSwitch(sh2jms.player, false);
             shCharacterPlayerModelToPlayable();
-            shCharacterSetPosAfterDemo(sh2jms.player, jms_pos, jms_rot);
+            shCharacterSetPosAfterDemo(sh2jms.player, stg_apart_w1f_jms_pos_01F048F0, stg_apart_w1f_jms_rot_01F04900);
             CharaAdminPlayableDisplay(1);
             vcReturnPreAutoCamWork(1);
             ScreenEffectFadeStart(4, 0.0f);

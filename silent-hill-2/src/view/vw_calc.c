@@ -29,7 +29,7 @@ void vwRenewalXZVelocityToTargetPos(sceVu0FVECTOR velo_xz, sceVu0FVECTOR now_pos
 
 
     
-    spd = vec_length(velo_xz);
+    spd = shVectorLength(velo_xz);
     
     if (spd > total_max_spd) {
         float ang_y;
@@ -53,11 +53,11 @@ void vwRenewalXZVelocityToTargetPos(sceVu0FVECTOR velo_xz, sceVu0FVECTOR now_pos
     vec_sub_xyz(tgt_pos, now_pos, vec_xz);
     
     to_tgt_ang_y = shAtanV(vec_xz);
-    to_tgt_dist = vec_length(vec_xz);
+    to_tgt_dist = shVectorLength(vec_xz);
 
     
     lim_spd = dec_forwd_lim_spd * (to_tgt_dist - tgt_r);
-    lim_spd = float_max(lim_spd, 0.0f);
+    lim_spd = shFloatMax(lim_spd, 0.0f);
     
     vwLimitOverLimVector(velo_xz, lim_spd, to_tgt_ang_y);
 
@@ -127,11 +127,11 @@ float vwRetNewVelocityToTargetVal(float now_spd, float mv_pos, float tgt_pos, fl
     left = CLAMP(left, -total_max_spd, total_max_spd);
 
     
-    abs_lim_spd = dec_val_lim_spd * float_abs(new_velo);
+    abs_lim_spd = dec_val_lim_spd * shFloatAbs(new_velo);
     if (new_velo >= 0.0f) 
-        return float_min(left, abs_lim_spd);
+        return shFloatMin(left, abs_lim_spd);
     else
-        return float_max(left, -abs_lim_spd);
+        return shFloatMax(left, -abs_lim_spd);
 
     
 }

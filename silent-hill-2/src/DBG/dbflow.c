@@ -1,27 +1,26 @@
-#include "dbflow.h"
+#include "DBG/dbflow.h"
 
-extern /* static */ char * last_check; // size: 0x4, address: 0x11B69A0
-extern /* static */ u_long check_count; // size: 0x4, address: 0x11B69A8
-extern /* static */ u_long prv_check_count; // size: 0x4, address: 0x11B69B0
-extern /* static */ u_long warn_check_count; // size: 0x4, address: 0x11B69B8
-extern /* static */ u_long warn_wait; // size: 0x4, address: 0x11B69C0
-extern /* static */ int check_halt; // size: 0x4, address: 0x0
-extern /* static */ long sleep_timeout; // size: 0x4, address: 0x11B69C8
-extern /* static */ long sleep_time; // size: 0x4, address: 0x11B69D0
-extern /* static */ long sleep_check_interval; // size: 0x4, address: 0x0
-extern /* static */ long sleep_max; // size: 0x4, address: 0x11B69D8
-extern /* static */ long sleep_max_report; // size: 0x4, address: 0x34C1D0
-extern /* static */ long call_count; // size: 0x4, address: 0x11B69E0
-extern int execEnv_auto_exit_time; // size: 0x4, address: 0x552698
+static s_char* last_check = NULL; // size: 0x4, address: 0x11B69A0
+static u_long check_count = 0; // size: 0x4, address: 0x11B69A8
+static u_long prv_check_count = 0; // size: 0x4, address: 0x11B69B0
+static u_long warn_check_count = 0; // size: 0x4, address: 0x11B69B8
+static u_long warn_wait = 0; // size: 0x4, address: 0x11B69C0
+static int check_halt = 0; // size: 0x4, address: 0x0
+static long sleep_timeout = 0; // size: 0x4, address: 0x11B69C8
+static long sleep_time = 0; // size: 0x4, address: 0x11B69D0
+static long sleep_check_interval = 0; // size: 0x4, address: 0x0
+static long sleep_max = 0; // size: 0x4, address: 0x11B69D8
+static long sleep_max_report = 119; // size: 0x4, address: 0x34C1D0
+static long call_count = 0; // size: 0x4, address: 0x11B69E0
 
-void ___dbFlowSetCheckPoint(char * check_point /* r2 */) {
+void ___dbFlowSetCheckPoint(s_char* check_point /* r2 */) {
     check_count++;
     last_check = check_point;
 }
 
 int dbFlowCheck(void) {
     int ret = true;
-    char* str = last_check;
+    s_char* str = last_check;
 
     if (str) {
 
@@ -39,6 +38,7 @@ int dbFlowCheck(void) {
         } else {
 
             if (prv_check_count == warn_check_count) {
+                s_char* str = last_check;
                 if (!str) str = "(unknown)";
                 DEBUG_LOG_ON_LINE(76, "reach at `%s'\n", str);
             }

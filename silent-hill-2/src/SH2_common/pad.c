@@ -169,7 +169,7 @@ int shPadPress(int port /* r17 */, int key /* r16 */) {
     ret = 0;
     for (i = 0; i < 0x14; i++) {
         if ((key >> i) & 1) {         
-            ret = clamp_max(ret, pad[port][i]);           
+            ret = shClampMax(ret, pad[port][i]);           
         }
     }
     
@@ -194,7 +194,7 @@ int shPadTrigger(int port /* r17 */, int key /* r16 */)  {
     for (i = 0; i < 0x14; i++) {
         if ((key >> i) & 1) {         
             if (pad_bak[port][i] == 0) {
-                ret = clamp_max(ret, pad[port][i]);
+                ret = shClampMax(ret, pad[port][i]);
             }           
         }
     }
@@ -221,7 +221,7 @@ int shPadRepeat(int port /* r17 */, int key /* r16 */) {
     for (i = 0; i < 0x14; i++) {
         if ((key >> i) & 1) {
             if (key & repeat[port]) {
-                ret = clamp_max(ret, pad[port][i]);
+                ret = shClampMax(ret, pad[port][i]);
             }
         }
     }

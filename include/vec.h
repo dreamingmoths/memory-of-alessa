@@ -9,7 +9,7 @@
 
 /* @note(dreamingmoths, july 20th, 2026): try to use these `vu0_` inlines where possible. */
 
-static inline void vu0_add_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+static inline void shAddVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
     asm volatile("\
 	lqc2      vf4,0x0(%1)\n\
 	lqc2      vf5,0x0(%2)\n\
@@ -18,7 +18,7 @@ static inline void vu0_add_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVEC
 	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
 }
 
-static inline void vu0_sub_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+static inline void shSubVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
     asm volatile("\
 	lqc2      vf4,0x0(%1)\n\
 	lqc2      vf5,0x0(%2)\n\
@@ -27,7 +27,7 @@ static inline void vu0_sub_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVEC
 	": : "r" (v0) , "r" (v1), "r" (v2) : "memory");
 }
 
-static inline void vu0_scale_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float t) {
+static inline void shScaleVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float t) {
     asm volatile("\
         mfc1        t7,  %2;\
 	    lqc2        vf4, 0x0(%1)\n\
@@ -37,7 +37,7 @@ static inline void vu0_scale_vector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float t)
 	": : "r" (v0) , "r" (v1), "f" (t):"t7", "memory");
 }
 
-static inline void vu0_transform_vector_perspective(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
+static inline void shTransformVectorPerspective(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
     asm ("\
          lqc2         vf4, 0x0(%0)\n\
          lqc2         vf5, 0x0(%1)\n\
@@ -58,14 +58,14 @@ static inline void vu0_transform_vector_perspective(sceVu0FVECTOR vec, sceVu0FMA
 }
 
 /* all inlines below may be used, but they may not exist forever. */
-static inline void vec_copy(void* dst, void* src) {
+static inline void shVectorCopyNonvolatile(void* dst, void* src) {
     asm("\
          lq t7, 0(%1)\n\
          sq t7, 0(%0)"
         : "+r"(dst), "+r"(src)::"t7");
 }
 
-static inline void volatile_vec_copy(void* dst, void* src) {
+static inline void shVectorCopy(void* dst, void* src) {
     asm volatile("\
          lq t7, 0(%1)\n\
          sq t7, 0(%0)"
@@ -135,8 +135,8 @@ static inline void vec_scale_xyz(float s, void* v, void* out) {
         : "+r"(v), "+f"(s), "+r"(out)::"t7");
 }
 
-static inline void vec_zero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
-static inline void vec_zero_xyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
+static inline void shVectorZero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
+static inline void shVectorZeroXyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
 
 static inline float vec_normalize(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\
@@ -264,7 +264,7 @@ static inline vec_lerp(float* out, float* v, float* w, float t) {
          sqc2 vf4, 0(%0)" : "=r"(out) : "r"(v), "r"(w), "f"(t) : "t7");
 }
 
-static inline float vec_length(float* a) {
+static inline float shVectorLength(float* a) {
     float result;
     asm volatile("lwc1   %0,0(%1);\
         lwc1   $f8,8(%1);\
@@ -351,7 +351,7 @@ static inline float vec3_dist_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
 }
 
 /* build 4x4 identity matrix using VU0 */
-static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
+static inline void shUnitMatrix(sceVu0FMATRIX out) {
     asm("\
         vsub.xyzw vf5, vf0, vf0\n\
         vsub.xyzw vf6, vf0, vf0\n\
@@ -365,7 +365,7 @@ static inline void vu0_unit_matrix(sceVu0FMATRIX out) {
         : "+r"(out));
 }
 
-static inline void vu0_transform_vector(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
+static inline void shVectorTransform(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
     asm("\
         lqc2         vf4, 0x0(%0)\n\
         lqc2         vf5, 0x0(%1)\n\
@@ -395,7 +395,7 @@ static inline void vu0_transform_vector_alt(sceVu0FVECTOR dst, sceVu0FVECTOR src
         : "+r"(dst) : "r"(src), "r"(mat));
 }
 
-static inline void mat_copy(void* dst, void* src) {
+static inline void shMatrixCopy(void* dst, void* src) {
     asm volatile("\
         lq $t6, 0(%1)\n\
         lq $t7, 0x10(%1)\n\
@@ -408,7 +408,7 @@ static inline void mat_copy(void* dst, void* src) {
                  : : "r"(dst), "r"(src) : "t6", "t7");
 }
 
-static inline void mat_copy_3x3(void* dst, void* src) {
+static inline void shMatrixCopy3d(void* dst, void* src) {
     asm volatile("\
         lq   $t7,  0(%1)\n\
         lq   $t6,  0x10(%1)\n\
@@ -420,7 +420,7 @@ static inline void mat_copy_3x3(void* dst, void* src) {
                  : : "r"(dst), "r"(src) : "t6", "t7");
 }
 
-static inline void vu0_unit_vector(sceVu0FVECTOR out) {
+static inline void shUnitVector(sceVu0FVECTOR out) {
     asm("\
         sqc2 vf0, 0x0(%0)"
         : "+r"(out));

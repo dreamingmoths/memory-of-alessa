@@ -6,10 +6,20 @@
 #include "SH2_common/pad.h"
 #include "Event/event.h"
 #include "Event/demoview.h"
+#include "sce/libvu0.h"
 
 #include "data/fs_structs.h"
 
 // @todo: clean up
+
+// total size: 0x40
+typedef struct Event_CamSetData {
+    // Members
+    sceVu0FVECTOR pos; // offset 0x0, size 0x10
+    sceVu0FVECTOR itr; // offset 0x10, size 0x10
+    sceVu0FVECTOR rot; // offset 0x20, size 0x10
+    float roll; // offset 0x30, size 0x4
+} Event_CamSetData;
 
 // gamemain.c
 extern char* get_gp_data_buf_addr(void); // @note: removing this gives problems
@@ -37,7 +47,6 @@ void EvDispControlModelExec(int* list /* r16 */);
 void EvSubMovieReady(fsFileIndex* file, DramaDemo_MessageTime* msg_time, int msg_no);
 int EvSubMovieStart(int demo /* r16 */);
 void EvSubMovieEnd(void);
-
 
 extern float ev_filter;
 extern int ev_filter_on;

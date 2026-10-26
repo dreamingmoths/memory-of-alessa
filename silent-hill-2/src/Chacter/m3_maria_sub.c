@@ -151,7 +151,7 @@ static void MariaPushedAnyoneIsOn(SubCharacter* p) {
             } else {
                 angle = shAtan2(p->pos.z - p->b_pos.z, p->pos.x - p->b_pos.x);
                 angle = shAngleRegulate(p->rot.y - angle);
-                if (float_abs(angle) < QUARTER_TURN) {
+                if (shFloatAbs(angle) < QUARTER_TURN) {
                     sh2mar.pushed_dir = 1;
                 } else
                     sh2mar.pushed_dir = -1;
@@ -730,19 +730,18 @@ static void mar_sub_onestep(SubCharacter* p) {
     }
 }
 
-#ifdef NON_MATCHING
 static void mar_sub_walk(SubCharacter* p) {
 
     mar_timer_set(1);
 
     if (p->spd > 1.4f) {
 
-        p->spd -= 4.0f * dtf;
-        CLAMP_MAX(p->spd, 1.4f);
+        p->spd -= (4.0f * dtf);
+        p->spd = (p->spd > 1.4f) ? p->spd : 1.4f; // CLAMP_MAX(p->spd, 1.4f);
     } else {
 
         p->spd += (2.0f * dtf);
-        CLAMP_MIN(p->spd, 1.4f);
+        p->spd = (p->spd > 1.4f) ? 1.4f : p->spd; // CLAMP_MIN(p->spd, 1.4f);
     }
     if (sh2mar.look_jms != 0) {
         sh2mar.to_target = shAtan2(sh2jms.player->pos.z - p->pos.z, sh2jms.player->pos.x - p->pos.x);
@@ -754,9 +753,6 @@ static void mar_sub_walk(SubCharacter* p) {
         mar_flg_on(&sh2mar.sub_st_flg, 1 << MAR_SUB_ST_STAND);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_maria_sub", mar_sub_walk);
-#endif
 
 static void mar_sub_run(SubCharacter* p) {
     float var_f1;
@@ -776,48 +772,66 @@ static void mar_sub_run(SubCharacter* p) {
     }
 }
 
-const char pad_0x297e98[] = "\0\0\0\0";
-
-#ifdef BROKEN
 static void mar_sub_damage(SubCharacter* p) {
     AnimeInfo* a_info = shCharacterAnimeGetInfo(p);
     float damage_angle;
     short cur_frame;
 
+    
     mar_timer_set(0);
+    
+    
     MariaSpeedDownToStand(p);
+    
     cur_frame = shCharacterAnimeFrameGet(p);
     if (p->battle.id != 0) {
-        p->spd_roty = shAngleRegulate(shAtan2(p->battle.vec.z, p->battle.vec.x) - p->rot.y);
-    } else if (a_info->name == 20) {
+        damage_angle = shAtan2(p->battle.vec[2], p->battle.vec[0]);
+        p->spd_roty = shAngleRegulate(damage_angle - p->rot.y);
+    } else 
+    if (a_info->name == 20) {
         p->spd_roty = TO_RAD(180);
     } else {
         p->spd_roty = 0.0f;
     }
-    if (mar_anime_flg_on(2) == 0) {
+    
+    
+    if (!mar_anime_flg_on(2)) {
         switch (a_info->name) {
             case 20:
             case 22:
             case 26:
             case 34:
-                if (2 < cur_frame && (cur_frame < 7)) {
+                
+                if ((cur_frame > 1) && (cur_frame < 7)) {
                     p->spd = 1.0f;
                 } else {
                     p->spd = 0.2f;
                 }
                 break;
-
             case 21:
             case 23:
             case 27:
             case 35:
-                if (cur_frame >= 6) {
+                if (cur_frame > 5) {
                     p->spd = 0.3f;
-                } else if (cur_frame >= 3) {
+                } else if (cur_frame > 2) {
                     p->spd = 1.2f;
                 }
                 break;
-
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             case 24:
             case 28:
             case 32:
@@ -825,36 +839,37 @@ static void mar_sub_damage(SubCharacter* p) {
             case 38:
             case 41:
             case 46:
-                if (2 < cur_frame && (cur_frame < 15)) {
-                    p->spd = 0.05f * (float) cur_frame;
+                if ((cur_frame > 1) && (cur_frame < 15)) {
+                    p->spd = 0.05f * cur_frame;
                 }
                 break;
-
             case 25:
             case 29:
             case 33:
             case 37:
             case 42:
             case 45:
-                if (2 < cur_frame && (cur_frame < 15)) {
-                    p->spd = 0.05f * (float) cur_frame;
+                if ((cur_frame > 1) && (cur_frame < 15)) {
+                    p->spd = 0.05f * cur_frame;
                 }
+                break;            
+            case 30: case 31: case 39: case 40: case 43: case 44: case 47:
                 break;
         }
     }
     if (sh2mar.anime_pause & 1) {
         MariaStatusClear();
+        
+        
         if (sh2mar.dead != 0) {
-            sh2jms.dead = 2;
-            return;
+            sh2jms.dead = 2;            
+        } else {
+            
+            mar_flg_off(&sh2mar.sub_st_flg, 1 << MAR_SUB_ST_DAMAGE);
+            mar_flg_on(&sh2mar.sub_st_flg, 1 << MAR_SUB_ST_STAND);
         }
-        mar_flg_off(&sh2mar.sub_st_flg, 256);
-        mar_flg_on(&sh2mar.sub_st_flg, 1 << MAR_SUB_ST_STAND);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_maria_sub", mar_sub_damage);
-#endif
 
 static int MariaCheckJamesLook(float* sp, float* ep) {
     CL_VHIT_RESULT result;
@@ -931,22 +946,22 @@ static void MariaSetStraightRoot(SubCharacter* this) {
             sh2mar.tgt_pointer++;
         }
     } else {
-        volatile_vec_copy(&sp1, sh2mar.tgt_pos[sh2mar.tgt_pointer - 1]);
+        shVectorCopy(&sp1, sh2mar.tgt_pos[sh2mar.tgt_pointer - 1]);
         if ((CheckJamesLook1(&sp1[0], &ep0[0]) == 0) || (CheckJamesLook2(&ep0[0], &sp1[0]) == 0)) {
             sh2mar.tgt_pointer += 1;
         }
     }
     if (sh2mar.tgt_pointer == 5) {
         sh2mar.tgt_pointer -= 1;
-        volatile_vec_copy(&sh2mar.mar_p->pos, &sh2mar.tgt_pos[0]);
+        shVectorCopy(&sh2mar.mar_p->pos, &sh2mar.tgt_pos[0]);
     }
-    volatile_vec_copy(sh2mar.tgt_pos[sh2mar.tgt_pointer], ep0);
+    shVectorCopy(sh2mar.tgt_pos[sh2mar.tgt_pointer], ep0);
     if (sh2mar.tgt_pointer > 0) {
         for (i = 0; i <= 0; i++) {
-            volatile_vec_copy(ep1, sh2mar.tgt_pos[i + 1]);
+            shVectorCopy(ep1, sh2mar.tgt_pos[i + 1]);
             if ((MariaCheckLook1(&sp0[0], &ep1[0]) != 0) && (MariaCheckLook2(&ep1[0], &sp0[0]) != 0)) {
                 for (j = 0; j < sh2mar.tgt_pointer; j++) {
-                    volatile_vec_copy(sh2mar.tgt_pos[j], sh2mar.tgt_pos[j + 1]);
+                    shVectorCopy(sh2mar.tgt_pos[j], sh2mar.tgt_pos[j + 1]);
                 }
                 sh2mar.tgt_pointer--;
             }
@@ -1099,8 +1114,8 @@ static void MariaCheckFootLine(SubCharacter* this) {
     sceVu0FVECTOR ep;
 
     GetMariaPartsWorldMatrix(mat, 8);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.r_foot, (int) this, &sp, &ep);
@@ -1108,8 +1123,8 @@ static void MariaCheckFootLine(SubCharacter* this) {
         vec_normalize(sh2mar.r_foot.hobj.chara.cp, sh2mar.r_foot.hobj.chara.cp);
     }
     GetMariaPartsWorldMatrix(mat, 7);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.l_foot, (int) this, &sp, &ep);
@@ -1192,8 +1207,8 @@ void MariaSetHeight(SubCharacter* this) {
     sceVu0FVECTOR sp;
     sceVu0FVECTOR ep;
 
-    volatile_vec_copy(sp, &this->pos);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, &this->pos);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 1500.0f;
     clCheckHitEyesOnlyFloor(&sh2mar.ft_floor, (int) this, &sp, &ep);
@@ -1257,7 +1272,7 @@ static void MariaCheckNeckAngle(SubCharacter* this) {
         default:
             if (sh2mar.look_tgt != NULL) {
 
-                volatile_vec_copy(pos, &sh2mar.look_tgt->pos);
+                shVectorCopy(pos, &sh2mar.look_tgt->pos);
                 pos[1] = sh2mar.look_tgt->eye_y;
 
                 tmp[0] = pos[0] - this->pos.x;
@@ -1352,8 +1367,8 @@ void GetMariaPartsWorldMatrix(float (*mat)[4], u_int parts_name) {
 
 void MariaCheckDamage(SubCharacter* this) {
     MariaPushedAnyoneIsOn(this);
-    volatile_vec_copy(&this->b_pos, &this->pos);
-    volatile_vec_copy(&this->b_rot, &this->rot);
+    shVectorCopy(&this->b_pos, &this->pos);
+    shVectorCopy(&this->b_rot, &this->rot);
     shBattleGetResult(this);
 
     if (sh2mar.hp_recover) {

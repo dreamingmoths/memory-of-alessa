@@ -18,12 +18,12 @@
 #define SH2_ITEM_08      8
 #define SH2_ITEM_09      9
 #define SH2_ITEM_10      10
-#define SH2_ITEM_11      11
+#define WOODEN_PLANK     11
 #define SH2_ITEM_12      12
 #define SH2_ITEM_13      13
 #define CHAINSAW         14
 #define SH2_ITEM_15      15
-#define SH2_ITEM_16      16
+#define SH2_ITEM_RADIO   16
 #define SH2_ITEM_17      17
 #define SH2_ITEM_18      18
 #define SH2_ITEM_19      19

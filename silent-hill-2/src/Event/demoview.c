@@ -42,14 +42,10 @@
 
 #include "sound/sh_sd_call.h"
 #include "Font/font.h"
+#include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_2d_filters.h"
 
 #pragma fast_fptosi on
-
-// @todo: move these 3 to GFW/sh2gfw_LightSet.h
-extern void sh2gfw_Set_DemoPointLight(int n /* r2 */, float* pos, float* col, float falloff_start, float falloff_end);
-extern void sh2gfw_Set_SpotLight(float* dir, float* pos, float* color, int unused, float falloff_start, float falloff_end, float spread_pi);
-extern int sh2gfw_Set_PallarelLight(float* dir, float* color, int n);
 
 static int DdsPlay(DramaDemo_PlayInfo* info);
 static int DramaDemoInit(DramaDemo_PlayInfo* info);
@@ -771,7 +767,7 @@ static int DramaDemoInit(DramaDemo_PlayInfo* info /* r18 */) {
     dummy[0][1] = sh2jms.player->pos.y;
     dummy[0][2] = sh2jms.player->pos.z;
     dummy[0][3] = 1.0f;
-    vu0_unit_vector(dummy[1]);
+    shUnitVector(dummy[1]);
     adr_dds = info->adr_dds_top;
 
     
@@ -1059,7 +1055,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
             interest[k] = next.light[i].interest[k] * frm_dcm + last.light[i].interest[k] * (1.0f - frm_dcm);
             color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
-        vu0_sub_vector(normal, interest, position);
+        shSubVector(normal, interest, position);
         vec_normalize(normal, normal);
         falloff_s = next.light[i].falloff[0] * frm_dcm + last.light[i].falloff[0] * (1.0f - frm_dcm);                             
         falloff_e = next.light[i].falloff[1] * frm_dcm + last.light[i].falloff[1] * (1.0f - frm_dcm);
@@ -1075,8 +1071,8 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
             position[k] = next.light[i].position[k] * frm_dcm + last.light[i].position[k] * (1.0f - frm_dcm);
             color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
-        vec_zero(normal);
-        vu0_sub_vector(normal, normal, position);
+        shVectorZero(normal);
+        shSubVector(normal, normal, position);
         vec_normalize(normal, normal);
         normal[3] = 0;
         sh2gfw_Set_PallarelLight(normal, color, j + 1);
@@ -1386,15 +1382,15 @@ void DramaDemoSkipLast(DramaDemo_PlayInfo* info /* r16 */) {
 static void RotationToInterest(float* position /* r19 */, float* rotation /* r18 */, float* interest /* r17 */, float* roll /* r16 */) {
     float matrix[4][4]; // r29+0x50
     float vector[4]; // r29+0x90
-    vu0_unit_matrix(matrix);
+    shUnitMatrix(matrix);
     shRotMatrixZ(matrix, matrix, rotation[2]);
     shRotMatrixX(matrix, matrix, rotation[0]);
     shRotMatrixY(matrix, matrix, rotation[1]);
-    vu0_unit_vector(vector);
+    shUnitVector(vector);
     vector[2] = 1.0f;
-    vu0_unit_vector(matrix[3]);
+    shUnitVector(matrix[3]);
     vu0_transform_vector_alt(interest, vector, matrix);
-    vu0_add_vector(interest, interest, position);
+    shAddVector(interest, interest, position);
     if (roll != NULL) {
         roll[0] = rotation[2];
     }

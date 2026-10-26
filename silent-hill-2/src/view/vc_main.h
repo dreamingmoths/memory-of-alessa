@@ -5,11 +5,6 @@
 #include "sce/libvu0.h"
 #include "Chacter/character.h"
 
-// SH1-style CLAMP macro, used a lot in SH1 code, but most of SH2 uses `float_clamp`?
-// Maybe only used in `vc` since this was reused from SH1.
-#define CLAMP(x, min, max) \
-    (((x) < (min)) ? (min) : (((x) > (max)) ? (max) : (x)))
-
 typedef enum _VC_ROAD_TYPE { // : u_char
     VC_RD_TYPE_ROAD,
     VC_RD_TYPE_EFFECT,

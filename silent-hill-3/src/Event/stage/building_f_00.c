@@ -17,17 +17,16 @@ void func_01F6D960_building_f_00(void* arg) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_f_00", func_01F6D970_building_f_00);
 
 void func_01F6E0D0_building_f_00(void) {
-    
-    switch (RoomName()) {   
+
+    switch (RoomName()) {
 
         case BUILDING_BATHTUB_ROOM:
             D_1D3170C |= 0x100000;
             break;
-            
+
         case BUILDING_2F_HALL:
             D_1D3170C |= 0x200000;
             break;
-
     }
 }
 
@@ -35,8 +34,7 @@ int func_01F6E140_building_f_00(void) {
 
     switch (RoomName()) {
 
-         case BUILDING_BATHTUB_ROOM:
+        case BUILDING_BATHTUB_ROOM:
             break;
-
     }
 }

@@ -7,7 +7,7 @@ from traceback import print_exception
 sys.path.append(abspath("tools/alessatool"))
 
 from kaitai.data.config import PROJECT_DATA_CONFIG
-from kaitai.data.data_utils import AlessastructDataOptions, DataMigrationRequest, run_data_migration
+from kaitai.data.data_utils import AlessastructDataOptions, DataMigrationRequest, DataMigrationStore, run_data_migration
 
 @dataclass
 class TestResult:
@@ -46,26 +46,30 @@ def run_project_test(project: str) -> TestResult:
     if len(table) == 0:
         return TestResult(name=project, skip=True)
 
+    store = DataMigrationStore()
     passing = count = 0
     for data in table:
         count += 1
-        print(bold(f"test: {data.name}"))
+        print(bold(f"   test: {data.name}"), end="\r")
         try:
-            request = DataMigrationRequest(
-                project=project,
-                name=data.name,
-                output_path=Path("/dev/null")
-            )
-            run_data_migration(request)
+            with open(Path("/dev/null"), "w") as stream:
+                request = DataMigrationRequest(
+                    project=project,
+                    name=data.name,
+                    stream=stream,
+                    store=store
+                )
+                run_data_migration(request)
+            print(bold(f"🟣 test: {data.name}"))
             passing += 1
         except Exception as exception:
-            print(f"🔴 test failed for {data.name}")
+            print(bold(f"🔴 test: {data.name} failed "))
             print_exception(exception)
 
     return TestResult(name=project, passing=passing, count=count)
 
 def configure():
-    AlessastructDataOptions.SILENCE_DEV_WARNINGS = True
+    AlessastructDataOptions.TEST_ENVIRONMENT = True
 
 def bold(text: str):
     return '\033[1m' + text + '\033[0m'

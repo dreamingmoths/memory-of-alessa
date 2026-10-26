@@ -1,7 +1,7 @@
 #ifndef SH_KT_VIF0PKBUF_H
 #define SH_KT_VIF0PKBUF_H
 
-#include "common.h"
+#include "sh2_common.h"
 
 void ktVif0PkBufInit(void* buf0, void* buf1, int size);
 

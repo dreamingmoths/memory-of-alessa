@@ -19,7 +19,7 @@ static float Wave_Calculator(Wave_Element* pElement /* r16 */, float Distance /*
 
     float result = pElement->Omega * (pElement->Timer + (Distance / pElement->Verocity)); // r29+0x30
 
-    float theta = reflex_angle(result); // r29+0x30
+    float theta = shReflexAngle(result); // r29+0x30
 
     return Amplitude_ratio * pElement->Arrival * HH_MathWrapper_Sinf(theta);
 }
@@ -252,7 +252,7 @@ void HH_Class_WaterCommon_WaveElement_Time_Count(Wave_Element* pElement_Table /*
     for (i = 0; i < Element_Max; i++) {
         pElement = &pElement_Table[i];
         if (pElement->Enable != 0) {
-            pElement->Timer += 1.0f / 30.0f;
+            pElement->Timer += TIME_STEP_30FPS;
             if (pElement->Timer > pElement->Lost_Time) {
                 pElement->Enable = 0;
             }

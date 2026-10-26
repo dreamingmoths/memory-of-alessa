@@ -225,11 +225,11 @@ int shCharacter_Manage_Create(CharaOptions* options) {
     if (scp != NULL) { 
         sh3CharacterSubtractSkeletons(shCharacterGetSkeltonNum(scp->kind));
 
-        vec_copy(&scp->pos, &options->pos_10);
-        vec_copy(&scp->unkF0, &options->pos_10);
-        vec_copy(&scp->unkD0, &options->pos_10);
-        vec_copy(&scp->rot, &options->rot_20);
-        vec_copy(&scp->unkE0, &options->rot_20);
+        shVectorCopy(&scp->pos, &options->pos_10);
+        shVectorCopy(&scp->unkF0, &options->pos_10);
+        shVectorCopy(&scp->unkD0, &options->pos_10);
+        shVectorCopy(&scp->rot, &options->rot_20);
+        shVectorCopy(&scp->unkE0, &options->rot_20);
         scp->battle.status |= 0x2000;
 
         if (options->id != 0xffff) {

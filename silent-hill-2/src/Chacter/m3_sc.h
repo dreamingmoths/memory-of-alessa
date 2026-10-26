@@ -8,14 +8,38 @@
 #include "Chacter/item_screen_obj.h"
 #include "Chacter/chara_list.h"
 
-#define SCP_STATUS_BIT_ANIME_TYPE          2
-#define SCP_STATUS_BIT_ROT_ZYX             7
-#define SCP_STATUS_BIT_STAY_MODEL          8
-#define SCP_STATUS_BIT_LIGHT_ON_NOW        9
-#define SCP_STATUS_BIT_NOW_DEMO_EVENT      13
-#define SCP_STATUS_BIT_NOW_PLAYABLE_EVENT  14
-#define SCP_STATUS_BIT_FREEFALL            16
-#define SCP_STATUS_BIT_17                  17
+#define SCP_STATUS_BIT_0                  0
+#define SCP_STATUS_BIT_1                  1
+#define SCP_STATUS_BIT_ANIME_TYPE         2
+#define SCP_STATUS_BIT_3                  3
+#define SCP_STATUS_BIT_4                  4
+#define SCP_STATUS_BIT_5                  5
+#define SCP_STATUS_BIT_6                  6
+#define SCP_STATUS_BIT_ROT_ZYX            7
+#define SCP_STATUS_BIT_STAY_MODEL         8
+#define SCP_STATUS_BIT_LIGHT_ON_NOW       9
+#define SCP_STATUS_BIT_10                 10
+#define SCP_STATUS_BIT_11                 11
+#define SCP_STATUS_BIT_12                 12
+#define SCP_STATUS_BIT_NOW_DEMO_EVENT     13
+#define SCP_STATUS_BIT_NOW_PLAYABLE_EVENT 14
+#define SCP_STATUS_BIT_15                 15
+#define SCP_STATUS_BIT_FREEFALL           16
+#define SCP_STATUS_BIT_17                 17
+#define SCP_STATUS_BIT_18                 18
+#define SCP_STATUS_BIT_19                 19
+#define SCP_STATUS_BIT_20                 20
+#define SCP_STATUS_BIT_21                 21
+#define SCP_STATUS_BIT_22                 22
+#define SCP_STATUS_BIT_23                 23
+#define SCP_STATUS_BIT_24                 24
+#define SCP_STATUS_BIT_25                 25
+#define SCP_STATUS_BIT_26                 26
+#define SCP_STATUS_BIT_27                 27
+#define SCP_STATUS_BIT_28                 28
+#define SCP_STATUS_BIT_29                 29
+#define SCP_STATUS_BIT_30                 30
+#define SCP_STATUS_BIT_31                 31
 
 extern struct shCharacterAll sh2chara; // size: 0x6810, address: 0x3C84D0
 
@@ -29,8 +53,8 @@ void shCharacterAnimeRestart(SubCharacter* scp /* r2 */);
 int shCharacterGetSkeltonNum(short kind);
 
 void shCharacterDelete(SubCharacter* scp);
-void shCharacterPlayingExecAnimeOne(SubCharacter * scp /* r16 */);
-void shCharacterDramaExecAnimeOne(SubCharacter * scp /* r16 */);
+void shCharacterPlayingExecAnimeOne(SubCharacter* scp /* r16 */);
+void shCharacterDramaExecAnimeOne(SubCharacter* scp /* r16 */);
 
 SubCharacter* shCharacterCreate(u_int id, int model, int anime, int clani, int chr_id);
 short shCharacterGetModelID(SubCharacter* scp /* r2 */);
@@ -94,6 +118,6 @@ void shCharacterGetGroundInfoForShadow(float* pos, float* normal, float* height,
 
 // @todo move these out
 extern int demo_status; // correct home for this?
-extern sceVu0FMATRIX kt_unit_matrix; // correct home for this?
+extern Matrix4 kt_unit_matrix; // correct home for this?
 
 #endif

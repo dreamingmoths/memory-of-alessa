@@ -25,7 +25,11 @@ SH2_DATA: DataTable = [
     StructData(name="boat_anim",                            type=Sh2.AnimeInfo,                        count=5                        ),
     StructData(name="d_boat_anim",                          type=Sh2.AnimeInfo,                        count=4                        ),
     StructData(name="mkn_anim",                             type=Sh2.AnimeInfo,                        count=35                       ),
-    StructData(name="d_mkn_anim",                           type=Sh2.AnimeInfo,                        count=8                        )
+    StructData(name="d_mkn_anim",                           type=Sh2.AnimeInfo,                        count=8                        ),
+    SimpleData(name="se_file_list_1329",                    type=Pointer,                              pattern=[35],                  ),
+    SimpleData(name="sdb_list",                             type=Pointer,                              pattern=[53],                  ),
+    SimpleData(name="bgm_list",                             type="<86I",                               pattern=[43,2]                 ),
+    StructData(name="change_list",                          type=Sh2.ChangeList,                       count=242                      ),
 ]
 
 SH3_DATA: DataTable = []

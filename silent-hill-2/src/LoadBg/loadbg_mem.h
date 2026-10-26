@@ -1,6 +1,7 @@
 #ifndef LOADBG_MEM_H
 #define LOADBG_MEM_H
 
+#include "sh2_common.h"
 #include "data/fs_structs.h"
 
 // total size: 0x10

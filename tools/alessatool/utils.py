@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from yaml import safe_load as safe_load_yaml
+from json import load as read_json
 from os import stat, remove
 from io import TextIOBase
 from subprocess import run
@@ -199,10 +200,17 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
 
     return "\n".join(symbol_addrs_lines) + "\n"
 
-READELF_FLAGS = ["-s", "--wide"]
+SYMTAB_READELF_FLAGS = ["-s", "--wide"]
+SECTION_HEADER_READELF_FLAGS = ["-S"]
 
 def read_symtab(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
-    proc = run([Path(readelf_path), *READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    proc = run([Path(readelf_path), *SYMTAB_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    if proc.returncode != 0:
+        raise Exception(proc.stderr.decode())
+    return proc.stdout.decode()
+
+def read_section_headers(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
+    proc = run([Path(readelf_path), *SECTION_HEADER_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
     if proc.returncode != 0:
         raise Exception(proc.stderr.decode())
     return proc.stdout.decode()
@@ -233,6 +241,25 @@ def parse_symtab_as_atlas(symtab_str: str) -> SplatSymbolAddrsAtlas:
         insert_into_atlas(symtab, name, int(address, 16), attributes, metadata)
 
     return symtab
+
+def parse_section_header_indices(section_headers_str: str):
+    section_headers_lines = section_headers_str.splitlines()
+
+    section_names_by_index = dict()
+
+    for line in section_headers_lines:
+        if "[" not in line: continue
+
+        columns = line[line.index("[")+1:].strip().split()
+        index = columns[0][:-1]
+
+        if not index.isnumeric(): continue
+
+        name = columns[1]
+        section_names_by_index[index] = name
+
+    return section_names_by_index
+
 
 def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     IGNORE_RODATA = True
@@ -370,6 +397,11 @@ def load_yaml(yaml_path: Path):
         yaml = safe_load_yaml(yaml_file)
     return yaml
 
+def load_json(json_path: Path):
+    with open(json_path) as json_file:
+        json = read_json(json_file)
+    return json
+
 @dataclass
 class ExecutableInfo:
     name: str
@@ -378,8 +410,10 @@ class ExecutableInfo:
     yaml_path: Path
     to_vram: Callable
 
-def get_exe_info_by_name(root: Path, main_name: str, filter=None):
-    exe_info_by_name: dict[str, ExecutableInfo] = dict()
+type ExeInfoByName = dict[str, ExecutableInfo]
+
+def get_exe_info_by_name(root: Path, main_name: str, filter=None, exe_info_by_name=None, parse_attributes=False):
+    exe_info_by_name: dict[str, ExecutableInfo] = exe_info_by_name or dict()
 
     for yaml_path in root.glob("**/*.yaml"):
         yaml = load_yaml(yaml_path)
@@ -409,6 +443,6 @@ def get_exe_info_by_name(root: Path, main_name: str, filter=None):
         sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
 
         for sym_path in sym_paths:
-            parse_symbol_addrs(root / sym_path, atlas)
+            parse_symbol_addrs(root / sym_path, atlas, parse_attributes=parse_attributes)
 
     return exe_info_by_name

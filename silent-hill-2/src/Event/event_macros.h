@@ -40,6 +40,7 @@ do {                                 \
 } while (0)
 
 /* flag bit indices used by `GET_GAME_FLAG`/`SET_GAME_FLAG`/`UNSET_GAME_FLAG` */
+#define GAME_FLAG_5    5
 #define GAME_FLAG_7    7
 #define GAME_FLAG_8    8
 #define GAME_FLAG_9    9

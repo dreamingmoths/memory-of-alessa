@@ -674,7 +674,6 @@ static void _sceVu0Normalize(sceVu0FVECTOR v0 /* r2 */, sceVu0FVECTOR v1 /* r2 *
         " : : "r"(v0), "r"(v1) : "memory");
 }
 
-#ifdef NON_MATCHING
 static void EigenVec2Mat(Vector4* ev, Matrix4* smat) {
     Vector4 v1, v2;
     Vector4 mv0, mv1, mv2;
@@ -723,7 +722,7 @@ static void EigenVec2Mat(Vector4* ev, Matrix4* smat) {
                 v1.z = mv0.x;
             }
             if (mv0.y)
-                v1.y = -(mv0.x * v1.x + mv0.z * v1.z) / mv0.x;
+                v1.y = -(mv0.x * v1.x + mv0.z * v1.z) / mv0.y;
             else
                 v1.y = 0.0f;
         }
@@ -751,9 +750,6 @@ static void EigenVec2Mat(Vector4* ev, Matrix4* smat) {
     smat->d[1][3] = 0.0f;
     smat->d[2][3] = 0.0f;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Chacter/anime", EigenVec2Mat);
-#endif
 
 static inline void vu0_transpose_matrix(sceVu0FMATRIX out, sceVu0FMATRIX matrix) {
     asm("

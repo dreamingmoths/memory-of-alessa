@@ -4,89 +4,86 @@
 UNCURSE_CHURCH();
 
 #ifdef HOLY_CANDLE
-int func_01F6D680_church_00(void)
-{
-    int s0 = 0;
-    int t = 0;
+int func_01F6D680_church_00(void) {
+    int s0    = 0;
+    int t     = 0;
     float cue = 0.0f;
-    
+
     switch (D_01F6E600_church_00) {
-    case 0:
-        func_00190A20(2);
-        func_00316C50(0);
-        func_0016ECE0(6);
+        case 0:
+            func_00190A20(2);
+            func_00316C50(0);
+            func_0016ECE0(6);
 
-        D_01F6E608_church_00 = 0;
-        D_01F6E620_church_00 = D_01F6E3B0_church_00;
-        D_01F6E618_church_00 = D_01F6E480_church_00;
-        D_01F6E610_church_00 = 0.0f;
+            D_01F6E608_church_00 = 0;
+            D_01F6E620_church_00 = D_01F6E3B0_church_00;
+            D_01F6E618_church_00 = D_01F6E480_church_00;
+            D_01F6E610_church_00 = 0.0f;
 
-        func_001C2290(2, 0.0f);
-        D_01F6E600_church_00++;
-    case 1:
-        if (func_0016C540(&D_01F6E4D0_church_00, &D_01F6E530_church_00) == 0) {
+            func_001C2290(2, 0.0f);
+            D_01F6E600_church_00++;
+        case 1:
+            if (func_0016C540(&D_01F6E4D0_church_00, &D_01F6E530_church_00) == 0) {
 
-            D_01F6E608_church_00 = (int)func_001643C0();
-                
-            
-            t = D_01F6E608_church_00;
+                D_01F6E608_church_00 = (int) func_001643C0();
 
-            if (t < 0x891 && t > 0x48A) {
-                func_00300390();
-            }
-            
-            cue = D_01F6E620_church_00->t;
+                t = D_01F6E608_church_00;
 
-            if (!(cue <= 0.0f)) {
-                float cur = (float)D_01F6E608_church_00;
-                if (cue <= cur) {
-                    func_0013D250(0, D_01F6E620_church_00->id, 1.0f);
-                    D_01F6E620_church_00 =
-                        (struct ChurchStruct00*)((char*)D_01F6E620_church_00 + 8);
-                }
-            }
-            
-
-            if (!((float)D_01F6E608_church_00 < 4780.0f)) {
-
-                if (D_01F6E618_church_00->t == 0.0f) {
-                    D_01F6E610_church_00 = 0.0f;
-                    D_01F6E618_church_00 = D_01F6E480_church_00;
+                if (t < 0x891 && t > 0x48A) {
+                    func_00300390();
                 }
 
-                D_01F6E610_church_00 = D_01F6E610_church_00 + (30.0f * shGetDT());
+                cue = D_01F6E620_church_00->t;
 
-                if (D_01F6E618_church_00->t <= D_01F6E610_church_00) {
-                    func_0013D250(0, D_01F6E618_church_00->id, 1.0f);
-                    D_01F6E618_church_00 =
-                        (struct ChurchStruct00*)((char*)D_01F6E618_church_00 + 8);
+                if (!(cue <= 0.0f)) {
+                    float cur = (float) D_01F6E608_church_00;
+                    if (cue <= cur) {
+                        func_0013D250(0, D_01F6E620_church_00->id, 1.0f);
+                        D_01F6E620_church_00 =
+                            (struct ChurchStruct00*) ((char*) D_01F6E620_church_00 + 8);
+                    }
                 }
-            }
 
-        } else {
-            if (func_001646C0() != 0) {
-                s0 = 1;
+                if (!((float) D_01F6E608_church_00 < 4780.0f)) {
+
+                    if (D_01F6E618_church_00->t == 0.0f) {
+                        D_01F6E610_church_00 = 0.0f;
+                        D_01F6E618_church_00 = D_01F6E480_church_00;
+                    }
+
+                    D_01F6E610_church_00 = D_01F6E610_church_00 + (30.0f * shGetDT());
+
+                    if (D_01F6E618_church_00->t <= D_01F6E610_church_00) {
+                        func_0013D250(0, D_01F6E618_church_00->id, 1.0f);
+                        D_01F6E618_church_00 =
+                            (struct ChurchStruct00*) ((char*) D_01F6E618_church_00 + 8);
+                    }
+                }
+
             } else {
-                SeCall(19000, 0.0f, 1.0f);
+                if (func_001646C0() != 0) {
+                    s0 = 1;
+                } else {
+                    SeCall(19000, 0.0f, 1.0f);
+                }
+                D_01F6E600_church_00++;
+                func_0019A940();
+            }
+            break;
+
+        case 2:
+            if (func_0019A9B0(1.2f) == 0) {
+                break;
             }
             D_01F6E600_church_00++;
             func_0019A940();
-        }
-        break;
+            SeCall(19001, 0.0f, 1.0f);
 
-    case 2:
-        if (func_0019A9B0(1.2f) == 0) {
+        case 3:
+            if (func_0019A9B0(3.0f) != 0) {
+                s0 = 1;
+            }
             break;
-        }
-        D_01F6E600_church_00++;
-        func_0019A940();
-        SeCall(19001, 0.0f, 1.0f);
-
-    case 3:
-        if (func_0019A9B0(3.0f) != 0) {
-            s0 = 1;
-        }
-        break;
     }
 
     if (s0 != 0) {
@@ -156,70 +153,67 @@ void func_01F6DB50_church_00(void) {
     func_01F6D9C0_church_00(5);
 }
 
-int func_01F6DB60_church_00(void)
-{
-    int s0 = 0;
+int func_01F6DB60_church_00(void) {
+    int s0    = 0;
     int var_1 = 1;
 
     switch (D_01F6E600_church_00) {
-    case 0:
-        func_00190A20(2);
-        func_0019A940();
-        func_01F6DCD0_church_00();
-        D_01F6E600_church_00 = 1;
-        break;
+        case 0:
+            func_00190A20(2);
+            func_0019A940();
+            func_01F6DCD0_church_00();
+            D_01F6E600_church_00 = 1;
+            break;
 
-    case 1:
-        if (func_0019A9B0(0.5f) != 0) {
-            if (GET_BIT(D_1D316A4, 14)) {
-                D_01F6E600_church_00 = 3;
-            } else {
-                D_01F6E600_church_00 = 2;
+        case 1:
+            if (func_0019A9B0(0.5f) != 0) {
+                if (GET_BIT(D_1D316A4, 14)) {
+                    D_01F6E600_church_00 = 3;
+                } else {
+                    D_01F6E600_church_00 = 2;
+                }
             }
-        }
-        break;
+            break;
 
-    case 2:
-        if (func_0016C1C0(0x43) != 0) {
-            D_01F6E600_church_00 = 4;
-        }
-        break;
+        case 2:
+            if (func_0016C1C0(0x43) != 0) {
+                D_01F6E600_church_00 = 4;
+            }
+            break;
 
-    case 3:
-        if ((func_0013D080(0, 0, var_1, var_1) != 0) ||
-            (func_0013D080(0, 0, var_1, 2)   != 0)) {
-            D_01F6E600_church_00 = 4;
-        }
-        break;
+        case 3:
+            if ((func_0013D080(0, 0, var_1, var_1) != 0) ||
+                (func_0013D080(0, 0, var_1, 2) != 0)) {
+                D_01F6E600_church_00 = 4;
+            }
+            break;
 
-    case 4:
-        D_1D316A4 |= 0x4000;
-        func_001C0EE0(0);
-        func_00190A20(0);
-        s0 = 1;
-        D_01F6E600_church_00 = 0;
-        break;
+        case 4:
+            D_1D316A4 |= 0x4000;
+            func_001C0EE0(0);
+            func_00190A20(0);
+            s0                   = 1;
+            D_01F6E600_church_00 = 0;
+            break;
     }
 
     return s0;
 }
 
 int func_01F6DCD0_church_00(void) {
-    func_001C0EB0((void*)func_01F6DCF0_church_00, 0x000F423F, 0);
+    func_001C0EB0((void*) func_01F6DCF0_church_00, 0x000F423F, 0);
 }
 
-
-void func_01F6DCF0_church_00(Q* arg0, int* arg1, Q* arg2, int*  arg3, int*  arg4)
-{
+void func_01F6DCF0_church_00(Q* arg0, int* arg1, Q* arg2, int* arg3, int* arg4) {
     Q sp0;
     Q sp10;
 
-    sp0.s32 = D_01F6E570_church_00.s32;
+    sp0.s32  = D_01F6E570_church_00.s32;
     sp10.s32 = D_01F6E580_church_00.s32;
 
-    vec_copy(&arg0->u128, &sp0.u128);
+    shVectorCopy(&arg0->u128, &sp0.u128);
     *arg1 = 0;
-    vec_copy(&arg2->u128, &sp10.u128);
+    shVectorCopy(&arg2->u128, &sp10.u128);
     *arg3 = 0;
     *arg4 = 0;
 }

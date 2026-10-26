@@ -105,7 +105,7 @@ void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */) {
     dp->kind = kind;
     dp->scp = scp;
     dp->path.markangle = dp->path.angle = dp->scp->rot.y;
-    volatile_vec_copy(&dp->scp->b_pos, &dp->scp->pos);
+    shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);
     
     
     dp->scp->battle.status &= ~0x4F;
@@ -508,7 +508,7 @@ float enGetPlayerDistance(EnLOCAL_DATA* dp) {
 
 float enGetPlayerDirection(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x20
-    vu0_sub_vector(vec, enGetPlayerPos(dp), &dp->scp->pos);
+    shSubVector(vec, enGetPlayerPos(dp), &dp->scp->pos);
     return shAtanV(&vec);
 }
 
@@ -658,34 +658,34 @@ void enFlagResetDisplay(struct EnLOCAL_DATA* dp) {
 
 float enCalcDirection(float* pa, float* pb) {
     sceVu0FVECTOR vec; // r29+0x10
-    vu0_sub_vector(vec, pa, pb);    
+    shSubVector(vec, pa, pb);    
     return shAtanV(&vec);
 }
 
 float enCalcAngleDifference(float angle1, float angle2) {
-    return float_abs(shAngleRegulate(angle1 - angle2));
+    return shFloatAbs(shAngleRegulate(angle1 - angle2));
 }
 
 float enCalcSpeedRate(float angle, float* mpos, float* tpos) { // not line matched
     float d; // r29+0x20
-    d = (PI - float_abs(shAngleRegulate(enCalcDirection(tpos, mpos) - angle)));
+    d = (PI - shFloatAbs(shAngleRegulate(enCalcDirection(tpos, mpos) - angle)));
     return 0.5f + (0.5f * (d / PI));    
 }
 
 void enMakeRotVector(float* vec, float* rot, float range) {
     sceVu0FMATRIX rmat; // r29+0x40
-    vu0_unit_matrix(rmat);
+    shUnitMatrix(rmat);
     shRotMatrixZ(rmat, rmat, rot[2]); shRotMatrixY(rmat, rmat, rot[1]); shRotMatrixX(rmat, rmat, rot[0]);   
-    vec_zero(vec);
+    shVectorZero(vec);
     vec[2] = range;
-    vu0_transform_vector(vec, rmat);
+    shVectorTransform(vec, rmat);
 }
 
 int enCheckIntoScreen(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x10
     vec_copy_vu0(vec, &dp->scp->pos);    
     vec[1] -= dp->eye_y;
-    vu0_transform_vector_perspective(vec, VbWvsMatrix.wsm);    
+    shTransformVectorPerspective(vec, VbWvsMatrix.wsm);    
     if (shScreenClipF(vec)) {
         return 0;
     }
@@ -784,10 +784,10 @@ void enCheckNearPlayer(EnLOCAL_DATA* dp, int* count, float* dist, float limit) {
         d = *dist;
     }
     shSinCosV_Scale(vec, enGetPlayerAngle(dp), d);  
-    vu0_add_vector(vec, enGetPlayerPos(dp), vec);
+    shAddVector(vec, enGetPlayerPos(dp), vec);
     dp->scp->pos.x = vec[0];
     dp->scp->pos.z = vec[2];
-    vec_zero(dp->vec);
+    shVectorZero(dp->vec);
 }
 
 void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
@@ -841,8 +841,8 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enIKETrans);
 void enARMTrans(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x20
     if ((dp == NULL) || (dp->scp->battle.status & 2) != 0) return;    
-    volatile_vec_copy(&dp->scp->b_pos, &dp->scp->pos);    
-    vu0_sub_vector(vec,&dp->scp->pos, dp->arm.old_pos);   
+    shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);    
+    shSubVector(vec,&dp->scp->pos, dp->arm.old_pos);   
     vec_add_xyz(dp->arm.hand_pos, vec, dp->arm.hand_pos);
     if (dp->scu.dc >= 0) {
         enARMGetHandPos(vec, dp, dp->scu.dc);
@@ -894,8 +894,8 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetPath);
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
     sceVu0FVECTOR sp, ep; // r29+0x10
-    volatile_vec_copy(sp, mpos);
-    volatile_vec_copy(ep, tpos);
+    shVectorCopy(sp, mpos);
+    shVectorCopy(ep, tpos);
     if (dp->flag & 0x40) {
         if (dp->flag & 0x100) {
             
@@ -918,8 +918,8 @@ float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
 
 float enCheckPath2(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
     sceVu0FVECTOR sp, ep;
-    volatile_vec_copy(sp, mpos);
-    volatile_vec_copy(ep, tpos);
+    shVectorCopy(sp, mpos);
+    shVectorCopy(ep, tpos);
     if (dp->flag & 0x40) {
         
         sp[1] = ep[1] = dp->scp->pos.y + dp->eye_y;
@@ -933,7 +933,7 @@ float enCheckPath2(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
 float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
     sceVu0FVECTOR tp; // r29+0x30
     enMakeRotVector(tp, rot, range);
-    vu0_add_vector(tp, pos, tp);
+    shAddVector(tp, pos, tp);
     return enCheckHitEyes(dp, pos, tp);
 }
 
@@ -944,7 +944,7 @@ float enCheckHitEyes(EnLOCAL_DATA* dp, float* sp, float* ep) {
     sceVu0FVECTOR cp; // r29+0x50
     
 
-    volatile_vec_copy(cp, ep);
+    shVectorCopy(cp, ep);
     if (enCheckForbiddenArea(sp, cp, dp->size) != 0) f = 1;
     clCheckHitEyes(res, (u_int) dp->scp, sp, cp, 2);
     if (res->kind == 0) 
@@ -986,8 +986,8 @@ float enCheckPlayerHitEyes(EnLOCAL_DATA* dp, float* ep) {
     sceVu0FVECTOR p2; // r29+0x30
 
 
-    volatile_vec_copy(p1, &dp->scp->battle.target->pos);
-    volatile_vec_copy(p2, ep);
+    shVectorCopy(p1, &dp->scp->battle.target->pos);
+    shVectorCopy(p2, ep);
     p2[1] = p1[1] = dp->scp->battle.target->eye_y;
     clCheckHitEyes(res, (u_int) dp->scp->battle.target, p1, p2, 0);
     if (res->kind == 0) {
@@ -1002,8 +1002,8 @@ int enCheckFloor(float* pos) {
     CL_VHIT_RESULT* res = &enLocalWork.HitResult;
     sceVu0FVECTOR vec1, vec2;
     int m; // r3
-    volatile_vec_copy(vec1, pos);
-    volatile_vec_copy(vec2, pos);
+    shVectorCopy(vec1, pos);
+    shVectorCopy(vec2, pos);
     vec1[1] -= 100.0f;
     vec2[1] += 100.0f;
     clCheckHitEyesOnlyFloor(res, NULL, vec1, vec2);
@@ -1025,7 +1025,7 @@ void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
     
     sp = dp->scp->sk_top;
     if (!(dp->scp->status & 0x10)) {
-        vec_zero(vec);
+        shVectorZero(vec);
         return;
     }
     i = 0;
@@ -1045,14 +1045,14 @@ void enGetSkeletonMatrix(float (*mat)[4], EnLOCAL_DATA* dp, int n) {
     sp = dp->scp->sk_top;
     
     if (!(dp->scp->status & 0x10)) {
-        vec_zero(mat[0]);
-        vec_zero(mat[1]);
-        vec_zero(mat[2]);
-        vec_zero(mat[3]);
+        shVectorZero(mat[0]);
+        shVectorZero(mat[1]);
+        shVectorZero(mat[2]);
+        shVectorZero(mat[3]);
         return;
     }    
     for (i = 0; (i < n) && (sp->next != NULL); i++) sp = sp->next;    
-    mat_copy(mat, &sp->src_m);
+    shMatrixCopy(mat, &sp->src_m);
 }
 
 #ifdef NON_MATCHING
@@ -1068,7 +1068,7 @@ int enGetDamageMotion(EnLOCAL_DATA* dp) { // @note: left like this since I dont 
 
     bi = &dp->scp->battle;
     a = shAngleRegulate(shAtanV(&bi->vec) - dp->scp->rot.y);
-    if (float_abs(a) > QUARTER_TURN) {
+    if (shFloatAbs(a) > QUARTER_TURN) {
         var_v0 = 0;
     } else {
         var_v0 = 1;
@@ -1154,7 +1154,7 @@ int enGetDownMotion(EnLOCAL_DATA* dp) {
     
     bi = &dp->scp->battle;
     a = shAngleRegulate(shAtanV(&bi->vec) - dp->scp->rot.y);
-    if (float_abs(a) > QUARTER_TURN) {
+    if (shFloatAbs(a) > QUARTER_TURN) {
         id = 0;
     } else {
         id = 1;
@@ -1387,7 +1387,7 @@ EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float dist, 
         if (i >= 8) return NULL;
         p++;
     }
-    volatile_vec_copy(&p->pos, pos);
+    shVectorCopy(&p->pos, pos);
     p->kind = kind;
     p->type = type;
     p->dist = dist;

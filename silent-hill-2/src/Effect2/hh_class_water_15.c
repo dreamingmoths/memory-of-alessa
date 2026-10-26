@@ -582,7 +582,7 @@ u_int HH_Class_Water_15(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                     pInfo->World_Location[2] += 10.0f;
                 }
             }
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

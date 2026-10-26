@@ -24,6 +24,8 @@
 #include "Event/demoview.h"
 #include "Event/stg_overlay.h"
 
+#include "MC/savedata.h"
+
 typedef struct /* @anon3 */ {
     // total size: 0x24
     float pos_x; // offset 0x0, size 0x4
@@ -226,7 +228,7 @@ void EventMain(void) {
     
     
     
-    item.ampoule_efficacy = float_max(0.0f, item.ampoule_efficacy - shGetDT());
+    item.ampoule_efficacy = shFloatMax(0.0f, item.ampoule_efficacy - shGetDT());
     
     
     
@@ -480,7 +482,7 @@ static int EventCheckLookPoint(float x, float z, Jms jms) {
     pos_z = z - jms.pos_z;
     
     
-    if (float_abs(pos_x) > 400.0f || float_abs(pos_z) > 400.0f)
+    if (shFloatAbs(pos_x) > 400.0f || shFloatAbs(pos_z) > 400.0f)
         return false;
 
     
@@ -490,7 +492,7 @@ static int EventCheckLookPoint(float x, float z, Jms jms) {
     
     ang = shAngleRegulate(jms.rot_y - shAtan2(z - jms.rear_z, x - jms.rear_x));
     
-    if (float_abs(ang) > TO_RAD(30)) return false;
+    if (shFloatAbs(ang) > TO_RAD(30)) return false;
     
     return true;
 }
@@ -640,7 +642,7 @@ static void EventResultMovePosition(int ev_no /* r2 */) {
     el = &stage->ev_list[ev_no];
     pos = (s_char*) &stage->ev_pos[EventListElement(el, 14)];
     pos_type = EventListElement(el, 15);
-    vec_zero_xyz(mv_pos);
+    shVectorZeroXyz(mv_pos);
     mv_pos[0] = CharToFloat4(pos);
     mv_pos[1] = CharToFloat2(pos + 4);
     mv_pos[2] = CharToFloat4(pos + 6);
@@ -1032,7 +1034,45 @@ static int EventExecMove(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecMove);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Event/event", EventExecSave);
+static int EventExecSave(void) {
+    Event_List* el;
+   
+    switch (ev_e_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, 1);
+            if (GET_GAME_FLAG(GAME_FLAG_5)) EV_EXEC_STEP(7);
+            else {
+                fontMessageNum(msg_station, 8);
+                EV_EXEC_STEP(1);
+            }
+        break;
+            
+        case 1:
+            if ((fontGetStatus() == -2) || (ev_cancel != 0)) {
+                fontClear();
+                if (ev_cancel != 0) EV_EXEC_STEP(6);
+                else {
+                    SET_GAME_FLAG(GAME_FLAG_5);
+                    EV_EXEC_STEP(7);
+                }            
+            }
+            break;
+        case 7:
+            ScreenEffectFadeStart(11, 0.0f);
+            el = &stage->ev_list[ev_active];
+            SetSavePointName(EventListElement(el, 21));
+            SeCall(10051, 1.0f, 0);
+            sh2sys_set_2(9);
+            EV_EXEC_STEP(6);
+            break;
+        
+        case 6:
+            ScreenEffectFadeStart(4, 0.0f);
+            SCNowPlayableEventSwitch(sh2jms.player, 0);
+            return 1;
+    }
+    return 0;
+}
 
 int LightSpotOnOffCheck(void) {
     if (!GET_BIT(item.flag[0], 15)) {

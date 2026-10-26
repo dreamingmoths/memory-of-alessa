@@ -68,27 +68,30 @@ int func_01F6D880_hospital_f_01(void) {
         func_00190A20(2);
     }
     riddle_level = GetRiddleLevel() & 0xFF;
-    var_s1 = 0x19;
+    var_s1       = 0x19;
     if (riddle_level <= 0) {
         index = 0x5AB;
     } else {
         var_s1 = 0x1A;
         if (riddle_level >= 2) {
             var_s1 = 0x1B;
-            index = 0x5AD;
+            index  = 0x5AD;
         } else {
             index = 0x5AC;
         }
     }
-   
+
     switch (D_01F71680_hospital_f_01) {
         case 0:
-            if (!func_0016C1C0(0x1C)) return 0;
-            if (func_00168440()) break;
+            if (!func_0016C1C0(0x1C))
+                return 0;
+            if (func_00168440())
+                break;
             D_01F71680_hospital_f_01++;
             func_0016C3C0();
         default:
-            if (!func_0016C1C0(var_s1)) return 0;
+            if (!func_0016C1C0(var_s1))
+                return 0;
             break;
     }
 
@@ -97,22 +100,19 @@ int func_01F6D880_hospital_f_01(void) {
     if (!GET_BIT(D_1D31688, 10)) {
         D_1D31688 |= 0x400;
     }
-    
+
     if (!GET_FLAG(D_01D31640, index)) {
         D_01D31640[index >> 5] |= (1 << (index & 0x1F));
     }
     return 1;
-
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_01", func_01F6DA30_hospital_f_01);
 
 void func_01F6DAC0_hospital_f_01(void) {
-
 }
 
 void func_01F6DAD0_hospital_f_01(void) {
-
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_01", func_01F6DAE0_hospital_f_01);
@@ -184,7 +184,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_01", func_01F6F7D0_hospital
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_01", func_01F6F880_hospital_f_01);
 
 #ifdef NON_MATCHING
-int func_01F6FBA0_hospital_f_01(void) { //when you enter the elevator from the second floor
+int func_01F6FBA0_hospital_f_01(void) { // when you enter the elevator from the second floor
     int ret;
 
     ret = 0;
@@ -210,14 +210,13 @@ int func_01F6FBA0_hospital_f_01(void) { //when you enter the elevator from the s
             }
             func_0016C1B0();
             D_01F71688_hospital_f_01 += 1;
-            break;        
+            break;
         default:
             ret = 1;
             D_1D31688 &= ~0x10;
             D_1D31720 |= 0x2000;
             D_1D31684 |= 0x200;
             D_1D317B8 |= 0x100000;
-
     }
     return ret;
 }
@@ -264,15 +263,15 @@ void func_01F6FD50_hospital_f_01(void) {
                 D_1D31688 &= 0xFFFF7FFF;
             }
             break;
-        }
+    }
 }
 
 void func_01F70000_hospital_f_01(void) {
 
     int riddle_level;
 
-    switch (RoomName()) { 
-        
+    switch (RoomName()) {
+
         case HOSPITAL_2F_ELEVATOR_HALLWAY:
             if (GET_BIT(D_1D31684, 0x10)) {
                 func_0016CA40(1);
@@ -280,7 +279,7 @@ void func_01F70000_hospital_f_01(void) {
             } else {
                 D_1D31720 &= 0xFFFF7FFF;
             }
-    
+
             riddle_level = GetRiddleLevel() & 0xFF;
             if (riddle_level <= 0) {
                 func_0016CA40(9);
@@ -297,7 +296,7 @@ void func_01F70000_hospital_f_01(void) {
                 D_1D31720 &= 0xFFFEFFFF;
             }
             break;
-        
+
         case HOSPITAL_2F_WOMENS_LOCKER_ROOM:
             if (!GET_BIT(D_1D31680, 4)) {
                 func_0016CA40(0xB);
@@ -305,7 +304,7 @@ void func_01F70000_hospital_f_01(void) {
             } else {
                 D_1D31720 &= 0xFFFBFFFF;
             }
-    
+
             if (!GET_BIT(D_1D31680, 5)) {
                 func_0016CA40(0xA);
                 D_1D31720 |= 0x20000;
@@ -313,7 +312,7 @@ void func_01F70000_hospital_f_01(void) {
                 D_1D31720 &= 0xFFFDFFFF;
             }
             break;
-        
+
         case HOSPITAL_2F_M_CORRIDOR:
             if (GET_BIT(D_1D31644, 5)) {
                 func_0016CA40(2);
@@ -325,7 +324,7 @@ void func_01F70000_hospital_f_01(void) {
             clAddDynamicWall(&D_01F71140_hospital_f_01);
             clAddDynamicWall(&D_01F711E0_hospital_f_01);
             break;
-        
+
         case HOSPITAL_2F_M4_ROOM:
             if (GET_BIT(D_1D31684, 0x13)) {
                 func_0016CA40(4);
@@ -333,7 +332,7 @@ void func_01F70000_hospital_f_01(void) {
             } else {
                 D_1D31720 &= 0xEFFFFFFF;
             }
-    
+
             func_01F6E1C0_hospital_f_01();
             if (GET_BIT(D_1D31680, 0x14)) {
                 func_0016CA40(3);
@@ -348,31 +347,30 @@ void func_01F70000_hospital_f_01(void) {
                 D_1D31720 |= 0x04000000;
             }
             break;
-        }
+    }
 }
 
 int func_01F70370_hospital_f_01(void) {
-    
+
     int hours;
     int minutes;
-    u_int *temp = D_01D31640;
+    u_int* temp = D_01D31640;
 
     D_1D318DC = 0;
     D_1D318E0 = 0;
-    if ((GetRiddleLevel () & 0xFF) == 2) { //check if riddle level is hard
+    if ((GetRiddleLevel() & 0xFF) == 2) { // check if riddle level is hard
         hours = (shRandI() % 12) + 12;
     } else {
         hours = (shRandI() % 12) + 1;
     }
-    
-    temp[0xA7] = ((((hours / 10) * 16)  << 8) + ((hours) % 10 * 128 << 1));
-    minutes = shRandI() % 60;
+
+    temp[0xA7] = ((((hours / 10) * 16) << 8) + ((hours) % 10 * 128 << 1));
+    minutes    = shRandI() % 60;
     temp[0xA7] += minutes % 10 + 16 * (minutes / 10);
-    
+
     /* I will leave a clearer version as a comment
-    D_1D318DC = (hours % 10 + 16 * (hours / 10)) << 8;   
+    D_1D318DC = (hours % 10 + 16 * (hours / 10)) << 8;
     minutes = shRandI() % 60;
     D_1D318DC->unk29C += minutes % 10 + 16 * (minutes / 10);
     */
-
 }

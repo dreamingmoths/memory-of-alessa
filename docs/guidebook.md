@@ -262,3 +262,19 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectUp);
 When the time comes, all hauntings will be exorcised through rituals.
 
 (@todo: Document this behavior on the [decomp wiki](https://decomp.wiki).)
+
+### MIPS registers
+
+The diagram below describes the MIPS assembly registers and their numeric
+mappings. This becomes important when matching Silent Hill 2 since the
+[decomp-toolkit symbols file](#decomp-toolkit) associates the local variable
+names to these numeric values.
+
+<div align="center">
+  <img alt="MIPS register mapping" src="https://i.imgur.com/OKTBeWK.png" width="512">
+
+  _Source: [Rochester Institute of Technology](https://www.cs.rit.edu/~paw/250/notes/135e/,notes.221/02/MIPS%20registers.pdf), via ["MIPS Assembly: Data, Registers, and Mimicking Scope"](https://oliviagallucci.com/mips-assembly-data-registers-and-mimicking-scope/) by Olivia A. Gallucci_.
+</div>
+
+Please note that the DWARF information may miss some local variables or show
+misleading register values (especially `$r2` in the case of MWCCPS2 2.4).

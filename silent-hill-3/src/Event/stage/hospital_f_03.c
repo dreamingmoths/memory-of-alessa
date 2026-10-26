@@ -15,21 +15,21 @@ int func_01F6D680_hospital_f_03(void) {
         D_1D31688 |= 8;
     }
     switch (D_01F70910_hospital_f_03) {
-        
+
         case 0:
             func_00190A20(5);
             D_01F70910_hospital_f_03 = 1;
-    
+
         case 1:
             if (func_00190C00() == 0) {
                 return 0;
             }
-            
-            func_00317490(0xC, 0.2f);        
+
+            func_00317490(0xC, 0.2f);
             SeCall(11041, 0.0f, 1.0f);
             D_1D31680 |= 0x80;
-            D_01F70910_hospital_f_03 = 2;  
-        
+            D_01F70910_hospital_f_03 = 2;
+
         case 2:
             if (func_0016C1C0(0x26) == 0) {
                 return 0;
@@ -38,21 +38,21 @@ int func_01F6D680_hospital_f_03(void) {
             func_003174B0(0.2f);
             D_01F70910_hospital_f_03 = 3;
             break;
-        
+
         case 3:
             func_00190A20(6);
             D_01F70910_hospital_f_03 = 4;
-    
+
         case 4:
             if (func_00190C00() == 0) {
                 return 0;
             }
             D_01F70910_hospital_f_03 = 5;
-        
+
         default:
             D_1D31688 &= ~8;
             func_00190A20(0);
-            ret = 1;        
+            ret = 1;
     }
     return ret;
 }
@@ -170,7 +170,7 @@ void func_01F6F5D0_hospital_f_03(void) {
             if (GET_BIT(D_1D31684, 0x15)) {
                 count += 1;
             }
-            if ( GET_BIT(D_1D31684, 0x19)) {
+            if (GET_BIT(D_1D31684, 0x19)) {
                 count += 1;
             }
             if (GET_BIT(D_1D31684, 0x1C)) {
@@ -196,9 +196,9 @@ void func_01F6F5D0_hospital_f_03(void) {
             D_01F708D0_hospital_f_03 = 0;
             D_1D31724 |= 0x8000;
             D_1D31724 |= 0x20000;
-            D_01F708E0_hospital_f_03 = 0xBFA0D97C;        
+            D_01F708E0_hospital_f_03 = 0xBFA0D97C;
             D_01F708D8_hospital_f_03 = 0x3DD67750;
-    
+
             if (GET_BIT(D_1D31680, 0x1A)) {
                 D_1D31680 |= 0x08000000;
                 break;
@@ -258,7 +258,7 @@ void func_01F6FAC0_hospital_f_03(void) {
     int numbers[9];
     int i, j;
     int index;
-    u_int *temp = D_01D31640;
+    u_int* temp = D_01D31640;
 
     D_1D318E4 = 0;
 
@@ -273,7 +273,7 @@ void func_01F6FAC0_hospital_f_03(void) {
     // the whole value being 0b0001010110000011
     for (i = 0; i < 4; i++) {
         int rand = shRandI();
-        index = rand % (9-i);
+        index    = rand % (9 - i);
         temp[0xA9] <<= 4;
         temp[0xA9] += numbers[index];
         for (j = index; j < 8 - i; j++) {

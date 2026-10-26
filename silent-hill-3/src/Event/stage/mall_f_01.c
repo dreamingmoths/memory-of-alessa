@@ -1,17 +1,14 @@
 #include "mall_f_01.h"
 
-int func_01F6D680_mall_f_01(void)
-{
-    switch (D_01F72BC8_mall_f_01)
-    {
+int func_01F6D680_mall_f_01(void) {
+    switch (D_01F72BC8_mall_f_01) {
         case 0:
             func_001C2290(3, 0.3f);
             func_0019B4B0(7);
             ++D_01F72BC8_mall_f_01;
             /* fallthrough */
         case 1:
-            if (func_001C2580(2) == 0)
-            {
+            if (func_001C2580(2) == 0) {
                 return 0;
             }
 
@@ -20,14 +17,11 @@ int func_01F6D680_mall_f_01(void)
             ++D_01F72BC8_mall_f_01;
             /* fallthrough */
         default:
-            if (func_0016C540(&D_01F72760_mall_f_01, &D_01F727C0_mall_f_01) == 0)
-            {
+            if (func_0016C540(&D_01F72760_mall_f_01, &D_01F727C0_mall_f_01) == 0) {
                 float var_f20 = func_001643C0();
 
-                while (D_01F72BC0_mall_f_01->unk0 > 0.0f)
-                {
-                    if (D_01F72BC0_mall_f_01->unk0 <= var_f20)
-                    {
+                while (D_01F72BC0_mall_f_01->unk0 > 0.0f) {
+                    if (D_01F72BC0_mall_f_01->unk0 <= var_f20) {
                         func_0013D250(0, D_01F72BC0_mall_f_01->unk4, 1.0f);
                         ++D_01F72BC0_mall_f_01;
                         continue;
@@ -43,8 +37,7 @@ int func_01F6D680_mall_f_01(void)
             func_001C2290(5, 0.5f);
             func_0013D280(0);
 
-            if (GET_BIT(D_1D31784, 1))
-            {
+            if (GET_BIT(D_1D31784, 1)) {
                 SET_BIT(D_1D31784, 2);
             }
 
@@ -52,27 +45,21 @@ int func_01F6D680_mall_f_01(void)
     }
 }
 
-int func_01F6D820_mall_f_01(void)
-{
+int func_01F6D820_mall_f_01(void) {
     int ret = func_0016C540(&D_01F72810_mall_f_01, &D_01F72870_mall_f_01);
 
-    if (D_01F72BB8_mall_f_01 == 0)
-    {
+    if (D_01F72BB8_mall_f_01 == 0) {
         func_003272C0();
         D_01F72BB8_mall_f_01 = 1;
         D_01F72BB0_mall_f_01 = shRandI() % 30 + 0x794;
-    }
-    else if (func_001643C0() > 0.0f)
-    {
+    } else if (func_001643C0() > 0.0f) {
         float var_f20 = func_001643C0();
 
-        if (var_f20 >= 1940.0f && var_f20 <= 2600.0f && D_01F72BB0_mall_f_01 <= var_f20)
-        {
+        if (var_f20 >= 1940.0f && var_f20 <= 2600.0f && D_01F72BB0_mall_f_01 <= var_f20) {
             D_01F727E0_struct* var_s1 = &D_01F727E0_mall_f_01;
-            int temp_v1 = shRandI() % 4;
+            int temp_v1               = shRandI() % 4;
 
-            while (temp_v1 != 0)
-            {
+            while (temp_v1 != 0) {
                 --temp_v1;
                 ++var_s1;
             }
@@ -84,10 +71,8 @@ int func_01F6D820_mall_f_01(void)
         func_003272E0();
     }
 
-    if (ret != 0)
-    {
-        if (func_001646C0() != 0)
-        {
+    if (ret != 0) {
+        if (func_001646C0() != 0) {
             func_001602D0(0x272C, 3, 1, 1.0f);
         }
 
@@ -99,12 +84,10 @@ int func_01F6D820_mall_f_01(void)
     return ret;
 }
 
-int func_01F6DA20_mall_f_01(void)
-{
+int func_01F6DA20_mall_f_01(void) {
     int ret = func_0016C540(&D_01F72890_mall_f_01, &D_01F728F0_mall_f_01);
 
-    if (ret != 0)
-    {
+    if (ret != 0) {
         func_001C2290(5, 0.5f);
     }
 
@@ -112,10 +95,8 @@ int func_01F6DA20_mall_f_01(void)
 }
 
 #ifdef HOLY_CANDLE
-int func_01F6DA70_mall_f_01(void)
-{
-    if (!GET_BIT(D_1D3164C, 24))
-    {
+int func_01F6DA70_mall_f_01(void) {
+    if (!GET_BIT(D_1D3164C, 24)) {
         D_01F72B80_mall_f_01 = 0;
         func_0016C3C0();
         SET_BIT(D_1D3164C, 24);
@@ -123,15 +104,11 @@ int func_01F6DA70_mall_f_01(void)
         func_00190A20(2);
     }
 
-    switch (D_01F72B80_mall_f_01)
-    {
+    switch (D_01F72B80_mall_f_01) {
         case 0:
-            if (func_0016C1C0(0x32) == 0)
-            {
+            if (func_0016C1C0(0x32) == 0) {
                 return 0;
-            }
-            else if (func_00168440() != 0)
-            {
+            } else if (func_00168440() != 0) {
                 break;
             }
 
@@ -143,8 +120,7 @@ int func_01F6DA70_mall_f_01(void)
             ++D_01F72B80_mall_f_01;
             /* fallthrough */
         default:
-            if (func_0016C1C0(0x48) == 0)
-            {
+            if (func_0016C1C0(0x48) == 0) {
                 return 0;
             }
 
@@ -161,46 +137,36 @@ int func_01F6DA70_mall_f_01(void)
 INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_f_01", func_01F6DA70_mall_f_01);
 #endif
 
-int func_01F6DBD0_mall_f_01(void)
-{
+int func_01F6DBD0_mall_f_01(void) {
     int var_s0;
     int temp_a1;
 
     func_0012CFA0();
 
-    if (func_0012D080() == 0)
-    {
+    if (func_0012D080() == 0) {
         func_00190A20(2);
     }
 
     func_0012CFC0();
 
-    if (GET_BIT(D_1D3164C, 27))
-    {
-        var_s0 = 0x3D;
+    if (GET_BIT(D_1D3164C, 27)) {
+        var_s0  = 0x3D;
         temp_a1 = 0x30;
-    }
-    else
-    {
+    } else {
         var_s0 = 0x3E;
 
-        if (GET_BIT(D_1D31BF4, 5) && GetRiddleLevel() == 0)
-        {
+        if (GET_BIT(D_1D31BF4, 5) && GetRiddleLevel() == 0) {
             temp_a1 = 0x2F;
-        }
-        else
-        {
+        } else {
             temp_a1 = 0x2E;
         }
 
-        if (!GET_BIT(D_1D31784, 1))
-        {
+        if (!GET_BIT(D_1D31784, 1)) {
             SET_BIT(D_1D31784, 1);
         }
     }
 
-    if (func_0016BED0(var_s0, temp_a1) == 0)
-    {
+    if (func_0016BED0(var_s0, temp_a1) == 0) {
         return 0;
     }
 
@@ -209,43 +175,35 @@ int func_01F6DBD0_mall_f_01(void)
     return 1;
 }
 
-int func_01F6DCC0_mall_f_01(void)
-{
+int func_01F6DCC0_mall_f_01(void) {
     int temp_a0;
     int temp_a1;
 
     func_0012CFA0();
 
-    if (func_0012D080() == 0)
-    {
+    if (func_0012D080() == 0) {
         func_00190A20(2);
     }
 
     func_0012CFC0();
 
-    if (GetRiddleLevel() == 1)
-    {
+    if (GetRiddleLevel() == 1) {
         temp_a0 = 0x42;
         temp_a1 = 0x33;
 
-        if (!GET_BIT(D_1D316F0, 27) && !GET_BIT(D_1D316F0, 28))
-        {
+        if (!GET_BIT(D_1D316F0, 27) && !GET_BIT(D_1D316F0, 28)) {
             SET_BIT(D_1D316F0, 27);
         }
-    }
-    else
-    {
+    } else {
         temp_a0 = 0x41;
         temp_a1 = 0x34;
 
-        if (!GET_BIT(D_1D316F0, 29) && !GET_BIT(D_1D316F0, 30))
-        {
+        if (!GET_BIT(D_1D316F0, 29) && !GET_BIT(D_1D316F0, 30)) {
             SET_BIT(D_1D316F0, 29);
         }
     }
 
-    if (func_0016BED0(temp_a0, temp_a1) == 0)
-    {
+    if (func_0016BED0(temp_a0, temp_a1) == 0) {
         return 0;
     }
 
@@ -254,8 +212,7 @@ int func_01F6DCC0_mall_f_01(void)
     return 1;
 }
 
-void func_01F6DDB0_mall_f_01(void)
-{
+void func_01F6DDB0_mall_f_01(void) {
     PicDraw_Data pic;
 
     shQzero(&pic, sizeof(PicDraw_Data));
@@ -266,10 +223,10 @@ void func_01F6DDB0_mall_f_01(void)
     pic.g = 0;
     SET_BIT(pic.status, 4);
     pic.otp = 6;
-    pic.x0 = 0x700;
-    pic.y0 = 0x100;
-    pic.x1 = 0xF80;
-    pic.y1 = 0x100;
+    pic.x0  = 0x700;
+    pic.y0  = 0x100;
+    pic.x1  = 0xF80;
+    pic.y1  = 0x100;
     SET_BIT(pic.status, 1);
     PictureDraw(&pic);
 
@@ -295,33 +252,31 @@ void func_01F6DDB0_mall_f_01(void)
     PictureDraw(&pic);
 }
 
-void func_01F6DF00_mall_f_01(PicLoadImage_Data* pic_load)
-{
-    PicDraw_Data* pic = (PicDraw_Data *) (pic_load + 2);
+void func_01F6DF00_mall_f_01(PicLoadImage_Data* pic_load) {
+    PicDraw_Data* pic = (PicDraw_Data*) (pic_load + 2);
 
-    pic_load->ap = func_00170410(1);
-    pic_load->tex_adr = -1;
+    pic_load->ap       = func_00170410(1);
+    pic_load->tex_adr  = -1;
     pic_load->clut_adr = -1;
-    pic_load->otp = 0;
+    pic_load->otp      = 0;
     PictureLoadImage(pic_load);
 
     shQzero(pic, sizeof(PicDraw_Data));
-    pic->ap = func_00170410(1);
-    pic->tex = -1;
+    pic->ap   = func_00170410(1);
+    pic->tex  = -1;
     pic->clut = -1;
     SET_BIT(pic->status, 0);
     pic->otp = 1;
     PictureDraw(pic);
 }
 
-void func_01F6DF90_mall_f_01(PicLoadImage_Data* pic_load)
-{
+void func_01F6DF90_mall_f_01(PicLoadImage_Data* pic_load) {
     PicLoadImage_Data* next_pic_load = pic_load + 1;
 
-    next_pic_load->ap = func_00170410(0);
-    next_pic_load->tex_adr = -1;
+    next_pic_load->ap       = func_00170410(0);
+    next_pic_load->tex_adr  = -1;
     next_pic_load->clut_adr = -1;
-    next_pic_load->otp = 2;
+    next_pic_load->otp      = 2;
     PictureLoadImage(next_pic_load);
 }
 

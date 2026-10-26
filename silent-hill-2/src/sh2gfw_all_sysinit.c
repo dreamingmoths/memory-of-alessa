@@ -248,7 +248,7 @@ void map_DATA_LOAD(int arg0) {
     loadBgMAP_AllClear();
     
     
-    for (i = 0; i < 4; i++) sh2gfw_init_zeroQ_BMAN(&(&b_man)[i]);
+    for (i = 0; i < 4; i++) sh2gfw_init_zeroQ_BMAN(&b_man[i]);
     
     
     sh2gfw_AllClear_TrMAN();

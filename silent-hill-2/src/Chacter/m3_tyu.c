@@ -61,8 +61,8 @@ static void EnemyTYUFunction(SubCharacter* this) {
                 
                 
                 
-                volatile_vec_copy(&pos, &this->pos);
-                volatile_vec_copy(&rot, &this->rot);
+                shVectorCopy(&pos, &this->pos);
+                shVectorCopy(&rot, &this->rot);
                                 
                 EnemyTYUInit(this);
                 
@@ -93,8 +93,8 @@ static void EnemyTYUFunction(SubCharacter* this) {
                 }
                 
                 
-                volatile_vec_copy(&this->pos, &pos);                
-                volatile_vec_copy(&this->rot, &rot);
+                shVectorCopy(&this->pos, &pos);                
+                shVectorCopy(&this->rot, &rot);
                 
                 this->step++;
             }
@@ -151,7 +151,7 @@ void shGetEnemyTYUAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
     mat.d[3][3] = 1.0f;   
        
     sceVu0ApplyMatrix(&pos0[0], &lw_mat[0], &pos0[0]);
-    volatile_vec_copy(s_pos, pos0);
+    shVectorCopy(s_pos, pos0);
    
 
     

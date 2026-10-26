@@ -132,7 +132,7 @@ void fogInitScreen(void) {
 }
 
 void fogInitWind(void) {
-    vec_zero(fwork.WindV);
+    shVectorZero(fwork.WindV);
     fogChangeWind(fwork.WindDef);
     shFill(&fwork.GridDense, 0x3f800000 /* 1.0f */, 512);
 }
@@ -158,7 +158,7 @@ void fogChangeWind(int wind) {
             Wind[2] = (shRandF() - 0.5f);
             break;
         case 2:
-            vec_zero(Wind);
+            shVectorZero(Wind);
             WindRandom = 0.0f;
             break;
         case 17:
@@ -253,14 +253,14 @@ void fogChangeWind(int wind) {
     if ((fwork.WindV[0] != 0.0f) || (fwork.WindV[1] != 0.0f) || (fwork.WindV[2] != 0.0f)) {
         a1 = shAtanV(&fwork.WindV);
         a2 = shAngleRegulate(a1 - shAtanV(Wind));
-        if (float_abs(a2) > (PI / 3)) {
+        if (shFloatAbs(a2) > (PI / 3)) {
             a1 += ((PI / 3) * float_sign(a2));
             shSinCosV_Scale(Wind2, a1, vec2_length(&Wind[0], &Wind[2]));
             Wind[0] = Wind2[0];
             Wind[2] = Wind2[2];
         }
     }
-    volatile_vec_copy(fwork.WindV, Wind);
+    shVectorCopy(fwork.WindV, Wind);
     fwork.WindTimer += (int) shSway1f(-300.0f, 0.1f);
     if (fwork.WindTimer < 300.0f || fwork.WindTimer > 900.0f) {
         fwork.WindTimer = 600;
@@ -315,8 +315,8 @@ void fogSetObj(u_long ID, void* Center, float Size) {
         fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 634);
         od = &fwork.Obj[fwork.ObjMax++];
     }
-    vec_copy(od->pos, Center);
-    vec_zero(od->mv);
+    shVectorCopy(od->pos, Center);
+    shVectorZero(od->mv);
     od->pos[3] = Size;
     od->mv[3] = fwork.EscapeRange;
     od->rer = 1.0f / fwork.EscapeRange;
@@ -332,8 +332,8 @@ void fogSetObj2(u_long ID, void* Center, float Size) {
         fjAssert(fwork.ObjMax < OBJ_MAX, "fog.c", 685);
         od = &fwork.Obj[fwork.ObjMax++];
     }
-    vec_copy(od->pos, Center);
-    vec_zero(od->mv);
+    shVectorCopy(od->pos, Center);
+    shVectorZero(od->mv);
     od->pos[3] = Size;
     od->mv[3] = fwork.EscapeRange;
     od->rer = 1.0f / fwork.EscapeRange;
@@ -441,16 +441,16 @@ void fogSetFloorY(float FloorY) {
 }
 
 void fogSetWorldScreenM(void* WorldScreenM) {
-    mat_copy(fwork.WorldScreenM, WorldScreenM);
+    shMatrixCopy(fwork.WorldScreenM, WorldScreenM);
 }
 
 void fogSetWorldViewM(void* WorldViewM) {
-    mat_copy_3x3(fwork.WorldViewM, WorldViewM);
+    shMatrixCopy3d(fwork.WorldViewM, WorldViewM);
 }
 
 void fogSetWorldPosV(void* WorldPosV) {
     if (!(fwork.Flag & 0x40)) {
-        vec_copy(fwork.WorldPosV, WorldPosV);
+        shVectorCopy(fwork.WorldPosV, WorldPosV);
     }
 }
 
@@ -468,11 +468,11 @@ void fogSetStayPoint(void* StayPoint) {
 }
 
 void fogResetStayPoint(void) {
-    vec_zero(fwork.StayPoint);
+    shVectorZero(fwork.StayPoint);
 }
 
 void fogSetCameraPosV(void* CameraPosV) {
-    vec_copy(fwork.CameraPosV, CameraPosV);
+    shVectorCopy(fwork.CameraPosV, CameraPosV);
 }
 
 void fogSetLocalPosV(void) {
@@ -482,8 +482,8 @@ void fogSetLocalPosV(void) {
     vec_sub_reverse(fwork.CameraPosV, fwork.WorldPosV, FVector);
     d = vec3_length(FVector);
     if (fwork.Flag & 0x20) {
-        vec_copy(TVector, fwork.LocalPosV);
-        dx = FVector[0] / float_abs(FVector[2]);
+        shVectorCopy(TVector, fwork.LocalPosV);
+        dx = FVector[0] / shFloatAbs(FVector[2]);
     }
     if (d > 2000.0f) {
         vec_scale(2000.0f / d, FVector, FVector);
