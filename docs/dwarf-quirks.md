@@ -215,7 +215,7 @@ See [this scratch](https://decomp.me/scratch/UGzq7) and its forks for a practica
 > Note: Scoped declarations aren't specific to similarly-named variables. See [this scratch.](https://decomp.me/scratch/CqUW2)
 
 ### Fake namespaces
-When a function has a struct pointer for an argument and said pointer is named `this`, MWCC will incorrectly output the function as belonging to a namespace with the struct's name. For example:
+When a function has a struct pointer for an argument and said pointer is named `this`, MWCC will incorrectly output the function as belonging to a namespace with the struct's name in the DWARF. For example:
 
 ```c
 typedef struct foo {...} foo;
@@ -250,7 +250,7 @@ signed int drinks; // size: 0x4, address: 0xDEADDEAD
 static signed int cards; // size: 0x4, address: 0x0
 static signed int seals; // size: 0x4, address: 0xDEADD00D
 ```
-### BSS ordering 
+### initialization & BSS ordering 
 Uninitialized and zero-initialized global variables both lie in BSS but will have different ordering. For example:
 
 ```c
