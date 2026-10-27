@@ -103,6 +103,7 @@ UNLINKED(EnANIME_DATA EnPAPAnime[33], {
 #pragma fast_fptosi on
 #pragma divbyzerocheck off
 
+#ifdef NON_MATCHING
 #line 130
 void enPAPInitData(EnLOCAL_DATA* dp) {
     float vitarity[5] = { 
@@ -246,132 +247,6 @@ static void enPAPCtrlEvent(EnLOCAL_DATA* dp) {
     }
 }
 
-
-
-
-
-
-/* huge line number gap! */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #line 399
 static void enPAPCtrlHand(EnLOCAL_DATA* dp) {
     /* empty */
@@ -474,7 +349,7 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
             enPAPAnimeSet(dp, 1);
             enPAPGetWalkSpeed(dp);
             enInitPath(&dp->path, dp->scp->rot.y);
-            shSinCosV_Scale(&vec, dp->scp->rot.y, 1500.0f);
+            shSinCosV_Scale(vec, dp->scp->rot.y, 1500.0f);
             shAddVector(dp->pap.target, &dp->scp->pos, vec);
             ENEMY_NEXT_SUB_STEP();
             break;
@@ -522,7 +397,6 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
-
 
 #line 551
 static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
@@ -671,7 +545,7 @@ static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
             if (enCheckHuggedPlayer()) {
                 dp->flag |= (1 << 3);
 
-                shSinCosV_Scale(&vec, enGetPlayerDirection(dp), 150.0f);
+                shSinCosV_Scale(vec, enGetPlayerDirection(dp), 150.0f);
                 shSubVector(vec, enGetPlayerPos(dp), vec);
                 shSubVector(vec, vec, &dp->scp->pos);
                 vec[1] = vec[2] = 0;
@@ -829,6 +703,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     enSetBlur();
                     dp->flag |= (1 << 3);
                     ENEMY_STEP(8);
+                    return;
                 } else {   
                     enFlagResetMoved(dp);
                     if (enCheckAimedByHuman(dp) == 0 || enCheckInstantDeath(dp)) {
@@ -958,9 +833,8 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
         if (enCheckDamage(dp)) {
             enReduceHP(dp);
             enSetHitBack(dp);
-            dp->hb_s *= (dp->pap.dcm - dp->pap.dc) / (dp->pap.dcm + 1);
-            dp->pap.dc++;
-            if (dp->pap.dc >= dp->pap.dcm || enCheckInstantDeath(dp)) {
+            dp->hb_s *= (float) (dp->pap.dcm - dp->pap.dc) / (float) (dp->pap.dcm + 1);
+            if (++dp->pap.dc >= dp->pap.dcm || enCheckInstantDeath(dp)) {
                 enKillCountUp(dp);
                 enPAPAnimeSet(dp, 0x1B);
                 ENEMY_STEP(ENEMY_PAP_STATE_DYING);
@@ -1103,43 +977,36 @@ static void enPAPAnimeSet(EnLOCAL_DATA* dp, int anim) {
 #line 1127
 static void enPAPAnimeExec(EnLOCAL_DATA* dp) {
     int of = dp->anim_n; // r16
-    enAnimeExec(EnPAPAnime, 5701);
+    enAnimeExec(dp, EnPAPAnime, 5701);
     if (dp->anim == 0x1B) {
         
         enPAPDrawBoad(dp);
     }
     if (dp->anim_n == -1 || dp->flag & (1 << 0)) return;
     if (dp->anim == 11 || dp->anim == 12 || dp->anim == 20 || dp->anim == 21) {
+
         
-        
-        enSetTransWalk(dp, dp->anim_n);
+        enSetTransWalk(dp);
     } else if (dp->anim == 1) {
         
-        enSetTransWalk(dp, dp->anim_n);
+        enSetTransWalk(dp);
         
         if (
-            ((of > 0) && 
-                (((dp->anim_s < 4800 ) && (dp->anim_n >= 4800 ))   || 
-                 ((dp->anim_s < 38400) && (dp->anim_n >= 38400)))) || 
-            ((of < 0) && 
-                (((dp->anim_s > 21600) && (dp->anim_n <= 21600))   || 
-                 ((dp->anim_s > 55200) && (dp->anim_n <  55200))))
+            ((dp->anim_s > 0) && 
+                (((of < 4800 ) && (dp->anim_n >= 4800 ))   || 
+                 ((of < 38400) && (dp->anim_n >= 38400)))) || 
+            ((dp->anim_s < 0) && 
+                (((of > 21600) && (dp->anim_n <= 21600))   || 
+                 ((of > 55200) && (dp->anim_n <= 55200))))
         ) {
-            
-            
-
-            
-            if (enCheckWater(dp)) {
+            if (enCheckWater(dp))
                 enSoundCall(18808, 1.0f, &dp->scp->pos);
-                return;
-            }
-            if (dp->flag & 0x1000) {
+            else if (dp->flag & 0x1000)
                 enSoundCall3D(18300, 1.0f, &dp->scp->pos);
-                return;
-            }
-            enSoundCall(18300, 1.0f, &dp->scp->pos);
+            else
+                enSoundCall(18300, 1.0f, &dp->scp->pos);
         }
-        return;
+
     } else if (dp->anim == 30) {
         if (dp->anim_n < 0xCE41) {
             enFlagSetNoDamage(dp);
@@ -1180,14 +1047,6 @@ static float enPAPGetWalkSpeed(EnLOCAL_DATA* dp) {
     return r;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0015CD20 -> 0x0015CD78
-*/
-// Range: 0x15CD20 -> 0x15CD78
 static float enPAPGetRotSpeed(void) {
     float rot_rate[5] = {
         0.5f,
@@ -1200,13 +1059,7 @@ static float enPAPGetRotSpeed(void) {
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0015CD80 -> 0x0015CE08
-*/
-// Range: 0x15CD80 -> 0x15CE08
+
 static float enPAPGetTurnSpeed(EnLOCAL_DATA* dp) {
     float rot_rate[5] = {
         1.0f,
@@ -1221,13 +1074,7 @@ static float enPAPGetTurnSpeed(EnLOCAL_DATA* dp) {
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0015CE10 -> 0x0015CEC0
-*/
-// Range: 0x15CE10 -> 0x15CEC0
+
 static void enPAPSetDownTime(EnLOCAL_DATA* dp) {
     short down_time[5] = {
         900,
@@ -1251,13 +1098,7 @@ static void enPAPSetDownTime(EnLOCAL_DATA* dp) {
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0015CEC0 -> 0x0015CF5C
-*/
-// Range: 0x15CEC0 -> 0x15CF5C
+
 static void enPAPSetMoveCount(EnLOCAL_DATA* dp) {
     int n; // r2
     n = (int) ((10.0f - (0.4f * (float) enGetMode())) + shSway1f(-4.0f, 0.5f)) << 11;
@@ -1265,95 +1106,12 @@ static void enPAPSetMoveCount(EnLOCAL_DATA* dp) {
 }
 
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0015CF60 -> 0x0015CFCC
-*/
-// Range: 0x15CF60 -> 0x15CFCC
+
 static void enPAPSetDc(EnLOCAL_DATA* dp) {
     enSetTimer(dp, 200);
     dp->pap.dc = 0;
     dp->pap.dcm = ((shRandI() >> 10) % (enGetMode() + 5)) + 4;
 }
-
-
-static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
-    sceVu0FMATRIX pos; // r29+0x40
-    sceVu0FVECTOR vec1; // r29+0x80
-    sceVu0FVECTOR vec2; // r29+0x90
-    sceVu0FMATRIX wsm; // r29+0xA0
-    sceVu0IVECTOR iv; // r29+0xE0
-    u_long xyz[4]; // r29+0xF0
-    int i; // r16
-    int cn; // r17
-    u_int w; // r18
-
-    u64* temp_v1;
-    u64* temp_v1_2;
-    u64* temp_v1_3;
-    u64* temp_v1_4;
-    u64* temp_v1_5;
-    u64* temp_v1_6;
-    void* temp_a1;
-
-    sceVu0CopyMatrix(wsm, cam0.world_screen);
-    shSinCosV_Scale(&vec1[0], dp->scp->rot.y, 495.0f);
-    shSinCosV_Scale(&vec2[0], QUARTER_TURN + dp->scp->rot.y, 195.0f);
-    shAddVector(pos, pos, pos); // @todo, ofc
-    shAddVector(pos, pos, pos);
-    shAddVector(pos, pos, pos);
-    shSubVector(pos, pos, pos);
-    shSinCosV_Scale(&vec1[0], dp->scp->rot.y, 315.0f);
-    shSubVector(pos, pos, pos);
-    shSubVector(pos, pos, pos);
-    shSubVector(pos, pos, pos);
-    shSubVector(pos, pos, pos);
-    w = 0;
-    cn = 0;
-    i = 0;
-loop_11:
-    if (i >= 4) {
-        if (cn < 4) {
-            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6),
-                           GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ3, SCE_GS_XYZ2, SCE_GS_XYZ2), 
-                           w, 1);
-            *spack.pos++ = 4;
-            *spack.pos++ = 0x8000 << 0x10;
-            *spack.pos++ = xyz[0];
-            *spack.pos++ = xyz[1];
-            *spack.pos++ = xyz[2];
-            *spack.pos++ = xyz[3];
-            // spkCloseGiftag(xyz[3]);
-        }
-        return;
-    }
-    pos[i][1] -= 10.0f;
-    pos[i][2] = 1.0f;
-    shTransformVectorPerspective(pos, pos);
-    // ??? wat
-    // M2C_ERROR(/* unknown instruction: vftoi4.xyw $vf4, $vf4 */);
-    // M2C_ERROR(/* unknown instruction: vftoi0.z $vf4, $vf4 */);
-    // M2C_ERROR(/* unknown instruction: sqc2 $vf4, ($a0) */);
-    // M2C_ERROR(/* unknown instruction: qmfc2.ni $a1, $vf4 */);
-    // M2C_ERROR(/* unknown instruction: pexch $t7, $a1 */);
-    // M2C_ERROR(/* unknown instruction: pextuw $a1, $zero, $a1 */);
-    // xyz[i] = (s64) M2C_ERROR(/* unknown instruction: pextlw $a1, $a1, $t7 */);
-    if ((iv[3] < 0) || (iv[2] < 0) || (iv[0] < 0) || (iv[1] < 0) || (iv[0] >= 0x10000) || (iv[1] >= 0x10000)) {
-        return;
-    }
-    cn += (s64) (shScreenClipI(&iv[0]) << 0x38) >> 0x38;
-    if (w < (u32) iv[3]) {
-        w = (u32) iv[3];
-    }
-    i += 1;
-    goto loop_11;
-}
-
-
-
-
 
 #line 1321
 static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
@@ -1367,3 +1125,67 @@ static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
         enSoundCall(signs + 18305, 0.4f, &dp->scp->pos);
     }
 }
+
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPInitData);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlMain);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAutomatic);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlSleep);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlGoPlayable);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlEvent);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlHand);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlStraight);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlChase);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlRush);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAttack);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDamage);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlConfuse);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDown);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlLastMove);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPMoveAngle);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCanSeePlayer);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeSet);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeExec);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAutoRecovery);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetWalkSpeed);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetRotSpeed);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetTurnSpeed);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDownTime);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetMoveCount);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDc);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
+
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSoundSigns);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1688);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1689);
+#endif

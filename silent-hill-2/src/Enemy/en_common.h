@@ -203,7 +203,8 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
 void enDyingExec(EnLOCAL_DATA* dp);
-
+void enAnimeExec(EnLOCAL_DATA* dp, EnANIME_DATA* pa, short anm_none);
+void enSetTransWalk(EnLOCAL_DATA* dp);
 extern EnLOCAL_WORK enLocalWork;
 
 #endif
