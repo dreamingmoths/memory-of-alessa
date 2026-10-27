@@ -1,6 +1,20 @@
 #include "sh2_common.h"
+#include "SH2_common/sh2dt.h"
+#include "SH2_common/sh_vu0.h"
 
+#include "gs.h"
+#include "math.h"
+#include "vec.h"
+
+#include "sce/libgraph.h"
+
+#include "Fog/spack.h"
+#include "Font/fj_man.h"
+#include "view/camera_dat.h"
+
+#include "Event/event.h"
 #include "Enemy/en_common.h"
+#include "Enemy/en_pap.h"
 
 //* abstract daddy *//
 
@@ -87,65 +101,1269 @@ UNLINKED(EnANIME_DATA EnPAPAnime[33], {
 #define ENEMY_PAP_STATE_DYING        9
 
 #pragma fast_fptosi on
+#pragma divbyzerocheck off
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPInitData);
+#line 130
+void enPAPInitData(EnLOCAL_DATA* dp) {
+    float vitarity[5] = { 
+        500.0f,
+        750.0f,
+        1000.0f,
+        2000.0f,
+        4000.0f
+    }; // r29+0x20
+    float endurance[5] = { 
+        150.0f,
+        285.0f,
+        380.0f,
+        500.0f,
+        600.0f
+    }; // r29+0x40
+    
+    float vitarity2[5] = { 
+        1000.0f,
+        4000.0f,
+        5000.0f,
+        7000.0f,
+        10000.0f
+    }; // r29+0x60
+    float endurance2[5] = { 
+        300.0f,
+        400.0f,
+        600.0f,
+        800.0f,
+        1000.0f 
+    }; // r29+0x80
+    int mode = enGetMode(); // r2
+    
+    ENEMY_MLV(ENEMY_PAP_MODE_AUTOMATIC);
+    switch (dp->scp->en_first_status) {
+        case 6:
+            ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+            enSetHP(dp, vitarity2[mode], endurance2[mode]);
+            dp->type = 1;
+            break;
+        case 13:
+            dp->type = 1;
+            dp->flag = 1 << 15;
+            enPAPAnimeSet(dp, 25);
+            enSetSize(dp, 300.0f, 250.0f, 125.0f, 125.0f);
+            dp->weight = 4;
+            enFlagSetNoDamage(dp);
+            ENEMY_MLV(ENEMY_PAP_MODE_EVENT);
+            return;
+        case 5:
+            enPAPAnimeSet(dp, 27);
+            ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+            return;
+        default:
+            ENEMY_STEP(ENEMY_PAP_STATE_STRAIGHT);
+            enSetHP(dp, vitarity[mode], endurance[mode]);
+            dp->type = 0;
+            break;
+    }
+    
+    enSetSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+    dp->weight = 3;
+    enPAPAnimeSet(dp, 2);
+    enSetBattleTarget(dp, true);
+    if (enCheckSleepIn(dp)) {
+        enSleepIn(dp);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlMain);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAutomatic);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlSleep);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlGoPlayable);
+#line 202
+void enPAPCtrlMain(EnLOCAL_DATA* dp) {
+    void (*enCtrlPAPFunc[6])(EnLOCAL_DATA*) = {
+        enDummyCtrl,
+        enPAPCtrlAutomatic,
+        enPAPCtrlSleep,
+        enPAPCtrlGoPlayable,
+        enPAPCtrlEvent,
+        enPAPCtrlHand
+    }; // r29+0x10
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlEvent);
+    enCtrlPAPFunc[dp->mlv](dp);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlHand);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
+#line 217
+static void enPAPCtrlAutomatic(EnLOCAL_DATA* dp) {
+    void (*enCtrlPAPSubFunc[10])(EnLOCAL_DATA*) = {
+        enPAPCtrlWander,
+        enPAPCtrlStraight,
+        enPAPCtrlChase,
+        enPAPCtrlRush,
+        enPAPCtrlAttack,
+        enPAPCtrlDamage,
+        enPAPCtrlConfuse,
+        enPAPCtrlDown,
+        enPAPCtrlLastMove,
+        enDyingExec 
+    }; // r29+0x20
+    
+    enSetBattleTarget(dp, true);
+    
+    enCtrlPAPSubFunc[dp->slv](dp);
+    
+    
+    enPAPAnimeExec(dp);
+    
+    enMoveExec(dp);
+    if (dp->type != 1 && dp->slv != ENEMY_PAP_STATE_DYING && 
+        enCheckSleepIn(dp)) {
+        enSleepIn(dp);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlStraight);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlChase);
+#line 247
+static void enPAPCtrlSleep(EnLOCAL_DATA* dp) {
+    if (enCheckSleepOut(dp)) {
+        enSleepOut(dp);
+        ENEMY_STEP(ENEMY_PAP_STATE_STRAIGHT);
+        enFlagResetLieDown(dp);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlRush);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAttack);
+#line 257
+static void enPAPCtrlGoPlayable(EnLOCAL_DATA* dp) {
+    ENEMY_MLV(ENEMY_PAP_MODE_AUTOMATIC);
+    ENEMY_STEP(ENEMY_PAP_MODE_DUMMY);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDamage);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlConfuse);
+#line 264
+static void enPAPCtrlEvent(EnLOCAL_DATA* dp) {
+    if (++dp->sslv >= 10) {
+        enAnimePause(dp);
+        ENEMY_MLV(ENEMY_PAP_MODE_AUTOMATIC);
+        ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDown);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlLastMove);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPMoveAngle);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCanSeePlayer);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeSet);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeExec);
+/* huge line number gap! */
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAutoRecovery);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetWalkSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetRotSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetTurnSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDownTime);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetMoveCount);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDc);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSoundSigns);
 
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1688);
 
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1689);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 399
+static void enPAPCtrlHand(EnLOCAL_DATA* dp) {
+    /* empty */
+}
+
+
+#line 405
+static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x20
+    float a; // r29+0x30
+    int t; // r2
+    if (enCheckDamage()) {
+        if (enCheckSpray(dp)) {
+            enReduceHP(dp);
+            if (enGetSprayPower()) {
+                ENEMY_STEP(ENEMY_PAP_STATE_CONFUSE);
+                return;
+            }
+        } else {
+            ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+            return;
+        }
+    }
+    t = enPAPCanSeePlayer(dp);
+    if (t == 2) {
+        ENEMY_STEP(ENEMY_PAP_STATE_ATTACK);
+        return;
+    } else if (t == 1 || dp->p_dist < 1000.0f) {
+        ENEMY_STEP(ENEMY_PAP_MODE_SLEEP); // gn
+        return;
+    }
+    switch (dp->sslv) {
+        case 0:
+            enPAPAnimeSet(dp, 1);
+            enPAPGetWalkSpeed(dp);
+            enInitPath(&dp->path, dp->scp->rot.y);
+            shSinCosV_Scale(vec, dp->scp->rot.y, 1500.0f);
+            shAddVector(dp->pap.target, &dp->scp->pos, vec);
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        case 1:
+            if (shRandF() < 0.01f) {
+                enPAPAnimeSet(dp, 2);
+                ENEMY_SUB_STEP(2);
+                break;
+            }
+            if (shVectorDistXz(&dp->scp->pos, dp->pap.target) < 750.0f || 
+                shRandF() < 0.01f) {
+                a = dp->scp->rot.y + ((PI * (shRandF() - 0.5f)) / 2.0f);
+                shSinCosV_Scale(&vec, a, 1500.0f);
+                shAddVector(dp->pap.target, &dp->scp->pos, vec);
+            }
+            if (enSetPath(dp, dp->ins.view_rot, &dp->scp->pos)) {
+                shSinCosV_Scale(&vec, dp->path.markangle, 1500.0f);
+                shAddVector(dp->pap.target, &dp->scp->pos, vec);
+                dp->path.timer = 0;
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enPAPAnimeSet(dp, 1);
+                ENEMY_SUB_STEP(1);
+            }
+            break;
+        case 3:
+            if (dp->anim_n == -1) {
+                enPAPAnimeSet(dp, 1);
+                ENEMY_SUB_STEP(1);
+            }
+            break;
+    }
+    enPAPMoveAngle(dp);
+    if (enCalcAngleDifference(dp->path.markangle, dp->path.angle) > QUARTER_TURN) {
+        enPAPAnimeSet(dp, 0x1E);
+        ENEMY_SUB_STEP(3);
+    }
+    enPAPAutoRecovery(dp);
+    enPAPSoundSigns(dp);
+}
+
+
+#line 480
+static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x20
+    if (enCheckDamage()) {
+        enFlagSetMoved(dp);
+        if (enCheckSpray(dp)) {
+            enReduceHP(dp);
+            if (enGetSprayPower()) {
+                ENEMY_STEP(ENEMY_PAP_STATE_CONFUSE);
+                return;
+            }
+        } else {
+            ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+            return;
+        }
+    }
+    switch (dp->sslv) {
+        case 0:
+            enPAPAnimeSet(dp, 1);
+            enPAPGetWalkSpeed(dp);
+            enInitPath(&dp->path, dp->scp->rot.y);
+            shSinCosV_Scale(&vec, dp->scp->rot.y, 1500.0f);
+            shAddVector(dp->pap.target, &dp->scp->pos, vec);
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        case 1:
+            if (shRandF() < 0.001f) {
+                enPAPAnimeSet(dp, 2);
+                ENEMY_SUB_STEP(2);
+                return;
+            }
+            if (enPAPCanSeePlayer(dp) == 2) {
+                enFlagSetMoved(dp);
+                ENEMY_STEP(ENEMY_PAP_STATE_ATTACK);
+                return;
+            }
+            if (!enSetPath(dp, dp->ins.view_rot, &dp->scp->pos)) break;
+            if (shRandF() < 0.01f) {
+                enPAPAnimeSet(dp, 2);
+                ENEMY_SUB_STEP(2);
+                return;
+            }
+            dp->path.timer = 0;
+            
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enPAPAnimeSet(dp, 1);
+                ENEMY_SUB_STEP(1);
+            } else
+                return;
+        /* fallthrough (this seems to be a @bug? since `dp->anim_n == -1` is checked above) */
+        case 3:
+            if (dp->anim_n == -1) {
+                enPAPAnimeSet(dp, 1);
+                ENEMY_SUB_STEP(1);
+            }
+            break;
+    }
+    enPAPMoveAngle(dp);
+    if (!(enCalcAngleDifference(dp->path.markangle, dp->path.angle) <= QUARTER_TURN)) {
+        enPAPAnimeSet(dp, 0x1E);
+        ENEMY_SUB_STEP(3);
+    }
+    shSinCosV_Scale(&vec, dp->path.markangle, 1500.0f);
+    shAddVector(dp->pap.target, &dp->scp->pos, vec);
+    enPAPAutoRecovery(dp);
+    enPAPSoundSigns(dp);
+}
+
+
+#line 551
+static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
+    int t; // r2
+    if (enCheckDamage()) {
+        if (enCheckSpray(dp)) {
+            enReduceHP(dp);
+            if (enGetSprayPower()) {
+                ENEMY_STEP(ENEMY_PAP_STATE_CONFUSE);
+                return;
+            }
+        } else {
+            ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enPAPAnimeSet(dp, 1);
+        ENEMY_NEXT_SUB_STEP();
+    } else if (dp->sslv == 2) {
+        if (dp->anim_n == -1) {
+            enPAPAnimeSet(dp, 1);
+            ENEMY_SUB_STEP(1);
+        }
+    }
+    dp->path.markangle = enGetPlayerDirection(dp);
+    dp->path.angle = dp->scp->rot.y;
+    enPAPMoveAngle(dp);
+    if (dp->sslv != 2) {
+        dp->anim_s = (short) (4096.0f * enPAPGetWalkSpeed(dp) *  enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));
+        
+        t = enPAPCanSeePlayer(dp);
+        if (t == 2) {
+            ENEMY_STEP(ENEMY_PAP_STATE_ATTACK);
+        } else if (t == 0 && dp->type == 0 && (dp->p_dist > 2500.0f || enLocalWork.Status & (1 << 0))) {
+        
+            
+            ENEMY_STEP(ENEMY_PAP_STATE_WANDER);
+        } else if (!(enCalcAngleDifference(dp->path.markangle, dp->path.angle) <= QUARTER_TURN)) {
+            
+            enPAPAnimeSet(dp, 0x1E);
+            ENEMY_SUB_STEP(2);
+        }
+    }
+    enPAPAutoRecovery(dp);
+    enPAPSoundSigns(dp);
+}
+
+
+#line 599
+static void enPAPCtrlRush(EnLOCAL_DATA* dp) {
+    if (enCheckDamage()) {
+        if (enCheckSpray(dp)) {
+            enReduceHP(dp);
+            if (enGetSprayPower()) {
+                ENEMY_STEP(ENEMY_PAP_STATE_CONFUSE);
+                return;
+            }
+        } else {
+            if (dp->last_atk == 2 || 
+                dp->last_atk == 1) {
+                dp->scp->battle.damage *= 0.4f;
+                enReduceHP(dp);
+                if (dp->scp->battle.hp <= 0.0f) {
+                    ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+                    return;
+                }
+            } else {
+                ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+                return;
+            }
+        }
+    }
+    if (dp->sslv == 0) {
+        enPAPAnimeSet(dp, 1);
+        enSetNewSize(dp, 200.0f, 650.0f, 600.0f, 650.0f);
+        
+        enSetTimer(dp, 300);
+        ENEMY_NEXT_SUB_STEP();
+    } else if (dp->sslv == 2) {
+        if (dp->anim_n == -1) {
+            enPAPAnimeSet(dp, 1);
+            ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+        }
+    }
+    dp->path.markangle = enGetPlayerDirection(dp);
+    dp->path.angle = dp->scp->rot.y;
+    enPAPMoveAngle(dp);
+    if (enReduceTimer(dp) <= 0) {
+        ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+        enSetNewSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+        return;
+    }
+    if (dp->sslv != 2) {
+        dp->anim_s = (short) (5120.0f * enPAPGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));
+        
+        if (enPAPCanSeePlayer(dp) == 2) {
+            enFlagSetNoDamage(dp);
+            ENEMY_STEP(ENEMY_PAP_STATE_ATTACK);
+        }
+    }
+    enPAPAutoRecovery(dp);
+    enPAPSoundSigns(dp);
+}
+
+
+#line 656
+static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+0x30
+    if (enCheckDamage()) {
+        if (enCheckHuggedPlayer()) {
+         
+            enResetDamage(dp);
+        } else {
+            if (enCheckSpray(dp)) {
+                enReduceHP(dp);
+                if (enGetSprayPower()) {
+                    ENEMY_STEP(ENEMY_PAP_STATE_CONFUSE);
+                    return;
+                }
+            } else {
+                ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+                return;
+            }
+        }
+    }
+    switch (dp->sslv) {
+        case 0:
+            if (enCalcAngleDifference(enGetPlayerDirection(dp), enGetPlayerAngle(dp)) > QUARTER_TURN) {
+     
+                enPAPAnimeSet(dp, 0x1C);
+            } else {
+                enPAPAnimeSet(dp, 0x1F);
+            }
+            enSetNewSize(dp, 150.0f, 650.0f, 600.0f, 650.0f);
+            enFlagSetCritical(dp);
+            enAttackStart(dp);
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        case 1:
+            enAttackCheck(dp, 0x39);
+            dp->path.markangle = enGetPlayerDirection(dp);
+            dp->path.angle = dp->scp->rot.y;
+            enMoveAngle(&dp->path, 0.05235988f);
+            dp->scp->rot.y = dp->path.angle;
+            if (enCheckHuggedPlayer()) {
+                dp->flag |= (1 << 3);
+
+                shSinCosV_Scale(&vec, enGetPlayerDirection(dp), 150.0f);
+                shSubVector(vec, enGetPlayerPos(dp), vec);
+                shSubVector(vec, vec, &dp->scp->pos);
+                vec[1] = vec[2] = 0;
+                shScaleVector(dp->vec, vec, 4.0f);
+                enSetNewSize(dp, 0.0f, 650.0f, 600.0f, 650.0f);
+            }
+            if (dp->anim_n == -1) {
+                dp->flag |= 1 << 15;
+                if (!enCheckHuggedPlayer()) {
+                    enPAPAnimeSet(dp, (u_char) (dp->anim == 0x1C ? 0x1D : 0x20));
+                    
+                    ENEMY_SUB_STEP(4);
+                } else {
+                    enPAPAnimeSet(dp, (u_char) (dp->anim == 0x1C ? 3 : 4));
+                    
+                    enAttackStart(dp);
+                    ENEMY_SUB_STEP(2);
+                }
+                dp->flag &= ~(1 << 15);
+            }
+            break;
+        case 2:
+            enAttackCheckHug(dp, 0x3A);
+            if (enCheckHuggedPlayer() == 0) {
+                enPAPAnimeSet(dp,(u_char) (dp->anim == 3 ? 0x1D : 0x20));
+                
+                ENEMY_NEXT_SUB_STEP();
+            }
+            break;
+        
+        case 3:
+            shSinCosV_Scale(dp->vec, dp->scp->rot.y, -500.0f); /* fallthrough */
+        case 4:
+            if (dp->anim_n == -1) {
+                enSetNewSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+                dp->flag &= ~8;
+                enFlagResetCritical(dp);
+                enFlagResetNoDamage(dp);
+                if (dp->type == 0) {
+                    ENEMY_STEP(ENEMY_PAP_STATE_WANDER);
+                } else {
+                    ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+                }
+            }
+            break;
+    }
+    enPAPAutoRecovery(dp);
+    enPAPSoundSigns(dp);
+}
+
+
+
+static void enPAPCtrlDamage(EnLOCAL_DATA* dp) {
+    float d; // r20
+    switch (dp->sslv) {
+        case 0:
+            if (dp->endurance == dp->endurance_max && 
+                !enCheckCritical(dp)) {
+                enReduceHP(dp);
+                enAnimePause(dp);
+                enSetHitBack(dp);
+                enSetTimer(dp, 10);
+                ENEMY_SUB_STEP(3);
+                return;
+            }
+            enFlagResetCritical(dp);
+            d = enReduceHP(dp);
+            if ((d <= 0.0f) || 
+                (d < 100.0f && shRandF() > (0.8f + (0.002f * d)))) {
+                enPAPAnimeSet(dp, enGetDownMotion(dp));
+                if (dp->type == 1 && dp->scp->battle.hp <= 0.0f) {
+                    
+                    enSetBlur();
+                    dp->flag |= (1 << 3);
+                    dp->anim_s = 512;
+                }
+            } else {
+                enPAPAnimeSet(dp, enGetDamageMotion(dp));
+            }
+            if ((dp->anim >= 0xE) && (dp->anim < 0x16)) {
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 300.0f, 250.0f, 200.0f, 250.0f);
+                ENEMY_SUB_STEP(2);
+            } else {
+                ENEMY_SUB_STEP(1);
+            }
+            enSetHitBack(dp);
+            return;
+        case 1:
+            if ((dp->anim_n == -1) && (dp->hb_s == 0.0f)) {
+                if ((dp->type == 1 || enGetMode() >= 3)     && 
+                    (dp->last_atk == 2 || dp->last_atk == 1)) {
+                    
+                    ENEMY_STEP(ENEMY_PAP_STATE_RUSH);
+                    return;
+                } else ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+                return;
+            } else if (!enCheckDamage(dp)) break; // @todo incorrect line numbers >_>
+            ENEMY_SUB_STEP(0);
+            
+            return;
+        case 2:
+            if (dp->anim_n != -1) break;
+            ENEMY_STEP(ENEMY_PAP_STATE_DOWN);
+            enFlagResetNoDamage(dp);
+            
+            return;
+        case 3:
+            if (enReduceTimer(dp) <= 0) {
+                ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
+            } else if (enCheckDamage(dp)) {
+                ENEMY_SUB_STEP(0);
+            }
+            break;
+    }
+}
+
+
+#line 817
+static void enPAPCtrlConfuse(EnLOCAL_DATA* dp) {
+    if (enCheckDamage()) {
+        if (enCheckSpray(dp)) {
+            ENEMY_SUB_STEP(0);
+        } else {
+            ENEMY_STEP(ENEMY_PAP_STATE_DAMAGE);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enReduceHP(dp);
+        enPAPAnimeSet(dp, 2);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    if (dp->sslv == 1 && dp->anim_n == -1) {
+        ENEMY_NEXT_SUB_STEP();
+        enSetTimer(dp, 600 - enGetMode() * 90);
+    } else if (dp->sslv == 2 && enReduceTimer(dp) <= 0) {
+        ENEMY_STEP(0);
+    }
+}
+
+
+
+static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
+    switch (dp->sslv) {
+        case 0:
+            enFlagSetRotFloor(dp);
+            enResetDamage(dp);
+            if (dp->type == 0) {
+                enFlagSetLieDown(dp);
+            }
+            enSetNewSize(dp, 300.0f, 250.0f, 200.0f, 250.0f);
+            if (enCheckDeath(dp)) {
+                if (dp->type == 1) {
+                    enSetBlur();
+                    dp->flag |= (1 << 3);
+                    ENEMY_STEP(8);
+                } else {   
+                    enFlagResetMoved(dp);
+                    if (enCheckAimedByHuman(dp) == 0 || enCheckInstantDeath(dp)) {
+                        enKillCountUp(dp);
+                        enPAPAnimeSet(dp, 0x1B);
+                        ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                        return;
+                    } else enPAPSetDc(dp);
+                    ENEMY_SUB_STEP(4);
+                }
+                
+                return;
+            }
+            if (dp->type != 1) {
+                enPAPSetDownTime(dp);
+            } else {
+                enSetTimer(dp, 0);
+            }
+            ENEMY_NEXT_SUB_STEP();
+            return;
+        case 1:
+            if (enCheckDamage(dp)) {
+                enAnimePause(dp);
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                if (enCheckInstantDeath(dp)) {
+                    enKillCountUp(dp);
+                    enPAPAnimeSet(dp, 0x1B);
+                    ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                    return;
+                }
+                ENEMY_SUB_STEP(3);
+                enSetTimer(dp, 0x3C);
+            return; } else if ((enReduceTimer(dp) <= 0) && (enCheckFinishedByHuman(dp) == 0)) { // @todo!
+                if (enGetMode() == 0 &&
+                    dp->type != 1) {
+                    dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                    return;
+                }
+                
+                enPAPAnimeSet(dp, 0x17);
+                enFlagResetRotFloor(dp);
+                enFlagResetLieDown(dp);
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+                enAddHP(dp, 100.0f);
+                ENEMY_SUB_STEP(2);
+                return; } else if (dp->flag & 0x2000) {
+                if (dp->anim == 0x19) {
+                    if (200.0f * shRandF() < 100.0f - dp->scp->battle.hp_rate) {
+                        enAnimePause(dp);
+                        enAddHP(dp, 10.0f);
+                        return;
+                    }
+                } else {
+                    if (300.0f * shRandF() < 200.0f + dp->scp->battle.hp_rate) {
+                        enPAPAnimeSet(dp, 0x19);
+                        return;
+                    }
+                    enAddHP(dp, 10.0f);
+                    return;
+                }
+            } 
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enResetDamage(dp);
+                enFlagResetNoDamage(dp);
+                ENEMY_STEP(2);
+                return;
+            }
+            break;
+        case 3:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                if (enCheckDeath(dp)) {
+                    enFlagResetMoved(dp);
+                    if (dp->type == 1) {
+                        enSetBlur();
+                        dp->flag |= (1 << 3);
+                        ENEMY_STEP(ENEMY_PAP_STATE_LAST_MOVE);
+                        return;
+                    }
+                    if (enCheckAimedByHuman(dp) == 0 || enCheckInstantDeath(dp)) {
+                        enKillCountUp(dp);
+                        enPAPAnimeSet(dp, 0x1B);
+                        ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                        return;
+                    }
+                    enPAPSetDc(dp);
+                    ENEMY_SUB_STEP(ENEMY_PAP_STATE_ATTACK);
+                    return;
+                }
+                if (enCheckInstantDeath(dp)) {
+                    enKillCountUp(dp);
+                    enPAPAnimeSet(dp, 0x1B);
+                    ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                    return;
+                }
+                enSetTimer(dp, 0x3C);
+                return;
+            }
+            if (dp->hb_s == 0.0f && enReduceTimer(dp) <= 0) {
+                if ((enGetMode() == 0) && (dp->type != 1)) {
+                    dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
+                    enKillCountUp(dp);
+                    ENEMY_STEP(11); // ??? is this a de@bug leftover? see enPAPCtrlAutomatic?
+                    return;
+                }
+                if (enCheckFinishedByHuman(dp)) {
+                    ENEMY_SUB_STEP(5);
+                    return;
+                }
+                enPAPAnimeSet(dp, 0x17);
+                enAddHP(dp, 50.0f);
+                enFlagResetRotFloor(dp);
+                enFlagResetLieDown(dp);
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+                ENEMY_SUB_STEP(2);
+            }
+            break;
+    case 4:
+        if (enCheckDamage(dp)) {
+            enReduceHP(dp);
+            enSetHitBack(dp);
+            dp->hb_s *= (dp->pap.dcm - dp->pap.dc) / (dp->pap.dcm + 1);
+            dp->pap.dc++;
+            if (dp->pap.dc >= dp->pap.dcm || enCheckInstantDeath(dp)) {
+                enKillCountUp(dp);
+                enPAPAnimeSet(dp, 0x1B);
+                ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                return;
+            }
+            enSetTimer(dp, 0xC8);
+            return;
+        }
+        if (enReduceTimer(dp) <= 0) {
+            enKillCountUp(dp);
+            enPAPAnimeSet(dp, 0x1B);
+            ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+            return;
+        }
+        break;
+    case 5:
+        if (enCheckDamage(dp)) {
+            enReduceHP(dp);
+            enSetHitBack(dp);
+            if (enCheckInstantDeath(dp)) {
+                enKillCountUp(dp);
+                enPAPAnimeSet(dp, 0x1B);
+                ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+                return;
+            }
+            enSetTimer(dp, 0x3C);
+            dp->sslv = 3;
+            return;
+        }
+        if (enCheckFinishedByHuman(dp) == 0) {
+            enPAPAnimeSet(dp, 0x17);
+            enAddHP(dp, 50.0f);
+            enFlagResetRotFloor(dp);
+            enFlagResetLieDown(dp);
+            enFlagSetNoDamage(dp);
+            enSetNewSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
+            dp->sslv = 2;
+        }
+        break;
+    }
+}
+static void enPAPCtrlLastMove(EnLOCAL_DATA* dp) {
+    if (dp->anim_n != -1) return;
+    enResetFilter();
+    SET_GAME_FLAG(334);
+    enPAPAnimeSet(dp, 0x1B);
+    ENEMY_STEP(ENEMY_PAP_STATE_DYING);}
+#line 1035
+static void enPAPMoveAngle(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec, vec2, tpos; // r29+0x30, r29+0x40, r29+0x50
+    float a, d; // r20, r21
+    if (dp->anim != 0x1E) {
+        d = enPAPGetRotSpeed();
+        a = dp->path.markangle;
+        shSinCosV_Scale(&vec, a, 300.0f + dp->size);
+        shAddVector(vec, &dp->scp->pos, vec);
+        shSinCosV_Scale(vec2, QUARTER_TURN + a, dp->size);
+        shAddVector(tpos, vec, vec2);
+        if (enCheckPath(dp, tpos, &dp->scp->pos) >= 0.0f) {
+            a -= d;
+        }
+        shSubVector(tpos, vec, vec2);
+        if (enCheckPath(dp, tpos, &dp->scp->pos) >= 0.0f) {
+            a += d;
+        }
+        dp->path.markangle = shAngleRegulate(a);
+    } else {
+        d = enPAPGetTurnSpeed(dp) * shSinF(((PI * dp->anim_n) / 2400.0f) / 30.0f);
+    }
+    
+    enMoveAngle(&dp->path, d);
+    dp->scp->rot.y = dp->path.angle;
+}
+
+
+
+#line 1064
+static int enPAPCanSeePlayer(EnLOCAL_DATA* dp) {
+    float* ppos = enGetPlayerPos(dp); // r2
+    float dist, a; // r20, r21
+    dist = enCheckPath2(dp, ppos, &dp->scp->pos);
+    dp->p_dist = shVectorDistXz(&dp->scp->pos, ppos);
+    if (dist >= 0.0f) {
+        return 0;
+    }
+    dist = dp->p_dist;
+    if (dist > 2500.0f) return 0;
+    a = enCalcDirection(ppos, &dp->scp->pos);
+    a = enCalcAngleDifference(a, dp->scp->rot.y);
+    if (!enCheckNoDamageHuman(dp) && 
+        a < TO_RAD(10)            &&
+        dist < ((405.0f + enGetPlayerSize()) - (dp->slv == 3 ? 100.0f : 0.0f))) {
+        return 2;
+    }
+    if (enLocalWork.Status & (1 << 0)) return 0;
+    if (a > TO_RAD(10)) return 0;
+    return 1;
+}
+
+
+#line 1088
+static void enPAPAnimeSet(EnLOCAL_DATA* dp, int anim) {
+    if (anim == dp->anim) {
+        enAnimeRestart(dp);
+        if (anim == 2) {
+            enPAPSetMoveCount(dp);
+        }
+        return;
+    }
+
+    FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnPAPAnime) / sizeof(EnANIME_DATA), 1097);
+    enAnimeSet(dp, anim, EnPAPAnime[anim].Anime);
+    if (anim == 2) {
+        enPAPSetMoveCount(dp);
+    }
+    if (anim >= 0xE && anim < 0x1C) {
+        dp->flag &= ~(1 << 10);
+        return;
+    }
+    dp->flag |= (1 << 10);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1127
+static void enPAPAnimeExec(EnLOCAL_DATA* dp) {
+    int of = dp->anim_n; // r16
+    enAnimeExec(EnPAPAnime, 5701);
+    if (dp->anim == 0x1B) {
+        
+        enPAPDrawBoad(dp);
+    }
+    if (dp->anim_n == -1 || dp->flag & (1 << 0)) return;
+    if (dp->anim == 11 || dp->anim == 12 || dp->anim == 20 || dp->anim == 21) {
+        
+        
+        enSetTransWalk(dp, dp->anim_n);
+    } else if (dp->anim == 1) {
+        
+        enSetTransWalk(dp, dp->anim_n);
+        
+        if (
+            ((of > 0) && 
+                (((dp->anim_s < 4800 ) && (dp->anim_n >= 4800 ))   || 
+                 ((dp->anim_s < 38400) && (dp->anim_n >= 38400)))) || 
+            ((of < 0) && 
+                (((dp->anim_s > 21600) && (dp->anim_n <= 21600))   || 
+                 ((dp->anim_s > 55200) && (dp->anim_n <  55200))))
+        ) {
+            
+            
+
+            
+            if (enCheckWater(dp)) {
+                enSoundCall(18808, 1.0f, &dp->scp->pos);
+                return;
+            }
+            if (dp->flag & 0x1000) {
+                enSoundCall3D(18300, 1.0f, &dp->scp->pos);
+                return;
+            }
+            enSoundCall(18300, 1.0f, &dp->scp->pos);
+        }
+        return;
+    } else if (dp->anim == 30) {
+        if (dp->anim_n < 0xCE41) {
+            enFlagSetNoDamage(dp);
+            return;
+        }
+        enFlagResetNoDamage(dp);
+    }
+}
+
+
+
+
+static void enPAPAutoRecovery(EnLOCAL_DATA* dp) {
+    short recover_rate[5] = {
+        0,
+        10,
+        30,
+        60,
+        100 
+    }; // r29+0x20
+    enAddEnduranceDT(dp, recover_rate[enGetMode()]);
+}
+
+
+#line 1191
+static float enPAPGetWalkSpeed(EnLOCAL_DATA* dp) {
+    float speed_rate[5] = {
+        0.69999998f,
+        0.8f,
+        1.0f,
+        1.2f,
+        1.5f
+    }; // r29+0x20
+    float r = speed_rate[enGetMode()]; // r29+0x40
+    r *= 0.5f + (dp->scp->battle.hp_rate / 200.0f);
+    if (dp->type == 1) r *= 0.5f;
+    dp->anim_s = (short) (4096.0f * r);
+    return r;
+}
+
+
+/*
+    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
+    Producer: MW MIPS C Compiler
+    Language: C
+    Code range: 0x0015CD20 -> 0x0015CD78
+*/
+// Range: 0x15CD20 -> 0x15CD78
+static float enPAPGetRotSpeed(void) {
+    float rot_rate[5] = {
+        0.5f,
+        0.8f,
+        1.0f,
+        1.2f,
+        1.5f
+    }; // r29+0x10
+    return TO_RAD(3) * rot_rate[enGetMode()];
+}
+
+
+/*
+    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
+    Producer: MW MIPS C Compiler
+    Language: C
+    Code range: 0x0015CD80 -> 0x0015CE08
+*/
+// Range: 0x15CD80 -> 0x15CE08
+static float enPAPGetTurnSpeed(EnLOCAL_DATA* dp) {
+    float rot_rate[5] = {
+        1.0f,
+        1.0f,
+        1.0f,
+        1.5f,
+        2.0f
+    }; // r29+0x20
+    float r = rot_rate[enGetMode()]; // r1
+    dp->anim_s = (short) (4096.0f * r);
+    return TO_RAD(6) * r;
+}
+
+
+/*
+    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
+    Producer: MW MIPS C Compiler
+    Language: C
+    Code range: 0x0015CE10 -> 0x0015CEC0
+*/
+// Range: 0x15CE10 -> 0x15CEC0
+static void enPAPSetDownTime(EnLOCAL_DATA* dp) {
+    short down_time[5] = {
+        900,
+        480,
+        360,
+        300,
+        240
+    }; // r29+0x20
+    short down_time2[5] = {
+        180,
+        180,
+        120,
+        60,
+        60
+    }; // r29+0x30
+    if (dp->type == 0) {
+        enSetTimer(dp, down_time[enGetMode()]);
+        return;
+    }
+    enSetTimer(dp, down_time2[enGetMode()]);
+}
+
+
+/*
+    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
+    Producer: MW MIPS C Compiler
+    Language: C
+    Code range: 0x0015CEC0 -> 0x0015CF5C
+*/
+// Range: 0x15CEC0 -> 0x15CF5C
+static void enPAPSetMoveCount(EnLOCAL_DATA* dp) {
+    int n; // r2
+    n = (int) ((10.0f - (0.4f * (float) enGetMode())) + shSway1f(-4.0f, 0.5f)) << 11;
+    enSetAnimeCount(dp, n);
+}
+
+
+/*
+    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_pap.c
+    Producer: MW MIPS C Compiler
+    Language: C
+    Code range: 0x0015CF60 -> 0x0015CFCC
+*/
+// Range: 0x15CF60 -> 0x15CFCC
+static void enPAPSetDc(EnLOCAL_DATA* dp) {
+    enSetTimer(dp, 200);
+    dp->pap.dc = 0;
+    dp->pap.dcm = ((shRandI() >> 10) % (enGetMode() + 5)) + 4;
+}
+
+
+static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
+    sceVu0FMATRIX pos; // r29+0x40
+    sceVu0FVECTOR vec1; // r29+0x80
+    sceVu0FVECTOR vec2; // r29+0x90
+    sceVu0FMATRIX wsm; // r29+0xA0
+    sceVu0IVECTOR iv; // r29+0xE0
+    u_long xyz[4]; // r29+0xF0
+    int i; // r16
+    int cn; // r17
+    u_int w; // r18
+
+    u64* temp_v1;
+    u64* temp_v1_2;
+    u64* temp_v1_3;
+    u64* temp_v1_4;
+    u64* temp_v1_5;
+    u64* temp_v1_6;
+    void* temp_a1;
+
+    sceVu0CopyMatrix(wsm, cam0.world_screen);
+    shSinCosV_Scale(&vec1[0], dp->scp->rot.y, 495.0f);
+    shSinCosV_Scale(&vec2[0], QUARTER_TURN + dp->scp->rot.y, 195.0f);
+    shAddVector(pos, pos, pos); // @todo, ofc
+    shAddVector(pos, pos, pos);
+    shAddVector(pos, pos, pos);
+    shSubVector(pos, pos, pos);
+    shSinCosV_Scale(&vec1[0], dp->scp->rot.y, 315.0f);
+    shSubVector(pos, pos, pos);
+    shSubVector(pos, pos, pos);
+    shSubVector(pos, pos, pos);
+    shSubVector(pos, pos, pos);
+    w = 0;
+    cn = 0;
+    i = 0;
+loop_11:
+    if (i >= 4) {
+        if (cn < 4) {
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6),
+                           GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ3, SCE_GS_XYZ2, SCE_GS_XYZ2), 
+                           w, 1);
+            *spack.pos++ = 4;
+            *spack.pos++ = 0x8000 << 0x10;
+            *spack.pos++ = xyz[0];
+            *spack.pos++ = xyz[1];
+            *spack.pos++ = xyz[2];
+            *spack.pos++ = xyz[3];
+            // spkCloseGiftag(xyz[3]);
+        }
+        return;
+    }
+    pos[i][1] -= 10.0f;
+    pos[i][2] = 1.0f;
+    shTransformVectorPerspective(pos, pos);
+    // ??? wat
+    // M2C_ERROR(/* unknown instruction: vftoi4.xyw $vf4, $vf4 */);
+    // M2C_ERROR(/* unknown instruction: vftoi0.z $vf4, $vf4 */);
+    // M2C_ERROR(/* unknown instruction: sqc2 $vf4, ($a0) */);
+    // M2C_ERROR(/* unknown instruction: qmfc2.ni $a1, $vf4 */);
+    // M2C_ERROR(/* unknown instruction: pexch $t7, $a1 */);
+    // M2C_ERROR(/* unknown instruction: pextuw $a1, $zero, $a1 */);
+    // xyz[i] = (s64) M2C_ERROR(/* unknown instruction: pextlw $a1, $a1, $t7 */);
+    if ((iv[3] < 0) || (iv[2] < 0) || (iv[0] < 0) || (iv[1] < 0) || (iv[0] >= 0x10000) || (iv[1] >= 0x10000)) {
+        return;
+    }
+    cn += (s64) (shScreenClipI(&iv[0]) << 0x38) >> 0x38;
+    if (w < (u32) iv[3]) {
+        w = (u32) iv[3];
+    }
+    i += 1;
+    goto loop_11;
+}
+
+
+
+
+
+#line 1321
+static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
+    int signs; // r3
+    if ((dp->pap.count -= shGetDF()) <= 0) {
+        dp->pap.count = enCalcTimer(120);
+        do {
+            signs = (shRandI() >> 20) & 7;
+        } while (signs == dp->pap.signs);
+        dp->pap.signs = signs;
+        enSoundCall(signs + 18305, 0.4f, &dp->scp->pos);
+    }
+}
