@@ -215,7 +215,9 @@ See [this scratch](https://decomp.me/scratch/UGzq7) and its forks for a practica
 > Note: Scoped declarations aren't specific to similarly-named variables. See [this scratch.](https://decomp.me/scratch/CqUW2)
 
 ### Fake namespaces
-When a function has a struct pointer for an argument and said pointer is named `this`, MWCC will incorrectly output the function as belonging to a namespace with the struct's name in the DWARF. For example:
+> Note: this is a quirk of Ghidra & DTK; not DWARF. Documented anyway to clear any confusion that might occur when observing the DWARF
+
+When a function has a struct pointer for an argument and said pointer is named `this`, DTK and Ghidra will incorrectly output the function as belonging to a namespace with the struct's name in the DWARF. For example:
 
 ```c
 typedef struct foo {...} foo;
@@ -223,7 +225,7 @@ typedef struct foo {...} foo;
 void foobar(foo* this) {...}
 ```
 
-This will come out in the DWARF as
+DTK will output the function as
 ```c
 // this: r2
 void foo::foobar() {
@@ -232,12 +234,22 @@ void foo::foobar() {
     }
 }
 ```
+
+Unlike DTK, Ghidra will keep the function parameter.
+```c
+void foo::foobar(foo* this)
+
+{ ...
+```
 non-typedef'd and anonymous structs are not immune to this.
 
+Look for `SubCharacter::EnemyEDBFunction` in the DWARF or Ghidra for a practical example.
+
+(TODO: consider moving this to its own section if another tool quirk occurs)
 ## Global variables
 
 ### Unused global variables
-Unlike local variables. global variables are not omitted from the DWARF if they go unused. Instead, they'll remain and will have an address of zero besides them. For example:
+Unlike local variables. global variables are not omitted from the DWARF if they go unused. Instead, they'll remain and will be assigned an address of zero. For example:
 ```c
 int drinks = 0;
 static int cards = 0;
@@ -250,6 +262,15 @@ signed int drinks; // size: 0x4, address: 0xDEADDEAD
 static signed int cards; // size: 0x4, address: 0x0
 static signed int seals; // size: 0x4, address: 0xDEADD00D
 ```
+This behavior changes based on whether or not linker dead code elimination is enabled. If it's disabled, the variable will be assigned a regular address.
+```c
+signed int drinks; // size: 0x4, address: 0xDEADDEAD
+static signed int cards; // size: 0x4, address: 0xDEADBEEF
+static signed int seals; // size: 0x4, address: 0xDEADD00D
+```
+
+Look for `keyhistcnt` in the DWARF for a practical example.
+
 ### initialization & BSS ordering 
 Uninitialized and zero-initialized global variables both lie in BSS but will have different ordering. For example:
 
@@ -283,10 +304,13 @@ signed int total_time; // size: 0x4, address: 0xA4
 ```
 Notice how the declaration order has been reversed.
 
-### Omission of the static qualifier in global variables
-If a global static variable has not been initialized, MWCC will omit its static qualifier. For example:
+Try comparing `sh2gfw_SyncDBG`'s declarations in the repo with the declarations in the DWARF for a practical example.
+
+### Omission of the static qualifier in file-scoped static variables
+If a file-scoped static variable is referenced before being initialized, MWCC will omit its static qualifier from the DWARF. For example:
 ```c
 static int steps = 0;
+int foo() { steps++; ...}
 ```
 This will come out in the DWARF with the static qualifier.
 ```c
@@ -295,9 +319,11 @@ static signed int steps; // size: 0x4, address: 0x84
 But if we remove the zero-initialization:
 ```c
 static int steps;
+int foo() { steps++; ...}
 ```
 It'll come out as:
 ```c
 signed int steps; // size: 0x4, address: 0x84
 ```
 
+For a practical example, compare `dma1cmd.c`'s declaration of `last_regist_cid` in the repo with its declaration in the DWARF.
