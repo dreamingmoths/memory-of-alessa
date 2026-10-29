@@ -109,7 +109,7 @@ int sh2ScfMakeDateStrByLocalTimeFromJST(s_char* datestr, sceCdCLOCK* jst) {
     month = UtilBCDToDecimal(rtc->month);
     day = UtilBCDToDecimal(rtc->day);
 
-                   //99 in decimal
+
     if (rtc->year == 153 && jst->year == 0) year -= 100;
     if (rtc->year == 0 && jst->year == 153) year += 100;
 
