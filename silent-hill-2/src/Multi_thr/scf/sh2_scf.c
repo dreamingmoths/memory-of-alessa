@@ -13,12 +13,12 @@ static sceScfT10kConfig sh2ScfInfo = {
 
 void sh2ScfInit(void) {
     ps2ScfInit();
-    sh2ScfInfo.TimeZone = ps2ScfGetTimeZone();
-    sh2ScfInfo.Aspect = ps2ScfGetAspect();
+    sh2ScfInfo.TimeZone     = ps2ScfGetTimeZone();
+    sh2ScfInfo.Aspect       = ps2ScfGetAspect();
     sh2ScfInfo.DateNotation = ps2ScfGetDateNotation();
-    sh2ScfInfo.Language = ps2ScfGetLanguage();
-    sh2ScfInfo.Spdif = ps2ScfGetSpdif();
-    sh2ScfInfo.SummerTime = ps2ScfGetSummerTime();
+    sh2ScfInfo.Language     = ps2ScfGetLanguage();
+    sh2ScfInfo.Spdif        = ps2ScfGetSpdif();
+    sh2ScfInfo.SummerTime   = ps2ScfGetSummerTime();
     sh2ScfInfo.TimeNotation = ps2ScfGetTimeNotation();
 }
 
@@ -138,7 +138,7 @@ int sh2ScfMakeTimeStrFromRTC(s_char* timestr, sceCdCLOCK* rtc) {
     u_int minute; // r17
     u_int second; // r2
 
-    hour = UtilBCDToDecimal(rtc->hour);
+    hour   = UtilBCDToDecimal(rtc->hour);
     minute = UtilBCDToDecimal(rtc->minute);
     second = UtilBCDToDecimal(rtc->second);
 
