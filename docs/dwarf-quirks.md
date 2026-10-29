@@ -335,4 +335,4 @@ no     value       size        bind    type     other      shndx          name
 ...
 ```
 
-For a practical example, compare `dma1cmd`'s declaration of `last_regist_cid` in the repo with its declaration in the DWARF.
+Try comparing `dma1cmd`'s declaration of `last_regist_cid` in the repo with its declaration in the DWARF for a practical example.
