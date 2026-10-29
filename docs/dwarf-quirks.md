@@ -215,7 +215,7 @@ See [this scratch](https://decomp.me/scratch/UGzq7) and its forks for a practica
 > Note: Scoped declarations aren't specific to similarly-named variables. See [this scratch.](https://decomp.me/scratch/CqUW2)
 
 ### Fake namespaces
-> Note: this is a quirk of Ghidra & DTK; not DWARF. Documented anyway to clear any confusion that might occur when observing the DWARF
+> Note: this is a quirk of Ghidra & DTK, not DWARF. Documented anyway to clear any confusion that might occur when observing the DWARF
 
 When a function has a struct pointer for an argument and said pointer is named `this`, DTK and Ghidra will incorrectly output the function as belonging to a namespace with the struct's name in the DWARF. For example:
 
@@ -306,7 +306,7 @@ Notice how the declaration order has been reversed.
 
 Try comparing `sh2gfw_SyncDBG`'s declarations in the repo with the declarations in the DWARF for a practical example.
 
-### Omission of the static qualifier in file-scoped static variables
+### Omission of the static qualifier in file-scoped variables
 If a file-scoped static variable is referenced before being initialized, MWCC will omit its static qualifier from the DWARF. For example:
 ```c
 static int steps = 0;
@@ -325,5 +325,14 @@ It'll come out as:
 ```c
 signed int steps; // size: 0x4, address: 0x84
 ```
+This doesn't necessarily mean that the variable will be treated as a global; the symbol table will still define the variable with a local scope.
+```
+                        *** SYMBOL TABLE (.symtab) ***
 
-For a practical example, compare `dma1cmd.c`'s declaration of `last_regist_cid` in the repo with its declaration in the DWARF.
+no     value       size        bind    type     other      shndx          name
+
+1      0x00000084  0x00000004  LOCAL   OBJECT   DEFAULT    MAIN           steps
+...
+```
+
+For a practical example, compare `dma1cmd`'s declaration of `last_regist_cid` in the repo with its declaration in the DWARF.
