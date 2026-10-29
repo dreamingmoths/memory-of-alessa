@@ -466,7 +466,7 @@ segments:
       - { start: 0x00152850,    type: c,          name: DBG/dbsw_map                                     }
       - { start: 0x00152c10,    type: c,          name: Chacter/chara_saveinfo                           }
       - { start: 0x00152e70,    type: c,          name: view/vc_newest                                   }
-      - { start: 0x00153490,    type: asm,        name: Multi_thr/scf/sh2_scf                            }
+      - { start: 0x00153490,    type: c,          name: Multi_thr/scf/sh2_scf                            }
       - { start: 0x00153950,    type: c,          name: DBG/dbalocate                                    }
       - { start: 0x001539b0,    type: c,          name: Chacter/bg_chara                                 }
       - { start: 0x00154200,    type: c,          name: Effect2/hh_class_blood_00                        }
@@ -753,7 +753,7 @@ segments:
       - { start: 0x262110,      type: .data,      name: sound/shd_vs_sp                                  }
       - { start: 0x262210,      type: data,       name: GFW/sh2_DrawEnvData                              }
       - { start: 0x26DE50,      type: data,       name: LoadBg/loadbg_common                             }
-      - { start: 0x26DF10,      type: data,       name: Multi_thr/scf/sh2_scf                            }
+      - { start: 0x26DF10,      type: .data,      name: Multi_thr/scf/sh2_scf                            }
       - { start: 0x26DF20,      type: data,       name: Effect2/hh_class_blood_00                        }
       - { start: 0x0026e560,    type: .data,      name: Effect2/hh_class_blood_01                        }
       - { start: 0x0026e570,    type: data,       name: data_0x26e570                                    }
@@ -1051,7 +1051,7 @@ segments:
       - { start: 0x0029a360,    type: .rodata,    name: LoadBg/loadbg_common                             }
       - { start: 0x0029a3a0,    type: .rodata,    name: DBG/dbsw_map                                     }
       - { start: 0x0029a640,    type: rodata,     name: view/vc_newest_rodata                            }
-      - { start: 0x0029a650,    type: rodata,     name: Multi_thr/scf/sh2_scf                            }
+      - { start: 0x0029a650,    type: .rodata,    name: Multi_thr/scf/sh2_scf                            }
       - { start: 0x0029a6c0,    type: .rodata,     name: DBG/dbalocate                                   }
       - { start: 0x0029a700,    type: .rodata,    name: Chacter/bg_chara                                 }
       - { start: 0x0029a850,    type: rodata,     name: Effect2/hh_class_glass_break_phenomenon_00       }
