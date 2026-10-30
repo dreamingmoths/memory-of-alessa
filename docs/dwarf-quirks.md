@@ -217,7 +217,7 @@ See [this scratch](https://decomp.me/scratch/UGzq7) and its forks for a practica
 ### Fake namespaces
 > Note: this is a quirk of Ghidra & DTK, not DWARF. Documented anyway to clear any confusion that might occur when observing the DWARF
 
-When a function has a struct pointer for an argument and said pointer is named `this`, DTK and Ghidra will incorrectly output the function as belonging to a namespace with the struct's name in the DWARF. For example:
+When a function has a struct pointer for an argument and said pointer is named `this`, DTK and Ghidra will incorrectly output the function as though it belonged to a namespace with the struct's name in the DWARF. For example:
 
 ```c
 typedef struct foo {...} foo;
