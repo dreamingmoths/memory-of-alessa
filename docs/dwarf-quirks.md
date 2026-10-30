@@ -56,6 +56,45 @@ signed int foo(signed int bar /* r16 */) {
 }
 ```
 
+<details>
+	<summary>Additional details</summary>
+	The reason behind this omission is because the DWARF v1.1 standard does not define a tag for local static vars; instead, opted to reuse the local var tag.
+	If we define a a local static named bar and a file static named var:
+	
+```c
+static int var;
+int foo() { static int bar; ...}
+```
+	
+The DWARF will only differentiate them by defining the local static as belonging to a subroutine: 
+	
+```
+00000086:<31>TAG_local_variable
+0000008c    AT_sibling(000000a5)
+00000092    AT_fund_type(FT_signed_integer)
+00000096    AT_location(<5> OP_ADDR(00000074))
+0000009f    AT_name(var)
+...
+000002e9:<42>TAG_global_subroutine
+000002ef    AT_sibling(00000352)
+000002f5    AT_low_pc(00000050)
+000002fb    AT_high_pc(00000074)
+00000301    AT_fund_type(FT_signed_integer)
+00000305    AT_global_refs_block(<4>86 00 00 00 )
+0000030d    AT_name(foo)
+00000313:<24>TAG_lexical_block
+00000319    AT_sibling(0000034e)
+0000031f    AT_low_pc(00000050)
+00000325    AT_high_pc(00000074)
+0000032b:<31>TAG_local_variable
+00000331    AT_sibling(0000034a)
+00000337    AT_fund_type(FT_signed_integer)
+0000033b    AT_location(<5> OP_ADDR(00000078))
+00000344    AT_name(bar)
+...
+```
+</details>
+
 See [this scratch](https://decomp.me/scratch/cLsKq) and its fork for a practical example.
 
 ### Omission of unused arguments
