@@ -1113,6 +1113,85 @@ static void enPAPSetDc(EnLOCAL_DATA* dp) {
     dp->pap.dcm = ((shRandI() >> 10) % (enGetMode() + 5)) + 4;
 }
 
+
+
+static inline u_long shTransformVectorPackXyz(sceVu0IVECTOR vec, sceVu0FMATRIX mat, sceVu0FVECTOR invec) {
+    u_long128 result;
+    asm volatile("\
+         lqc2         vf4, 0x0(%3)\n\
+         lqc2         vf5, 0x0(%2)\n\
+         lqc2         vf6, 0x10(%2)\n\
+         vmulax.xyzw  ACC, vf5, vf4x\n\
+         vmadday.xyzw ACC, vf6, vf4y\n\
+         lqc2         vf5, 0x20(%2)\n\
+         lqc2         vf6, 0x30(%2)\n\
+         vmaddaz.xyzw ACC, vf5, vf4z\n\
+         vmaddw.xyzw  vf4, vf6, vf4w\n\
+         vdiv         Q, vf0w, vf4w\n\
+         vwaitq\n\
+         vmulq.xyz    vf4, vf4, Q\n\
+         vftoi4.xyw   vf4, vf4\n\
+         vftoi0.z     vf4, vf4\n\
+         sqc2         vf4, 0x0(%0)\n\
+         qmfc2        %1,  vf4\n\
+         pexch        t7,  %1\n\
+         pextuw       %1,  zero, %1\n\
+         pextlw       %1,  %1, t7"
+        : "+r"(vec), "=r"(result) : "r"(mat), "r"(invec) : "t7", "f0");
+    return result;
+}
+
+static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
+    sceVu0FMATRIX pos; // r29+0x40
+    sceVu0FVECTOR vec1; // r29+0x80
+    sceVu0FVECTOR vec2; // r29+0x90
+    sceVu0FMATRIX wsm; // r29+0xA0
+    sceVu0IVECTOR iv; // r29+0xE0
+    u_long xyz[4]; // r29+0xF0
+    int i; // r16
+    int cn; // r17
+    u_int w; // r18
+
+    sceVu0CopyMatrix(wsm, cam0.world_screen);
+    shSinCosV_Scale(vec1, dp->scp->rot.y, 495.0f);
+    shSinCosV_Scale(vec2, QUARTER_TURN + dp->scp->rot.y, 195.0f);
+    shAddVector(pos[0], &dp->scp->pos, vec1);
+    shAddVector(pos[0], pos[0], vec2);
+    shAddVector(pos[1], &dp->scp->pos, vec1);
+    shSubVector(pos[1], pos[1], vec2);
+    shSinCosV_Scale(vec1, dp->scp->rot.y, 315.0f);
+    shSubVector(pos[2], &dp->scp->pos, vec1);
+    shAddVector(pos[2], pos[2], vec2);
+    shSubVector(pos[3], &dp->scp->pos, vec1);
+    shSubVector(pos[3], pos[3], vec2);
+
+    for (w = 0, cn = 0, i = 0; i < 4; i++) {
+        pos[i][1] -= 10.0f;
+        pos[i][3] = 1.0f;
+        xyz[i] = shTransformVectorPackXyz(iv, wsm, pos[i]);
+        if (iv[3] < 0 || iv[2] < 0 || iv[0] < 0 || iv[1] < 0 || iv[0] > 0xffff || 0xffff < iv[1]) {
+            return;
+        }
+        cn += shScreenClipI(iv);
+        if (w < iv[3]) {
+            w = iv[3];
+        }
+    }
+
+    if (cn < 4) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6),
+                       GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ3, SCE_GS_XYZ2, SCE_GS_XYZ2), 
+                       w, 1);
+        *spack.pos++ = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
+        *spack.pos++ = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
+        *spack.pos++ = xyz[0];
+        *spack.pos++ = xyz[1];
+        *spack.pos++ = xyz[2];
+        *spack.pos++ = xyz[3];
+        spkCloseGiftag();
+    }
+}
+
 #line 1321
 static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
     int signs; // r3
