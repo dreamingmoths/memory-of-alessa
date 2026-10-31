@@ -101,11 +101,18 @@ EnANIME_DATA EnPAPAnime[33] = {
 #define ENEMY_PAP_STATE_DYING        9
 
 typedef enum _EnPAPAnimKind {
+    PAPAnime_01 = 1,
+    PAPAnime_02 = 2,
     PAPAnime_03 = 3,
     PAPAnime_04 = 4,
+    PAPAnime_23 = 23,
+    PAPAnime_25 = 25,
+    PAPAnime_27 = 27,
     PAPAnime_28 = 28,
     PAPAnime_29 = 29,
-    PAPAnime_32 = 32
+    PAPAnime_30 = 30,
+    PAPAnime_31 = 31,
+    PAPAnime_32 = 32,
 } EnPAPAnimKind;
 
 #pragma fast_fptosi on
@@ -155,14 +162,14 @@ void enPAPInitData(EnLOCAL_DATA* dp) {
         case 13:
             dp->type = 1;
             dp->flag = 1 << 15;
-            enPAPAnimeSet(dp, 25);
+            enPAPAnimeSet(dp, PAPAnime_25);
             enSetSize(dp, 300.0f, 250.0f, 125.0f, 125.0f);
             dp->weight = 4;
             enFlagSetNoDamage(dp);
             ENEMY_MLV(ENEMY_PAP_MODE_EVENT);
             return;
         case 5:
-            enPAPAnimeSet(dp, 27);
+            enPAPAnimeSet(dp, PAPAnime_27);
             ENEMY_STEP(ENEMY_PAP_STATE_DYING);
             return;
         default:
@@ -174,7 +181,7 @@ void enPAPInitData(EnLOCAL_DATA* dp) {
     
     enSetSize(dp, 400.0f, 650.0f, 600.0f, 650.0f);
     dp->weight = 3;
-    enPAPAnimeSet(dp, 2);
+    enPAPAnimeSet(dp, PAPAnime_02);
     enSetBattleTarget(dp, true);
     if (enCheckSleepIn(dp)) {
         enSleepIn(dp);
@@ -318,7 +325,7 @@ static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
     }
     switch (dp->sslv) {
         case 0:
-            enPAPAnimeSet(dp, 1);
+            enPAPAnimeSet(dp, PAPAnime_01);
             enPAPGetWalkSpeed(dp);
             enInitPath(&dp->path, dp->scp->rot.y);
             shSinCosV_Scale(vec, dp->scp->rot.y, 1500.0f);
@@ -327,7 +334,7 @@ static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
             break;
         case 1:
             if (shRandF() < 0.01f) {
-                enPAPAnimeSet(dp, 2);
+                enPAPAnimeSet(dp, PAPAnime_02);
                 ENEMY_SUB_STEP(2);
                 break;
             }
@@ -345,28 +352,25 @@ static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
             break;
         case 2:
             if (dp->anim_n == -1) {
-                enPAPAnimeSet(dp, 1);
+                enPAPAnimeSet(dp, PAPAnime_01);
                 ENEMY_SUB_STEP(1);
             }
             break;
         case 3:
             if (dp->anim_n == -1) {
-                enPAPAnimeSet(dp, 1);
+                enPAPAnimeSet(dp, PAPAnime_01);
                 ENEMY_SUB_STEP(1);
             }
             break;
     }
     enPAPMoveAngle(dp);
     if (enCalcAngleDifference(dp->path.markangle, dp->path.angle) > QUARTER_TURN) {
-        enPAPAnimeSet(dp, 0x1E);
+        enPAPAnimeSet(dp, PAPAnime_30);
         ENEMY_SUB_STEP(3);
     }
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
-#endif
 
 
 #line 480
@@ -387,7 +391,7 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
     }
     switch (dp->sslv) {
         case 0:
-            enPAPAnimeSet(dp, 1);
+            enPAPAnimeSet(dp, PAPAnime_01);
             enPAPGetWalkSpeed(dp);
             enInitPath(&dp->path, dp->scp->rot.y);
             shSinCosV_Scale(vec, dp->scp->rot.y, 1500.0f);
@@ -396,7 +400,7 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
             break;
         case 1:
             if (shRandF() < 0.001f) {
-                enPAPAnimeSet(dp, 2);
+                enPAPAnimeSet(dp, PAPAnime_02);
                 ENEMY_SUB_STEP(2);
                 return;
             }
@@ -407,7 +411,7 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
             }
             if (!enSetPath(dp, dp->ins.view_rot, &dp->scp->pos)) break;
             if (shRandF() < 0.01f) {
-                enPAPAnimeSet(dp, 2);
+                enPAPAnimeSet(dp, PAPAnime_02);
                 ENEMY_SUB_STEP(2);
                 return;
             }
@@ -416,21 +420,21 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
             break;
         case 2:
             if (dp->anim_n == -1) {
-                enPAPAnimeSet(dp, 1);
+                enPAPAnimeSet(dp, PAPAnime_01);
                 ENEMY_SUB_STEP(1);
             } else
                 return;
         /* fallthrough (this seems to be a @bug? since `dp->anim_n == -1` is checked above) */
         case 3:
             if (dp->anim_n == -1) {
-                enPAPAnimeSet(dp, 1);
+                enPAPAnimeSet(dp, PAPAnime_01);
                 ENEMY_SUB_STEP(1);
             }
             break;
     }
     enPAPMoveAngle(dp);
     if (!(enCalcAngleDifference(dp->path.markangle, dp->path.angle) <= QUARTER_TURN)) {
-        enPAPAnimeSet(dp, 0x1E);
+        enPAPAnimeSet(dp, PAPAnime_30);
         ENEMY_SUB_STEP(3);
     }
     shSinCosV_Scale(&vec, dp->path.markangle, 1500.0f);
@@ -438,6 +442,10 @@ static void enPAPCtrlStraight(EnLOCAL_DATA* dp) {
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlStraight);
+#endif
 
 #line 551
 static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
@@ -455,11 +463,11 @@ static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
         }
     }
     if (dp->sslv == 0) {
-        enPAPAnimeSet(dp, 1);
+        enPAPAnimeSet(dp, PAPAnime_01);
         ENEMY_NEXT_SUB_STEP();
     } else if (dp->sslv == 2) {
         if (dp->anim_n == -1) {
-            enPAPAnimeSet(dp, 1);
+            enPAPAnimeSet(dp, PAPAnime_01);
             ENEMY_SUB_STEP(1);
         }
     }
@@ -479,7 +487,7 @@ static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
             ENEMY_STEP(ENEMY_PAP_STATE_WANDER);
         } else if (!(enCalcAngleDifference(dp->path.markangle, dp->path.angle) <= QUARTER_TURN)) {
             
-            enPAPAnimeSet(dp, 0x1E);
+            enPAPAnimeSet(dp, PAPAnime_30);
             ENEMY_SUB_STEP(2);
         }
     }
@@ -514,14 +522,14 @@ static void enPAPCtrlRush(EnLOCAL_DATA* dp) {
         }
     }
     if (dp->sslv == 0) {
-        enPAPAnimeSet(dp, 1);
+        enPAPAnimeSet(dp, PAPAnime_01);
         enSetNewSize(dp, 200.0f, 650.0f, 600.0f, 650.0f);
         
         enSetTimer(dp, 300);
         ENEMY_NEXT_SUB_STEP();
     } else if (dp->sslv == 2) {
         if (dp->anim_n == -1) {
-            enPAPAnimeSet(dp, 1);
+            enPAPAnimeSet(dp, PAPAnime_01);
             ENEMY_STEP(ENEMY_PAP_STATE_CHASE);
         }
     }
@@ -574,9 +582,9 @@ static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
         case 0:
             if (enCalcAngleDifference(enGetPlayerDirection(dp), enGetPlayerAngle(dp)) > QUARTER_TURN) {
      
-                enPAPAnimeSet(dp, 0x1C);
+                enPAPAnimeSet(dp, PAPAnime_28);
             } else {
-                enPAPAnimeSet(dp, 0x1F);
+                enPAPAnimeSet(dp, PAPAnime_31);
             }
             enSetNewSize(dp, 150.0f, 650.0f, 600.0f, 650.0f);
             enFlagSetCritical(dp);
@@ -666,7 +674,7 @@ static void enPAPCtrlDamage(EnLOCAL_DATA* dp) {
             d = enReduceHP(dp);
             if ((d <= 0.0f) || 
                 (d < 100.0f && shRandF() > (0.8f + (0.002f * d)))) {
-                enPAPAnimeSet(dp, enGetDownMotion(dp));
+                enPAPAnimeSet(dp, PAPAnime_enGetDownMotion(dp));
                 if (dp->type == 1 && dp->scp->battle.hp <= 0.0f) {
                     
                     enSetBlur();
@@ -674,7 +682,7 @@ static void enPAPCtrlDamage(EnLOCAL_DATA* dp) {
                     dp->anim_s = 512;
                 }
             } else {
-                enPAPAnimeSet(dp, enGetDamageMotion(dp));
+                enPAPAnimeSet(dp, PAPAnime_enGetDamageMotion(dp));
             }
             if ((dp->anim >= 0xE) && (dp->anim < 0x16)) {
                 enFlagSetNoDamage(dp);
@@ -730,7 +738,7 @@ static void enPAPCtrlConfuse(EnLOCAL_DATA* dp) {
     }
     if (dp->sslv == 0) {
         enReduceHP(dp);
-        enPAPAnimeSet(dp, 2);
+        enPAPAnimeSet(dp, PAPAnime_02);
         ENEMY_NEXT_SUB_STEP();
     }
     if (dp->sslv == 1 && dp->anim_n == -1) {
@@ -761,7 +769,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     enFlagResetMoved(dp);
                     if (enCheckAimedByHuman(dp) == 0 || enCheckInstantDeath(dp)) {
                         enKillCountUp(dp);
-                        enPAPAnimeSet(dp, 0x1B);
+                        enPAPAnimeSet(dp, PAPAnime_27);
                         ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                         return;
                     } else enPAPSetDc(dp);
@@ -784,7 +792,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                 enSetHitBack(dp);
                 if (enCheckInstantDeath(dp)) {
                     enKillCountUp(dp);
-                    enPAPAnimeSet(dp, 0x1B);
+                    enPAPAnimeSet(dp, PAPAnime_27);
                     ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                     return;
                 }
@@ -799,7 +807,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     return;
                 }
                 
-                enPAPAnimeSet(dp, 0x17);
+                enPAPAnimeSet(dp, PAPAnime_23);
                 enFlagResetRotFloor(dp);
                 enFlagResetLieDown(dp);
                 enFlagSetNoDamage(dp);
@@ -815,7 +823,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     }
                 } else {
                     if (300.0f * shRandF() < 200.0f + dp->scp->battle.hp_rate) {
-                        enPAPAnimeSet(dp, 0x19);
+                        enPAPAnimeSet(dp, PAPAnime_25);
                         return;
                     }
                     enAddHP(dp, 10.0f);
@@ -845,7 +853,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     }
                     if (enCheckAimedByHuman(dp) == 0 || enCheckInstantDeath(dp)) {
                         enKillCountUp(dp);
-                        enPAPAnimeSet(dp, 0x1B);
+                        enPAPAnimeSet(dp, PAPAnime_27);
                         ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                         return;
                     }
@@ -855,7 +863,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                 }
                 if (enCheckInstantDeath(dp)) {
                     enKillCountUp(dp);
-                    enPAPAnimeSet(dp, 0x1B);
+                    enPAPAnimeSet(dp, PAPAnime_27);
                     ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                     return;
                 }
@@ -873,7 +881,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
                     ENEMY_SUB_STEP(5);
                     return;
                 }
-                enPAPAnimeSet(dp, 0x17);
+                enPAPAnimeSet(dp, PAPAnime_23);
                 enAddHP(dp, 50.0f);
                 enFlagResetRotFloor(dp);
                 enFlagResetLieDown(dp);
@@ -889,7 +897,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
             dp->hb_s *= (float) (dp->pap.dcm - dp->pap.dc) / (float) (dp->pap.dcm + 1);
             if (++dp->pap.dc >= dp->pap.dcm || enCheckInstantDeath(dp)) {
                 enKillCountUp(dp);
-                enPAPAnimeSet(dp, 0x1B);
+                enPAPAnimeSet(dp, PAPAnime_27);
                 ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                 return;
             }
@@ -898,7 +906,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
         }
         if (enReduceTimer(dp) <= 0) {
             enKillCountUp(dp);
-            enPAPAnimeSet(dp, 0x1B);
+            enPAPAnimeSet(dp, PAPAnime_27);
             ENEMY_STEP(ENEMY_PAP_STATE_DYING);
             return;
         }
@@ -909,7 +917,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
             enSetHitBack(dp);
             if (enCheckInstantDeath(dp)) {
                 enKillCountUp(dp);
-                enPAPAnimeSet(dp, 0x1B);
+                enPAPAnimeSet(dp, PAPAnime_27);
                 ENEMY_STEP(ENEMY_PAP_STATE_DYING);
                 return;
             }
@@ -918,7 +926,7 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
             return;
         }
         if (enCheckFinishedByHuman(dp) == 0) {
-            enPAPAnimeSet(dp, 0x17);
+            enPAPAnimeSet(dp, PAPAnime_23);
             enAddHP(dp, 50.0f);
             enFlagResetRotFloor(dp);
             enFlagResetLieDown(dp);
@@ -937,7 +945,7 @@ static void enPAPCtrlLastMove(EnLOCAL_DATA* dp) {
     if (dp->anim_n != -1) return;
     enResetFilter();
     SET_GAME_FLAG(334);
-    enPAPAnimeSet(dp, 0x1B);
+    enPAPAnimeSet(dp, PAPAnime_27);
     ENEMY_STEP(ENEMY_PAP_STATE_DYING);
 }
 
@@ -1259,9 +1267,6 @@ static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
         spkCloseGiftag();
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
-#endif
 
 #line 1321
 static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
@@ -1275,3 +1280,7 @@ static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
         enSoundCall(signs + 18305, 0.4f, &dp->scp->pos);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSoundSigns);
+#endif
