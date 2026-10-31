@@ -405,7 +405,7 @@ segments:
       - { start: 0x00108af8,    type: asmtu,      name: sdk/lib_002083F8                                 }
       - { start: 0x00109840,    type: asm,        name: MWCC/mwUtils_PS2, ld_align_segment_start: 0x10   }
       - { start: 0x00109850,    type: asm,        name: Item/item_tgs_tmp                                }
-      - { start: 0x00109cc0,    type: asm,        name: Multi_thr/intc/th_vbs                            }
+      - { start: 0x00109cc0,    type: c,          name: Multi_thr/intc/th_vbs                            }
       - { start: 0x00109e90,    type: c,          name: DBG/shDBG_fontHandle                             }
       - { start: 0x0010a2b0,    type: asm,        name: Chacter/m3_edb                                   }
       - { start: 0x0010a960,    type: c,          name: sh2_init                                         }
@@ -721,7 +721,7 @@ segments:
       - { start: 0x00246DD0,    type: .data,      name: sdk/lib_002081D8                                 }
       - { start: 0x00246E00,    type: .data,      name: sdk/lib_002083F8                                 }
       - { start: 0x00246E30,    type: data,       name: Item/item_tgs_tmp                                }
-      - { start: 0x00247290,    type: data,       name: Multi_thr/intc/th_vbs                            }
+      - { start: 0x00247290,    type: .data,      name: Multi_thr/intc/th_vbs                            }
       - { start: 0x002472A0,    type: data,       name: DBG/dbg_font8                                    }
       - { start: 0x002486E0,    type: data,       name: Chacter/m3_edb                                   }
       - { start: 0x00248700,    type: .data,      name: Chacter/m3_nse                                   }
@@ -1234,6 +1234,8 @@ segments:
       - { vram:  0x01174E00,    type: .bss,       name: sdk/lib_00205730                                 } # GCC data
       - { vram:  0x011751C0,    type: .bss,       name: sdk/lib_00207E90                                 } # GCC data
       - { vram:  0x01175380,    type: .bss,       name: sdk/lib_002081D8                                 } # GCC data
+      - { vram:  0x011765a8,    type: .bss,       name: Multi_thr/intc/th_vbs                            }
+      - { vram:  0x011765b8,    type: bss,        name: bss_0x11765b8                                    }
       - { vram:  0x011b6990,    type: .bss,       name: jump_menu                                        }
       - { vram:  0x011b69a0,    type: .bss,       name: DBG/dbflow                                       }
       - { vram:  0x011b69e8,    type: bss,        name: bss_0x11b69e8                                    }
