@@ -168,7 +168,7 @@ segments:
       - { start: 0x000b1450,    type: asm,        name: Event/vu0_func                                   }
       - { start: 0x000b1480,    type: c,          name: Event/demoview                                   }
       - { start: 0x000b3e30,    type: c,          name: Font/font                                        }
-      - { start: 0x000bab70,    type: asm,        name: Multi_thr/filesys/filecmd                        }
+      - { start: 0x000bab70,    type: c,          name: Multi_thr/filesys/filecmd                        }
       - { start: 0x000bc760,    type: c,          name: Multi_thr/filesys/filepath                       }
       - { start: 0x000bcd30,    type: c,          name: Multi_thr/filesys/fileserv                       }
       - { start: 0x000bd2c0,    type: c,          name: Multi_thr/filesys/iopload                        }
@@ -666,7 +666,7 @@ segments:
       - { start: 0x001bb580,    type: .data,      name: Font/font                                        }
       - { start: 0x001bb5c0,    type: data,       name: data_0x1bb5c0                                    }
       - { start: 0x001bb648,    type: data,       name: sdk/lib_002BAF48                                 }
-      - { start: 0x0023b920,    type: data,       name: Multi_thr/filesys/filecmd                        }
+      - { start: 0x0023b920,    type: .data,      name: Multi_thr/filesys/filecmd                        }
       - { start: 0x0023bab8,    type: .data,      name: Multi_thr/filesys/filepath                       }
       - { start: 0x0023bad0,    type: data,       name: Multi_thr/filesys/sh_cdvd                        }
       - { start: 0x0023baf8,    type: data,       name: Multi_thr/filesys/sh_chk_syscnf                  }
@@ -919,7 +919,7 @@ segments:
       - { start: 0x002918e0,    type: .rodata,    name: Event/stg_name                                   }
       - { start: 0x00291980,    type: .rodata,    name: Event/demoview                                   }
       - { start: 0x00291ac0,    type: .rodata,    name: Font/font                                        }
-      - { start: 0x00291c20,    type: rodata,     name: Multi_thr/filesys/filecmd                        }
+      - { start: 0x00291c20,    type: .rodata,    name: Multi_thr/filesys/filecmd                        }
 #     - { start: 0x00291d98,    type: rodata,     name: unaff_00391698                                   }
       - { start: 0x00291d98,    type: .rodata,    name: Multi_thr/filesys/filepath                       }
       - { start: 0x00291db0,    type: .rodata,    name: Multi_thr/filesys/fileserv                       }
@@ -1195,7 +1195,7 @@ segments:
       - { vram:  0x011268d0,    type: bss,        name: Event/event_sub                                  }
       - { vram:  0x01133148,    type: .bss,       name: Event/demoview                                   }
       - { vram:  0x01133c30,    type: bss,        name: Font/font                                        }
-      - { vram:  0x011591e0,    type: bss,        name: Multi_thr/filesys/filecmd                        }
+      - { vram:  0x011591e0,    type: .bss,       name: Multi_thr/filesys/filecmd                        }
       - { vram:  0x01159208,    type: .bss,       name: Multi_thr/filesys/filepath                       }
       - { vram:  0x01159230,    type: .bss,       name: Multi_thr/filesys/fileserv                       }
       - { vram:  0x01159238,    type: bss,        name: Multi_thr/filesys/sh_cdvd                        }

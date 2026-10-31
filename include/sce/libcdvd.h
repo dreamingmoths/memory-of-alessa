@@ -25,8 +25,24 @@
 #define SCECdSecS2328 1
 #define SCECdSecS2340 2
 
-#define SCECdErTRMOPN 0x31
+/*
+ * Macros for sceCdGetError()
+ */
 
+#define SCECdErFAIL         (-1)    /* sceCdGetError() failed to execute */
+#define SCECdErNO           0x00    /* No Error */
+#define SCECdErEOM          0x32    /* End of Media */
+#define SCECdErTRMOPN       0x31    /* Disc tray was opened during playback */
+#define SCECdErREAD         0x30    /* Issue occurred during playback */
+#define SCECdErPRM          0x22    /* Error in command parameters */
+#define SCECdErILI          0x21    /* Transfer length is incorrect */
+#define SCECdErIPI          0x20    /* Transfer start address is incorrect */
+#define SCECdErCUD          0x14    /* Not suitable for disc on drive */
+#define SCECdErNORDY        0x13    /* Command execution in progress */
+#define SCECdErNODISC       0x12    /* No disc */
+#define SCECdErOPENS        0x11    /* Disc tray is open */
+#define SCECdErCMD          0x10    /* Unsupported command */
+#define SCECdErABRT         0x01    /* Abort issued during command processing */
 /*
  * Macros for sceCdGetDiskType()
  */
