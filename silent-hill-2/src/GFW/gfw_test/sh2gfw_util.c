@@ -141,20 +141,20 @@ void InterpNode(sh2gfw_Node* inter, sh2gfw_Node* inside, sh2gfw_Node* outside,
     lqc2  vf26, 0x10(%2);\
     lqc2  vf27, 0x20(%2);\
     lqc2  vf28, 0x30(%2);\
-    vsub.xyzw  vf15, vf11, vf10 ;\
-    vsub.xyzw  vf25, vf25, vf21 ;\
-    vsub.xyzw  vf26, vf26, vf22 ;\
-    vsub.xyzw  vf27, vf27, vf23 ;\
-    vsub.xyzw  vf28, vf28, vf24 ;\
+    vsub.xyzw  vf15, vf11, vf10;\
+    vsub.xyzw  vf25, vf25, vf21;\
+    vsub.xyzw  vf26, vf26, vf22;\
+    vsub.xyzw  vf27, vf27, vf23;\
+    vsub.xyzw  vf28, vf28, vf24;\
     mfc1     $8, %3;\
-    qmtc2    $8, vf09             ;\
-    vmulx.w  vf12w, vf10w, vf09x  ;\
-    vmulx.w  vf13w, vf11w, vf09x  ;\
-    vsubw.xyzw  vf16, vf10, vf12w ;\
-    vsubw.xyzw  vf17, vf11, vf13w  ;\
+    qmtc2    $8, vf09;\
+    vmulx.w  vf12w, vf10w, vf09x;\
+    vmulx.w  vf13w, vf11w, vf09x;\
+    vsubw.xyzw  vf16, vf10, vf12w;\
+    vsubw.xyzw  vf17, vf11, vf13w;\
     vabs.xyzw vf16, vf16;\
     vabs.xyzw vf17, vf17;\
-    qmfc2    $9,  vf16            ;\
+    qmfc2    $9,  vf16;\
     qmfc2    $10, vf17;\
   LOOP:\
     beq      %4, $0, LOOP_END;\
@@ -164,23 +164,23 @@ void InterpNode(sh2gfw_Node* inter, sh2gfw_Node* inside, sh2gfw_Node* outside,
     j        LOOP;\
     nop;\
   LOOP_END:\
-    qmtc2  $9, vf16 ;\
-    qmtc2  $10, vf17            ;\
-    vadd.xyz  vf18, vf17, vf16  ;\
-    vdiv   Q, vf16x, vf18x      ;\
+    qmtc2  $9, vf16;\
+    qmtc2  $10, vf17;\
+    vadd.xyz  vf18, vf17, vf16;\
+    vdiv   Q, vf16x, vf18x;\
     vwaitq;\
     vaddq.xyzw  vf20, vf00, Q;\
     vabs.x     vf20x, vf20x;\
-    vmulx.xyzw  vf15, vf15, vf20x ;\
-    vmulx.xyzw  vf25, vf25, vf20x ;\
-    vmulx.xyzw  vf26, vf26, vf20x ;\
-    vmulx.xyzw  vf27, vf27, vf20x ;\
-    vmulx.xyzw  vf28, vf28, vf20x ;\
-    vadd.xyzw vf19, vf10, vf15 ;\
-    vadd.xyzw vf25, vf25, vf21 ;\
-    vadd.xyzw vf26, vf26, vf22 ;\
-    vadd.xyzw vf27, vf27, vf23 ;\
-    vadd.xyzw vf28, vf28, vf24 ;\
+    vmulx.xyzw  vf15, vf15, vf20x;\
+    vmulx.xyzw  vf25, vf25, vf20x;\
+    vmulx.xyzw  vf26, vf26, vf20x;\
+    vmulx.xyzw  vf27, vf27, vf20x;\
+    vmulx.xyzw  vf28, vf28, vf20x;\
+    vadd.xyzw vf19, vf10, vf15;\
+    vadd.xyzw vf25, vf25, vf21;\
+    vadd.xyzw vf26, vf26, vf22;\
+    vadd.xyzw vf27, vf27, vf23;\
+    vadd.xyzw vf28, vf28, vf24;\
     sqc2  vf25, 0x00(%0);\
     sqc2  vf26, 0x10(%0);\
     sqc2  vf27, 0x20(%0);\
