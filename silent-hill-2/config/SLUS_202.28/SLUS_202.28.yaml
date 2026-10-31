@@ -175,7 +175,7 @@ segments:
       - { start: 0x000bd3a0,    type: c,          name: Multi_thr/filesys/sh_cdvd                        }
       - { start: 0x000be810,    type: asm,        name: Multi_thr/filesys/sh_chk_syscnf                  }
       - { start: 0x000bea60,    type: c,          name: Multi_thr/intc/syncv                             }
-      - { start: 0x000bed80,    type: asm,        name: Multi_thr/intc/th_vbe                            }
+      - { start: 0x000bed80,    type: c,          name: Multi_thr/intc/th_vbe                            }
       - { start: 0x000bef20,    type: asm,        name: Multi_thr/pad/keydata                            }
       - { start: 0x000bfc40,    type: c,          name: Multi_thr/pad/th_pad                             }
       - { start: 0x000bff00,    type: c,          name: Multi_thr/sys/init_mt_sys                        }
@@ -671,7 +671,7 @@ segments:
       - { start: 0x0023bad0,    type: data,       name: Multi_thr/filesys/sh_cdvd                        }
       - { start: 0x0023baf8,    type: data,       name: Multi_thr/filesys/sh_chk_syscnf                  }
       - { start: 0x0023bb08,    type: data,       name: Multi_thr/intc/syncv                             }
-      - { start: 0x0023bb28,    type: data,       name: Multi_thr/intc/th_vbe                            }
+      - { start: 0x0023bb28,    type: .data,      name: Multi_thr/intc/th_vbe                            }
       - { start: 0x0023bb40,    type: data,       name: Multi_thr/pad/keydata                            }
       - { start: 0x0023bc88,    type: .data,      name: Multi_thr/pad/th_pad                             }
       - { start: 0x0023bca0,    type: data,       name: Multi_thr/sys/init_mt_sys                        }
