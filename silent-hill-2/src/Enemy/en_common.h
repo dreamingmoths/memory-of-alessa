@@ -6,7 +6,8 @@
 
 #define ENEMY_MAX 32
 #define EnKIND_NONE 0
-#define EnKIND_INS 15
+#define EnKIND_IKE  7
+#define EnKIND_INS  15
 
 #define SET_DP_STATE_LV(_dp, _slv, _sslv) do { \
     _dp->slv = _slv; \

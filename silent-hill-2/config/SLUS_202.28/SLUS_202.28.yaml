@@ -87,7 +87,7 @@ segments:
       - { start: 0x00047f50,    type: asm,        name: Enemy/en_draw                                    }
       - { start: 0x00049bc0,    type: asm,        name: Enemy/en_edb                                     }
       - { start: 0x0004e720,    type: asm,        name: Enemy/en_effect                                  }
-      - { start: 0x00051250,    type: asm,        name: Enemy/en_ike                                     }
+      - { start: 0x00051250,    type: c,          name: Enemy/en_ike                                     }
       - { start: 0x00053b10,    type: c,          name: Enemy/en_mkn                                     }
       - { start: 0x00057eb0,    type: c,          name: Enemy/en_nse                                     }
       - { start: 0x0005a760,    type: c,          name: Enemy/en_pap                                     }
