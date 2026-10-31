@@ -31,6 +31,11 @@ SH2_DATA: DataTable = [
     SimpleData(name="bgm_list",                             type="<86I",                               pattern=[43, 2]                ),
     StructData(name="change_list",                          type=Sh2.ChangeList,                       count=242                      ),
     SimpleData(name="escape_point",                         type="<12f",                               pattern=[3, 4]                 ),
+    SimpleData(name="@914_0x002AA370",                      type="<5f",                                pattern=[5]                    ),
+    StructData(name="EnIKEAnime",                           type=Sh2.EnAnimeData,                      count=21                       ),
+    SimpleData(name="appearance_point",                     type="<28f",                               pattern=[7, 4]                 ),
+    SimpleData(name="@930_0x002AA390",                      type=Pointer,                              pattern=[6],                   ),
+    SimpleData(name="@935_0x002AA3B0",                      type=Pointer,                              pattern=[11],                  ),
 ]
 
 SH3_DATA: DataTable = []
