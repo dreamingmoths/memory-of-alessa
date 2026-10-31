@@ -620,7 +620,7 @@ segments:
       - { start: 0x001aa9a0,    type: data,       name: Enemy/en_ike                                     }
       - { start: 0x001aab00,    type: data,       name: Enemy/en_mkn                                     }
       - { start: 0x001aad10,    type: .data,      name: Enemy/en_nse                                     }
-      - { start: 0x001aaeb0,    type: data,       name: Enemy/en_pap                                     }
+      - { start: 0x001aaeb0,    type: .data,      name: Enemy/en_pap                                     }
       - { start: 0x001ab0a0,    type: data,       name: Enemy/en_red                                     }
       - { start: 0x001ab2a0,    type: data,       name: Enemy/en_scu                                     }
       - { start: 0x001ab998,    type: data,       name: Enemy/en_tyu                                     }

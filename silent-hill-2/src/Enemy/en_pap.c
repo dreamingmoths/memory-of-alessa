@@ -46,7 +46,7 @@ static void enPAPSetDc(EnLOCAL_DATA* dp);
 static void enPAPDrawBoad(EnLOCAL_DATA* dp);
 static void enPAPSoundSigns(EnLOCAL_DATA* dp);
 
-UNLINKED(EnANIME_DATA EnPAPAnime[33], {
+EnANIME_DATA EnPAPAnime[33] = {
     { /* .anime = */ 5701, /* .loop  = */ false },
     { /* .anime = */ 5702, /* .loop  = */ true  },
     { /* .anime = */ 5701, /* .loop  = */ true  },
@@ -80,7 +80,7 @@ UNLINKED(EnANIME_DATA EnPAPAnime[33], {
     { /* .anime = */ 5724, /* .loop  = */ false },
     { /* .anime = */ 5726, /* .loop  = */ false },
     { /* .anime = */ 5728, /* .loop  = */ false }
-});
+};
 
 #define ENEMY_PAP_MODE_DUMMY         0
 #define ENEMY_PAP_MODE_AUTOMATIC     1
@@ -100,10 +100,18 @@ UNLINKED(EnANIME_DATA EnPAPAnime[33], {
 #define ENEMY_PAP_STATE_LAST_MOVE    8
 #define ENEMY_PAP_STATE_DYING        9
 
+typedef enum _EnPAPAnimKind {
+    PAPAnime_03 = 3,
+    PAPAnime_04 = 4,
+    PAPAnime_28 = 28,
+    PAPAnime_29 = 29,
+    PAPAnime_32 = 32
+} EnPAPAnimKind;
+
 #pragma fast_fptosi on
 #pragma divbyzerocheck off
 
-#ifdef NON_MATCHING
+#ifdef HOLY_CANDLE
 #line 130
 void enPAPInitData(EnLOCAL_DATA* dp) {
     float vitarity[5] = { 
@@ -172,9 +180,38 @@ void enPAPInitData(EnLOCAL_DATA* dp) {
         enSleepIn(dp);
     }
 }
+#else
+float vitarity_0x002AA840[5] = { 
+    500.0f,
+    750.0f,
+    1000.0f,
+    2000.0f,
+    4000.0f
+}; // r29+0x20
+float endurance_0x002AA860[5] = { 
+    150.0f,
+    285.0f,
+    380.0f,
+    500.0f,
+    600.0f
+}; // r29+0x40
 
-
-
+float vitarity2_0x002AA880[5] = { 
+    1000.0f,
+    4000.0f,
+    5000.0f,
+    7000.0f,
+    10000.0f
+}; // r29+0x60
+float endurance2_0x002AA8A0[5] = { 
+    300.0f,
+    400.0f,
+    600.0f,
+    800.0f,
+    1000.0f 
+}; // r29+0x80
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPInitData);
+#endif
 
 #line 202
 void enPAPCtrlMain(EnLOCAL_DATA* dp) {
@@ -253,6 +290,7 @@ static void enPAPCtrlHand(EnLOCAL_DATA* dp) {
 }
 
 
+#ifdef HOLY_CANDLE
 #line 405
 static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x20
@@ -326,6 +364,9 @@ static void enPAPCtrlWander(EnLOCAL_DATA* dp) {
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
+#endif
 
 
 #line 480
@@ -426,7 +467,8 @@ static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
     dp->path.angle = dp->scp->rot.y;
     enPAPMoveAngle(dp);
     if (dp->sslv != 2) {
-        dp->anim_s = (short) (4096.0f * enPAPGetWalkSpeed(dp) *  enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));
+        float* ppos = enGetPlayerPos(dp);
+        dp->anim_s = (short) (4096.0f * enPAPGetWalkSpeed(dp) *  enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, ppos));
         
         t = enPAPCanSeePlayer(dp);
         if (t == 2) {
@@ -446,6 +488,7 @@ static void enPAPCtrlChase(EnLOCAL_DATA* dp) {
 }
 
 
+#ifdef HOLY_CANDLE
 #line 599
 static void enPAPCtrlRush(EnLOCAL_DATA* dp) {
     if (enCheckDamage()) {
@@ -501,8 +544,12 @@ static void enPAPCtrlRush(EnLOCAL_DATA* dp) {
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlRush);
+#endif
 
 
+#ifdef HOLY_CANDLE
 #line 656
 static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x30
@@ -548,18 +595,18 @@ static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
                 shSinCosV_Scale(vec, enGetPlayerDirection(dp), 150.0f);
                 shSubVector(vec, enGetPlayerPos(dp), vec);
                 shSubVector(vec, vec, &dp->scp->pos);
-                vec[1] = vec[2] = 0;
+                vec[1] = vec[3] = 0;
                 shScaleVector(dp->vec, vec, 4.0f);
                 enSetNewSize(dp, 0.0f, 650.0f, 600.0f, 650.0f);
             }
             if (dp->anim_n == -1) {
                 dp->flag |= 1 << 15;
                 if (!enCheckHuggedPlayer()) {
-                    enPAPAnimeSet(dp, (u_char) (dp->anim == 0x1C ? 0x1D : 0x20));
+                    enPAPAnimeSet(dp, dp->anim == PAPAnime_28 ? PAPAnime_29 : PAPAnime_32);
                     
                     ENEMY_SUB_STEP(4);
                 } else {
-                    enPAPAnimeSet(dp, (u_char) (dp->anim == 0x1C ? 3 : 4));
+                    enPAPAnimeSet(dp, (u_char) (dp->anim == PAPAnime_28 ? PAPAnime_03 : PAPAnime_04));
                     
                     enAttackStart(dp);
                     ENEMY_SUB_STEP(2);
@@ -570,7 +617,7 @@ static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
         case 2:
             enAttackCheckHug(dp, 0x3A);
             if (enCheckHuggedPlayer() == 0) {
-                enPAPAnimeSet(dp,(u_char) (dp->anim == 3 ? 0x1D : 0x20));
+                enPAPAnimeSet(dp,(u_char) (dp->anim == PAPAnime_03 ? PAPAnime_29 : PAPAnime_32));
                 
                 ENEMY_NEXT_SUB_STEP();
             }
@@ -595,9 +642,13 @@ static void enPAPCtrlAttack(EnLOCAL_DATA* dp) {
     enPAPAutoRecovery(dp);
     enPAPSoundSigns(dp);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAttack);
+#endif
 
 
 
+#ifdef HOLY_CANDLE
 static void enPAPCtrlDamage(EnLOCAL_DATA* dp) {
     float d; // r20
     switch (dp->sslv) {
@@ -662,6 +713,9 @@ static void enPAPCtrlDamage(EnLOCAL_DATA* dp) {
             break;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDamage);
+#endif
 
 
 #line 817
@@ -687,8 +741,7 @@ static void enPAPCtrlConfuse(EnLOCAL_DATA* dp) {
     }
 }
 
-
-
+#ifdef HOLY_CANDLE
 static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
         case 0:
@@ -876,12 +929,18 @@ static void enPAPCtrlDown(EnLOCAL_DATA* dp) {
         break;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDown);
+#endif
+
 static void enPAPCtrlLastMove(EnLOCAL_DATA* dp) {
     if (dp->anim_n != -1) return;
     enResetFilter();
     SET_GAME_FLAG(334);
     enPAPAnimeSet(dp, 0x1B);
-    ENEMY_STEP(ENEMY_PAP_STATE_DYING);}
+    ENEMY_STEP(ENEMY_PAP_STATE_DYING);
+}
+
 #line 1035
 static void enPAPMoveAngle(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec, vec2, tpos; // r29+0x30, r29+0x40, r29+0x50
@@ -1016,9 +1075,8 @@ static void enPAPAnimeExec(EnLOCAL_DATA* dp) {
     }
 }
 
-
-
-
+#ifdef NON_MATCHING
+/* @note possible haunting?? */
 static void enPAPAutoRecovery(EnLOCAL_DATA* dp) {
     short recover_rate[5] = {
         0,
@@ -1029,6 +1087,16 @@ static void enPAPAutoRecovery(EnLOCAL_DATA* dp) {
     }; // r29+0x20
     enAddEnduranceDT(dp, recover_rate[enGetMode()]);
 }
+#else
+short recover_rate_0x002AA908[5] = {
+    0,
+    10,
+    30,
+    60,
+    100 
+};
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAutoRecovery);
+#endif
 
 
 #line 1191
@@ -1114,7 +1182,6 @@ static void enPAPSetDc(EnLOCAL_DATA* dp) {
 }
 
 
-
 static inline u_long shTransformVectorPackXyz(sceVu0IVECTOR vec, sceVu0FMATRIX mat, sceVu0FVECTOR invec) {
     u_long128 result;
     asm volatile("\
@@ -1141,6 +1208,7 @@ static inline u_long shTransformVectorPackXyz(sceVu0IVECTOR vec, sceVu0FMATRIX m
     return result;
 }
 
+#ifdef HOLY_CANDLE
 static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
     sceVu0FMATRIX pos; // r29+0x40
     sceVu0FVECTOR vec1; // r29+0x80
@@ -1191,6 +1259,9 @@ static void enPAPDrawBoad(EnLOCAL_DATA* dp) {
         spkCloseGiftag();
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
+#endif
 
 #line 1321
 static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
@@ -1204,67 +1275,3 @@ static void enPAPSoundSigns(EnLOCAL_DATA* dp) {
         enSoundCall(signs + 18305, 0.4f, &dp->scp->pos);
     }
 }
-
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPInitData);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlMain);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAutomatic);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlSleep);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlGoPlayable);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlEvent);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlHand);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlWander);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlStraight);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlChase);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlRush);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlAttack);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDamage);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlConfuse);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlDown);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCtrlLastMove);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPMoveAngle);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPCanSeePlayer);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeSet);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAnimeExec);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPAutoRecovery);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetWalkSpeed);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetRotSpeed);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPGetTurnSpeed);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDownTime);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetMoveCount);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSetDc);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPDrawBoad);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_pap", enPAPSoundSigns);
-
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1688);
-
-INCLUDE_RODATA("asm/nonmatchings/Enemy/en_pap", @1689);
-#endif
