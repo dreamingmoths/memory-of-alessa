@@ -106,7 +106,7 @@ segments:
       - { start: 0x00073030,    type: asm,        name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x000745e0,    type: asm,        name: GFW/gfw_test/sh2_dmachain_regist                 }
       - { start: 0x000748b0,    type: asm,        name: GFW/gfw_test/sh2gfw_shcamtest                    }
-      - { start: 0x00074ac0,    type: asm,        name: GFW/gfw_test/sh2gfw_util                         }
+      - { start: 0x00074ac0,    type: c,          name: GFW/gfw_test/sh2gfw_util                         }
       - { start: 0x000758d0,    type: asm,        name: GFW/sh2_get_drawenv                              }
       - { start: 0x00075eb0,    type: asm,        name: GFW/sh2_set_drawenv                              }
       - { start: 0x00076690,    type: asm,        name: GFW/sh2_shadow_filters                           }
@@ -1156,7 +1156,7 @@ segments:
       - { vram:  0x00584580,    type: bss,        name: SH2_common/sh_vu0                                }
       - { vram:  0x005845c0,    type: bss,        name: Fog/spack                                        }
       - { vram:  0x00614980,    type: bss,        name: Font/dic                                         }
-      - { vram:  0x00614d90,    type: bss,        name: GFW/gfw_test/sh2gfw_util                         }
+      - { vram:  0x00614d90,    type: .bss,       name: GFW/gfw_test/sh2gfw_util                         }
       - { vram:  0x00614e90,    type: bss,        name: GFW/sh2_get_drawenv                              }
       - { vram:  0x00614ec0,    type: bss,        name: GFW/sh2_set_drawenv                              }
       - { vram:  0x00614ed0,    type: bss,        name: GFW/sh2_shadow_filters                           }
