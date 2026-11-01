@@ -996,7 +996,7 @@ static int fsSubCmdCdGetMmode(int media /* r2 */) {
 
 
 static int fsSubCmdCdRead(int lsn /* r18 */, int sectors /* r17 */, void* buf /* r16 */) {
-    static sceCdRMode rmode[] = {0, 1}; // @ 0x0033B2A0
+    static sceCdRMode rmode[] = {0, SCECdSpinNom, SCECdSecS2048}; // @ 0x0033B2A0
     int ret; // r4
 
 
