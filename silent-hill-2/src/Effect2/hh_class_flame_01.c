@@ -227,11 +227,11 @@ static u_int Object_Draw(HH_Object_Flame_01* pThis, ImpactQueue_Element* pElemen
         
         HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(xyzf, stq_dummy, lsm, clip_mat, pVertex[0], 0x3F);
         ((u_long128*) pPk->pCurrent)[1] = ((u_long128*) pStq)[0];
-        xyzf[2] += sizeof(u_long128) * 50;
+        xyzf[2] += 800;
         ((u_long128*) pPk->pCurrent)[2] = *(u_long128*) xyzf;
         HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(xyzf, stq_dummy, lsm, clip_mat, pVertex[3], 0x3F);
         ((u_long128*) pPk->pCurrent)[3] = ((u_long128*) pStq)[3];
-        xyzf[2] += sizeof(u_long128) * 50;
+        xyzf[2] += 800;
         ((u_long128*) pPk->pCurrent)[4] = *(u_long128*) xyzf;
         pPk->pCurrent += 20;
         sceVif1PkCloseGifTag(pPk);

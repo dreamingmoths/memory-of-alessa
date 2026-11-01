@@ -25,12 +25,12 @@ typedef struct HH_Object_Flame_00_Particle {
 
 typedef struct HH_Object_Flame_00 {
     // total size: 0x1F70
-    struct Object_DataBlock_Header Header;                                 // offset 0x0, size 0x10
-    u_char Step;                                                           // offset 0x10, size 0x1
-    float Timer;                                                           // offset 0x14, size 0x4
-    u_int Particle_DrawNum;                                                // offset 0x18, size 0x4
-    sceVu0FVECTOR Wind;                                                    // offset 0x20, size 0x10
-    struct HH_Object_Flame_00_Particle Particle[HH_FLAME_00_PARTICLE_MAX]; // offset 0x30, size 0x1F40
+    Object_DataBlock_Header Header;                                 // offset 0x0, size 0x10
+    u_char Step;                                                    // offset 0x10, size 0x1
+    float Timer;                                                    // offset 0x14, size 0x4
+    u_int Particle_DrawNum;                                         // offset 0x18, size 0x4
+    sceVu0FVECTOR Wind;                                             // offset 0x20, size 0x10
+    HH_Object_Flame_00_Particle Particle[HH_FLAME_00_PARTICLE_MAX]; // offset 0x30, size 0x1F40
 } HH_Object_Flame_00;
 
 typedef struct Flame_Initialize_Parameter {
