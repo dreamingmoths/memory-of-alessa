@@ -118,15 +118,6 @@ static void Particle_Initialize(HH_Object_Flame_01_Particle* pParticle, Flame_In
     pParticle->Life_Time = pParameter->Base_Time + (pParameter->Rand_Time_Width * (1.0f - ratio));
 }
 
-
-
-
-
-
-
-
-
-
 /* @note almost exact same as Flame_00, except it has the `Ratio` */
 #line 900
 static void Particle_Motion(HH_Object_Flame_01_Particle* pParticle, Flame_Initialize_Parameter* pParameter, float* Position, float Ratio) {
