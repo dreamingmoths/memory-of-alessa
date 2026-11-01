@@ -536,7 +536,7 @@ segments:
       - { start: 0x00183e40,    type: c,          name: Chacter/m3_play_event                            }
       - { start: 0x00184830,    type: c,          name: Chacter/m3_play_efect                            }
       - { start: 0x001869a0,    type: c,          name: LoadBg/loadbg_1x1                                }
-      - { start: 0x00186ae0,    type: asm,        name: Effect2/hh_class_flame_02                        }
+      - { start: 0x00186ae0,    type: c,          name: Effect2/hh_class_flame_02                        }
       - { start: 0x00187590,    type: asm,        name: Effect2/hh_class_plural_phenomenon_01            }
       - { start: 0x00187b80,    type: c,          name: movie/movie_main                                 }
       - { start: 0x00188380,    type: c,          name: movie/pss_audiodec                               }
