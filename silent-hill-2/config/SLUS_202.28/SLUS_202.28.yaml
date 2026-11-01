@@ -530,7 +530,7 @@ segments:
       - { start: 0x0017ea10,    type: c,          name: sh2shd/sh2shd_shadow_env                         }
       - { start: 0x00181300,    type: asm,        name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x001816f0,    type: c,          name: Effect2/hh_class_flame_00                        }
-      - { start: 0x00182150,    type: asm,        name: Effect2/hh_class_flame_01                        }
+      - { start: 0x00182150,    type: c,          name: Effect2/hh_class_flame_01                        }
       - { start: 0x00182bf0,    type: asm,        name: Effect2/hh_class_smoke_00                        }
       - { start: 0x001835c0,    type: asm,        name: Effect2/hh_class_water_pool_00                   }
       - { start: 0x00183e40,    type: c,          name: Chacter/m3_play_event                            }
