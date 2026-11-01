@@ -26,18 +26,18 @@ static int fsSubCmdHdError();
 static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */);
 static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */);
 static int ___fsCmdRead(fsFile* fp /* r17 */, void* buf /* r16 */);
+
 static int (* ___fsSubCmdFixFuncListC[2])(fsFile *);
 static fsSubCmdStatT fs_stat = {___fsSubCmdFixFuncListC, 255};
-static int (* ___fsSubCmdFixFuncListC[2])(fsFile *) = {___fsSubCmdCdFixFile}; // size: 0x8, address: 0x33B258
+static int (* ___fsSubCmdFixFuncListC[2])(fsFile *)  = {___fsSubCmdCdFixFile}; // size: 0x8, address: 0x33B258
 static int (* ___fsSubCmdFixFuncListCH[5])(fsFile *) = { ___fsSubCmdCd1stFixFile, ___fsSubCmdHd1stFixFile, ___fsSubCmdCdFixFile, ___fsSubCmdHdFixFile}; // size: 0x14, address: 0x33B260
 static int (* ___fsSubCmdFixFuncListHC[5])(fsFile *) = { ___fsSubCmdHd1stFixFile, ___fsSubCmdCd1stFixFile, ___fsSubCmdHdFixFile, ___fsSubCmdCdFixFile}; // size: 0x14, address: 0x33B280
-static int (* ___fsSubCmdFixFuncListH[2])(fsFile *) = {___fsSubCmdHdFixFile}; // size: 0x8, address: 0x33B298
+static int (* ___fsSubCmdFixFuncListH[2])(fsFile *)  = {___fsSubCmdHdFixFile}; // size: 0x8, address: 0x33B298
 
-UNMIGRATED(fsFileIndex data_null_dev[1]); // size: 0x8, address: 0x39C600
-static int hdopen_lastmode = 0; // size: 0x4, address: 0x11591E0
-static int fsCmdParam_media_permission = 0; // size: 0x4, address: 0x11591E8
-static fsFile** fsCmdParam_fplist = NULL; // size: 0x4, address: 0x11591F0
-static void** fsCmdParam_buflist = NULL; // size: 0x4, address: 0x11591F8
+static int hdopen_lastmode                             = 0; // size: 0x4, address: 0x11591E0
+static int fsCmdParam_media_permission                 = 0; // size: 0x4, address: 0x11591E8
+static fsFile** fsCmdParam_fplist                      = NULL; // size: 0x4, address: 0x11591F0
+static void** fsCmdParam_buflist                       = NULL; // size: 0x4, address: 0x11591F8
 static int (* fsCmdParam_check_func)(fsFile**, void**) = NULL; // size: 0x4, address: 0x1159200
 
 static inline fsFile* ID_fsFile(fsFileIndex* fileidx) {
