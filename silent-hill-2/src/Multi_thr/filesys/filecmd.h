@@ -3,6 +3,7 @@
 
 #include "sh2_common.h"
 #include "data/fs_structs.h"
+#include "data/daily.thu/data_null_dev.h"
 #include "Multi_thr/filesys/sh_cdvd.h"
 
 // total size: 0x38
