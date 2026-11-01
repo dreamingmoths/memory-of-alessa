@@ -475,7 +475,7 @@ segments:
       - { start: 0x00155b30,    type: c,          name: Effect2/hh_class_blood_03                        }
       - { start: 0x001562e0,    type: c,          name: Effect2/hh_class_blood_footmark_00               }
       - { start: 0x00156750,    type: c,          name: Effect2/hh_class_blood_pool_phenomenon_00        }
-      - { start: 0x00156a70,    type: asm,        name: Effect2/hh_class_blood_splash_phenomenon_00      }
+      - { start: 0x00156a70,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_00      }
       - { start: 0x00157550,    type: asm,        name: Effect2/hh_class_blood_splash_phenomenon_01      }
       - { start: 0x00157b00,    type: c,          name: Effect2/hh_class_blood_stick_00                  }
       - { start: 0x00157f40,    type: asm,        name: Effect2/hh_class_dust_00                         }
