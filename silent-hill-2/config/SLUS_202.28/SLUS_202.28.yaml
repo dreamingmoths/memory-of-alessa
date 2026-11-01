@@ -564,7 +564,7 @@ segments:
       - { start: 0x00194300,    type: asm,        name: SH2_common/result                                }
       - { start: 0x001951b0,    type: c,          name: view/vc_prio                                     }
       - { start: 0x00195480,    type: c,          name: Effect2/hh_class_blood_05                        }
-      - { start: 0x00195cc0,    type: asm,        name: Effect2/hh_class_blood_splash_phenomenon_02      }
+      - { start: 0x00195cc0,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_02      }
       - { start: 0x00196800,    type: asm,        name: Effect2/hh_class_water_80                        }
       - { start: 0x00197870,    type: asm,        name: Effect2/hh_class_water_90                        }
       - { start: 0x001988b0,    type: asm,        name: Effect2/hh_class_boatmask                        }
