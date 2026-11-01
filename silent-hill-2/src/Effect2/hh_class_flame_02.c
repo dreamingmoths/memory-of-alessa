@@ -35,9 +35,9 @@ static u_int Object_Draw(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElemen
 /**
  * flame_02 is more akin to flame_00, except it has alpha & depth tests set to "always".
  */
-UNMIGRATED(/* static */ sceVu0FVECTOR* _square_stq_list_0x0037B030[64]); // size: 0x100, address: 0x377A50
-UNMIGRATED(/* static */ Flame_Initialize_Parameter _flame_init_parm_table_0x0037B130[8]); // size: 0x300, address: 0x377B50
-UNMIGRATED(/* static */ sceVu0FMATRIX _square_00_vertex_0x00379FF0); // size: 0x40, address: 0x376A10
+UNMIGRATED(/* static */ sceVu0FVECTOR* _square_stq_list_0x0037B030[64]);
+UNMIGRATED(/* static */ Flame_Initialize_Parameter _flame_init_parm_table_0x0037B130[8]);
+UNMIGRATED(/* static */ sceVu0FMATRIX _square_00_vertex_0x00379FF0);
 #define HH_FLAME_02_PARTICLE_MAX 100
 
 #line 795
@@ -81,11 +81,6 @@ static u_int Object_Initialize(HH_Object_Flame_02* pThis, ImpactQueue_Element* p
     return result;
 }
 
-
-
-
-
-
 #line 841
 static void Particle_Initialize(HH_Object_Flame_02_Particle* pParticle, Flame_Initialize_Parameter* pParameter) {
     float ratio; // r1
@@ -125,16 +120,6 @@ static void Particle_Initialize(HH_Object_Flame_02_Particle* pParticle, Flame_In
 
     pParticle->Life_Time = pParameter->Base_Time + (pParameter->Rand_Time_Width * (1.0f - ratio));
 }
-
-
-
-
-
-
-
-
-
-
 
 #line 891
 static void Particle_Motion(HH_Object_Flame_02_Particle* pParticle, Flame_Initialize_Parameter* pParameter, float* Position) {
