@@ -33,9 +33,9 @@ static u_int Object_Initialize(HH_Object_Flame_01* pThis, ImpactQueue_Element* p
 static void Particle_Motion(HH_Object_Flame_01_Particle* pParticle, Flame_Initialize_Parameter* pParameter, float* Position, float Ratio);
 static u_int Object_Draw(HH_Object_Flame_01* pThis, ImpactQueue_Element* pElement);
 
-UNMIGRATED(/* static */ sceVu0FVECTOR* _square_stq_list_0x00378E90[64]); // size: 0x100, address: 0x377A50
-UNMIGRATED(/* static */ Flame_Initialize_Parameter _flame_init_parm_table_0x00378F90[8]); // size: 0x300, address: 0x377B50
-UNMIGRATED(/* static */ sceVu0FMATRIX _square_00_vertex_0x00377E50); // size: 0x40, address: 0x376A10
+UNMIGRATED(/* static */ sceVu0FVECTOR* _square_stq_list_0x00378E90[64]);
+UNMIGRATED(/* static */ Flame_Initialize_Parameter _flame_init_parm_table_0x00378F90[8]);
+UNMIGRATED(/* static */ sceVu0FMATRIX _square_00_vertex_0x00377E50);
 
 #line 801
 static u_int Object_Initialize(HH_Object_Flame_01* pThis, ImpactQueue_Element* pElement) {
@@ -127,7 +127,7 @@ static void Particle_Initialize(HH_Object_Flame_01_Particle* pParticle, Flame_In
 
 
 
-/* @note almost exact same as Flame_01, except it has the `Ratio` */
+/* @note almost exact same as Flame_00, except it has the `Ratio` */
 #line 900
 static void Particle_Motion(HH_Object_Flame_01_Particle* pParticle, Flame_Initialize_Parameter* pParameter, float* Position, float Ratio) {
     if (pParticle->Time > pParticle->Life_Time) {
