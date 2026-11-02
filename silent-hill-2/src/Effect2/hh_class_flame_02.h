@@ -3,6 +3,14 @@
 
 #include "Effect2/hh_class_manager.h"
 
+#define HH_FLAME_02_STEP_INIT    0
+#define HH_FLAME_02_STEP_TIMER   1
+#define HH_FLAME_02_STEP_DRAW    2
+#define HH_FLAME_02_STEP_OFF     3
+#define HH_FLAME_02_TEX_ID       3
+#define HH_FLAME_02_CLUT_ID      0
+#define HH_FLAME_02_PARTICLE_MAX 100
+
 typedef struct HH_Object_Flame_02_Particle {
     // total size: 0x50
     sceVu0FVECTOR Location;   // offset 0x0, size 0x10
@@ -17,12 +25,12 @@ typedef struct HH_Object_Flame_02_Particle {
 
 typedef struct HH_Object_Flame_02 {
     // total size: 0x1F70
-    struct Object_DataBlock_Header Header;            // offset 0x0, size 0x10
-    u_char Step;                                      // offset 0x10, size 0x1
-    float Timer;                                      // offset 0x14, size 0x4
-    u_int Particle_DrawNum;                           // offset 0x18, size 0x4
-    sceVu0FVECTOR Wind;                               // offset 0x20, size 0x10
-    struct HH_Object_Flame_02_Particle Particle[100]; // offset 0x30, size 0x1F40
+    Object_DataBlock_Header Header;                                 // offset 0x0, size 0x10
+    u_char Step;                                                    // offset 0x10, size 0x1
+    float Timer;                                                    // offset 0x14, size 0x4
+    u_int Particle_DrawNum;                                         // offset 0x18, size 0x4
+    sceVu0FVECTOR Wind;                                             // offset 0x20, size 0x10
+    HH_Object_Flame_02_Particle Particle[HH_FLAME_02_PARTICLE_MAX]; // offset 0x30, size 0x1F40
 } HH_Object_Flame_02;
 
 u_int HH_Class_Prefix_Flame_02(void);

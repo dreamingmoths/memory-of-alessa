@@ -38,7 +38,6 @@ static u_int Object_Draw(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElemen
 UNMIGRATED(/* static */ sceVu0FVECTOR* _square_stq_list_0x0037B030[64]);
 UNMIGRATED(/* static */ Flame_Initialize_Parameter _flame_init_parm_table_0x0037B130[8]);
 UNMIGRATED(/* static */ sceVu0FMATRIX _square_00_vertex_0x00379FF0);
-#define HH_FLAME_02_PARTICLE_MAX 100
 
 #line 795
 static u_int Object_Initialize(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElement) {
@@ -154,14 +153,6 @@ static void Particle_Motion(HH_Object_Flame_02_Particle* pParticle, Flame_Initia
     }
 }
 
-
-
-
-
-
-
-
-
 #line 932
 static void Particle_Calculator(HH_Object_Flame_02_Particle* pParticle, float* Position) {
     sceVu0FMATRIX time_mat; // r29+0x30
@@ -175,17 +166,6 @@ static void Particle_Calculator(HH_Object_Flame_02_Particle* pParticle, float* P
     time_mat[3][3] = 0;
     sceVu0ApplyMatrix(Position, time_mat, pParticle->Verocity_0);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 #line 957
 static u_int Object_Draw(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElement) {
@@ -246,11 +226,11 @@ static u_int Object_Draw(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElemen
         
         HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(xyzf, stq_dummy, lsm, clip_mat, pVertex[0], 0x3F);
         ((u_long128*) pPk->pCurrent)[1] = ((u_long128*) pStq)[0];
-        xyzf[2] += sizeof(u_long128) * 50;
+        xyzf[2] += 800;
         ((u_long128*) pPk->pCurrent)[2] = *(u_long128*) xyzf;
         HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(xyzf, stq_dummy, lsm, clip_mat, pVertex[3], 0x3F);
         ((u_long128*) pPk->pCurrent)[3] = ((u_long128*) pStq)[3];
-        xyzf[2] += sizeof(u_long128) * 50;
+        xyzf[2] += 800;
         ((u_long128*) pPk->pCurrent)[4] = *(u_long128*) xyzf;
         pPk->pCurrent += 20;
         sceVif1PkCloseGifTag(pPk);
@@ -259,20 +239,6 @@ static u_int Object_Draw(HH_Object_Flame_02* pThis, ImpactQueue_Element* pElemen
     
     return result;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-#define HH_FLAME_02_TEX_ID 3
-#define HH_FLAME_02_CLUT_ID 0
 
 #line 1044
 u_int HH_Class_Prefix_Flame_02(void) {
@@ -305,16 +271,6 @@ u_int HH_Class_Prefix_Flame_02(void) {
     return result;
 }
 
-
-
-
-
-
-
-
-
-
-
 #line 1085
 u_int HH_Class_Suffix_Flame_02(void) {
     u_int result = true; // r2
@@ -341,16 +297,6 @@ u_int HH_Class_Suffix_Flame_02(void) {
     
     return result;
 }
-
-
-
-#define HH_FLAME_02_STEP_INIT    0
-#define HH_FLAME_02_STEP_TIMER   1
-#define HH_FLAME_02_STEP_DRAW    2
-#define HH_FLAME_02_STEP_OFF     3
-
-
-
 
 #line 1122
 u_int HH_Class_Flame_02(void* pBlock, ImpactQueue_Element* pElement) {
