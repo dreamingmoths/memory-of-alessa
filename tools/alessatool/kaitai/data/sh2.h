@@ -76,6 +76,7 @@ kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir 
 #include "Effect2/hh_class_object_execute.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_memory_manage.h"
 
 #include "Enemy/en_arm.h"
