@@ -477,7 +477,7 @@ static void EnemySCUFunction(SubCharacter* this) {
                     
                     
                     
-                    if (this->status & 4) {
+                    if (this->status & (1 << SCP_STATUS_BIT_ANIME_TYPE)) {
                     
                         
                         if ((dp = enEntryEnemy(1)) != NULL) {
