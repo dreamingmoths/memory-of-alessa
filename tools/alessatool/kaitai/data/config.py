@@ -36,6 +36,9 @@ SH2_DATA: DataTable = [
     SimpleData(name="appearance_point",                     type="<28f",                               pattern=[7, 4]                 ),
     SimpleData(name="@930_0x002AA390",                      type=Pointer,                              pattern=[6],                   ),
     SimpleData(name="@935_0x002AA3B0",                      type=Pointer,                              pattern=[11],                  ),
+    StructData(name="d_scu_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
+    StructData(name="scu_anim",                             type=Sh2.AnimeInfo,                        count=36                       ),
+    SimpleData(name="dscu_anime_adr_list",                  type="<10i"                                                               ),
 ]
 
 SH3_DATA: DataTable = []

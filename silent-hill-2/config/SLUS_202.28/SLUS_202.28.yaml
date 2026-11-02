@@ -46,7 +46,7 @@ segments:
       - { start: 0x00016180,    type: c,          name: Chacter/m3_play_3d                               }
       - { start: 0x0001d080,    type: c,          name: Chacter/m3_red                                   }
       - { start: 0x0001d610,    type: c,          name: Chacter/m3_sc                                    }
-      - { start: 0x0001ffc0,    type: asm,        name: Chacter/m3_scu                                   }
+      - { start: 0x0001ffc0,    type: c,          name: Chacter/m3_scu                                   }
       - { start: 0x000206d0,    type: c,          name: Chacter/m3_wep                                   }
       - { start: 0x00020ca0,    type: c,          name: Chacter/sh_character_battle                      }
       - { start: 0x00024170,    type: c,          name: Chacter/sh_character_status                      }
@@ -597,7 +597,7 @@ segments:
       - { start: 0x001a9760,    type: data,       name: Chacter/m3_play_3d                               }
       - { start: 0x001a9aa0,    type: .data,      name: Chacter/m3_red                                   }
       - { start: 0x001a9ad0,    type: .data,      name: Chacter/m3_sc                                    }
-      - { start: 0x001a9ae0,    type: data,       name: Chacter/m3_scu                                   }
+      - { start: 0x001a9ae0,    type: .data,      name: Chacter/m3_scu                                   }
       - { start: 0x001a9b10,    type: data,       name: Chacter/m3_wep                                   }
       - { start: 0x001a9ba0,    type: data,       name: Chacter_Draw/vifot/sh_kt_vif1ot2                 }
       - { start: 0x001a9bb0,    type: data,       name: Chacter_Draw/_3d_n                               }
@@ -860,7 +860,7 @@ segments:
       - { start: 0x0028cab0,    type: .rodata,    name: Chacter/m3_play_3d                               }
       - { start: 0x0028ccf0,    type: rodata,     name: Chacter/m3_red_rodata                            }
       - { start: 0x0028cee0,    type: .rodata,    name: Chacter/m3_sc                                    }
-      - { start: 0x0028cfd0,    type: rodata,     name: Chacter/m3_scu                                   }
+      - { start: 0x0028cfd0,    type: .rodata,    name: Chacter/m3_scu                                   }
       - { start: 0x0028d200,    type: .rodata,    name: Chacter/m3_wep                                   }
       - { start: 0x0028dbe0,    type: .rodata,    name: Chacter/sh_character_battle                      }
       - { start: 0x0028ddd0,    type: .rodata,    name: Chacter/skelton                                  }
