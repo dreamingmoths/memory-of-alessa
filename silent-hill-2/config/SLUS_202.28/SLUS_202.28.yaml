@@ -425,7 +425,7 @@ segments:
       - { start: 0x00121210,    type: asm,        name: Chacter/m3_bos                                   }
       - { start: 0x00121750,    type: c,          name: Chacter/m3_oni                                   }
       - { start: 0x00121c30,    type: asm,        name: sound/snd_select                                 }
-      - { start: 0x00122340,    type: asm,        name: Chacter/m3_nik                                   }
+      - { start: 0x00122340,    type: c,          name: Chacter/m3_nik                                   }
       - { start: 0x00122560,    type: c,          name: Multi_thr/loadinit/loadinit                      }
       - { start: 0x00122690,    type: c,          name: DBG/dbswitch                                     }
       - { start: 0x00122b20,    type: c,          name: Effect/ef_cartridge                              }
@@ -732,14 +732,20 @@ segments:
       - { start: 0x0024c900,    type: .data,      name: Chacter/m3_play_common                           }
       - { start: 0x0024c960,    type: data,       name: Chacter/m3_maria                                 }
       - { start: 0x0024c980,    type: .data,      name: Chacter/m3_tyu                                   }
-      - { start: 0x0024c990,    type: data,       name: data_0x24c990                                    }
+      - { start: 0x0024c990,    type: data,       name: Chacter/m3_bos                                   }
       - { start: 0x0024ca00,    type: .data,      name: Chacter/m3_oni                                   }
-      - { start: 0x0024ca40,    type: data,       name: data_0x24ca40                                    }
+      - { start: 0x0024ca40,    type: data,       name: sound/snd_select                                 }
+      - { start: 0x0024cb70,    type: .data,      name: Chacter/m3_nik                                   }
       - { start: 0x0024cba8,    type: .data,      name: DBG/dbswitch                                     }
       - { start: 0x0024cbc0,    type: .data,      name: Chacter/m3_maria_sub                             }
-      - { start: 0x0024cd90,    type: data,       name: data_0x24cd90                                    }
+      - { start: 0x0024cd90,    type: data,       name: Enemy/en_oni                                     }
       - { start: 0x0024cff8,    type: .data,      name: Multi_thr/scf/ps2_scf                            }
-      - { start: 0x0024d010,    type: data,       name: data_0x24d010                                    }
+      - { start: 0x0024d010,    type: data,       name: SH2_common/data_load                             }
+      - { start: 0x0024d5d0,    type: data,       name: Event/memo                                       }
+      - { start: 0x0024da50,    type: data,       name: FilesList/fileslist_bg_ob                        }
+      - { start: 0x0024dbf0,    type: data,       name: DS_Pad/dsr_data                                  }
+      - { start: 0x0024e270,    type: data,       name: DS_Pad/ds_sequencer                              }
+      - { start: 0x0024e280,    type: data,       name: DS_Pad/dss_wrapper                               }
       - { start: 0x0024e28c,    type: .data,      name: DBG/dbsw_sys                                     }
       - { start: 0x0024e2a8,    type: data,       name: data_0x24e2a8                                    }
       - { start: 0x0024f000,    type: .data,      name: Chacter/m3_arm                                   }
@@ -1023,7 +1029,7 @@ segments:
       - { start: 0x00297420,    type: rodata,     name: Chacter/m3_bos                                   }
       - { start: 0x002975a0,    type: rodata,     name: Chacter/m3_oni_rodata                            }
       - { start: 0x002976e0,    type: rodata,     name: sound/snd_select                                 }
-      - { start: 0x00297720,    type: rodata,     name: Chacter/m3_nik                                   }
+      - { start: 0x00297720,    type: .rodata,    name: Chacter/m3_nik                                   }
       - { start: 0x00297760,    type: .rodata,    name: DBG/dbswitch                                     }
       - { start: 0x00297790,    type: rodata,     name: Chacter/m3_maria_sub_rodata                      }
       - { start: 0x00298500,    type: .rodata,    name: Chacter/m3_maria_sub                             }
