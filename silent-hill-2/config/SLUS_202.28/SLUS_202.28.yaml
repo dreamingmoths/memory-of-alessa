@@ -138,7 +138,7 @@ segments:
       - { start: 0x00089bc0,    type: c,          name: Multi_thr/dma/texslot                            }
       - { start: 0x00089e30,    type: c,          name: Multi_thr/util/cmd_serv                          }
       - { start: 0x0008b280,    type: asm,        name: Multi_thr/util/utilexcl                          }
-      - { start: 0x0008b390,    type: asm,        name: Multi_thr/util/utilstr                           }
+      - { start: 0x0008b390,    type: c,          name: Multi_thr/util/utilstr                           }
       - { start: 0x0008bbc0,    type: asm,        name: shPad/lib_sh_pad                                 }
       - { start: 0x0008c760,    type: c,          name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x0008f6c0,    type: c,          name: shGs/sh2gfw_GS_NewLoopEnv                        }
@@ -910,7 +910,7 @@ segments:
       - { start: 0x00290270,    type: .rodata,    name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x00290370,    type: .rodata,    name: Multi_thr/dma/texslot                            }
       - { start: 0x002903a0,    type: rodata,     name: Multi_thr/util/cmd_serv_rodata                   }
-      - { start: 0x00290488,    type: rodata,     name: Multi_thr/util/utilstr                           }
+      - { start: 0x00290488,    type: .rodata,    name: Multi_thr/util/utilstr                           }
       - { start: 0x00290490,    type: rodata,     name: shPad/lib_sh_pad                                 }
       - { start: 0x002904a0,    type: .rodata,    name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x00290760,    type: .rodata,    name: shGs/sh2gfw_GsInit                               }
