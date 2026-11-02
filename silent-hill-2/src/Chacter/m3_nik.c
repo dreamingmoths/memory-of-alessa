@@ -59,7 +59,7 @@ void ObjectNIKFunction(SubCharacter* this) {
     
     
     
-    signed short init_frame[11] = {
+    short init_frame[11] = {
         52,
         19,
         0,
@@ -72,7 +72,7 @@ void ObjectNIKFunction(SubCharacter* this) {
         0,
         27
     };
-    signed short init_anime[11] = {
+    short init_anime[11] = {
         2,
         1,
         2,
