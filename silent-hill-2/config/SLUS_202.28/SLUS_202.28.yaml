@@ -1027,7 +1027,7 @@ segments:
       - { start: 0x002971b0,    type: rodata,     name: Chacter/m3_maria_rodata                          }
       - { start: 0x002973f0,    type: rodata,     name: Chacter/m3_tyu_rodata                            }
       - { start: 0x00297420,    type: rodata,     name: Chacter/m3_bos                                   }
-      - { start: 0x002975a0,    type: rodata,     name: Chacter/m3_oni_rodata                            }
+      - { start: 0x002975a0,    type: .rodata,    name: Chacter/m3_oni                                   }
       - { start: 0x002976e0,    type: rodata,     name: sound/snd_select                                 }
       - { start: 0x00297720,    type: .rodata,    name: Chacter/m3_nik                                   }
       - { start: 0x00297760,    type: .rodata,    name: DBG/dbswitch                                     }
