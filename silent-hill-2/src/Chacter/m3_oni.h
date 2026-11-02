@@ -5,8 +5,10 @@
 #include "Chacter/character.h"
 
 #define ONI_PLAY_ANIME_ID_START 5400
-#define ONI_PLAY_ANIM_5401      5401
-#define D_ONI_ANIM_START        6350
+#define ONI_PLAY_ANIM(id) (id + ONI_PLAY_ANIME_ID_START)
+
+#define ONI_DRAMA_ANIME_ID_START 6350
+#define ONI_DRAMA_ANIM(id) (id + ONI_DRAMA_ANIME_ID_START)
 
 void shCharacterSetEnemyONILow(SubCharacter* scp);
 int shCharacterEnemyONIAnimeSet(SubCharacter* scp, int anime_id);
