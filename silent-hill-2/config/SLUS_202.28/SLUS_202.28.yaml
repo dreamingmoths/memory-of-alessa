@@ -565,7 +565,7 @@ segments:
       - { start: 0x001951b0,    type: c,          name: view/vc_prio                                     }
       - { start: 0x00195480,    type: c,          name: Effect2/hh_class_blood_05                        }
       - { start: 0x00195cc0,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_02      }
-      - { start: 0x00196800,    type: asm,        name: Effect2/hh_class_water_80                        }
+      - { start: 0x00196800,    type: c,          name: Effect2/hh_class_water_80                        }
       - { start: 0x00197870,    type: asm,        name: Effect2/hh_class_water_90                        }
       - { start: 0x001988b0,    type: asm,        name: Effect2/hh_class_boatmask                        }
       - { start: 0x00199090,    type: asm,        name: pause                                            }
@@ -822,7 +822,9 @@ segments:
       - { start: 0x0027c230,    type: .data,      name: Effect2/hh_memory_manage                         }
       - { start: 0x0027c240,    type: data,       name: data_0x27c240                                    }
       - { start: 0x0027d8d0,    type: .data,      name: Effect2/hh_class_blood_05                        }
-      - { start: 0x0027dc10,    type: data,       name: data_0x27dc10                                    }
+      - { start: 0x0027dc10,    type: data,       name: Effect2/hh_class_blood_splash_phenomenon_02      }
+      - { start: 0x0027dc40,    type: .data,      name: Effect2/hh_class_water_80                        }
+      - { start: 0x0027dea8,    type: data,       name: data_0x27dea8                                    }
       # -----------------------------------------    vudata   ------------------------------------------ #
       - { start: 0x0027e280,    type: vudata,     name: vsm/vudata/model2_vu_load                        }
       - { start: 0x0027ff40,    type: vudata,     name: vsm/vudata/model3_mpg0_clip0                     }
@@ -1306,7 +1308,7 @@ segments:
       - { vram:  0x0122b308,    type: bss,        name: sound/sh_sd_call                                 }
       - { vram:  0x0122b3c0,    type: .bss,       name: Effect2/hh_memory_manage                         }
       - { vram:  0x0126fbc0,    type: .bss,       name: SH2_common/mem_share                             }
-      - { vram:  0x01f01bc0,    type: bss,        name: Effect2/hh_class_water_80                        }
+      - { vram:  0x01f01bc0,    type: .bss,       name: Effect2/hh_class_water_80                        }
       - { vram:  0x01f01bf0,    type: bss,        name: Effect2/hh_class_water_90                        }
       - { vram:  0x01f01c28,    type: bss,        name: pause                                            }
       - { vram:  0x01f01dd0,    type: bss,        name: now_loading                                      }
