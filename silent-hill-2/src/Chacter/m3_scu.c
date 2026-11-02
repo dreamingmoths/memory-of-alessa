@@ -5,7 +5,7 @@
 #include "Chacter/m3_scu.h"
 #include "Chacter/m3_sc.h"
 
-static int EnemySCUInit(SubCharacter*);
+static int EnemySCUInit(SubCharacter* scp);
 static void EnemySCUFunction(SubCharacter* this);
 
 static const AnimeInfo scu_anim[] = {

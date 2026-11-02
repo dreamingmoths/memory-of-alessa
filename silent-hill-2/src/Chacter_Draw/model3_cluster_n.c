@@ -3,6 +3,7 @@
 #include "sce/libvu0.h"
 #include "sce/eestruct.h"
 #include "sce/libdma.h"
+#include "Chacter_Draw/vifot/sh_kt_pkbuf.h"
 #include "Chacter_Draw/vifot/sh_kt_vif0pkbuf.h"
 #include "Chacter_Draw/model_common.h"
 #include "Chacter_Draw/model3_n.h"

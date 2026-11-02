@@ -8,7 +8,14 @@ static void SetNext(sceDmaTag* tag, sceDmaTag* p);
 static sceDmaTag* Next(sceDmaTag* tag);
 static u_int Depth2(sceDmaTag* tag);
 static sceDmaTag* Link(sceDmaTag* tag);
-UNMIGRATED (/* static */ sceDmaTag term); // size: 0x10, address: 0x2A94A0
+
+static sceDmaTag term = {
+        /* .qwc = */ 0,
+        /* .mark = */ 0,
+        /* .id = */ 112,
+        /* .next = */ NULL,
+        /* .p = */ {},
+};
 
 #line 221
 void ktVif1Ot2Init(ktVif1Ot2* ot, u_int n_bits_1, sceDmaTag* top_1, u_int n_bits_2, sceDmaTag* top_2) {

@@ -599,7 +599,7 @@ segments:
       - { start: 0x001a9ad0,    type: .data,      name: Chacter/m3_sc                                    }
       - { start: 0x001a9ae0,    type: .data,      name: Chacter/m3_scu                                   }
       - { start: 0x001a9b10,    type: data,       name: Chacter/m3_wep                                   }
-      - { start: 0x001a9ba0,    type: data,       name: Chacter_Draw/vifot/sh_kt_vif1ot2                 }
+      - { start: 0x001a9ba0,    type: .data,      name: Chacter_Draw/vifot/sh_kt_vif1ot2                 }
       - { start: 0x001a9bb0,    type: data,       name: Chacter_Draw/_3d_n                               }
       - { start: 0x001a9c30,    type: .data,      name: Chacter_Draw/clani                               }
       - { start: 0x001a9c40,    type: .data,      name: Chacter_Draw/light_n                             }
@@ -745,7 +745,7 @@ segments:
       - { start: 0x0024da50,    type: data,       name: FilesList/fileslist_bg_ob                        }
       - { start: 0x0024dbf0,    type: data,       name: DS_Pad/dsr_data                                  }
       - { start: 0x0024e270,    type: data,       name: DS_Pad/ds_sequencer                              }
-      - { start: 0x0024e280,    type: data,       name: DS_Pad/dss_wrapper                               }
+      - { start: 0x0024e280,    type: .data,      name: DS_Pad/dss_wrapper                               }
       - { start: 0x0024e28c,    type: .data,      name: DBG/dbsw_sys                                     }
       - { start: 0x0024e2a8,    type: data,       name: data_0x24e2a8                                    }
       - { start: 0x0024f000,    type: .data,      name: Chacter/m3_arm                                   }
@@ -1128,10 +1128,10 @@ segments:
       - { vram:  0x003cece0,    type: .bss,       name: Chacter/sh_character_battle                      }
       - { vram:  0x003cedc8,    type: bss,        name: bss_0x03cedc8                                    }
       - { vram:  0x003cefc0,    type: .bss,       name: Chacter/skelton                                  }
-      - { vram:  0x003e66d0,    type: bss,        name: Chacter_Draw/vifot/sh_kt_vif0                    }
-      - { vram:  0x003e66e0,    type: bss,        name: Chacter_Draw/vifot/sh_kt_vif0pkbuf               }
-      - { vram:  0x003e8700,    type: bss,        name: Chacter_Draw/vifot/sh_kt_vif1                    }
-      - { vram:  0x003e8710,    type: bss,        name: Chacter_Draw/vifot/sh_kt_vif1pkbuf               }
+      - { vram:  0x003e66d0,    type: .bss,       name: Chacter_Draw/vifot/sh_kt_vif0                    }
+      - { vram:  0x003e66e0,    type: .bss,       name: Chacter_Draw/vifot/sh_kt_vif0pkbuf               }
+      - { vram:  0x003e8700,    type: .bss,       name: Chacter_Draw/vifot/sh_kt_vif1                    }
+      - { vram:  0x003e8710,    type: .bss,       name: Chacter_Draw/vifot/sh_kt_vif1pkbuf               }
       - { vram:  0x00418780,    type: .bss,       name: Chacter_Draw/clani                               }
       - { vram:  0x00419380,    type: bss,        name: Chacter_Draw/light_n                             }
       - { vram:  0x00419380,    type: bss,        name: Event/stage/stg_apart_w2f                        }

@@ -1,7 +1,7 @@
 #include "Chacter_Draw/vifot/sh_kt_vif1.h"
+#include "sce/libdma.h"
 
-UNMIGRATED(sceDmaChan* sceDmaGetChan(int id));
-UNMIGRATED(Vif1Work vif1_work);
+Vif1Work vif1_work;
 
 
 #line 34
