@@ -39,6 +39,7 @@ SH2_DATA: DataTable = [
     StructData(name="d_scu_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
     StructData(name="scu_anim",                             type=Sh2.AnimeInfo,                        count=36                       ),
     SimpleData(name="dscu_anime_adr_list",                  type="<10i"                                                               ),
+    StructData(name="_wave_element_list",                   type=Sh2.WaveElement,                      count=3                        ),
 ]
 
 SH3_DATA: DataTable = []

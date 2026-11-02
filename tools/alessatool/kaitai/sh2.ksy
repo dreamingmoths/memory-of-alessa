@@ -2623,6 +2623,47 @@ types:
 
       - size: 1
 
+  sh_boat_work:
+    seq:
+      - id: boat_p
+        type: pointer('sub_character')
+
+      - id: status_now
+        type: u1
+
+      - id: status_prev
+        type: u1
+
+      - size: 2
+
+      - id: sub_st_flg
+        type: u4
+
+      - id: anime_st_flg
+        type: u4
+
+      - id: anime_pause
+        type: u4
+
+      - id: anim_change
+        type: u1
+
+      - id: anime_change_now
+        type: u1
+
+      - id: anime_change_prev
+        type: u1
+
+      - size: 1
+
+      - id: anime_change_timer
+        type: f4
+
+      - id: anime_speed
+        type: s2
+
+      - size: 2
+
   text_pos:
     seq:
       - id: block_index
@@ -3298,6 +3339,17 @@ types:
 
       - size: 8
 
+  motion_table_infomeation:
+    seq:
+      - id: diff_time
+        type: f4
+
+      - id: diff_scale_ratio
+        type: f4
+
+      - id: diff_rgba_ratio
+        type: f4
+
   hh_class_wrapper_work:
     seq:
       - id: view_frustum_primitive_clip_matrix
@@ -3332,6 +3384,132 @@ types:
         type: pointer('data')
 
       - size: 8
+
+  wave_element:
+    seq:
+      - id: enable
+        type: u4
+
+      - id: area
+        type: u4
+
+      - id: attribute
+        type: u4
+
+      - id: wave_origin
+        type: u4
+
+      - id: post_history
+        type: u4
+        repeat: expr
+        repeat-expr: 8
+
+      - id: power
+        type: f4
+
+      - id: impact_grid_index
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: max_distance0
+        type: f4
+
+      - id: lost_time
+        type: f4
+
+      - id: timer
+        type: f4
+
+      - id: arrival
+        type: f4
+
+      - id: omega
+        type: f4
+
+      - id: verocity
+        type: f4
+
+  wave_area_infomeation:
+    seq:
+      - id: world_location
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: grid_wh
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: grid_index
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: p_view_area_list
+        type: pointer('data')
+
+      - id: view_area_list_max
+        type: u4
+
+      - id: p_grid_y_value
+        type: pointer('data')
+
+      - size: 12
+
+      - id: specular_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient0_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient1_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_st_defference
+        type: pointer('data')
+
+      - size: 12
+
+  wave_area_grid_link_infomeation:
+    seq:
+      - id: p_grid_y_value_link
+        type: pointer('data')
+        repeat: expr
+        repeat-expr: 2
+
+      - id: vertical_horizontal_flag
+        type: u4
+
+      - id: length
+        type: u4
+
+      - id: x_index_max
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: x_index_start
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: z_index_start
+        type: u4
+        repeat: expr
+        repeat-expr: 2
 
   en_sound_queue:
     seq:
@@ -4246,6 +4424,28 @@ types:
 
       - id: visible
         type: s4
+
+      - size: 12
+
+  event_cam_set_data:
+    seq:
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: itr
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rot
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: roll
+        type: f4
 
       - size: 12
 
@@ -6096,6 +6296,181 @@ types:
 
       - size: 2
 
+  demo_light_work:
+    seq:
+      - id: parallel
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: parallel_cid
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: point
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: point_cid
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: spot
+        type: s2
+
+      - id: amb
+        type: s2
+
+      - id: ref
+        type: s2
+
+      - size: 2
+
+      - id: demo_p_light0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_light1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_light2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_base_vertex_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotcol
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotdecay
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ref_light_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ref_light_col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  aaa:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
   load_bg_common_info_t:
     seq:
       - id: glb_crd
@@ -6658,6 +7033,46 @@ types:
         type: u1
         repeat: expr
         repeat-expr: 512
+
+  save_data:
+    seq:
+      - id: version
+        type: u4
+
+      - id: scene
+        type: u2
+
+      - size: 10
+
+      - id: jms_pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: playing
+        type: playing_info
+
+      - id: game_flag
+        type: game_flag
+
+      - id: item
+        type: item
+
+      - id: chara
+        type: character_info
+
+      - id: key_config
+        type: pad_key_config
+
+  save_data_all:
+    seq:
+      - id: d
+        type: save_data
+
+      - id: pad
+        type: s1
+        repeat: expr
+        repeat-expr: 1456
 
   sce_cd_clock:
     seq:

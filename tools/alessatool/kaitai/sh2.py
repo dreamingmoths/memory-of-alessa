@@ -22,6 +22,41 @@ class Sh2(KaitaiStruct):
     def _fetch_instances(self):
         pass
 
+    class Aaa(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Aaa, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.decay = []
+            for i in range(4):
+                self.decay.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.col)):
+                pass
+
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.decay)):
+                pass
+
+
+
     class AnimeInfo(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.AnimeInfo, self).__init__(_io)
@@ -1470,6 +1505,227 @@ class Sh2(KaitaiStruct):
             pass
 
 
+    class DemoLightWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DemoLightWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.parallel = []
+            for i in range(3):
+                self.parallel.append(self._io.read_s2le())
+
+            self.parallel_cid = []
+            for i in range(3):
+                self.parallel_cid.append(self._io.read_s2le())
+
+            self.point = []
+            for i in range(3):
+                self.point.append(self._io.read_s2le())
+
+            self.point_cid = []
+            for i in range(3):
+                self.point_cid.append(self._io.read_s2le())
+
+            self.spot = self._io.read_s2le()
+            self.amb = self._io.read_s2le()
+            self.ref = self._io.read_s2le()
+            self._unnamed7 = self._io.read_bytes(2)
+            self.demo_p_light0 = []
+            for i in range(4):
+                self.demo_p_light0.append(self._io.read_f4le())
+
+            self.demo_p_color0 = []
+            for i in range(4):
+                self.demo_p_color0.append(self._io.read_f4le())
+
+            self.demo_p_light1 = []
+            for i in range(4):
+                self.demo_p_light1.append(self._io.read_f4le())
+
+            self.demo_p_color1 = []
+            for i in range(4):
+                self.demo_p_color1.append(self._io.read_f4le())
+
+            self.demo_p_light2 = []
+            for i in range(4):
+                self.demo_p_light2.append(self._io.read_f4le())
+
+            self.demo_p_color2 = []
+            for i in range(4):
+                self.demo_p_color2.append(self._io.read_f4le())
+
+            self.demo_ambient = []
+            for i in range(4):
+                self.demo_ambient.append(self._io.read_f4le())
+
+            self.demo_vertex_ambient = []
+            for i in range(4):
+                self.demo_vertex_ambient.append(self._io.read_f4le())
+
+            self.demo_base_ambient = []
+            for i in range(4):
+                self.demo_base_ambient.append(self._io.read_f4le())
+
+            self.demo_base_vertex_color = []
+            for i in range(4):
+                self.demo_base_vertex_color.append(self._io.read_f4le())
+
+            self.demo_spotcol = []
+            for i in range(4):
+                self.demo_spotcol.append(self._io.read_f4le())
+
+            self.demo_spotdir = []
+            for i in range(4):
+                self.demo_spotdir.append(self._io.read_f4le())
+
+            self.demo_spotpos = []
+            for i in range(4):
+                self.demo_spotpos.append(self._io.read_f4le())
+
+            self.demo_spotdecay = []
+            for i in range(4):
+                self.demo_spotdecay.append(self._io.read_f4le())
+
+            self.demo_pointcol0 = []
+            for i in range(4):
+                self.demo_pointcol0.append(self._io.read_f4le())
+
+            self.demo_pointpos0 = []
+            for i in range(4):
+                self.demo_pointpos0.append(self._io.read_f4le())
+
+            self.demo_pointdecay0 = []
+            for i in range(4):
+                self.demo_pointdecay0.append(self._io.read_f4le())
+
+            self.demo_pointcol1 = []
+            for i in range(4):
+                self.demo_pointcol1.append(self._io.read_f4le())
+
+            self.demo_pointpos1 = []
+            for i in range(4):
+                self.demo_pointpos1.append(self._io.read_f4le())
+
+            self.demo_pointdecay1 = []
+            for i in range(4):
+                self.demo_pointdecay1.append(self._io.read_f4le())
+
+            self.demo_pointcol2 = []
+            for i in range(4):
+                self.demo_pointcol2.append(self._io.read_f4le())
+
+            self.demo_pointpos2 = []
+            for i in range(4):
+                self.demo_pointpos2.append(self._io.read_f4le())
+
+            self.demo_pointdecay2 = []
+            for i in range(4):
+                self.demo_pointdecay2.append(self._io.read_f4le())
+
+            self.demo_ref_light_dir = []
+            for i in range(4):
+                self.demo_ref_light_dir.append(self._io.read_f4le())
+
+            self.demo_ref_light_col = []
+            for i in range(4):
+                self.demo_ref_light_col.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.parallel)):
+                pass
+
+            for i in range(len(self.parallel_cid)):
+                pass
+
+            for i in range(len(self.point)):
+                pass
+
+            for i in range(len(self.point_cid)):
+                pass
+
+            for i in range(len(self.demo_p_light0)):
+                pass
+
+            for i in range(len(self.demo_p_color0)):
+                pass
+
+            for i in range(len(self.demo_p_light1)):
+                pass
+
+            for i in range(len(self.demo_p_color1)):
+                pass
+
+            for i in range(len(self.demo_p_light2)):
+                pass
+
+            for i in range(len(self.demo_p_color2)):
+                pass
+
+            for i in range(len(self.demo_ambient)):
+                pass
+
+            for i in range(len(self.demo_vertex_ambient)):
+                pass
+
+            for i in range(len(self.demo_base_ambient)):
+                pass
+
+            for i in range(len(self.demo_base_vertex_color)):
+                pass
+
+            for i in range(len(self.demo_spotcol)):
+                pass
+
+            for i in range(len(self.demo_spotdir)):
+                pass
+
+            for i in range(len(self.demo_spotpos)):
+                pass
+
+            for i in range(len(self.demo_spotdecay)):
+                pass
+
+            for i in range(len(self.demo_pointcol0)):
+                pass
+
+            for i in range(len(self.demo_pointpos0)):
+                pass
+
+            for i in range(len(self.demo_pointdecay0)):
+                pass
+
+            for i in range(len(self.demo_pointcol1)):
+                pass
+
+            for i in range(len(self.demo_pointpos1)):
+                pass
+
+            for i in range(len(self.demo_pointdecay1)):
+                pass
+
+            for i in range(len(self.demo_pointcol2)):
+                pass
+
+            for i in range(len(self.demo_pointpos2)):
+                pass
+
+            for i in range(len(self.demo_pointdecay2)):
+                pass
+
+            for i in range(len(self.demo_ref_light_dir)):
+                pass
+
+            for i in range(len(self.demo_ref_light_col)):
+                pass
+
+
+
     class DramaDemoAnimInfo(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.DramaDemoAnimInfo, self).__init__(_io)
@@ -2432,6 +2688,43 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
+
+
+    class EventCamSetData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EventCamSetData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.itr = []
+            for i in range(4):
+                self.itr.append(self._io.read_f4le())
+
+            self.rot = []
+            for i in range(4):
+                self.rot.append(self._io.read_f4le())
+
+            self.roll = self._io.read_f4le()
+            self._unnamed4 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.itr)):
+                pass
+
+            for i in range(len(self.rot)):
+                pass
+
 
 
     class EventDoorSound(KaitaiStruct):
@@ -4603,6 +4896,23 @@ class Sh2(KaitaiStruct):
 
 
 
+    class MotionTableInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.MotionTableInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.diff_time = self._io.read_f4le()
+            self.diff_scale_ratio = self._io.read_f4le()
+            self.diff_rgba_ratio = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class MovieWrk(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.MovieWrk, self).__init__(_io)
@@ -5880,6 +6190,63 @@ class Sh2(KaitaiStruct):
         def _fetch_instances(self):
             pass
             for i in range(len(self.data)):
+                pass
+
+
+
+    class SaveData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SaveData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.version = self._io.read_u4le()
+            self.scene = self._io.read_u2le()
+            self._unnamed2 = self._io.read_bytes(10)
+            self.jms_pos = []
+            for i in range(4):
+                self.jms_pos.append(self._io.read_f4le())
+
+            self.playing = Sh2.PlayingInfo(self._io, self, self._root)
+            self.game_flag = Sh2.GameFlag(self._io, self, self._root)
+            self.item = Sh2.Item(self._io, self, self._root)
+            self.chara = Sh2.CharacterInfo(self._io, self, self._root)
+            self.key_config = Sh2.PadKeyConfig(self._io, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.jms_pos)):
+                pass
+
+            self.playing._fetch_instances()
+            self.game_flag._fetch_instances()
+            self.item._fetch_instances()
+            self.chara._fetch_instances()
+            self.key_config._fetch_instances()
+
+
+    class SaveDataAll(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SaveDataAll, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.d = Sh2.SaveData(self._io, self, self._root)
+            self.pad = []
+            for i in range(1456):
+                self.pad.append(self._io.read_s1())
+
+
+
+        def _fetch_instances(self):
+            pass
+            self.d._fetch_instances()
+            for i in range(len(self.pad)):
                 pass
 
 
@@ -8917,6 +9284,35 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
+
+
+    class ShBoatWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShBoatWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.boat_p = Sh2.Pointer(u"sub_character", self._io, self, self._root)
+            self.status_now = self._io.read_u1()
+            self.status_prev = self._io.read_u1()
+            self._unnamed3 = self._io.read_bytes(2)
+            self.sub_st_flg = self._io.read_u4le()
+            self.anime_st_flg = self._io.read_u4le()
+            self.anime_pause = self._io.read_u4le()
+            self.anim_change = self._io.read_u1()
+            self.anime_change_now = self._io.read_u1()
+            self.anime_change_prev = self._io.read_u1()
+            self._unnamed10 = self._io.read_bytes(1)
+            self.anime_change_timer = self._io.read_f4le()
+            self.anime_speed = self._io.read_s2le()
+            self._unnamed13 = self._io.read_bytes(2)
+
+
+        def _fetch_instances(self):
+            pass
+            self.boat_p._fetch_instances()
 
 
     class ShCharaInfo(KaitaiStruct):
@@ -13128,6 +13524,162 @@ class Sh2(KaitaiStruct):
             pass
             self.v._fetch_instances()
             for i in range(len(self.dummy)):
+                pass
+
+
+
+    class WaveAreaGridLinkInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveAreaGridLinkInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.p_grid_y_value_link = []
+            for i in range(2):
+                self.p_grid_y_value_link.append(Sh2.Pointer(u"data", self._io, self, self._root))
+
+            self.vertical_horizontal_flag = self._io.read_u4le()
+            self.length = self._io.read_u4le()
+            self.x_index_max = []
+            for i in range(2):
+                self.x_index_max.append(self._io.read_u4le())
+
+            self.x_index_start = []
+            for i in range(2):
+                self.x_index_start.append(self._io.read_u4le())
+
+            self.z_index_start = []
+            for i in range(2):
+                self.z_index_start.append(self._io.read_u4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.p_grid_y_value_link)):
+                pass
+                self.p_grid_y_value_link[i]._fetch_instances()
+
+            for i in range(len(self.x_index_max)):
+                pass
+
+            for i in range(len(self.x_index_start)):
+                pass
+
+            for i in range(len(self.z_index_start)):
+                pass
+
+
+
+    class WaveAreaInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveAreaInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.world_location = []
+            for i in range(4):
+                self.world_location.append(self._io.read_f4le())
+
+            self.grid_wh = []
+            for i in range(4):
+                self.grid_wh.append(self._io.read_f4le())
+
+            self.grid_index = []
+            for i in range(2):
+                self.grid_index.append(self._io.read_u4le())
+
+            self.p_view_area_list = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.view_area_list_max = self._io.read_u4le()
+            self.p_grid_y_value = Sh2.Pointer(u"data", self._io, self, self._root)
+            self._unnamed6 = self._io.read_bytes(12)
+            self.specular_base_rgba = []
+            for i in range(4):
+                self.specular_base_rgba.append(self._io.read_f4le())
+
+            self.ambient0_base_rgba = []
+            for i in range(4):
+                self.ambient0_base_rgba.append(self._io.read_f4le())
+
+            self.ambient1_base_rgba = []
+            for i in range(4):
+                self.ambient1_base_rgba.append(self._io.read_f4le())
+
+            self.light_base_rgba = []
+            for i in range(4):
+                self.light_base_rgba.append(self._io.read_f4le())
+
+            self.p_st_defference = Sh2.Pointer(u"data", self._io, self, self._root)
+            self._unnamed12 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.world_location)):
+                pass
+
+            for i in range(len(self.grid_wh)):
+                pass
+
+            for i in range(len(self.grid_index)):
+                pass
+
+            self.p_view_area_list._fetch_instances()
+            self.p_grid_y_value._fetch_instances()
+            for i in range(len(self.specular_base_rgba)):
+                pass
+
+            for i in range(len(self.ambient0_base_rgba)):
+                pass
+
+            for i in range(len(self.ambient1_base_rgba)):
+                pass
+
+            for i in range(len(self.light_base_rgba)):
+                pass
+
+            self.p_st_defference._fetch_instances()
+
+
+    class WaveElement(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveElement, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.enable = self._io.read_u4le()
+            self.area = self._io.read_u4le()
+            self.attribute = self._io.read_u4le()
+            self.wave_origin = self._io.read_u4le()
+            self.post_history = []
+            for i in range(8):
+                self.post_history.append(self._io.read_u4le())
+
+            self.power = self._io.read_f4le()
+            self.impact_grid_index = []
+            for i in range(2):
+                self.impact_grid_index.append(self._io.read_u4le())
+
+            self.max_distance0 = self._io.read_f4le()
+            self.lost_time = self._io.read_f4le()
+            self.timer = self._io.read_f4le()
+            self.arrival = self._io.read_f4le()
+            self.omega = self._io.read_f4le()
+            self.verocity = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.post_history)):
+                pass
+
+            for i in range(len(self.impact_grid_index)):
                 pass
 
 
