@@ -6,7 +6,20 @@
 
 #define ENEMY_MAX 32
 #define EnKIND_NONE 0
+#define EnKIND_SCU  1
+#define EnKIND_MKN  2
+#define EnKIND_TYU  3
+#define EnKIND_RED  4
+#define EnKIND_ONI  5
+#define EnKIND_NSE  6
 #define EnKIND_IKE  7
+#define EnKIND_PAP  8
+#define EnKIND_EDB  9
+#define EnKIND_ARM  10
+#define EnKIND_BOS  11
+#define EnKIND_NIK  12
+#define EnKIND_TY2  13
+#define EnKIND_TY3  14
 #define EnKIND_INS  15
 
 #define SET_DP_STATE_LV(_dp, _slv, _sslv) do { \

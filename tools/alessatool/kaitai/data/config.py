@@ -43,6 +43,8 @@ SH2_DATA: DataTable = [
     StructData(name="nik_anim",                             type=Sh2.AnimeInfo,                        count=4                        ),
     StructData(name="term",                                 type=Sh2.SceDmaTag,                        count=1                        ),
     SimpleData(name="_Peripheral_Controller_SendData",      type="<12c",                               pattern=[2, 6]                 ),
+    StructData(name="d_oni_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
+    StructData(name="oni_anim",                             type=Sh2.AnimeInfo,                        count=16                       ),
 ]
 
 SH3_DATA: DataTable = []
