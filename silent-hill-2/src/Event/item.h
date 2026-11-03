@@ -52,7 +52,7 @@
 #define SH2_ITEM_48      48
 #define SH2_ITEM_49      49
 #define SH2_ITEM_50      50
-#define SH2_ITEM_51      51
+#define SH2_ITEM_NEEDLE  51
 #define SH2_ITEM_52      52
 #define SH2_ITEM_53      53
 #define SH2_ITEM_54      54

@@ -5,7 +5,7 @@ from functools import reduce
 from pathlib import Path
 from struct import unpack, calcsize
 from io import BytesIO
-from sys import stdout
+from sys import stderr, stdout
 from typing import TextIO, Type
 from re import MULTILINE, finditer, sub
 
@@ -340,6 +340,8 @@ def migrate_struct_data(request: StructDataMigrationRequest):
         request.stream.write("});\n")
 
 def default_to_str(value):
+    if isinstance(value, float):
+        return find_smallest_float_string(value)
     if isinstance(value, bytes):
         assert len(value) == 1
         return str(int(value[0]))
@@ -416,6 +418,19 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
         else:
             raise NotImplementedError("n > 2")
 
+def migrate_asm_file(project: str, path: str | Path):
+    with open(path) as asm_file:
+        asm_contents = asm_file.read()
+    
+    data_labels = map(lambda m : m.group(1).replace('"', ""), finditer("^dlabel (.*+)", asm_contents, flags=MULTILINE))
+    store = DataMigrationStore()
+
+    for label in data_labels:
+        if label.startswith("D_"): continue
+        try:
+            run_data_migration(DataMigrationRequest(project, label, stdout, store))
+        except Exception as e:
+            stderr.write(e)
 
 def run_data_migration(request: DataMigrationRequest):
     name = request.name

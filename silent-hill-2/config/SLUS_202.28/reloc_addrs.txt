@@ -14125,14 +14125,14 @@ rom:0x05A6A0 reloc:MIPS_26                             symbol:shRandF
 rom:0x05A6D8 reloc:MIPS_26                             symbol:enSoundCall
 rom:0x05A710 reloc:MIPS_26                             symbol:shRandF
 rom:0x05A744 reloc:MIPS_26                             symbol:enSoundCall
-rom:0x05A770 reloc:MIPS_HI16                           symbol:"@994_0x002AA840"
-rom:0x05A774 reloc:MIPS_LO16                           symbol:"@994_0x002AA840"
-rom:0x05A78C reloc:MIPS_HI16                           symbol:"@995_0x002AA860"
-rom:0x05A790 reloc:MIPS_LO16                           symbol:"@995_0x002AA860"
-rom:0x05A7A8 reloc:MIPS_HI16                           symbol:"@996"
-rom:0x05A7AC reloc:MIPS_LO16                           symbol:"@996"
-rom:0x05A7C4 reloc:MIPS_HI16                           symbol:"@997"
-rom:0x05A7C8 reloc:MIPS_LO16                           symbol:"@997"
+rom:0x05A770 reloc:MIPS_HI16                           symbol:"vitarity_0x002AA840"
+rom:0x05A774 reloc:MIPS_LO16                           symbol:"vitarity_0x002AA840"
+rom:0x05A78C reloc:MIPS_HI16                           symbol:"endurance_0x002AA860"
+rom:0x05A790 reloc:MIPS_LO16                           symbol:"endurance_0x002AA860"
+rom:0x05A7A8 reloc:MIPS_HI16                           symbol:"vitarity2_0x002AA880"
+rom:0x05A7AC reloc:MIPS_LO16                           symbol:"vitarity2_0x002AA880"
+rom:0x05A7C4 reloc:MIPS_HI16                           symbol:"endurance2_0x002AA8A0"
+rom:0x05A7C8 reloc:MIPS_LO16                           symbol:"endurance2_0x002AA8A0"
 rom:0x05A7E0 reloc:MIPS_26                             symbol:enGetMode
 rom:0x05A844 reloc:MIPS_26                             symbol:enSetHP
 rom:0x05A870 reloc:MIPS_26                             symbol:enPAPAnimeSet
@@ -14459,8 +14459,8 @@ rom:0x05D270 reloc:MIPS_26                             symbol:enSoundCall3D
 rom:0x05D294 reloc:MIPS_26                             symbol:enSoundCall
 rom:0x05D2C4 reloc:MIPS_26                             symbol:enFlagSetNoDamage
 rom:0x05D2D8 reloc:MIPS_26                             symbol:enFlagResetNoDamage
-rom:0x05D310 reloc:MIPS_HI16                           symbol:"@1755_0x002AA908"
-rom:0x05D314 reloc:MIPS_LO16                           symbol:"@1755_0x002AA908"
+rom:0x05D310 reloc:MIPS_HI16                           symbol:"recover_rate_0x002AA908"
+rom:0x05D314 reloc:MIPS_LO16                           symbol:"recover_rate_0x002AA908"
 rom:0x05D32C reloc:MIPS_26                             symbol:enGetMode
 rom:0x05D350 reloc:MIPS_26                             symbol:enAddEnduranceDT
 rom:0x05D380 reloc:MIPS_HI16                           symbol:"@1765"
@@ -89300,7 +89300,7 @@ rom:0x1966A4 reloc:MIPS_26                             symbol:fptoui
 rom:0x1966B8 reloc:MIPS_26                             symbol:sceVu0CopyVector
 rom:0x1966C8 reloc:MIPS_26                             symbol:sceVu0CopyVector
 rom:0x19673C reloc:MIPS_26                             symbol:Impact_Parameter_Calculator
-rom:0x27DC78 reloc:MIPS_32                             symbol:_area00_view_list_0x0037D540
+rom:0x27DC78 reloc:MIPS_32                             symbol:_area00_view_list
 rom:0x196814 reloc:MIPS_26                             symbol:memset
 // rom:0x196848 reloc:MIPS_HI16                           symbol:"@51"
 // rom:0x19684C reloc:MIPS_LO16                           symbol:"@51"
@@ -89308,22 +89308,22 @@ rom:0x196860 reloc:MIPS_26                             symbol:sceVu0CopyVector
 // rom:0x196868 reloc:MIPS_HI16                           symbol:"@53"
 // rom:0x19686C reloc:MIPS_LO16                           symbol:"@53"
 rom:0x196880 reloc:MIPS_26                             symbol:sceVu0CopyVector
-rom:0x196894 reloc:MIPS_HI16           addend:+0x30    symbol:_Area_Info_List_0x0037D550
-rom:0x196898 reloc:MIPS_LO16           addend:+0x30    symbol:_Area_Info_List_0x0037D550
+rom:0x196894 reloc:MIPS_HI16           addend:+0x30    symbol:_Area_Info_List
+rom:0x196898 reloc:MIPS_LO16           addend:+0x30    symbol:_Area_Info_List
 rom:0x196900 reloc:MIPS_26                             symbol:HH_Vif1Packet_Current_Get
 rom:0x196918 reloc:MIPS_26                             symbol:HH_ClassWrapper_ViewDirection_Get
 rom:0x196930 reloc:MIPS_26                             symbol:HH_ClassWrapper_SpotLight_EnvironmentParameter_Get
-rom:0x196940 reloc:MIPS_HI16                           symbol:Light_Base_105_0x0037D700
-rom:0x196944 reloc:MIPS_LO16                           symbol:Light_Base_105_0x0037D700
+rom:0x196940 reloc:MIPS_HI16                           symbol:Light_Base
+rom:0x196944 reloc:MIPS_LO16                           symbol:Light_Base
 rom:0x196948 reloc:MIPS_26                             symbol:sceVu0MulVector
 rom:0x196958 reloc:MIPS_26                             symbol:sceVu0Normalize
-// rom:0x196960 reloc:MIPS_HI16                           symbol:flag$112
-// rom:0x196964 reloc:MIPS_LO16                           symbol:flag$112
-rom:0x196970 reloc:MIPS_HI16                           symbol:_n_115
-rom:0x196974 reloc:MIPS_LO16                           symbol:_n_115
+// rom:0x196960 reloc:MIPS_HI16                           symbol:flag
+// rom:0x196964 reloc:MIPS_LO16                           symbol:flag
+rom:0x196970 reloc:MIPS_HI16                           symbol:_n
+rom:0x196974 reloc:MIPS_LO16                           symbol:_n
 rom:0x19697C reloc:MIPS_26                             symbol:sceVu0InnerProduct
-rom:0x196998 reloc:MIPS_HI16                           symbol:_n_115
-rom:0x19699C reloc:MIPS_LO16                           symbol:_n_115
+rom:0x196998 reloc:MIPS_HI16                           symbol:_n
+rom:0x19699C reloc:MIPS_LO16                           symbol:_n
 rom:0x1969A0 reloc:MIPS_26                             symbol:sceVu0ScaleVectorXYZ
 rom:0x1969B4 reloc:MIPS_26                             symbol:sceVu0SubVector
 rom:0x1969F8 reloc:MIPS_26                             symbol:sceVu0ScaleVectorXYZ
@@ -89336,20 +89336,20 @@ rom:0x196A58 reloc:MIPS_26                             symbol:HH_ClassWrapper_Vi
 rom:0x196A6C reloc:MIPS_26                             symbol:sceVu0MulMatrix
 rom:0x196A74 reloc:MIPS_26                             symbol:HH_Vif1PacketBuffer_GifTag_Open
 rom:0x196A80 reloc:MIPS_26                             symbol:sceVif1PkCloseGifTag
-rom:0x196A94 reloc:MIPS_HI16                           symbol:"@121"
-rom:0x196A98 reloc:MIPS_LO16                           symbol:"@121"
-rom:0x196AF0 reloc:MIPS_HI16                           symbol:"@122_0x0037D750"
-rom:0x196AF4 reloc:MIPS_LO16                           symbol:"@122_0x0037D750"
-rom:0x196B54 reloc:MIPS_HI16                           symbol:"@123_0x0037D760"
-rom:0x196B58 reloc:MIPS_LO16                           symbol:"@123_0x0037D760"
-rom:0x196B6C reloc:MIPS_HI16                           symbol:_GifTag_Tri_104_0x0037D6F0
-rom:0x196B70 reloc:MIPS_LO16                           symbol:_GifTag_Tri_104_0x0037D6F0
+rom:0x196A94 reloc:MIPS_HI16                           symbol:"Grid_Vertex0"
+rom:0x196A98 reloc:MIPS_LO16                           symbol:"Grid_Vertex0"
+rom:0x196AF0 reloc:MIPS_HI16                           symbol:"Grid_Vertex1"
+rom:0x196AF4 reloc:MIPS_LO16                           symbol:"Grid_Vertex1"
+rom:0x196B54 reloc:MIPS_HI16                           symbol:"Grid_Vertex2"
+rom:0x196B58 reloc:MIPS_LO16                           symbol:"Grid_Vertex2"
+rom:0x196B6C reloc:MIPS_HI16                           symbol:_GifTag_Tri
+rom:0x196B70 reloc:MIPS_LO16                           symbol:_GifTag_Tri
 rom:0x196B7C reloc:MIPS_26                             symbol:sceVif1PkOpenGifTag
 rom:0x196BA0 reloc:MIPS_26                             symbol:HH_ClassWrapper_MemoryCopy128Align_DesignateCycle
-rom:0x196CB0 reloc:MIPS_HI16                           symbol:ty_131
-rom:0x196CB4 reloc:MIPS_LO16                           symbol:ty_131
-rom:0x196CD0 reloc:MIPS_HI16                           symbol:sx_130
-rom:0x196CD4 reloc:MIPS_LO16                           symbol:sx_130
+rom:0x196CB0 reloc:MIPS_HI16                           symbol:ty
+rom:0x196CB4 reloc:MIPS_LO16                           symbol:ty
+rom:0x196CD0 reloc:MIPS_HI16                           symbol:sx
+rom:0x196CD4 reloc:MIPS_LO16                           symbol:sx
 rom:0x196D14 reloc:MIPS_26                             symbol:sceVu0AddVector
 rom:0x196D28 reloc:MIPS_26                             symbol:sceVu0AddVector
 rom:0x196D3C reloc:MIPS_26                             symbol:sceVu0SubVector
@@ -89360,43 +89360,43 @@ rom:0x196D90 reloc:MIPS_26                             symbol:sceVu0OuterProduct
 rom:0x196DB8 reloc:MIPS_26                             symbol:HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N
 rom:0x196DC8 reloc:MIPS_26                             symbol:sceVu0InnerProduct
 rom:0x196DE0 reloc:MIPS_26                             symbol:HH_ClassWrapper_Float_Clamp
-rom:0x196E04 reloc:MIPS_HI16                           symbol:Ambient_Color_107_0x0037D710
-rom:0x196E08 reloc:MIPS_LO16                           symbol:Ambient_Color_107_0x0037D710
+rom:0x196E04 reloc:MIPS_HI16                           symbol:Ambient_Color
+rom:0x196E08 reloc:MIPS_LO16                           symbol:Ambient_Color
 rom:0x196E0C reloc:MIPS_26                             symbol:sceVu0FTOI0Vector
 rom:0x196E28 reloc:MIPS_26                             symbol:sceVu0ScaleVectorXYZ
-rom:0x196E38 reloc:MIPS_HI16                           symbol:Ambient_Color_107_0x0037D710
-rom:0x196E3C reloc:MIPS_LO16                           symbol:Ambient_Color_107_0x0037D710
+rom:0x196E38 reloc:MIPS_HI16                           symbol:Ambient_Color
+rom:0x196E3C reloc:MIPS_LO16                           symbol:Ambient_Color
 rom:0x196E40 reloc:MIPS_26                             symbol:sceVu0AddVector
 rom:0x196E5C reloc:MIPS_26                             symbol:sceVu0ClampVector
 rom:0x196E6C reloc:MIPS_26                             symbol:sceVu0FTOI0Vector
 rom:0x196E78 reloc:MIPS_26                             symbol:HH_ClassWrapper_FogParameter_A_Get
 rom:0x196E84 reloc:MIPS_26                             symbol:HH_ClassWrapper_FogParameter_B_Get
-rom:0x196E98 reloc:MIPS_HI16                           symbol:fog_ratio_f_111_0x0037D720
-rom:0x196E9C reloc:MIPS_LO16                           symbol:fog_ratio_f_111_0x0037D720
+rom:0x196E98 reloc:MIPS_HI16                           symbol:fog_ratio_f
+rom:0x196E9C reloc:MIPS_LO16                           symbol:fog_ratio_f
 rom:0x196EB0 reloc:MIPS_26                             symbol:HH_ClassWrapper_Float_Clamp
 rom:0x196EBC reloc:MIPS_26                             symbol:fptoui
 rom:0x196F68 reloc:MIPS_26                             symbol:HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N
 rom:0x196F78 reloc:MIPS_26                             symbol:sceVu0InnerProduct
 rom:0x196F90 reloc:MIPS_26                             symbol:HH_ClassWrapper_Float_Clamp
-rom:0x196FB4 reloc:MIPS_HI16                           symbol:Ambient_Color_107_0x0037D710
-rom:0x196FB8 reloc:MIPS_LO16                           symbol:Ambient_Color_107_0x0037D710
+rom:0x196FB4 reloc:MIPS_HI16                           symbol:Ambient_Color
+rom:0x196FB8 reloc:MIPS_LO16                           symbol:Ambient_Color
 rom:0x196FBC reloc:MIPS_26                             symbol:sceVu0FTOI0Vector
 rom:0x196FD8 reloc:MIPS_26                             symbol:sceVu0ScaleVectorXYZ
-rom:0x196FE8 reloc:MIPS_HI16                           symbol:Ambient_Color_107_0x0037D710
-rom:0x196FEC reloc:MIPS_LO16                           symbol:Ambient_Color_107_0x0037D710
+rom:0x196FE8 reloc:MIPS_HI16                           symbol:Ambient_Color
+rom:0x196FEC reloc:MIPS_LO16                           symbol:Ambient_Color
 rom:0x196FF0 reloc:MIPS_26                             symbol:sceVu0AddVector
 rom:0x19700C reloc:MIPS_26                             symbol:sceVu0ClampVector
 rom:0x19701C reloc:MIPS_26                             symbol:sceVu0FTOI0Vector
 rom:0x197028 reloc:MIPS_26                             symbol:HH_ClassWrapper_FogParameter_A_Get
 rom:0x197034 reloc:MIPS_26                             symbol:HH_ClassWrapper_FogParameter_B_Get
-rom:0x197050 reloc:MIPS_HI16                           symbol:fog_ratio_f_111_0x0037D720
-rom:0x197054 reloc:MIPS_LO16                           symbol:fog_ratio_f_111_0x0037D720
+rom:0x197050 reloc:MIPS_HI16                           symbol:fog_ratio_f
+rom:0x197054 reloc:MIPS_LO16                           symbol:fog_ratio_f
 rom:0x197060 reloc:MIPS_26                             symbol:HH_ClassWrapper_Float_Clamp
 rom:0x19706C reloc:MIPS_26                             symbol:fptoui
 rom:0x197110 reloc:MIPS_26                             symbol:sceVif1PkCloseGifTag
 rom:0x197138 reloc:MIPS_26                             symbol:HH_ClassWrapper_Packet_ADC_Flag_OnceMore_Set
-rom:0x197140 reloc:MIPS_HI16                           symbol:_GifTag_103_0x0037D6E0
-rom:0x197144 reloc:MIPS_LO16                           symbol:_GifTag_103_0x0037D6E0
+rom:0x197140 reloc:MIPS_HI16                           symbol:_GifTag
+rom:0x197144 reloc:MIPS_LO16                           symbol:_GifTag
 rom:0x197150 reloc:MIPS_26                             symbol:sceVif1PkOpenGifTag
 rom:0x197158 reloc:MIPS_26                             symbol:HH_Vif1PacketBuffer_GifTag_Close
 rom:0x1971AC reloc:MIPS_26                             symbol:HH_Vif1Packet_Current_Get
@@ -89487,8 +89487,8 @@ rom:0x1979CC reloc:MIPS_LO16           addend:+0xC     symbol:Ambient_Color_107_
 rom:0x1979D0 reloc:MIPS_HI16                           symbol:light_alpha_110
 rom:0x1979D4 reloc:MIPS_LO16                           symbol:light_alpha_110
 rom:0x1979E4 reloc:MIPS_26                             symbol:sceVu0Normalize
-// rom:0x1979EC reloc:MIPS_HI16                           symbol:flag$112
-// rom:0x1979F0 reloc:MIPS_LO16                           symbol:flag$112
+// rom:0x1979EC reloc:MIPS_HI16                           symbol:flag
+// rom:0x1979F0 reloc:MIPS_LO16                           symbol:flag
 rom:0x1979FC reloc:MIPS_HI16                           symbol:x_115
 rom:0x197A00 reloc:MIPS_LO16                           symbol:x_115
 rom:0x197A08 reloc:MIPS_HI16                           symbol:y_116

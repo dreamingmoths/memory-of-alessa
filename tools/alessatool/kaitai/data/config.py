@@ -31,6 +31,20 @@ SH2_DATA: DataTable = [
     SimpleData(name="bgm_list",                             type="<86I",                               pattern=[43, 2]                ),
     StructData(name="change_list",                          type=Sh2.ChangeList,                       count=242                      ),
     SimpleData(name="escape_point",                         type="<12f",                               pattern=[3, 4]                 ),
+    SimpleData(name="@914_0x002AA370",                      type="<5f",                                pattern=[5]                    ),
+    StructData(name="EnIKEAnime",                           type=Sh2.EnAnimeData,                      count=21                       ),
+    SimpleData(name="appearance_point",                     type="<28f",                               pattern=[7, 4]                 ),
+    SimpleData(name="@930_0x002AA390",                      type=Pointer,                              pattern=[6],                   ),
+    SimpleData(name="@935_0x002AA3B0",                      type=Pointer,                              pattern=[11],                  ),
+    StructData(name="d_scu_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
+    StructData(name="scu_anim",                             type=Sh2.AnimeInfo,                        count=36                       ),
+    SimpleData(name="dscu_anime_adr_list",                  type="<10i"                                                               ),
+    StructData(name="_wave_element_list",                   type=Sh2.WaveElement,                      count=3                        ),
+    StructData(name="nik_anim",                             type=Sh2.AnimeInfo,                        count=4                        ),
+    StructData(name="term",                                 type=Sh2.SceDmaTag,                        count=1                        ),
+    SimpleData(name="_Peripheral_Controller_SendData",      type="<12c",                               pattern=[2, 6]                 ),
+    StructData(name="d_oni_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
+    StructData(name="oni_anim",                             type=Sh2.AnimeInfo,                        count=16                       ),
 ]
 
 SH3_DATA: DataTable = []

@@ -272,7 +272,7 @@ void CheckModeJumpDataSet(void) {
                 break;
             case 83:
                 ItemGet(SH2_ITEM_50);
-                ItemGet(SH2_ITEM_51);
+                ItemGet(SH2_ITEM_NEEDLE);
                 break;
             case 79:
                 playing.riddle_level = SH2_RIDDLE_LEVEL_EASY;

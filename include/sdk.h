@@ -15,6 +15,8 @@ extern float atan2f(float, float);
 extern float fmodf(float, float);
 extern float sqrtf(float);
 
+extern int abs(int);
+
 extern u_int fptoui(float);
 extern int fptosi(float);
 

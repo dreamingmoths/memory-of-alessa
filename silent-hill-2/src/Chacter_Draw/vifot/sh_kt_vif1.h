@@ -7,6 +7,8 @@ typedef struct Vif1Work {
     sceDmaChan* dma;
 } Vif1Work;
 
+extern Vif1Work vif1_work;
+
 void ktVif1Init(void);
 
 #endif // SH_KT_VIF1_H

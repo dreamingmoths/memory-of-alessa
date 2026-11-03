@@ -5,7 +5,6 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_mkn.h"
 #include "Chacter/m3_sc.h"
-#include "Chacter/m3_sc.h"
 
 #include "Enemy/en_common.h"
 
@@ -487,7 +486,7 @@ int shCharacterEnemyMKNAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r1
     AnimeInfo* aip; // r18
 
     if (shCharacterGetModelID(scp) == EN_MKN_CHARA_KIND) {
-        aip = (AnimeInfo*) &mkn_anim[anime_id - 0x13EC];
+        aip = (AnimeInfo*) &mkn_anim[anime_id - MANNEQUIN_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             (s_char) (comp == 1 ? 4 : 2),

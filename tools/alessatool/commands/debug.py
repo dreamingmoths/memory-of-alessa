@@ -39,6 +39,8 @@ class MismatchingFileEntry:
     target_path: Path
     exe_info: ExecutableInfo
 
+SYMBOL_IGNORELIST = ["d"]
+
 def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableInfo], debug_args: DebugArgs) -> bool:
     with open(mapfile_path) as mapfile_file:
         mapfile_lines = mapfile_file.readlines()
@@ -79,6 +81,9 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
 
         addr_hex, size, section = entry[:3]
         symbol_name, object_file = entry[-1].split("\t")
+
+        if symbol_name in SYMBOL_IGNORELIST:
+            continue
 
         if symbol_name.startswith("."):
             # skip possible section name

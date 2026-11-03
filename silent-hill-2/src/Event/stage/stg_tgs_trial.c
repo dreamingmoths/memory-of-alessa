@@ -12,9 +12,14 @@
 
 #include "sound/sh_sound.h"
 
+/* static */ int EvProgGetHospitalMap(void);
+/* static */  int EvProgGetNeedle(void);
+
 static int EvProgBoxWithKeyCursor(void);
 static int EvProgBoxWithKeyLayer(void);
 static int EvProgBoxWithKeyOpen(int alp);
+
+/* static */  int EvProgOnlyNeedle(void);
 
 extern /* static */ float cyl_alp; // size: 0x4, address: 0x11EA360
 extern /* static */ short tex_1051[9][4][4]; // @ 0x00355FD0
@@ -22,11 +27,14 @@ extern /* static */ short pos_1052[9][4][2]; // @ 0x003560F0
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgTrialStartSet);
 
-int EvProgGetHospitalMap(void) {
+/* static */ int EvProgGetHospitalMap(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
+#line 321
+/* static */ int EvProgGetNeedle(void) {
+    return EvSubItemGetAndAnim(SH2_ITEM_NEEDLE, 25);
+}
 
 #line 329
 /* static */ int EvProgGuruguruNumber(void) {
@@ -65,7 +73,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
 
     switch (ev_p_step) {
         case 0:
-            SCNowPlayableEventSwitch(sh2jms.player, 1);
+            SCNowPlayableEventSwitch(sh2jms.player, true);
             if (GET_GAME_FLAG(GAME_FLAG_192)) EV_PROG_STEP(2);
             else EV_PROG_STEP(10);
             break;
@@ -127,7 +135,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
             break;
         
         case 13:
-            SCNowPlayableEventSwitch(sh2jms.player, 0);
+            SCNowPlayableEventSwitch(sh2jms.player, false);
             return 1;
     }
     return 0;
@@ -139,7 +147,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
         case 0:
             if (GET_BIT(game_flag.flag[5], 31)) EV_PROG_STEP(12);
             else EV_PROG_STEP(11);
-            SCNowPlayableEventSwitch(sh2jms.player, 1);
+            SCNowPlayableEventSwitch(sh2jms.player, true);
             break;
         
         case 11:
@@ -157,7 +165,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
             break;
 
         case 13:
-            SCNowPlayableEventSwitch(sh2jms.player, 0);
+            SCNowPlayableEventSwitch(sh2jms.player, false);
             return 1;
     }
     return 0;
@@ -169,7 +177,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
         case 0:
             if (GET_GAME_FLAG(GAME_FLAG_197)) cyl_alp = 0.0f;
             else cyl_alp = 1.0f;
-            SCNowPlayableEventSwitch(sh2jms.player, 1);            
+            SCNowPlayableEventSwitch(sh2jms.player, true);            
             ev_cursor_x = ev_cursor_y = 0.0f;
             EV_PROG_STEP(2);
             break;
@@ -206,7 +214,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
             EvSubPictureFilter();
             EvProgBoxWithKeyLayer();
             EvSubPictureEnd();
-            if (EvSubMessage(0xA)) {
+            if (EvSubMessage(10)) {
                 ev_cursor_x = 0.0f;
                 ev_cursor_y = 0.0f;
                 EV_PROG_STEP(7);
@@ -323,7 +331,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgGetNeedle);
             break;
     
         case 13:
-            SCNowPlayableEventSwitch(sh2jms.player, 0);
+            SCNowPlayableEventSwitch(sh2jms.player, false);
             UNSET_GAME_FLAG(GAME_FLAG_194);
             return 1;
     }
@@ -334,13 +342,92 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgBoxWithKeyLayer)
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgBoxWithKeyCursor);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgBoxWithKeyOpen);
+/* static */ int EvProgBoxWithKeyOpen(int alp) {
+    PicDraw_Data pic;
+
+    PictureLoadImage(layer_adr, 2, -1, -1);
+    
+    shQzero(&pic, sizeof(pic));
+    
+    picture_set_ap(&pic, layer_adr);    
+    pic.otp = 3;
+    picture_set_alpha(&pic, alp);    
+    picture_set_xy(&pic, -1136, -832, 2960, 192);
+    PictureDraw(&pic);
+    
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgEmptyBox);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgOnlyNeedle);
+#line 884
+/* static */ int EvProgOnlyNeedle(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(20001);
+            EV_PROG_STEP(16);
+            break;
+            
+        case 16:
+            if (PlayerEventAnimeSuccessFrame()) {
+                shCharacterAnimePause(sh2jms.player);
+                EV_PROG_STEP(15);
+            }
+            break;
+        
+        case 15:
+            if (EvSubMessage(15)) {
+                shCharacterAnimeRestart(sh2jms.player);
+                EV_PROG_STEP(1);
+            }
+            break;
+        
+        case 1:
+            if (shCharacterAnimeIsEnd(sh2jms.player)) 
+                EV_PROG_STEP(13);            
+            break;
+        
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgOnlyHair);
+/* static */ int EvProgOnlyHair(void) {
+    switch (ev_p_step) {
+        case 0:
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            PlayerEventAnimeSet(20001);
+            EV_PROG_STEP(16);
+            break;
+            
+        case 16:
+            if (PlayerEventAnimeSuccessFrame()) {
+                shCharacterAnimePause(sh2jms.player);
+                EV_PROG_STEP(15);
+            }
+            break;
+        
+        case 15:
+            if (EvSubMessage(14)) {
+                shCharacterAnimeRestart(sh2jms.player);
+                EV_PROG_STEP(1);
+            }
+            break;
+        
+        case 1:
+            if (shCharacterAnimeIsEnd(sh2jms.player)) 
+                EV_PROG_STEP(13);
+            break;
+        
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgInShowerDrain);
 
