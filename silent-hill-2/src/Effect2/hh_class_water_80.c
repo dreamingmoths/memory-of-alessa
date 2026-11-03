@@ -15,6 +15,7 @@
 #include "Effect2/hh_packet.h"
 
 #pragma divbyzerocheck off
+#define Object_Draw HH_Class_Water_Object_Draw
 
 static void Grid_Work_Initialize(HH_Object_Water_80* pThis);
 static u_int Object_Initialize(HH_Object_Water_80* pThis);
@@ -24,7 +25,7 @@ static u_int _area00_view_list[1] = {0};
 static WaveArea_Infomeation _Area_Info_List[1] = {{
      /* .World_Location = */ {0.0f, 0.0f, 0.0f, 1.0f},
      /* .Grid_WH = */ {13500.0f, 0.0f, 13500.0f, 300.0f},
-     /* .Grid_Index = */ {20, 1},
+     /* .Grid_Index = */ {45, 45},
      /* .pViewArea_List = */ &_area00_view_list,
      /* .ViewArea_List_Max = */ 1,
      /* .pGrid_Y_Value = */ NULL,
@@ -111,6 +112,7 @@ static u_int Object_Initialize(HH_Object_Water_80* pThis) {
     return result;
 }
 
+#ifdef NON_MATCHING
 #line 449           
 static u_int Object_Draw(HH_Object_Water_80* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max) {
     static u_long _GifTag[2] = {
@@ -389,6 +391,25 @@ static u_int Object_Draw(HH_Object_Water_80* pThis, float* pGrid_Y_Value, float*
 
     return result;
 }
+#else
+static u_long _GifTag[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)};
+static u_long _GifTag_Tri[2] = {
+    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 1, 0, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)};
+static sceVu0FVECTOR Light_Base = {16.0f, 16.0f, 16.0f, 0.0f}; // @ 0x0037D700
+static sceVu0FVECTOR Ambient_Color = {16.0f, 16.0f, 16.0f, 70.0f}; // @ 0x0037D710
+static float fog_ratio_f = 1.0f; // @ 0x0037D720
+static sceVu0FVECTOR _n = {0.0f, -1.0f, 0.0f, 0.0f}; // @ 0x0037D730
+static u_int flag = 0; // @ 0x01F01BE0
+sceVu0FVECTOR Grid_Vertex0 = {300.0f, 0.0f, 0.0f, 1.0f}; // r29+0x1C0
+sceVu0FVECTOR Grid_Vertex1 = {300.0f, 0.0f, 0.0f, 1.0f}; // r29+0x1D0
+sceVu0FVECTOR Grid_Vertex2 = {300.0f, 0.0f, 0.0f, 1.0f}; // r29+0x2E0
+static float sx = 7.0f; // @ 0x0037D770
+static float ty = 7.0f; // @ 0x0037D778
+INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_water_80", HH_Class_Water_Object_Draw);
+#endif
 
 
 #line 775
