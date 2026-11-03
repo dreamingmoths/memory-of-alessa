@@ -1,5 +1,6 @@
 #include "Enemy/en_nse.h"
 #include "Chacter/chara_list.h"
+#include "Chacter/m3_nse.h"
 #include "Chacter/sh2_battle_list.h"
 #include "Font/fj_man.h"
 #include "SH2_common/sh_vu0.h"
@@ -36,131 +37,131 @@ static void enNSESoundAttackVoice(EnLOCAL_DATA* dp);
 
 static EnANIME_DATA EnNSEAnime[28] = {
     {
-        /* .anime = */ 5501,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(1),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5502,
-        /* .loop = */ 1,
+        /* .anime = */ NSE_PLAY_ANIM(2),
+        /* .loop = */ true,
     },
     {
-        /* .anime = */ 5501,
-        /* .loop = */ 1,
+        /* .anime = */ NSE_PLAY_ANIM(1),
+        /* .loop = */ true,
     },
     {
-        /* .anime = */ 5503,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(3),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5504,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(4),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5505,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(5),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5506,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(6),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5507,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(7),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5508,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(8),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5509,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(9),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5510,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(10),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5511,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(11),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5512,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(12),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5505,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(5),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5513,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(13),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5514,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(14),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5515,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(15),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5516,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(16),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5517,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(17),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5518,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(18),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5519,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(19),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5520,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(20),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5522,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(22),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5521,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(21),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5524,
-        /* .loop = */ 1,
+        /* .anime = */ NSE_PLAY_ANIM(24),
+        /* .loop = */ true,
     },
     {
-        /* .anime = */ 5523,
-        /* .loop = */ 1,
+        /* .anime = */ NSE_PLAY_ANIM(23),
+        /* .loop = */ true,
     },
     {
-        /* .anime = */ 5526,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(26),
+        /* .loop = */ false,
     },
     {
-        /* .anime = */ 5525,
-        /* .loop = */ 0,
+        /* .anime = */ NSE_PLAY_ANIM(25),
+        /* .loop = */ false,
     }
 };
 
 #ifdef NON_MATCHING
 void enNSEInitData(EnLOCAL_DATA* dp) {
-    short vitarity[5] = { 400, 500, 800, 1500, 9999 }; // r29+0x60
+    short vitarity[5] = { 400, 500, 800, 1500, 9999 };
     
     
     
     
     
     
-    float endurance[5] = { 10.0f, 190.0f, 285.0f, 380.0f, 450.0f }; // r29+0x40    
-    float rate; // r20
-    int mode; // r16
+    float endurance[5] = { 10.0f, 190.0f, 285.0f, 380.0f, 450.0f };  
+    float rate;
+    int mode;
 
 
     
@@ -208,8 +209,8 @@ void enNSEInitData(EnLOCAL_DATA* dp) {
     }
 }
 #else
-short vitarity_0x002AA680[5] = { 400, 500, 800, 1500, 9999 }; // r29+0x60
-float endurance_0x002AA690[5] = { 10.0f, 190.0f, 285.0f, 380.0f, 450.0f }; // r29+0x40    
+short vitarity_0x002AA680[5] = { 400, 500, 800, 1500, 9999 };
+float endurance_0x002AA690[5] = { 10.0f, 190.0f, 285.0f, 380.0f, 450.0f };
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_nse", enNSEInitData);
 #endif
 
@@ -813,7 +814,7 @@ static void enNSEAnimeReset(EnLOCAL_DATA* dp, int anim) {
 
 static void enNSEAnimeExec(EnLOCAL_DATA* dp) {
     int of = dp->anim_n;   
-    enAnimeExec(dp, EnNSEAnime, 5501);
+    enAnimeExec(dp, EnNSEAnime, NSE_PLAY_ANIM(1));
     if ((dp->anim_n == -1) || (dp->flag & 1)) return;    
     if ((dp->anim >= 14) &&
         (dp->anim <= 21)) {
@@ -843,7 +844,7 @@ static void enNSEAnimeExec(EnLOCAL_DATA* dp) {
                 enSoundCall(18808, 1.0f, &dp->scp->pos);
                 return;
             }            
-            if (dp->flag & 0x1000) {
+            if (dp->flag & (1 << 12)) {
                 enSoundCall3D(12100, 1.0f, &dp->scp->pos);
             } else {
                 enSoundCall(12100, 1.0f, &dp->scp->pos);
