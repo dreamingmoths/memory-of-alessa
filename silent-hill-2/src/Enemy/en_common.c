@@ -372,6 +372,7 @@ void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */) {
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData);
+void (*enInitDataFunc[15])(EnLOCAL_DATA*) = { enSCUInitData, enMKNInitData, enTYUInitData, enREDInitData, enONIInitData, enNSEInitData, enIKEInitData, enPAPInitData, enEDBInitData, enARMInitData, enBOSInitData, enNIKInitData, enTY2InitData, enTY3InitData, enINSInitData };
 #endif
 
 void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */) {
@@ -1598,6 +1599,7 @@ signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 *
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetPath)
+char timer[12] = { 0, 30, 20, 0, 20, 20, 15, 12, 30, 15, 12, 12 };
 #endif
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {

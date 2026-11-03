@@ -11395,8 +11395,8 @@ rom:0x1AA37C reloc:MIPS_32                             symbol:enREDInitData
 rom:0x1AA378 reloc:MIPS_32                             symbol:enTYUInitData
 rom:0x1AA374 reloc:MIPS_32                             symbol:enMKNInitData
 rom:0x1AA370 reloc:MIPS_32                             symbol:enSCUInitData
-rom:0x04208C reloc:MIPS_HI16                           symbol:"@1053_0x002A9C70"
-rom:0x042090 reloc:MIPS_LO16                           symbol:"@1053_0x002A9C70"
+rom:0x04208C reloc:MIPS_HI16                           symbol:"enInitDataFunc"
+rom:0x042090 reloc:MIPS_LO16                           symbol:"enInitDataFunc"
 rom:0x0420F0 reloc:MIPS_HI16                           symbol:"@1074_0x0038E1D0"
 rom:0x0420F4 reloc:MIPS_LO16                           symbol:"@1074_0x0038E1D0"
 rom:0x0420F8 reloc:MIPS_HI16                           symbol:"@1075"
@@ -11582,8 +11582,8 @@ rom:0x045108 reloc:MIPS_26                             symbol:BgIsOut
 rom:0x045144 reloc:MIPS_26                             symbol:enInitData
 rom:0x045184 reloc:MIPS_26                             symbol:shCharacter_Manage_Delete
 rom:0x0451B0 reloc:MIPS_26                             symbol:shAngleRegulate
-rom:0x04521C reloc:MIPS_HI16                           symbol:"@2091"
-rom:0x045220 reloc:MIPS_LO16                           symbol:"@2091"
+rom:0x04521C reloc:MIPS_HI16                           symbol:"timer"
+rom:0x045220 reloc:MIPS_LO16                           symbol:"timer"
 rom:0x045238 reloc:MIPS_26                             symbol:enCheckPath
 rom:0x045258 reloc:MIPS_26                             symbol:shAtanV
 rom:0x0452AC reloc:MIPS_26                             symbol:shGetDF
