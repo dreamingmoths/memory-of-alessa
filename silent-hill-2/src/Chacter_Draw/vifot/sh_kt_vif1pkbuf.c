@@ -1,8 +1,10 @@
 #include "sh2_common.h"
 #include "Chacter_Draw/vifot/sh_kt_pkbuf.h"
+#include "Chacter_Draw/vifot/sh_kt_vif1pkbuf.h"
 
-UNMIGRATED(__int128 vif1_pk_buf_db[2][6144]); // size: 0x30000, address: 0x3E8780
-UNMIGRATED(ktPkBuf vif1_pkbuf); // size: 0x14, address: 0x3E8710
+
+u_long128 vif1_pk_buf_db[2][6144] __attribute__((aligned(128)));
+ktPkBuf vif1_pkbuf;
 
 #line 44
 void ktVif1PkBufInit(void* buf0, void* buf1, int size) {
