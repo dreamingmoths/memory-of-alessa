@@ -61,7 +61,7 @@ static void HumanRPJMSFunction(SubCharacter* this) {
                     this->pos.x = sh2jms.player->pos.x;
                     this->pos.y = sh2jms.player->pos.y;
                     this->pos.z = wall_pos + (wall_pos - sh2jms.player->pos.z);
-                    if (!(sh2jms.player->rot.y < 0.0f)) {
+                    if (sh2jms.player->rot.y >= 0.0f) {
                         this->rot.y = PI - sh2jms.player->rot.y;
                         return;}
                     this->rot.y = -PI - sh2jms.player->rot.y;
