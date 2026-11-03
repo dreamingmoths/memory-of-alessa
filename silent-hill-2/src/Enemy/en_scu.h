@@ -13,6 +13,7 @@
     void enBOSCtrlMain(struct EnLOCAL_DATA *);
     void enNIKCtrlMain(struct EnLOCAL_DATA *);
     void enTY2CtrlMain(struct EnLOCAL_DATA *);
+    void enTY3CtrlMain(struct EnLOCAL_DATA *);
     void enINSCtrlMain(struct EnLOCAL_DATA *);
     void enSCUInitData(struct EnLOCAL_DATA *);
     void enMKNInitData(struct EnLOCAL_DATA *);

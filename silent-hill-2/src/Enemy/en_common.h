@@ -238,7 +238,6 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA * /* r2 */, Vector4 * /* r2 */, Vect
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
 void enDyingExec(EnLOCAL_DATA* dp);
-
-extern EnLOCAL_WORK enLocalWork;
+extern EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
 #endif
