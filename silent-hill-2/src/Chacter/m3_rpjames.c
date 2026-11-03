@@ -148,7 +148,7 @@ void shGetJamesLightPos_Calc_Reverse(void) {
 }
 
 #line 226
-void shGetJamesLightPosOriginal_Reverse(f32* pos, f32* vec) {
+void shGetJamesLightPosOriginal_Reverse(float* pos, float* vec) {
     shVectorCopy(pos, sh2jms.light_pos_reverse);
     shVectorCopy(vec, sh2jms.light_vec_reverse);
 }
