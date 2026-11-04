@@ -349,7 +349,7 @@ static void EnemyIKEFunction(SubCharacter* this) {
             
             EnemyIKEInit(this);
             
-            if (PlayerNowDemoEventMode() == 0) {
+            if (PlayerNowDemoEventMode() == false) {
             
                 SCAnimeTypeSwitch(this, true);
                 
@@ -362,7 +362,7 @@ static void EnemyIKEFunction(SubCharacter* this) {
                 
                 
                 
-                if (this->status & 4) {
+                if (this->status & (1 << SCP_STATUS_BIT_ANIME_TYPE)) {
                 
                     
                     if ((dp = enEntryEnemy(7)) != NULL) {
