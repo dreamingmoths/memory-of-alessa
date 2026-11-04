@@ -75013,10 +75013,10 @@ rom:0x14C348 reloc:MIPS_LO16           addend:+0x4DC   symbol:sh2jms
 rom:0x14C34C reloc:MIPS_HI16           addend:+0x4D8   symbol:sh2jms
 rom:0x14C350 reloc:MIPS_LO16           addend:+0x4D8   symbol:sh2jms
 rom:0x14C354 reloc:MIPS_26                             symbol:sh2gfw_Set_JMSequip
-rom:0x14C35C reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C360 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C38C reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C390 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C35C reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C360 reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C38C reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C390 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C394 reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C398 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C3AC reloc:MIPS_HI16                           symbol:sh2jms
@@ -75027,8 +75027,8 @@ rom:0x14C3CC reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C3D0 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C3E8 reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C3EC reloc:MIPS_LO16                           symbol:sh2jms
-rom:0x14C3F8 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C3FC reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C3F8 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C3FC reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C400 reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C404 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C418 reloc:MIPS_HI16                           symbol:sh2jms
@@ -75039,8 +75039,8 @@ rom:0x14C44C reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C450 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C45C reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C460 reloc:MIPS_LO16                           symbol:sh2jms
-rom:0x14C46C reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C470 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C46C reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C470 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C474 reloc:MIPS_HI16                           symbol:sh2jms
 rom:0x14C478 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C48C reloc:MIPS_HI16                           symbol:sh2jms
@@ -75048,10 +75048,10 @@ rom:0x14C490 reloc:MIPS_LO16                           symbol:sh2jms
 rom:0x14C508 reloc:MIPS_HI16                           symbol:HumanRPJMSFunction
 rom:0x14C50C reloc:MIPS_LO16                           symbol:HumanRPJMSFunction
 rom:0x14C510 reloc:MIPS_26                             symbol:shCharacterSetFunction
-rom:0x14C530 reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C534 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C560 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C564 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C530 reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C534 reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C560 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C564 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C568 reloc:MIPS_HI16           addend:+0xA0    symbol:sh2jms
 rom:0x14C56C reloc:MIPS_LO16           addend:+0xA0    symbol:sh2jms
 rom:0x14C578 reloc:MIPS_HI16           addend:+0xE0    symbol:sh2jms
@@ -75108,8 +75108,8 @@ rom:0x14C65C reloc:MIPS_HI16           addend:+0xA0    symbol:sh2jms
 rom:0x14C660 reloc:MIPS_LO16           addend:+0xA0    symbol:sh2jms
 rom:0x14C664 reloc:MIPS_HI16           addend:+0xE0    symbol:sh2jms
 rom:0x14C668 reloc:MIPS_LO16           addend:+0xE0    symbol:sh2jms
-rom:0x14C66C reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C670 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C66C reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C670 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C674 reloc:MIPS_HI16           addend:+0xA4    symbol:sh2jms
 rom:0x14C678 reloc:MIPS_LO16           addend:+0xA4    symbol:sh2jms
 rom:0x14C684 reloc:MIPS_HI16           addend:+0xE4    symbol:sh2jms
@@ -75166,8 +75166,8 @@ rom:0x14C768 reloc:MIPS_HI16           addend:+0xA4    symbol:sh2jms
 rom:0x14C76C reloc:MIPS_LO16           addend:+0xA4    symbol:sh2jms
 rom:0x14C770 reloc:MIPS_HI16           addend:+0xE4    symbol:sh2jms
 rom:0x14C774 reloc:MIPS_LO16           addend:+0xE4    symbol:sh2jms
-rom:0x14C778 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C77C reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C778 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C77C reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C780 reloc:MIPS_HI16           addend:+0xA8    symbol:sh2jms
 rom:0x14C784 reloc:MIPS_LO16           addend:+0xA8    symbol:sh2jms
 rom:0x14C790 reloc:MIPS_HI16           addend:+0xE8    symbol:sh2jms
@@ -75217,36 +75217,36 @@ rom:0x14C864 reloc:MIPS_LO16           addend:+0x100   symbol:sh2jms
 rom:0x14C870 reloc:MIPS_HI16           addend:+0x110   symbol:sh2jms
 rom:0x14C874 reloc:MIPS_LO16           addend:+0x110   symbol:sh2jms
 rom:0x14C898 reloc:MIPS_26                             symbol:RoomNameJms
-rom:0x14C968 reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C96C reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C978 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C97C reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C968 reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C96C reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C978 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C97C reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C980 reloc:MIPS_HI16           addend:+0x32B   symbol:sh2jms
 rom:0x14C984 reloc:MIPS_LO16           addend:+0x32B   symbol:sh2jms
-rom:0x14C994 reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C998 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C9A4 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C9A8 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C994 reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C998 reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C9A4 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C9A8 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C9AC reloc:MIPS_HI16           addend:+0x32B   symbol:sh2jms
 rom:0x14C9B0 reloc:MIPS_LO16           addend:+0x32B   symbol:sh2jms
-rom:0x14C9C0 reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C9C4 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C9C8 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C9CC reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C9C0 reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C9C4 reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C9C8 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C9CC reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C9D0 reloc:MIPS_HI16           addend:+0x32B   symbol:sh2jms
 rom:0x14C9D4 reloc:MIPS_LO16           addend:+0x32B   symbol:sh2jms
-rom:0x14C9E4 reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14C9E8 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
-rom:0x14C9F0 reloc:MIPS_HI16                           symbol:wall_pos_0x011EA390
-rom:0x14C9F4 reloc:MIPS_LO16                           symbol:wall_pos_0x011EA390
+rom:0x14C9E4 reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14C9E8 reloc:MIPS_LO16                           symbol:mirror_mode
+rom:0x14C9F0 reloc:MIPS_HI16                           symbol:wall_pos
+rom:0x14C9F4 reloc:MIPS_LO16                           symbol:wall_pos
 rom:0x14C9F8 reloc:MIPS_HI16           addend:+0x32B   symbol:sh2jms
 rom:0x14C9FC reloc:MIPS_LO16           addend:+0x32B   symbol:sh2jms
-rom:0x14CA0C reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14CA10 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
+rom:0x14CA0C reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14CA10 reloc:MIPS_LO16                           symbol:mirror_mode
 rom:0x14CA14 reloc:MIPS_HI16           addend:+0x32B   symbol:sh2jms
 rom:0x14CA18 reloc:MIPS_LO16           addend:+0x32B   symbol:sh2jms
-rom:0x14CA1C reloc:MIPS_HI16                           symbol:mirror_mode_0x011EA388
-rom:0x14CA20 reloc:MIPS_LO16                           symbol:mirror_mode_0x011EA388
+rom:0x14CA1C reloc:MIPS_HI16                           symbol:mirror_mode
+rom:0x14CA20 reloc:MIPS_LO16                           symbol:mirror_mode
 rom:0x14CA40 reloc:MIPS_HI16           addend:+0x32A   symbol:sh2jms
 rom:0x14CA44 reloc:MIPS_LO16           addend:+0x32A   symbol:sh2jms
 rom:0x14CAA8 reloc:MIPS_HI16                           symbol:WeaponRFunction
