@@ -319,7 +319,7 @@ void fogSetStayPos(void* WorldPosV) {
 }
 
 void fogSetStayPoint(void* StayPoint) {
-    vec_copy_vu0(fwork.StayPoint, StayPoint);
+    shVectorCopyVu0(fwork.StayPoint, StayPoint);
 }
 
 void fogResetStayPoint(void) {

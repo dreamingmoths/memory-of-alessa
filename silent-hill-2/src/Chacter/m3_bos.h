@@ -8,15 +8,16 @@ void shCharacterSetEnemyBOSLow(SubCharacter* scp);
 int shCharacterEnemyBOSAnimeSet(SubCharacter* scp, int anime_id);
 int shCharacterEnemyBOSAnimeSetP(SubCharacter* scp, int anime_id, int comp);
 void shGetEnemyBOSAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_short atk);
-int shCharacterEnemySCUAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyMKNAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyTYUAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyREDAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyONIAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyNSEAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyIKEAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyPAPAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyEDBAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyARMAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
-int shCharacterEnemyBOSAnimeSetP(struct SubCharacter * scp /* r17 */, signed int anime_id /* r18 */, signed int comp /* r16 */);
+int shCharacterEnemySCUAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyMKNAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyTYUAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyREDAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyONIAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyNSEAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyIKEAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyPAPAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyEDBAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyARMAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+int shCharacterEnemyBOSAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r18 */, int comp /* r16 */);
+
 #endif // M3_BOS_H

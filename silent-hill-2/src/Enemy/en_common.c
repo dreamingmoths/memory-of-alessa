@@ -40,7 +40,7 @@
 #include "Font/fj_man.h"
 EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
-static int (* EnAnimeSetFunc[12])(struct SubCharacter*, int, int) = {
+static int (* EnAnimeSetFunc[12])(SubCharacter*, int, int) = {
     NULL,
     shCharacterEnemySCUAnimeSetP,
     shCharacterEnemyMKNAnimeSetP,
@@ -146,7 +146,7 @@ static float EnBattleCollisionRate[16] = {
     0.0f, 0.8f, 0.8f, 2.0f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 1.0f, 0.8f, 1.0f, 2.0f, 2.0f, 0.0f
 };
 
-static inline float angle_add(struct EnPATH_DATA* p, float a0) { // what is the best place for this?
+static inline float angle_add(EnPATH_DATA* p, float a0) { // what is the best place for this?
     float a1 = p->markangle;
     float temp_f0 = shAngleRegulate(a1 - p->angle);
     if (temp_f0 < -a0) {
@@ -157,7 +157,7 @@ static inline float angle_add(struct EnPATH_DATA* p, float a0) { // what is the 
     return shAngleRegulate(a1);
 }
 
-static inline float add_rot_x(struct SubCharacter* scp, float a0, float a2) {
+static inline float add_rot_x(SubCharacter* scp, float a0, float a2) {
     float r = a0;
     Vector4 *rot = &scp->rot;
     float temp_f0 = shAngleRegulate(r - rot->x);
@@ -169,7 +169,7 @@ static inline float add_rot_x(struct SubCharacter* scp, float a0, float a2) {
     rot->x = shAngleRegulate(r);
 }
 
-static inline float add_rot_z(struct SubCharacter* scp, float a0, float a2) {
+static inline float add_rot_z(SubCharacter* scp, float a0, float a2) {
     float r = a0;
     Vector4 *rot = &scp->rot;
     float* zz = &rot->z;
@@ -189,10 +189,10 @@ void enInitEnemy(void) {
 
 #line 193
 void enExecTask() {
-    signed int i; /* r16 */
-    EnLOCAL_DATA * dp; /* r17 */
-    Vector4 * p_pos; /* r2 */
-    void (* enEnemyControlFunc[15])(EnLOCAL_DATA *) = {
+    int i; /* r16 */
+    EnLOCAL_DATA* dp; /* r17 */
+    Vector4* p_pos; /* r2 */
+    void (*enEnemyControlFunc[15])(EnLOCAL_DATA*) = {
         enSCUCtrlMain,
         enMKNCtrlMain,
         enTYUCtrlMain,
@@ -211,16 +211,16 @@ void enExecTask() {
     }; /* r29+0x40 */
     float dist[32]; /* r29+0x80 */ int num[32]; /* r29+0x100 */ int j; /* r5 */
     int max; /* r2 */ int max2; /* r3 */ int n; /* r6 */ float d; /* r1 */
-    EnFORBIDDENAREA * fa; /* r4 */ EnCOMMUNICATION * cp; /* r4 */ EnSOUND_QUEUE * que; /* r17 */ int f; /* r18 */
+    EnFORBIDDENAREA* fa; /* r4 */ EnCOMMUNICATION* cp; /* r4 */ EnSOUND_QUEUE* que; /* r17 */ int f; /* r18 */
     p_pos = &sh2jms.player->pos;
     
     
     
     
     
-    dp = &enLocalWork.Data[0];
+    dp = enLocalWork.Data;
     max = 0;
-    for(i = 0; i < 32; i++, dp ++) {
+    for (i = 0; i < 32; i++, dp ++) {
         if (dp->kind > 0 && dp->kind < 16) {
             dp->p_dist = shVectorDist((float *) &dp->scp->pos, (float *) p_pos);dist[max] = dp->p_dist;
             num[max] = i;
@@ -230,10 +230,10 @@ void enExecTask() {
     }
     max2 = max;
     if (enLocalWork.Max3DSounds < max) {max2 = enLocalWork.Max3DSounds;}
-    for(i = 0; i < max2; i++) {
+    for (i = 0; i < max2; i++) {
         d = dist[i];
         f = i;
-        for(j = i + 1; j < max; j++) {
+        for (j = i + 1; j < max; j++) {
             if (dist[j] < d) {
                 d = dist[j];
                 f = j;
@@ -248,20 +248,20 @@ void enExecTask() {
     
     enRoomForbiddenArea();
     
-    fa = &enLocalWork.ForbiddenArea[0];
-    enLocalWork.Status &= ~0x1;
+    fa = enLocalWork.ForbiddenArea;
+    enLocalWork.Status &= ~1;
     for (i = 0; i < enLocalWork.ForbiddenNum; i++, fa++) {
-        if (!(p_pos->x < fa->x0) && (p_pos->x  <= fa->x1) && !(p_pos->z < fa->z0) && (p_pos->z <= fa->z1)) {
+        if (p_pos->x >= fa->x0 && p_pos->x  <= fa->x1 && p_pos->z >= fa->z0 && p_pos->z <= fa->z1) {
    
-            enLocalWork.Status |= 0x1;
+            enLocalWork.Status |= 1;
             break;
         } 
     }
     
     
     
-    dp = &enLocalWork.Data[0];
-    for (i = 0; i < 32;i++,dp++) {
+    dp = enLocalWork.Data;
+    for (i = 0; i < 32; i++, dp++) {
         if ((dp->kind > 0) && (dp->kind < 16)) {
             enLocalWork.This = dp;
             shPushRandSeed(dp->randseed);
@@ -277,7 +277,7 @@ void enExecTask() {
     
     
     if (enLocalWork.CommunicationNum != 0) {
-        cp = &enLocalWork.Communication[0];
+        cp = enLocalWork.Communication;
         for (i = 0; i < 8;i++,cp++) {
             if ((cp->kind != 0) && (cp->time > 0) && (--cp->time) <= 0) {
                 cp->kind = 0;
@@ -287,7 +287,7 @@ void enExecTask() {
     }
     
     
-    if(enLocalWork.SoundQueueNum != 0) {
+    if (enLocalWork.SoundQueueNum != 0) {
     
     
         for (i = 0; i < enLocalWork.SoundQueueNum; i++) {
@@ -315,7 +315,7 @@ void enExecTask() {
 
 EnLOCAL_DATA* enEntryEnemy(int kind) {
     int i = 0;
-    struct EnLOCAL_DATA* dp = &enLocalWork.Data[0];
+    EnLOCAL_DATA* dp = enLocalWork.Data;
     while (dp->kind) {
         if (++i >= ENEMY_MAX) {
             printf("enemy task empty.\n", i);
@@ -375,14 +375,14 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData);
 void (*enInitDataFunc[15])(EnLOCAL_DATA*) = { enSCUInitData, enMKNInitData, enTYUInitData, enREDInitData, enONIInitData, enNSEInitData, enIKEInitData, enPAPInitData, enEDBInitData, enARMInitData, enBOSInitData, enNIKInitData, enTY2InitData, enTY3InitData, enINSInitData };
 #endif
 
-void enDeleteEnemy(struct EnLOCAL_DATA* dp /* r2 */) {
+void enDeleteEnemy(EnLOCAL_DATA* dp /* r2 */) {
     if (dp != NULL) {
         dp->kind = 0;
         fogEraseObj((dp - enLocalWork.Data) + 10);
     }
 }
 
-void enDummyCtrl(struct EnLOCAL_DATA* dp /* r2 */) {
+void enDummyCtrl(EnLOCAL_DATA* dp /* r2 */) {
     void* tmp; // r2 // nice function
 }
 
@@ -487,7 +487,7 @@ int enGetMode(void) {
     return playing.battle_level;
 }
 
-int enCheckDarkOrBright(struct SubCharacter* scp /* r2 */) {
+int enCheckDarkOrBright(SubCharacter* scp /* r2 */) {
     return sh2gfw_Check_CharaDarkOrBright(scp);
 }
 
@@ -537,12 +537,12 @@ int enCheckWater(EnLOCAL_DATA* dp) {
 
 }
 
-void enSetBattleTarget(struct EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */) {
+void enSetBattleTarget(EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */) {
     dp->scp->battle.target = shBattleGetTargetHuman(dp->scp, type);
 }
 
-void enSetHP(struct EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endurance /* r20 */) {
-    struct shBattleInfo* bi = &dp->scp->battle; // r16
+void enSetHP(EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endurance /* r20 */) {
+    shBattleInfo* bi = &dp->scp->battle; // r16
     
     if ((dp->kind == 1) || (dp->kind == 2) || (dp->kind == 6)) {
         switch (enGetPlace()) {
@@ -568,8 +568,8 @@ void enSetHP(struct EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endura
     bi->damage = 0.0f;
 }
 
-float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */) {
-    struct shBattleInfo* bi = &dp->scp->battle; // r16
+float enReduceHP(EnLOCAL_DATA* dp /* r2 */) {
+    shBattleInfo* bi = &dp->scp->battle; // r16
     
     bi->hp -= bi->damage;
     if (bi->hp < 0.0f) {
@@ -584,8 +584,8 @@ float enReduceHP(struct EnLOCAL_DATA* dp /* r2 */) {
     return dp->endurance;
 }
 
-float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */) {
-    struct shBattleInfo* bi = &dp->scp->battle; // r16
+float enAddHP(EnLOCAL_DATA* dp /* r2 */, float n /* r29 */) {
+    shBattleInfo* bi = &dp->scp->battle; // r16
     if ((bi->hp += n) > bi->hp_max) {
         bi->hp = bi->hp_max;
     }
@@ -597,8 +597,8 @@ float enAddHP(struct EnLOCAL_DATA* dp /* r2 */, float n /* r29 */) {
     return bi->hp;
 }
 
-float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
-    struct shBattleInfo* bi = &dp->scp->battle; // r16
+float enAddEnduranceDT(EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
+    shBattleInfo* bi = &dp->scp->battle; // r16
     float en; // r29+0x40
 
     en = dp->endurance + (n * shGetDT());
@@ -612,8 +612,8 @@ float enAddEnduranceDT(struct EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
 }
 
 //#line 777
-signed int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
-   struct shBattleInfo * bi = &dp->scp->battle; /* r16 */
+int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
+   shBattleInfo * bi = &dp->scp->battle; /* r16 */
    if (bi->damage == 0.0f) {
         dp->d_count = (char) 0;
         return 0;
@@ -649,14 +649,14 @@ signed int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
     return 1;
 }
 
-int enCheckSpray(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckSpray(EnLOCAL_DATA* dp /* r2 */) {
     if ((dp->last_atk == 8) || (dp->last_atk == 9)) {
         return 1;
     }
     return 0;
 }
 
-void enResetDamage(struct EnLOCAL_DATA* dp /* r2 */) {
+void enResetDamage(EnLOCAL_DATA* dp /* r2 */) {
     dp->scp->battle.id = 0;
     dp->scp->battle.damage = 0.0f;
     dp->scp->battle.shock = 0.0f;
@@ -667,9 +667,9 @@ int enCheckDeath(EnLOCAL_DATA* dp) {
     return 0;
 }
 
-void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */) {
+void enSetHitBack(EnLOCAL_DATA* dp /* r2 */) {
     Vector4 vec; // r29
-    struct shBattleInfo* bi = &dp->scp->battle; // r3
+    shBattleInfo* bi = &dp->scp->battle; // r3
     shNormalizeVector((float*)&bi->vec, (float*)&vec);
     dp->hb_x = vec.x;
     dp->hb_z = vec.z;
@@ -677,48 +677,48 @@ void enSetHitBack(struct EnLOCAL_DATA* dp /* r2 */) {
     bi->shock = 0.0f;
 }
 
-int enCheckInstantDeath(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckInstantDeath(EnLOCAL_DATA* dp /* r2 */) {
     if ((dp->last_atk >= 0x19) && (dp->last_atk < 0x23)) {
         return 1;
     }
     return 0;
 }
 
-void enSetSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+void enSetSize(EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
     dp->size = dp->new_size = size;
     dp->tall = dp->new_tall = tall;
     dp->center_y = dp->new_center = center;    
     dp->eye_y = dp->new_eye = eye;
 }
 
-void enSetNewSize(struct EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+void enSetNewSize(EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
     dp->new_size = size;
     dp->new_tall = tall;
     dp->new_center = center;
     dp->new_eye = eye;
 }
 
-void enSetSeeLightStatus(struct EnLOCAL_DATA* dp /* r2 */, float center /* r29 */, float radius /* r29 */) {
-    struct shBattleInfo* bi = &dp->scp->battle; // r2
+void enSetSeeLightStatus(EnLOCAL_DATA* dp /* r2 */, float center /* r29 */, float radius /* r29 */) {
+    shBattleInfo* bi = &dp->scp->battle; // r2
     bi->look.center = center;
     bi->look.radius = radius;
     bi->feel.radius = 0.0f;
     bi->feel.center = 0.0f;
 }
 
-int enCheckSeeLight(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckSeeLight(EnLOCAL_DATA* dp /* r2 */) {
     return shBattleSeeHumanLight(dp->scp) == 1;
 }
 
-int enCheckAimedByHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckAimedByHuman(EnLOCAL_DATA* dp /* r2 */) {
     return shBattleAimedByHuman(dp->scp);
 }
 
-int enCheckFinishedByHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckFinishedByHuman(EnLOCAL_DATA* dp /* r2 */) {
     return shBattleFinishedByHuman(dp->scp);
 }
 
-int enCheckNoDamageHuman(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckNoDamageHuman(EnLOCAL_DATA* dp /* r2 */) {
     if (dp->scp->battle.target->kind != 0x105) {
         return shBattleNoDamageHumanJames();
     }
@@ -726,12 +726,12 @@ int enCheckNoDamageHuman(struct EnLOCAL_DATA* dp /* r2 */) {
     return shBattleNoDamageHumanMaria();
 }
 
-void enAttackStart(struct EnLOCAL_DATA* dp /* r16 */) {
+void enAttackStart(EnLOCAL_DATA* dp /* r16 */) {
     shBattleAttackHitCheckInit(dp->scp);
     ENEMY_FLAG_SET(ENEMY_FLAG_2);
 }
 
-int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */) {
+int enAttackCheck(EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */) {
     int result; // r16
     if (!ENEMY_FLAG_CHECK(ENEMY_FLAG_2)) return 0;
     result = dp->scp->battle.atk_result;
@@ -748,7 +748,7 @@ int enAttackCheck(struct EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */) {
     return result;
 }
 
-int enAttackCheckHug(struct EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */)  {
+int enAttackCheckHug(EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */)  {
     shBattleAttackHitCheckToHuman(dp->scp, ID);
     return dp->scp->battle.atk_result;
 }
@@ -757,36 +757,36 @@ int enCheckHuggedPlayer(void) {
     return shBattleHuggedHuman();
 }
 
-int enCheckSleepIn(struct EnLOCAL_DATA* dp) {
+int enCheckSleepIn(EnLOCAL_DATA* dp) {
     if ((!ENEMY_BATTLE_FLAG_CHECK(BATTLE_STATS_FLAG_10) || ((BgIsOut(0) != 0) && !(dp->p_dist <= 15000.0f))) && !(ENEMY_BATTLE_FLAG_CHECK(DEAD_FLAG))) {
         return 1;
     }
     return 0;
 }
 
-int enCheckSleepOut(struct EnLOCAL_DATA* dp) {
+int enCheckSleepOut(EnLOCAL_DATA* dp) {
     if (ENEMY_BATTLE_FLAG_CHECK(BATTLE_STATS_FLAG_10) && ((BgIsOut(0) == 0) || (dp->p_dist < 7500.0f))) {
         return 1;
     }
     return 0;
 }
 
-void enSleepIn(struct EnLOCAL_DATA* dp /* r2 */) {
+void enSleepIn(EnLOCAL_DATA* dp /* r2 */) {
     dp->mlv = 2;
     ENEMY_BATTLE_FLAG_UNSET(MOVED_FLAG);
 }
 
-void enSleepOut(struct EnLOCAL_DATA* dp /* r2 */) {
+void enSleepOut(EnLOCAL_DATA* dp /* r2 */) {
     dp->mlv = 1;
     ENEMY_BATTLE_FLAG_UNSET((LIE_DOWN_FLAG | CRITICAL_FLAG | NO_DAMAGE_FLAG));
     ENEMY_BATTLE_FLAG_SET(MOVED_FLAG);
 }
 
-void enKillCountUp(struct EnLOCAL_DATA* dp /* r2 */) {
+void enKillCountUp(EnLOCAL_DATA* dp /* r2 */) {
     GameKillEnemyCountUp(dp->last_atk);
 }
 
-float* enGetPlayerPos(struct EnLOCAL_DATA* dp /* r2 */) {
+float* enGetPlayerPos(EnLOCAL_DATA* dp /* r2 */) {
     if (dp->scp->battle.target == sh2jms.player) {
         return &sh2jms.column_mov.p;
     }
@@ -816,7 +816,7 @@ int enCheckPlayerWeapon(void) {
     return 0;
 }
 
-float enGetPlayerAngle(struct EnLOCAL_DATA* dp /* r2 */) {
+float enGetPlayerAngle(EnLOCAL_DATA* dp /* r2 */) {
     return dp->scp->battle.target->rot.y;
 }
 
@@ -824,11 +824,11 @@ float enGetPlayerSize(void) {
     return sh2jms.column_mov.p[1][3];
 }
 
-int enCheckPlayerSound(struct EnLOCAL_DATA* dp /* r2 */) {
+int enCheckPlayerSound(EnLOCAL_DATA* dp /* r2 */) {
     return shBattleListenHumanSound(dp->scp, dp->scp->battle.target);
 }
 
-int enCheckPlayerCondition(struct EnLOCAL_DATA* dp /* r17 */) {
+int enCheckPlayerCondition(EnLOCAL_DATA* dp /* r17 */) {
     int r = 0; // r16
     int w; // r2
     float a; // r29+0x30
@@ -878,72 +878,72 @@ void enSetGameOver(void) {
     sh2jms.dead = 2;
 }
 
-void enFlagSetMoved(struct EnLOCAL_DATA* dp) {
+void enFlagSetMoved(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_SET(MOVED_FLAG);
 }
 
-void enFlagResetMoved(struct EnLOCAL_DATA* dp) {
+void enFlagResetMoved(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_UNSET(MOVED_FLAG);
 }
 
-void enFlagSetLieDown(struct EnLOCAL_DATA* dp) {
+void enFlagSetLieDown(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_SET(LIE_DOWN_FLAG);
 }
 
-void enFlagResetLieDown(struct EnLOCAL_DATA* dp) {
+void enFlagResetLieDown(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_UNSET(LIE_DOWN_FLAG);
 }
 
-void enFlagSetCritical(struct EnLOCAL_DATA* dp) {
+void enFlagSetCritical(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_SET(CRITICAL_FLAG)
 }
 
-void enFlagResetCritical(struct EnLOCAL_DATA* dp) {
+void enFlagResetCritical(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_UNSET(CRITICAL_FLAG)
 }
 
-int enCheckCritical(struct EnLOCAL_DATA* dp) {
+int enCheckCritical(EnLOCAL_DATA* dp) {
     return ENEMY_BATTLE_FLAG_CHECK(CRITICAL_FLAG) != 0;
 }
 
-void enFlagSetNoDamage(struct EnLOCAL_DATA* dp) {
+void enFlagSetNoDamage(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_SET(NO_DAMAGE_FLAG);
 }
 
-void enFlagResetNoDamage(struct EnLOCAL_DATA* dp) {
+void enFlagResetNoDamage(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_UNSET(NO_DAMAGE_FLAG);
 }
 
-void enFlagSetDead(struct EnLOCAL_DATA* dp) {
+void enFlagSetDead(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_SET(DEAD_FLAG);
 }
 
-void enFlagResetDead(struct EnLOCAL_DATA* dp) {
+void enFlagResetDead(EnLOCAL_DATA* dp) {
     ENEMY_BATTLE_FLAG_UNSET(DEAD_FLAG);
 }
 
-void enFlagSetRotFloor(struct EnLOCAL_DATA* dp) {
+void enFlagSetRotFloor(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_SET(ENEMY_FLAG_11);
     dp->scp->status |= 0x80;
 }
 
-void enFlagResetRotFloor(struct EnLOCAL_DATA* dp) {
+void enFlagResetRotFloor(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_UNSET(ENEMY_FLAG_11);
     dp->trx = dp->trz = 0.0f;
 }
 
-void enFlagResetRotFloorJust(struct EnLOCAL_DATA* dp) {
+void enFlagResetRotFloorJust(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_UNSET(ENEMY_FLAG_11);
     dp->trx = dp->trz = 0.0f;
     dp->scp->rot.x = dp->scp->rot.z = 0.0f;
     dp->scp->status &= ~0x80;
 }
 
-void enFlagSetDisplay(struct EnLOCAL_DATA* dp) {
+void enFlagSetDisplay(EnLOCAL_DATA* dp) {
     dp->scp->status |= 0x410;
 }
 
-void enFlagResetDisplay(struct EnLOCAL_DATA* dp) {
+void enFlagResetDisplay(EnLOCAL_DATA* dp) {
     dp->scp->status &= ~0x410;
 }
 
@@ -974,7 +974,7 @@ void enMakeRotVector(float* vec, float* rot, float range) {
 
 int enCheckIntoScreen(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x10
-    vec_copy_vu0(vec, &dp->scp->pos);    
+    shVectorCopyVu0(vec, &dp->scp->pos);    
     vec[1] -= dp->eye_y;
     shTransformVectorPerspective(vec, VbWvsMatrix.wsm);    
     if (shScreenClipF(vec)) {
@@ -1005,12 +1005,12 @@ int enCalcTimer(int t /* r2 */) {
     return (t * 60) / 60;
 }
 
-void enSetTimer(struct EnLOCAL_DATA* dp /* r16 */, int t /* r2 */) {
+void enSetTimer(EnLOCAL_DATA* dp /* r16 */, int t /* r2 */) {
     if ((dp->timer = enCalcTimer(t) - 1) < 0) dp->timer = 0.0f;
     ENEMY_FLAG_UNSET(ENEMY_FLAG_13);
 }
 
-int enReduceTimer(struct EnLOCAL_DATA* dp /* r18 */) {    
+int enReduceTimer(EnLOCAL_DATA* dp /* r18 */) {    
     int t = dp->timer; // r16
     int n = t / 60; // r17
     t -= shGetDF();
@@ -1081,7 +1081,7 @@ void enCheckNearPlayer(EnLOCAL_DATA* dp, int* count, float* dist, float limit) {
     shVectorZero(dp->vec);
 }
 
-void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
+void enSetRadioVolume(EnLOCAL_DATA* dp /* r2 */) {
     if ((dp->kind == 4) && (dp->type == 0)) {
         dp->radio = 1.0f;
         return;
@@ -1105,7 +1105,7 @@ void enSetRadioVolume(struct EnLOCAL_DATA* dp /* r2 */) {
     dp->radio = 0;
 }
 
-void enMoveAngle(struct EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
+void enMoveAngle(EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
     p->angle = angle_add(p, 60.0f * delta * shGetDT());
 }
 
@@ -1117,7 +1117,7 @@ void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
 
 #ifdef HOLY_CANDLE
 #line 1624
-void enMoveExec(struct EnLOCAL_DATA * dp /* r16 */) {
+void enMoveExec(EnLOCAL_DATA * dp /* r16 */) {
     /* r29+0x40 */ sceVu0FVECTOR vec; /* r29+0x50 */ sceVu0FVECTOR vec2;
     /* f20 */ float s; /* f3 */ float t; /* f3 */ float c; /* f3 */ float e; /* f21 */ float dt; /* r29+0x60 */ float hb;
     dt = 30.0f * shGetDT();
@@ -1125,8 +1125,8 @@ void enMoveExec(struct EnLOCAL_DATA * dp /* r16 */) {
     if (dp->flag & 0x800) {
         enSetRotFloor(dp);
     }
-    add_rot_x(dp->scp, s = dp->trx, 0.08726646f * dt);
-    add_rot_z(dp->scp, s = dp->trz, 0.08726646f * dt);
+    add_rot_x(dp->scp, s = dp->trx, TO_RAD(5) * dt);
+    add_rot_z(dp->scp, s = dp->trz, TO_RAD(5) * dt);
     
     s = dp->size;
     if (dp->new_size != s) {
@@ -1171,7 +1171,7 @@ void enMoveExec(struct EnLOCAL_DATA * dp /* r16 */) {
         dp->tx2 = dp->tx;
         dp->tz2 = dp->tz;
         shRotVectorY(&vec2, &vec2, dp->scp->rot.y);
-        vec_add_xyz(&vec, &vec2, &vec);
+        shAddVectorXyz(&vec, &vec2, &vec);
     }
     
     if (dp->hb_s != 0.0f) {
@@ -1181,12 +1181,12 @@ void enMoveExec(struct EnLOCAL_DATA * dp /* r16 */) {
         vec2[0] = dp->hb_x;
         vec2[2] = dp->hb_z;
         shScaleVector(&vec2, &vec2, hb);
-        vec_add_xyz(&vec, &vec2, &vec);
+        shAddVectorXyz(&vec, &vec2, &vec);
         if (dp->hb_s < 1.0f) { dp->hb_s = 0.0f; }
     }
-    vec_add_xyz(&dp->scp->pos, &vec, &vec);
+    shAddVectorXyz(&dp->scp->pos, &vec, &vec);
     enCheckForbiddenArea(&dp->scp->pos.x, &vec, e);
-    vec_copy_vu0(&vec, &dp->scp->pos);
+    shVectorCopyVu0(&vec, &dp->scp->pos);
     shVectorZero(dp->vec);
     
     enSetHitColumn(dp);
@@ -1205,10 +1205,10 @@ void enSetRotFloor(EnLOCAL_DATA* dp) {
 
 #ifdef HOLY_CANDLE
 #line 1712
-void enSetHitColumn(struct EnLOCAL_DATA * dp /* r17 */) {
-    struct _CL_HITPOLY_COLUMN column; /* r29+0x40 */ struct _CL_HITPOLY_COLUMN column2; /* r29+0x70 */ sceVu0FVECTOR vec; /* r29+0xA0 */
-    float s; /* r20 */ float t; /* r21 */ float c; /* r22 */ float e; /* r23 */ float * pos; /* r2 */ signed int ID; /* r16 */
-    struct FOG_OBJ_DATA * od; /* r2 */
+void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
+    _CL_HITPOLY_COLUMN column; /* r29+0x40 */ _CL_HITPOLY_COLUMN column2; /* r29+0x70 */ sceVu0FVECTOR vec; /* r29+0xA0 */
+    float s; /* r20 */ float t; /* r21 */ float c; /* r22 */ float e; /* r23 */ float* pos; /* r2 */ int ID; /* r16 */
+    FOG_OBJ_DATA* od; /* r2 */
 
     if ((dp->flag & 8) || ((dp->kind != 12) && !(dp->scp->status & 16))) {
         
@@ -1225,7 +1225,7 @@ void enSetHitColumn(struct EnLOCAL_DATA * dp /* r17 */) {
     column.shape = 3;
     column.weight = dp->weight;
     column.material = 12;
-    vec_copy_vu0(column.p[0], pos);
+    shVectorCopyVu0(column.p[0], pos);
     shVectorZero(column.p[1]);
     if (dp->flag & 0x20) {
         column.p[0][1] += s;
@@ -1314,9 +1314,9 @@ static inline void shRotMatrix(sceVu0FMATRIX out) {
 }
 
 static inline void buildRotMatrix(sceVu0FMATRIX mat, float * rot) {
-    shRotMatrixZ((float (*) [4]) &mat[0], (float (*) [4]) &mat[0], rot[2]);
-    shRotMatrixX((float (*) [4]) &mat[0], (float (*) [4]) &mat[0], rot[0]);
-    shRotMatrixY((float (*) [4]) &mat[0], (float (*) [4]) &mat[0], rot[1]);
+    shRotMatrixZ(mat, mat, rot[2]);
+    shRotMatrixX(mat, mat, rot[0]);
+    shRotMatrixY(mat, mat, rot[1]);
 }
 
 static inline void shIKEVectorTransform(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
@@ -1349,7 +1349,7 @@ void enIKETrans(EnLOCAL_DATA* dp) {
         vec_sub(&dp->oni, vec, vec);
         shUnitMatrix(rot);
         buildRotMatrix((float (*) [4])&rot, (float *) &dp->scp->rot);
-        shIKEVectorTransform((float*) &vec, (float (*) [4]) &rot);
+        shIKEVectorTransform((float*) &vec, &rot);
         vec_sub_xyz(&dp->scp->pos, &vec, &dp->scp->pos);
     }
 }
@@ -1359,7 +1359,7 @@ void enARMTrans(EnLOCAL_DATA* dp) {
     if ((dp == NULL) || (ENEMY_BATTLE_FLAG_CHECK(DEAD_FLAG)) != 0) return;
     shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);
     shSubVector(vec, &dp->scp->pos, dp->arm.old_pos);
-    vec_add_xyz(dp->arm.hand_pos, vec, dp->arm.hand_pos);
+    shAddVectorXyz(dp->arm.hand_pos, vec, dp->arm.hand_pos);
     if (dp->scu.dc >= 0) {
         enARMGetHandPos(vec, dp, dp->scu.dc);
         vec_sub_xyz(dp->arm.hand_pos, vec, vec);
@@ -1370,7 +1370,7 @@ void enARMTrans(EnLOCAL_DATA* dp) {
 }
 
 #line 1845
-void enDyingExec(struct EnLOCAL_DATA * dp /* r16 */) {
+void enDyingExec(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sslv == 0) {
         if ((dp->scp->en_first_status != 13) && (dp->scp->en_first_status != 14)) {
             
@@ -1395,7 +1395,7 @@ void enDyingExec(struct EnLOCAL_DATA * dp /* r16 */) {
                 return;
             }
         }
-        dp->sslv += 1;
+        ENEMY_NEXT_SUB_STEP();
     }
 
 
@@ -1428,11 +1428,11 @@ void enWaitRegenerate(EnLOCAL_DATA* dp) {
 }
 
 //#line 1911
-void enFlyingFunc(struct SubCharacter * scp /* r2 */) {
+void enFlyingFunc(SubCharacter* scp /* r2 */) {
     void * tmp; // r2
 }
 
-void enDeleteCharacter(struct EnLOCAL_DATA* dp /* r2 */) {
+void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */) {
     shCharacter_Manage_Delete(dp->scp, dp->scp->kind, dp->scp->id);
 }
 
@@ -1444,12 +1444,12 @@ void enInitPath(EnPATH_DATA* p, float angle) {
 
 #ifdef HOLY_CANDLE
 #line 1941
-signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 */, float * pos /* r18 */) {
-    struct EnPATH_DATA * p = &dp->path; // r16
-    float vec[4]; /* r29+0x70 */ float dist; /* r20 */ float ma; /* r21 */ 
+int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */) {
+    EnPATH_DATA* p = &dp->path; // r16
+    sceVu0FVECTOR vec; /* r29+0x70 */ float dist; /* r20 */ float ma; /* r21 */ 
     float a; /* r29+0x90 */ float a1; /* r22 */ float a2; /* r24 */
     float d1; /* r23 */ float d2; /* r29+0x90 */ int k; /* r17 */
-    /* r29+0x80 */ char timer[12] = {
+    /* r29+0x80 */ s_char timer[12] = {
         0, 
         30, 
         20,
@@ -1487,11 +1487,11 @@ signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 *
     switch (k = p->step) {
     case 0:
         p->step = 1;
-        a1 = 0.2617994f + ma;
+        a1 = TO_RAD(15) + ma;
         shSinCosV_Scale(&vec, a1, dist);
         vec_add(pos, vec, vec);
         d1 = enCheckPath(dp, &vec, pos);
-        a2 = ma - 0.2617994f;
+        a2 = ma - TO_RAD(15);
         shSinCosV_Scale(&vec, a2, dist);
         vec_add(pos, vec, vec);
         a = enCheckPath(dp, &vec, pos);
@@ -1501,25 +1501,25 @@ signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 *
             ma = a2;
         } 
         else if (d1 >= 0.0f && a >= 0.0f && ((++p->deadend) >= 3)) {
-            ma = ma + 3.1415927f;
+            ma += PI;
             p->step = -1;
         } else {
-            ma -= 0.0017453292f;
+            ma -= TO_RAD(1);
             p->step = 2;
         }
         
         break;
     case 1:
         a2 = shAngleRegulate(ma - p->angle);
-        if (a2 == 0.0f) { a2 = 0.017453292f; }
-        if (shFloatAbs(a2) < 0.2617994f) { a1 = ma; }
-        else { a1 = p->angle + (0.2617994f * float_sign(a2)); };
+        if (a2 == 0.0f) { a2 = TO_RAD(1); }
+        if (shFloatAbs(a2) < TO_RAD(15)) { a1 = ma; }
+        else { a1 = p->angle + (TO_RAD(15) * float_sign(a2)); };
         shSinCosV_Scale(&vec, a1, dist);
         vec_add(pos, vec, vec);
         d1 = enCheckPath(dp, &vec, pos);
         if (d1 < 0.0f) {
             ma = a1;
-            p->timer = fptosi((dist = (timer[dp->kind] * 60) / 60.0f) * (1.0f + shSway1f(-0.5f, 0.5f)));
+            p->timer = (dist = (timer[dp->kind] * 60) / 60.0f) * (1.0f + shSway1f(-0.5f, 0.5f));
             
             break;
         } 
@@ -1527,23 +1527,23 @@ signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 *
         vec_add(pos, vec, vec);
         d2 = enCheckPath(dp, &vec, pos);
         if (d2 < 0.0f) {
-            p->timer = fptosi((timer[dp->kind] * 60) / 60.0f);
+            p->timer = (timer[dp->kind] * 60) / 60.0f;
             break;
         } 
         if (d1 < d2) {
             a1 = ma;
             d1 = d2;
         }
-        d1 = float_sign(d1); a2 = p->angle - (0.2617994f * a2);
+        d1 = float_sign(d1); a2 = p->angle - (TO_RAD(15) * a2);
         shSinCosV_Scale(&vec, a2, dist);
         vec_add(pos, vec, vec);
         if (enCheckPath(dp, &vec, pos) < 0.0f) {
             
             ma = a2;
-            p->timer = fptosi((timer[dp->kind] * 60) / 60.0f);
+            p->timer = (timer[dp->kind] * 60) / 60.0f;
         } else if (d1 < 0.0f) {
             ma = a1;
-            p->timer = fptosi((timer[dp->kind] * 60) / 60.0f);
+            p->timer = (timer[dp->kind] * 60) / 60.0f;
         } else {
 
             ma = a1;
@@ -1552,18 +1552,18 @@ signed int enSetPath(struct EnLOCAL_DATA * dp /* r19 */, float * target /* r17 *
         break;
     case -1:
         ma = p->markangle;
-        if (enCalcAngleDifference(ma, p->angle) < 0.2617994f) {
+        if (enCalcAngleDifference(ma, p->angle) < TO_RAD(15)) {
             p->deadend = 0;
             p->step = 1;
         }
         break;
     
     default:
-        a1 = ma + (0.2617994f * k);
+        a1 = ma + (TO_RAD(15) * k);
         shSinCosV_Scale(&vec, a1, dist);
         vec_add(pos, vec, vec);
         d1 = enCheckPath(dp, &vec, pos);
-        a2 = ma - (0.2617994f * k);
+        a2 = ma - (TO_RAD(15) * k);
         shSinCosV_Scale(&vec, a2, dist);
         vec_add(pos, vec, vec);
         a = enCheckPath(dp, &vec, pos);
@@ -1744,7 +1744,7 @@ void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
         i++;
     }
     m = &sp->src_m;
-    vec_copy_vu0(vec, m->d[3]);
+    shVectorCopyVu0(vec, m->d[3]);
 }
 
 
@@ -1767,7 +1767,7 @@ void enGetSkeletonMatrix(float (*mat)[4], EnLOCAL_DATA* dp, int n) {
 
 #ifdef HOLY_CANDLE
 int enGetDamageMotion(EnLOCAL_DATA* dp) { // @note: left like this since I dont know how those variables were used
-    struct shBattleInfo* bi; // r16   
+    shBattleInfo* bi; // r16   
     int m; // r18
     int id; // r2
     int dd; // r2    
@@ -1952,7 +1952,7 @@ int enGetLieDirection(int dm) {
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetLieDirection)
 #endif
 
-void enAnimeSet(struct EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */) {
+void enAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */) {
     enAnimeRestart(dp);
     dp->anim = anim;
     dp->anim_s = 0x1000;
@@ -1993,7 +1993,7 @@ void enAnimeSetDirectFrame(EnLOCAL_DATA* dp, int anim, int id, int frame) {
 }
 
 #line 2554
-void enAnimeExec(struct EnLOCAL_DATA * dp /* r22 */, struct EnANIME_DATA * pa /* r21 */, signed short anm_none /* r20 */) {
+void enAnimeExec(EnLOCAL_DATA * dp /* r22 */, EnANIME_DATA * pa /* r21 */, short anm_none /* r20 */) {
     int n; /* r16 */ int limit; /* r17 */ int speed; /* r18 */ int loop; /* r2 */ int f; /* r19 */
     AnimeInfo* ai; /* r2 */
     if (ENEMY_FLAG_CHECK(ENEMY_FLAG_0) || dp->anim_n < 0) { return; }
@@ -2069,8 +2069,8 @@ void enAnimeExec(struct EnLOCAL_DATA * dp /* r22 */, struct EnANIME_DATA * pa /*
 }
 
 #line 2633
-void enSetTrans(EnLOCAL_DATA * dp /* r16 */) {
-    EnSKELETON_DATA * sd = &EnSkeletonData + dp->kind; // r17
+void enSetTrans(EnLOCAL_DATA* dp /* r16 */) {
+    EnSKELETON_DATA* sd = &EnSkeletonData + dp->kind; // r17
     float vec1[4]; /* r29+0x30 */ float vec2[4]; /* r29+0x40 */
     if (sd->rate != 0.0f) {
         enGetSkeletonVector(vec1, dp, sd->num1);
@@ -2090,8 +2090,8 @@ void enSetTransN(EnLOCAL_DATA* dp, int n) {
 }
 
 #line 2660
-void enSetTransWalk(EnLOCAL_DATA * dp /* r17 */) {
-    sceVu0FVECTOR vec[2]; /* r29+0x40 */ signed int sn[2]; /* r29+0x68 */ signed int d; /* r16 */ float od; /* r20 */
+void enSetTransWalk(EnLOCAL_DATA* dp /* r17 */) {
+    sceVu0FVECTOR vec[2]; /* r29+0x40 */ int sn[2]; /* r29+0x68 */ int d; /* r16 */ float od; /* r20 */
     
     
     od = dp->tz - dp->tz2;
@@ -2116,22 +2116,22 @@ void enSetTransForward(EnLOCAL_DATA* dp, float s) {
     dp->tz = ((-s * dp->anim_s) / 4096.0f) * shGetDT();
 }
 
-void enAnimePause(struct EnLOCAL_DATA* dp /* r2 */) {
+void enAnimePause(EnLOCAL_DATA* dp /* r2 */) {
     ENEMY_FLAG_SET(ENEMY_FLAG_0)
     shCharacterAnimePause(dp->scp);
 }
 
-void enAnimeRestart(struct EnLOCAL_DATA* dp /* r2 */) {
+void enAnimeRestart(EnLOCAL_DATA* dp /* r2 */) {
     ENEMY_FLAG_UNSET(ENEMY_FLAG_0)
     shCharacterAnimeRestart(dp->scp);
 }
 
-void enAnimeFrameSet(struct EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */) {
+void enAnimeFrameSet(EnLOCAL_DATA* dp /* r2 */, u_short frame /* r2 */) {
     dp->anim_n = frame * 2400;
     shCharacterAnimeFrameSet(dp->scp, frame);
 }
 
-void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */) {
+void enAnimeReverse(EnLOCAL_DATA* dp /* r16 */) {
     AnimeInfo* ai = shCharacterAnimeGetInfo(dp->scp); // r2    
     if (dp->anim_s > 0) {
         dp->anim_s = -dp->anim_s;
@@ -2141,15 +2141,15 @@ void enAnimeReverse(struct EnLOCAL_DATA* dp /* r16 */) {
     }
 }
 
-void enSetAnimeCount(struct EnLOCAL_DATA* dp /* r17 */, int count /* r16 */) {
+void enSetAnimeCount(EnLOCAL_DATA* dp /* r17 */, int count /* r16 */) {
     int limit = shCharacterAnimeGetInfo(dp->scp)->frame; // r2    
     ENEMY_FLAG_SET(ENEMY_FLAG_7)
     dp->anim_step = (count * (limit * 2400)) >> 0xC;
 }
 
-void enEfctBloodPool(struct EnLOCAL_DATA* dp /* r2 */) {
+void enEfctBloodPool(EnLOCAL_DATA* dp /* r2 */) {
     float pos[4]; // r29+0x10   
-    vec_copy_vu0(pos, (float*)&dp->scp->pos);    
+    shVectorCopyVu0(pos, (float*)&dp->scp->pos);    
     pos[1] -= 3.0f;
     HH_Effect_Object_Blood_Pool_Impact_Post(pos, 0);
 }
@@ -2182,7 +2182,7 @@ void enSoundStop(int num /* r2 */) {
     shSdSeStop(num);
 }
 
-void enSoundSetQueue(struct SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* r29 */, float time /* r29 */) {
+void enSoundSetQueue(SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* r29 */, float time /* r29 */) {
     EnSOUND_QUEUE* que; // r2
     
     if (enLocalWork.SoundQueueNum < 8) {
@@ -2263,7 +2263,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetForbiddenArea)
 #ifdef HOLY_CANDLE
 #line 2981
 void enRoomForbiddenArea(void) {
-    signed int f = 0;
+    int f = 0;
     switch(stage->glb_crd) {
     case 3:
         
@@ -2324,7 +2324,7 @@ int enCheckForbiddenArea(float* sp, float* ep, float size) {
 }
 
 #ifdef HOLY_CANDLE
-int enCheckForbiddenAreaSub(EnFORBIDDENAREA * fa /* r2 */, Vector4 * sp /* r2 */, Vector4 * ep /* r2 */, float size /* r29 */) {
+int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, Vector4* ep /* r2 */, float size /* r29 */) {
     float x0; // r1
     float z0; // r2
     float x1; // r3
@@ -2334,7 +2334,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA * fa /* r2 */, Vector4 * sp /* r2 */
     float vx; // r7
     float vz; // r8
     float c; // r29
-    signed int f; // r2
+    int f; // r2
 
     x0 = fa->x0 - size;
     z0 = fa->z0 - size;
@@ -2398,7 +2398,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForbiddenAreaSub);
 
 void enEventDriven(int event /* r2 */, int id /* r2 */) {
     int i; // r3
-    struct EnLOCAL_DATA* dp = enLocalWork.Data; // r6
+    EnLOCAL_DATA* dp = enLocalWork.Data; // r6
 
     switch (event) {
         case 0:

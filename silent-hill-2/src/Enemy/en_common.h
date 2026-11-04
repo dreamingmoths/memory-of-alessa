@@ -99,8 +99,8 @@ typedef struct EnANIME_DATA {
 // total size: 0x8
 typedef struct EnSKELETON_DATA {
     // Members
-    signed short num1; // offset 0x0, size 0x2
-    signed short num2; // offset 0x2, size 0x2
+    short num1; // offset 0x0, size 0x2
+    short num2; // offset 0x2, size 0x2
     float rate; // offset 0x4, size 0x4
 } EnSKELETON_DATA;
 
