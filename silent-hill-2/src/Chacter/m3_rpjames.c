@@ -155,49 +155,48 @@ void shGetJamesLightPosOriginal_Reverse(float* pos, float* vec) {
 
 #line 240
 void PlayerSetReverseMode(void) {
-    
-    
+    #line 243
     switch (RoomNameJms()) {
-    case 1:
-        mirror_mode = 0;
-        wall_pos = -20000.0f;
-        sh2jms.water_road = 0;
-        break;
-    case 36:
-        mirror_mode = 2;
-        wall_pos = -99995.0f;
-        sh2jms.water_road = 0;
-        break;
-    case 37:
-    case 38:
-    case 98:
-        mirror_mode = 1;
-        wall_pos = 0.0f;
-        sh2jms.water_road = 0;
-        break;
-    case 99:
-        
-    case 128:
-    case 133:
-    case 122:
-        
-    case 124:
-    case 126:
-    case 182:
-        
-    case 183:
-    case 171:
-    case 184:
-        
-    case 185:
-        mirror_mode = 1;
-        wall_pos = -100.0f;
-        sh2jms.water_road = 1;
-        break;
-    default:
-        mirror_mode = -1;
-        sh2jms.water_road = 0;
-        break;
+        case 1:
+            mirror_mode = 0;
+            wall_pos = -20000.0f;
+            sh2jms.water_road = 0;
+            break;
+        case 36:
+            mirror_mode = 2;
+            wall_pos = -99995.0f;
+            sh2jms.water_road = 0;
+            break;
+        case 37:
+        case 38:
+        case 98:
+            mirror_mode = 1;
+            wall_pos = 0.0f;
+            sh2jms.water_road = 0;
+            break;
+        case 99:
+            
+        case 128:
+        case 133:
+        case 122:
+            
+        case 124:
+        case 126:
+        case 182:
+            
+        case 183:
+        case 171:
+        case 184:
+            
+        case 185:
+            mirror_mode = 1;
+            wall_pos = -100.0f;
+            sh2jms.water_road = 1;
+            break;
+        default:
+            mirror_mode = -1;
+            sh2jms.water_road = 0;
+            break;
     }
     sh2jms.light_reverse = (mirror_mode == -1)? 0 : 1;
 }
