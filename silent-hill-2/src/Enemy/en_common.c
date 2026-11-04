@@ -2324,7 +2324,7 @@ int enCheckForbiddenArea(float* sp, float* ep, float size) {
 }
 
 #ifdef HOLY_CANDLE
-int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, Vector4* ep /* r2 */, float size /* r29 */) {
+int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, float* ep /* r2 */, float size /* r29 */) {
     float x0; // r1
     float z0; // r2
     float x1; // r3
@@ -2340,22 +2340,22 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
     z0 = fa->z0 - size;
     x1 = fa->x1 + size;
     z1 = fa->z1 + size;
-    sx = sp->x;
-    sz = sp->z;
-    if ((sx <= x0 && ep->x <= x0) || ((sx >= x1) && (ep->x >= x1)) 
-        || (sz <= z0 && ep->z <= z0) || ((sz >= z1) && (ep->z >= z1))) {
+    sx = sp[0];
+    sz = sp[2];
+    if ((sx <= x0 && ep[0] <= x0) || ((sx >= x1) && (ep[0] >= x1)) 
+        || (sz <= z0 && ep[2] <= z0) || ((sz >= z1) && (ep[2] >= z1))) {
         
         return 0;
     }
     f = 0;
-    vx = ep->x - sx;
-    vz = ep->z - sz;
+    vx = ep[0] - sx;
+    vz = ep[2] - sz;
     if (sx < (x0 + (2.0f * size))) {
         c = sz + ((vz * (x0 - sx)) / vx);
         if ((c >= z0) && (c <= z1)) {
             f = 1;
-            ep->x = x0;
-            ep->z = c;
+            ep[0] = x0;
+            ep[2] = c;
             vx = c;
             vz = c - sz;
         }
@@ -2364,8 +2364,8 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
         c = sz + ((vz * (x1 - sx)) / vx);
         if ((c >= z0) && (c <= z1)) {
             f = 1;
-            ep->x = x1;
-            ep->z = c;
+            ep[0] = x1;
+            ep[2] = c;
             vx = c;
             vz = c - sz;
         }
@@ -2374,8 +2374,8 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
         c = sx + ((vx * (z0 - sz)) / vz);
         if ((c >= x0) && (c <= x1)) {
             f = 1;
-            ep->x = c;
-            ep->z = z0;
+            ep[0] = c;
+            ep[2] = z0;
             vx = c - sx;
             vz = c;
         }
@@ -2384,8 +2384,8 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
         c = sx + ((vx * (z1 - sz)) / vz);
         if ((c >= x0) && (c <= x1)) {
             f = 1;
-            ep->x = c;
-            ep->z = z1;
+            ep[0] = c;
+            ep[2] = z1;
         }
     }
     return f;
