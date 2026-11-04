@@ -3385,6 +3385,940 @@ types:
 
       - size: 8
 
+  sce_gif_tag:
+    seq:
+      - id: nloop
+        type: b15
+
+      - id: eop
+        type: b1
+
+      - id: pad16
+        type: b16
+
+      - id: id
+        type: b14
+
+      - id: pre
+        type: b1
+
+      - id: prim
+        type: b11
+
+      - id: flg
+        type: b2
+
+      - id: nreg
+        type: b4
+
+      - id: regs0
+        type: b4
+
+      - id: regs1
+        type: b4
+
+      - id: regs2
+        type: b4
+
+      - id: regs3
+        type: b4
+
+      - id: regs4
+        type: b4
+
+      - id: regs5
+        type: b4
+
+      - id: regs6
+        type: b4
+
+      - id: regs7
+        type: b4
+
+      - id: regs8
+        type: b4
+
+      - id: regs9
+        type: b4
+
+      - id: regs10
+        type: b4
+
+      - id: regs11
+        type: b4
+
+      - id: regs12
+        type: b4
+
+      - id: regs13
+        type: b4
+
+      - id: regs14
+        type: b4
+
+      - id: regs15
+        type: b4
+
+  sce_gif_pack_rgbaq:
+    seq:
+      - id: r
+        type: u4
+
+      - id: g
+        type: u4
+
+      - id: b
+        type: u4
+
+      - id: a
+        type: u4
+
+  sce_gif_pack_ad:
+    seq:
+      - id: data
+        type: u8
+
+      - id: addr
+        type: u8
+
+  sce_gif_pack_st:
+    seq:
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+      - id: q
+        type: f4
+
+      - id: pad96
+        type: u4
+
+  sce_gif_pack_uv:
+    seq:
+      - id: u
+        type: s4
+
+      - id: v
+        type: s4
+
+      - id: pad64
+        type: s8
+
+  sce_gif_pack_xyzf:
+    seq:
+      - id: x
+        type: s4
+
+      - id: y
+        type: s4
+
+      - id: z
+        type: u4
+
+      - id: f
+        type: b12
+
+      - id: pad108
+        type: b3
+
+      - id: adc
+        type: b1
+
+      - id: pad112
+        type: b16
+
+  sce_gif_pack_xyz:
+    seq:
+      - id: x
+        type: s4
+
+      - id: y
+        type: s4
+
+      - id: z
+        type: u4
+
+      - id: pad96
+        type: b15
+
+      - id: adc
+        type: b1
+
+      - id: pad112
+        type: b16
+
+  sce_gif_pack_fog:
+    seq:
+      - id: pad
+        type: u4
+        repeat: expr
+        repeat-expr: 3
+
+      - id: f
+        type: u4
+
+  sce_gif_pack_nop:
+    seq:
+      - id: pad
+        type: u8
+        repeat: expr
+        repeat-expr: 2
+
+  sce_gs_alpha:
+    seq:
+      - id: a
+        type: b2
+
+      - id: b
+        type: b2
+
+      - id: c
+        type: b2
+
+      - id: d
+        type: b2
+
+      - id: pad8
+        type: b24
+
+      - id: fix
+        type: b8
+
+      - id: pad40
+        type: b24
+
+  sce_gs_bitbltbuf:
+    seq:
+      - id: sbp
+        type: b14
+
+      - id: pad14
+        type: b2
+
+      - id: sbw
+        type: b6
+
+      - id: pad22
+        type: b2
+
+      - id: spsm
+        type: b6
+
+      - id: pad30
+        type: b2
+
+      - id: dbp
+        type: b14
+
+      - id: pad46
+        type: b2
+
+      - id: dbw
+        type: b6
+
+      - id: pad54
+        type: b2
+
+      - id: dpsm
+        type: b6
+
+      - id: pad62
+        type: b2
+
+  sce_gs_clamp:
+    seq:
+      - id: wms
+        type: b2
+
+      - id: wmt
+        type: b2
+
+      - id: minu
+        type: b10
+
+      - id: maxu
+        type: b10
+
+      - id: minv
+        type: b10
+
+      - id: maxv
+        type: b10
+
+      - id: pad44
+        type: b20
+
+  sce_gs_colclamp:
+    seq:
+      - id: clamp
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_dimx:
+    seq:
+      - id: dimx00
+        type: b3
+
+      - id: pad00
+        type: b1
+
+      - id: dimx01
+        type: b3
+
+      - id: pad01
+        type: b1
+
+      - id: dimx02
+        type: b3
+
+      - id: pad02
+        type: b1
+
+      - id: dimx03
+        type: b3
+
+      - id: pad03
+        type: b1
+
+      - id: dimx10
+        type: b3
+
+      - id: pad10
+        type: b1
+
+      - id: dimx11
+        type: b3
+
+      - id: pad11
+        type: b1
+
+      - id: dimx12
+        type: b3
+
+      - id: pad12
+        type: b1
+
+      - id: dimx13
+        type: b3
+
+      - id: pad13
+        type: b1
+
+      - id: dimx20
+        type: b3
+
+      - id: pad20
+        type: b1
+
+      - id: dimx21
+        type: b3
+
+      - id: pad21
+        type: b1
+
+      - id: dimx22
+        type: b3
+
+      - id: pad22
+        type: b1
+
+      - id: dimx23
+        type: b3
+
+      - id: pad23
+        type: b1
+
+      - id: dimx30
+        type: b3
+
+      - id: pad30
+        type: b1
+
+      - id: dimx31
+        type: b3
+
+      - id: pad31
+        type: b1
+
+      - id: dimx32
+        type: b3
+
+      - id: pad32
+        type: b1
+
+      - id: dimx33
+        type: b3
+
+      - id: pad33
+        type: b1
+
+  sce_gs_dthe:
+    seq:
+      - id: dthe
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_fba:
+    seq:
+      - id: fba
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_finish:
+    seq:
+      - id: pad00
+        type: u8
+
+  sce_gs_fog:
+    seq:
+      - id: pad00
+        type: b56
+
+      - id: f
+        type: b8
+
+  sce_gs_fogcol:
+    seq:
+      - id: fcr
+        type: b8
+
+      - id: fcg
+        type: b8
+
+      - id: fcb
+        type: b8
+
+      - id: pad24
+        type: b40
+
+  sce_gs_frame:
+    seq:
+      - id: fbp
+        type: b9
+
+      - id: pad09
+        type: b7
+
+      - id: fbw
+        type: b6
+
+      - id: pad22
+        type: b2
+
+      - id: psm
+        type: b6
+
+      - id: pad30
+        type: b2
+
+      - id: fbmsk
+        type: b32
+
+  sce_gs_hwreg:
+    seq:
+      - id: wdata
+        type: u8
+
+  sce_gs_label:
+    seq:
+      - id: id
+        type: u4
+
+      - id: idmsk
+        type: u4
+
+  sce_gs_miptbp1:
+    seq:
+      - id: tbp1
+        type: b14
+
+      - id: tbw1
+        type: b6
+
+      - id: tbp2
+        type: b14
+
+      - id: tbw2
+        type: b6
+
+      - id: tbp3
+        type: b14
+
+      - id: tbw3
+        type: b6
+
+      - id: pad60
+        type: b4
+
+  sce_gs_miptbp2:
+    seq:
+      - id: tbp4
+        type: b14
+
+      - id: tbw4
+        type: b6
+
+      - id: tbp5
+        type: b14
+
+      - id: tbw5
+        type: b6
+
+      - id: tbp6
+        type: b14
+
+      - id: tbw6
+        type: b6
+
+      - id: pad60
+        type: b4
+
+  sce_gs_pabe:
+    seq:
+      - id: pabe
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_prim:
+    seq:
+      - id: prim
+        type: b3
+
+      - id: iip
+        type: b1
+
+      - id: tme
+        type: b1
+
+      - id: fge
+        type: b1
+
+      - id: abe
+        type: b1
+
+      - id: aa1
+        type: b1
+
+      - id: fst
+        type: b1
+
+      - id: ctxt
+        type: b1
+
+      - id: fix
+        type: b1
+
+      - id: pad11
+        type: b53
+
+  sce_gs_prmode:
+    seq:
+      - id: pad00
+        type: b3
+
+      - id: iip
+        type: b1
+
+      - id: tme
+        type: b1
+
+      - id: fge
+        type: b1
+
+      - id: abe
+        type: b1
+
+      - id: aa1
+        type: b1
+
+      - id: fst
+        type: b1
+
+      - id: ctxt
+        type: b1
+
+      - id: fix
+        type: b1
+
+      - id: pad11
+        type: b53
+
+  sce_gs_prmodecont:
+    seq:
+      - id: ac
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_rgbaq:
+    seq:
+      - id: r
+        type: b8
+
+      - id: g
+        type: b8
+
+      - id: b
+        type: b8
+
+      - id: a
+        type: b8
+
+      - id: q
+        type: f4
+
+  sce_gs_scanmsk:
+    seq:
+      - id: msk
+        type: b2
+
+      - id: pad02
+        type: b62
+
+  sce_gs_scissor:
+    seq:
+      - id: scax0
+        type: b11
+
+      - id: pad11
+        type: b5
+
+      - id: scax1
+        type: b11
+
+      - id: pad27
+        type: b5
+
+      - id: scay0
+        type: b11
+
+      - id: pad43
+        type: b5
+
+      - id: scay1
+        type: b11
+
+      - id: pad59
+        type: b5
+
+  sce_gs_signal:
+    seq:
+      - id: id
+        type: u4
+
+      - id: idmsk
+        type: u4
+
+  sce_gs_st:
+    seq:
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+  sce_gs_test:
+    seq:
+      - id: ate
+        type: b1
+
+      - id: atst
+        type: b3
+
+      - id: aref
+        type: b8
+
+      - id: afail
+        type: b2
+
+      - id: date
+        type: b1
+
+      - id: datm
+        type: b1
+
+      - id: zte
+        type: b1
+
+      - id: ztst
+        type: b2
+
+      - id: pad19
+        type: b45
+
+  sce_gs_tex0:
+    seq:
+      - id: tbp0
+        type: b14
+
+      - id: tbw
+        type: b6
+
+      - id: psm
+        type: b6
+
+      - id: tw
+        type: b4
+
+      - id: th
+        type: b4
+
+      - id: tcc
+        type: b1
+
+      - id: tfx
+        type: b2
+
+      - id: cbp
+        type: b14
+
+      - id: cpsm
+        type: b4
+
+      - id: csm
+        type: b1
+
+      - id: csa
+        type: b5
+
+      - id: cld
+        type: b3
+
+  sce_gs_tex1:
+    seq:
+      - id: lcm
+        type: b1
+
+      - id: pad01
+        type: b1
+
+      - id: mxl
+        type: b3
+
+      - id: mmag
+        type: b1
+
+      - id: mmin
+        type: b3
+
+      - id: mtba
+        type: b1
+
+      - id: pad10
+        type: b9
+
+      - id: l
+        type: b2
+
+      - id: pad21
+        type: b11
+
+      - id: k
+        type: b12
+
+      - id: pad44
+        type: b20
+
+  sce_gs_tex2:
+    seq:
+      - id: pad00
+        type: b20
+
+      - id: psm
+        type: b6
+
+      - id: pad26
+        type: b11
+
+      - id: cbp
+        type: b14
+
+      - id: cpsm
+        type: b4
+
+      - id: csm
+        type: b1
+
+      - id: csa
+        type: b5
+
+      - id: cld
+        type: b3
+
+  sce_gs_texa:
+    seq:
+      - id: ta0
+        type: b8
+
+      - id: pad08
+        type: b7
+
+      - id: aem
+        type: b1
+
+      - id: pad16
+        type: b16
+
+      - id: ta1
+        type: b8
+
+      - id: pad40
+        type: b24
+
+  sce_gs_texclut:
+    seq:
+      - id: cbw
+        type: b6
+
+      - id: cou
+        type: b6
+
+      - id: cov
+        type: b10
+
+      - id: pad22
+        type: b42
+
+  sce_gs_texflush:
+    seq:
+      - id: pad00
+        type: u8
+
+  sce_gs_trxdir:
+    seq:
+      - id: xdr
+        type: b2
+
+      - id: pad02
+        type: b62
+
+  sce_gs_trxpos:
+    seq:
+      - id: ssax
+        type: b11
+
+      - id: pad11
+        type: b5
+
+      - id: ssay
+        type: b11
+
+      - id: pad27
+        type: b5
+
+      - id: dsax
+        type: b11
+
+      - id: pad43
+        type: b5
+
+      - id: dsay
+        type: b11
+
+      - id: dir
+        type: b2
+
+      - id: pad61
+        type: b3
+
+  sce_gs_trxreg:
+    seq:
+      - id: rrw
+        type: b12
+
+      - id: pad12
+        type: b20
+
+      - id: rrh
+        type: b12
+
+      - id: pad44
+        type: b20
+
+  sce_gs_uv:
+    seq:
+      - id: u
+        type: b14
+
+      - id: pad14
+        type: b2
+
+      - id: v
+        type: b14
+
+      - id: pad30
+        type: b34
+
+  sce_gs_xyoffset:
+    seq:
+      - id: ofx
+        type: b16
+
+      - id: pad16
+        type: b16
+
+      - id: ofy
+        type: b16
+
+      - id: pad48
+        type: b16
+
+  sce_gs_xyz:
+    seq:
+      - id: x
+        type: b16
+
+      - id: y
+        type: b16
+
+      - id: z
+        type: b32
+
+  sce_gs_xyzf:
+    seq:
+      - id: x
+        type: b16
+
+      - id: y
+        type: b16
+
+      - id: z
+        type: b24
+
+      - id: f
+        type: b8
+
+  sce_gs_zbuf:
+    seq:
+      - id: zbp
+        type: b9
+
+      - id: pad09
+        type: b15
+
+      - id: psm
+        type: b4
+
+      - id: pad28
+        type: b4
+
+      - id: zmsk
+        type: b1
+
+      - id: pad33
+        type: b31
+
   wave_element:
     seq:
       - id: enable
@@ -3598,6 +4532,17 @@ types:
         type: u1
 
       - size: 1
+
+  en_skeleton_data:
+    seq:
+      - id: num1
+        type: s2
+
+      - id: num2
+        type: s2
+
+      - id: rate
+        type: f4
 
   item:
     seq:
@@ -7254,10 +8199,10 @@ types:
   t_tcount:
     seq:
       - id: count
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_tmode:
     seq:
@@ -7297,18 +8242,18 @@ types:
   t_tcomp:
     seq:
       - id: comp
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_thold:
     seq:
       - id: hold
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_ipu_cmd_write:
     seq:
@@ -7491,7 +8436,7 @@ types:
         type: b1
 
       - id: tag
-        type: u16
+        type: b16
 
   t_gif_tag1:
     seq:
@@ -7554,7 +8499,7 @@ types:
         type: b1
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif0_stat:
     seq:
@@ -7634,10 +8579,10 @@ types:
   t_vif_mark:
     seq:
       - id: mark
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif_cycle:
     seq:
@@ -7648,7 +8593,7 @@ types:
         type: b8
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif_mode:
     seq:
@@ -7719,7 +8664,7 @@ types:
   t_vif_code:
     seq:
       - id: immediate
-        type: u16
+        type: b16
 
       - id: num
         type: b8
@@ -7931,7 +8876,7 @@ types:
         type: b7
 
       - id: tag
-        type: u16
+        type: b16
 
   t_dmadr:
     seq:
@@ -7944,10 +8889,10 @@ types:
   t_dqwc:
     seq:
       - id: qwc
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_dtadr:
     seq:
@@ -8202,7 +9147,7 @@ types:
   t_denabler:
     seq:
       - id: p0
-        type: u16
+        type: b16
 
       - id: cpnd
         type: b1
@@ -8213,7 +9158,7 @@ types:
   t_denablew:
     seq:
       - id: p0
-        type: u16
+        type: b16
 
       - id: cpnd
         type: b1
@@ -8245,7 +9190,7 @@ types:
         type: b8
 
       - id: p0
-        type: u16
+        type: b16
 
       - id: p1
         type: u4
@@ -8542,940 +9487,6 @@ types:
 
       - id: lblid
         type: b32
-
-  sce_gif_tag:
-    seq:
-      - id: nloop
-        type: b15
-
-      - id: eop
-        type: b1
-
-      - id: pad16
-        type: u16
-
-      - id: id
-        type: b14
-
-      - id: pre
-        type: b1
-
-      - id: prim
-        type: b11
-
-      - id: flg
-        type: b2
-
-      - id: nreg
-        type: b4
-
-      - id: regs0
-        type: b4
-
-      - id: regs1
-        type: b4
-
-      - id: regs2
-        type: b4
-
-      - id: regs3
-        type: b4
-
-      - id: regs4
-        type: b4
-
-      - id: regs5
-        type: b4
-
-      - id: regs6
-        type: b4
-
-      - id: regs7
-        type: b4
-
-      - id: regs8
-        type: b4
-
-      - id: regs9
-        type: b4
-
-      - id: regs10
-        type: b4
-
-      - id: regs11
-        type: b4
-
-      - id: regs12
-        type: b4
-
-      - id: regs13
-        type: b4
-
-      - id: regs14
-        type: b4
-
-      - id: regs15
-        type: b4
-
-  sce_gif_pack_rgbaq:
-    seq:
-      - id: r
-        type: u4
-
-      - id: g
-        type: u4
-
-      - id: b
-        type: u4
-
-      - id: a
-        type: u4
-
-  sce_gif_pack_ad:
-    seq:
-      - id: data
-        type: u8
-
-      - id: addr
-        type: u8
-
-  sce_gif_pack_st:
-    seq:
-      - id: s
-        type: f4
-
-      - id: t
-        type: f4
-
-      - id: q
-        type: f4
-
-      - id: pad96
-        type: u4
-
-  sce_gif_pack_uv:
-    seq:
-      - id: u
-        type: s4
-
-      - id: v
-        type: s4
-
-      - id: pad64
-        type: s8
-
-  sce_gif_pack_xyzf:
-    seq:
-      - id: x
-        type: s4
-
-      - id: y
-        type: s4
-
-      - id: z
-        type: u4
-
-      - id: f
-        type: b12
-
-      - id: pad108
-        type: b3
-
-      - id: adc
-        type: b1
-
-      - id: pad112
-        type: u16
-
-  sce_gif_pack_xyz:
-    seq:
-      - id: x
-        type: s4
-
-      - id: y
-        type: s4
-
-      - id: z
-        type: u4
-
-      - id: pad96
-        type: b15
-
-      - id: adc
-        type: b1
-
-      - id: pad112
-        type: u16
-
-  sce_gif_pack_fog:
-    seq:
-      - id: pad
-        type: u4
-        repeat: expr
-        repeat-expr: 3
-
-      - id: f
-        type: u4
-
-  sce_gif_pack_nop:
-    seq:
-      - id: pad
-        type: u8
-        repeat: expr
-        repeat-expr: 2
-
-  sce_gs_alpha:
-    seq:
-      - id: a
-        type: b2
-
-      - id: b
-        type: b2
-
-      - id: c
-        type: b2
-
-      - id: d
-        type: b2
-
-      - id: pad8
-        type: b24
-
-      - id: fix
-        type: b8
-
-      - id: pad40
-        type: b24
-
-  sce_gs_bitbltbuf:
-    seq:
-      - id: sbp
-        type: b14
-
-      - id: pad14
-        type: b2
-
-      - id: sbw
-        type: b6
-
-      - id: pad22
-        type: b2
-
-      - id: spsm
-        type: b6
-
-      - id: pad30
-        type: b2
-
-      - id: dbp
-        type: b14
-
-      - id: pad46
-        type: b2
-
-      - id: dbw
-        type: b6
-
-      - id: pad54
-        type: b2
-
-      - id: dpsm
-        type: b6
-
-      - id: pad62
-        type: b2
-
-  sce_gs_clamp:
-    seq:
-      - id: wms
-        type: b2
-
-      - id: wmt
-        type: b2
-
-      - id: minu
-        type: b10
-
-      - id: maxu
-        type: b10
-
-      - id: minv
-        type: b10
-
-      - id: maxv
-        type: b10
-
-      - id: pad44
-        type: b20
-
-  sce_gs_colclamp:
-    seq:
-      - id: clamp
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_dimx:
-    seq:
-      - id: dimx00
-        type: b3
-
-      - id: pad00
-        type: b1
-
-      - id: dimx01
-        type: b3
-
-      - id: pad01
-        type: b1
-
-      - id: dimx02
-        type: b3
-
-      - id: pad02
-        type: b1
-
-      - id: dimx03
-        type: b3
-
-      - id: pad03
-        type: b1
-
-      - id: dimx10
-        type: b3
-
-      - id: pad10
-        type: b1
-
-      - id: dimx11
-        type: b3
-
-      - id: pad11
-        type: b1
-
-      - id: dimx12
-        type: b3
-
-      - id: pad12
-        type: b1
-
-      - id: dimx13
-        type: b3
-
-      - id: pad13
-        type: b1
-
-      - id: dimx20
-        type: b3
-
-      - id: pad20
-        type: b1
-
-      - id: dimx21
-        type: b3
-
-      - id: pad21
-        type: b1
-
-      - id: dimx22
-        type: b3
-
-      - id: pad22
-        type: b1
-
-      - id: dimx23
-        type: b3
-
-      - id: pad23
-        type: b1
-
-      - id: dimx30
-        type: b3
-
-      - id: pad30
-        type: b1
-
-      - id: dimx31
-        type: b3
-
-      - id: pad31
-        type: b1
-
-      - id: dimx32
-        type: b3
-
-      - id: pad32
-        type: b1
-
-      - id: dimx33
-        type: b3
-
-      - id: pad33
-        type: b1
-
-  sce_gs_dthe:
-    seq:
-      - id: dthe
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_fba:
-    seq:
-      - id: fba
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_finish:
-    seq:
-      - id: pad00
-        type: u8
-
-  sce_gs_fog:
-    seq:
-      - id: pad00
-        type: b56
-
-      - id: f
-        type: b8
-
-  sce_gs_fogcol:
-    seq:
-      - id: fcr
-        type: b8
-
-      - id: fcg
-        type: b8
-
-      - id: fcb
-        type: b8
-
-      - id: pad24
-        type: b40
-
-  sce_gs_frame:
-    seq:
-      - id: fbp
-        type: b9
-
-      - id: pad09
-        type: b7
-
-      - id: fbw
-        type: b6
-
-      - id: pad22
-        type: b2
-
-      - id: psm
-        type: b6
-
-      - id: pad30
-        type: b2
-
-      - id: fbmsk
-        type: b32
-
-  sce_gs_hwreg:
-    seq:
-      - id: wdata
-        type: u8
-
-  sce_gs_label:
-    seq:
-      - id: id
-        type: u4
-
-      - id: idmsk
-        type: u4
-
-  sce_gs_miptbp1:
-    seq:
-      - id: tbp1
-        type: b14
-
-      - id: tbw1
-        type: b6
-
-      - id: tbp2
-        type: b14
-
-      - id: tbw2
-        type: b6
-
-      - id: tbp3
-        type: b14
-
-      - id: tbw3
-        type: b6
-
-      - id: pad60
-        type: b4
-
-  sce_gs_miptbp2:
-    seq:
-      - id: tbp4
-        type: b14
-
-      - id: tbw4
-        type: b6
-
-      - id: tbp5
-        type: b14
-
-      - id: tbw5
-        type: b6
-
-      - id: tbp6
-        type: b14
-
-      - id: tbw6
-        type: b6
-
-      - id: pad60
-        type: b4
-
-  sce_gs_pabe:
-    seq:
-      - id: pabe
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_prim:
-    seq:
-      - id: prim
-        type: b3
-
-      - id: iip
-        type: b1
-
-      - id: tme
-        type: b1
-
-      - id: fge
-        type: b1
-
-      - id: abe
-        type: b1
-
-      - id: aa1
-        type: b1
-
-      - id: fst
-        type: b1
-
-      - id: ctxt
-        type: b1
-
-      - id: fix
-        type: b1
-
-      - id: pad11
-        type: b53
-
-  sce_gs_prmode:
-    seq:
-      - id: pad00
-        type: b3
-
-      - id: iip
-        type: b1
-
-      - id: tme
-        type: b1
-
-      - id: fge
-        type: b1
-
-      - id: abe
-        type: b1
-
-      - id: aa1
-        type: b1
-
-      - id: fst
-        type: b1
-
-      - id: ctxt
-        type: b1
-
-      - id: fix
-        type: b1
-
-      - id: pad11
-        type: b53
-
-  sce_gs_prmodecont:
-    seq:
-      - id: ac
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_rgbaq:
-    seq:
-      - id: r
-        type: b8
-
-      - id: g
-        type: b8
-
-      - id: b
-        type: b8
-
-      - id: a
-        type: b8
-
-      - id: q
-        type: f4
-
-  sce_gs_scanmsk:
-    seq:
-      - id: msk
-        type: b2
-
-      - id: pad02
-        type: b62
-
-  sce_gs_scissor:
-    seq:
-      - id: scax0
-        type: b11
-
-      - id: pad11
-        type: b5
-
-      - id: scax1
-        type: b11
-
-      - id: pad27
-        type: b5
-
-      - id: scay0
-        type: b11
-
-      - id: pad43
-        type: b5
-
-      - id: scay1
-        type: b11
-
-      - id: pad59
-        type: b5
-
-  sce_gs_signal:
-    seq:
-      - id: id
-        type: u4
-
-      - id: idmsk
-        type: u4
-
-  sce_gs_st:
-    seq:
-      - id: s
-        type: f4
-
-      - id: t
-        type: f4
-
-  sce_gs_test:
-    seq:
-      - id: ate
-        type: b1
-
-      - id: atst
-        type: b3
-
-      - id: aref
-        type: b8
-
-      - id: afail
-        type: b2
-
-      - id: date
-        type: b1
-
-      - id: datm
-        type: b1
-
-      - id: zte
-        type: b1
-
-      - id: ztst
-        type: b2
-
-      - id: pad19
-        type: b45
-
-  sce_gs_tex0:
-    seq:
-      - id: tbp0
-        type: b14
-
-      - id: tbw
-        type: b6
-
-      - id: psm
-        type: b6
-
-      - id: tw
-        type: b4
-
-      - id: th
-        type: b4
-
-      - id: tcc
-        type: b1
-
-      - id: tfx
-        type: b2
-
-      - id: cbp
-        type: b14
-
-      - id: cpsm
-        type: b4
-
-      - id: csm
-        type: b1
-
-      - id: csa
-        type: b5
-
-      - id: cld
-        type: b3
-
-  sce_gs_tex1:
-    seq:
-      - id: lcm
-        type: b1
-
-      - id: pad01
-        type: b1
-
-      - id: mxl
-        type: b3
-
-      - id: mmag
-        type: b1
-
-      - id: mmin
-        type: b3
-
-      - id: mtba
-        type: b1
-
-      - id: pad10
-        type: b9
-
-      - id: l
-        type: b2
-
-      - id: pad21
-        type: b11
-
-      - id: k
-        type: b12
-
-      - id: pad44
-        type: b20
-
-  sce_gs_tex2:
-    seq:
-      - id: pad00
-        type: b20
-
-      - id: psm
-        type: b6
-
-      - id: pad26
-        type: b11
-
-      - id: cbp
-        type: b14
-
-      - id: cpsm
-        type: b4
-
-      - id: csm
-        type: b1
-
-      - id: csa
-        type: b5
-
-      - id: cld
-        type: b3
-
-  sce_gs_texa:
-    seq:
-      - id: ta0
-        type: b8
-
-      - id: pad08
-        type: b7
-
-      - id: aem
-        type: b1
-
-      - id: pad16
-        type: u16
-
-      - id: ta1
-        type: b8
-
-      - id: pad40
-        type: b24
-
-  sce_gs_texclut:
-    seq:
-      - id: cbw
-        type: b6
-
-      - id: cou
-        type: b6
-
-      - id: cov
-        type: b10
-
-      - id: pad22
-        type: b42
-
-  sce_gs_texflush:
-    seq:
-      - id: pad00
-        type: u8
-
-  sce_gs_trxdir:
-    seq:
-      - id: xdr
-        type: b2
-
-      - id: pad02
-        type: b62
-
-  sce_gs_trxpos:
-    seq:
-      - id: ssax
-        type: b11
-
-      - id: pad11
-        type: b5
-
-      - id: ssay
-        type: b11
-
-      - id: pad27
-        type: b5
-
-      - id: dsax
-        type: b11
-
-      - id: pad43
-        type: b5
-
-      - id: dsay
-        type: b11
-
-      - id: dir
-        type: b2
-
-      - id: pad61
-        type: b3
-
-  sce_gs_trxreg:
-    seq:
-      - id: rrw
-        type: b12
-
-      - id: pad12
-        type: b20
-
-      - id: rrh
-        type: b12
-
-      - id: pad44
-        type: b20
-
-  sce_gs_uv:
-    seq:
-      - id: u
-        type: b14
-
-      - id: pad14
-        type: b2
-
-      - id: v
-        type: b14
-
-      - id: pad30
-        type: b34
-
-  sce_gs_xyoffset:
-    seq:
-      - id: ofx
-        type: u16
-
-      - id: pad16
-        type: u16
-
-      - id: ofy
-        type: u16
-
-      - id: pad48
-        type: u16
-
-  sce_gs_xyz:
-    seq:
-      - id: x
-        type: u16
-
-      - id: y
-        type: u16
-
-      - id: z
-        type: b32
-
-  sce_gs_xyzf:
-    seq:
-      - id: x
-        type: u16
-
-      - id: y
-        type: u16
-
-      - id: z
-        type: b24
-
-      - id: f
-        type: b8
-
-  sce_gs_zbuf:
-    seq:
-      - id: zbp
-        type: b9
-
-      - id: pad09
-        type: b15
-
-      - id: psm
-        type: b4
-
-      - id: pad28
-        type: b4
-
-      - id: zmsk
-        type: b1
-
-      - id: pad33
-        type: b31
 
   sce_gs_disp_env:
     seq:

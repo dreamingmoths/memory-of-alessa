@@ -2621,6 +2621,23 @@ class Sh2(KaitaiStruct):
             self.ambush._fetch_instances()
 
 
+    class EnSkeletonData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnSkeletonData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.num1 = self._io.read_s2le()
+            self.num2 = self._io.read_s2le()
+            self.rate = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class EnSoundQueue(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.EnSoundQueue, self).__init__(_io)
@@ -6588,12 +6605,11 @@ class Sh2(KaitaiStruct):
             self.z = self._io.read_u4le()
             self.pad96 = self._io.read_bits_int_le(15)
             self.adc = self._io.read_bits_int_le(1) != 0
-            self.pad112 = Sh2.U16(self._io, self, self._root)
+            self.pad112 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.pad112._fetch_instances()
 
 
     class SceGifPackXyzf(KaitaiStruct):
@@ -6610,12 +6626,11 @@ class Sh2(KaitaiStruct):
             self.f = self._io.read_bits_int_le(12)
             self.pad108 = self._io.read_bits_int_le(3)
             self.adc = self._io.read_bits_int_le(1) != 0
-            self.pad112 = Sh2.U16(self._io, self, self._root)
+            self.pad112 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.pad112._fetch_instances()
 
 
     class SceGifTag(KaitaiStruct):
@@ -6628,7 +6643,7 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.nloop = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.pad16 = Sh2.U16(self._io, self, self._root)
+            self.pad16 = self._io.read_bits_int_le(16)
             self.id = self._io.read_bits_int_le(14)
             self.pre = self._io.read_bits_int_le(1) != 0
             self.prim = self._io.read_bits_int_le(11)
@@ -6654,7 +6669,6 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
-            self.pad16._fetch_instances()
 
 
     class SceGsAlpha(KaitaiStruct):
@@ -7635,14 +7649,13 @@ class Sh2(KaitaiStruct):
             self.ta0 = self._io.read_bits_int_le(8)
             self.pad08 = self._io.read_bits_int_le(7)
             self.aem = self._io.read_bits_int_le(1) != 0
-            self.pad16 = Sh2.U16(self._io, self, self._root)
+            self.pad16 = self._io.read_bits_int_le(16)
             self.ta1 = self._io.read_bits_int_le(8)
             self.pad40 = self._io.read_bits_int_le(24)
 
 
         def _fetch_instances(self):
             pass
-            self.pad16._fetch_instances()
 
 
     class SceGsTexclut(KaitaiStruct):
@@ -7761,18 +7774,14 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.ofx = Sh2.U16(self._io, self, self._root)
-            self.pad16 = Sh2.U16(self._io, self, self._root)
-            self.ofy = Sh2.U16(self._io, self, self._root)
-            self.pad48 = Sh2.U16(self._io, self, self._root)
+            self.ofx = self._io.read_bits_int_le(16)
+            self.pad16 = self._io.read_bits_int_le(16)
+            self.ofy = self._io.read_bits_int_le(16)
+            self.pad48 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.ofx._fetch_instances()
-            self.pad16._fetch_instances()
-            self.ofy._fetch_instances()
-            self.pad48._fetch_instances()
 
 
     class SceGsXyz(KaitaiStruct):
@@ -7783,15 +7792,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.x = Sh2.U16(self._io, self, self._root)
-            self.y = Sh2.U16(self._io, self, self._root)
+            self.x = self._io.read_bits_int_le(16)
+            self.y = self._io.read_bits_int_le(16)
             self.z = self._io.read_bits_int_le(32)
 
 
         def _fetch_instances(self):
             pass
-            self.x._fetch_instances()
-            self.y._fetch_instances()
 
 
     class SceGsXyzf(KaitaiStruct):
@@ -7802,16 +7809,14 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.x = Sh2.U16(self._io, self, self._root)
-            self.y = Sh2.U16(self._io, self, self._root)
+            self.x = self._io.read_bits_int_le(16)
+            self.y = self._io.read_bits_int_le(16)
             self.z = self._io.read_bits_int_le(24)
             self.f = self._io.read_bits_int_le(8)
 
 
         def _fetch_instances(self):
             pass
-            self.x._fetch_instances()
-            self.y._fetch_instances()
 
 
     class SceGsZbuf(KaitaiStruct):
@@ -10945,12 +10950,11 @@ class Sh2(KaitaiStruct):
             self.tie = self._io.read_bits_int_le(1) != 0
             self.str = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(7)
-            self.tag = Sh2.U16(self._io, self, self._root)
+            self.tag = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.tag._fetch_instances()
 
 
     class TDctrl(KaitaiStruct):
@@ -10982,14 +10986,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.cpnd = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(15)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TDenablew(KaitaiStruct):
@@ -11000,14 +11003,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.cpnd = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(15)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TDmadr(KaitaiStruct):
@@ -11071,14 +11073,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.qwc = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.qwc = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.qwc._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TDrbor(KaitaiStruct):
@@ -11302,12 +11302,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.loopcnt = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TGifStat(KaitaiStruct):
@@ -11349,12 +11348,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.nloop = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.tag = Sh2.U16(self._io, self, self._root)
+            self.tag = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.tag._fetch_instances()
 
 
     class TGifTag1(KaitaiStruct):
@@ -11657,13 +11655,12 @@ class Sh2(KaitaiStruct):
             self.amod = self._io.read_bits_int_le(1) != 0
             self.slbg = self._io.read_bits_int_le(1) != 0
             self.alp = self._io.read_bits_int_le(8)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.p1 = self._io.read_u4le()
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TGsSiglblid(KaitaiStruct):
@@ -11808,14 +11805,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.comp = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.comp = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.comp._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TTcount(KaitaiStruct):
@@ -11826,14 +11821,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.count = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.count = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.count._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TThold(KaitaiStruct):
@@ -11844,14 +11837,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.hold = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.hold = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.hold._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TTmode(KaitaiStruct):
@@ -12175,14 +12166,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.immediate = Sh2.U16(self._io, self, self._root)
+            self.immediate = self._io.read_bits_int_le(16)
             self.num = self._io.read_bits_int_le(8)
             self.cmd = self._io.read_bits_int_le(8)
 
 
         def _fetch_instances(self):
             pass
-            self.immediate._fetch_instances()
 
 
     class TVifCycle(KaitaiStruct):
@@ -12195,12 +12185,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.cl = self._io.read_bits_int_le(8)
             self.wl = self._io.read_bits_int_le(8)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TVifItop(KaitaiStruct):
@@ -12243,14 +12232,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.mark = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.mark = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.mark._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TVifMask(KaitaiStruct):
