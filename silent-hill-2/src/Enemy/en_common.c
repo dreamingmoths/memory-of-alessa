@@ -146,7 +146,7 @@ static float EnBattleCollisionRate[16] = {
     0.0f, 0.8f, 0.8f, 2.0f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f, 1.0f, 0.8f, 1.0f, 2.0f, 2.0f, 0.0f
 };
 
-static inline float angle_add(EnPATH_DATA* p, float a0) { // what is the best place for this?
+static inline float shAngleAdd(EnPATH_DATA* p, float a0) {
     float a1 = p->markangle;
     float temp_f0 = shAngleRegulate(a1 - p->angle);
     if (temp_f0 < -a0) {
@@ -157,7 +157,7 @@ static inline float angle_add(EnPATH_DATA* p, float a0) { // what is the best pl
     return shAngleRegulate(a1);
 }
 
-static inline float add_rot_x(SubCharacter* scp, float a0, float a2) {
+static inline float shAddRotX(SubCharacter* scp, float a0, float a2) {
     float r = a0;
     Vector4 *rot = &scp->rot;
     float temp_f0 = shAngleRegulate(r - rot->x);
@@ -169,7 +169,7 @@ static inline float add_rot_x(SubCharacter* scp, float a0, float a2) {
     rot->x = shAngleRegulate(r);
 }
 
-static inline float add_rot_z(SubCharacter* scp, float a0, float a2) {
+static inline float shAddRotZ(SubCharacter* scp, float a0, float a2) {
     float r = a0;
     Vector4 *rot = &scp->rot;
     float* zz = &rot->z;
@@ -188,7 +188,7 @@ void enInitEnemy(void) {
 }
 
 #line 193
-void enExecTask() {
+void enExecTask(void) {
     int i; /* r16 */
     EnLOCAL_DATA* dp; /* r17 */
     Vector4* p_pos; /* r2 */
@@ -496,7 +496,7 @@ int enCheckDarkOrBrightPlayer(void) {
 }
  
 int enCheckWater(EnLOCAL_DATA* dp) {
-    float y = 3.4028235e38f; // r20
+    float y = MAX_FLOAT; // r20
     switch (RoomName(0, dp->scp->pos.x, dp->scp->pos.z)) {
         case 0x63:
         case 0x62:
@@ -758,7 +758,7 @@ int enCheckHuggedPlayer(void) {
 }
 
 int enCheckSleepIn(EnLOCAL_DATA* dp) {
-    if ((!ENEMY_BATTLE_FLAG_CHECK(BATTLE_STATS_FLAG_10) || ((BgIsOut(0) != 0) && !(dp->p_dist <= 15000.0f))) && !(ENEMY_BATTLE_FLAG_CHECK(DEAD_FLAG))) {
+    if ((!ENEMY_BATTLE_FLAG_CHECK(BATTLE_STATS_FLAG_10) || ((BgIsOut(0) != 0) && (dp->p_dist > 15000.0f))) && !(ENEMY_BATTLE_FLAG_CHECK(DEAD_FLAG))) {
         return 1;
     }
     return 0;
@@ -1106,7 +1106,7 @@ void enSetRadioVolume(EnLOCAL_DATA* dp /* r2 */) {
 }
 
 void enMoveAngle(EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
-    p->angle = angle_add(p, 60.0f * delta * shGetDT());
+    p->angle = shAngleAdd(p, 60.0f * delta * shGetDT());
 }
 
 void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
@@ -1117,16 +1117,16 @@ void enMoveAngleToPlayer(EnLOCAL_DATA* dp, float delta) {
 
 #ifdef HOLY_CANDLE
 #line 1624
-void enMoveExec(EnLOCAL_DATA * dp /* r16 */) {
+void enMoveExec(EnLOCAL_DATA* dp /* r16 */) {
     /* r29+0x40 */ sceVu0FVECTOR vec; /* r29+0x50 */ sceVu0FVECTOR vec2;
     /* f20 */ float s; /* f3 */ float t; /* f3 */ float c; /* f3 */ float e; /* f21 */ float dt; /* r29+0x60 */ float hb;
     dt = 30.0f * shGetDT();
     
-    if (dp->flag & 0x800) {
+    if (dp->flag & (1 << ENEMY_FLAG_11)) {
         enSetRotFloor(dp);
     }
-    add_rot_x(dp->scp, s = dp->trx, TO_RAD(5) * dt);
-    add_rot_z(dp->scp, s = dp->trz, TO_RAD(5) * dt);
+    shAddRotX(dp->scp, s = dp->trx, TO_RAD(5) * dt);
+    shAddRotZ(dp->scp, s = dp->trz, TO_RAD(5) * dt);
     
     s = dp->size;
     if (dp->new_size != s) {
@@ -1206,7 +1206,7 @@ void enSetRotFloor(EnLOCAL_DATA* dp) {
 #ifdef HOLY_CANDLE
 #line 1712
 void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
-    _CL_HITPOLY_COLUMN column; /* r29+0x40 */ _CL_HITPOLY_COLUMN column2; /* r29+0x70 */ sceVu0FVECTOR vec; /* r29+0xA0 */
+    CL_HITPOLY_COLUMN column; /* r29+0x40 */ CL_HITPOLY_COLUMN column2; /* r29+0x70 */ sceVu0FVECTOR vec; /* r29+0xA0 */
     float s; /* r20 */ float t; /* r21 */ float c; /* r22 */ float e; /* r23 */ float* pos; /* r2 */ int ID; /* r16 */
     FOG_OBJ_DATA* od; /* r2 */
 
@@ -1930,21 +1930,21 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enGetDownMotion)
 int enGetLieDirection(int dm) {
     int m; // r16
     switch (dm) {
-    case 14:
-    case 16:
-    case 17:
-    case 18:
-    case 19:
-    case 20:
-    case 21:
-        m = 0;
-        break;
-    case 15:
-        m = 1;
-        break;
-    default:
-        m = 0;
-        printf("Illegal down motion!(%d)\n", dm);
+        case 14:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+            m = 0;
+            break;
+        case 15:
+            m = 1;
+            break;
+        default:
+            m = 0;
+            printf("Illegal down motion!(%d)\n", dm);
     }
     return m;
 }
@@ -2342,8 +2342,8 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
     z1 = fa->z1 + size;
     sx = sp->x;
     sz = sp->z;
-    if ((sx <= x0 && ep->x <= x0) || (!(sx < x1) && !(ep->x < x1)) 
-        || (sz <= z0 && ep->z <= z0) || (!(sz < z1) && !(ep->z < z1))) {
+    if ((sx <= x0 && ep->x <= x0) || ((sx >= x1) && (ep->x >= x1)) 
+        || (sz <= z0 && ep->z <= z0) || ((sz >= z1) && (ep->z >= z1))) {
         
         return 0;
     }
@@ -2352,7 +2352,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
     vz = ep->z - sz;
     if (sx < (x0 + (2.0f * size))) {
         c = sz + ((vz * (x0 - sx)) / vx);
-        if (!(c < z0) && (c <= z1)) {
+        if ((c >= z0) && (c <= z1)) {
             f = 1;
             ep->x = x0;
             ep->z = c;
@@ -2360,9 +2360,9 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
             vz = c - sz;
         }
     }
-    if (!(sx <= (x1 - (2.0f * size)))) {
+    if ((sx > (x1 - (2.0f * size)))) {
         c = sz + ((vz * (x1 - sx)) / vx);
-        if (!(c < z0) && (c <= z1)) {
+        if ((c >= z0) && (c <= z1)) {
             f = 1;
             ep->x = x1;
             ep->z = c;
@@ -2372,7 +2372,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
     }
     if (sz < (z0 + (2.0f * size))) {
         c = sx + ((vx * (z0 - sz)) / vz);
-        if (!(c < x0) && (c <= x1)) {
+        if ((c >= x0) && (c <= x1)) {
             f = 1;
             ep->x = c;
             ep->z = z0;
@@ -2380,9 +2380,9 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, Vector4* sp /* r2 */, 
             vz = c;
         }
     }
-    if (!(sz <= (z1 - (2.0f * size)))) {
+    if ((sz > (z1 - (2.0f * size)))) {
         c = sx + ((vx * (z1 - sz)) / vz);
-        if (!(c < x0) && (c <= x1)) {
+        if ((c >= x0) && (c <= x1)) {
             f = 1;
             ep->x = c;
             ep->z = z1;
@@ -2403,21 +2403,21 @@ void enEventDriven(int event /* r2 */, int id /* r2 */) {
     switch (event) {
         case 0:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if ((dp->kind != 0) && (dp->mlv != 0)) {
+                if (dp->kind != 0 && dp->mlv != 0) {
                     dp->mlv = 0;
                 }
             }
             break;
         case 1:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if ((dp->kind != 0) && (dp->mlv != 1)) {
+                if (dp->kind != 0 && dp->mlv != 1) {
                     dp->mlv = 3;
                 }
             }
             break;
         case 2:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if ((dp->kind == 2) && (dp->type == 6)) {
+                if (dp->kind == 2 && dp->type == 6) {
                     dp->type = 7;
                 }
             }
@@ -2432,7 +2432,7 @@ void enEventDriven(int event /* r2 */, int id /* r2 */) {
             break;
         case 4:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if ((dp->kind == 5) && (dp->mlv == 4)) {
+                if (dp->kind == 5 && dp->mlv == 4) {
                     dp->slv = event;
                     dp->sslv = id;
                 }
