@@ -290,13 +290,17 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
                 stream.write(f"{indent}/* .{attr_str} = */ {", ".join(list(map(lambda v : f"{v:X}", list(value))))},\n")
 
             elif isinstance(value, list):
-                element = value[0]
-                if isinstance(element, float):
-                    # float array
-                    stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(find_smallest_float_string, value)).replace("\0", "")}}},\n")
+                if len(value) == 0 or not any(value):
+                    # empty array
+                    stream.write(f"{indent}/* .{attr_str} = */ {{}},\n")
                 else:
-                    # string array
-                    stream.write(f"{indent}/* .{attr_str} = */ \"{"".join(map(chr, value)).replace("\0", "")}\",\n")
+                    element = value[0]
+                    if isinstance(element, float):
+                        # float array
+                        stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(find_smallest_float_string, value)).replace("\0", "")}}},\n")
+                    else:
+                        # string array
+                        stream.write(f"{indent}/* .{attr_str} = */ \"{"".join(map(chr, value)).replace("\0", "")}\",\n")
 
             elif isinstance(value, float):
                 # float

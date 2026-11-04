@@ -6,7 +6,7 @@
  * used for decomp.me contexts and alessastruct.
  */
 
- /*
+/*
  
 to rebuild with alessastruct:
 
@@ -23,6 +23,10 @@ then:
 ```sh
 kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir tools/alessatool/kaitai
 ```
+
+NOTE: currently two lines in `sh2.py` need fixups after this last step as they use reserved python keywords:
+`global` -> `global_`
+`as`     -> `as_`
 
  */
 #define __ALESSASTRUCT_README__
