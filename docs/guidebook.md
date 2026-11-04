@@ -278,3 +278,61 @@ names to these numeric values.
 
 Please note that the DWARF information may miss some local variables or show
 misleading register values (especially `$r2` in the case of MWCCPS2 2.4).
+
+## data migration
+
+In the context of decompilation projects, "data migration" refers the process of
+moving assembly data to C, including tables, numeric constants, strings, and so
+on. Compared to function decompilation, the decompilation of data is relatively
+straightforward to automate, even more so when the structure of the data is
+known ahead of time.
+
+`alessatool` can perform data migration automatically, with no further
+dependencies outside of the Python requirements for this repository. To see an
+example data migration, run
+
+```sh
+source tools/scripts/env.sh # activate `alessatool`, if not already active
+alessatool migrate --project=silent-hill-2 --name=_pObject_Class_List
+```
+
+and then open `ctx.c` in an editor of choice. This is used in
+[hh_effect_object_def.c](../silent-hill-2/src/Effect2/hh_effect_object_def.c).
+
+### how to migrate data
+
+If you already have some data you need to migrate, then:
+
+1. Add an entry to the list in `tools/alessatool/kaitai/data/config.py`. See
+   [migration syntax](#migration-syntax) for more details if needed.
+
+2. Run the migration command. For example, if the data is named `symbol_name`:
+
+```sh
+alessatool migrate --project=silent-hill-2 --name=symbol_name
+```
+
+The result will be in `ctx.c`. Any macros such as `UNLINKED(...)` or
+`UNMIGRATED(...)` can be removed so that the result is formatted as a definition
+(like `AnimeInfo anime_info = { /* ... */ };`).
+
+### migration syntax
+
+*(This section is likely to change.)*
+
+`StructData` is for data that contains at least one struct, whereas `SimpleData`
+is for everything else.
+
+The `name` section of each entry should match a symbol in `symbol_addrs.txt`.
+
+The `count` field is how many elements are in the array part if any, for example
+`AnimeInfo[11]` should have `count=11`. `SimpleData` supports `pattern`, which
+can be used for multidimensional arrays such as `float[4][4]`, where we would
+write `pattern=[4, 4]`.
+
+`hex=False` can be used to specify that numbers are decompiled as decimal
+numbers rather than hexadecimal.
+
+`to_str` can be used to pass a custom stringification function. This can be
+useful to format the data in special ways, for example converting numbers to
+macros or enums.
