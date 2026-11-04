@@ -45,6 +45,9 @@ SH2_DATA: DataTable = [
     SimpleData(name="_Peripheral_Controller_SendData",      type="<12c",                               pattern=[2, 6]                 ),
     StructData(name="d_oni_anim",                           type=Sh2.AnimeInfo,                        count=10                       ),
     StructData(name="oni_anim",                             type=Sh2.AnimeInfo,                        count=16                       ),
+    StructData(name="ike_anim",                             type=Sh2.AnimeInfo,                        count=21                       ),
+    StructData(name="d_ike_anim",                           type=Sh2.AnimeInfo,                        count=12                       ),
+    SimpleData(name="dike_anime_adr_list",                  type="<12i"                                                               ),
 ]
 
 SH3_DATA: DataTable = []
