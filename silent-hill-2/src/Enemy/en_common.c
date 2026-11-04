@@ -222,7 +222,7 @@ void enExecTask(void) {
     max = 0;
     for (i = 0; i < 32; i++, dp ++) {
         if (dp->kind > 0 && dp->kind < 16) {
-            dp->p_dist = shVectorDist((float *) &dp->scp->pos, (float *) p_pos);dist[max] = dp->p_dist;
+            dp->p_dist = shVectorDist((float*) &dp->scp->pos, (float*) p_pos);dist[max] = dp->p_dist;
             num[max] = i;
             dp->flag &= ~0x1000;
             max++;
@@ -296,7 +296,7 @@ void enExecTask(void) {
             if (que->scp->kind == 0) {
                 n = 1;
             } else if ((que->time -= shGetDT()) <= 0.0f) {
-                enSoundCall(que->num, que->vol, (float *) &que->scp->pos.x);
+                enSoundCall(que->num, que->vol, (float*) &que->scp->pos.x);
                 n = 1;
             }
             if (n != 0) {
@@ -1346,9 +1346,9 @@ void enIKETrans(EnLOCAL_DATA* dp) {
         }
         shVectorCopy(vec, &dp->oni);
         enGetSkeletonVector(dp->bos.target, dp, 0xC);
-        vec_sub(&dp->oni, vec, vec);
+        shSubVector(vec, &dp->oni, vec);
         shUnitMatrix(rot);
-        buildRotMatrix((float (*) [4])&rot, (float *) &dp->scp->rot);
+        buildRotMatrix(rot, (float*) &dp->scp->rot);
         shIKEVectorTransform((float*) &vec, &rot);
         vec_sub_xyz(&dp->scp->pos, &vec, &dp->scp->pos);
     }
@@ -1429,7 +1429,7 @@ void enWaitRegenerate(EnLOCAL_DATA* dp) {
 
 //#line 1911
 void enFlyingFunc(SubCharacter* scp /* r2 */) {
-    void * tmp; // r2
+    void* tmp; // r2
 }
 
 void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */) {
@@ -1513,7 +1513,7 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
         a2 = shAngleRegulate(ma - p->angle);
         if (a2 == 0.0f) { a2 = TO_RAD(1); }
         if (shFloatAbs(a2) < TO_RAD(15)) { a1 = ma; }
-        else { a1 = p->angle + (TO_RAD(15) * float_sign(a2)); };
+        else { a1 = p->angle + TO_RAD(15) * float_sign(a2); };
         shSinCosV_Scale(&vec, a1, dist);
         vec_add(pos, vec, vec);
         d1 = enCheckPath(dp, &vec, pos);
@@ -1534,7 +1534,7 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
             a1 = ma;
             d1 = d2;
         }
-        d1 = float_sign(d1); a2 = p->angle - (TO_RAD(15) * a2);
+        d1 = float_sign(d1); a2 = p->angle - TO_RAD(15) * a2;
         shSinCosV_Scale(&vec, a2, dist);
         vec_add(pos, vec, vec);
         if (enCheckPath(dp, &vec, pos) < 0.0f) {
@@ -1588,7 +1588,7 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
             }
             if (++k >= 6) {
                 
-                ma = ma + 3.1415927f;
+                ma += PI;
                 k = -1;
             }
         }
@@ -1739,7 +1739,7 @@ void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
         return;
     }
     i = 0;
-    while ((i < n) && (sp->next != NULL)) {
+    while (i < n && sp->next != NULL) {
         sp = sp->next;
         i++;
     }
@@ -1754,7 +1754,7 @@ void enGetSkeletonMatrix(float (*mat)[4], EnLOCAL_DATA* dp, int n) {
 
     sp = dp->scp->sk_top;
     
-    if (!(dp->scp->status & 0x10)) {
+    if (!(dp->scp->status & (1 << SCP_STATUS_BIT_4))) {
         shVectorZero(mat[0]);
         shVectorZero(mat[1]);
         shVectorZero(mat[2]);
@@ -1874,11 +1874,11 @@ int enGetDownMotion(EnLOCAL_DATA* dp) {
         case 2:
         case 1: 
         case 36: 
-            m = 0xE;
+            m = 14;
             break;
         case 4: 
         case 6: 
-            m = id + 0xF;
+            m = id + 15;
             break;
         case 12:
         case 13:
@@ -1894,9 +1894,9 @@ int enGetDownMotion(EnLOCAL_DATA* dp) {
         case 46:
         case 50:
             if (a < 0.0f) {
-                m = 0x11;
+                m = 17;
             } else {
-                m = 0x12;
+                m = 18;
             }
             break;
         case 14:
@@ -1904,19 +1904,19 @@ int enGetDownMotion(EnLOCAL_DATA* dp) {
         case 21:
         case 22:
         case 45:
-            m = 0x13;
+            m = 19;
             break;
 
         case 18:
         case 24:
         case 41:
         case 49:
-            m = id + 0x14;
+            m = id + 20;
             bi->shock = 0.0f;
             dp->hb_s = 0.0f;
             break;
         default:
-            m = 0xE;
+            m = 14;
             printf("Illegal down type!(%d)\n", dp->last_atk);
             break;
     }

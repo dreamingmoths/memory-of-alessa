@@ -5,25 +5,6 @@
 #include "sce/libvu0.h"
 #include "Chacter_Draw/clani.h"
 
-typedef enum BATTLE_STATUS_FLAG {
-    MOVED_FLAG = 1 << 0,
-    DEAD_FLAG = 1 << 1,
-    LIE_DOWN_FLAG = 1 << 2,
-    CRITICAL_FLAG = 1 << 3,
-    BATTLE_STATS_FLAG_4 = 1 << 4,
-    BATTLE_STATS_FLAG_5 = 1 << 5,
-    NO_DAMAGE_FLAG = 1 << 6,
-    BATTLE_STATS_FLAG_7 = 1 << 7,
-    BATTLE_STATS_FLAG_8 = 1 << 8,
-    BATTLE_STATS_FLAG_9 = 1 << 9,
-    BATTLE_STATS_FLAG_10 = 1 << 10,
-    BATTLE_STATS_FLAG_11 = 1 << 11,
-    BATTLE_STATS_FLAG_12 = 1 << 12,
-    BATTLE_STATS_FLAG_13 = 1 << 13,
-    BATTLE_STATS_FLAG_14 = 1 << 14,
-    BATTLE_STATS_FLAG_15 = 1 << 15,
-} BATTLE_STATUS_FLAG;
-
 typedef struct shBattleArea {
     // total size: 0x8
     float center; // offset 0x0, size 0x4
@@ -796,6 +777,24 @@ typedef struct shMariaWork {
     u_char active_type; // offset 0x30E, size 0x1
 } shMariaWork;
 
+typedef enum BATTLE_STATUS_FLAG {
+    MOVED_FLAG           = 1 << 0,
+    DEAD_FLAG            = 1 << 1,
+    LIE_DOWN_FLAG        = 1 << 2,
+    CRITICAL_FLAG        = 1 << 3,
+    BATTLE_STATS_FLAG_4  = 1 << 4,
+    BATTLE_STATS_FLAG_5  = 1 << 5,
+    NO_DAMAGE_FLAG       = 1 << 6,
+    BATTLE_STATS_FLAG_7  = 1 << 7,
+    BATTLE_STATS_FLAG_8  = 1 << 8,
+    BATTLE_STATS_FLAG_9  = 1 << 9,
+    BATTLE_STATS_FLAG_10 = 1 << 10,
+    BATTLE_STATS_FLAG_11 = 1 << 11,
+    BATTLE_STATS_FLAG_12 = 1 << 12,
+    BATTLE_STATS_FLAG_13 = 1 << 13,
+    BATTLE_STATS_FLAG_14 = 1 << 14,
+    BATTLE_STATS_FLAG_15 = 1 << 15,
+} BATTLE_STATUS_FLAG;
 
 typedef enum _BOAT_STATUS {
     BOAT_ST_BOTH = 0,
