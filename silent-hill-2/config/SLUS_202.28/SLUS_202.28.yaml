@@ -453,7 +453,7 @@ segments:
       - { start: 0x00143370,    type: c,          name: MC/mc_menu                                       }
       - { start: 0x001480d0,    type: c,          name: MC/savedata                                      }
       - { start: 0x00148790,    type: c,          name: Event/stage/stg_tgs_trial                        }
-      - { start: 0x0014c2b0,    type: asm,        name: Chacter/m3_rpjames                               }
+      - { start: 0x0014c2b0,    type: c,          name: Chacter/m3_rpjames                               }
       - { start: 0x0014ca60,    type: c,          name: Chacter/m3_rwep                                  }
       - { start: 0x0014CAC8,    type: asmtu,      name: sdk/lib_0024C3C8, ld_align_segment_start: 8      } 
       - { start: 0x0014CCE0,    type: asmtu,      name: sdk/lib_0024C5E0                                 } 
@@ -1266,7 +1266,7 @@ segments:
       - { vram: 0x011E7880,     type: bss,        name: Event/chara_data_load                            }
       - { vram: 0x011E8358,     type: bss,        name: MC/mc                                            }
       - { vram: 0x011EA360,     type: bss,        name: Event/stage/stg_tgs_trial                        }
-      - { vram: 0x011EA388,     type: bss,        name: Chacter/m3_rpjames                               }
+      - { vram: 0x011EA388,     type: .bss,       name: Chacter/m3_rpjames                               }
       - { vram: 0x011EA3A0,     type: .bss,       name: sound/shd_vs_sp                                  }
       - { vram: 0x011EACC0,     type: bss,        name: GFW/sh2_DrawEnvData                              }
       - { vram: 0x011EACE0,     type: bss,        name: LoadBg/loadbg_camdata                            }
