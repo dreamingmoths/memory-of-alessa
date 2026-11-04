@@ -402,6 +402,14 @@ def load_json(json_path: Path):
         json = read_json(json_file)
     return json
 
+class OnceYaml:
+    contents = None
+
+    def read(self, path):
+        if self.contents is None:
+            self.contents = load_yaml(Path(path))
+        return self.contents
+
 @dataclass
 class ExecutableInfo:
     name: str
