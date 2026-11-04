@@ -253,7 +253,7 @@ int SeCallPosDirection(float* pos) {
     sceVu0FVECTOR pos0; // r29+0x10
     float sign; // r29+0x20
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     vu0_transform_vector_alt(fv, pos0, VbWvsMatrix.wvm);
     fv[0] -= 750.0f;
     fv[1] = 0.0f;
@@ -268,7 +268,7 @@ int SeCallPosDistance(float volume, float* pos) {
     float len; /* r29+0x20 */ float work_0; /* r29+0x20 */ float work_1; // r29+0x20
 
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     shSubVector(fvec, vcWork.cam_pos, &sh2jms.player->pos);
     len = vec3_lenght_alt(fvec);    
     work_0 = (len - 1500.0f) * 0.000100000005f;
@@ -287,7 +287,7 @@ float SeCallPosDistanceF(float* pos) {
     float len; /* r29+0x20 */ float work_0; /* r29+0x20 */ float work_1; // r29+0x20
 
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     shSubVector(fvec, vcWork.cam_pos, &sh2jms.player->pos);
     len = vec3_lenght_alt(fvec);    
     work_0 = (len - 1500.0f) * 0.000100000005f;

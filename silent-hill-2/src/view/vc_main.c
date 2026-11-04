@@ -1554,7 +1554,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
                 
                 vec_sub_xyz_reverse(w_p->watch_tgt_pos, far_watch_pos, vec);
                 vec_scale_xyz(far_watch_rate, vec, vec);
-                vec_add_xyz(w_p->watch_tgt_pos, vec, w_p->watch_tgt_pos);
+                shAddVectorXyz(w_p->watch_tgt_pos, vec, w_p->watch_tgt_pos);
                 
             }
             break;
@@ -1854,7 +1854,7 @@ void vcMixSelfViewEffectToWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang
     
     vec_sub_xyz(eff_pos, watch_tgt_pos, eff_pos);
     vec_scale_xyz(effect_rate, eff_pos, eff_pos);
-    vec_add_xyz(watch_tgt_pos, eff_pos, watch_tgt_pos);
+    shAddVectorXyz(watch_tgt_pos, eff_pos, watch_tgt_pos);
     
 }
 
@@ -2003,7 +2003,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
     w_p->cam_tgt_mv_ang_y = shAtanV(tgt_vec);
     
     if (shGetDT() != 0.0f || (vcWork.flags & VC_WARP_CAM_TGT_F)) {
-        vec_add_xyz(w_p->cam_tgt_pos, tgt_vec, w_p->cam_tgt_pos);
+        shAddVectorXyz(w_p->cam_tgt_pos, tgt_vec, w_p->cam_tgt_pos);
 
         
         // flipped last 2 params
@@ -2792,7 +2792,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
     VC_NEAR_ROAD_DATA* use_nearest_p;
     sceVu0FVECTOR pre_tgt_pos, chk_pos, post_tgt_pos, sincos_y, pos;
     
-    vec_add_xyz(tgt_mv_vec, w_p->cam_tgt_pos, pre_tgt_pos);
+    shAddVectorXyz(tgt_mv_vec, w_p->cam_tgt_pos, pre_tgt_pos);
     pre_tgt_pos[1] = 0;
     pre_tgt_pos[3] = 1.0f;
     
@@ -2824,7 +2824,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
     shVectorZero(sincos_y);
     shSinCosV(&sincos_y, flip_ang_y);
     vec_scale_xyz(chk_near_dist, sincos_y, chk_pos);
-    vec_add_xyz(pre_tgt_pos, chk_pos, chk_pos);
+    shAddVectorXyz(pre_tgt_pos, chk_pos, chk_pos);
     
 
     if (!(w_p->cur_near_road.road_p->flags & VC_RD_MARGE_ROAD_F)) {
@@ -2853,7 +2853,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
 
     
     vec_scale_xyz(flip_dist, sincos_y, post_tgt_pos);
-    vec_add_xyz(pre_tgt_pos, post_tgt_pos, post_tgt_pos);
+    shAddVectorXyz(pre_tgt_pos, post_tgt_pos, post_tgt_pos);
 
 
 

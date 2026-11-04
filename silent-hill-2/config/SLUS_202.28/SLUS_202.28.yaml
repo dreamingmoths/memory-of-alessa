@@ -614,7 +614,7 @@ segments:
       - { start: 0x001aa0b8,    type: data,       name: Effect/ef_broken_glass                           }
       - { start: 0x001aa0c0,    type: data,       name: Effect/ef_common_0x1aa0c0                        }
       - { start: 0x001aa160,    type: .data,      name: Enemy/en_bos                                     }
-      - { start: 0x001aa230,    type: data,       name: Enemy/en_common                                  }
+      - { start: 0x001aa230,    type: .data,       name: Enemy/en_common                                  }
       - { start: 0x001aa3e0,    type: data,       name: Enemy/en_edb                                     }
       - { start: 0x001aa950,    type: data,       name: Enemy/en_effect                                  }
       - { start: 0x001aa9a0,    type: data,       name: Enemy/en_ike                                     }
@@ -1155,7 +1155,7 @@ segments:
       - { vram:  0x0049fa20,    type: bss,        name: Effect/ef_common                                 }
       - { vram:  0x00550678,    type: bss,        name: Effect/ef_malloc                                 }
       - { vram:  0x00550680,    type: bss,        name: Effect/ef_packet                                 }
-      - { vram:  0x005506a0,    type: bss,        name: Enemy/en_common                                  }
+      - { vram:  0x005506a0,    type: .bss,        name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: bss,        name: Enemy/en_draw                                    }
       - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
       - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }

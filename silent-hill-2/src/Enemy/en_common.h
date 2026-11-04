@@ -4,7 +4,7 @@
 #include "sh2_common.h"
 #include "Chacter/character.h"
 
-#define ENEMY_MAX 32
+#define ENEMY_MAX   32
 #define EnKIND_NONE 0
 #define EnKIND_SCU  1
 #define EnKIND_MKN  2
@@ -22,15 +22,50 @@
 #define EnKIND_TY3  14
 #define EnKIND_INS  15
 
-#define SET_DP_STATE_LV(_dp, _slv, _sslv) do { \
-    _dp->slv = _slv; \
-    _dp->sslv = _sslv; \
-} while (0)
+#define SET_DP_STATE_LV(_dp, _slv, _sslv) \
+    do {                                  \
+        _dp->slv  = _slv;                 \
+        _dp->sslv = _sslv;                \
+    } while (0)
 
 #define ENEMY_STEP(_slv) SET_DP_STATE_LV(dp, _slv, 0)
-#define ENEMY_NEXT_SUB_STEP() do { dp->sslv++; } while (0)
-#define ENEMY_SUB_STEP(_sslv) do { dp->sslv = _sslv; } while (0)
-#define ENEMY_MLV(_mlv) do { dp->mlv = _mlv; } while (0)
+#define ENEMY_NEXT_SUB_STEP() \
+    do {                      \
+        dp->sslv++;           \
+    } while (0)
+#define ENEMY_SUB_STEP(_sslv) \
+    do {                      \
+        dp->sslv = _sslv;     \
+    } while (0)
+#define ENEMY_MLV(_mlv) \
+    do {                \
+        dp->mlv = _mlv; \
+    } while (0)
+#define ENEMY_FLAG_SET(_flag)          dp->flag |= _flag;
+#define ENEMY_FLAG_UNSET(_flag)        dp->flag &= ~_flag;
+#define ENEMY_FLAG_CHECK(_flag)        (dp->flag & _flag)
+#define ENEMY_BATTLE_FLAG_SET(_flag)   dp->scp->battle.status |= _flag;
+#define ENEMY_BATTLE_FLAG_UNSET(_flag) dp->scp->battle.status &= ~_flag;
+#define ENEMY_BATTLE_FLAG_CHECK(_flag) (dp->scp->battle.status & _flag)
+
+typedef enum ENEMY_FLAG {
+    ENEMY_FLAG_0  = 1 << 0,
+    ENEMY_FLAG_1  = 1 << 1,
+    ENEMY_FLAG_2  = 1 << 2,
+    ENEMY_FLAG_3  = 1 << 3,
+    ENEMY_FLAG_4  = 1 << 4,
+    ENEMY_FLAG_5  = 1 << 5,
+    ENEMY_FLAG_6  = 1 << 6,
+    ENEMY_FLAG_7  = 1 << 7,
+    ENEMY_FLAG_8  = 1 << 8,
+    ENEMY_FLAG_9  = 1 << 9,
+    ENEMY_FLAG_10 = 1 << 10,
+    ENEMY_FLAG_11 = 1 << 11,
+    ENEMY_FLAG_12 = 1 << 12,
+    ENEMY_FLAG_13 = 1 << 13,
+    ENEMY_FLAG_14 = 1 << 14,
+    ENEMY_FLAG_15 = 1 << 15,
+} ENEMY_FLAG;
 
 typedef struct EnSOUND_QUEUE {
     // total size: 0x10
@@ -71,8 +106,16 @@ typedef struct EnANIME_DATA {
     u_char Loop;   // offset 0x2, size 0x1
 } EnANIME_DATA;
 
-void enInitEnemy(void);
+// total size: 0x8
+typedef struct EnSKELETON_DATA {
+    // Members
+    short num1; // offset 0x0, size 0x2
+    short num2; // offset 0x2, size 0x2
+    float rate; // offset 0x4, size 0x4
+} EnSKELETON_DATA;
 
+void enInitEnemy(void);
+void enExecTask(void);
 EnLOCAL_DATA* enEntryEnemy(int kind /* r2 */);
 void enInitData(EnLOCAL_DATA* dp /* r18 */, SubCharacter* scp /* r17 */);
 void enDeleteEnemy(EnLOCAL_DATA* dp /* r2 */);
@@ -145,8 +188,9 @@ void enFlagSetRotFloor(EnLOCAL_DATA* dp /* r2 */);
 void enFlagResetRotFloor(EnLOCAL_DATA* dp /* r2 */);
 void enFlagResetRotFloorJust(EnLOCAL_DATA* dp /* r2 */);
 void enFlagSetDisplay(EnLOCAL_DATA* dp /* r2 */);
+void enFlyingFunc(struct SubCharacter* scp /* r2 */);
 void enFlagResetDisplay(EnLOCAL_DATA* dp /* r2 */);
-
+void enSetHitColumn(struct EnLOCAL_DATA* dp /* r17 */);
 float enCalcDirection(float* pa /* r2 */, float* pb /* r2 */);
 float enCalcAngleDifference(float angle1 /* r29+0x10 */, float angle2 /* r29+0x10 */);
 float enCalcSpeedRate(float angle, float* mpos, float* tpos);
@@ -190,6 +234,7 @@ int enGetDownMotion(EnLOCAL_DATA* dp /* r18 */);
 int enGetLieDirection(int dm);
 void enAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r18 */, int id /* r16 */);
 void enAnimeSetDirectFrame(EnLOCAL_DATA* dp, int anim, int id, int frame);
+void enSetTrans(EnLOCAL_DATA* dp);
 
 void enSetTransN(EnLOCAL_DATA* dp, int n);
 
@@ -211,14 +256,15 @@ void enSoundSetQueue(SubCharacter* scp /* r2 */, int num /* r2 */, float vol /* 
 EnCOMMUNICATION* enSetCommunication(int kind, int type, float* pos, float dist, int time);
 EnCOMMUNICATION* enCommunicateTribe(int kind /* r2 */, float* pos /* r2 */);
 void enResetForbiddenArea(void);
-
+void enRoomForbiddenArea(void);
 int enCheckForbiddenArea(float* sp, float* ep, float size);
 int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, float* ep /* r2 */, float size /* r29 */);
 void enEventDriven(int event /* r2 */, int id /* r2 */);
 
 void enDyingExec(EnLOCAL_DATA* dp);
+
 void enAnimeExec(EnLOCAL_DATA* dp, EnANIME_DATA* pa, short anm_none);
 void enSetTransWalk(EnLOCAL_DATA* dp);
-extern EnLOCAL_WORK enLocalWork;
+extern EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
 #endif

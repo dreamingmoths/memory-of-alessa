@@ -81,7 +81,7 @@ static inline void vec_add(void* x, void* y, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
-static inline void vec_add_xyz(void* x, void* y, void* out) {
+static inline void shAddVectorXyz(void* x, void* y, void* out) {
     asm("\
         lqc2 vf4, 0(%0)\n\
         lqc2 vf5, 0(%1)\n\
@@ -177,7 +177,7 @@ static inline void vec_copy_reverse(void* src, void* dst) {
         : "+r"(dst), "+r"(src)::"t7");
 }
 
-static inline void vec_copy_vu0(void* dst, void* src) {
+static inline void shVectorCopyVu0(void* dst, void* src) {
     asm("\
          lqc2 vf4, 0(%1)\n\
          vmove.w vf4, vf0\n\
