@@ -405,7 +405,7 @@ int shCharacterEnemyIKEAnimeSet(SubCharacter* scp, int anime_id) {
             2,
             aip,
             dike_anime_adr_list[anime_id - 6500] + 
-            (int)shCharacterGetAnimeAdrForDrama(scp, anime_id - 6500)
+            (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 6500)
         );
         return 0;
     }
@@ -418,7 +418,7 @@ int shCharacterEnemyIKEAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
     AnimeInfo* aip;
     
     
-    if ((scp->status & 4) && (shCharacterGetModelID(scp) == 515)) {
+    if (scp->status & (1 << SCP_STATUS_BIT_ANIME_TYPE) && shCharacterGetModelID(scp) == 515) {
         aip = (AnimeInfo*)&ike_anim[anime_id - 5600];
 
         
@@ -427,7 +427,7 @@ int shCharacterEnemyIKEAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
             0, 
             (s_char) ((comp == 1) ? 4 : 2),
             aip,
-            (int)shCharacterGetAnimeAdrForPlay(scp)
+            (int) shCharacterGetAnimeAdrForPlay(scp)
         );
         return 0;
     }
