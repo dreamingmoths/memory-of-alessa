@@ -1019,7 +1019,7 @@ segments:
       - { start: 0x002963c0,    type: .rodata,    name: gamemain                                         }
       - { start: 0x002969d0,    type: .rodata,    name: connect                                          }
       - { start: 0x002969f0,    type: rodata,     name: logo                                             }
-      - { start: 0x00296cb0,    type: rodata,     name: Chacter/m3_nse_rodata                            }
+      - { start: 0x00296cb0,    type: .rodata,    name: Chacter/m3_nse                                   }
       - { start: 0x00296e00,    type: .rodata,    name: Effect/screen_effect                             }
       - { start: 0x00296e80,    type: rodata,     name: GFW/sh2gfw_SemiTrans_FrameWork                   }
       - { start: 0x00296ef0,    type: .rodata,    name: DBG/dbflow                                       }
