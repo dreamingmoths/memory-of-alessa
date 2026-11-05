@@ -369,7 +369,7 @@ static void EnemyPAPFunction(SubCharacter* this) {
 
     switch (this->step) {
         case 0:
-            if (this->battle.status & (1 << BATTLE_STATS_FLAG_10)) {
+            if (this->battle.status & BATTLE_STATS_FLAG_10) {
                 
                 
                 
