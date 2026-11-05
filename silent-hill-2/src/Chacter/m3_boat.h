@@ -3,6 +3,8 @@
 
 #include "Chacter/character.h"
 
+extern shBoatWork sh2bot;
+
 void bot_flg_on(u_int* type, u_int status);
 
 void bot_flg_off(u_int* type, u_int status);

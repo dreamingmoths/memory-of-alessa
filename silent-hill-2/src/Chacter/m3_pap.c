@@ -5,6 +5,9 @@
 #include "Chacter/m3_sc.h"
 #include "Chacter/m3_pap.h"
 
+static int EnemyPAPInit(SubCharacter* scp);
+static void EnemyPAPFunction(SubCharacter* this);
+
 static const AnimeInfo pap_anim[] = {
     {
         /* .name = */ 0,

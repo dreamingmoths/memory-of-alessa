@@ -1179,17 +1179,17 @@ static void BoatCheckSetFirst(SubCharacter* this) {
     shCharacterAnimeFrameSet(this, 60);
 }
 
-static inline void setBoatLocalWorldMatrix(SubCharacter* this) {
+static inline void setBoatLocalWorldMatrix(Vector4* rot) {
     sceVu0FVECTOR vec;
-    vec[0] = this->rot.x; vec[1] = 0.0f; vec[2] = this->rot.z; vec[3] = 1.0f;
+    vec[0] = rot->x; vec[1] = 0.0f; vec[2] = rot->z; vec[3] = 1.0f;
     sceVu0RotMatrix(boat_localworld_matrix.d, kt_unit_matrix.d, vec);
-    sceVu0RotMatrixY(boat_localworld_matrix.d, boat_localworld_matrix.d, this->rot.y);
+    sceVu0RotMatrixY(boat_localworld_matrix.d, boat_localworld_matrix.d, rot->y);
 }
 
-static inline void setBoatLocalWorldPosition(SubCharacter* this) {
-    boat_localworld_matrix.d[3][0] = this->pos.x;
-    boat_localworld_matrix.d[3][1] = this->pos.y;
-    boat_localworld_matrix.d[3][2] = this->pos.z;
+static inline void setBoatLocalWorldPosition(Vector4* pos) {
+    boat_localworld_matrix.d[3][0] = pos->x;
+    boat_localworld_matrix.d[3][1] = pos->y;
+    boat_localworld_matrix.d[3][2] = pos->z;
     boat_localworld_matrix.d[3][3] = 1.0f;
 }
 
@@ -1295,8 +1295,8 @@ static void HumanBOTFunction(SubCharacter* this) {
                 
 
                 
-                setBoatLocalWorldMatrix(this);
-                setBoatLocalWorldPosition(this);
+                setBoatLocalWorldMatrix(&this->rot);
+                setBoatLocalWorldPosition(&this->pos);
                 
                 
                 
