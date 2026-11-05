@@ -505,7 +505,7 @@ segments:
       - { start: 0x0016b9c0,    type: c,          name: Effect2/hh_math_wrapper                          }
       - { start: 0x0016bae0,    type: c,          name: Effect2/hh_packet                                }
       - { start: 0x0016c1c0,    type: c,          name: Multi_thr/filesys/fcread                         }
-      - { start: 0x0016c4c0,    type: asm,        name: Chacter/m3_boat_jms                              }
+      - { start: 0x0016c4c0,    type: c,          name: Chacter/m3_boat_jms                              }
       - { start: 0x0016c780,    type: c,          name: Chacter/m3_boat                                  }
       - { start: 0x0016f630,    type: c,          name: Chacter/lake_wave                                }
       - { start: 0x0016fbf0,    type: c,          name: Chacter/m3_inu                                   }
@@ -1289,7 +1289,7 @@ segments:
       - { vram:  0x011eb930,    type: bss,        name: Effect2/hh_effect_object_def                     }
       - { vram:  0x01201b80,    type: bss,        name: Effect2/hh_effect_object_texture                 }
       - { vram:  0x01202258,    type: .bss,       name: Effect2/hh_packet                                }
-      - { vram:  0x012022b0,    type: bss,        name: Chacter/m3_boat_jms                              }
+      - { vram:  0x012022b0,    type: .bss,       name: Chacter/m3_boat_jms                              }
       - { vram:  0x012022f0,    type: .bss,       name: Chacter/m3_boat                                  }
       - { vram:  0x01202580,    type: .bss,       name: Chacter/lake_wave                                }
       - { vram:  0x01202730,    type: bss,        name: view/vc_play                                     }
