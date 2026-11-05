@@ -453,7 +453,7 @@ int shCharacterEnemyPAPAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
         shCharacterAnimeSet(
             scp, 
             0, 
-            (s_char) ((comp == 1)? 4 : 2), 
+            (s_char) ((comp == 1) ? 4 : 2), 
             aip, 
             (int) shCharacterGetAnimeAdrForPlay(scp)
         );
