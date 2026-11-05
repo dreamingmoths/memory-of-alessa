@@ -3670,15 +3670,3 @@ int PlayerReverseLightCalcIsOn(void) {
 int PlayerWaterRoadIsOn(void) {
     return sh2jms.water_road;
 }
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @905_0x0038C2D0);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @906_0x0038C2F0);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2145);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2146_0x0038C330);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2147);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2148);

@@ -48,6 +48,9 @@ SH2_DATA: DataTable = [
     StructData(name="ike_anim",                             type=Sh2.AnimeInfo,                        count=21                       ),
     StructData(name="d_ike_anim",                           type=Sh2.AnimeInfo,                        count=12                       ),
     SimpleData(name="dike_anime_adr_list",                  type="<12i"                                                               ),
+    StructData(name="pap_anim",                             type=Sh2.AnimeInfo,                        count=29                       ),
+    StructData(name="d_pap_anim",                           type=Sh2.AnimeInfo,                        count=8                        ),
+    SimpleData(name="dpap_anime_adr_list",                  type="<8i"                                                                ),
 ]
 
 SH3_DATA: DataTable = []
