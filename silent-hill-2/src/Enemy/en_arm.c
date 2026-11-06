@@ -113,8 +113,8 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMInitData);
 float vitarity[5] = { 500.0f, 800.0f, 1200.0f, 2500.0f, 4000.0f };
 #endif
 
-void enARMCtrlMain(struct EnLOCAL_DATA * dp /* r2 */) {
-    void (* enCtrlARMFunc[6])(struct EnLOCAL_DATA *) = {
+void enARMCtrlMain(EnLOCAL_DATA* dp /* r2 */) {
+    void (* enCtrlARMFunc[6])(EnLOCAL_DATA*) = {
         enDummyCtrl,
         enARMCtrlAutomatic,
         enARMCtrlSleep,
@@ -129,7 +129,7 @@ void enARMCtrlMain(struct EnLOCAL_DATA * dp /* r2 */) {
 
 
 void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
-    void (*enCtrlARMSubFunc[4])(struct EnLOCAL_DATA * dp /* r17 */) = { 
+    void (*enCtrlARMSubFunc[4])(EnLOCAL_DATA* dp /* r17 */) = { 
         enARMCtrlWander,
         enARMCtrlTurn,
         enARMCtrlDamage,
@@ -527,7 +527,7 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 
 
 #ifdef HOLY_CANDLE
-int enARMCanSeePlayer(EnLOCAL_DATA * dp /* r16 */) {
+int enARMCanSeePlayer(EnLOCAL_DATA* dp /* r16 */) {
     float a = enCalcAngleDifference(enGetPlayerDirection(dp), dp->scp->rot.y); sceVu0FVECTOR vec;
     if (enLocalWork.Status & 1) { return 0; }
     if (((dp->p_dist > 2500.0f) || (a > 2.0943952f)) && (dp->anim < 6)) {
@@ -546,7 +546,7 @@ int enARMCanSeePlayer(EnLOCAL_DATA * dp /* r16 */) {
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMCanSeePlayer);
 #endif
 
-int enARMCheckNearOther(struct EnLOCAL_DATA * dp /* r18 */) {
+int enARMCheckNearOther(EnLOCAL_DATA* dp /* r18 */) {
     EnLOCAL_DATA* tp = &enLocalWork.Data[0]; /* r16 */
     int i; /* r17 */ float* tpos; /* r2 */ float d; /* r29+0x40 */
 
@@ -570,7 +570,7 @@ int enARMCheckNearOther(struct EnLOCAL_DATA * dp /* r18 */) {
 }
 
 
-void enARMAnimeSet(EnLOCAL_DATA * dp /* r17 */, int anim /* r16 */) {
+void enARMAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
     if (anim == dp->anim) {
         enAnimeRestart(dp);
         return;
@@ -583,7 +583,7 @@ void enARMAnimeSet(EnLOCAL_DATA * dp /* r17 */, int anim /* r16 */) {
 
 
 
-void enARMAnimeReset(EnLOCAL_DATA * dp /* r17 */, int anim /* r16 */) {
+void enARMAnimeReset(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
     
     FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnARMAnime) / sizeof(EnANIME_DATA), 588);
     enAnimeSet(dp, anim, (&EnARMAnime)[anim].Anime);
@@ -592,7 +592,7 @@ void enARMAnimeReset(EnLOCAL_DATA * dp /* r17 */, int anim /* r16 */) {
 
 
 #ifdef HOLY_CANDLE
-void enARMAnimeExec(struct EnLOCAL_DATA * dp /* r16 */) {
+void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
     int of; /* r2 */ sceVu0FVECTOR pos; // r29+0x20
     enAnimeExec(dp, &EnARMAnime, 5251);
     if ((dp->anim >= 2) && (dp->anim < 6) 
@@ -623,7 +623,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMAnimeExec);
 #endif
 
 #ifdef HOLY_CANDLE
-void enARMSetHandPos(EnLOCAL_DATA * dp /* r16 */, int d /* r2 */) {
+void enARMSetHandPos(EnLOCAL_DATA* dp /* r16 */, int d /* r2 */) {
     sceVu0FVECTOR vec; // r29+0x20
     enARMGetHandPos(&vec, dp, d);
     vec_add_alt(&vec, &dp->scp->pos, &dp->arm.hand_pos);
@@ -634,7 +634,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMSetHandPos);
 
 
 
-void enARMGetHandPos(float * vec /* r17 */, EnLOCAL_DATA * dp /* r16 */, int d /* r2 */) {
+void enARMGetHandPos(float* vec /* r17 */, EnLOCAL_DATA* dp /* r16 */, int d /* r2 */) {
     sceVu0FMATRIX mat; // r29+0x30
     enGetSkeletonMatrix(mat, dp, d + 11);
     shVectorZeroXyz(vec);
@@ -650,7 +650,7 @@ void enARMGetHandPos(float * vec /* r17 */, EnLOCAL_DATA * dp /* r16 */, int d /
 
 
 
-int enARMCheckFloor(EnLOCAL_DATA * dp /* r2 */, int d /* r2 */) {
+int enARMCheckFloor(EnLOCAL_DATA* dp /* r2 */, int d /* r2 */) {
     sceVu0FVECTOR pos;
     enARMGetHandPos(&pos, dp, d);
     enCheckFloor(&pos);
@@ -658,7 +658,7 @@ int enARMCheckFloor(EnLOCAL_DATA * dp /* r2 */, int d /* r2 */) {
 
 
 
-float enARMGetMoveSpeed(EnLOCAL_DATA * dp /* r16 */) {
+float enARMGetMoveSpeed(EnLOCAL_DATA* dp /* r16 */) {
     float speed_rate[5] = { 0.7f, 0.8f, 1.0f, 1.2f, 1.5f }; // r29+0x20
     float r; // r29+0x40
 
@@ -675,7 +675,7 @@ float enARMGetMoveSpeed(EnLOCAL_DATA * dp /* r16 */) {
 
 
 #ifdef HOLY_CANDLE
-void enARMSoundSigns(EnLOCAL_DATA * dp /* r16 */) {
+void enARMSoundSigns(EnLOCAL_DATA* dp /* r16 */) {
     int signs; // r3
     if ((dp->arm.count -= shGetDF()) <= 0) {
         dp->arm.count = enCalcTimer(0x3C);
