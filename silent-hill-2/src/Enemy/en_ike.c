@@ -311,19 +311,19 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlChase);
     if (dp->sslv == 0) {
         enIKEAnimeSet(dp, 1);
         enInitPath(&dp->path, dp->scp->rot.y);
-        dp->edb.bullet = (shRandI() >> 10) & 1;
-        dp->ins.rot_add[0] = 0.0f;
+        dp->ike.direc = (shRandI() >> 10) & 1;
+        dp->ike.swing = 0.0f;
         ENEMY_NEXT_SUB_STEP();
     }
     d = dp->ike.direc;
     if (!(dp->sslv & 1)) d ^= 1;
-    a = dp->ins.rot_add[0] = dp->ins.rot_add[0] + (PI * shGetDT());
+    a = dp->ike.swing = dp->ike.swing + (PI * shGetDT());
 
     switch (dp->sslv) {
         case 1:
         case 4:
             if (a > QUARTER_TURN) {
-                dp->ins.rot_add[0] -= QUARTER_TURN;
+                dp->ike.swing -= QUARTER_TURN;
                 ENEMY_NEXT_SUB_STEP();
                 if (dp->sslv == 2) {
                     enIKESoundSwing(dp);
@@ -337,7 +337,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlChase);
         case 2:
         case 3:
             if (a > PI) {
-                dp->ins.rot_add[0] -= PI;
+                dp->ike.swing -= PI;
                 ENEMY_NEXT_SUB_STEP();
                 if (dp->sslv == 3) {
                     enIKESoundSwing(dp);
@@ -380,7 +380,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlChase);
             enIKECheckNearPlayer(dp);
             enAttackCheck(dp, 54);
             if (dp->anim_n == -1) {
-                dp->edb.mark[2] = 0;
+                dp->ike.pipe_count = 0;
                 if (dp->flag & (1 << 2)) {
                     enIKEAnimeSet(dp, 6);
                     ENEMY_SUB_STEP(4);
@@ -425,7 +425,6 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlChase);
     }
     enIKESoundSigns(dp);
 }
-
 
 #ifdef HOLY_CANDLE
 /* static */ void enIKECtrlAttack2(EnLOCAL_DATA* dp) {
