@@ -448,7 +448,7 @@ segments:
       - { start: 0x001395d0,    type: c,          name: Chacter/m3_arm                                   }
       - { start: 0x00139a00,    type: c,          name: Chacter/m3_mary                                  }
       - { start: 0x00139ca0,    type: c,          name: Chacter/m3_mxx                                   }
-      - { start: 0x00139db0,    type: asm,        name: Enemy/en_arm                                     }
+      - { start: 0x00139db0,    type: c,          name: Enemy/en_arm                                     }
       - { start: 0x0013b3b0,    type: c,          name: MC/mc                                            }
       - { start: 0x00143370,    type: c,          name: MC/mc_menu                                       }
       - { start: 0x001480d0,    type: c,          name: MC/savedata                                      }
@@ -614,7 +614,7 @@ segments:
       - { start: 0x001aa0b8,    type: data,       name: Effect/ef_broken_glass                           }
       - { start: 0x001aa0c0,    type: data,       name: Effect/ef_common_0x1aa0c0                        }
       - { start: 0x001aa160,    type: .data,      name: Enemy/en_bos                                     }
-      - { start: 0x001aa230,    type: .data,       name: Enemy/en_common                                  }
+      - { start: 0x001aa230,    type: .data,      name: Enemy/en_common                                  }
       - { start: 0x001aa3e0,    type: data,       name: Enemy/en_edb                                     }
       - { start: 0x001aa950,    type: data,       name: Enemy/en_effect                                  }
       - { start: 0x001aa9a0,    type: data,       name: Enemy/en_ike                                     }
@@ -750,7 +750,7 @@ segments:
       - { start: 0x0024e2a8,    type: data,       name: data_0x24e2a8                                    }
       - { start: 0x0024f000,    type: .data,      name: Chacter/m3_arm                                   }
       - { start: 0x24F010,      type: data,       name: Chacter/m3_mary                                  }
-      - { start: 0x24F0D0,      type: data,       name: Enemy/en_arm                                     }
+      - { start: 0x24F0D0,      type: .data,      name: Enemy/en_arm                                     }
       - { start: 0x24F180,      type: data,       name: MC/mc                                            }
       - { start: 0x24F970,      type: data,       name: MC/mc_menu                                       }
       - { start: 0x24F9A0,      type: data,       name: Event/stage/stg_tgs_trial                        }
@@ -1052,7 +1052,7 @@ segments:
       - { start: 0x00299780,    type: .rodata,    name: Chacter/m3_arm                                   }
       - { start: 0x00299830,    type: rodata,     name: Chacter/m3_mary_rodata                           }
       - { start: 0x00299960,    type: rodata,     name: Chacter/m3_mxx_rodata                            }
-      - { start: 0x002999f0,    type: rodata,     name: Enemy/en_arm                                     }
+      - { start: 0x002999f0,    type: .rodata,    name: Enemy/en_arm                                     }
       - { start: 0x00299a90,    type: .rodata,    name: MC/mc                                            }
       - { start: 0x0029a050,    type: .rodata,    name: MC/mc_menu                                       }
       - { start: 0x0029a160,    type: .rodata,    name: MC/savedata                                      }
@@ -1063,7 +1063,7 @@ segments:
       - { start: 0x0029a3a0,    type: .rodata,    name: DBG/dbsw_map                                     }
       - { start: 0x0029a640,    type: rodata,     name: view/vc_newest_rodata                            }
       - { start: 0x0029a650,    type: .rodata,    name: Multi_thr/scf/sh2_scf                            }
-      - { start: 0x0029a6c0,    type: .rodata,     name: DBG/dbalocate                                   }
+      - { start: 0x0029a6c0,    type: .rodata,    name: DBG/dbalocate                                   }
       - { start: 0x0029a700,    type: .rodata,    name: Chacter/bg_chara                                 }
       - { start: 0x0029a850,    type: rodata,     name: Effect2/hh_class_glass_break_phenomenon_00       }
       - { start: 0x0029a870,    type: .rodata,    name: Effect2/hh_class_manager                         }

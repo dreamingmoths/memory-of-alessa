@@ -31,7 +31,7 @@
 #define ENEMY_STEP(_slv) SET_DP_STATE_LV(dp, _slv, 0)
 #define ENEMY_NEXT_SUB_STEP() \
     do {                      \
-        dp->sslv++;           \
+        dp->sslv++;          \
     } while (0)
 #define ENEMY_SUB_STEP(_sslv) \
     do {                      \
