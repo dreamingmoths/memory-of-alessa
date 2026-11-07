@@ -88,14 +88,14 @@ static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pEleme
 
     for (j = 0; j < div_j; j++) {
         sceVu0FVECTOR vec[2] = {
-            { 0, 0, z_w * (float)(j + 0), 1 },
-            { 0, 0, z_w * (float)(j + 1), 1 }
+            { 0, 0, z_w * (float) (j + 0), 1 },
+            { 0, 0, z_w * (float) (j + 1), 1 }
         };
         
         
         sceVu0FVECTOR stq_list[2] = { 
-            { pStq[1][0], t_w * (float)(j + 0), 1, 0 },
-            { pStq[1][0], t_w * (float)(j + 1), 1, 0 }
+            { pStq[1][0], t_w * (float) (j + 0), 1, 0 },
+            { pStq[1][0], t_w * (float) (j + 1), 1, 0 }
         };
         
         
@@ -185,8 +185,8 @@ u_int HH_Class_Suffix_Boat_Mask(void) {
     HH_Vif1PacketBuffer_GifTag_Open();
     
     HH_Vif1Packet_GeneralGifTag_GS_AD_Open();
-    *(u_long128*)pPk->pCurrent = *HH_ClassWrapper_GS_EnvironmentRegister_Frame_AlphaMask_Get();
-    ((u_long128*)pPk->pCurrent)++;
+    *(u_long128*) pPk->pCurrent = *HH_ClassWrapper_GS_EnvironmentRegister_Frame_AlphaMask_Get();
+    ((u_long128*) pPk->pCurrent)++;
     sceVif1PkAddGsAD(pPk, SCE_GS_TEST_1, SCE_GS_SET_TEST_1(0, 1, 0, 0, 0, 0, 1, 2));
     
     
