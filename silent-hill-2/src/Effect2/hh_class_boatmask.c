@@ -10,8 +10,19 @@
 static u_int Object_Initialize(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement);
 static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement);
 
-static sceVu0FMATRIX _square_stq;
-static sceVu0FMATRIX _square_00_vertex;
+static sceVu0FMATRIX _square_00_vertex = {
+    { 275.0f, -392.0f, -2005.0f, 1.0f },
+    { 245.0f, -392.0f, 1990.0f, 1.0f },
+    { 275.0f, 392.0f, -2005.0f, 1.0f },
+    { 245.0f, 392.0f, 1990.0f, 1.0f },
+};
+
+static sceVu0FMATRIX _square_stq = {
+    { 0.4f, 1.0f, 1.0f, 0.0f },
+    { 0.4f, 0.0f, 1.0f, 0.0f },
+    { 0.6f, 1.0f, 1.0f, 0.0f },
+    { 0.6f, 0.0f, 1.0f, 0.0f },
+};
 
 
 #line 203
