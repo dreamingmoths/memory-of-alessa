@@ -93,9 +93,77 @@ void TransferDefaultClusterNodes(Model* model) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_cluster_n", MakeApplyClusterPacket);
+#line 133
+void MakeApplyClusterPacket(u_long128* packet_buffer, ClusterElement* top, int n, float weight) {
+    sceVif0Packet packet;
+    sceVif0Packet* pk = &packet;
+    int qwc = (u_int) ((n * 8) + 15) / 16;
 
+    sceVif0PkInit(pk, (u_long128*) READ_UNCACHED(packet_buffer));
+    sceVif0PkRef(pk, top, qwc,
+                 SCE_VIF0_SET_ITOP(n - 1, 0),
+                 SCE_VIF0_SET_UNPACK(0, n, SCE_VIF_UPK_V4_16, 0), 0);
+    sceVif0PkEnd(pk, 0);
+    sceVif0PkAddCode(pk, SCE_VIF0_SET_CODE(n, 1, SCE_VIF_UNPACK,  0));
+    sceVif0PkAddData(pk, reinterpret_as_u_int(weight));
+    sceVif0PkAddCode(pk, SCE_VIF0_SET_CODE(2, 0, SCE_VIF_MSCAL,  0));
+    sceVif0PkAddCode(pk, SCE_VIF0_SET_CODE(0, 0, SCE_VIF_FLUSHE, 0));
+    sceVif0PkTerminate(pk);
+}
+
+#ifdef NON_MATCHING
+#define CLUSTER_SPR_ADR 0x3000
+#define MAX_N_CLUSTERS  0x300
+
+static void ApplyCluster(Model* model, Cluster* cluster, float weight) {
+    sceVu0FVECTOR* cluster_nodes = model3_junk.cluster_nodes; // r16
+    int n_nodes = cluster->n_nodes; // r17
+    ClusterElement* elements = (u_char*) model + cluster->element_offset; // r18
+    int i = 0; // r19
+
+    while (i < n_nodes) {
+        int n_rest_nodes = n_nodes - i; 
+        int n = n_rest_nodes < 0xF0 ? n_rest_nodes : 0xF0;
+        int itop; // r2
+
+        
+        u_long128* packet_buffer; // r20
+        packet_buffer = ktVif0PkBufNext();
+        MakeApplyClusterPacket(packet_buffer, &elements[i], n, weight);
+        ktVif0Send(packet_buffer, 1);
+        ktVif0Wait2();
+        {
+            sceDmaChan* toSPR; // r20
+            sceVu0FVECTOR* spr; // r2
+
+            toSPR = sceDmaGetChan(SCE_DMA_toSPR);
+            toSPR->sadr = (void*) CLUSTER_SPR_ADR;
+            sceDmaSendN(toSPR, (void*) VU0_MEM, n);
+            
+            BLOCK_WHILE(sceDmaSync(toSPR, 0, 0));
+            
+            {
+                Q* top; /* r2 */
+                Q* end; /* r20 */
+                Q* p; /* r21 */
+                itop = SCRATCHPAD_START | CLUSTER_SPR_ADR;
+                
+                end = (Q*) itop + n;
+                
+                for (p = (Q*) itop; p < end; p++) {
+                    int index = p->iv[3];
+                    float* v = (float*) ((index < MAX_N_CLUSTERS) ? (sceVu0FVECTOR*) SCRATCHPAD_START + index : &cluster_nodes[index]);
+                    sceVu0AddVector(v, v, p->fv);
+                }
+            }
+            
+            i += n;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_cluster_n", ApplyCluster);
+#endif
 
 void Model3UpdateClusters(Model* model, ModelWork* work) {
     int n_cluster_nodes = model->n_cluster_nodes; // r16
