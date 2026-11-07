@@ -2,9 +2,11 @@
 #include "sce/libvifpk.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter/character.h"
+#include "Chacter/chara_list.h"
 #include "Effect2/hh_packet.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_texture.h"
+#include "Effect2/hh_effect_object_def.h"
 #include "Effect2/hh_class_boatmask.h"
 
 static u_int Object_Initialize(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement);
