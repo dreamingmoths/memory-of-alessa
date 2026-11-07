@@ -104,7 +104,7 @@ void enARMInitData(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_SET(ENEMY_FLAG_15 | ENEMY_FLAG_10 | ENEMY_FLAG_6 | ENEMY_FLAG_1);
     enARMAnimeSet(dp, 1);
     dp->scu.dc = -1;
-    if (enCheckSleepIn(dp) != 0) {
+    if (enCheckSleepIn(dp)) {
         enSleepIn(dp);
     }
 }
@@ -166,7 +166,7 @@ void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
     if (dp->slv < 2) {
         enARMSoundSigns(dp);
     }
-    if (enCheckSleepIn(dp) != 0) {
+    if (enCheckSleepIn(dp)) {
         enSleepIn(dp);
     }
 }
@@ -174,7 +174,7 @@ void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
 
 
 void enARMCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
-    if (enCheckSleepOut(dp) != 0) {
+    if (enCheckSleepOut(dp)) {
         enSleepOut(dp);
         ENEMY_MLV(3);
         ENEMY_STEP(0);
@@ -196,76 +196,7 @@ void enARMCtrlEvent(EnLOCAL_DATA* dp /* r2 */) {
     /* @note empty function */ void* tmp; // r2
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#line 270
 void enARMCtrlHand(EnLOCAL_DATA* dp) {
     /* @note empty function */
 }
@@ -275,7 +206,7 @@ void enARMCtrlHand(EnLOCAL_DATA* dp) {
 void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
     sceVu0FVECTOR vec;
     s_char s;
-    if (enCheckDamage(dp) != 0) {
+    if (enCheckDamage(dp)) {
         ENEMY_STEP(2);
         return;
     }
@@ -285,30 +216,29 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
     }
     enReduceTimer(dp);
     if (dp->anim_n == -1) {
-        if (enARMCheckNearOther(dp) != 0) {
+        if (enARMCheckNearOther(dp)) {
             ENEMY_STEP(1);
             enSetTimer(dp, 0);
             dp->scu.dcm = 0;
             return;
         }
         switch (enARMCanSeePlayer(dp)) {
-        case 0:
-            s = 1;
-            dp->scu.dcm = 0;
-            break;
-        case 1:
-            if (dp->timer == 0) {
-                s = 2;
-            } else {
+            case 0:
                 s = 1;
-            }
-            
-            dp->scu.dcm = 0;
-            break;
-        case 2:
-            s = 3;
-            dp->scu.dcm += 1; // ++ doesn't match
-            
+                dp->scu.dcm = 0;
+                break;
+            case 1:
+                if (dp->timer == 0) {
+                    s = 2;
+                } else {
+                    s = 1;
+                }
+                dp->scu.dcm = 0;
+                break;
+            case 2:
+                s = 3;
+                dp->scu.dcm += 1; // ++ doesn't match
+                
         }
         if (dp->sslv >= 2 && (dp->sslv != s && s < 3 || !ENEMY_FLAG_CHECK(ENEMY_FLAG_2)) 
         || dp->scu.dcm >= 5) {
@@ -345,7 +275,7 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
         
         enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
     }
-    enMoveAngle(&dp->path, 0.05235988f);
+    enMoveAngle(&dp->path, TO_RAD(3));
     dp->scp->rot.y = dp->path.angle;
     enARMCheckNearPlayer(dp);
 }
@@ -353,7 +283,7 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMCtrlWander);
 #endif
 void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
-    if (enCheckDamage(dp) != 0) {
+    if (enCheckDamage(dp)) {
         ENEMY_STEP(2);
         return;
     }
@@ -387,8 +317,8 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
         dp->anim_s /= 4;
         dp->mkn.dc = 4;
     }
-    dp->path.markangle = dp->path.angle + (0.05235988f * dp->arm.dir);
-    enMoveAngle(&dp->path, 0.05235988f);
+    dp->path.markangle = dp->path.angle + (TO_RAD(3) * dp->arm.dir);
+    enMoveAngle(&dp->path, TO_RAD(3));
     dp->scp->rot.y = dp->path.angle;
     enARMCheckNearPlayer(dp);
     if (dp->anim_n == -1) {
@@ -409,43 +339,43 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
 
 void enARMCtrlDamage(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
-    case 0:
-        enReduceHP(dp);
-        ENEMY_FLAG_UNSET(ENEMY_FLAG_15);
-        enARMAnimeReset(dp, enARMGetDamageMotion(dp));
-        ENEMY_NEXT_SUB_STEP();
-        break;
-    case 1:
-        if (enCheckDamage(dp) != 0) {
+        case 0:
             enReduceHP(dp);
-        }
-        if (dp->anim_n == -1) {
-            if (enCheckDeath(dp) != 0) {
-                if (dp->anim == 6 
-                || dp->anim == 8 
-                || dp->anim == 9) {
-                    enARMAnimeSet(dp, 0xC);
-                } else {
-                    enARMAnimeSet(dp, 0xD);
-                }
-                fogEraseObj(dp - enLocalWork.Data + 10);
-                enFlagSetNoDamage(dp);
-                enFlagResetMoved(dp);
-                enFlagSetDead(dp);
-                enKillCountUp(dp);
-                ENEMY_NEXT_SUB_STEP();
-            } else {
-                ENEMY_STEP(0);
-                enSetTimer(dp, 0);
-                dp->scu.dcm = 0;
-                ENEMY_FLAG_SET(ENEMY_FLAG_15);
+            ENEMY_FLAG_UNSET(ENEMY_FLAG_15);
+            enARMAnimeReset(dp, enARMGetDamageMotion(dp));
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        case 1:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
             }
-        }
-        break;
-    case 2:
-        if (dp->anim_n == -1) {
-            ENEMY_STEP(3);
-        }
+            if (dp->anim_n == -1) {
+                if (enCheckDeath(dp)) {
+                    if (dp->anim == 6 
+                    || dp->anim == 8 
+                    || dp->anim == 9) {
+                        enARMAnimeSet(dp, 12);
+                    } else {
+                        enARMAnimeSet(dp, 13);
+                    }
+                    fogEraseObj(dp - enLocalWork.Data + 10);
+                    enFlagSetNoDamage(dp);
+                    enFlagResetMoved(dp);
+                    enFlagSetDead(dp);
+                    enKillCountUp(dp);
+                    ENEMY_NEXT_SUB_STEP();
+                } else {
+                    ENEMY_STEP(0);
+                    enSetTimer(dp, 0);
+                    dp->scu.dcm = 0;
+                    ENEMY_FLAG_SET(ENEMY_FLAG_15);
+                }
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                ENEMY_STEP(3);
+            }
     }
     
     enARMCheckNearPlayer(dp);
@@ -487,39 +417,39 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 
     
     a = shAngleRegulate(shAtanV(&dp->scp->battle.vec) - dp->scp->rot.y);
-    if (shFloatAbs(a) > QUARTER_TURN) { id = 0; }
-    else { id = 1; }
+    if (shFloatAbs(a) > QUARTER_TURN) id = 0;
+    else id = 1;
     
     switch (dp->anim) {
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-        dd = dp->anim_n >= 19201 ^ (dp->arm.arm == 0 ? 0 : 1);
-        break;
-    case 1:
-    case 6:
-    case 8:
-    case 9:
-        dd = 0;
-        break;
-    default:
-        dd = 1;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            dd = dp->anim_n >= 19201 ^ (dp->arm.arm == 0 ? 0 : 1);
+            break;
+        case 1:
+        case 6:
+        case 8:
+        case 9:
+            dd = 0;
+            break;
+        default:
+            dd = 1;
     }
 
     m = dp->last_atk;
     switch (m) {
-    case 2:
-    case 1:
-        arm = dd + 6;
-        break;
-    case 4:
-    case 6:
-        arm = dd * 2 + 6 + id;
-        break;
-    default:
-        arm = 0;
-        printf("Illegal damage type!(%d)\n", dp->last_atk);
+        case 2:
+        case 1:
+            arm = dd + 6;
+            break;
+        case 4:
+        case 6:
+            arm = dd * 2 + 6 + id;
+            break;
+        default:
+            arm = 0;
+            printf("Illegal damage type!(%d)\n", dp->last_atk);
     }
     return arm;
 }
@@ -529,15 +459,15 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 #ifdef HOLY_CANDLE
 int enARMCanSeePlayer(EnLOCAL_DATA* dp /* r16 */) {
     float a = enCalcAngleDifference(enGetPlayerDirection(dp), dp->scp->rot.y); sceVu0FVECTOR vec;
-    if (enLocalWork.Status & 1) { return 0; }
-    if ((dp->p_dist > 2500.0f || a > 2.0943952f) && dp->anim < 6) {
+    if (enLocalWork.Status & 1) return 0;
+    if ((dp->p_dist > 2500.0f || a > TO_RAD(120)) && dp->anim < 6) {
         return 0;
     } else if (dp->p_dist < 1000.0f && enARMCheckFloor(dp, 0) != 1 && enARMCheckFloor(dp, 1) != 1) {
         
         
         shSinCosV_Scale(&vec, dp->scp->rot.y, 1000.0f);
         vec_add(&dp->scp->pos, &vec, &vec);
-        if (enCheckFloor(&vec) != 1) { return 2; }
+        if (enCheckFloor(&vec) != 1) return 2;
     }
     
     return 1;
@@ -616,7 +546,7 @@ void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
     }
     
     
-    if (dp->anim_n == -1 || ENEMY_FLAG_CHECK(ENEMY_FLAG_0)) { return; }
+    if (dp->anim_n == -1 || ENEMY_FLAG_CHECK(ENEMY_FLAG_0)) return;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMAnimeExec);
@@ -668,7 +598,7 @@ float enARMGetMoveSpeed(EnLOCAL_DATA* dp /* r16 */) {
     
     r = speed_rate[enGetMode()];
     r *= (0.6f + (dp->scp->battle.hp_rate / 250.0f));
-    if (dp->p_dist > 5000.0f) { r *= 4.0f; }
+    if (dp->p_dist > 5000.0f) r *= 4.0f;
     dp->anim_s = r * 4096.0f;
     return r;
 }
@@ -678,7 +608,7 @@ float enARMGetMoveSpeed(EnLOCAL_DATA* dp /* r16 */) {
 void enARMSoundSigns(EnLOCAL_DATA* dp /* r16 */) {
     int signs; // r3
     if ((dp->arm.count -= shGetDF()) <= 0) {
-        dp->arm.count = enCalcTimer(0x3C);
+        dp->arm.count = enCalcTimer(60);
         do {
             signs = shRandI() >> 0x14 & 3;
         } while (signs == dp->mkn.dcm);
