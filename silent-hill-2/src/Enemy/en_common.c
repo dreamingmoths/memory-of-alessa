@@ -1336,17 +1336,17 @@ static inline void shIKEVectorTransform(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
 
 #line 1806
 void enIKETrans(EnLOCAL_DATA* dp) {
-    sceVu0FVECTOR vec; // r29+0x30
-    sceVu0FMATRIX rot; // r29+0x40
+    sceVu0FVECTOR vec;
+    sceVu0FMATRIX rot;
     if (dp != NULL) {
         shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);
         if ((dp->slv == 0) || (dp->slv == 1)) {
-            enGetSkeletonVector(dp->bos.target, dp, 0xC);
+            enGetSkeletonVector(dp->ike.handpos, dp, 12);
             return;
         }
-        shVectorCopy(vec, &dp->oni);
-        enGetSkeletonVector(dp->bos.target, dp, 0xC);
-        shSubVector(vec, &dp->oni, vec);
+        shVectorCopy(vec, dp->ike.handpos);
+        enGetSkeletonVector(dp->ike.handpos, dp, 12);
+        shSubVector(vec, dp->ike.handpos, vec);
         shUnitMatrix(rot);
         buildRotMatrix(rot, (float*) &dp->scp->rot);
         shIKEVectorTransform((float*) &vec, &rot);
@@ -1355,13 +1355,13 @@ void enIKETrans(EnLOCAL_DATA* dp) {
 }
 
 void enARMTrans(EnLOCAL_DATA* dp) {
-    sceVu0FVECTOR vec; // r29+0x20
+    sceVu0FVECTOR vec;
     if ((dp == NULL) || (ENEMY_BATTLE_FLAG_CHECK(DEAD_FLAG)) != 0) return;
     shVectorCopy(&dp->scp->b_pos, &dp->scp->pos);
     shSubVector(vec, &dp->scp->pos, dp->arm.old_pos);
     shAddVectorXyz(dp->arm.hand_pos, vec, dp->arm.hand_pos);
-    if (dp->scu.dc >= 0) {
-        enARMGetHandPos(vec, dp, dp->scu.dc);
+    if (dp->arm.arm >= 0) {
+        enARMGetHandPos(vec, dp, dp->arm.arm);
         vec_sub_xyz(dp->arm.hand_pos, vec, vec);
         dp->scp->pos.x = vec[0];
         dp->scp->pos.z = vec[2];
