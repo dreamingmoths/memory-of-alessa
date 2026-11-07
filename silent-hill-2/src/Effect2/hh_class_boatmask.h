@@ -10,7 +10,6 @@ typedef struct HH_Object_Boat_Mask {
     u_short Vertex_Kind; // offset 0x16, size 0x2
 } HH_Object_Boat_Mask;
 
-
 u_int HH_Class_Prefix_Boat_Mask(void);
 
 u_int HH_Class_Suffix_Boat_Mask(void);
