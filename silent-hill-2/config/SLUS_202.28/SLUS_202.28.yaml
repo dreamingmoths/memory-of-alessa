@@ -62,7 +62,7 @@ segments:
       - { start: 0x00027f80,    type: c,          name: Chacter_Draw/model3_cluster_n                    }
       - { start: 0x00028730,    type: asm,        name: Chacter_Draw/model3_equip_n                      }
       - { start: 0x000287e0,    type: c,          name: Chacter_Draw/model3_n                            }
-      - { start: 0x00029000,    type: asm,        name: Chacter_Draw/model3_sub_n                        }
+      - { start: 0x00029000,    type: c,          name: Chacter_Draw/model3_sub_n                        }
       - { start: 0x000295f0,    type: c,          name: Chacter_Draw/model3_vu0_n                        }
       - { start: 0x0002c4e0,    type: c,          name: Chacter_Draw/model3_vu1_n                        }
       - { start: 0x0002e4c0,    type: c,          name: Chacter_Draw/model_common                        }
@@ -604,8 +604,7 @@ segments:
       - { start: 0x001a9c30,    type: .data,      name: Chacter_Draw/clani                               }
       - { start: 0x001a9c40,    type: .data,      name: Chacter_Draw/light_n                             }
       - { start: 0x001a9c80,    type: .data,      name: Chacter_Draw/model3_n                            }
-      - { start: 0x001a9d20,    type: data,       name: Chacter_Draw/model3_sub_n                        }
-      - { start: 0x001a9d20,    type: data,       name: Chacter_Draw/model3_sub_n                        }
+      - { start: 0x001a9d20,    type: .data,      name: Chacter_Draw/model3_sub_n                        }
       - { start: 0x001a9e08,    type: data,       name: Chacter_Draw/model3_vu0_n                        }
       - { start: 0x001a9e50,    type: data,       name: Chacter_Draw/model3_vu1_n                        }
       - { start: 0x001a9ef0,    type: data,       name: Chacter_Draw/sh2gfw_Draw_Character               }
@@ -1140,7 +1139,8 @@ segments:
       - { vram:  0x00419380,    type: bss,        name: Chacter_Draw/light_n                             }
       - { vram:  0x00419380,    type: bss,        name: Event/stage/stg_apart_w2f                        }
       - { vram:  0x00419d60,    type: .bss,       name: Chacter_Draw/model3_cluster_n                    }
-      - { vram:  0x00419dc0,    type: bss,        name: Chacter_Draw/model3_sub_n                        }
+      - { vram:  0x00419dc0,    type: bss,        name: Chacter_Draw/model3_junk                         }
+      - { vram:  0x00419f80,    type: .bss,       name: Chacter_Draw/model3_sub_n                        }
       - { vram:  0x00419f88,    type: bss,        name: Chacter_Draw/model3_vu0_n_bss                    }
       - { vram:  0x00419fa0,    type: .bss,       name: Chacter_Draw/model3_vu0_n                        }
       - { vram:  0x00419fa8,    type: bss,        name: bss_0x0419fa8                                    }
