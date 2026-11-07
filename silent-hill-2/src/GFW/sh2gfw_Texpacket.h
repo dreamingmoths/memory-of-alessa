@@ -19,7 +19,7 @@ void sh2gfw_Change_TexBody(void* pT, void* texaddr);
 
 void sh2gfw_Reset_TexBody(void* pT);
 
-__int128* sh2gfw_Get_RegTEX0(sh2gfw_TexMAN* sTM, u_int clutid, u_int flg);
+u_long128* sh2gfw_Get_RegTEX0(sh2gfw_TexMAN* sTM, u_int clutid, u_int flg);
 
 int sh2gfw_Get_TFX(void* sTMV, int clutid);
 
