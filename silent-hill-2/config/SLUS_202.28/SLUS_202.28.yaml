@@ -567,7 +567,7 @@ segments:
       - { start: 0x00195cc0,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_02      }
       - { start: 0x00196800,    type: c,          name: Effect2/hh_class_water_80                        }
       - { start: 0x00197870,    type: asm,        name: Effect2/hh_class_water_90                        }
-      - { start: 0x001988b0,    type: asm,        name: Effect2/hh_class_boatmask                        }
+      - { start: 0x001988b0,    type: c,          name: Effect2/hh_class_boatmask                        }
       - { start: 0x00199090,    type: asm,        name: pause                                            }
       - { start: 0x001996a0,    type: c,          name: now_loading                                      }
       # -----------------------------------------    vutext   ------------------------------------------ #
@@ -826,11 +826,16 @@ segments:
       - { start: 0x0027bfe0,    type: .data,      name: Effect2/hh_class_blood_04                        }
       - { start: 0x0027c210,    type: .data,      name: Effect2/hh_class_blood_pool_phenomenon_01        }
       - { start: 0x0027c230,    type: .data,      name: Effect2/hh_memory_manage                         }
-      - { start: 0x0027c240,    type: data,       name: data_0x27c240                                    }
+      - { start: 0x0027c240,    type: data,       name: SH2_common/mem_share                             }
+      - { start: 0x0027c2d0,    type: data,       name: Effect2/hh_class_flame_03                        }
+      - { start: 0x0027d710,    type: data,       name: FilesList/fileslist_bg_qt                        }
+      - { start: 0x0027d8b0,    type: data,       name: SH2_common/result                                }
       - { start: 0x0027d8d0,    type: .data,      name: Effect2/hh_class_blood_05                        }
       - { start: 0x0027dc10,    type: data,       name: Effect2/hh_class_blood_splash_phenomenon_02      }
       - { start: 0x0027dc40,    type: .data,      name: Effect2/hh_class_water_80                        }
-      - { start: 0x0027dea8,    type: data,       name: data_0x27dea8                                    }
+      - { start: 0x0027dea8,    type: data,       name: Effect2/hh_class_water_90                        }
+      - { start: 0x0027e040,    type: .data,      name: Effect2/hh_class_boatmask                        }
+      - { start: 0x0027e120,    type: data,       name: pause                                            }
       # -----------------------------------------    vudata   ------------------------------------------ #
       - { start: 0x0027e280,    type: vudata,     name: vsm/vudata/model2_vu_load                        }
       - { start: 0x0027ff40,    type: vudata,     name: vsm/vudata/model3_mpg0_clip0                     }

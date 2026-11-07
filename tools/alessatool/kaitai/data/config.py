@@ -51,6 +51,10 @@ SH2_DATA: DataTable = [
     StructData(name="pap_anim",                             type=Sh2.AnimeInfo,                        count=29                       ),
     StructData(name="d_pap_anim",                           type=Sh2.AnimeInfo,                        count=8                        ),
     SimpleData(name="dpap_anime_adr_list",                  type="<8i"                                                                ),
+    SimpleData(name="_square_stq",                          type="<16f",                                pattern=[4, 4]                ),
+    SimpleData(name="_square_00_vertex",                    type="<16f",                                pattern=[4, 4]                ),
+    SimpleData(name="div_i",                                type="<1i"                                                                ),
+    SimpleData(name="div_j",                                type="<1i"                                                                ),
 ]
 
 SH3_DATA: DataTable = []
