@@ -5,8 +5,8 @@
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_fire_phenomenon_00.h"
 
-UNMIGRATED(/*static*/ Descriptor_Post_Infomeation _post_info_demo[23]); // size: 0x730, address: 0x375DE0
-UNMIGRATED(/*static*/ Descriptor_Post_Infomeation _post_info_normal[16]); // size: 0x500, address: 0x376510
+UNMIGRATED(/* static */ Descriptor_Post_Infomeation _post_info_demo[23]); // size: 0x730, address: 0x375DE0
+UNMIGRATED(/* static */ Descriptor_Post_Infomeation _post_info_normal[16]); // size: 0x500, address: 0x376510
 
 static inline float shGetDemoFrame(void) {
     return demo_frame;
@@ -112,7 +112,7 @@ u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
             
                 
             
-            if (!((Sh2sys.main_status >> 6) & 1)) {
+            if (!GET_BIT(Sh2sys.main_status, 6)) {
                 
                 HH_Effect_Object_DesignateClassInstance_Clear(43);
                 HH_Effect_Object_DesignateClassInstance_Clear(44);
