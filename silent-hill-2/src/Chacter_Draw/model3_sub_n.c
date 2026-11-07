@@ -204,26 +204,18 @@ void Model3UpdateLightEnv(void) {
     LightUpdateInfoByPos(wpos, radius);
 }
 
-static inline float getScale(void) { 
-    return 2.0f;
-}
-
-#ifdef HOLY_CANDLE
 #line 438
 void Model3UpdateGlobalAmbient(void) {
-    float scale = getScale(); // @note not in dwarf
+
     
     sceVu0ScaleVector(
-        model3_junk.global_ambient,
+        (float*) model3_junk.global_ambient, // @note cast needed as a holy candle
         Env_ctl.ambient, 
-        scale
+        2.0f
     );
     sceVu0ScaleVector(model3_junk.global_ambient, model3_junk.global_ambient, Env_ctl.CharacterLightFactor[0]);
     
     #line 450
-    model3_junk.global_ambient[3] *= scale;
+    model3_junk.global_ambient[3] *= 2.0f;
     #line 476
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_sub_n", Model3UpdateGlobalAmbient)
-#endif
