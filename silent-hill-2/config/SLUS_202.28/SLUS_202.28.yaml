@@ -61,7 +61,7 @@ segments:
       - { start: 0x00026760,    type: c,          name: Chacter_Draw/light_n                             }
       - { start: 0x00027f80,    type: c,          name: Chacter_Draw/model3_cluster_n                    }
       - { start: 0x00028730,    type: asm,        name: Chacter_Draw/model3_equip_n                      }
-      - { start: 0x000287e0,    type: asm,        name: Chacter_Draw/model3_n                            }
+      - { start: 0x000287e0,    type: c,          name: Chacter_Draw/model3_n                            }
       - { start: 0x00029000,    type: asm,        name: Chacter_Draw/model3_sub_n                        }
       - { start: 0x000295f0,    type: c,          name: Chacter_Draw/model3_vu0_n                        }
       - { start: 0x0002c4e0,    type: c,          name: Chacter_Draw/model3_vu1_n                        }
@@ -603,7 +603,7 @@ segments:
       - { start: 0x001a9bb0,    type: data,       name: Chacter_Draw/_3d_n                               }
       - { start: 0x001a9c30,    type: .data,      name: Chacter_Draw/clani                               }
       - { start: 0x001a9c40,    type: .data,      name: Chacter_Draw/light_n                             }
-      - { start: 0x001a9c80,    type: data,       name: Chacter_Draw/model3_n                            }
+      - { start: 0x001a9c80,    type: .data,      name: Chacter_Draw/model3_n                            }
       - { start: 0x001a9d20,    type: data,       name: Chacter_Draw/model3_sub_n                        }
       - { start: 0x001a9d20,    type: data,       name: Chacter_Draw/model3_sub_n                        }
       - { start: 0x001a9e08,    type: data,       name: Chacter_Draw/model3_vu0_n                        }

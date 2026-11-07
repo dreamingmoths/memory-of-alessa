@@ -89,10 +89,10 @@ typedef struct Enemy_List {
 // total size: 0x10
 typedef struct /* @anon2 */ {
     // Members
-    void (*SpecDraw)(void);       // offset 0x0, size 0x4
-    void (*PreDraw)(void);        // offset 0x4, size 0x4
-    void (*PostDraw)(void);       // offset 0x8, size 0x4
-    void (*CharaDraw_Hook)(void); // offset 0xC, size 0x4
+    void (*SpecDraw)();       // offset 0x0, size 0x4
+    void (*PreDraw)();        // offset 0x4, size 0x4
+    void (*PostDraw)();       // offset 0x8, size 0x4
+    void (*CharaDraw_Hook)(); // offset 0xC, size 0x4
 } GfwFunc;
 
 // total size: 0x44
