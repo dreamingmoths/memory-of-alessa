@@ -26,7 +26,6 @@ typedef struct HH_Object_Fire_Phenomenon_00 {
     float Timer; // offset 0x14, size 0x4
 } HH_Object_Fire_Phenomenon_00;
 
-
 u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement);
 
 #endif // HH_CLASS_FIRE_PHENOMENON_00_H
