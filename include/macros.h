@@ -48,4 +48,6 @@
 
 #define IS_EVEN(x) (((x) & 1) ? 0 : 1)
 
+#define ALIGN16(x) ((x + 0xF) & ~0xF)
+
 #endif // ALESSA_MACROS_H

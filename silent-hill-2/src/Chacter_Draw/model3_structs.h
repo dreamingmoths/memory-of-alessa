@@ -4,6 +4,49 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
 
+typedef struct sh_Model {
+    u_int id;
+    u_int revision;
+    u_int initial_matrices_offset;
+    u_int n_skeletons;
+    u_int skeleton_structure_offset;
+    u_int n_skeleton_pairs;
+    u_int skeleton_pairs_offset;
+    u_int default_pcms_offset;
+    u_int n_vu1_parts;
+    u_int vu1_parts_offset;
+    u_int n_vu0_parts;
+    u_int vu0_parts_offset;
+    u_int n_texture_blocks;
+    u_int texture_blocks_offset;
+    u_int n_text_poses;
+    u_int text_poses_offset;
+    u_int text_pos_params_offset;
+    u_int n_cluster_nodes;
+    u_int cluster_nodes_offset;
+    u_int n_clusters;
+    u_int clusters_offset;
+    u_int n_func_data;
+    u_int func_data_offset;
+    u_int hit_offset;
+    u_int box_offset;
+    u_int flag;
+    u_int relative_matrices_offset;
+    u_int relative_transes_offset;
+    void* pTexMAN[4];
+} sh_Model;
+
+typedef struct ModelWork {
+    // total size: 0x30
+    u_int id;                              // offset 0x0, size 0x4
+    float (*relatives)[4][4];              // offset 0x4, size 0x4
+    float (*matrices)[4][4];               // offset 0x8, size 0x4
+    float* cluster_weights;                // offset 0xC, size 0x4
+    u_long128 equipment_flag;              // offset 0x10, size 0x10
+    int (*draw_hook)(void*, void*, void*); // offset 0x20, size 0x4
+    void* draw_hook_data;                  // offset 0x24, size 0x4
+} ModelWork;
+
 typedef struct Model3Junk {
     // total size: 0x1C0
     float xyz_min[4];          // offset 0x0, size 0x10
