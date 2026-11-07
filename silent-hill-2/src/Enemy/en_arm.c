@@ -91,7 +91,7 @@ void enARMInitData(EnLOCAL_DATA* dp) {
 
     mode = enGetMode();
     
-    dp->mlv = 1;
+    ENEMY_MLV(1);
     ENEMY_STEP(0);
     
     enSetBattleTarget(dp, 0);
@@ -101,7 +101,7 @@ void enARMInitData(EnLOCAL_DATA* dp) {
     enSetHP(dp, vitarity[mode], vitarity[mode]);
     enFlagSetMoved(dp);
     
-    dp->flag |= 0x8442;
+    ENEMY_FLAG_SET(ENEMY_FLAG_15 | ENEMY_FLAG_10 | ENEMY_FLAG_6 | ENEMY_FLAG_1);
     enARMAnimeSet(dp, 1);
     dp->scu.dc = -1;
     if (enCheckSleepIn(dp) != 0) {
@@ -176,7 +176,7 @@ void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
 void enARMCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
     if (enCheckSleepOut(dp) != 0) {
         enSleepOut(dp);
-        dp->mlv = 3;
+        ENEMY_MLV(3);
         ENEMY_STEP(0);
     }
     dp->scu.dc = -1;
@@ -185,7 +185,7 @@ void enARMCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
 
 
 void enARMCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */) {
-    dp->mlv = 1;
+    ENEMY_MLV(1);
     ENEMY_STEP(0);
     dp->scu.dc = -1;
 }
@@ -297,7 +297,7 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
             dp->scu.dcm = 0;
             break;
         case 1:
-            if(dp->timer == 0) {
+            if (dp->timer == 0) {
                 s = 2;
             } else {
                 s = 1;
@@ -307,18 +307,18 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
             break;
         case 2:
             s = 3;
-            dp->scu.dcm += 1;
+            dp->scu.dcm += 1; // ++ doesn't match
             
         }
-        if ((dp->sslv >= 2) && ((dp->sslv != s) && (s < 3) || !(dp->flag & 4)) 
-        || ((dp->scu.dcm >= 5)) != 0) {
+        if (dp->sslv >= 2 && (dp->sslv != s && s < 3 || !ENEMY_FLAG_CHECK(ENEMY_FLAG_2)) 
+        || dp->scu.dcm >= 5) {
             enSetTimer(dp, (60 * 3));
             dp->scu.dcm = 0;
             s = 1;
         }
         dp->sslv = s;
         if (dp->scu.dc == -1) {
-            if ((dp->anim == 7) || (dp->anim == 10) || (dp->anim == 11)) {
+            if (dp->anim == 7 || dp->anim == 10 || dp->anim == 11) {
               
                 
                 dp->scu.dc = 0;
@@ -340,7 +340,7 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
         enSetPath(dp, &vec, &dp->scp->pos);
     } else {
         if (dp->sslv == 3) {
-            enAttackCheck(dp, ((dp->anim == 4) ? (u_char) 64 : (u_char) 65));
+            enAttackCheck(dp, (dp->anim == 4 ? (u_char) 64 : (u_char) 65));
         }
         
         enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
@@ -361,9 +361,9 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
         enInitPath(&dp->path, dp->scp->rot.y);
         dp->anim_n = -1;
         if (dp->scu.dc == -1) {
-            if ((dp->anim == 7)
-            || (dp->anim == 10) 
-            || (dp->anim == 11)) {
+            if (dp->anim == 7
+            || dp->anim == 10 
+            || dp->anim == 11) {
                 dp->scu.dc = 0;
             } else {
                 dp->scu.dc = 1;
@@ -411,7 +411,7 @@ void enARMCtrlDamage(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
     case 0:
         enReduceHP(dp);
-        dp->flag &= 0xFFFF7FFF;
+        ENEMY_FLAG_UNSET(ENEMY_FLAG_15);
         enARMAnimeReset(dp, enARMGetDamageMotion(dp));
         ENEMY_NEXT_SUB_STEP();
         break;
@@ -421,14 +421,14 @@ void enARMCtrlDamage(EnLOCAL_DATA* dp) {
         }
         if (dp->anim_n == -1) {
             if (enCheckDeath(dp) != 0) {
-                if ((dp->anim == 6) 
-                || (dp->anim == 8) 
-                || (dp->anim == 9)) {
+                if (dp->anim == 6 
+                || dp->anim == 8 
+                || dp->anim == 9) {
                     enARMAnimeSet(dp, 0xC);
                 } else {
                     enARMAnimeSet(dp, 0xD);
                 }
-                fogEraseObj((dp - enLocalWork.Data) + 10);
+                fogEraseObj(dp - enLocalWork.Data + 10);
                 enFlagSetNoDamage(dp);
                 enFlagResetMoved(dp);
                 enFlagSetDead(dp);
@@ -438,7 +438,7 @@ void enARMCtrlDamage(EnLOCAL_DATA* dp) {
                 ENEMY_STEP(0);
                 enSetTimer(dp, 0);
                 dp->scu.dcm = 0;
-                dp->flag |= 0x8000;
+                ENEMY_FLAG_SET(ENEMY_FLAG_15);
             }
         }
         break;
@@ -487,7 +487,7 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 
     
     a = shAngleRegulate(shAtanV(&dp->scp->battle.vec) - dp->scp->rot.y);
-    if (shFloatAbs(a) > QUARTER_TURN) { id = 0;} 
+    if (shFloatAbs(a) > QUARTER_TURN) { id = 0; }
     else { id = 1; }
     
     switch (dp->anim) {
@@ -495,7 +495,7 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
     case 3:
     case 4:
     case 5:
-        dd = (dp->anim_n >= 19201) ^ ((dp->arm.arm == 0) ? 0 : 1);
+        dd = dp->anim_n >= 19201 ^ (dp->arm.arm == 0 ? 0 : 1);
         break;
     case 1:
     case 6:
@@ -515,7 +515,7 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
         break;
     case 4:
     case 6:
-        arm = id + ((dd * 2) + 6);
+        arm = dd * 2 + 6 + id;
         break;
     default:
         arm = 0;
@@ -530,9 +530,9 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 int enARMCanSeePlayer(EnLOCAL_DATA* dp /* r16 */) {
     float a = enCalcAngleDifference(enGetPlayerDirection(dp), dp->scp->rot.y); sceVu0FVECTOR vec;
     if (enLocalWork.Status & 1) { return 0; }
-    if (((dp->p_dist > 2500.0f) || (a > 2.0943952f)) && (dp->anim < 6)) {
+    if ((dp->p_dist > 2500.0f || a > 2.0943952f) && dp->anim < 6) {
         return 0;
-    } else if ((dp->p_dist < 1000.0f) && (enARMCheckFloor(dp, 0) != 1) && (enARMCheckFloor(dp, 1) != 1)) {
+    } else if (dp->p_dist < 1000.0f && enARMCheckFloor(dp, 0) != 1 && enARMCheckFloor(dp, 1) != 1) {
         
         
         shSinCosV_Scale(&vec, dp->scp->rot.y, 1000.0f);
@@ -550,8 +550,8 @@ int enARMCheckNearOther(EnLOCAL_DATA* dp /* r18 */) {
     EnLOCAL_DATA* tp = &enLocalWork.Data[0]; /* r16 */
     int i; /* r17 */ float* tpos; /* r2 */ float d; /* r29+0x40 */
 
-    for(i = 0; i < 32; i++, tp++) {
-        if ((tp != dp) && (tp->kind == 10)) {
+    for (i = 0; i < ENEMY_MAX; i++, tp++) {
+        if (tp != dp && tp->kind == 10) {
             tpos = &tp->scp->pos;
             if (shVectorDist(&dp->scp->pos, tpos) < 1000.0f) {
                 d = shAngleRegulate(dp->scp->rot.y - enCalcDirection(tpos, &dp->scp->pos));
@@ -595,17 +595,17 @@ void enARMAnimeReset(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
 void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
     int of; /* r2 */ sceVu0FVECTOR pos; // r29+0x20
     enAnimeExec(dp, &EnARMAnime, 5251);
-    if ((dp->anim >= 2) && (dp->anim < 6) 
-    && (dp->anim_step == 0) && (dp->anim_n == -1)) {
+    if (dp->anim >= 2 && dp->anim < 6
+    && dp->anim_step == 0 && dp->anim_n == -1) {
         dp->anim_step = 1;
-        if((dp->p_dist < 5000.0f) || ((++dp->mkn.dc < 4) == 0)) {
+        if (dp->p_dist < 5000.0f || ++dp->mkn.dc >= 4) {
             
             dp->mkn.dc = 0;
             enARMGetHandPos(&pos, dp, dp->scu.dc ^ 1);
             vec_add(&dp->scp->pos, &pos, &pos);
             pos[1] = dp->scp->pos.y;
             
-            switch(enCheckFloor(&pos)) {
+            switch (enCheckFloor(&pos)) {
                 case 2:
                     enSoundCall(12250, 0.8f, &pos);
                 break;
@@ -616,7 +616,7 @@ void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
     }
     
     
-    if ((dp->anim_n == -1) || (dp->flag & 1)) { return; }
+    if (dp->anim_n == -1 || ENEMY_FLAG_CHECK(ENEMY_FLAG_0)) { return; }
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMAnimeExec);
@@ -680,7 +680,7 @@ void enARMSoundSigns(EnLOCAL_DATA* dp /* r16 */) {
     if ((dp->arm.count -= shGetDF()) <= 0) {
         dp->arm.count = enCalcTimer(0x3C);
         do {
-            signs = (shRandI() >> 0x14) & 3;
+            signs = shRandI() >> 0x14 & 3;
         } while (signs == dp->mkn.dcm);
         dp->mkn.dcm = signs;
         
