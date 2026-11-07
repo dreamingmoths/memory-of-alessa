@@ -70012,8 +70012,8 @@ rom:0x2A27B8 reloc:MIPS_32                             symbol:z_data_chr_arm_arm
 rom:0x2AF6D4 reloc:MIPS_32                             symbol:z_data_chr_arm_mgf__info
 rom:0x2A27C4 reloc:MIPS_32                             symbol:z_data_chr_arm_arm_mdl__name
 rom:0x2A27C0 reloc:MIPS_32                             symbol:z_data_chr_arm_arm_mdl__info
-rom:0x139DC4 reloc:MIPS_HI16                           symbol:"@914_0x0034EA10"
-rom:0x139DC8 reloc:MIPS_LO16                           symbol:"@914_0x0034EA10"
+rom:0x139DC4 reloc:MIPS_HI16                           symbol:"vitarity"
+rom:0x139DC8 reloc:MIPS_LO16                           symbol:"vitarity"
 rom:0x139DE0 reloc:MIPS_26                             symbol:enGetMode
 rom:0x139E04 reloc:MIPS_26                             symbol:enSetBattleTarget
 rom:0x139E30 reloc:MIPS_26                             symbol:enSetSize

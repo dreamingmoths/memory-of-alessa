@@ -35,7 +35,7 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ float enREDGetWalkSpeed(EnLOCAL_DATA* dp);
 
 /* static */ float enREDGetRotSpeed(void);
-/* static */ void enREDSetSlowTime(EnLOCAL_DATA * dp /* r16 */);
+/* static */ void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp);
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
