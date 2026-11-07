@@ -260,6 +260,25 @@ def parse_section_header_indices(section_headers_str: str):
 
     return section_names_by_index
 
+def get_configured_deduplications():
+    undollar = lambda name, target :                    \
+            "$" in name                                 \
+                and target.endswith(name.split("$")[1]) \
+                    and name.replace("$", "_")          \
+                    or name.split("$")[0]               \
+                or name
+
+    transform_source_symbol_name =                   \
+        lambda name, target : undollar(name, target) \
+            .replace(".", "_")
+
+    transform_target_symbol_name = \
+        lambda name : name         \
+            .replace(".", "_")     \
+            .replace("$", "_")     \
+            .rsplit("_0x", maxsplit=1)[0]
+
+    return (transform_source_symbol_name, transform_target_symbol_name)
 
 def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     IGNORE_RODATA = True
@@ -268,22 +287,7 @@ def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     FIX_ISSUES = True
 
     if TRANSFORM_SYMBOLS:
-        undollar = lambda name, target :                    \
-                "$" in name                                 \
-                    and target.endswith(name.split("$")[1]) \
-                        and name.replace("$", "_")          \
-                        or name.split("$")[0]               \
-                    or name
-
-        transform_source_symbol_name =                   \
-            lambda name, target : undollar(name, target) \
-                .replace(".", "_")
-
-        transform_target_symbol_name = \
-            lambda name : name         \
-                .replace(".", "_")     \
-                .replace("$", "_")     \
-                .rsplit("_0x", maxsplit=1)[0]
+        (transform_source_symbol_name, transform_target_symbol_name) = get_configured_deduplications()
     else:
         transform_source_symbol_name = lambda name : name
         transform_target_symbol_name = lambda name : name
