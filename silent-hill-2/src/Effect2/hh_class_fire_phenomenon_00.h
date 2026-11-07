@@ -3,6 +3,10 @@
 
 #include "Effect2/hh_class_manager.h"
 
+#define HH_FIRE_STEP_INIT        0
+#define HH_FIRE_STEP_PREDRAW     1
+#define HH_FIRE_STEP_DRAW        2
+#define HH_FIRE_STEP_OFF         3
 
 typedef struct Descriptor_Post_Infomeation {
     sceVu0FVECTOR Location; // offset 0x0, size 0x10

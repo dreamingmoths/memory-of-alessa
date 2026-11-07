@@ -42,34 +42,28 @@ static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_
 
 #line 661
 u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
-    
-    
-    
-    
-    
-    
-    
+    #line 669
     u_int result = 1;
     HH_Object_Fire_Phenomenon_00* pThis = pBlock;
     u_int i; ImpactQueue_Element descriptor;
     switch (pThis->Step) {
-        case 0:
+        case HH_FIRE_STEP_INIT:
             Object_Initialize(pThis, pElement);
             pThis->Step = 1;
             break;
-        case 1:
+        case HH_FIRE_STEP_PREDRAW:
             
             if (!((Sh2sys.main_status >> 6) & 1)) {
                 break;
             }
-            pThis->Step = 2;
+            pThis->Step = HH_FIRE_STEP_DRAW;
             
         
         
         
         
         
-        case 2:
+        case HH_FIRE_STEP_DRAW:
             descriptor.hInstance = 0.0f;
             descriptor.Option.Int_Value[1] = 0;
             
@@ -78,8 +72,8 @@ u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
                 Descriptor_Post_Infomeation* pInfo = &_post_info_demo[i];
                 
                 switch (pInfo->Step) {
-                   
                     case 0:
+                   
                         if (pInfo->Post_Frame <= shGetDemoFrame()) {
                            
                             descriptor.Option.Float_Value[0] = pInfo->Float_Argument[0];
@@ -155,14 +149,14 @@ u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
 
   
                 }
-                pThis->Step = 3;
+                pThis->Step = HH_FIRE_STEP_OFF;
             }
             
             
             pThis->Timer += TIME_STEP_30FPS;
             break;
         default:
-        case 3:
+        case HH_FIRE_STEP_OFF:
             pThis->Header.Enable = 0;
             result = 0;
             break;
