@@ -202,7 +202,7 @@ u_int HH_Class_Suffix_Boat_Mask(void) {
     
     HH_Vif1PacketBuffer_GifTag_Close();
     
-    return 1;
+    return result;
 }
 
 #line 428
