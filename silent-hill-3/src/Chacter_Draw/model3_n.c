@@ -11,7 +11,8 @@ int Model3NSkeletons(void* model_) {
     return model->n_skeletons;
 }
 
-s_char* Model3SkeletonStructure(sh_Model* model) {
+s_char* Model3SkeletonStructure(void* model_) {
+    Model* model = (Model*) model_; // r2
     s_char* structure= (s_char*)((u8*)model + model->skeleton_structure_offset);
     int i;
     u_char mask;
