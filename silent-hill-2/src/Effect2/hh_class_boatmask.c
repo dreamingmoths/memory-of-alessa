@@ -37,24 +37,24 @@ static u_int Object_Initialize(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* 
 #line 223
 static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement) {
     u_int result = 0;
-    sceVif1Packet *pPk = HH_Vif1Packet_Current_Get();
-    sceVu0FVECTOR *pVertex = _square_00_vertex;
+    sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
+    sceVu0FVECTOR* pVertex = _square_00_vertex;
     sceVu0FVECTOR Rgba = { 128.0f, 128.0f, 128.0f, 255.0f };
     static u_int div_i = 4, div_j = 8;
-    sceVu0FVECTOR *pStq = _square_stq;
+    sceVu0FVECTOR* pStq = _square_stq;
     u_int vertex_num, v, i, j;
     sceVu0FMATRIX lwm, lsm, clip_mat;
     sceVu0FVECTOR stq;
     sceVu0IVECTOR xyzf, rgba;
     float x_w, z_w, s_w, t_w;
-    SubCharacter *pSub_Char; 
+    SubCharacter* pSub_Char; 
     sceVu0FMATRIX _lwm;
 
     x_w = (pVertex[3][1] - pVertex[0][1]) / div_i;
     z_w = (pVertex[0][2] - pVertex[3][2]) / div_j;
     s_w = (pStq[2][0] - pStq[1][0]) / div_i;
     t_w = (pStq[2][1] - pStq[1][1]) / div_j;
-    pSub_Char = shCharacterGetSubCharacter(267, -1);
+    pSub_Char = shCharacterGetSubCharacter(BOAT_CHARA_KIND, -1);
     
     if (pSub_Char == NULL) {
         return result;
@@ -70,7 +70,7 @@ static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pEleme
     
     
     
-    shCharacterGetPartsMatrixForShadow(_lwm, 267, 0, 0);
+    shCharacterGetPartsMatrixForShadow(_lwm, BOAT_CHARA_KIND, 0, 0);
     sceVu0MulMatrix(lwm, lwm, _lwm);
     
     sceVu0MulMatrix(lsm, lsm, lwm);
@@ -124,10 +124,10 @@ static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pEleme
                 
                 HH_ClassWrapper_Transform_PerspectiveProjection_Clip_forTriangleStrip(xyzf, stq, lsm, clip_mat, vec[v]);
                
-                ((u_long128*)pPk->pCurrent)[0] = ((u_long128*)stq)[0];
-                ((u_long128*)pPk->pCurrent)[1] = ((u_long128*)rgba)[0];
-                ((u_long128*)pPk->pCurrent)[2] = ((u_long128*)xyzf)[0];
-                ((u_long128*)pPk->pCurrent) += 3;
+                ((u_long128*) pPk->pCurrent)[0] = ((u_long128*) stq)[0];
+                ((u_long128*) pPk->pCurrent)[1] = ((u_long128*) rgba)[0];
+                ((u_long128*) pPk->pCurrent)[2] = ((u_long128*) xyzf)[0];
+                ((u_long128*) pPk->pCurrent) += 3;
             }
         }
         sceVif1PkCloseGifTag(pPk);
@@ -216,17 +216,17 @@ u_int HH_Class_Boat_Mask(void* pBlock, ImpactQueue_Element* pElement) {
     
     switch (pThis->Step) {
         
-        case 0:
+        case HH_EFFECT_STEP_INIT:
             Object_Initialize(pThis, pElement);
-            pThis->Step = 1;
+            pThis->Step = HH_EFFECT_STEP_DRAW;
             break;
         
-        case 1:
+        case HH_EFFECT_STEP_DRAW:
             Object_Draw(pThis, pElement);
             
             break;
         
-        case 2: default:
+        case HH_EFFECT_STEP_OFF: default:
             pThis->Header.Enable = NULL;
             result = 0;
             break;
