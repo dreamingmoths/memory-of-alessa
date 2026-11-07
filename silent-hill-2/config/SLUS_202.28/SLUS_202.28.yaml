@@ -528,7 +528,7 @@ segments:
       - { start: 0x0017c4a0,    type: c,          name: Effect2/hh_class_water_09                        }
       - { start: 0x0017d7b0,    type: c,          name: Enemy/en_insect                                  }
       - { start: 0x0017ea10,    type: c,          name: sh2shd/sh2shd_shadow_env                         }
-      - { start: 0x00181300,    type: asm,        name: Effect2/hh_class_fire_phenomenon_00              }
+      - { start: 0x00181300,    type: c,          name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x001816f0,    type: c,          name: Effect2/hh_class_flame_00                        }
       - { start: 0x00182150,    type: c,          name: Effect2/hh_class_flame_01                        }
       - { start: 0x00182bf0,    type: asm,        name: Effect2/hh_class_smoke_00                        }
