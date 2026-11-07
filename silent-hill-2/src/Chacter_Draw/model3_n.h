@@ -44,7 +44,6 @@ typedef struct EnvPacket {
 } EnvPacket;
 
 extern EnvPacket envpacketdata; // @ 0x002A9580
-extern Model3Junk model3_junk;  // size: 0x1C0, address: 0x419DC0
 
 // E:\work\sh2(CVS全取得)\src\Chacter_Draw\sh2gfw_CharacterOT.c
 u_long128* CharacterOt_RequestPacket(int qwc /* r2 */);
