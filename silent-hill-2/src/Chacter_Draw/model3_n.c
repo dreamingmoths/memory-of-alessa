@@ -17,6 +17,7 @@
 
 static void Exec_ModelDraw_OVFunc(void* pp);
 
+// thank you: cuddly shrew (anon)
 #line 51
 static u_int UIntFogcol(void) {
     u_int fogcol;
