@@ -1536,7 +1536,99 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_command);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_volume);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_hp);
+#line 2523
+void look_hp(void) {
+    int z, i, j, j0, j1, r, g, b; // @todo arguments are quite wrong and confusing
+    float j_hp, j_max;
+    j_hp = sh2jms.player->battle.hp;
+    j_max = sh2jms.player->battle.hp_max;
+    
+    
+
+    #define HP_PERCENT() (j_hp / j_max)
+    
+    
+    t.hp_time1 -= 30.0f * shGetDT();
+    t.hp_time2 += 30.0f * ((1.4f + ((1.0f - HP_PERCENT()) / 0.7f)) * shGetDT());
+    if (t.hp_time2 > -70.0f) t.hp_time2 = -210.0f;
+    t.hp_abe -= 0.034f + ((1.0f - HP_PERCENT()) / 25.0f);
+    if (t.hp_abe < 0.0f) {
+        t.hp_abe = 1.0f;
+        
+        t.hp_time1 = t.hp_time2;
+    }
+    fptosi(2048.0f + t.hp_time2); // @hack?
+
+    t.hp_kodo += shGetDT() / 2.0f;
+    if (t.hp_kodo > 0.2f + HP_PERCENT()) {
+        t.hp_kodo = 0.0f;
+    }
+    if ((t.hp_kodo < 0.1f) && (j_hp < (0.8f * j_max)))
+        t.hp_abe2 = 1.0f - (6.0f * t.hp_kodo);
+    else if ((t.hp_kodo < 0.2f) && (j_hp < (0.8f * j_max))) 
+        t.hp_abe2 = (6.0f * t.hp_kodo) - 0.2f;
+    else t.hp_abe2 = 1.0f;
+
+
+
+    #define COL() 160.0f * t.hp_abe2
+    #define COLDIFF()  (t.hp_abe2 * (160.0f * (1.0f - ((2.0f * j_hp) / j_max))))
+
+    
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, 2147483651, 0U);
+    
+    (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
+    (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_TEX0_1, SCE_GS_RGBAQ, SCE_GS_ST, SCE_GS_XYZF2, SCE_GS_ST, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1 /* texture mapping */, 0, 0, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_TEX0(13312, 1, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0);
+
+    if (j_hp < j_max / 2.0f)
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL() - COLDIFF(), COL() - COLDIFF(), 160, FLOAT_ONE);
+    else
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL(), COL(), 160, FLOAT_ONE);
+    (*spack.pos++) = SCE_GS_SET_ST(0.0f, 0.0f);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-230), zs(-175), 0, 255);
+    (*spack.pos++) = SCE_GS_SET_ST(FLOAT_ONE, FLOAT_ONE);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-90), zs(-70), 0, 255);
+    spkCloseGiftag();
+    
+    // randomly create lines on the screen.
+    // the lower your health is, the more chances for lines there are, up to 10 per frame.
+    for (i = 0; i < 10.0f - 10.0f * HP_PERCENT(); i++) {
+        int z;
+        srand(t.seed++);
+        j = (rand() % 140) - 230;
+        j0 = (rand() % 105) - 173;
+        j1 = rand() % 105;
+        z = rand() % 6;
+        
+        if (z <= 0) {
+            if (j + j1 > -90) j1 = -90 - j; // if their sum is larger than -90, ensure it sums to -90
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, 2147483652, 0U);
+            
+            (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
+            (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_TEX0_1, SCE_GS_RGBAQ, SCE_GS_ST, SCE_GS_XYZF2, SCE_GS_ST, SCE_GS_XYZF2));
+            (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1 /* texture mapping */, 0, 0, 0, 0, 0, 0);
+            (*spack.pos++) = SCE_GS_SET_TEX0(13312, 1, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0);
+            
+            
+            if (j_hp < j_max / 2.0f)
+                (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL() - COLDIFF(), COL() - COLDIFF(), 160, FLOAT_ONE);
+            else
+                (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL(), COL(), 160, FLOAT_ONE);
+            // @weird numbers?
+            (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * ((j + 230) / 140.0f), 1040187400.0f + 24117248.0f * ((j0 + 175) / 105.0f));
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(zs(j), 0, zs(j0 - 2), 0, 0xff000000); // @weird wtf is this q value?
+            (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * (((j + j1) + 230) / 140.0f), 1041236000.0f + 24117248.0f * ((j0 + 175) / 105.0f));
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(j + j1), zs(j0), 0, 255);
+            spkCloseGiftag();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", stock_line);
 
