@@ -20,6 +20,8 @@
 #include "Font/font.h"
 #include "Fog/spack.h"
 #include "FilesList/fileslist_bg.h"
+#include "data/daily.thu/data_pic_item.h"
+#include "Multi_thr/filesys/fcread.h"
 
 /* @todo: why does objdiff display this symbol as `unsigned short`? */
 static struct /* @anon8 */ {
@@ -314,7 +316,256 @@ void itemmainmain(void) {
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", itemmainmain);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", cur_step);
+#line 534
+void cur_step(void) {
+    int i = 0; // @note unused
+
+    switch (t.step) {
+        case 0:
+            t.step++;
+            break;
+
+        case 1:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_DOWN) || t.analog[PAD_ANALOG_DOWN]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    if (item.equip) {
+                        t.step = 5;
+                        SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                    }
+                }
+                if (shPadTrigger(0, key_config.enter) && !shPadPress(0, PAD_KEY_DPAD_LEFT) && !shPadPress(0, PAD_KEY_DPAD_RIGHT) && (t.analog[PAD_ANALOG_LEFT] == 0) && (t.analog[PAD_ANALOG_RIGHT] == 0) && (t.use_item == 0) && (t.item_kind) && (command_kind((short) t.item_kind) || t.shelf)) {
+                    t.step = 6;
+                    examine_file_load();
+                    SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 0);
+                }
+            }
+            if (!t.prs_btn2) {
+                if (shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) {
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -30);
+                    t.item_no++;
+                    t.prs_btn2 = 1;
+                    if (t.item_no == t.item_count) {
+                        t.item_no = 0;
+                    }
+                    if (shPadPress(0, PAD_KEY_DPAD_RIGHT)) {
+                        t.turn_speed = 64;
+                    } else {
+                        t.turn_speed = shPadPress(0, PAD_KEY_6) - 192;
+                    }
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 30);
+                    t.item_no--;
+                    t.prs_btn2 = 1;
+                    if (t.item_no == -1) {
+                        t.item_no = t.item_count - 1;
+                    }
+                    if (shPadPress(0, PAD_KEY_DPAD_LEFT)) {
+                        t.turn_speed = 64;
+                    } else {
+                        t.turn_speed = -(shPadPress(0, PAD_KEY_6) - 64);
+                    }
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[2] = 0;
+                t.combine[1] = 0;
+                t.combine[0] = 0;
+                return;
+            }
+            break;
+
+        case 2:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                }
+            }
+            if (shPadPress(0, key_config.enter)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 7;
+                t.fade_step1 = 2;
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[2] = 0;
+                t.combine[1] = 0;
+                t.combine[0] = 0;
+                return;
+            }
+            break;
+
+        case 3:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -60);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+            }
+            if ((shPadTrigger(0, key_config.enter)) && MemoCommandCheck()) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 8;
+                t.fade_step1 = 0;
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[2] = 0;
+                t.combine[1] = 0;
+                t.combine[0] = 0;
+                return;
+            }
+            break;
+
+        case 4:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    t.step = 2;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 20);
+                }
+                if ((shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) && MemoCommandCheck()) {
+                    t.step = 3;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -20);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, key_config.enter)) {
+                    t.fade_flag  = 1;
+                    t.fade_step0 = 5;
+                    t.fade_step1 = 1;
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[2] = 0;
+                t.combine[1] = 0;
+                t.combine[0] = 0;
+                return;
+            }
+            break;
+
+        case 5:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_DOWN) || t.analog[PAD_ANALOG_DOWN]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, key_config.enter)) {
+                    t.step = 7;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2)) {
+                t.step = 1;
+                SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                return;
+            }
+            break;
+
+        case 6:
+            command_main(command_kind((s32) t.item_kind));
+            if ((!t.prs_btn) && (shPadPress(0, key_config.cancel)) && (t.use_item == 0)) {
+                t.command_volume = 0;
+                t.step           = 1;
+                SeCall(SH_SOUND_CANCEL_SELECTION_10003, 1.0f, -30);
+                return;
+            }
+            break;
+
+        case 7:
+            weapon_command_main(command_kind((s32) item.equip));
+            if ((!t.prs_btn) && (shPadPress(0, key_config.cancel))) {
+                t.command_volume = 0;
+                t.step           = 1;
+                SeCall(SH_SOUND_CANCEL_SELECTION_10003, 1.0f, -30);
+                return;
+            }
+            break;
+
+        case 8:
+            if (!t.prs_btn) {
+                t.step = 1;
+                SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 30);
+                return;
+            }
+            break;
+
+        case 9:
+            if (!t.prs_btn) {
+                t.step = 1;
+                return;
+            }
+            break;
+
+        case 11:
+            if ((shPadTrigger(0, key_config.enter)) && (t.use_item == 0)) {
+                t.step = 1;
+                return;
+            }
+            break;
+
+        case 12:
+            examine2_main();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                t.step = 13;
+                if (t.item_kind == SH2_ITEM_48) {
+                    FcRead(data_pic_item_x_coinelder_ura_tex, layer_adr);
+                } else if (t.item_kind == SH2_ITEM_49) {
+                    FcRead(data_pic_item_x_coinprisoner_ura_tex, layer_adr);
+                } else if (t.item_kind == COIN_OF_SNAKE) {
+                    FcRead(data_pic_item_x_coinsnake_ura_tex, layer_adr);
+                }
+            }
+            break;
+
+        case 13:
+            examine2_main();
+            if (!t.prs_btn) {
+                if ((t.item_kind == SH2_ITEM_48 || t.item_kind == SH2_ITEM_49 || t.item_kind == COIN_OF_SNAKE) && t.examine_step == 1) {
+                    if (fsSync(1, -1) >= 0) {
+                        t.step = 12;
+                        t.examine_step++;
+                    }
+                } else {
+                    t.step         = 1;
+                    t.examine_step = 0;
+                }
+                SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 30);
+            }
+            break;
+    }
+}
 
 void command_main(int command_step) {
 
@@ -1070,12 +1321,12 @@ void font_print(void) {
                     t.use_item++;
                 } else if (t.item_kind == 20) {
                     kage_font(msg_buffer, 181, 45, 340);
-                    if ((shPadTrigger(0, key_config.enter) != 0) && (t.prs_btn == 0)) {
+                    if ((shPadTrigger(0, key_config.enter) != 0) && (!t.prs_btn)) {
                         t.use_item++;
                     }
                 } else if (t.item_kind == 27) {
                     kage_font(msg_buffer, 175, 45, 340);
-                    if ((shPadTrigger(0, key_config.enter) != 0) && (t.prs_btn == 0)) {
+                    if ((shPadTrigger(0, key_config.enter) != 0) && (!t.prs_btn)) {
                         t.use_item++;
                     }
                 } else {
@@ -1100,7 +1351,7 @@ void font_print(void) {
                     t.step     = 1;
                     t.use_item = 0;
                 }
-                if (((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, key_config.cancel) != 0)) && (t.prs_btn == 0)) {
+                if (((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, key_config.cancel) != 0)) && (!t.prs_btn)) {
                     t.step     = 1;
                     t.use_item = 0;
                     t.prs_btn  = 1;
@@ -1394,7 +1645,7 @@ void font_print(void) {
         }
     }
     fontSetColorDirect((u_char) f, (u_char) f, (u_char) f, 255);
-    if ((t.item_kind != 0) && ((command_kind((short) t.item_kind) == 2) || (command_kind((s32) t.item_kind) == 4) || (command_kind((s32) t.item_kind) == 5)) && (t.prs_btn2 == 0)) {
+    if ((t.item_kind != 0) && ((command_kind((short) t.item_kind) == 2) || (command_kind((s32) t.item_kind) == 4) || (command_kind((s32) t.item_kind) == 5)) && (!t.prs_btn2)) {
         if (item.number[t.item_kind] < 10) {
             fontPrintDec(item.number[t.item_kind], 236, 289, 3, 0);
             stock_line(31, 0);
@@ -1406,7 +1657,7 @@ void font_print(void) {
             stock_line(59, 0);
         }
     }
-    if (t.prs_btn2 == 0) {
+    if (!t.prs_btn2) {
         if (t.item_kind == 15) {
             if (item.light_switch != 0) {
                 fontPrintStrNum(msg_buffer, 4U, 264, 290);
@@ -1467,8 +1718,8 @@ void lookline(sceVu0FMATRIX box) {
     (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0]), zs(box[0][1]), zs(0), 1);
     spkCloseGiftag();
 
-    // draws too little corners on either side of the diagonal of the rectangle when no button is pressed
-    if (BOX_ALPHA() == 255 && t.prs_btn == 0 && t.prs_btn2 == 0) {
+    // draws two little corners on either side of the diagonal of the rectangle when no button is pressed
+    if (BOX_ALPHA() == 255 && !t.prs_btn && !t.prs_btn2) {
         spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
         spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
         
