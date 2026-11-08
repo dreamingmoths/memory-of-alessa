@@ -1444,7 +1444,54 @@ void font_print(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", kage_font);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", lookline);
+#line 2302
+void lookline(sceVu0FMATRIX box) {
+    #define BOX_ALPHA() ((int) box[0][3])
+
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    
+    // disable alpha blending when alpha is full
+    if (BOX_ALPHA() == 255)
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+    else
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);;
+
+    // draw the item selection box
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0]), zs(box[0][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0]), zs(box[1][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[2][0]), zs(box[2][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0]), zs(box[3][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0]), zs(box[0][1]), zs(0), 1);
+    spkCloseGiftag();
+
+    // draws too little corners on either side of the diagonal of the rectangle when no button is pressed
+    if (BOX_ALPHA() == 255 && t.prs_btn == 0 && t.prs_btn2 == 0) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] - 6.0f), zs(box[1][1] - (box[1][1] - box[0][1]) / 2.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0] - 6.0f), zs(box[0][1] - 6.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0] - (box[3][0] - box[0][0]) / 2.0f), zs(box[3][1] - 6.0f), zs(0), 1);
+        spkCloseGiftag();
+
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] + (box[3][0] - box[0][0]) / 2.0f), zs(box[1][1] + 5.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[2][0] + 6.0f), zs(box[2][1] + 5.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0] + 6.0f), zs(box[3][1] + (box[1][1] - box[0][1]) / 2.0f), zs(0), 1);
+        spkCloseGiftag();
+    }
+}
 
 #line 2353
 void item_allay(void) {
