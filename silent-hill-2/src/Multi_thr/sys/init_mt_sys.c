@@ -116,7 +116,7 @@ static void iop_mem_check_break(int fid) {
         break_flag = 1;
         count = 0;
         printf(DEBUG_TEXT_ON_LINE(241, "Please break and modify flag(@0x%08x)\n", &break_flag));
-        while (break_flag != 0) 
+        while (break_flag) 
             count++;        
     }
 }
