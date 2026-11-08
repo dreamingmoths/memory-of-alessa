@@ -674,7 +674,7 @@ segments:
       - { start: 0x0023bb28,    type: .data,      name: Multi_thr/intc/th_vbe                            }
       - { start: 0x0023bb40,    type: data,       name: Multi_thr/pad/keydata                            }
       - { start: 0x0023bc88,    type: .data,      name: Multi_thr/pad/th_pad                             }
-      - { start: 0x0023bca0,    type: data,       name: Multi_thr/sys/init_mt_sys                        }
+      - { start: 0x0023bca0,    type: .data,      name: Multi_thr/sys/init_mt_sys                        }
       - { start: 0x0023bda0,    type: data,       name: Multi_thr/boot/bootopt                           }
       - { start: 0x0023bda0,    type: .data,      name: Multi_thr/boot/bootoptitem                       }
       - { start: 0x0023bf80,    type: .data,      name: Event/title                                      }
@@ -1211,7 +1211,7 @@ segments:
       - { vram:  0x01159230,    type: .bss,       name: Multi_thr/filesys/fileserv                       }
       - { vram:  0x01159238,    type: bss,        name: Multi_thr/filesys/sh_cdvd                        }
       - { vram:  0x01159280,    type: .bss,       name: Multi_thr/filesys/sh_chk_syscnf                  }
-      - { vram:  0x01159a80,    type: bss,        name: Multi_thr/sys/init_mt_sys                        }
+      - { vram:  0x01159a80,    type: .bss,       name: Multi_thr/sys/init_mt_sys                        }
       - { vram:  0x0116d280,    type: .bss,       name: Multi_thr/boot/bootopt                           }
       - { vram:  0x0116d380,    type: bss,        name: Multi_thr/boot/bootoptitem                       }
       - { vram:  0x0116d788,    type: .bss,       name: Event/title                                      }
