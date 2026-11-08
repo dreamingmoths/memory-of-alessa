@@ -135,7 +135,7 @@ def parse_mw_mapfile(
             if symtab_symbol and not symtab_symbol.duplicate_by_addr and not is_anonymous_symbol and not "@" in symtab_symbol.name:
                 transformed_source = transform_source_symbol_name(symtab_symbol.name, symbol_name)
                 transformed_target = transform_target_symbol_name(symbol_name)
-                if transformed_source not in transformed_target:
+                if transformed_source not in transformed_target and transformed_target not in transformed_source:
                     reason += [f"{symbol_name} was placed at vram address 0x{address:X}, but symtab has {transformed_source} ({object_file})"]
                     trace_index = index
 
