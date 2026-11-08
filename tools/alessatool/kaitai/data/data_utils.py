@@ -422,17 +422,17 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
         else:
             raise NotImplementedError("n > 2")
 
-def migrate_asm_file(project: str, path: str | Path):
+def migrate_asm_file(project: str, path: str | Path, stream: TextIO):
     with open(path) as asm_file:
         asm_contents = asm_file.read()
-    
+
     data_labels = map(lambda m : m.group(1).replace('"', ""), finditer("^dlabel (.*+)", asm_contents, flags=MULTILINE))
     store = DataMigrationStore()
 
     for label in data_labels:
         if label.startswith("D_"): continue
         try:
-            run_data_migration(DataMigrationRequest(project, label, stdout, store))
+            run_data_migration(DataMigrationRequest(project, label, stream, store))
         except Exception as e:
             stderr.write(e)
 

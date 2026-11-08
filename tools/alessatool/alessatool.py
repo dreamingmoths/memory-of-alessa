@@ -339,10 +339,16 @@ def main():
         default="silent-hill-3",
         help="name of the project to debug (e.g., `silent-hill-2`)"
     )
-    migrate_parser.add_argument(
+    migrate_group = migrate_parser.add_mutually_exclusive_group(required=True)
+    migrate_group.add_argument(
         "--name",
         type=str,
         help="name of the symbol to migrate (must be in `PROJECT_DATA_CONFIG`)"
+    )
+    migrate_group.add_argument(
+        "--asm-path",
+        type=Path,
+        help="path to the asm file to migrate (experimental)"
     )
     migrate_parser.add_argument(
         "--output-path",
