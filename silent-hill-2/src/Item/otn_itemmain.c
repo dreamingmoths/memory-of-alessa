@@ -8,6 +8,8 @@
 
 #include "Event/item.h"
 #include "Event/event.h"
+#include "Event/event_sub.h"
+#include "Event/picture.h"
 
 #include "Item/otn_option.h"
 #include "Item/item_tgs_tmp.h"
@@ -77,10 +79,12 @@ static struct /* @anon8 */ {
 } t; // size: 0x2A0, address: 0x116E3D0
 
 extern u_short msg_buffer[32768]; // size: 0x10000, address: 0x11B7040
+extern int lcolor;
 
 
 #define ITEM_SELECT_COUNT 75
-extern struct /* @anon1 */ {
+
+struct /* @anon1 */ {
     // total size: 0x14
     unsigned char kind; // offset 0x0, size 0x1
     unsigned char count; // offset 0x1, size 0x1
@@ -89,6 +93,7 @@ extern struct /* @anon1 */ {
     float rot; // offset 0xC, size 0x4
     float item_scale; // offset 0x10, size 0x4
 } item_select[ITEM_SELECT_COUNT]; // size: 0x5DC, address: 0x116DDF0
+int examine_rgb;
 
 /* @todo find a place for these */
 extern fsFileIndex data_pic_etc_p_laura_letter_tex[1];
@@ -920,11 +925,91 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", event_item_use);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", combine_item_use);
 
+/* static */ PicDraw_Data i_pic_2116;
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine_main);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine_file_load);
 
+#ifdef HOLY_CANDLE
+#line 1836
+void examine2_main(void) {
+    static PicDraw_Data i_pic; // @ 0x0116DD50
+    static int i; // @ 0x0116DD48
+
+    switch (t.examine_step) {
+        case 0:
+
+            if (fsSync(1, -1) >= 0)
+                t.examine_step++;
+            if (t.item_kind == SH2_ITEM_29   || 
+                t.item_kind == SH2_ITEM_25   || 
+                t.item_kind == SH2_ITEM_38   || 
+                t.item_kind == COIN_OF_SNAKE || 
+                t.item_kind == SH2_ITEM_48   || 
+                t.item_kind == SH2_ITEM_49)
+                t.use_item = 7;
+            if (t.item_kind == SH2_ITEM_25 && !GET_GAME_FLAG(GAME_FLAG_77))
+                
+                t.use_item = 0;
+            
+            if (t.item_kind == APART_GATE_KEY)
+                SET_GAME_FLAG(GAME_FLAG_1270);
+            break;
+
+        case 1:
+        case 2:
+            PictureLoadImage(layer_adr, 6, -1, -1);
+            
+            shQzero(&i_pic, sizeof(PicDraw_Data));
+            
+            picture_set_ap(&i_pic, layer_adr);
+            picture_set_alpha(&i_pic, 128);
+            
+            i_pic.x0 = (int) (t.box[0][0]) * 16; i_pic.y0 = (int) (t.box[0][1]) * 16; i_pic.x1 = (int) (t.box[2][0]) * 16; i_pic.y1 = (int) (t.box[2][1]) * 16; i_pic.status |= 2;
+            i_pic.r = 128; i_pic.g = 128; i_pic.b = 128; i_pic.status |= 16;
+            i_pic.otp = 7;
+            PictureDraw(&i_pic);
+            break;
+    }
+    #define COL(i) ((lcolor * (3 - i)) + 30)
+    for (i = 0; i < 4; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+        (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+        spkCloseOpenDGiftag(
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 7),
+            GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
+        );
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(i), COL(i), COL(i), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] - i), zs(t.box[0][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[1][0] - i), zs(t.box[1][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[2][0] + i), zs(t.box[2][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[3][0] + i), zs(t.box[3][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] - i), zs(t.box[0][1] - i), zs(-10), 255);
+        spkCloseGiftag();
+
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+        (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1);
+        (*spack.pos++) = SCE_GS_TEST_1;
+        spkCloseOpenDGiftag(
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 7),
+            GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
+        );
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(i), COL(i), COL(i), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] + i), zs(t.box[0][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[1][0] + i), zs(t.box[1][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[2][0] - i), zs(t.box[2][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[3][0] - i), zs(t.box[3][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] + i), zs(t.box[0][1] + i), zs(-10), 255);
+        spkCloseGiftag();
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine2_main);
+/* static */ PicDraw_Data i_pic_2178; // @ 0x0116DD50
+/* static */ int i_2179; // @ 0x0116DD48
+#endif
 
 void font_print(void) {
     int i;   // r2

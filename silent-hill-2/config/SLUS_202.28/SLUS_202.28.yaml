@@ -1227,7 +1227,7 @@ segments:
       - { vram:  0x0116dc70,    type: bss,        name: Fog/spkTexMan                                    }
       - { vram:  0x0116dcc0,    type: bss,        name: Font/fj_man                                      }
       - { vram:  0x0116dd40,    type: bss,        name: DBG/dbflag                                       }
-      - { vram:  0x0116e3d0,    type: .bss,       name: Item/otn_itemmain                                }
+      - { vram:  0x0116dd48,    type: .bss,       name: Item/otn_itemmain                                }
       - { vram:  0x0116e670,    type: bss,        name: Enemy/en_fly                                     }
       - { vram:  0x0116e940,    type: bss,        name: wrap_printf_bss                                  }
       - { vram:  0x0116E980,    type: bss,        name: crt0                                             } # GCC data

@@ -15,6 +15,8 @@ static inline void dword_struct_copy(u_int* dst, u_int* src, u_int size) {
     } while (i > 0);
 }
 
+int zs(int hoge /* r2 */);
+
 extern void look_board(void);
 
 #endif // OTN_OPTION_H
