@@ -598,7 +598,104 @@ void config_main(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", position_main);
+#line 899
+void position_main(void) {
+    int i, j, rgb, fade;    // r16
+    if (t.fade_flag == 0) fade_in();
+    if ((shPadTrigger(0, key_config.cancel)) && (t.fade == 0)) t.fade_flag = 1;
+    if (t.fade_flag == 1) t.option_step = fade_out(2);
+    
+    if (t.fade == 0) {
+    
+        
+        #line 909
+        if ((shPadRepeat(0, PAD_KEY_DPAD_DOWN)) || ((shPadPress(0, PAD_KEY_7) > 192) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0))))) playing.screen_position_y += 3;
+        if ((shPadRepeat(0, PAD_KEY_DPAD_UP)) || ((shPadPress(0, PAD_KEY_7) < 64) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0))))) playing.screen_position_y -= 3;
+        if (playing.screen_position_x < -22) playing.screen_position_x = -22;
+        if (playing.screen_position_x > 22) playing.screen_position_x = 22;
+        if (playing.screen_position_y < -24) playing.screen_position_y = -24;
+        if (playing.screen_position_y > 24) playing.screen_position_y = 24;
+        
+        
+        shGs_SetDefaultDispArea();
+        shGs_TrimDispArea(playing.screen_position_x / 4, playing.screen_position_y / 3);
+    }
+    
+    if (((int) (t.timer) % 40) < 20) do { fade = 0; } while (0); // @hack?
+    
+    if ((t.hoge == 0) || (t.hoge == 255)) {
+        if (t.fade_flag == 0)
+            if (shPadTrigger(0, key_config.enter) && t.fade == 0) t.hoge += 32;
+    } else
+        t.hoge += 32;
+    if (t.hoge == 256) t.hoge = 255;
+    if (t.hoge == 511) t.hoge = 0;
+    if (t.hoge < 256) rgb = t.hoge;
+    else rgb = 511 - t.hoge;
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65528, 0);
+            spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(rgb, rgb, rgb, 128, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 256), zs(j * 64 - 256), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 192), zs(j * 64 - 192), zs(0), 255);
+            spkCloseGiftag();
+        }
+    }
+
+    for (i = 0; i < 23; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65532, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        if ((i % 10) == 1)
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(255, 64, 64, 128, 0);
+        else
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(255 - rgb, 255 - rgb, 255 - rgb, 128, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 24 - 265), zs(-270), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 24 - 263), zs(270), zs(0), 255);
+        spkCloseGiftag();
+    }
+
+    for (i = 0; i < 17; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65532, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        if ((i % 6) == 2)
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(255, 64, 64, 128, 0);
+        else
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(255 - rgb, 255 - rgb, 255 - rgb, 128, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(-270), zs(i * 32 - 257), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(270), zs(i * 32 - 255), zs(0), 255);
+        spkCloseGiftag();
+    }
+
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(255, 255, 255, 128, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-122), zs(48), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(122), zs(112), zs(0), 255);
+    spkCloseGiftag();
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-120), zs(50), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(120), zs(110), zs(0), 255);
+    spkCloseGiftag();
+
+    allow_u(0, -165);
+    allow_d(0, 165);
+    allow_l(-230, 0);
+    allow_r(230, 0);
+}
 
 #line 1002
 void look_bgm(void) {
@@ -914,13 +1011,117 @@ void look_cur(void) {
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_cur);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", allow_u);
+#line 1326
+void allow_u(int x, int y) {
+    int rgb;
+    if (((int) t.timer % 40) < 20) rgb = ((int) t.timer % 40) * 3;
+    else rgb = 120 - (((int) t.timer % 40) * 3);
+    if (shPadPress(0, PAD_KEY_DPAD_UP) || shPadPress(0, PAD_KEY_7) < 64) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 100, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y - 2), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 22), zs(y + 13), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 22), zs(y + 13), zs(0), 255);
+        spkCloseGiftag();
+        return;
+    }
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 50, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 17), zs(y + 13), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 17), zs(y + 13), zs(0), 255);
+    spkCloseGiftag();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", allow_d);
+#line 1354
+void allow_d(int x, int y) {
+    int rgb;
+    if (((int) t.timer % 40) < 20) rgb = ((int) t.timer % 40) * 3;
+    else rgb = 120 - (((int) t.timer % 40) * 3);
+    if (shPadPress(0, PAD_KEY_DPAD_DOWN) || shPadPress(0, PAD_KEY_7) > 192) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 100, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y + 2), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 22), zs(y - 13), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 22), zs(y - 13), zs(0), 255);
+        spkCloseGiftag();
+        return;
+    }
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 50, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 17), zs(y - 13), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 17), zs(y - 13), zs(0), 255);
+    spkCloseGiftag();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", allow_l);
+#line 1382
+void allow_l(int x, int y) {
+    int rgb;
+    if (((int) t.timer % 40) < 20) rgb = ((int) t.timer % 40) * 3;
+    else rgb = 120 - (((int) t.timer % 40) * 3);
+    if (shPadPress(0, PAD_KEY_DPAD_LEFT) || shPadPress(0, PAD_KEY_6) < 64) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 100, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 2), zs(y), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 12), zs(y - 23), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 12), zs(y + 23), zs(0), 255);
+        spkCloseGiftag();
+        return;
+    }
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 50, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 12), zs(y - 18), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 12), zs(y + 18), zs(0), 255);
+    spkCloseGiftag();
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", allow_r);
+#line 1410
+void allow_r(int x, int y) {
+    int rgb;
+    if (((int) t.timer % 40) < 20) rgb = ((int) t.timer % 40) * 3;
+    else rgb = 120 - (((int) t.timer % 40) * 3);
+    if (shPadPress(0, PAD_KEY_DPAD_RIGHT) || shPadPress(0, PAD_KEY_6) > 192) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 100, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x + 2), zs(y), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 12), zs(y - 23), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 12), zs(y + 23), zs(0), 255);
+        spkCloseGiftag();
+        return;
+    }
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRI, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 160, 255, rgb + 50, 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x), zs(y), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 12), zs(y - 18), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(x - 12), zs(y + 18), zs(0), 255);
+    spkCloseGiftag();
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", KeyConfigPictureLoad);
 

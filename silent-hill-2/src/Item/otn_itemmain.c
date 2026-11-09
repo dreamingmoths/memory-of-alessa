@@ -1540,7 +1540,7 @@ void examine2_main(void) {
         spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
         (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
         spkCloseOpenDGiftag(
-            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 7),
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 7),
             GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
         );
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -1556,7 +1556,7 @@ void examine2_main(void) {
         (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1);
         (*spack.pos++) = SCE_GS_TEST_1;
         spkCloseOpenDGiftag(
-            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 7),
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 7),
             GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
         );
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -2036,7 +2036,7 @@ void lookline(sceVu0FMATRIX box) {
         spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
         spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
         
-        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
         (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
         (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] - 6.0f), zs(box[1][1] - (box[1][1] - box[0][1]) / 2.0f), zs(0), 1);
@@ -2047,7 +2047,7 @@ void lookline(sceVu0FMATRIX box) {
         spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
         spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
         
-        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
         (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
         (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] + (box[3][0] - box[0][0]) / 2.0f), zs(box[1][1] + 5.0f), zs(0), 1);
