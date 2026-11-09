@@ -152,7 +152,7 @@ u_int HH_Class_Prefix_Boat_Mask(void) {
     ((u_long128*)pPk->pCurrent)++;
     
     
-    tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(20, 0);
+    tex0 = HH_Effect_Object_Texture_GS_Register_Tex0_Get(HH_WATER_CLASS_BOATMASK_TEX_ID, 0);
     
     sceVif1PkAddGsAD(pPk, SCE_GS_TEX0_1, tex0 & ~SCE_GS_SET_TEX0(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
     

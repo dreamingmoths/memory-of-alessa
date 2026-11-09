@@ -532,7 +532,7 @@ segments:
       - { start: 0x001816f0,    type: c,          name: Effect2/hh_class_flame_00                        }
       - { start: 0x00182150,    type: c,          name: Effect2/hh_class_flame_01                        }
       - { start: 0x00182bf0,    type: asm,        name: Effect2/hh_class_smoke_00                        }
-      - { start: 0x001835c0,    type: asm,        name: Effect2/hh_class_water_pool_00                   }
+      - { start: 0x001835c0,    type: c,          name: Effect2/hh_class_water_pool_00                   }
       - { start: 0x00183e40,    type: c,          name: Chacter/m3_play_event                            }
       - { start: 0x00184830,    type: c,          name: Chacter/m3_play_efect                            }
       - { start: 0x001869a0,    type: c,          name: LoadBg/loadbg_1x1                                }
@@ -809,7 +809,7 @@ segments:
       - { start: 0x00277110,    type: data,       name: Effect2/hh_class_flame_00                        }
       - { start: 0x00278550,    type: data,       name: Effect2/hh_class_flame_01                        }
       - { start: 0x00279990,    type: data,       name: Effect2/hh_class_smoke_00                        }
-      - { start: 0x0027a060,    type: data,       name: Effect2/hh_class_water_pool_00                   }
+      - { start: 0x0027a060,    type: .data,      name: Effect2/hh_class_water_pool_00                   }
       - { start: 0x0027a5a0,    type: .data,      name: Chacter/m3_play_event                            }
       - { start: 0x0027a630,    type: .data,      name: Chacter/m3_play_efect                            }
       - { start: 0x0027a6f0,    type: data,       name: Effect2/hh_class_flame_02                        }
@@ -1308,7 +1308,7 @@ segments:
       - { vram:  0x01202f50,    type: .bss,       name: Effect2/hh_class_water_08                        }
       - { vram:  0x01202f70,    type: .bss,       name: Effect2/hh_class_water_09                        }
       - { vram:  0x01202f90,    type: bss,        name: Enemy/en_insect                                  }
-      - { vram:  0x01202fa0,    type: bss,        name: Effect2/hh_class_water_pool_00                   }
+      - { vram:  0x01202fa0,    type: .bss,       name: Effect2/hh_class_water_pool_00                   }
       - { vram:  0x01202fa8,    type: .bss,       name: Chacter/m3_play_event                            }
       - { vram:  0x01202fb0,    type: bss,        name: movie/movie_main                                 }
       - { vram:  0x01216b00,    type: bss,        name: movie/pss_audiodec                               }
