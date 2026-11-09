@@ -80,16 +80,16 @@ u_int HH_Class_Raise_Dust_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElem
             
                 
                 {
-                    sceVu0FVECTOR vec = {0.0f, 0.0f, 0.0f, 1.0f};
-                    
+                    sceVu0FVECTOR vec = { 0.0f, 0.0f, 0.0f, 1.0f };
+                    src_location  = pElement->Option.Vector[0];
                     vec[2] = radius_rand;
                     sceVu0UnitMatrix(lwm);
                     sceVu0RotMatrixY(lwm, lwm, radian);
-                    sceVu0TransMatrix(lwm, lwm, pElement->Option.Vector[0]);
+                    sceVu0TransMatrix(lwm, lwm, src_location);
                     sceVu0ApplyMatrix(descriptor.Option.Vector[0], lwm, vec);
                 }                
                 {
-                    sceVu0FVECTOR vec = {0.0f, 0.0f, 0.0f, 1.0f};
+                    sceVu0FVECTOR vec = { 0.0f, 0.0f, 0.0f, 1.0f };
                     
                     vec[2] = p_volume;
                     alpha = shReflexAngle(alpha); // @bug this isn't necessary as it was already done above.
