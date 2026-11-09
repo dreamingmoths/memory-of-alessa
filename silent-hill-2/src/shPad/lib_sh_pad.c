@@ -44,14 +44,21 @@ typedef struct shPadData {
     u_char reserved[18];
 } shPadData;
 
+
+static int libShPadSlotTrans(int port, int slot);
+
+static u_short libShPadSlotTransSub(int port, int slot, u_short step);
+
+static int libShPadPortTrans(int port);
+
 u_long128* libShPadDmaBuffer[2][4] = {};
 u_short libShPadStep[2][4]         = {};
 shPadData* libShPadData[2][4]      = {};
 
 // INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadEnable00);
 void libShPadEnable00(void) {
-    static u_long128 buffer[16];
     static shPadData data;
+    static u_long128 buffer[16];
 
     libShPadDmaBuffer[0][0] = &buffer;
     libShPadData[0][0]      = &data;
@@ -59,8 +66,8 @@ void libShPadEnable00(void) {
 
 // INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadEnable10);
 void libShPadEnable10(void) {
-    static u_long128 buffer[16];
     static shPadData data;
+    static u_long128 buffer[16];
 
     libShPadDmaBuffer[1][0] = &buffer;
     libShPadData[1][0]      = &data;
@@ -414,19 +421,17 @@ s_char libShPadRead(int port, int slot, u_char* data) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadSend);
-#ifdef NON_MATCHING
 int libShPadSend(int port, int slot, u_short pow0, u_short pow1) {
     int ret;
     shPadData* paddata;
     u_char old_act0;
     u_char old_act1;
-    u_char temp_a1;
     u_char temp_v1;
+    int temp;
 
     ret = 0;
-    if (libShPadData[port][slot] != NULL) {
-        paddata = libShPadData[port][slot];
+    paddata = libShPadData[port][slot];
+    if (paddata != NULL) {
 
         old_act0 = paddata->actuator[0];
         old_act1 = paddata->actuator[1];
@@ -443,7 +448,8 @@ int libShPadSend(int port, int slot, u_short pow0, u_short pow1) {
 
         temp_v1 = (pow1 >> 8);
 
-        pow1 = (pow1 &= (u_char)~temp_v1) | (old_act1 & temp_v1);
+        pow1 = (pow1 &= (u_char)~temp_v1);
+        pow1 |= ((u_char)old_act1 & (u_int)temp_v1);
 
         if (old_act1 != pow1) {
             paddata->actuator[1] = pow1;
@@ -453,5 +459,3 @@ int libShPadSend(int port, int slot, u_short pow0, u_short pow1) {
     }
     return ret;
 }
-#endif
-// INCLUDE_RODATA("asm/nonmatchings/shPad/lib_sh_pad", @268_0x0038FD90);
