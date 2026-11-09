@@ -7,6 +7,7 @@
 #include "Effect2/hh_effect_object_texture.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_class_water_pool_00.h"
+#include "Effect2/hh_effect_object_def.h"
 
 static sceVu0FMATRIX _square_00_vertex = {
     { 1.0f, 0.0f, 1.0f, 1.0f },
@@ -15,49 +16,49 @@ static sceVu0FMATRIX _square_00_vertex = {
     { -1.0f, 0.0f, -1.0f, 1.0f },
 };
 
-sceVu0FMATRIX _square_00_stq_0x003799A0 = {
+sceVu0FMATRIX _square_00_stq = {
     {0.0f, 0.0f, 1.0f, 0.0f},
     {0.0f, 0.24804687f, 1.0f, 0.0f},
     {0.24804687f, 0.0f, 1.0f, 0.0f},
     {0.24804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_01_stq_0x003799E0 = {
+sceVu0FMATRIX _square_01_stq = {
     {0.25f, 0.0f, 1.0f, 0.0f},
     {0.25f, 0.24804687f, 1.0f, 0.0f},
     {0.49804687f, 0.0f, 1.0f, 0.0f},
     {0.49804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_02_stq_0x00379A20 = {
+sceVu0FMATRIX _square_02_stq = {
     {0.5f, 0.0f, 1.0f, 0.0f},
     {0.5f, 0.24804687f, 1.0f, 0.0f},
     {0.74804687f, 0.0f, 1.0f, 0.0f},
     {0.74804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_03_stq_0x00379A60 = {
+sceVu0FMATRIX _square_03_stq = {
     {0.75f, 0.0f, 1.0f, 0.0f},
     {0.75f, 0.24804687f, 1.0f, 0.0f},
     {0.99804687f, 0.0f, 1.0f, 0.0f},
     {0.99804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_10_stq_0x00379AA0 = {
+sceVu0FMATRIX _square_10_stq = {
     {0.0f, 0.25f, 1.0f, 0.0f},
     {0.0f, 0.49804687f, 1.0f, 0.0f},
     {0.24804687f, 0.25f, 1.0f, 0.0f},
     {0.24804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_11_stq_0x00379AE0 = {
+sceVu0FMATRIX _square_11_stq = {
     {0.25f, 0.25f, 1.0f, 0.0f},
     {0.25f, 0.49804687f, 1.0f, 0.0f},
     {0.49804687f, 0.25f, 1.0f, 0.0f},
     {0.49804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_12_stq_0x00379B20 = {
+sceVu0FMATRIX _square_12_stq = {
     {0.5f, 0.25f, 1.0f, 0.0f},
     {0.5f, 0.49804687f, 1.0f, 0.0f},
     {0.74804687f, 0.25f, 1.0f, 0.0f},
     {0.74804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_13_stq_0x00379B60 = {
+sceVu0FMATRIX _square_13_stq = {
     {0.75f, 0.25f, 1.0f, 0.0f},
     {0.75f, 0.49804687f, 1.0f, 0.0f},
     {0.99804687f, 0.25f, 1.0f, 0.0f},
@@ -113,7 +114,10 @@ sceVu0FMATRIX _square_33_stq = {
 };
 
 static sceVu0FMATRIX* _square_stq_list[16] = {
-    _square_00_stq_0x003799A0, _square_01_stq_0x003799E0, _square_02_stq_0x00379A20, _square_03_stq_0x00379A60, _square_10_stq_0x00379AA0, _square_11_stq_0x00379AE0, _square_12_stq_0x00379B20, _square_13_stq_0x00379B60, _square_20_stq, _square_21_stq, _square_22_stq, _square_23_stq, _square_30_stq, _square_31_stq, _square_32_stq, _square_33_stq 
+    _square_00_stq, _square_01_stq, _square_02_stq, _square_03_stq, 
+    _square_10_stq, _square_11_stq, _square_12_stq, _square_13_stq, 
+    _square_20_stq, _square_21_stq, _square_22_stq, _square_23_stq,
+    _square_30_stq, _square_31_stq, _square_32_stq, _square_33_stq 
 };
 
 static sceVu0FVECTOR _rgba_start_list[1] = {
@@ -144,8 +148,7 @@ static Motion_Table_Infomeation _motion_info[4] = {
     { 1.2f, 0.5f, 0.2f },
 };
 
-
-static inline idk(HH_Object_Water_Pool_00* pThis, sceVu0FMATRIX lwm) {
+static inline shColumnScaleXyz(HH_Object_Water_Pool_00* pThis, sceVu0FMATRIX lwm) {
     sceVu0FMATRIX ones; int i;
     sceVu0UnitMatrix(ones);
     
@@ -158,7 +161,7 @@ static inline idk(HH_Object_Water_Pool_00* pThis, sceVu0FMATRIX lwm) {
 
 #line 314
 static u_int Object_Initialize(HH_Object_Water_Pool_00* pThis) {
-    u_int result = 1;
+    u_int result = true;
     float radian;
 
     
@@ -188,7 +191,7 @@ static u_int Object_Initialize(HH_Object_Water_Pool_00* pThis) {
 
 #line 354
 static u_int Object_Motion_00(HH_Object_Water_Pool_00* pThis) {
-    u_int result = 0;
+    u_int result = false;
     
     float* pRgba_s = _rgba_start_list[pThis->Rgba_Kind];
     float* pRgba_e = _rgba_end_list[pThis->Rgba_Kind];
@@ -267,7 +270,7 @@ static u_int Object_Motion_00(HH_Object_Water_Pool_00* pThis) {
 
 #line 443
 static u_int Object_Draw(HH_Object_Water_Pool_00* pThis, ImpactQueue_Element* pElement) {
-    u_int result = 0;
+    u_int result = false;
     sceVif1Packet *pPk = HH_Vif1Packet_Current_Get();
     sceVu0FVECTOR* pVertex = _square_00_vertex;
     sceVu0FVECTOR* pStq = _square_stq_list[pThis->Texture_Kind];
@@ -296,7 +299,7 @@ static u_int Object_Draw(HH_Object_Water_Pool_00* pThis, ImpactQueue_Element* pE
     HH_ClassWrapper_WorldScreenMatrix_Get(lsm);
     
     sceVu0UnitMatrix(lwm);
-    idk(pThis, lwm);
+    shColumnScaleXyz(pThis, lwm);
     sceVu0RotMatrixY(lwm, lwm, pThis->Rotate_Y);
     
     sceVu0TransMatrix(lwm, lwm, pElement->Option.Vector[0]);
@@ -339,7 +342,7 @@ static u_int Object_Draw(HH_Object_Water_Pool_00* pThis, ImpactQueue_Element* pE
 
 #line 543
 u_int HH_Class_Prefix_Water_Pool_00(void) {
-    unsigned int result = 1;
+    unsigned int result = true;
     sceVif1Packet *pPk = HH_Vif1Packet_Current_Get();
     u_long tex0;
 
@@ -358,24 +361,24 @@ u_int HH_Class_Prefix_Water_Pool_00(void) {
 
 #line 573
 u_int HH_Class_Suffix_Water_Pool_00(void) {
-    u_int result = 1;
+    u_int result = true;
     return result;
 }
 
 #line 589
 u_int HH_Class_Water_Pool_00(void* pBlock, ImpactQueue_Element* pElement) {
     #line 596
-    u_int result = 1;
+    u_int result = true;
     HH_Object_Water_Pool_00* pThis = pBlock;
 
     switch (pThis->Step) {
-        case 0:
+        case HH_EFFECT_STEP_INIT:
             
             Object_Initialize(pThis);
        
-            pThis->Step = 1;
+            pThis->Step = HH_EFFECT_STEP_DRAW;
             break;
-        case 1:
+        case HH_EFFECT_STEP_DRAW:
             
             Object_Motion_00(pThis);
             
@@ -392,9 +395,9 @@ u_int HH_Class_Water_Pool_00(void* pBlock, ImpactQueue_Element* pElement) {
             pThis->Timer += TIME_STEP_30FPS;
             break;
         default:
-        case 2:
-            pThis->Header.Enable = 0;
-            result = 0;
+        case HH_EFFECT_STEP_OFF:
+            pThis->Header.Enable = false;
+            result = false;
             break;
     }
     return result;
