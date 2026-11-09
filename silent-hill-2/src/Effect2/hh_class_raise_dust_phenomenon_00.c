@@ -46,7 +46,7 @@ u_int HH_Class_Raise_Dust_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElem
     u_int result;
     HH_Object_Raise_Dust_Phenomenon_00* pThis;
     u_int i;
-    float* src_direction, src_location;
+    float* src_direction, *src_location;
     float p_volume;
     
     result = true;
