@@ -81,7 +81,7 @@ u_int HH_Class_Raise_Dust_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElem
                 
                 {
                     sceVu0FVECTOR vec = { 0.0f, 0.0f, 0.0f, 1.0f };
-                    src_location  = pElement->Option.Vector[0];
+                    src_location = pElement->Option.Vector[0];
                     vec[2] = radius_rand;
                     sceVu0UnitMatrix(lwm);
                     sceVu0RotMatrixY(lwm, lwm, radian);
