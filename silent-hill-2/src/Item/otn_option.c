@@ -31,6 +31,10 @@ static struct /* @anon2 */ {
 
 extern u_short msg_buffer[32768]; // size: 0x10000, address: 0x11B7040
 
+extern char key_cur; // size: 0x1, address: 0x11B6A60
+extern char key_cur2; // size: 0x1, address: 0x11B6A58
+extern u_char key_rem[20]; // size: 0x14, address: 0x11B6A40
+
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", option_main);
 
 void option_mainmain(void) {
@@ -341,13 +345,258 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_option", key_conf_check);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", key_color);
 
-INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1735);
+void config_main(void) {
+    int i;         // r29+36
+    int j;         // r16
+    int k;         // r29+40
+    s_char buf[2]; // r29+44
 
-INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1736);
+    if (t.fade_flag == 0)
+        fade_in();
 
-INCLUDE_RODATA("asm/nonmatchings/Item/otn_option", @1737);
+    if (((shPadTrigger(0, key_config.enter)) || (shPadTrigger(0, key_config.cancel))) && (t.fade == 0) && (key_cur == 0) && (key_cur2 == 0))
+        t.fade_flag = 1;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", config_main);
+    if (t.fade_flag == 1) {
+        key_config        = t.key_config_set;
+        key_config.attack = key_config.action;
+        shPadSetGameKeyAssign();
+        t.option_step = fade_out(2);
+    }
+
+    KeyConfigPitureStart();
+    key_color(0);
+    if ((key_cur2 == 0) && (key_cur == 0))
+        fontSetColorDirect(128, 128, 128, 255);
+    else
+        fontSetColorDirect(32, 32, 32, 255);
+
+    fontPrintStrNum(msg_buffer, 8U, 30, 60);
+    if ((key_cur2 == 1) && (key_cur == 0))
+        fontSetColorDirect(128, 128, 128, 255);
+    else
+        fontSetColorDirect(32, 32, 32, 255);
+
+    sprintf(buf, "1");
+    fontSetMes(0, dicSetStr(buf));
+    fontPrintStrNum(msg_buffer, 9, 140, 60);
+    if ((key_cur2 == 2) && (key_cur == 0))
+        fontSetColorDirect(128, 128, 128, 255);
+    else
+        fontSetColorDirect(32, 32, 32, 255);
+
+    sprintf(buf, "2");
+    fontSetMes(0, dicSetStr(buf));
+    fontPrintStrNum(msg_buffer, 9, 230, 60);
+    if ((key_cur2 == 3) && (key_cur == 0))
+        fontSetColorDirect(128, 128, 128, 255);
+    else
+        fontSetColorDirect(32, 32, 32, 255);
+
+    sprintf(buf, "3");
+    fontSetMes(0, dicSetStr(buf));
+    fontPrintStrNum(msg_buffer, 9, 320, 60);
+    if ((key_cur2 == 4) && (key_cur == 0))
+        fontSetColorDirect(128, 128, 128, 255);
+    else
+        fontSetColorDirect(32, 32, 32, 255);
+
+    fontPrintStrNum(msg_buffer, 24, 410, 60);
+    key_color(1);
+    fontPrintStrNum(msg_buffer, 10, 56, 102);
+    key_color(2);
+    fontPrintStrNum(msg_buffer, 11, 40, 129);
+    key_color(3);
+    fontPrintStrNum(msg_buffer, 12, 77, 156);
+    key_color(4);
+    fontPrintStrNum(msg_buffer, 19, 53, 183);
+    key_color(5);
+    fontPrintStrNum(msg_buffer, 18, 53, 210);
+    key_color(6);
+    fontPrintStrNum(msg_buffer, 13, 40, 237);
+    key_color(7);
+    fontPrintStrNum(msg_buffer, 16, 77, 264);
+    key_color(8);
+    fontPrintStrNum(msg_buffer, 15, 56, 291);
+    key_color(9);
+    fontPrintStrNum(msg_buffer, 21, 68, 318);
+    key_color(10);
+    fontPrintStrNum(msg_buffer, 17, 66, 345);
+    key_color(11);
+    fontPrintStrNum(msg_buffer, 14, 78, 372);
+    key_color(12);
+    fontPrintStrNum(msg_buffer, 22, 73, 399);
+    key_color(13);
+    fontPrintStrNum(msg_buffer, 20, 53, 426);
+
+    for (i = 0; i < 14; i++) {
+        k = 140;
+        for (j = 0; j < 20; j++) {
+            if (i == 1 && t.key_config_set.enter & (1 << j))
+                print_config(j, &k, i);
+            if (i == 2 && t.key_config_set.cancel & (1 << j))
+                print_config(j, &k, i);
+            if (i == 3 && t.key_config_set.skip & (1 << j))
+                print_config(j, &k, i);
+            if (i == 4 && t.key_config_set.right_move & (1 << j))
+                print_config(j, &k, i);
+            if (i == 5 && t.key_config_set.left_move & (1 << j))
+                print_config(j, &k, i);
+            if (i == 6 && t.key_config_set.action & (1 << j))
+                print_config(j, &k, i);
+            if (i == 7 && t.key_config_set.dash & (1 << j))
+                print_config(j, &k, i);
+            if (i == 8 && t.key_config_set.light & (1 << j))
+                print_config(j, &k, i);
+            if (i == 9 && t.key_config_set.item & (1 << j))
+                print_config(j, &k, i);
+            if (i == 10 && t.key_config_set.search_view & (1 << j))
+                print_config(j, &k, i);
+            if (i == 11 && t.key_config_set.ready & (1 << j))
+                print_config(j, &k, i);
+            if (i == 12 && t.key_config_set.map & (1 << j))
+                print_config(j, &k, i);
+            if (i == 13 && t.key_config_set.pause & (1 << j))
+                print_config(j, &k, i);
+            key_rem[j] = i;
+        }
+    }
+
+    if ((key_cur == 0) && (key_cur2 == 1) && (shPadTrigger(0, key_config.enter)))
+        key_type1();
+
+    if ((key_cur == 0) && (key_cur2 == 2) && (shPadTrigger(0, key_config.enter)))
+        key_type2();
+
+    if ((key_cur == 0) && (key_cur2 == 3) && (shPadTrigger(0, key_config.enter)))
+        key_type3();
+
+    if ((key_cur == 0) && (key_cur2 == 4) && (shPadTrigger(0, key_config.enter)))
+        t.key_config_set = key_config;
+
+    if ((key_cur == 0) && (shPadTrigger(0, key_config.cancel)))
+        key_cur2 = 0;
+
+    switch (key_cur) {
+        case 1:
+            i = t.key_config_set.enter;
+            if (i ^ key_check())
+                i ^= key_check();
+            key_conf(&i, &t.key_config_set.cancel, 1);
+            if (i)
+                t.key_config_set.enter = i;
+            break;
+
+        case 2:
+            i = t.key_config_set.cancel;
+            if (i ^ key_check())
+                i ^= key_check();
+            key_conf(&i, &t.key_config_set.enter, 1);
+            if (i)
+                t.key_config_set.cancel = i;
+            break;
+
+        case 3:
+            t.key_config_set.skip ^= key_check();
+            break;
+
+        case 4:
+            i = t.key_config_set.right_move;
+            i ^= key_check();
+            key_conf_check(4, &i);
+            t.key_config_set.right_move = i;
+            break;
+
+        case 5:
+            i = t.key_config_set.left_move;
+            i ^= key_check();
+            key_conf_check(5, &i);
+            t.key_config_set.left_move = i;
+            break;
+
+        case 6:
+            i = t.key_config_set.action;
+            if (i ^ key_check())
+                i ^= key_check();
+            key_conf_check(6, &i);
+            if (i)
+                t.key_config_set.action = i;
+            break;
+
+        case 7:
+            i = t.key_config_set.dash;
+            i ^= key_check();
+            key_conf_check(7, &i);
+            t.key_config_set.dash = i;
+            break;
+
+        case 8:
+            i = t.key_config_set.light;
+            i ^= key_check();
+            key_conf_check(8, &i);
+            t.key_config_set.light = i;
+            break;
+
+        case 9:
+            i = t.key_config_set.item;
+            if (i ^ key_check())
+                i ^= key_check();
+            key_conf_check(9, &i);
+            if (i)
+                t.key_config_set.item = i;
+            break;
+
+        case 10:
+            i = t.key_config_set.search_view;
+            i ^= key_check();
+            key_conf_check(10, &i);
+            t.key_config_set.search_view = i;
+            break;
+
+        case 11:
+            i = t.key_config_set.ready;
+            if (i ^ key_check())
+                i ^= key_check();
+            key_conf_check(11, &i);
+            if (i)
+                t.key_config_set.ready = i;
+            break;
+
+        case 12:
+            i = t.key_config_set.map;
+            i ^= key_check();
+            key_conf_check(12, &i);
+            t.key_config_set.map = i;
+            break;
+
+        case 13:
+            i = t.key_config_set.pause;
+            i ^= key_check();
+            key_conf_check(13, &i);
+            t.key_config_set.pause = i;
+            break;
+    }
+
+    if (ScreenEffectFadeCheck()) {
+        if ((shPadRepeat(0, PAD_KEY_DPAD_DOWN)) || ((shPadPress(0, PAD_KEY_7) > 192) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0)))))
+            key_cur++;
+
+        if ((shPadRepeat(0, PAD_KEY_DPAD_UP)) || ((shPadPress(0, PAD_KEY_7) < 64) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0)))))
+            key_cur--;
+
+        if ((shPadRepeat(0, PAD_KEY_DPAD_RIGHT)) || ((shPadPress(0, PAD_KEY_6) > 192) && ((t.ana_x == 0) || ((t.ana_x > 15) && ((t.ana_x % 3) == 0)))))
+            key_cur2++;
+
+        if ((shPadRepeat(0, PAD_KEY_DPAD_LEFT)) || ((shPadPress(0, PAD_KEY_6) < 64) && ((t.ana_x == 0) || ((t.ana_x > 15) && ((t.ana_x % 3) == 0)))))
+            key_cur2--;
+
+        if (key_cur > 13) key_cur = 0;
+        if (key_cur < 0) key_cur = 13;
+        if (key_cur2 > 4) key_cur2 = 0;
+        if (key_cur2 < 0) key_cur2 = 4;
+        if (key_cur) key_cur2 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", position_main);
 
