@@ -1842,7 +1842,23 @@ void look_command(int gosa) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_volume);
+#line 2497
+void look_volume(void) {
+    int i;
+    
+    for (i = 0; i < 16; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -65533, 0);
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        if (i <= item.radio_volume) {
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 176, 0, 32, 0);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 48, 0, 32, 0);
+        }
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 7 + 105), zs(-120), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 7 + 109), zs(-100), zs(0), 255);
+        spkCloseGiftag();
+    }
+}
 
 #line 2523
 void look_hp(void) {
@@ -1938,8 +1954,32 @@ void look_hp(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", stock_line);
+#line 2627
+void stock_line(int leftx, int hoge) {
+    int i;
 
+    for (i = 0; i < 2; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(160, 160, 160, 255, 0);
+        if (hoge == 0) {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(50 - (i * leftx)), zs(50), zs(0), 255);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(76 - (i * leftx)), zs(-80), zs(0), 255);
+        }
+        if (hoge == 0) {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(38 - (i * leftx)), zs(52), zs(0), 255);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(64 - (i * leftx)), zs(-78), zs(0), 255);
+        }
+        spkCloseGiftag();
+    }
+}
+
+
+#ifdef HOLY_CANDLE
 static inline void drawItemImage(int index, int location) {
     // @note scope needed for match
     { short type = t.combine[index]; if (type) TgsItemPitureDraw(type, location, 1072, 128, 100, 0.4f); }
@@ -1978,6 +2018,9 @@ void look_combine(void) {
     }
     return;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_combine);
+#endif
 
 // ざんぞう (zanzō) afterimage
 #line 2691
@@ -2013,7 +2056,7 @@ void look_blackscr(int num) {
             } else {
                 spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT, 0);
             }
-            (*spack.pos++) = 6;
+            (*spack.pos++) = SCE_GS_PRIM_SPRITE;
             (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
             (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 256), zs(j * 64 - 256), zs(-100), 255);
             (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 192), zs(j * 64 - 192), zs(-100), 255);
