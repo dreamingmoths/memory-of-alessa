@@ -4,6 +4,7 @@
 #include "SH2_common/data_load.h"
 
 #include "sce/libgraph.h"
+#include "gs.h"
 
 #include "Fog/spack.h"
 
@@ -350,9 +351,113 @@ INCLUDE_ASM("asm/nonmatchings/Item/otn_option", config_main);
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", position_main);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_bgm);
+#line 1002
+void look_bgm(void) {
+    int i, j, abe;
+    if (t.cursol == 9) abe = true;
+    else abe = false;
+    for (i = 0; i < playing.bgm_volume; i++) {
+        // draw bars up to the background music volume
+        // first two "shining" outer bars, then the inner part
+        for (j = 0; j < 2; j++) {
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65532, 0);
+            spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 8), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+            else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 176, 176, 64, 0);
+            else (*spack.pos++) = SCE_GS_SET_RGBAQ(64, 64, 64, 64, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 24), zs(92), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(94), zs(0), 255);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 15), zs(92), zs(0), 255);
+            else (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 24), zs(115), zs(0), 255);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(94), zs(0), 255);
+            else (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(113), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 15), zs(115), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(113), zs(0), 255);
+            spkCloseGiftag();
+        }
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+        else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(128, 128, 128, 64, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(94), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(94), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(113), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(113), zs(0), 255);
+        spkCloseGiftag();
+    }
+    // drawing the reamining bars without the first loop to show they're off
+    for (i = playing.bgm_volume; i < 15; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+        else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(80, 80, 80, 64, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(94), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(94), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(113), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(113), zs(0), 255);
+        spkCloseGiftag();
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_se);
+#line 1061
+void look_se(void) {
+    int i, j, abe;
+    if (t.cursol == 10) abe = true;
+    else abe = false;
+    for (i = 0; i < playing.se_volume; i++) {
+        // draw bars up to the sound volume
+        // first two "shining" outer bars, then the inner part
+        for (j = 0; j < 2; j++) {
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65532, 0);
+            spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 8), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+            else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_RGBAQ(176, 176, 176, 64, 0);
+            else (*spack.pos++) = SCE_GS_SET_RGBAQ(64, 64, 64, 64, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 24), zs(119), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(121), zs(0), 255);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 15), zs(119), zs(0), 255);
+            else (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 24), zs(142), zs(0), 255);
+            if (j == 0) (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(121), zs(0), 255);
+            else (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(140), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 15), zs(142), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(140), zs(0), 255);
+            spkCloseGiftag();
+        }
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+        else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(128, 128, 128, 64, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(121), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(121), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(140), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(140), zs(0), 255);
+        spkCloseGiftag();
+    }
+    // drawing the reamining bars without the first loop to show they're off
+    for (i = playing.se_volume; i < 15; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65533, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        if (abe) (*spack.pos++) = SCE_GS_PRIM_TRISTRIP;
+        else (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blend */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(80, 80, 80, 64, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(121), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(121), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 17), zs(140), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 11 + 22), zs(140), zs(0), 255);
+        spkCloseGiftag();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", option_near);
 
@@ -512,7 +617,53 @@ void look_board(void) {
     spkCloseGiftag();
 }
 
+#ifdef NON_MATCHING
+#line 1278
+void look_cur(void) {
+    int i;
+    if (t.fade == 0) {
+        if ((shPadRepeat(0, PAD_KEY_DPAD_DOWN) != 0) || ((shPadPress(0, PAD_KEY_7) > 192) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0))))) t.cursol++;
+        if ((shPadRepeat(0, PAD_KEY_DPAD_UP) != 0) || ((shPadPress(0, PAD_KEY_7) < 64) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0))))) t.cursol--;
+    }
+    if (t.extra_mode == 0) {
+        if (t.cursol < 0)  t.cursol = 10;
+        if (t.cursol > 10) t.cursol = 0;
+        if (t.fade == 0) 
+            if ((shPadRepeat(0, PAD_KEY_DPAD_DOWN) != 0) || (shPadRepeat(0, PAD_KEY_DPAD_UP) != 0) || ((shPadPress(0, PAD_KEY_7) > 192) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0)))) || ((shPadPress(0, PAD_KEY_7) < 64) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0))))) 
+                SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+    } else {
+
+        if (t.cursol < 0) t.cursol = 6;
+        if (t.cursol > 6) t.cursol = 0;
+        if (t.fade == 0) 
+            if ((shPadRepeat(0, PAD_KEY_DPAD_DOWN) != 0) || (shPadRepeat(0, PAD_KEY_DPAD_UP) != 0) || ((shPadPress(0, PAD_KEY_7) > 192) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0)))) || ((shPadPress(0, PAD_KEY_7) < 64) && ((t.ana_y == 0) || ((t.ana_y > 15) && ((t.ana_y % 3) == 0)))))
+                SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+    }
+    t.cursol_pos = option_near(2.0f, 1.0f, t.cursol_pos, 27 * t.cursol - 140);
+
+    for (i = 0; i < 15; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65531, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 15 - i, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(-226), zs((int) t.cursol_pos + i), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(226), zs((int) t.cursol_pos + i + 1), zs(0), 255);
+        spkCloseGiftag();
+
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65531, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 15 - i, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(-226), zs((int) t.cursol_pos - i), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(226), zs(((int) t.cursol_pos - i) - 1), zs(0), 255);
+        spkCloseGiftag();
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_cur);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_option", allow_u);
 
@@ -889,6 +1040,26 @@ void option_font(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", look_scr);
+// @info see look_blackscr in otn_itemmain
+#line 1705
+void look_scr(void) {
+    int i;
+    int j;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_option", zs);
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -MAX_INT + 4, 0);
+            spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 256), zs(j * 64 - 256), zs(0), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 192), zs(j * 64 - 192), zs(0), 255);
+            spkCloseGiftag();
+        }
+    }
+}
+
+int zs(int hoge) {
+    return (hoge + 2048) * 16;
+}

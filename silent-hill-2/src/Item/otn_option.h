@@ -19,4 +19,9 @@ int zs(int hoge /* r2 */);
 
 extern void look_board(void);
 
+void look_se(void);
+void look_bgm(void);
+void look_cur(void);
+int option_near(float f0, float f1, float f2, float f3);
+
 #endif // OTN_OPTION_H
