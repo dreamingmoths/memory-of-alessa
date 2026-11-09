@@ -3,6 +3,8 @@
 
 #include "Effect2/hh_class_manager.h"
 
+#define HH_WATER_CLASS_BOATMASK_TEX_ID 20
+
 typedef struct HH_Object_Boat_Mask {
     Object_DataBlock_Header Header; // offset 0x0, size 0x10
     float Timer; // offset 0x10, size 0x4
