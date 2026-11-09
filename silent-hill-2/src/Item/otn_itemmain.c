@@ -1865,7 +1865,7 @@ void look_hp(void) {
     #define COLDIFF()  (t.hp_abe2 * (160.0f * (1.0f - ((2.0f * j_hp) / j_max))))
 
     
-    spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, 0x80000003, 0);
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -MAX_INT + 2, 0);
     
     (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
     spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
@@ -1896,7 +1896,7 @@ void look_hp(void) {
         
         if (z <= 0) {
             if (j + j1 > -90) j1 = -90 - j; // if their sum is larger than -90, ensure it sums to -90
-            spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, 0x80000004, 0);
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -MAX_INT + 3, 0);
             
             (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
             spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
@@ -1912,7 +1912,7 @@ void look_hp(void) {
                 (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL(), COL(), 160, FLOAT_ONE);
             // @weird numbers?
             (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * ((j + 230) / 140.0f), 1040187400.0f + 24117248.0f * ((j0 + 175) / 105.0f));
-            (*spack.pos++) = SCE_GS_SET_RGBAQ(zs(j), 0, zs(j0 - 2), 0, 0xff000000); // @weird wtf is this q value?
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(zs(j), 0, zs(j0 - 2), 0, 0xff000000);
             (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * (((j + j1) + 230) / 140.0f), 1041236000.0f + 24117248.0f * ((j0 + 175) / 105.0f));
             (*spack.pos++) = SCE_GS_SET_XYZF(zs(j + j1), zs(j0), 0, 255);
             spkCloseGiftag();
@@ -1941,14 +1941,14 @@ void look_combine(void) {
 
     for (i = 0; i < 3; i++) {
         // draw each combined item type
-        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), 0x80000003, 0);
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT + 2, 0);
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);;
         (*spack.pos++) = SCE_GS_SET_RGBAQ(16, 48, 16, 80.0f * t.combine_abe, 0);
         (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(45), zs(0), 255);
         (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 140), zs(95), zs(0), 255);
         spkCloseGiftag();
         
-        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2), 0x80000003, 0);
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT + 2, 0);
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
         (*spack.pos++) = SCE_GS_SET_RGBAQ(64, 128, 64, (80.0f * t.combine_abe), 0);
         (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(45), zs(0), 255);
@@ -1961,10 +1961,48 @@ void look_combine(void) {
     return;
 }
 
+// ざんぞう (zanzō) afterimage
+#line 2691
+void look_zanzo(sceVu0FVECTOR za0, sceVu0FVECTOR za1, sceVu0FVECTOR za2, sceVu0FVECTOR za3) {
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_zanzo);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    if (t.step != 12 && t.step != 13)
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, (int) za0[3], 0);
+    else 
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(140, 140, 140, 2 * (int) za0[3], 0);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_blackscr);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za0[0]), zs(za0[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za1[0]), zs(za1[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za2[0]), zs(za2[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za3[0]), zs(za3[1]), zs(0), 255);
+    spkCloseGiftag();
+}
+
+#line 2711
+void look_blackscr(int num) {
+    int i;
+    int j;
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (num == 0) {
+                spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+                spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+                spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            } else {
+                spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT, 0);
+            }
+            (*spack.pos++) = 6;
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 256), zs(j * 64 - 256), zs(-100), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 192), zs(j * 64 - 192), zs(-100), 255);
+            spkCloseGiftag();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_fade_in);
 

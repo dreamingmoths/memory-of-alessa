@@ -12,6 +12,7 @@
 #define TAU 6.2831855f
 #define QUARTER_TURN 1.5707964f
 #define MAX_FLOAT 3.4028235e38f
+#define MAX_INT 2147483647
 #define FLOAT_ONE 0x3F800000
 #define TIME_STEP_30FPS (1.0f / 30.0f)
 #define TIME_STEP_60FPS (1.0f / 60.0f)
