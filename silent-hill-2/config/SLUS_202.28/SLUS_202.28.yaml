@@ -484,7 +484,7 @@ segments:
       - { start: 0x00159ce0,    type: c,          name: Effect2/hh_class_manager                         }
       - { start: 0x0015ad80,    type: c,          name: Effect2/hh_class_object_execute                  }
       - { start: 0x0015b560,    type: c,          name: Effect2/hh_class_plural_phenomenon_00            }
-      - { start: 0x0015b930,    type: asm,        name: Effect2/hh_class_raise_dust_phenomenon_00        }
+      - { start: 0x0015b930,    type: c,          name: Effect2/hh_class_raise_dust_phenomenon_00        }
       - { start: 0x0015bee0,    type: c,          name: Effect2/hh_class_water_00                        }
       - { start: 0x0015ce40,    type: c,          name: Effect2/hh_class_water_01                        }
       - { start: 0x0015e140,    type: c,          name: Effect2/hh_class_water_02                        }
@@ -771,7 +771,7 @@ segments:
       - { start: 0x0026ee10,    type: data,       name: data_0x26ee10                                    }
       - { start: 0x0026f410,    type: .data,      name: Effect2/hh_class_object_execute                  }
       - { start: 0x0026f450,    type: .data,      name: Effect2/hh_class_plural_phenomenon_00            }
-      - { start: 0x0026f460,    type: data,       name: Effect2/hh_class_raise_dust_phenomenon_00        }
+      - { start: 0x0026f460,    type: .data,      name: Effect2/hh_class_raise_dust_phenomenon_00        }
       - { start: 0x0026f480,    type: .data,      name: Effect2/hh_class_water_00                        }
       - { start: 0x0026f530,    type: .data,      name: Effect2/hh_class_water_01                        }
       - { start: 0x0026fa30,    type: .data,      name: Effect2/hh_class_water_02                        }

@@ -5,6 +5,8 @@
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_fire_phenomenon_00.h"
 
+static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_Element* pElement);
+
 UNMIGRATED(/* static */ Descriptor_Post_Infomeation _post_info_demo[23]); // size: 0x730, address: 0x375DE0
 UNMIGRATED(/* static */ Descriptor_Post_Infomeation _post_info_normal[16]); // size: 0x500, address: 0x376510
 
@@ -12,10 +14,9 @@ static inline float shGetDemoFrame(void) {
     return demo_frame;
 }
 
-
 #line 618
 static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_Element* pElement) {
-    u_int result = 1;
+    u_int result = true;
     u_int i;
 
     
@@ -43,7 +44,7 @@ static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_
 #line 661
 u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
     #line 669
-    u_int result = 1;
+    u_int result = true;
     HH_Object_Fire_Phenomenon_00* pThis = pBlock;
     u_int i; ImpactQueue_Element descriptor;
     switch (pThis->Step) {
@@ -157,8 +158,8 @@ u_int HH_Class_Fire_Phenomenon_00(void* pBlock, ImpactQueue_Element* pElement) {
             break;
         default:
         case HH_FIRE_STEP_OFF:
-            pThis->Header.Enable = 0;
-            result = 0;
+            pThis->Header.Enable = false;
+            result = false;
             break;
     }
     return result;

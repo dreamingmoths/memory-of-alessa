@@ -29,7 +29,7 @@ static sceVu0FMATRIX _square_stq = {
 
 #line 203
 static u_int Object_Initialize(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement) {
-    u_int result = 1;
+    u_int result = true;
     
     pThis->Timer = 0.0f;
     
@@ -38,7 +38,7 @@ static u_int Object_Initialize(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* 
 
 #line 223
 static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pElement) {
-    u_int result = 0;
+    u_int result = false;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
     sceVu0FVECTOR* pVertex = _square_00_vertex;
     sceVu0FVECTOR Rgba = { 128.0f, 128.0f, 128.0f, 255.0f };
@@ -141,7 +141,7 @@ static u_int Object_Draw(HH_Object_Boat_Mask* pThis, ImpactQueue_Element* pEleme
 
 #line 342
 u_int HH_Class_Prefix_Boat_Mask(void) {
-    u_int result = 1;
+    u_int result = true;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
     u_long tex0;
 
@@ -179,7 +179,7 @@ u_int HH_Class_Prefix_Boat_Mask(void) {
 
 #line 390
 u_int HH_Class_Suffix_Boat_Mask(void) {
-    u_int result = 1;
+    u_int result = true;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
 
     HH_Vif1PacketBuffer_GifTag_Open();
@@ -213,7 +213,7 @@ u_int HH_Class_Boat_Mask(void* pBlock, ImpactQueue_Element* pElement) {
     
     
     
-    result = 1;
+    result = true;
     
     
     switch (pThis->Step) {
@@ -229,8 +229,8 @@ u_int HH_Class_Boat_Mask(void* pBlock, ImpactQueue_Element* pElement) {
             break;
         
         case HH_EFFECT_STEP_OFF: default:
-            pThis->Header.Enable = NULL;
-            result = 0;
+            pThis->Header.Enable = false;
+            result = false;
             break;
     }
     return result;

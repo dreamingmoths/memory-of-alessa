@@ -6,8 +6,12 @@
 #include "Effect2/hh_packet.h"
 #include "Effect2/hh_effect_object_texture.h"
 #include "Effect2/hh_class_wrapper.h"
-#include "Effect2/hh_class_water_pool_00.h"
 #include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_class_water_pool_00.h"
+
+static u_int Object_Initialize(HH_Object_Water_Pool_00* pThis);
+static u_int Object_Motion_00(HH_Object_Water_Pool_00* pThis);
+static u_int Object_Draw(HH_Object_Water_Pool_00* pThis, ImpactQueue_Element* pElement);
 
 static sceVu0FMATRIX _square_00_vertex = {
     { 1.0f, 0.0f, 1.0f, 1.0f },
