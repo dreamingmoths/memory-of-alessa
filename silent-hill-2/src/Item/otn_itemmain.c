@@ -1822,7 +1822,25 @@ void item_allay(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", sprite);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_command);
+void look_command(int gosa) {
+    int k;
+
+    t.command_move = move_near(2.0f, 0.2f, 1000.0f * t.command_move, 1000.0f * t.command_cur);
+    t.command_move /= 1000.0f;
+
+    for (k = 0; k < 6; k++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(0, (t.command_abe / 2) * (6 - k), (t.command_abe / 4) * (6 - k), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(90.0f  + (k * k) / 10), zs(k + ((26.0f * t.command_move) + gosa)), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(230.0f - (k * k) / 10), zs(1.0f + (k + ((26.0f * t.command_move) + gosa))), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(90.0f  + (k * k) / 10), zs(26.0f * t.command_move + gosa - k), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(230.0f - (k * k) / 10), zs(26.0f * t.command_move + gosa - k - 1.0f), zs(-10), 255);
+        spkCloseGiftag();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_volume);
 
