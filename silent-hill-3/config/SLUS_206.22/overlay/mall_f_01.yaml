@@ -26,5 +26,6 @@ segments:
       - [0x0, databin, mall_f_01_overlay_header]
       - [0x80, c, Event/stage/mall_f_01]
       - [0x3600, data, mall_f_01_data]
+      - [0x5500, .rodata, Event/stage/mall_f_01]
       - { vram: 0x1F72B80, type: bss, name: mall_f_01_bss }
   - [0x5580]
