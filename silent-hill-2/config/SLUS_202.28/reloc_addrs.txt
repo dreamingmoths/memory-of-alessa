@@ -58279,10 +58279,10 @@ rom:0x1291CC reloc:MIPS_LO16                           symbol:playing
 rom:0x1291D0 reloc:MIPS_26                             symbol:StgOverlayGetStageData
 rom:0x1291D8 reloc:MIPS_HI16                           symbol:stage
 rom:0x1291DC reloc:MIPS_LO16                           symbol:stage
-rom:0x129218 reloc:MIPS_HI16                           symbol:"@915_0x0034C7D0"
-rom:0x12921C reloc:MIPS_LO16                           symbol:"@915_0x0034C7D0"
-rom:0x129234 reloc:MIPS_HI16                           symbol:"@916_0x0034C7F0"
-rom:0x129238 reloc:MIPS_LO16                           symbol:"@916_0x0034C7F0"
+rom:0x129218 reloc:MIPS_HI16                           symbol:"vitarity_0x0034C7D0"
+rom:0x12921C reloc:MIPS_LO16                           symbol:"vitarity_0x0034C7D0"
+rom:0x129234 reloc:MIPS_HI16                           symbol:"endurance_0x0034C7F0"
+rom:0x129238 reloc:MIPS_LO16                           symbol:"endurance_0x0034C7F0"
 rom:0x129250 reloc:MIPS_26                             symbol:enGetMode
 rom:0x129298 reloc:MIPS_26                             symbol:enSetSize
 rom:0x1292FC reloc:MIPS_26                             symbol:enSetSize
