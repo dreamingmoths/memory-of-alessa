@@ -18,7 +18,7 @@ void libShPadSetMode(int port, int slot, u_int arg2, u_int arg3, u_int arg4, u_i
 
 int libShPadTrans(void);
 
-s_char libShPadRead(int port, int slot, u_char* data);
+s_char libShPadRead(int port, int slot, char* data);
 
 int libShPadSend(int port, int slot, u_short pow0, u_short pow1);
 //@note: ^ last two functions are subject to change.
