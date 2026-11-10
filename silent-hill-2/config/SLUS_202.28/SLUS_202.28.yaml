@@ -537,7 +537,7 @@ segments:
       - { start: 0x00184830,    type: c,          name: Chacter/m3_play_efect                            }
       - { start: 0x001869a0,    type: c,          name: LoadBg/loadbg_1x1                                }
       - { start: 0x00186ae0,    type: c,          name: Effect2/hh_class_flame_02                        }
-      - { start: 0x00187590,    type: asm,        name: Effect2/hh_class_plural_phenomenon_01            }
+      - { start: 0x00187590,    type: c,          name: Effect2/hh_class_plural_phenomenon_01            }
       - { start: 0x00187b80,    type: c,          name: movie/movie_main                                 }
       - { start: 0x00188380,    type: c,          name: movie/pss_audiodec                               }
       - { start: 0x00188dd0,    type: c,          name: movie/pss_common                                 }
@@ -813,7 +813,7 @@ segments:
       - { start: 0x0027a5a0,    type: .data,      name: Chacter/m3_play_event                            }
       - { start: 0x0027a630,    type: .data,      name: Chacter/m3_play_efect                            }
       - { start: 0x0027a6f0,    type: data,       name: Effect2/hh_class_flame_02                        }
-      - { start: 0x0027bb30,    type: data,       name: Effect2/hh_class_plural_phenomenon_01            }
+      - { start: 0x0027bb30,    type: .data,      name: Effect2/hh_class_plural_phenomenon_01            }
       - { start: 0x0027bba0,    type: data,       name: movie/pss_common                                 }
       - { start: 0x0027bba8,    type: data,       name: movie/pss_cscvu1                                 }
       - { start: 0x0027bbc0,    type: data,       name: movie/pss_disp                                   }
