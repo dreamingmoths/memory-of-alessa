@@ -1,7 +1,8 @@
 #ifndef SH_SOUND_H
 #define SH_SOUND_H
 
-#include "common.h"
+#include "sh2_common.h"
+#include "sce/eetypes.h"
 
 // total size: 0xC this was an anon
 typedef struct Change_List {
@@ -36,7 +37,7 @@ typedef struct Se_BgmBuffer {
 typedef struct Se2D_ManageData {
     // Members
     int sd;                                    // offset 0x0, size 0x4
-    float pos[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
+    sceVu0FVECTOR pos;                         // offset 0x10, size 0x10
     float vol;                                 // offset 0x20, size 0x4
     short room;                                // offset 0x24, size 0x2
     u_char pos_on;                             // offset 0x26, size 0x1
@@ -53,7 +54,7 @@ typedef struct Se3D_ChannelData {
     int sd;                                    // offset 0x0, size 0x4
     int room;                                  // offset 0x4, size 0x4
     int status;                                // offset 0x8, size 0x4
-    float pos[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
+    sceVu0FVECTOR pos;                         // offset 0x10, size 0x10
     float vol;                                 // offset 0x20, size 0x4
 } Se3D_ChannelData;
 
@@ -92,7 +93,7 @@ typedef struct _NEAR_SOUND_DATA {
 typedef struct _SOUND_WORK {
     // Members
     SOUND_DATA* sound_ary;                           // offset 0x0, size 0x4
-    float chara_pos[4] __attribute__((aligned(16))); // offset 0x10, size 0x10
+    sceVu0FVECTOR chara_pos;                         // offset 0x10, size 0x10
     float half_w;                                    // offset 0x20, size 0x4
     int page;                                        // offset 0x24, size 0x4
     int near_sound_num;                              // offset 0x28, size 0x4
@@ -103,42 +104,32 @@ typedef struct _SOUND_WORK {
     int nearindex;                                   // offset 0x11C, size 0x4
 } SOUND_WORK;
 
-void SeWait(int wait /* r17 */);
+void SeWait(int wait);
 void SeForceWait(void);
-void SeCallInit(int sect /* r18 */, int mmode /* r17 */, char* path /* r16 */);
+void SeCallInit(int sect, int mmode, char* path);
 void SeCallReset(void);
-int SeCall(int sd_no /* r17 */, float volume /* r20 */, int stereo /* r16 */);
-int SeCallPos(int sd_no /* r20 */, float volume /* r20 */, float* pos /* r19 */, int status /* r18 */);
-void SeCallPosChange(int sd_no, float volume, float* pos, int status);
-int Se3dPlayCheck(int sd_no /* r2 */);
-void SeStop(int sd_no /* r18 */);
-void SeBgmChange(void);
-void SeBgmCall(int bgm_no /* r2 */);
-
+int SeCall(int sd_no, float volume, int stereo);
+int SeCallPos(int sd_no, float volume, float* pos, int status);
+int SeCallPosChange(int sd_no, float volume, float* pos, int status);
+int SeCallPosDirection(float* pos);
 int SeCallPosDistance(float volume, float* pos);
-float SeCallPosDistanceF(float* pos /* r2 */);
-int Se3dPlayCheck(int sd_no /* r2 */);
+float SeCallPosDistanceF(float* pos);
+int Se3dPlayCheck(int sd_no);
 void SeSoundLoad(void);
-void SeSoundEffect3dLoad(int data /* r16 */);
-void SeSoundEffectLoad(int data /* r16 */);
+void SeSoundEffectLoad(int data);
+void SeSoundEffect3dLoad(int data);
 void SeSoundManager(void);
 void Se2dManager(void);
-void Se2dManageDataVolumeChange(int sd /* r2 */, float vol /* r29+0x10 */);
-float Se2dManageDataTimer(int sd /* r2 */, int clear /* r2 */);
+void Se2dManageDataVolumeChange(int sd, float vol);
+float Se2dManageDataTimer(int sd, int clear);
 void Se3dManager(void);
+int Se3dControl(int sd_no, float volume, float* pos);
+void SeStop(int sd_no);
+void SeBgmChange(void);
+void SeBgmCall(int bgm_no);
 void SeBgmManager(void);
-int Se3dControl(int sd_no /* r17 */, float volume /* r20 */, float* pos /* r16 */);
+int BgmPageSet(void);
 void SeMasterVolumeChange(void);
-
-extern Se_BgmBuffer bgm;
-extern Se2D_ManageData se_2d_manage_data[4];
-extern Se3D_ChannelData se_3d_channel_data[8];
-extern int se_3d_channel_max;
-extern int se_3d_channel_number;
-extern int se_3d_load_data;
-extern int se_load_data;
-extern SOUND_WORK sound_work;
-extern Change_List change_list[242]; // size: 0xB58, address: 0x2B8880
 
 extern void sd_setpath(char* dp /* r2 */); // M:\select\sound\sd0712\ee\sd_call.c we need to find a home for lil bro
 

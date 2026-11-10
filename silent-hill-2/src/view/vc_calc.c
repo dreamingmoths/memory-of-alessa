@@ -68,10 +68,10 @@ float vcRetNearRatioSwitchAreaForCircleCam(VC_NEAR_ROAD_DATA cur_near_road, VC_C
         (TO_RAD(45.0f) <= ofs_ang_y && ofs_ang_y < TO_RAD(135.0f))) {
 
 
-        near_ratio = float_abs((cir_man.origin[0] - chr_pos[0]) / cir_man.sw_l[0]);
+        near_ratio = shFloatAbs((cir_man.origin[0] - chr_pos[0]) / cir_man.sw_l[0]);
 
     } else {
-        near_ratio = float_abs((cir_man.origin[2] - chr_pos[2]) / cir_man.sw_l[2]);
+        near_ratio = shFloatAbs((cir_man.origin[2] - chr_pos[2]) / cir_man.sw_l[2]);
 
     }
 

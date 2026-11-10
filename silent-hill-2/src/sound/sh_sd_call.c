@@ -22,7 +22,7 @@ static int shSdSignalExcl(void) {
 
 int shSdInit(void) {
     if (excl_sid_0x0037B8D8 == -1) {
-        excl_sid_0x0037B8D8 = CreateSema2(0, 1, 0);
+        excl_sid_0x0037B8D8 = CreateSema2(0, 1, NULL);
     }
     shSdSignalExcl();
     return 1;

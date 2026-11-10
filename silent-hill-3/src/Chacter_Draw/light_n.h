@@ -8,8 +8,8 @@ typedef struct Light {
     float influence;         // offset 0x8, size 0x4
     float intensity2;        // offset 0xC, size 0x4
     float influence2;        // offset 0x10, size 0x4
-    signed short cid;        // offset 0x14, size 0x2
-    signed short fakekind;   // offset 0x16, size 0x2
+    short cid;               // offset 0x14, size 0x2
+    short fakekind;          // offset 0x16, size 0x2
     float inf_fac;           // offset 0x18, size 0x4
     void* DrawEnv_LightData; // offset 0x1C, size 0x4
     float pos[4];            // offset 0x20, size 0x10

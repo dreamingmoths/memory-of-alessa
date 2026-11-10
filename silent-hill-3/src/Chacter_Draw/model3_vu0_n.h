@@ -253,9 +253,9 @@ typedef struct AllData_Vu0 {
 
 typedef struct ClusterData {
     // total size: 0x6
-    unsigned short src; // offset 0x0, size 0x2
-    unsigned short dst; // offset 0x2, size 0x2
-    unsigned short n;   // offset 0x4, size 0x2
+    u_short src; // offset 0x0, size 0x2
+    u_short dst; // offset 0x2, size 0x2
+    u_short n;   // offset 0x4, size 0x2
 } ClusterData;
 
 void FlipXMTOP(void);

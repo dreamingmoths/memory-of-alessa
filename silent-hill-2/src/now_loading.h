@@ -4,7 +4,7 @@
 #include "sh2_common.h"
 #include "GFW/sh2_GsAllEnv.h"
 
-unsigned short* dicSetStr(void* str /* r2 */);
+u_short* dicSetStr(void* str /* r2 */);
 void fjFontDrawExecVif1(void);
 void fontClear(void);
 void fontPrintStr(u_short* str /* r29+0x1C */, int x /* r2 */, int y /* r2 */);

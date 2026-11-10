@@ -1,6 +1,6 @@
-#include "sh2_common.h"
-#include "sce/eekernel.h"
-#include "sce/libscf.h"
+#include "Multi_thr/scf/ps2_scf.h"
+
+
 
 #define TZ_UTC_9 540
 
@@ -31,7 +31,7 @@ static int excl_sid = -1;
 
 void ps2ScfInit(void) {
     if (excl_sid == -1) {
-        excl_sid = CreateSema2(NULL, 1, 0);
+        excl_sid = CreateSema2(NULL, 1, NULL);
         sceScfSetT10kConfig(&ps2ScfDefault);
         SignalSema(excl_sid);
     }

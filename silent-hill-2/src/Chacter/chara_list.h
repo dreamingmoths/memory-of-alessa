@@ -423,6 +423,7 @@
 #define ITEM_B_DHA_CHARA_KIND                                                         0x525
 #define ITEM_BOX_01_CHARA_KIND                                                        0x526
 #define ITEM_BOX_02_CHARA_KIND                                                        0x527
+#define ITEM_INU_EARLY_DEMO_CHARA_KIND                                                0x528
 #define ITEM_BAF_CHARA_KIND                                                           0x52b
 #define ITEM_NEO_CHARA_KIND                                                           0x52c
 #define ITEM_NEF_CHARA_KIND                                                           0x52d

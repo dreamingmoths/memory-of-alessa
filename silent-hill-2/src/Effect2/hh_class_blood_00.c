@@ -227,7 +227,7 @@ u_int HH_Class_Blood_00(void* pBlock, ImpactQueue_Element* pElement) {
         case 1:
             Object_Motion_00(pThis);
             Object_Draw(pThis, pElement);
-            pThis->Timer += 1.0/30.0;
+            pThis->Timer += TIME_STEP_30FPS;
             
             if(pThis->Timer > 30.0f){
                 pThis->Step = 2;

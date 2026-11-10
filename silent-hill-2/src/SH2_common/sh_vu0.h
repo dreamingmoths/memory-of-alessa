@@ -11,7 +11,7 @@ float shAtan_asm(float angle);
 void sh_ecossin(void);
 float shSinF(float);
 float shCosF(float);
-void shSinCosV(void*, float);
+void shSinCosV(float*, float);
 void shSinCosV_Scale(sceVu0FVECTOR, float, float);
 void shRotVectorY(sceVu0FVECTOR*, sceVu0FVECTOR*, float); // @note: not sure if this is the correct signature
 void shRotMatrixX(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx);
@@ -24,7 +24,7 @@ int shPopRandSeed(void);
 int shRandI(void);
 float shRandF(void);
 void shRandF_asm(void);
-void shRandV_Scale(void*, float);
+void shRandV_Scale(float*, float);
 void shRandV_asm(void);
 float shSway1f(float, float);
 void shSway1f_asm(void);

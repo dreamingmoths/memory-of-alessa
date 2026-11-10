@@ -42,6 +42,7 @@
 
 #include "sound/sh_sd_call.h"
 #include "Font/font.h"
+#include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_2d_filters.h"
 
 #pragma fast_fptosi on
@@ -670,11 +671,6 @@ static short DdsReadShort(void) {
     return *(short*) c_work;
 }
 
-static inline float fast_fptosi(float x) {
-    asm volatile("cvt.w.s %0, %0; cvt.s.w %0, %0": "+f"(x));
-    return x;
-}
-
 // @note: very similar to GetSF in anime.c.
 static float DdsReadFloat2(void) {
 	int work;
@@ -771,7 +767,7 @@ static int DramaDemoInit(DramaDemo_PlayInfo* info /* r18 */) {
     dummy[0][1] = sh2jms.player->pos.y;
     dummy[0][2] = sh2jms.player->pos.z;
     dummy[0][3] = 1.0f;
-    vu0_unit_vector(dummy[1]);
+    shUnitVector(dummy[1]);
     adr_dds = info->adr_dds_top;
 
     
@@ -925,8 +921,8 @@ static void DramaDemoAnimationStart(short* adr_anim /* r17 */) {
     }
 }
 
-#ifdef NON_MATCHING
-static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
+#line 482
+int DdsPlay(DramaDemo_PlayInfo* info) {
     sceVu0FVECTOR position; // r29+0x50
     sceVu0FVECTOR interest; // r29+0x60
     sceVu0FVECTOR color; // r29+0x70
@@ -944,14 +940,14 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     int i; // r17
     int j; // r18
     int k; // r4
-    DramaDemo_MessageTime* temp_v1_3;
-    float var_f2;
-    s32 temp_a0;
-    s32 temp_a0_2;
-    s32 temp_v1_2;
-    u8 temp_v1;
-    void* temp_a2;
-    void* temp_v1_4; void* temp_v1_5; void* temp_v1_6; float tmp;
+
+
+    
+    
+    
+    
+    
+    
     DramaDemoFade();
     
     if(fptosi(last.frame) < fptosi(demo_frame)) {
@@ -1004,13 +1000,13 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
 
     if (playing.subtitles == true) {
         if (info->adr_msg_time != NULL) {
-            if ((int) msg_frame > (int) info->adr_msg_time[demo_msg_no].end) {
+            if (ftoi(msg_frame) > (info->adr_msg_time[demo_msg_no].end)) {
                 
                 fontClear();
                 demo_msg_no++;
                 DdsUnsetFlag(DDS_FLAG_SUBTITLES_SHOWN);
             }
-            if ((int) msg_frame > ((int) info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
+            if ((ftoi(msg_frame) > info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
                 
                 fontMessageNum(msg_buffer, info->msg_start + demo_msg_no);
                 demo_status |= 8;
@@ -1019,8 +1015,8 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     }
     
     if (demo_status & 1) frm_dcm = 0.0f;
-    else frm_dcm = demo_frame - fast_fptosi(fast_fptosi(demo_frame));
-
+    else frm_dcm = demo_frame - (float)ftoi((float)ftoi(demo_frame));
+    
     
     for (i = 0; i < 3; i++) {
         position[i] = next.camera.position[i] * frm_dcm + last.camera.position[i] * (1.0f - frm_dcm);
@@ -1031,12 +1027,12 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     interest[0] += info->add_pos_x;
     interest[2] += info->add_pos_z;
     position[3] = interest[3] = 1.0f;
-    roll =  next.camera.roll * frm_dcm + last.camera.roll * (1.0f - frm_dcm);
+    roll = next.camera.roll * frm_dcm + last.camera.roll * (1.0f - frm_dcm);
     plane = next.camera.plane * frm_dcm + last.camera.plane * (1.0f - frm_dcm);
-    vcSetEventCamParamRefView(position, NULL, interest, NULL, plane, 1);
+    vcSetEventCamParamRefView(position, NULL, interest, NULL, roll, 1);
     
     
-    VbScreenInfo.scr_z = 1.14702f * roll;
+    VbScreenInfo.scr_z = 1.14702f * plane;
     vbCalcViewScreenMatrix();
     vcMoveAndSetCamera(0, 0, 0, 0, 0, 0, 0, 0);
     
@@ -1044,8 +1040,8 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     for (i = 0, j = 0; j < point_light; i++, j++) {
         if (next.light[i].visible == 0) continue;
         for (k = 0; k < 3; k++) {
-            position[k] = next.light[j].position[k] * frm_dcm  + last.light[j].position[k] * (1.0f - frm_dcm);
-            color[k] = next.light[j].color[k] * frm_dcm + last.light[j].color[k] * (1.0f - frm_dcm);
+            position[k] = next.light[i].position[k] * frm_dcm + last.light[i].position[k] * (1.0f - frm_dcm);
+            color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
         falloff_s = next.light[i].falloff[0] * frm_dcm + last.light[i].falloff[0] * (1.0f - frm_dcm);
         falloff_e = next.light[i].falloff[1] * frm_dcm + last.light[i].falloff[1] * (1.0f - frm_dcm);
@@ -1055,12 +1051,12 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     for (j = 0; j < spot_light; i++, j++) {
         if (next.light[i].visible == 0) continue;
         for (k = 0; k < 3; k++) {
-            position[k] = next.light[j].position[k] * frm_dcm  + last.light[j].position[k] * (1.0f - frm_dcm);
-            interest[k] = next.light[j].interest[k] * frm_dcm + last.light[j].interest[k] * (1.0f - frm_dcm);
-            color[k] = next.light[j].color[k] * frm_dcm + last.light[j].color[k] * (1.0f - frm_dcm);
+            position[k] = next.light[i].position[k] * frm_dcm + last.light[i].position[k] * (1.0f - frm_dcm);
+            interest[k] = next.light[i].interest[k] * frm_dcm + last.light[i].interest[k] * (1.0f - frm_dcm);
+            color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
-        vu0_sub_vector(normal, interest, position);
-        vec_normalize(normal, normal);
+        shSubVector(normal, interest, position);
+        shNormalizeVector(normal, normal);
         falloff_s = next.light[i].falloff[0] * frm_dcm + last.light[i].falloff[0] * (1.0f - frm_dcm);                             
         falloff_e = next.light[i].falloff[1] * frm_dcm + last.light[i].falloff[1] * (1.0f - frm_dcm);
         cone = next.light[i].cone[0] * frm_dcm + last.light[i].cone[0] * (1.0f - frm_dcm);
@@ -1072,12 +1068,12 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     for (j = 0; j < infinite_light; i++, j++) {
         if (next.light[i].visible == 0) continue;
         for (k = 0; k < 3; k++) {
-            position[k] = next.light[j].position[k] * frm_dcm + last.light[j].position[k] * (1.0f - frm_dcm);
-            color[k] = next.light[j].color[k] * frm_dcm + last.light[j].color[k] * (1.0f - frm_dcm);
+            position[k] = next.light[i].position[k] * frm_dcm + last.light[i].position[k] * (1.0f - frm_dcm);
+            color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
-        vec_zero(normal);
-        vu0_sub_vector(normal, normal, position);
-        vec_normalize(normal, normal);
+        shVectorZero(normal);
+        shSubVector(normal, normal, position);
+        shNormalizeVector(normal, normal);
         normal[3] = 0;
         sh2gfw_Set_PallarelLight(normal, color, j + 1);
     }
@@ -1110,15 +1106,12 @@ static int DdsPlay(DramaDemo_PlayInfo * info /* r16 */) {
     msg_frame += 30.0f * shGetDT();
     // ??? lmao
     if (demo_frame >= total_demo_frame) return 1;
-    if ((demo_frame - (tmp = (int) fast_fptosi((demo_frame)))) > 0.9999f) // demo_frame = 1.0f +  (float)(int)(float)(int)(float)(int) (float) (int) demo_frame; 
-        demo_frame = 1.0f + ((int)(fast_fptosi(tmp))); 
-    if ((msg_frame) -  fast_fptosi(fast_fptosi((msg_frame))) > 0.9999f)
-        msg_frame = 1.0f + fast_fptosi((msg_frame));
+    if (demo_frame - (float)ftoi((float)ftoi(demo_frame)) > 0.9999f) 
+        demo_frame = 1.0f + (float)ftoi((float)ftoi(demo_frame));    
+    if (msg_frame - (float)ftoi((float)ftoi(msg_frame)) > 0.9999f) 
+        msg_frame = 1.0f + (float)ftoi((float)ftoi(msg_frame));    
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/demoview", DdsPlay);
-#endif
 
 #line 676
 void DdsPlayKey(void) {
@@ -1389,15 +1382,15 @@ void DramaDemoSkipLast(DramaDemo_PlayInfo* info /* r16 */) {
 static void RotationToInterest(float* position /* r19 */, float* rotation /* r18 */, float* interest /* r17 */, float* roll /* r16 */) {
     float matrix[4][4]; // r29+0x50
     float vector[4]; // r29+0x90
-    vu0_unit_matrix(matrix);
+    shUnitMatrix(matrix);
     shRotMatrixZ(matrix, matrix, rotation[2]);
     shRotMatrixX(matrix, matrix, rotation[0]);
     shRotMatrixY(matrix, matrix, rotation[1]);
-    vu0_unit_vector(vector);
+    shUnitVector(vector);
     vector[2] = 1.0f;
-    vu0_unit_vector(matrix[3]);
+    shUnitVector(matrix[3]);
     vu0_transform_vector_alt(interest, vector, matrix);
-    vu0_add_vector(interest, interest, position);
+    shAddVector(interest, interest, position);
     if (roll != NULL) {
         roll[0] = rotation[2];
     }

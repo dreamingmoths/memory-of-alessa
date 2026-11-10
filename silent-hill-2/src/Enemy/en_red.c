@@ -17,6 +17,8 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */);
 /* static */ void enREDCtrlEvent(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlWander(EnLOCAL_DATA* dp);
+/* static */ void enREDCtrlChase(EnLOCAL_DATA* dp);
+/* static */ void enREDCtrlBerserk(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlHand(void);
 
 /* static */ void enREDCtrlAttack(EnLOCAL_DATA* dp);
@@ -24,11 +26,13 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDCtrlOnlyWalk(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDCheckPlayerWeapon(EnLOCAL_DATA* dp);
 /* static */ int enREDSetDamage(EnLOCAL_DATA* dp);
+/* static */ int enREDCanSeePlayer(EnLOCAL_DATA* dp);
 
 /* static */ void enREDAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */);
 /* static */ void enREDAnimeReset(EnLOCAL_DATA* dp, int anim);
-
-/* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */);
+/* static */ void enREDAnimeExec(EnLOCAL_DATA* dp);
+/* static */ float enREDGetSpeed(EnLOCAL_DATA* dp);
+/* static */ float enREDGetWalkSpeed(EnLOCAL_DATA* dp);
 
 /* static */ float enREDGetRotSpeed(void);
 /* static */ void enREDSetSlowTime(EnLOCAL_DATA * dp /* r16 */);
@@ -78,7 +82,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
             dp->path.markangle = enCalcDirection(&hp_roof_pos, &dp->scp->pos);
             enMoveAngle(&dp->path, enREDGetRotSpeed());
             dp->scp->rot.y = dp->path.angle;            
-            if (vec3_dist_xz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
+            if (shVectorDistXz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
                 SET_GAME_FLAG(202); // @todo: add define
             }
     }
@@ -114,7 +118,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enREDGetWalkSpeed(dp);
     
     shSinCosV_Scale(&vec, dp->scp->rot.y, 1500.0f);
-    vu0_add_vector(&vec, &dp->scp->pos, &vec);
+    shAddVector(&vec, &dp->scp->pos, &vec);
     enSetPath(dp, &vec, &dp->scp->pos);
     enMoveAngle(&dp->path, enREDGetRotSpeed());
     dp->scp->rot.y = dp->path.angle;
@@ -128,9 +132,95 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enREDSoundLife(dp);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlChase);
+/* static */ void enREDCtrlChase(EnLOCAL_DATA* dp) {
+    int t;
+    if (enCheckDamage(dp)) {
+        if (enREDSetDamage(dp)) {
+            ENEMY_STEP(7);
+            return;
+        }
+        if (enCheckSpray(dp)) {
+            ENEMY_STEP(6);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enREDAnimeSet(dp, 1);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
+    enMoveAngle(&dp->path, enREDGetRotSpeed());
+    dp->scp->rot.y = dp->path.angle;
+    dp->anim_s = ftoi(4096.0f * enREDGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));    
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBerserk);
+    
+    t = enREDCanSeePlayer(dp);
+    if (t == 5) {
+        ENEMY_STEP(5);
+    } else if (t >= 2) {
+        ENEMY_STEP(4);
+    } else if ((t == 0) && (dp->type != 2)) {
+        ENEMY_STEP(0);
+    } else if ((dp->type == 2) && (enGetPlayerPos(dp)[2] > -99300.0f)) {
+    
+        ENEMY_STEP(3);
+    } else if ((dp->type == 2) &&
+               (dp->scp->pos.z > -99300.0f) &&
+               (enGetPlayerPos(dp)[2] < -99300.0f)) {        
+        ENEMY_STEP(3);
+        if (dp->scp->pos.x > 99200.0f) {
+            dp->sslv = 5;
+        } else {
+            dp->sslv = 6;
+        }
+    }
+    enREDSoundLife(dp);
+}
+
+/* static */ void enREDCtrlBerserk(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec;
+    float d;
+    int t;
+    SubCharacter* scp;
+    float* pos;
+    if (enCheckDamage(dp)) {
+        if (enREDSetDamage(dp)) {
+            ENEMY_STEP(7);
+            return;
+        }
+        if (enCheckSpray(dp)) {
+            ENEMY_STEP(6);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enREDAnimeSet(dp, 1);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    enREDGetWalkSpeed(dp);
+    scp = enGetNearCharacter(dp);
+    
+    pos = &scp->pos;
+    shSubVector(vec, &dp->scp->pos, pos);
+    d = vec3_length(vec);
+    if (d < 250.0f) {
+        shVectorCopy(vec, pos);
+    } else {
+        shScaleVector(vec, vec, 250.0f / d);
+        shAddVector(vec, pos, vec);
+    }
+    enSetPath(dp, vec, (float*) &dp->scp->pos.x);
+    enMoveAngle(&dp->path, enREDGetRotSpeed());
+    dp->scp->rot.y = dp->path.angle;
+    
+    t = enREDCanSeeCharacter(dp, scp);
+    if (t >= 2) {
+        ENEMY_STEP(4);
+    }
+    enREDSoundLife(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlStair);
 
@@ -258,7 +348,46 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDAnimeExec);
+/* static */ void enREDAnimeExec(EnLOCAL_DATA* dp) {
+    int of = dp->anim_n; // r16    
+    enAnimeExec(dp, EnREDAnime, 0x14B5);
+    if ((dp->anim_n == -1) || (dp->flag & 1)) return;
+    if (dp->anim == 1) {         
+            enSetTransWalk(dp);
+            
+        if (((dp->anim_s > 0) && (of < 0x12C0) && (dp->anim_n >= 0x12C0)) ||
+            ((dp->anim_s < 0) && (of >= 0x12C0) && (dp->anim_n < 0x12C0))) {
+            
+            
+            
+                        
+            if ((dp->type == 2) && (dp->scp->pos.z > -1600.0f)) {
+                enSoundCall(0x3E94, 1.0f, &dp->scp->pos);
+            } else
+            
+                if (enCheckWater(dp))
+                    enSoundCall(0x4978, 1.0f, &dp->scp->pos);
+            
+            
+            
+            if (dp->p_dist > 5000.0f) {
+                enSoundCall3D((ftoi(3.0f * shRandF()) * 2) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+            
+            } else 
+                enSoundCall(ftoi(6.0f * shRandF()) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+        }
+    
+    
+    
+    } else if (dp->anim == 3 || dp->anim == 4) {
+            if ((dp->scp->battle.atk_result == 2) && (dp->anim_step == 0)){
+                dp->anim_step++;
+                
+                enSoundCall(0x3EEB, 1.0f, &dp->scp->pos);                
+            }
+    }
+
+}
 
 /* static */ float enREDGetSpeed(EnLOCAL_DATA* dp /* r2 */) {
     return 0.25f + (0.75f * (dp->endurance / dp->endurance_max));

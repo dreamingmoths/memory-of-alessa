@@ -1,5 +1,7 @@
 #include "DBG/dbsw_all.h"
 
+static void dbSwitchHelpPrint(void);
+
 void dbSwitchAllInit(int enable) {
     dbSwitchDispEnable(enable != false);
     if (enable) {
@@ -8,11 +10,11 @@ void dbSwitchAllInit(int enable) {
     }
 }
 
-void dbSwitchHelpPrint() {
-    int on; // r16
-    char* help; // r17
+static void dbSwitchHelpPrint(void) {
     int X; // r29+0x38
     int Y; // r29+0x3C
+    int on; // r16
+    s_char* help; // r17
 
     help = NULL;
     on = dbSwitchGetPos(&X, &Y);
@@ -28,10 +30,10 @@ void dbSwitchHelpPrint() {
     dbfntprintfR("%s:%s\n", help, on ? "ON " : "OFF");
 }
 
-int dbSwitchIsVisible() {
-    int disp; // r2
-    int notonlyport1; // r2
+int dbSwitchIsVisible(void) {
     int port; // r16
+    int notonlyport1; // r2
+    int disp; // r2
 
     port = shPadGetPort();
     notonlyport1 = dbSwitchSysPrintNotOnlyPort1();
@@ -42,10 +44,10 @@ int dbSwitchIsVisible() {
     return disp;
 }
 
-void dbSwitchAllPrint() {
-    int disp; // r18
-    int loop; // r16
+void dbSwitchAllPrint(void) {
     int X; // r29+0x6C
+    int loop; // r16
+    int disp; // r18
 
     disp = dbSwitchIsVisible();
 

@@ -3,6 +3,7 @@
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_texture.h"
+#include "Effect2/hh_object_vertex_info.h"
 #include "Effect2/hh_math_wrapper.h"
 #include "Effect2/hh_packet.h"
 #include "sce/libvifpk.h"
@@ -211,7 +212,7 @@ u_int Object_Motion_00(HH_Object_Water_20* pThis, ImpactQueue_Element* pElement)
 }
 
 u_int Object_Draw(HH_Object_Water_20* pThis, ImpactQueue_Element* pElement, float* Current_Position) {
-    unsigned int result = 0;
+    u_int result = 0;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
     Vertex_Infomeation_List* pInfo;
     sceVu0FVECTOR *pVertex = _vertex_info_list_0x00370310->pVertex_List;
@@ -356,7 +357,7 @@ u_int HH_Class_Water_20(void* pBlock, ImpactQueue_Element* pElement)
                 pThis->Step = 3;
             }
             Object_Draw(pThis, pElement, position);
-            pThis->Timer += (1.0f / 60.0f);
+            pThis->Timer += TIME_STEP_60FPS;
             break;
         
         default:

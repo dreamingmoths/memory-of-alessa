@@ -62,7 +62,72 @@ int sh2gfw_Get_CamTilePos(float* origin) {
     return ssx + (ssz * 8);
 }
 
-INCLUDE_ASM("asm/nonmatchings/GFW/sh2gfw_viewclip", sh2gfw_get_ViewRecTangle);
+#line 429
+void sh2gfw_get_ViewRecTangle(float* origin, sceVu0FMATRIX view_triangle, int* view_rect, int view_tile) {
+    int i, j, tp, cx, cz;
+    sceVu0FVECTOR tmpf[3]; // r29+0x90
+    sceVu0IVECTOR tmpi[3]; // r29+0xC0
+    
+    for (i = 0; i < 3; i++) {
+        sceVu0SubVector(tmpf[i], view_triangle[i], origin);
+        sceVu0ScaleVector(tmpf[i], tmpf[i], 0.0004f);
+        sceVu0FTOI0Vector(tmpi[i], tmpf[i]);
+        if (tmpi[i][0] < 0) tmpi[i][0]--;
+        if (tmpi[i][2] < 0) tmpi[i][2]--;
+    }
+
+    
+    for (i = 0; i < 2; i++) {
+        for (j = i + 1; j < 3; j++) {
+            if (tmpi[i][0] < tmpi[j][0]) {
+                tp = tmpi[i][0];
+                tmpi[i][0] = tmpi[j][0];
+                tmpi[j][0] = tp;
+            }
+        }
+    }
+    
+    for (i = 0; i < 2; i++) {
+        for (j = i + 1; j < 3; j++) {
+            if (tmpi[i][2] < tmpi[j][2]) {
+                tp = tmpi[i][2];
+                tmpi[i][2] = tmpi[j][2];
+                tmpi[j][2] = tp;
+            }
+        }
+    }
+    
+    
+    
+    
+    cx = view_tile & 7; if (view_tile < 0 && cx) cx -= 8;
+    cz = view_tile >> 3; if (view_tile < 0) cz = (view_tile + 7) >> 3;
+    
+    i = abs(tmpi[0][0] - cx);
+    j = abs(tmpi[2][0] - cx);
+    
+    if (j < i) tmpi[2][0]--;
+    else tmpi[0][0]++;
+
+    i = abs(tmpi[0][2] - cz);
+    j = abs(tmpi[2][2] - cz);
+    
+    if (j < i) tmpi[2][2]--;
+    else tmpi[0][2]++;
+
+
+    
+    
+    view_rect[0] = tmpi[0][0];
+    view_rect[1] = tmpi[2][0];
+    view_rect[2] = tmpi[0][2];
+    view_rect[3] = tmpi[2][2];
+
+
+
+}
+
+
 
 extern /* static */ float inclip;
 void sh2gfw_get_viewTriangle(sceVu0FMATRIX view_triangle) {
@@ -294,7 +359,7 @@ void sh2gfw_set_objclip_matrix(void) {
     
     
     sh2gde_Get_EyeDir(tmp); tmp[1] = 0.0f;
-    vec_normalize(tmp, wvm[2]);
+    shNormalizeVector(tmp, wvm[2]);
     vec_cross_product(wvm[2], y_dirvec, wvm[0]);
     vec_copy_reverse(y_dirvec, wvm[1]); // fixed?
     vwGetViewPosition(tmp);

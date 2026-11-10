@@ -7,6 +7,16 @@
 
 extern int rand(void);
 
+
+typedef struct Vertex_Infomeation_List {
+    // Members
+    float (*pVertex_List)[4]; // offset 0x0, size 0x4
+    float (*pRgba_List)[4];   // offset 0x4, size 0x4
+    float (**pStq_List)[4];   // offset 0x8, size 0x4
+    u_int Vertex_Max;         // offset 0xC, size 0x4
+    u_int Primitive_Type;     // offset 0x10, size 0x4
+} Vertex_Infomeation_List;
+
 static u_int Object_Initialize(HH_Object_Blood_FootMark_00* pThis);
 static u_int Object_Draw(HH_Object_Blood_FootMark_00* pThis, ImpactQueue_Element* pElement);
 
@@ -17,6 +27,7 @@ extern /* static */ sceVu0FMATRIX _square_11_stq_0x0036E580;
 extern /* static */ float (* _square_0x_stq_list[2])[4];
 extern /* static */ float (* _square_1x_stq_list[2])[4];
 extern /* static */ sceVu0FMATRIX _square_00_rgba;
+
 extern /* static */ Vertex_Infomeation_List _vertex_info_list_0x0036E620[2];
 
 static u_int Object_Initialize(HH_Object_Blood_FootMark_00* pThis) {
@@ -123,7 +134,7 @@ u_int HH_Class_Blood_FootMark_00(void* pBlock, ImpactQueue_Element* pElement) {
             break;
         case 1:
             Object_Draw(pThis, pElement);
-            pThis->Timer += 1.0/30.0;
+            pThis->Timer += TIME_STEP_30FPS;
             
             if(pThis->Timer > 10.0f){
                 pElement->Option.Float_Value[1] -= 0.01f;

@@ -25,8 +25,8 @@ extern /* static */ int dinu_anime_adr_list[3]; // size: 0xC, address: 0x371BA0
             
             
             
-            volatile_vec_copy(pos, &this->pos);
-            volatile_vec_copy(rot, &this->rot);
+            shVectorCopy(pos, &this->pos);
+            shVectorCopy(rot, &this->rot);
     
             if (PlayerNowDemoEventMode() == 0) {
             
@@ -37,8 +37,8 @@ extern /* static */ int dinu_anime_adr_list[3]; // size: 0xC, address: 0x371BA0
             
             
             
-            volatile_vec_copy(&this->pos, pos);
-            volatile_vec_copy(&this->rot, rot);
+            shVectorCopy(&this->pos, pos);
+            shVectorCopy(&this->rot, rot);
     
             this->step++;
         /* fallthrough */

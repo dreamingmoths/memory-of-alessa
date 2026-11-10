@@ -10,18 +10,15 @@ alessatool debug --project silent-hill-2
 run `alessatool debug --help` for more information.
 '''
 
-from sys import stdout, stdin
 from pathlib import Path
 from subprocess import run
 from dataclasses import dataclass
-from typing import Callable
 from constants import *
-from struct import unpack
-from yaml import safe_load
 from re import findall
 from bisect import bisect_left
 
-from utils import SplatSymbol, SplatSymbolAddrsAtlas, parse_symbol_addrs, relative_to_name
+from utils import ExecutableInfo, SplatSymbol, SplatSymbolAddrsAtlas, get_configured_deduplications, \
+    get_exe_info_by_name, parse_symtab_as_atlas, read_symtab, relative_to_name
 
 @dataclass
 class DebugArgs:
@@ -35,13 +32,6 @@ class DebugInfo:
     root: Path
 
 @dataclass
-class ExecutableInfo:
-    name: str
-    atlas: SplatSymbolAddrsAtlas
-    target_path: Path
-    to_vram: Callable
-
-@dataclass
 class MismatchingFileEntry:
     cmp_output: str
     cmp_error: str
@@ -49,13 +39,22 @@ class MismatchingFileEntry:
     target_path: Path
     exe_info: ExecutableInfo
 
-def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableInfo], debug_args: DebugArgs) -> bool:
+SYMBOL_IGNORELIST = ["d"]
+
+def parse_mw_mapfile(
+    mapfile_path: Path, 
+    exe_info_by_name: dict[str, ExecutableInfo], 
+    symtab_atlas: SplatSymbolAddrsAtlas, 
+    debug_args: DebugArgs
+) -> bool:
     with open(mapfile_path) as mapfile_file:
         mapfile_lines = mapfile_file.readlines()
 
     current_filename = None
     reason = []
     trace_index = -1
+
+    (transform_source_symbol_name, transform_target_symbol_name) = get_configured_deduplications()
 
     for index, line in enumerate(mapfile_lines):
         line = line.strip()
@@ -90,6 +89,9 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         addr_hex, size, section = entry[:3]
         symbol_name, object_file = entry[-1].split("\t")
 
+        if symbol_name in SYMBOL_IGNORELIST:
+            continue
+
         if symbol_name.startswith("."):
             # skip possible section name
             continue
@@ -114,12 +116,28 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             except:
                 pass
 
+        if current_filename not in exe_info_by_name:
+            continue
+
+        is_anonymous_symbol = object_file.endswith(".c.o") and symbol_name.startswith("@")
+
+        symtab_symbol = address in symtab_atlas.syms_by_addr and symtab_atlas.syms_by_addr[address] or None
+        is_local = symtab_symbol and symtab_symbol.metadata["bind"] == "LOCAL" or False # note assumes not duplicated by address
+
         syms_by_addr = exe_info_by_name[current_filename].atlas.syms_by_addr
+
         if address in syms_by_addr:
             target_symbol: SplatSymbol = syms_by_addr[address]
 
             if target_symbol.duplicate_by_addr:
                 continue
+
+            if symtab_symbol and not symtab_symbol.duplicate_by_addr and not is_anonymous_symbol and not "@" in symtab_symbol.name:
+                transformed_source = transform_source_symbol_name(symtab_symbol.name, symbol_name)
+                transformed_target = transform_target_symbol_name(symbol_name)
+                if transformed_source not in transformed_target and transformed_target not in transformed_source:
+                    reason += [f"{symbol_name} was placed at vram address 0x{address:X}, but symtab has {transformed_source} ({object_file})"]
+                    trace_index = index
 
             if target_symbol.addr != address:
                 reason += [f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X} ({object_file})"]
@@ -132,8 +150,8 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             if target_symbol.duplicate_by_name:
                 continue
 
-            if object_file.endswith(".c.o") and symbol_name.startswith("@"):
-                # don't bother trying to match anonymous symbols
+            if is_anonymous_symbol or is_local:
+                # don't bother trying to match local symbols here
                 continue
 
             if target_symbol.addr != address:
@@ -149,7 +167,7 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         return True
     else:
         if trace_index >= 0:
-            print("surrounding context:")
+            print(f"surrounding context ({mapfile_path.as_posix()}:{trace_index}):")
             CONTEXT_WINDOW = 2
 
             print("...")
@@ -161,45 +179,6 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         print(f"🗺️  mapfile notes: \n\t{"\n\t".join(reason)}")
 
         return False
-
-def discover_yamls(debug_info: DebugInfo):
-    root = debug_info.root
-    serial = debug_info.serial
-
-    exe_info_by_name: dict[str, ExecutableInfo] = dict()
-
-    for yaml_path in root.glob("**/*.yaml"):
-        with open(yaml_path) as yaml_file:
-            yaml = safe_load(yaml_file)
-
-        yaml_opts = yaml["options"]
-        if "basename" not in yaml_opts:
-            continue
-
-        target_path = Path(yaml_opts["target_path"])
-        name = yaml_opts["basename"] == serial and "main" or target_path.name
-
-        segments: list = yaml["segments"]
-        first_code_segment = list(filter(lambda s : isinstance(s, dict) and s["type"] == "code", segments))[0]
-        file_start = first_code_segment["start"]
-        vram_start = first_code_segment["vram"]
-
-        atlas = SplatSymbolAddrsAtlas()
-        info = ExecutableInfo(
-            name=name, 
-            atlas=atlas,
-            target_path=target_path,
-            to_vram=lambda x, start=file_start, vram=vram_start : x + vram
-        )
-        exe_info_by_name[name] = info
-
-        sym_paths = "symbol_addrs_path" in yaml_opts and yaml_opts["symbol_addrs_path"] or "symbol_addrs.txt"
-        sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
-
-        for sym_path in sym_paths:
-            parse_symbol_addrs(root / sym_path, atlas)
-
-    return exe_info_by_name
 
 def run_bin_diff(debug_args: DebugArgs, debug_info: DebugInfo, exe_info_by_name: dict[str, ExecutableInfo]) -> bool:
     serial = debug_info.serial
@@ -277,20 +256,21 @@ def run_bin_diff(debug_args: DebugArgs, debug_info: DebugInfo, exe_info_by_name:
 
 def debug_nonmatching(args: DebugArgs):
     project = args.project
-    serial = PROJECT_CONFIGURATIONS[project]
+    serial = PROJECT_CONFIG[project]
     root = Path(project) / CONFIG / serial
     debug_info = DebugInfo(project, serial, root)
 
     print("🐞 alessatool/debug 🐞")
 
-    exe_info_by_name = discover_yamls(debug_info)
+    exe_info_by_name = get_exe_info_by_name(root, serial)
+    symtab_atlas = parse_symtab_as_atlas(read_symtab(root / exe_info_by_name["main"].target_path))
 
     mapfile_path = Path(BUILD) / serial / f"{serial}.xMAP"
     mapfile_status = False
     bindiff_status = False
 
     if mapfile_path.exists():
-        mapfile_status = parse_mw_mapfile(mapfile_path, exe_info_by_name, args)
+        mapfile_status = parse_mw_mapfile(mapfile_path, exe_info_by_name, symtab_atlas, args)
 
     bindiff_status = run_bin_diff(args, debug_info, exe_info_by_name)
 

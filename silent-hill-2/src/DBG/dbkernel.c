@@ -1,14 +1,19 @@
-#include "dbkernel.h"
+#include "DBG/dbkernel.h"
+
+static int ___dbPrintThre(int tid, /* r2 */ int (* printf)());
+
+static void ___dbPrintThreAll(int (* printf)() /* r18 */);
 
 #line 55
 static int ___dbPrintThre(int tid, /* r2 */ int (* printf)()) {
-    char * help;                             // r2
-    char str[256];                           // r29+0x20
+    int ret; // r16;
+    s_char str[256];                           // r29+0x20
     ThreadParam thre;                        // r29+0x120
-    int ret = ReferThreadStatus(tid, &thre); // r16;
+    s_char* help;                             // r2
+    ret = ReferThreadStatus(tid, &thre);
     if (ret) {
 
-        help = (char *)(thre.option & 0x1FFFFFF);
+        help = (s_char *)(thre.option & 0x1FFFFFF);
         if (   (u_int)help <  0x100000
             || (u_int)help >= 0x2000000
             || help[0] != 'f'
@@ -29,7 +34,7 @@ static int ___dbPrintThre(int tid, /* r2 */ int (* printf)()) {
 }
 
 
-static void ___dbPrintThreAll(int (* printf)() /* r18 */){
+static void ___dbPrintThreAll(int (* printf)() /* r18 */) {
 
     int tid;       // r16
     int count = 0; // r17

@@ -36,7 +36,7 @@ extern /* static */ CL_HITPOLY_PLANE stg_apart_e1f_clActWallList_ap100[4]; // @ 
 
 extern /* static */ float stg_apart_e1f_edi_vec[2][4]; // @ 0x01F02DC0
 
-extern /* static */ DramaDemo_PlayInfo stg_apart_e1f_info_vomit; // @ 0x01F02E60
+extern /* static */ DramaDemo_PlayInfo stg_apart_e1f_vomit; // @ 0x01F02E60
 
 extern /* static */ DramaDemo_PlayInfo stg_apart_e1f_info_h; // @ 0x01F02ED0
 
@@ -82,7 +82,7 @@ extern /* static */ char* stg_apart_e1f_dds_adr_i; // size: 0x4, address: 0x01F0
             EV_PROG_STEP(22);
             /* fallthrough */
         case 22:
-            if (DramaDemoMain(&stg_apart_e1f_info_vomit)) {
+            if (DramaDemoMain(&stg_apart_e1f_vomit)) {
                 EV_PROG_STEP(13);
             }
             break;

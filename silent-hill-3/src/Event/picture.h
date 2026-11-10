@@ -62,5 +62,10 @@ typedef struct PicDraw_Data {
 
 void PictureDraw(PicDraw_Data* pic /* r16 */);
 void PictureLoadImage(PicLoadImage_Data* pic_load /* r22 */);
+void sh3_PictureDrawWrapped(PicDraw_Data* pic /* r16 */);
+void sh3_PictureLoadImageWrapped(PicLoadImage_Data* pic_load /* r22 */);
 
+sh3gfw_AREA_HEAD* func_00170410(unsigned int); 
+PicLoadImage_Data* func_00170430(int);
+PicDraw_Data* func_00170450(int);
 #endif

@@ -109,7 +109,7 @@ void systemColdInit(void) {
     shPadInit();
     sceMcInit();
     PlayingInfoColdInit();
-    DataLoadMessage(0);
+    DataLoadMessage(SH2_MES_FILE_COMMON);
     
     sh2gfw_util_zeroq(&AllTexSync_Man, sizeof(AllTexSync_Man) / sizeof(Q_WORDDATA));
     

@@ -185,7 +185,7 @@ float HH_ClassWrapper_FogParameter_B_Get(void) {
 }
 
 float HH_ClassWrapper_Float_Clamp(float Src_Value, float Min, float Max) {
-    return float_min(float_max(Src_Value, Min), Max);
+    return shFloatMin(shFloatMax(Src_Value, Min), Max);
 }
 
 void HH_ClassWrapper_AmbientColor_Get(float* Ambient_Color) {

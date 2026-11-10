@@ -10,7 +10,7 @@ options:
    - overlay/${{ name }}_symbol_addrs.txt
    - symbol_addrs.txt
    - sdk_symbol_addrs.txt
-  reloc_addrs_path: ${{ name }}_reloc_addrs.txt
+  reloc_addrs_path: overlay/${{ name }}_reloc_addrs.txt
   ld_script_path: linkers/${{ name }}.ld
   undefined_funcs_auto_path: linkers/${{ name }}_undefined_funcs_auto.main.txt
   undefined_syms_auto_path: linkers/${{ name }}_undefined_syms_auto.main.txt

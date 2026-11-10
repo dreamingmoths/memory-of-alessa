@@ -1,6 +1,8 @@
 #ifndef SH2GFW_SYNCDBG_H
 #define SH2GFW_SYNCDBG_H
 
+#define DRAW_MAIN_PERF_MD 8
+
 void sh2gfw_Init_AllVertCounter(void);
 
 void sh2gfw_Incliment_VertNumIndices(void);

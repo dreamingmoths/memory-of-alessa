@@ -1,13 +1,16 @@
+#include "SH2_common/sh2dt.h"
+
 #include "Effect/ef_common.h"
 #include "Effect/ef_packet.h"
 #include "Effect/ef_malloc.h"
-#include "SH2_common/sh2dt.h"
-#include "Event/item.h"
-#include "Chacter/m3_play_event.h"
-#include "Multi_thr/dma/dma1cmd.h"
 #include "Effect/ef_stage.h"
 #include "Effect/ef_broken_glass.h"
 #include "Effect/ef_smoke.h"
+
+#include "Event/item.h"
+#include "Chacter/m3_play_event.h"
+#include "Multi_thr/dma/dma1cmd.h"
+#include "GFW/sh2_DrawEnvData.h"
 
 static void EFCTInitEffectTask(void);
 static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
@@ -308,7 +311,37 @@ INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", DrawPrimitive);
 
 INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", EFCTMakePacket);
 
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_common", SetVertexPkData);
+#define FOGPARAM(_i) Env_ctl.fogparm.fl32[_i]
+#define FOGFAR       FOGPARAM(0)
+#define FOGNEAR      FOGPARAM(1)
+#define FOGMAX       FOGPARAM(2)
+#define FOGMIN       FOGPARAM(3)
+
+static inline float calc_fog_coeff(float* q) {
+    float a = FOGFAR * FOGNEAR * (FOGMIN - FOGMAX) / (FOGFAR - FOGNEAR);
+    float b = (FOGFAR * FOGMAX - FOGNEAR * FOGMIN) / (FOGFAR - FOGNEAR);
+    return *q * a + b;
+}
+
+#line 1587
+void SetVertexPkData(sceVif1Packet* pck, EFCTVertexData* pVertex, u_int nVertexNum) {
+    int i;
+    float s, t, f;
+
+    for (i = 0; i < nVertexNum; i++) {
+        if (pVertex[i].is_valid == true) {
+            s = pVertex[i].stq[0] * pVertex[i].stq[2];
+            t = pVertex[i].stq[1] * pVertex[i].stq[2];
+            sceVif1PkAddGsData(pck, SCE_GS_SET_ST(*(u_int*) &s, *(u_int*) &t));
+            sceVif1PkAddGsData(pck, SCE_GS_SET_RGBAQ(pVertex[i].rgba[0], pVertex[i].rgba[1], pVertex[i].rgba[2], pVertex[i].rgba[3], *(u_int*) &pVertex[i].stq[2]));
+            
+            
+            
+            f = calc_fog_coeff(&pVertex[i].stq[2]);
+            sceVif1PkAddGsData(pck, SCE_GS_SET_XYZF(pVertex[i].ScreenPos[0], pVertex[i].ScreenPos[1], pVertex[i].ScreenPos[2], shClamp(f, 0, 255)));
+        }
+    }
+}
 
 const char rodata_1193_0x0038DF30[] = "ef_common.c:1118> assert:(%s)\n";
 

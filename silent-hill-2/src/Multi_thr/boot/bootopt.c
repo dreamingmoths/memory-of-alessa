@@ -1,5 +1,6 @@
 #include "common.h"
 #include "Multi_thr/boot/bootopt.h"
+#include "Multi_thr/boot/bootoptitem.h"
 
 extern BootOptItem BootOptItemList[20]; // size: 0x1E0, address: 0x33B6A0
 extern s_char* D_01F01DEC;

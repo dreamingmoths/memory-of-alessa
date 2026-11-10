@@ -14,6 +14,11 @@ typedef struct Chara_Bound {
 
 int CharaBoundTblNum(void);
 
-extern Chara_Bound chara_bound_tbl[CHARA_BOUND_TBL_NUM]; // size: 0x760, address: 0x373070
+/**
+ * @brief Table that stores the radius of a bounding sphere for each character kind.
+ * 
+ * size: 0x760, address: 0x373070
+ */
+extern Chara_Bound chara_bound_tbl[CHARA_BOUND_TBL_NUM];
 
 #endif // CHARABOUNDTBL_H

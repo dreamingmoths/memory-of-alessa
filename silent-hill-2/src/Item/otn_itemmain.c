@@ -8,16 +8,22 @@
 
 #include "Event/item.h"
 #include "Event/event.h"
+#include "Event/event_sub.h"
+#include "Event/picture.h"
 
 #include "Item/otn_option.h"
 #include "Item/item_tgs_tmp.h"
 #include "Item/otn_itemmain.h"
+
+#include "data/daily.thu/data_pic_item.h"
+#include "data/daily.thu/data_pic_etc.h"
 
 #include "sound/sh_sound.h"
 #include "Effect/screen_effect.h"
 #include "Font/font.h"
 #include "Fog/spack.h"
 #include "FilesList/fileslist_bg.h"
+#include "Multi_thr/filesys/fcread.h"
 
 /* @todo: why does objdiff display this symbol as `unsigned short`? */
 static struct /* @anon8 */ {
@@ -77,18 +83,21 @@ static struct /* @anon8 */ {
 } t; // size: 0x2A0, address: 0x116E3D0
 
 extern u_short msg_buffer[32768]; // size: 0x10000, address: 0x11B7040
+extern int lcolor;
 
 
 #define ITEM_SELECT_COUNT 75
-extern struct /* @anon1 */ {
+
+struct /* @anon1 */ {
     // total size: 0x14
-    unsigned char kind; // offset 0x0, size 0x1
-    unsigned char count; // offset 0x1, size 0x1
-    unsigned char del; // offset 0x2, size 0x1
+    u_char kind; // offset 0x0, size 0x1
+    u_char count; // offset 0x1, size 0x1
+    u_char del; // offset 0x2, size 0x1
     float pos[2]; // offset 0x4, size 0x8
     float rot; // offset 0xC, size 0x4
     float item_scale; // offset 0x10, size 0x4
 } item_select[ITEM_SELECT_COUNT]; // size: 0x5DC, address: 0x116DDF0
+int examine_rgb;
 
 /* @todo find a place for these */
 extern fsFileIndex data_pic_etc_p_laura_letter_tex[1];
@@ -309,7 +318,248 @@ void itemmainmain(void) {
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", itemmainmain);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", cur_step);
+#line 534
+void cur_step(void) {
+    int i = 0; // @note unused
+
+    switch (t.step) {
+        case 0:
+            t.step++;
+            break;
+
+        case 1:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_DOWN) || t.analog[PAD_ANALOG_DOWN]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    if (item.equip) {
+                        t.step = 5;
+                        SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                    }
+                }
+                if (shPadTrigger(0, key_config.enter) && !shPadPress(0, PAD_KEY_DPAD_LEFT) && !shPadPress(0, PAD_KEY_DPAD_RIGHT) && (t.analog[PAD_ANALOG_LEFT] == 0) && (t.analog[PAD_ANALOG_RIGHT] == 0) && (t.use_item == 0) && (t.item_kind) && (command_kind((short) t.item_kind) || t.shelf)) {
+                    t.step = 6;
+                    examine_file_load();
+                    SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 0);
+                }
+            }
+            if (!t.prs_btn2) {
+                if (shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) {
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -30);
+                    t.item_no++;
+                    t.prs_btn2 = 1;
+                    if (t.item_no == t.item_count) {
+                        t.item_no = 0;
+                    }
+                    if (shPadPress(0, PAD_KEY_DPAD_RIGHT)) {
+                        t.turn_speed = 64;
+                    } else {
+                        t.turn_speed = shPadPress(0, PAD_KEY_6) - 192;
+                    }
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 30);
+                    t.item_no--;
+                    t.prs_btn2 = 1;
+                    if (t.item_no == -1) {
+                        t.item_no = t.item_count - 1;
+                    }
+                    if (shPadPress(0, PAD_KEY_DPAD_LEFT)) {
+                        t.turn_speed = 64;
+                    } else {
+                        t.turn_speed = -(shPadPress(0, PAD_KEY_6) - 64);
+                    }
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[0] = t.combine[1] = t.combine[2] = 0;
+                return;
+            }
+            break;
+
+        case 2:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                }
+            }
+            if (shPadPress(0, key_config.enter)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 7;
+                t.fade_step1 = 2;
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[0] = t.combine[1] = t.combine[2] = 0;
+                return;
+            }
+            break;
+
+        case 3:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    t.step = 4;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -60);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+            }
+            if ((shPadTrigger(0, key_config.enter)) && MemoCommandCheck()) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 8;
+                t.fade_step1 = 0;
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[0] = t.combine[1] = t.combine[2] = 0;
+                return;
+            }
+            break;
+
+        case 4:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_LEFT) || t.analog[PAD_ANALOG_LEFT]) {
+                    t.step = 2;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 20);
+                }
+                if ((shPadPress(0, PAD_KEY_DPAD_RIGHT) || t.analog[PAD_ANALOG_RIGHT]) && MemoCommandCheck()) {
+                    t.step = 3;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, -20);
+                }
+                if (shPadPress(0, PAD_KEY_DPAD_UP) || t.analog[PAD_ANALOG_UP]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, key_config.enter)) {
+                    t.fade_flag  = 1;
+                    t.fade_step0 = 5;
+                    t.fade_step1 = 1;
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2) && (t.combine[0] == 0)) {
+                t.fade_flag  = 1;
+                t.fade_step0 = 1;
+                t.fade_step1 = 6;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                t.combine[0] = t.combine[1] = t.combine[2] = 0;
+                return;
+            }
+            break;
+
+        case 5:
+            if (!t.prs_btn) {
+                if (shPadPress(0, PAD_KEY_DPAD_DOWN) || t.analog[PAD_ANALOG_DOWN]) {
+                    t.step = 1;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+                if (shPadPress(0, key_config.enter)) {
+                    t.step = 7;
+                    SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
+                }
+            }
+            if ((shPadTrigger(0, key_config.cancel)) && (!t.prs_btn) && (!t.prs_btn2)) {
+                t.step = 1;
+                SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 60);
+                return;
+            }
+            break;
+
+        case 6:
+            command_main(command_kind((s32) t.item_kind));
+            if ((!t.prs_btn) && (shPadPress(0, key_config.cancel)) && (t.use_item == 0)) {
+                t.command_volume = 0;
+                t.step           = 1;
+                SeCall(SH_SOUND_CANCEL_SELECTION_10003, 1.0f, -30);
+                return;
+            }
+            break;
+
+        case 7:
+            weapon_command_main(command_kind((s32) item.equip));
+            if ((!t.prs_btn) && (shPadPress(0, key_config.cancel))) {
+                t.command_volume = 0;
+                t.step           = 1;
+                SeCall(SH_SOUND_CANCEL_SELECTION_10003, 1.0f, -30);
+                return;
+            }
+            break;
+
+        case 8:
+            if (!t.prs_btn) {
+                t.step = 1;
+                SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 30);
+                return;
+            }
+            break;
+
+        case 9:
+            if (!t.prs_btn) {
+                t.step = 1;
+                return;
+            }
+            break;
+
+        case 11:
+            if ((shPadTrigger(0, key_config.enter)) && (t.use_item == 0)) {
+                t.step = 1;
+                return;
+            }
+            break;
+
+        case 12:
+            examine2_main();
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel)) {
+                t.step = 13;
+                if (t.item_kind == SH2_ITEM_48) {
+                    FcRead(data_pic_item_x_coinelder_ura_tex, layer_adr);
+                } else if (t.item_kind == SH2_ITEM_49) {
+                    FcRead(data_pic_item_x_coinprisoner_ura_tex, layer_adr);
+                } else if (t.item_kind == COIN_OF_SNAKE) {
+                    FcRead(data_pic_item_x_coinsnake_ura_tex, layer_adr);
+                }
+            }
+            break;
+
+        case 13:
+            examine2_main();
+            if (!t.prs_btn) {
+                if ((t.item_kind == SH2_ITEM_48 || t.item_kind == SH2_ITEM_49 || t.item_kind == COIN_OF_SNAKE) && t.examine_step == 1) {
+                    if (fsSync(1, -1) >= 0) {
+                        t.step = 12;
+                        t.examine_step++;
+                    }
+                } else {
+                    t.step         = 1;
+                    t.examine_step = 0;
+                }
+                SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 30);
+            }
+            break;
+    }
+}
 
 void command_main(int command_step) {
 
@@ -904,27 +1154,426 @@ const char __pad_0x00392ee8[] = "\0\0\0\0"; /* @hack temporary fix to align roda
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", set_position);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_turn);
+#line 1437
+void item_turn(void) {
+    int i;
+    int j;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_position);
+    for (i = 0; i < t.item_count; i++)
+        item_select[i].count = 0;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", move_near);
+    for (i = t.item_no, j = 0; i < t.item_no + 10; i++, j++) {
+        
+        if (i < t.item_count)
+            item_select[i].count = j;
+        else
+            item_select[i - t.item_count].count = j;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", command_kind);
+#ifdef HOLY_CANDLE
+#line 1459
+void item_position(sceVu0FVECTOR f0, sceVu0FVECTOR f1, int count, sceVu0FVECTOR r0) {
+    r0[0] = move_near(20.0f, 110.0f + t.turn_speed, 1000.0f * *r0, count * 1000);
+    r0[0] /= 1000.0f;
+    
+    if ((count - *r0) > 1.5f || (count - *r0) < -1.5f) *r0 = count;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", del_check);
+    f0[0] = sin(((PI * (*r0 - 5.0f)) / 5.0f) / 1.6f) * 1500.0;
+    f1[0] = -cos(((PI * (*r0 - 5.0f)) / 5.0f) / 1.6f) * 1000.0;
+    
+    if (count == *r0 && count == 5) t.prs_btn2 = 0;
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_position)
+#endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", kind_no);
+#line 1485
+int move_near(float f0, float f1, float f2, float f3) {
+    float f;
+    if (f2 < f3) {
+        f = f2 + (((f3 - f2) / f0) * (30.0f * shGetDT()));
+        f = f + (f1 * (30.0f * shGetDT()));
+        if (f >= f3) f = f3;
+    }
+    else {
+        f = f2 - (((f2 - f3) / f0) * (30.0f * shGetDT()));
+        f = f - (f1 * (30.0f * shGetDT()));
+        if (f <= f3) f = f3;
+    }
+    return f;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", event_item_use);
+#line 1519
+int command_kind(int kind) {
+    switch (kind) {
+        case SH2_ITEM_22:
+        case APART_202_KEY:
+        case SH2_ITEM_30:
+        case SH2_ITEM_31:
+        case SH2_ITEM_32:
+        case SH2_ITEM_34:
+        case SH2_ITEM_35:
+        case SH2_ITEM_36:
+        case SH2_ITEM_37:
+        case SH2_ITEM_39:
+        case SH2_ITEM_41:
+        case SH2_ITEM_42:
+        case SH2_ITEM_43:
+        case SH2_ITEM_44:
+        case SH2_ITEM_45:
+        case SH2_ITEM_46:
+        case SH2_ITEM_50:
+        case SH2_ITEM_NEEDLE:
+        case SH2_ITEM_52:
+        case SH2_ITEM_55:
+        case SH2_ITEM_59:
+        case SH2_ITEM_60:
+        case SH2_ITEM_61:
+        case SH2_ITEM_62:
+        case SH2_ITEM_63:
+        case SH2_ITEM_64:
+        case SH2_ITEM_65:
+        case SH2_ITEM_66:
+        case SH2_ITEM_67:
+        case SH2_ITEM_68:
+        case SH2_ITEM_69:
+        case SH2_ITEM_70:
+        case SH2_ITEM_73:
+            return 1;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", combine_item_use);
+        case HEALTH_DRINK:
+        case FIRST_AID_KIT:
+        case AMPOULE:
+            return 2;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine_main);
+        case SH2_ITEM_10:
+        case WOODEN_PLANK:
+        case SH2_ITEM_12:
+        case SH2_ITEM_13:
+        case CHAINSAW:
+            return 3;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine_file_load);
+        case SH2_ITEM_04:
+        case SH2_ITEM_06:
+        case SH2_ITEM_08:
+            return 4;
 
+        case SH2_ITEM_05:
+        case SH2_ITEM_07:
+        case SH2_ITEM_09:
+            return 5;
+
+        case SH2_ITEM_15:
+            return 6;
+
+        case SH2_ITEM_RADIO:
+            return 7;
+
+        case SH2_ITEM_20:
+        case SH2_ITEM_21:
+        case SH2_ITEM_26:
+        case SH2_ITEM_27:
+        case SH2_ITEM_28:
+        case SH2_ITEM_40:
+        case SH2_ITEM_74:
+            return 8;
+
+        case SH2_ITEM_18:
+        case SH2_ITEM_19:
+        case SH2_ITEM_71:
+        case SH2_ITEM_72:
+            return 9;
+
+        case APART_GATE_KEY:
+        case SH2_ITEM_25:
+        case SH2_ITEM_29:
+        case SH2_ITEM_33:
+        case SH2_ITEM_38:
+        case COIN_OF_SNAKE:
+        case SH2_ITEM_48:
+        case SH2_ITEM_49:
+        case SH2_ITEM_53:
+        case SH2_ITEM_54:
+        case SH2_ITEM_56:
+        case SH2_ITEM_57:
+        case SH2_ITEM_58:
+            return 10;
+
+        case SH2_ITEM_17:
+            return 11;
+
+        default:
+            return 0;
+    }
+}
+
+#line 1617
+void del_check(void) {
+    int i;
+    for (i = 0; i < t.item_count; i++) {
+        
+        switch (item_select[i].kind) {
+            default: break;
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 7:
+            case 9:
+                if (item.number[item_select[i].kind] == 0) {
+                    item_select[kind_no(item_select[i].kind)].del = true;
+                }
+        }
+    }
+}
+
+#line 1641
+int kind_no(int kind) {
+    int i;
+
+    for (i = 0; i < t.item_count; i++)
+        if (kind == item_select[i].kind) 
+            return i;
+
+    return 0;
+}
+
+#line 1670
+void event_item_use(int kind) {
+    if (ItemEventCheck(kind, 0, 0) != -1) {
+        
+        item.event_use[0] = kind; item.event_use[1] = 0; item.event_use[2] = 0; // @note possible macro
+        t.fade_flag = 1;
+        t.fade_step0 = 1;
+        t.fade_step1 = 6;
+        
+    } else 
+        t.use_item = 1;
+}
+
+#line 1686
+void combine_item_use(int kind) {
+    if (ItemEventCheck(kind, t.combine[0], t.combine[1]) != -1 && ItemEventCheck(kind, t.combine[0], t.combine[1]) != -2) {
+        item.event_use[0] = kind;
+        item.event_use[1] = t.combine[0];
+        item.event_use[2] = t.combine[1];
+        t.fade_flag = 1;
+        t.fade_step0 = 1;
+        t.fade_step1 = 6;
+    } else if (ItemEventCheck(kind, t.combine[0], t.combine[1]) != -1) {
+        t.use_item = 3;
+    } else {
+        t.use_item = 1;
+    }
+    if (t.combine[1]) {
+        t.combine[2] = (s16) kind;
+        return;
+    }
+    t.combine[1] = (s16) kind;
+}
+
+#line 1715
+void examine_main(void) {
+    static PicDraw_Data i_pic;
+
+    #line 1719
+    switch (t.examine_step) {
+        default: break;
+        
+        case 0:
+            fontClear();
+            examine_rgb = 128;
+            PictureLoadImage(get_gp_data_buf_addr(), 0, -1, -1);
+            
+            shQzero(&i_pic, sizeof(i_pic));
+            
+            picture_set_ap(&i_pic, get_gp_data_buf_addr());
+            picture_set_alpha(&i_pic, 128);
+            
+            i_pic.r = 128; i_pic.g = 128; i_pic.b = 128; i_pic.status |= 16;
+            i_pic.otp = 1;
+            PictureDraw(&i_pic);
+            
+            look_blackscr(1);
+            if (shPadTrigger(0, key_config.enter) || shPadTrigger(0, key_config.cancel))
+                t.examine_step = 1;
+            break;
+        
+        case 1:
+            if (examine_rgb > 69) /* @epic */ examine_rgb = (int) (examine_rgb - (300.0f * shGetDT()));
+            PictureLoadImage(get_gp_data_buf_addr(), 0, -1, -1);
+            
+            shQzero(&i_pic, sizeof(i_pic));
+            
+            picture_set_ap(&i_pic, get_gp_data_buf_addr());
+            picture_set_alpha(&i_pic, 128);            
+            i_pic.r = examine_rgb; i_pic.g = examine_rgb; i_pic.b = examine_rgb; i_pic.status |= 16;
+            i_pic.otp = 1;
+            PictureDraw(&i_pic);
+            
+            look_blackscr(1);
+            if (!EvSubMessage(t.examine_msg))
+                break;
+            t.examine_step = 2;
+            ScreenEffectFadeStart(1, 0.0f);
+            item_main_setup();
+            TgsItemPictureLoad();
+            
+            break;
+        
+        case 2:
+            if (!ScreenEffectFadeCheck())
+                break;
+            t.examine_step = 0;
+            t.main_step = 1;
+            break;
+    }
+}
+
+#line 1778
+void examine_file_load(void) {
+    layer_adr = (sh2gfw_AREA_HEAD*) (get_gp_data_buf_addr() + ((FcGetFileSize(data_pic_etc_itemmenu2_tex) + 0x7FF) & ~0x7FF));
+
+    switch (t.item_kind) {
+        case COIN_OF_SNAKE:
+            FcRead(data_pic_item_x_coinsnake_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_48:
+            FcRead(data_pic_item_x_coinelder_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_49:
+            FcRead(data_pic_item_x_coinprisoner_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_25:
+            FcRead(data_pic_item_x_keyclock_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_56:
+            FcRead(data_pic_item_x_plate_kick_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_57:
+            FcRead(data_pic_item_x_plate_pig_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_58:
+            FcRead(data_pic_item_x_plate_female_tex, layer_adr);
+            return;
+
+        case APART_GATE_KEY:
+            FcRead(data_pic_item_x_keygate_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_29:
+            FcRead(data_pic_item_x_keynorth_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_33:
+            FcRead(data_pic_item_x_keyrapis_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_38:
+            FcRead(data_pic_item_x_keyspiral_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_54:
+            FcRead(data_pic_item_x_ringlead_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_53:
+            FcRead(data_pic_item_x_ringopper_tex, layer_adr);
+            return;
+
+        case SH2_ITEM_17:
+            FcRead(data_pic_item_x_mary_p_tex, layer_adr);
+            return;
+    }
+}
+
+#ifdef HOLY_CANDLE
+#line 1836
+void examine2_main(void) {
+    static PicDraw_Data i_pic; // @ 0x0116DD50
+    static int i; // @ 0x0116DD48
+
+    switch (t.examine_step) {
+        case 0:
+
+            if (fsSync(1, -1) >= 0)
+                t.examine_step++;
+            if (t.item_kind == SH2_ITEM_29   || 
+                t.item_kind == SH2_ITEM_25   || 
+                t.item_kind == SH2_ITEM_38   || 
+                t.item_kind == COIN_OF_SNAKE || 
+                t.item_kind == SH2_ITEM_48   || 
+                t.item_kind == SH2_ITEM_49)
+                t.use_item = 7;
+            if (t.item_kind == SH2_ITEM_25 && !GET_GAME_FLAG(GAME_FLAG_77))
+                
+                t.use_item = 0;
+            
+            if (t.item_kind == APART_GATE_KEY)
+                SET_GAME_FLAG(GAME_FLAG_1270);
+            break;
+
+        case 1:
+        case 2:
+            PictureLoadImage(layer_adr, 6, -1, -1);
+            
+            shQzero(&i_pic, sizeof(PicDraw_Data));
+            
+            picture_set_ap(&i_pic, layer_adr);
+            picture_set_alpha(&i_pic, 128);
+            
+            i_pic.x0 = (int) (t.box[0][0]) * 16; i_pic.y0 = (int) (t.box[0][1]) * 16; i_pic.x1 = (int) (t.box[2][0]) * 16; i_pic.y1 = (int) (t.box[2][1]) * 16; i_pic.status |= 2;
+            i_pic.r = 128; i_pic.g = 128; i_pic.b = 128; i_pic.status |= 16;
+            i_pic.otp = 7;
+            PictureDraw(&i_pic);
+            break;
+    }
+    #define COL(i) ((lcolor * (3 - i)) + 30)
+    for (i = 0; i < 4; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+        (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+        spkCloseOpenDGiftag(
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 7),
+            GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
+        );
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(i), COL(i), COL(i), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] - i), zs(t.box[0][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[1][0] - i), zs(t.box[1][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[2][0] + i), zs(t.box[2][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[3][0] + i), zs(t.box[3][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] - i), zs(t.box[0][1] - i), zs(-10), 255);
+        spkCloseGiftag();
+
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+        (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1);
+        (*spack.pos++) = SCE_GS_TEST_1;
+        spkCloseOpenDGiftag(
+            SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 7),
+            GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2)
+        );
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(i), COL(i), COL(i), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] + i), zs(t.box[0][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[1][0] + i), zs(t.box[1][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[2][0] - i), zs(t.box[2][1] - i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[3][0] - i), zs(t.box[3][1] + i), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(t.box[0][0] + i), zs(t.box[0][1] + i), zs(-10), 255);
+        spkCloseGiftag();
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", examine2_main);
+/* static */ PicDraw_Data i_pic_2178; // @ 0x0116DD50
+/* static */ int i_2179; // @ 0x0116DD48
+#endif
 
 void font_print(void) {
     int i;   // r2
@@ -985,12 +1634,12 @@ void font_print(void) {
                     t.use_item++;
                 } else if (t.item_kind == 20) {
                     kage_font(msg_buffer, 181, 45, 340);
-                    if ((shPadTrigger(0, key_config.enter) != 0) && (t.prs_btn == 0)) {
+                    if ((shPadTrigger(0, key_config.enter) != 0) && (!t.prs_btn)) {
                         t.use_item++;
                     }
                 } else if (t.item_kind == 27) {
                     kage_font(msg_buffer, 175, 45, 340);
-                    if ((shPadTrigger(0, key_config.enter) != 0) && (t.prs_btn == 0)) {
+                    if ((shPadTrigger(0, key_config.enter) != 0) && (!t.prs_btn)) {
                         t.use_item++;
                     }
                 } else {
@@ -1015,7 +1664,7 @@ void font_print(void) {
                     t.step     = 1;
                     t.use_item = 0;
                 }
-                if (((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, key_config.cancel) != 0)) && (t.prs_btn == 0)) {
+                if (((shPadTrigger(0, key_config.enter) != 0) || (shPadTrigger(0, key_config.cancel) != 0)) && (!t.prs_btn)) {
                     t.step     = 1;
                     t.use_item = 0;
                     t.prs_btn  = 1;
@@ -1309,7 +1958,7 @@ void font_print(void) {
         }
     }
     fontSetColorDirect((u_char) f, (u_char) f, (u_char) f, 255);
-    if ((t.item_kind != 0) && ((command_kind((short) t.item_kind) == 2) || (command_kind((s32) t.item_kind) == 4) || (command_kind((s32) t.item_kind) == 5)) && (t.prs_btn2 == 0)) {
+    if ((t.item_kind != 0) && ((command_kind((short) t.item_kind) == 2) || (command_kind((s32) t.item_kind) == 4) || (command_kind((s32) t.item_kind) == 5)) && (!t.prs_btn2)) {
         if (item.number[t.item_kind] < 10) {
             fontPrintDec(item.number[t.item_kind], 236, 289, 3, 0);
             stock_line(31, 0);
@@ -1321,7 +1970,7 @@ void font_print(void) {
             stock_line(59, 0);
         }
     }
-    if (t.prs_btn2 == 0) {
+    if (!t.prs_btn2) {
         if (t.item_kind == 15) {
             if (item.light_switch != 0) {
                 fontPrintStrNum(msg_buffer, 4U, 264, 290);
@@ -1359,7 +2008,54 @@ void font_print(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", kage_font);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", lookline);
+#line 2302
+void lookline(sceVu0FMATRIX box) {
+    #define BOX_ALPHA() ((int) box[0][3])
+
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    
+    // disable alpha blending when alpha is full
+    if (BOX_ALPHA() == 255)
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+    else
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);;
+
+    // draw the item selection box
+    (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0]), zs(box[0][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0]), zs(box[1][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[2][0]), zs(box[2][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0]), zs(box[3][1]), zs(0), 1);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0]), zs(box[0][1]), zs(0), 1);
+    spkCloseGiftag();
+
+    // draws two little corners on either side of the diagonal of the rectangle when no button is pressed
+    if (BOX_ALPHA() == 255 && !t.prs_btn && !t.prs_btn2) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] - 6.0f), zs(box[1][1] - (box[1][1] - box[0][1]) / 2.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[0][0] - 6.0f), zs(box[0][1] - 6.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0] - (box[3][0] - box[0][0]) / 2.0f), zs(box[3][1] - 6.0f), zs(0), 1);
+        spkCloseGiftag();
+
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 5), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_FALSE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, BOX_ALPHA(), 0); // @info already checked that it's 255, so redundant
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[1][0] + (box[3][0] - box[0][0]) / 2.0f), zs(box[1][1] + 5.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[2][0] + 6.0f), zs(box[2][1] + 5.0f), zs(0), 1);
+        (*spack.pos++) = SCE_GS_SET_XYZF2(zs(box[3][0] + 6.0f), zs(box[3][1] + (box[1][1] - box[0][1]) / 2.0f), zs(0), 1);
+        spkCloseGiftag();
+    }
+}
 
 #line 2353
 void item_allay(void) {
@@ -1447,19 +2143,248 @@ void item_allay(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", sprite);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_command);
+void look_command(int gosa) {
+    int k;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_volume);
+    t.command_move = move_near(2.0f, 0.2f, 1000.0f * t.command_move, 1000.0f * t.command_cur);
+    t.command_move /= 1000.0f;
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_hp);
+    for (k = 0; k < 6; k++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, 0, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(0, (t.command_abe / 2) * (6 - k), (t.command_abe / 4) * (6 - k), 32, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(90.0f  + (k * k) / 10), zs(k + ((26.0f * t.command_move) + gosa)), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(230.0f - (k * k) / 10), zs(1.0f + (k + ((26.0f * t.command_move) + gosa))), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(90.0f  + (k * k) / 10), zs(26.0f * t.command_move + gosa - k), zs(-10), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(230.0f - (k * k) / 10), zs(26.0f * t.command_move + gosa - k - 1.0f), zs(-10), 255);
+        spkCloseGiftag();
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", stock_line);
+#line 2497
+void look_volume(void) {
+    int i;
+    
+    for (i = 0; i < 16; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -65533, 0);
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        if (i <= item.radio_volume) {
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 176, 0, 32, 0);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 48, 0, 32, 0);
+        }
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 7 + 105), zs(-120), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 7 + 109), zs(-100), zs(0), 255);
+        spkCloseGiftag();
+    }
+}
 
+#line 2523
+void look_hp(void) {
+    int z, i, j, j0, j1, r, g, b; // @todo arguments are quite wrong and confusing
+    float j_hp, j_max;
+    j_hp = sh2jms.player->battle.hp;
+    j_max = sh2jms.player->battle.hp_max;
+    
+    
+
+    #define HP_PERCENT() (j_hp / j_max)
+    
+    
+    t.hp_time1 -= 30.0f * shGetDT();
+    t.hp_time2 += 30.0f * ((1.4f + ((1.0f - HP_PERCENT()) / 0.7f)) * shGetDT());
+    if (t.hp_time2 > -70.0f) t.hp_time2 = -210.0f;
+    t.hp_abe -= 0.034f + ((1.0f - HP_PERCENT()) / 25.0f);
+    if (t.hp_abe < 0.0f) {
+        t.hp_abe = 1.0f;
+        
+        t.hp_time1 = t.hp_time2;
+    }
+    fptosi(2048.0f + t.hp_time2); // @hack?
+
+    t.hp_kodo += shGetDT() / 2.0f;
+    if (t.hp_kodo > 0.2f + HP_PERCENT()) {
+        t.hp_kodo = 0.0f;
+    }
+    if ((t.hp_kodo < 0.1f) && (j_hp < (0.8f * j_max)))
+        t.hp_abe2 = 1.0f - (6.0f * t.hp_kodo);
+    else if ((t.hp_kodo < 0.2f) && (j_hp < (0.8f * j_max))) 
+        t.hp_abe2 = (6.0f * t.hp_kodo) - 0.2f;
+    else t.hp_abe2 = 1.0f;
+
+
+
+    #define COL() 160.0f * t.hp_abe2
+    #define COLDIFF()  (t.hp_abe2 * (160.0f * (1.0f - ((2.0f * j_hp) / j_max))))
+
+    
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -MAX_INT + 2, 0);
+    
+    (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
+    (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_TEX0_1, SCE_GS_RGBAQ, SCE_GS_ST, SCE_GS_XYZF2, SCE_GS_ST, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1 /* texture mapping */, 0, 0, 0, 0, 0, 0);
+    (*spack.pos++) = SCE_GS_SET_TEX0(13312, 1, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0);
+
+    if (j_hp < j_max / 2.0f)
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL() - COLDIFF(), COL() - COLDIFF(), 160, FLOAT_ONE);
+    else
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL(), COL(), 160, FLOAT_ONE);
+    (*spack.pos++) = SCE_GS_SET_ST(0.0f, 0.0f);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-230), zs(-175), 0, 255);
+    (*spack.pos++) = SCE_GS_SET_ST(FLOAT_ONE, FLOAT_ONE);
+    (*spack.pos++) = SCE_GS_SET_XYZF(zs(-90), zs(-70), 0, 255);
+    spkCloseGiftag();
+    
+    // randomly create lines on the screen.
+    // the lower your health is, the more chances for lines there are, up to 10 per frame.
+    for (i = 0; i < 10.0f - 10.0f * HP_PERCENT(); i++) {
+        int z;
+        srand(t.seed++);
+        j = (rand() % 140) - 230;
+        j0 = (rand() % 105) - 173;
+        j1 = rand() % 105;
+        z = rand() % 6;
+        
+        if (z <= 0) {
+            if (j + j1 > -90) j1 = -90 - j; // if their sum is larger than -90, ensure it sums to -90
+            spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -MAX_INT + 3, 0);
+            
+            (*spack.pos++) = 0; (*spack.pos++) = SCE_GS_TEXFLUSH;
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD);
+            (*spack.pos++) = SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1); (*spack.pos++) = SCE_GS_TEST_1;
+            spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_TEX0_1, SCE_GS_RGBAQ, SCE_GS_ST, SCE_GS_XYZF2, SCE_GS_ST, SCE_GS_XYZF2));
+            (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1 /* texture mapping */, 0, 0, 0, 0, 0, 0);
+            (*spack.pos++) = SCE_GS_SET_TEX0(13312, 1, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0);
+            
+            
+            if (j_hp < j_max / 2.0f)
+                (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL() - COLDIFF(), COL() - COLDIFF(), 160, FLOAT_ONE);
+            else
+                (*spack.pos++) = SCE_GS_SET_RGBAQ(COL(), COL(), COL(), 160, FLOAT_ONE);
+            // @weird numbers?
+            (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * ((j + 230) / 140.0f), 1040187400.0f + 24117248.0f * ((j0 + 175) / 105.0f));
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(zs(j), 0, zs(j0 - 2), 0, 0xff000000);
+            (*spack.pos++) = SCE_GS_SET_ST(1040187400.0f + 24117248.0f * (((j + j1) + 230) / 140.0f), 1041236000.0f + 24117248.0f * ((j0 + 175) / 105.0f));
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(j + j1), zs(j0), 0, 255);
+            spkCloseGiftag();
+        }
+    }
+}
+
+#line 2627
+void stock_line(int leftx, int hoge) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+        spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+        spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+        (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(160, 160, 160, 255, 0);
+        if (hoge == 0) {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(50 - (i * leftx)), zs(50), zs(0), 255);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(76 - (i * leftx)), zs(-80), zs(0), 255);
+        }
+        if (hoge == 0) {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(38 - (i * leftx)), zs(52), zs(0), 255);
+        } else {
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(64 - (i * leftx)), zs(-78), zs(0), 255);
+        }
+        spkCloseGiftag();
+    }
+}
+
+
+#ifdef HOLY_CANDLE
+static inline void drawItemImage(int index, int location) {
+    // @note scope needed for match
+    { short type = t.combine[index]; if (type) TgsItemPitureDraw(type, location, 1072, 128, 100, 0.4f); }
+}
+
+#line 2652
+void look_combine(void) {
+    int i;
+    drawItemImage(0, 1920);
+    drawItemImage(1, 2720);
+    drawItemImage(2, 3520);
+    
+    if (t.combine[0]) t.combine_abe += 4.0f * shGetDT();
+    else t.combine_abe -= 4.0f * shGetDT();
+    if (t.combine_abe > 1.0f) t.combine_abe = 1.0f;
+    else if (t.combine_abe < 0.0f) t.combine_abe = 0.0f;
+
+    for (i = 0; i < 3; i++) {
+        // draw each combined item type
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT + 2, 0);
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);;
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(16, 48, 16, 80.0f * t.combine_abe, 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(45), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 140), zs(95), zs(0), 255);
+        spkCloseGiftag();
+        
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 7), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT + 2, 0);
+        (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_LINESTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(64, 128, 64, (80.0f * t.combine_abe), 0);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(45), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(95), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 140), zs(95), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 140), zs(45), zs(0), 255);
+        (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 50 + 100), zs(45), zs(0), 255);
+        spkCloseGiftag();
+    }
+    return;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_combine);
+#endif
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_zanzo);
+// ざんぞう (zanzō) afterimage
+#line 2691
+void look_zanzo(sceVu0FVECTOR za0, sceVu0FVECTOR za1, sceVu0FVECTOR za2, sceVu0FVECTOR za3) {
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65534, 0);
+    spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
 
-INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", look_blackscr);
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 6), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2, SCE_GS_XYZF2));
+    (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
+    if (t.step != 12 && t.step != 13)
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(48, 96, 240, (int) za0[3], 0);
+    else 
+        (*spack.pos++) = SCE_GS_SET_RGBAQ(140, 140, 140, 2 * (int) za0[3], 0);
+
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za0[0]), zs(za0[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za1[0]), zs(za1[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za2[0]), zs(za2[1]), zs(0), 255);
+    (*spack.pos++) = SCE_GS_SET_XYZF2(zs(za3[0]), zs(za3[1]), zs(0), 255);
+    spkCloseGiftag();
+}
+
+#line 2711
+void look_blackscr(int num) {
+    int i;
+    int j;
+
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            if (num == 0) {
+                spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -65535, 0);
+                spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
+                spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2));
+            } else {
+                spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZF2, SCE_GS_XYZF2), -MAX_INT, 0);
+            }
+            (*spack.pos++) = SCE_GS_PRIM_SPRITE;
+            (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 128, 0);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 256), zs(j * 64 - 256), zs(-100), 255);
+            (*spack.pos++) = SCE_GS_SET_XYZF(zs(i * 64 - 192), zs(j * 64 - 192), zs(-100), 255);
+            spkCloseGiftag();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Item/otn_itemmain", item_fade_in);
 

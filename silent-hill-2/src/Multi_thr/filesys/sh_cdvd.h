@@ -3,9 +3,7 @@
 
 #include "common.h"
 #include "sce/libcdvd.h"
-
-// ???
-extern int CreateSema2(int, int, int);
+#include "sdk.h"
 
 // total size: 0x10
 typedef struct shCdWorkT {

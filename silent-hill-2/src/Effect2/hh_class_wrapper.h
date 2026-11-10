@@ -4,11 +4,11 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
 
-#define PRIMITIVE_X_RANGE 1024.0f
-#define PRIMITIVE_Y_RANGE 1024.0f
+#define PRIMITIVE_X_RANGE    1024.0f
+#define PRIMITIVE_Y_RANGE    1024.0f
 #define BOUNDING_BOX_X_RANGE 1500.0f
 #define BOUNDING_BOX_Y_RANGE 1500.0f
-#define BOUNDING_BOX_Z_FAR 200.0f
+#define BOUNDING_BOX_Z_FAR   200.0f
 
 typedef struct HH_Class_Wrapper_Work {
     // total size: 0xC0

@@ -76,7 +76,7 @@ typedef int (func_t)(func2_t*);
     PlayerInitOnConnect();    
     if (GET_GAME_FLAG(GAME_FLAG_15)) MariaInitOnConnect();
 
-    volatile_vec_copy(&sys.hero.pos[0], &connect_pos[0]);
+    shVectorCopy(&sys.hero.pos[0], &connect_pos[0]);
     
     
     

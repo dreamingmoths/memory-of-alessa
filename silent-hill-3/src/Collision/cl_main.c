@@ -115,22 +115,22 @@ int clCheckCrossLine2LineXZ(float * va0, float * va1, float * vb0, float * vb1) 
     outer0 = bp[0] * p0[2] - bp[2] * p0[0];
     outer1 = bp[0] * p1[2] - bp[2] * p1[0];
     if (outer0 == 0.0f && outer1 == 0.0f) {
-        if ((va0[0] <= float_max(vb0[0], vb1[0])  &&
-             va0[0] >= float_min(vb0[0], vb1[0])  &&
-             va0[2] <= float_max(vb0[2], vb1[2])  &&
-             va0[2] >= float_min(vb0[2], vb1[2])) ||
-            (va1[0] <= float_max(vb0[0], vb1[0])  &&
-             va1[0] >= float_min(vb0[0], vb1[0])  &&
-             va1[2] <= float_max(vb0[2], vb1[2])  &&
-             va1[2] >= float_min(vb0[2], vb1[2])) ||
-            (vb0[0] <= float_max(va0[0], va1[0])  &&
-             vb0[0] >= float_min(va0[0], va1[0])  &&
-             vb0[2] <= float_max(va0[2], va1[2])  &&
-             vb0[2] >= float_min(va0[2], va1[2])) ||
-            (vb1[0] <= float_max(va0[0], va1[0])  &&
-             vb1[0] >= float_min(va0[0], va1[0])  &&
-             vb1[2] <= float_max(va0[2], va1[2])  &&
-             vb1[2] >= float_min(va0[2], va1[2]))
+        if ((va0[0] <= shFloatMax(vb0[0], vb1[0])  &&
+             va0[0] >= shFloatMin(vb0[0], vb1[0])  &&
+             va0[2] <= shFloatMax(vb0[2], vb1[2])  &&
+             va0[2] >= shFloatMin(vb0[2], vb1[2])) ||
+            (va1[0] <= shFloatMax(vb0[0], vb1[0])  &&
+             va1[0] >= shFloatMin(vb0[0], vb1[0])  &&
+             va1[2] <= shFloatMax(vb0[2], vb1[2])  &&
+             va1[2] >= shFloatMin(vb0[2], vb1[2])) ||
+            (vb0[0] <= shFloatMax(va0[0], va1[0])  &&
+             vb0[0] >= shFloatMin(va0[0], va1[0])  &&
+             vb0[2] <= shFloatMax(va0[2], va1[2])  &&
+             vb0[2] >= shFloatMin(va0[2], va1[2])) ||
+            (vb1[0] <= shFloatMax(va0[0], va1[0])  &&
+             vb1[0] >= shFloatMin(va0[0], va1[0])  &&
+             vb1[2] <= shFloatMax(va0[2], va1[2])  &&
+             vb1[2] >= shFloatMin(va0[2], va1[2]))
         ) {
             return 1;
         }

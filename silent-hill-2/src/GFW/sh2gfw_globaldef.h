@@ -1,0 +1,6 @@
+#ifndef SH2GFW_GLOBALDEF_H
+#define SH2GFW_GLOBALDEF_H
+
+extern Q_WORDDATA CalcTex_buffer[2304];
+
+#endif // SH2GFW_GLOBALDEF_H

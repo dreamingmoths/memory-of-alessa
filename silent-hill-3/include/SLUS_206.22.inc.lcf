@@ -683,11 +683,11 @@ SECTIONS
 		
 		amusement_00.c.o (.text)
 
-		. = ALIGN(0x80);
+		. = ALIGN(0x100);
 		ALIGNALL(0x4);
 
 		amusement_00_data.data.s.o (.data)
-		ALIGNALL(0x10);
+		ALIGNALL(0x8);
 		amusement_00.c.o (.rodata)
 
 		. = ALIGN(0x80);

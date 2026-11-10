@@ -39,7 +39,7 @@ typedef struct Object_DataPool_Infomeation {
     u_int Block_Index_Max;                    // offset 0x4, size 0x4
     void* pBlock_Table;                       // offset 0x8, size 0x4
     Object_DataBlock_Header* pFreeBlock_List; // offset 0xC, size 0x4
-}__attribute__((aligned(16))) Object_DataPool_Infomeation;
+} __attribute__((aligned(16))) Object_DataPool_Infomeation;
 
 typedef struct Object_InstanceTable_Infomeation {
     Object_Instance* pInstanceTable;   // offset 0x0, size 0x4
@@ -78,6 +78,12 @@ typedef struct Object_Group_Infomeation {
     u_int Enable;                                          // offset 0x50, size 0x4
     u_int Step;                                            // offset 0x54, size 0x4
 } Object_Group_Infomeation;
+
+typedef struct Motion_Table_Infomeation {
+    float diff_time;        // offset 0x0, size 0x4
+    float diff_scale_ratio; // offset 0x4, size 0x4
+    float diff_rgba_ratio;  // offset 0x8, size 0x4
+} Motion_Table_Infomeation;
 
 u_int ImpactDescriptor_Post(Object_Group_Infomeation* pInfo, ImpactQueue_Element* pDescriptor);
 u_int Object_Group_Manager(Object_Group_Infomeation* pInfo);

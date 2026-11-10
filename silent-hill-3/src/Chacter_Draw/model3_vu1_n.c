@@ -21,7 +21,7 @@ INCLUDE_ASM("asm/nonmatchings/Chacter_Draw/model3_vu1_n", func_001D7530);
 
 static void MakeNormalPacket(Part* part, sceVif1Packet* pk) {
     int n_textures = part->n_textures;
-    unsigned short * text_pos_indices = (u_short*)((u_int)part + part->text_pos_indices_offset);
+    u_short * text_pos_indices = (u_short*)((u_int)part + part->text_pos_indices_offset);
     TextPosParam * text_pos_params = model_common_work->text_pos_params;
     TextureParam * texture_params = (TextureParam*) ((u_int)part + part->texture_params_offset);
     int mpg = ((part->backclip == 0) ? 0x16: 0x18);

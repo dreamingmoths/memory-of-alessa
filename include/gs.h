@@ -4,6 +4,7 @@
 /* miscellaneous GS/GIF helpers, with commentary from @Mc-muffin */
 
 #include "sce/eetypes.h"
+#include "macros.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480

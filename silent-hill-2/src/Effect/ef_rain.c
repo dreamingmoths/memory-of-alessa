@@ -105,13 +105,13 @@ void EFCTRainDropMain(shTskTASK* ptr) {
             
             
             
-            vec_zero_xyz(pos);
+            shVectorZeroXyz(pos);
             pos[2] = 1000.0f;
             vwGetViewAngle(camang);
-            vu0_unit_matrix(m0);               
+            shUnitMatrix(m0);               
             shRotMatrixY(m0, m0, camang[1]);
-            vu0_transform_vector(pos, m0);
-            vu0_add_vector(campos, campos, pos);
+            shVectorTransform(pos, m0);
+            shAddVector(campos, campos, pos);
                     
             
             for (j = 0; j < 15; j++) {
@@ -130,8 +130,8 @@ void EFCTRainDropMain(shTskTASK* ptr) {
             for (j = 0; j < 15; j++) {
                 
                 pt->p[j][1] += dif;
-                volatile_vec_copy(line.v[0], pt->p[j]);
-                volatile_vec_copy(line.v[1], pt->p[j]);
+                shVectorCopy(line.v[0], pt->p[j]);
+                shVectorCopy(line.v[1], pt->p[j]);
                 line.v[1][1] += 100.0f;
                 
                 efRainDropDrawLINE(&line);
@@ -164,12 +164,12 @@ void EFCTRainDropMain(shTskTASK* ptr) {
 }
 
 static void efRainDropInitSpray(EF_RAINDROP_DATA* dat /* r16 */, float* pos /* r2 */) {
-    volatile_vec_copy(&dat->v[0], pos);
+    shVectorCopy(&dat->v[0], pos);
     dat->v[0][1] -= 25.0f;
     dat->v[0][3] = 1.0f;
-    volatile_vec_copy(&dat->v[1], &dat->v[0]);
-    volatile_vec_copy(&dat->v[2], &dat->v[0]);
-    volatile_vec_copy(&dat->v[3], &dat->v[0]);
+    shVectorCopy(&dat->v[1], &dat->v[0]);
+    shVectorCopy(&dat->v[2], &dat->v[0]);
+    shVectorCopy(&dat->v[3], &dat->v[0]);
     dat->v[1][0] = dat->v[0][0] + (shRandF() - 0.5f) / 10.0f * 500.0f;
     dat->v[2][2] = dat->v[0][2] + (shRandF() - 0.5f) / 10.0f * 500.0f;
     dat->v[3][0] = dat->v[0][0] + (shRandF() - 0.5f) / 10.0f * 500.0f;
@@ -188,8 +188,8 @@ static int efRainDropDrawSpray(EF_RAINDROP_DATA* dat /* r16 */)  {
     line.rgba[3] = 0xFF;
 
     for (i = 0; i < 4; i++) {
-        volatile_vec_copy(line.v[0], dat->v[i]);
-        volatile_vec_copy(line.v[1], dat->v[i]);
+        shVectorCopy(line.v[0], dat->v[i]);
+        shVectorCopy(line.v[1], dat->v[i]);
         line.v[1][1] -= 10.0f;
         efRainDropDrawLINE(&line);
     }

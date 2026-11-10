@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from argparse import ArgumentParser
 
 from constants import READELF_PATH
+from kaitai.data.config import PROJECT_DATA_CONFIG
 from utils import atlas_diff, parse_symbol_addrs, parse_symtab_as_atlas, read_symtab, write_symbol_addrs
 
 def configure_util_parser(util_parser: ArgumentParser):
@@ -36,7 +37,7 @@ def configure_util_parser(util_parser: ArgumentParser):
     format_chara_kinds_parser.add_argument(
         "--chara-kinds-path",
         type=Path,
-        default="silent-hill-3/src/Chacter/chara_list.h"
+        default=PROJECT_DATA_CONFIG["silent-hill-3"]
     )
     format_chara_kinds_parser.set_defaults(func=format_chara_kinds)
 

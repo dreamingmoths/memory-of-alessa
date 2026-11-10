@@ -30,7 +30,7 @@ used with the `make report` commands. Please see
 
 For more information on Ghidra, see [#working-in-ghidra](#working-in-ghidra).
 
-- PlayStation 2 extension: [chaoticgd/ghidra-emotionengine-reloaded](github.com/chaoticgd/ghidra-emotionengine-reloaded)
+- PlayStation 2 extension: [chaoticgd/ghidra-emotionengine-reloaded](https://github.com/chaoticgd/ghidra-emotionengine-reloaded)
 
 - When working on Silent Hill 2, we recommend this extension for the DWARF
 information: [zoikun/ghidra-dwarf1](https://github.com/zoikun/ghidra-dwarf1)
@@ -53,6 +53,8 @@ dtk dwarf dump SLUS_202.28 -o debug.c
 Due to performance concerns, it may be good to open `debug.c` in a text editor
 such as Sublime Text rather than an IDE, or otherwise turn off code analysis
 when the file is open.
+
+Silent Hill 2's DWARF has a couple of quirks to look out for. See [dwarf-quirks.md](dwarf-quirks.md)
 
 
 ### alessatool
@@ -140,7 +142,7 @@ This section will hopefully be filled out more soon. We would also like to have 
 
 These were listed above, but are listed again for convenience.
 
-- [chaoticgd/ghidra-emotionengine-reloaded](github.com/chaoticgd/ghidra-emotionengine-reloaded)
+- [chaoticgd/ghidra-emotionengine-reloaded](https://github.com/chaoticgd/ghidra-emotionengine-reloaded)
 - [zoikun/ghidra-dwarf1](https://github.com/zoikun/ghidra-dwarf1)
 
 ### setting up ghidra
@@ -260,3 +262,77 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontSelectUp);
 When the time comes, all hauntings will be exorcised through rituals.
 
 (@todo: Document this behavior on the [decomp wiki](https://decomp.wiki).)
+
+### MIPS registers
+
+The diagram below describes the MIPS assembly registers and their numeric
+mappings. This becomes important when matching Silent Hill 2 since the
+[decomp-toolkit symbols file](#decomp-toolkit) associates the local variable
+names to these numeric values.
+
+<div align="center">
+  <img alt="MIPS register mapping" src="https://i.imgur.com/OKTBeWK.png" width="512">
+
+  _Source: [Rochester Institute of Technology](https://www.cs.rit.edu/~paw/250/notes/135e/,notes.221/02/MIPS%20registers.pdf), via ["MIPS Assembly: Data, Registers, and Mimicking Scope"](https://oliviagallucci.com/mips-assembly-data-registers-and-mimicking-scope/) by Olivia A. Gallucci_.
+</div>
+
+Please note that the DWARF information may miss some local variables or show
+misleading register values (especially `$r2` in the case of MWCCPS2 2.4).
+
+## data migration
+
+In the context of decompilation projects, "data migration" refers the process of
+moving assembly data to C, including tables, numeric constants, strings, and so
+on. Compared to function decompilation, the decompilation of data is relatively
+straightforward to automate, even more so when the structure of the data is
+known ahead of time.
+
+`alessatool` can perform data migration automatically, with no further
+dependencies outside of the Python requirements for this repository. To see an
+example data migration, run
+
+```sh
+source tools/scripts/env.sh # activate `alessatool`, if not already active
+alessatool migrate --project=silent-hill-2 --name=_pObject_Class_List
+```
+
+and then open `ctx.c` in an editor of choice. This is used in
+[hh_effect_object_def.c](../silent-hill-2/src/Effect2/hh_effect_object_def.c).
+
+### how to migrate data
+
+If you already have some data you need to migrate, then:
+
+1. Add an entry to the list in `tools/alessatool/kaitai/data/config.py`. See
+   [migration syntax](#migration-syntax) for more details if needed.
+
+2. Run the migration command. For example, if the data is named `symbol_name`:
+
+```sh
+alessatool migrate --project=silent-hill-2 --name=symbol_name
+```
+
+The result will be in `ctx.c`. Any macros such as `UNLINKED(...)` or
+`UNMIGRATED(...)` can be removed so that the result is formatted as a definition
+(like `AnimeInfo anime_info = { /* ... */ };`).
+
+### migration syntax
+
+*(This section is likely to change.)*
+
+`StructData` is for data that contains at least one struct, whereas `SimpleData`
+is for everything else.
+
+The `name` section of each entry should match a symbol in `symbol_addrs.txt`.
+
+The `count` field is how many elements are in the array part if any, for example
+`AnimeInfo[11]` should have `count=11`. `SimpleData` supports `pattern`, which
+can be used for multidimensional arrays such as `float[4][4]`, where we would
+write `pattern=[4, 4]`.
+
+`hex=False` can be used to specify that numbers are decompiled as decimal
+numbers rather than hexadecimal.
+
+`to_str` can be used to pass a custom stringification function. This can be
+useful to format the data in special ways, for example converting numbers to
+macros or enums.

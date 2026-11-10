@@ -89,7 +89,7 @@ static u_int Object_Manager(HH_Object_Blood_Stick_00* pThis, ImpactQueue_Element
             descriptor.pResultHandle_Address = NULL;
             descriptor.Class_Descriptor = 9;
             sceVu0CopyVector(descriptor.Option.Vector[0], center_location);                        
-            (rot_y = reflex_angle(rot_y), descriptor.Option.Float_Value[0] = rot_y);
+            (rot_y = shReflexAngle(rot_y), descriptor.Option.Float_Value[0] = rot_y);
             
             descriptor.Option.Float_Value[1] = 1.0f;
             descriptor.Option.Int_Value[0] = pThis->FootMark_Kind;
@@ -128,7 +128,7 @@ u_int HH_Class_Blood_Stick_00(void* pBlock, ImpactQueue_Element* pElement) {
         case 1:
             Object_Manager(pThis, pElement);
             
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             
             if (pThis->Leftover <= 0) {
                 pThis->Step = 2;

@@ -55,7 +55,7 @@ void vcSetCameraUseWarp(sceVu0FVECTOR chr_pos, float chr_ang_y) {
     sceVu0FVECTOR cam_ang;
 
 
-    vec_zero(cam_ang); // @bug: Arrays are set but never used, vec_zero uses asm that makes compiler forget this?
+    shVectorZero(cam_ang); // @bug: Arrays are set but never used, shVectorZero uses asm that makes compiler forget this?
     cam_ang[1] = chr_ang_y;
 
 
@@ -83,9 +83,9 @@ void vcMakeHeroHeadPos(sceVu0FVECTOR head_pos) {
 
 
 
-    mat_copy(neck_lwm, vcPreInfo.hero_neck_lwm);
+    shMatrixCopy(neck_lwm, vcPreInfo.hero_neck_lwm);
 
-    vec_zero(fpos);
+    shVectorZero(fpos);
     fpos[1] = -50.0f;
     vbApplyMatrixWithoutTr(fpos, neck_lwm, fpos);
 

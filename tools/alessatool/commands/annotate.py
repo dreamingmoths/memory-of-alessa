@@ -48,7 +48,9 @@ def annotate_asm(args: AnnotationArgs):
     vram_end = args.vram_end
 
     if vram_start is None or vram_end is None:
-        vram_start, vram_end = find_vram_bounds(asm_lines)
+        found_vram_start, found_vram_end  = find_vram_bounds(asm_lines)
+        if vram_start is None: vram_start = found_vram_start
+        if vram_end   is None: vram_end   = found_vram_end
 
     line_file_path = get_line_file_path(args)
 

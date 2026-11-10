@@ -167,7 +167,7 @@ int shBattleCheckTargetChara(SubCharacter* scp) {
 
         sh2_target_info[20 - rest_tgt].in_area = in_area;
         sh2_target_info[20 - rest_tgt].adr.scp = tgt;
-        sh2_target_info[20 - rest_tgt].distance = vec3_dist(&scp->pos, &tgt->pos);
+        sh2_target_info[20 - rest_tgt].distance = shVectorDist(&scp->pos, &tgt->pos);
         
         rest_tgt--;        
     }    
@@ -430,8 +430,8 @@ SubCharacter* shBattleGetTargetHuman(SubCharacter* scp, u_int type) {
                     pos1[2] = p1->pos.z - scp->pos.z;
                     pos2[0]= p2->pos.x - scp->pos.x;
                     pos2[2] = p2->pos.z - scp->pos.z;
-                    scalar1 = vec_length(pos1);
-                    scalar2 = vec_length(pos2);
+                    scalar1 = shVectorLength(pos1);
+                    scalar2 = shVectorLength(pos2);
                     p = (scalar1 <= scalar2) ? p1 : p2;
                     break;
                 } else p = p1;                                                                      

@@ -171,7 +171,7 @@ static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_D
     return result * specular_coefficient;
 }
 
-static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
+static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
     float brightness = 255.0f;
 
     asm("lqc2 vf30, 0(a1);\
@@ -582,7 +582,7 @@ u_int HH_Class_Water_15(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                     pInfo->World_Location[2] += 10.0f;
                 }
             }
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

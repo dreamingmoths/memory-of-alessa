@@ -1,31 +1,30 @@
 //* aex === stg_apart_e1f *//
-stg_apart_e1f_EvProgVomitEddie                                   = 0x01F01E80; // type:func
-stg_apart_e1f_EvProgVomitEddieAfter                              = 0x01F02100; // type:func
-stg_apart_e1f_EvProgTouristGuideRead                             = 0x01F022E0; // type:func
-stg_apart_e1f_EvCharaDataClear                                   = 0x01F025B0; // type:func
-stg_apart_e1f_EvRoomInit                                         = 0x01F025F0; // type:func
-stg_apart_e1f_EvAllTimeFunc                                      = 0x01F026F0; // type:func
-stg_apart_e1f_pjames_stage_anim                                  = 0x01F02780; // size:0xFC
-stg_apart_e1f_ev_pos                                             = 0x01F02880; // size:0xF4
-stg_apart_e1f_ev_list                                            = 0x01F02980; // size:0x170
-stg_apart_e1f_gi_list                                            = 0x01F02AF0; // size:0x40
-stg_apart_e1f_clActWallList_ap100                                = 0x01F02B30; // size:0x140
-stg_apart_e1f_ev_prog                                            = 0x01F02C70; // size:0x10
-stg_apart_e1f_mdl_list                                           = 0x01F02C80; // size:0x60
-stg_apart_e1f_en_list                                            = 0x01F02CE0; // size:0x8C
-stage_apart_e1f                                                  = 0x01F02D70; // size:0x44
-stg_apart_e1f_edi_vec                                            = 0x01F02DC0; // size:0x20 type:f32
-stg_apart_e1f_info_vomit                                         = 0x01F02E60; // size:0x28
-stg_apart_e1f_info_h                                             = 0x01F02ED0; // size:0x28
-stg_apart_e1f_info_i                                             = 0x01F02F00; // size:0x28
-stg_apart_e1f_chara_data_01F02F30                                = 0x01F02F30; // size:0x3C
-stg_apart_e1f_pos_01F02F70                                       = 0x01F02F70; // size:0x10 type:f32
-stg_apart_e1f_dds_adr_h                                          = 0x01F02F80; // size:0x4
-stg_apart_e1f_dds_adr_i                                          = 0x01F02F88; // size:0x4
-
-
-
-
-
-
-
+stg_apart_e1f_EvProgVomitEddie                                   = 0x01f01e80; // type:func
+stg_apart_e1f_EvProgVomitEddieAfter                              = 0x01f02100; // type:func
+stg_apart_e1f_EvProgTouristGuideRead                             = 0x01f022e0; // type:func
+stg_apart_e1f_EvCharaDataClear                                   = 0x01f025b0; // type:func
+stg_apart_e1f_EvRoomInit                                         = 0x01f025f0; // type:func
+stg_apart_e1f_EvAllTimeFunc                                      = 0x01f026f0; // type:func
+stg_apart_e1f_pjames_stage_anim                                  = 0x01f02780; // size:252
+stg_apart_e1f_ev_pos                                             = 0x01f02880; // size:244
+stg_apart_e1f_ev_list                                            = 0x01f02980; // size:368
+stg_apart_e1f_gi_list                                            = 0x01f02af0; // size:64
+stg_apart_e1f_clActWallList_ap100                                = 0x01f02b30; // size:320
+stg_apart_e1f_ev_prog                                            = 0x01f02c70; // size:16
+stg_apart_e1f_mdl_list                                           = 0x01f02c80; // size:96
+stg_apart_e1f_en_list                                            = 0x01f02ce0; // size:140
+stage_apart_e1f                                                  = 0x01f02d70; // size:68
+stg_apart_e1f_edi_vec                                            = 0x01f02dc0; // size:32
+stg_apart_e1f_vomit_anim                                         = 0x01f02de0; // size:12
+stg_apart_e1f_vomit_msg                                          = 0x01f02df0; // size:108
+stg_apart_e1f_vomit                                              = 0x01f02e60; // size:40
+stg_apart_e1f_anim_h                                             = 0x01f02e88; // size:4
+stg_apart_e1f_anim_i                                             = 0x01f02e90; // size:4
+stg_apart_e1f_msg_h                                              = 0x01f02e98; // size:12
+stg_apart_e1f_msg_i                                              = 0x01f02eb0; // size:20
+stg_apart_e1f_info_h                                             = 0x01f02ed0; // size:40
+stg_apart_e1f_info_i                                             = 0x01f02f00; // size:40
+stg_apart_e1f_chara_data_01F02F30                                = 0x01f02f30; // size:60
+stg_apart_e1f_pos_01F02F70                                       = 0x01F02F70; // size:16 type:f32
+stg_apart_e1f_dds_adr_h                                          = 0x01f02f80; // size:4
+stg_apart_e1f_dds_adr_i                                          = 0x01f02f88; // size:4

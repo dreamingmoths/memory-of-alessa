@@ -46,7 +46,6 @@ int func_0012CFC0(void);
 u_char GetRiddleLevel(void);
 int func_0016BED0(int, int);
 void shQzero(void* ptr, u_int size);
-sh3gfw_AREA_HEAD* func_00170410(u_int index);
 void func_002A2E70(Q*);
 int func_002A47C0(float, float);
 void func_0029F330(float*, float*);

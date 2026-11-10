@@ -80,7 +80,7 @@ void shUpdateWeaponMatrixAfterAnime(SubCharacter* this, short kind) {
             this->mat = player->mat;
 
             
-            volatile_vec_copy(&this->pos, this->mat[3]);
+            shVectorCopy(&this->pos, this->mat[3]);
         } 
     }
 }

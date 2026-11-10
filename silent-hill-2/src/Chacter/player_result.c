@@ -8,7 +8,7 @@ void GameTimerCountUp(void) {
 }
 
 void GameMoveDistanceCountUp(struct SubCharacter* scp, int status) {
-    float distance = vec3_dist((float*) &scp->pos, (float*) &scp->b_pos);
+    float distance = shVectorDist((float*) &scp->pos, (float*) &scp->b_pos);
     
     if (distance < 200.0f) {
         switch (status) {
@@ -45,7 +45,7 @@ void GameBoatTimerCountUp(void) {
 }
 
 void GameBoatMaxSpeedCheck(float spd) {
-    if (!(spd <= playing.boat_max_speed)) {
+    if (spd > playing.boat_max_speed) {
         playing.boat_max_speed = spd;
     }
 }

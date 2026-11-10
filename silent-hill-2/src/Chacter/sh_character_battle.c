@@ -28,6 +28,7 @@
 #include "Effect2/hh_class_object_execute.h"
 
 #include "Enemy/en_edb.h"
+#include "Enemy/en_common.h"
 
 #include "Event/item.h"
 #include "Event/stg_name.h"
@@ -42,13 +43,14 @@
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
+static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec);
 static void shBattleAttackByHumanGunshotTypeA(SubCharacter* attacker , u_short atk);
 static void shBattleAttackByHumanGunshotTypeB(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByHumanFightType(SubCharacter* attacker, u_short atk);
-static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short atk /* r17 */);
+static void shBattleAttackByHumanFog(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByHumanFinish(SubCharacter* attacker, u_short atk);
-static void shGetEnemyAttackStartPos(SubCharacter* attacker /* r18 */, u_short atk /* r8 */, float* s_pos /* r17 */, float* s_vec /* r16 */);
+static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float* s_pos, float* s_vec);
 static void shBattleAttackByEnemySlash(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyStrike(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk);
@@ -56,8 +58,7 @@ static void shBattleAttackByEnemyBite(void);
 static void shBattleAttackByEnemyHug(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk);
 static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk);
-
-static void shBattleAddAttackQueue(SubCharacter* scp /* r2 */, u_char wep_no /* r2 */, u_short atk_no /* r2 */);
+static void shBattleAddAttackQueue(SubCharacter* scp, u_char wep_no , u_short atk_no);
 
 
 extern /* static */ struct shAttackInfo sh2_attack_list[66];
@@ -71,11 +72,11 @@ static float max_range_1171;
 static float min_range_1172;
 
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result) {
-    if (scp->battle.status & 0x40) {
+    if (scp->battle.status & (1 << 6)) {
         *damage = 0.0f;
     } else {
-        switch ((u_int)(u_char)result->btlid) {
-            case 0x2D:
+        switch ((u_int) (u_char) result->btlid) {
+            case 45:
                 scp->battle.hp = -1.0f;
                 *damage = sh2_attack_list[(u_char)result->btlid].ap;
                 break;
@@ -96,24 +97,163 @@ static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u
         return;
     }
 
-    if (7 >= atk || atk == 0x34) {
+    if (7 >= atk || atk == 52) {
         atk_type = 0;
     } else {
         atk_type = 1;
     }
     
-    if (!(atk == 0x35 || atk == 0x3F || atk == 0x3E || atk == 0x3C || atk == 0x3B ||
-        atk == 0x3A || atk == 0x39 || atk == 0x37 || atk == 0x36 || atk == 0x30 ||
-        atk == 0x2F || atk == 0x25 || atk == 0x24 || atk == 0x9 || atk == 0x8)) {
-        vec_copy(vec_tmp,vec);
+    if (!(atk == 53 || atk == 63 || atk == 62 || atk == 60 || atk == 59 ||
+        atk == 58 || atk == 57 || atk == 55 || atk == 54 || atk == 48 ||
+        atk == 47 || atk == 37 || atk == 36 || atk == 9 || atk == 8)) {
+        shVectorCopy(vec_tmp,vec);
         HH_Effect_Object_Blood_Splash_Impact_Post(pos, vec_tmp, (u_int)scp, atk_type);        
     }
 
 }
 
-// INCLUDE_RODATA("asm/nonmatchings/Chacter/sh_character_battle", sh2_attack_list);
+static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result) {
+    int se;
+    int type;
+    float vol; 
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleSetSoundDamage);
+    type = 0;
+
+    switch ((u_char) result->btlid) {
+        case 25:
+        case 26:
+        case 27:
+        case 28:
+        case 29:
+        case 30:
+        case 31:
+        case 32:
+        case 33:
+        case 34:
+            se = 11033;
+            vol = 0.8f;
+            break;
+        case 23:
+        case 24:
+            se = 11046;
+            vol = 0.8f;
+            break;
+        case 8:
+        case 9:
+            return;
+        case 1:
+        case 2:
+        case 4:
+        case 6:
+            type = 1;
+        default:
+            se = -1;
+            break;
+    }
+    
+    /* @todo: add sound ID macros/enums! */
+    if (se == -1) {
+        if (!(scp->battle.status & 2)) {    
+            switch (scp->kind) {
+                case EN_SCU_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 12015;
+                    vol = 1.0f;
+                    break;
+                case EN_MKN_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 12501;
+                    vol = 1.0f;
+                    break;
+                
+                case EN_NSE_CHARA_KIND:
+                case EN_XOO_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 12113;
+                    vol = 1.0f;
+                    break;
+                case EN_LLL_EDI_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 18203;
+                    vol = 1.0f;
+                    break;
+                case EN_IKE_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 3) + 18501;
+                    vol = 1.0f;
+                    break;
+                case EN_PAP_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 18301;
+                    vol = 0.8f;
+                    break;
+                case EN_RED_CHARA_KIND:
+                case EN_ONI_CHARA_KIND:
+                    switch ((u_char) result->btlid) {
+                        case 2:
+                        case 1:
+                            se = 16110;
+                            vol = 1.0f;
+                            break;
+                        case 12:
+                        case 13:
+                        case 14:
+                            se = 16112;
+                            vol = 1.0f;
+                            break;
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                            se = 16111;
+                            vol = 1.0f;
+                            break;
+                        default:
+                            se = ((shRandI() >> 10) % 4) + 16114;
+                            vol = 0.8f;
+                    }
+                                                    
+                    break;
+                
+                
+                case EN_TYU_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 6) + 12208;
+                    vol = 0.5f;
+                    break;
+                case EN_ARM_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 12254;
+                    vol = 1.0f;
+                    break;
+                case EN_BOS_CHARA_KIND:
+                    se = ((shRandI() >> 10) % 4) + 18858;
+                    vol = 0.8f;
+                    break;
+                
+                default:
+                    se = -1;
+
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (se > 0) {
+        if (type != 0) {
+            enSoundSetQueue(scp, se, vol, 0.1f);
+        } else {
+            SeCallPos(se, vol, result->pos, 0);
+        }
+    }
+
+}
 
 static void shBattleAddEffectAttack(SubCharacter* attacker, float* pos, float* vec) {
     EFCTSetGunFire(pos, vec);
@@ -158,7 +298,7 @@ static void shBattleAttackByHumanGunshotTypeA(SubCharacter * attacker /* r20 */,
         attacker->battle.atk_result = 1;
         shBattleAddEffectAttack(attacker, gunpos, gunvec);
 
-        SeCallPos(atk == 6 ? 0x2B28 : 0x2B14, 1.0f, gunpos, 0);
+        SeCallPos(atk == 6 ? 11048 : 11028, 1.0f, gunpos, 0);
 
         wep = PlayerNowItemName(sh2jms.weapon);
         ItemWeaponShoot(wep, 1);
@@ -202,8 +342,8 @@ static void shBattleAttackByHumanGunshotTypeB(SubCharacter* attacker, u_short at
         
         shGetJamesWeaponEndPos(gunpos, gunvec);
         rot[1] = shAtan2(gunvec[2], gunvec[0]);
-        rot[0] = -shAtan2(vec_length(gunvec), gunvec[1]);
-        vu0_unit_matrix(unit);
+        rot[0] = -shAtan2(shVectorLength(gunvec), gunvec[1]);
+        shUnitMatrix(unit);
         shRotMatrixZ(mat, unit, rot[2]); shRotMatrixX(mat, mat, rot[0]); shRotMatrixY(mat, mat, rot[1]);
         
         for (i = 0; i < 10; i++) { 
@@ -245,7 +385,7 @@ static void shBattleAttackByHumanGunshotTypeB(SubCharacter* attacker, u_short at
         shBattleAddEffectAttack(attacker, gunpos, gunvec);
         
         
-        SeCallPos(0x2B2B, 1.0f, gunpos, 0);
+        SeCallPos(11051, 1.0f, gunpos, 0);
         
         
         
@@ -379,7 +519,7 @@ void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) 
     
     
     roty = shAtan2(s_vec[2], s_vec[0]);
-    rotx = shAtan2(vec_length(s_vec), s_vec[1]);
+    rotx = shAtan2(shVectorLength(s_vec), s_vec[1]);
     
     switch (i) {
         case 0:
@@ -413,7 +553,7 @@ void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) 
     vec[1] = pos1[1] - s_pos[1];
     vec[2] = pos1[2] - s_pos[2];
     vec[3] = 0.0f;
-    vec_normalize(vec, result);
+    shNormalizeVector(vec, result);
 
     
 }
@@ -466,7 +606,7 @@ static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short a
         que.sve[2] = s_pos[2] + (s_vec_result[2] * max_range_1171);
         que.sve[3] = 1.0f;
         que.svs[3] = 1.0f;
-        que.btlid = 0x100 + (short) atk;
+        que.btlid = 256 + (short) atk;
         que.kind = sh2_attack_list[atk].kind;
         que.sc = attacker;
         clBattleAddQue(&que);
@@ -475,28 +615,28 @@ static void shBattleAttackByHumanFog(SubCharacter* attacker /* r18 */, u_short a
             que.sve[0] = s_pos[0] + (s_vec_result[0] * max_range_1171);
             que.sve[1] = s_pos[1] + (s_vec_result[1] * max_range_1171);
             que.sve[2] = s_pos[2] + (s_vec_result[2] * max_range_1171);
-            volatile_vec_copy(sp_start, que.svs);
-            vu0_sub_vector(sp_end, que.sve, que.svs);
+            shVectorCopy(sp_start, que.svs);
+            shSubVector(sp_end, que.sve, que.svs);
         }
     }
     switch (playing.spray_pow) {
         case -1:
-            color = COLOR_RGBA(0x40, 0x00, 0x40, 0xFF);
+            color = COLOR_RGBA(64, 0, 64, 255);
             break;
         case 0:
-            color = COLOR_RGBA(0xC0, 0xC0, 0xC0, 0xFF);
+            color = COLOR_RGBA(192, 192, 192, 255);
             break;
         case 1:
-            color = COLOR_RGBA(0xC0, 0xC0, 0x40, 0xFF);
+            color = COLOR_RGBA(192, 192, 64, 255);
             break;
         case 2:
-            color = COLOR_RGBA(0x40, 0xFF, 0x40, 0xFF);
+            color = COLOR_RGBA(64, 255, 64, 255);
             break;
         default:
             ASSERT_ON_LINE(0, 953);
     }
 
-    enEfctSetSpray(sp_start, sp_end, color, 0xC);
+    enEfctSetSpray(sp_start, sp_end, color, 12);
     if (attacker->battle.se == 0) {
         if (!sh2jms.csaw_se_vol) {
             sh2jms.csaw_se_vol = 0.7f;
@@ -616,10 +756,10 @@ static void shGetEnemyAttackStartPos(SubCharacter* attacker, u_short atk, float*
 
 static void shBattleAttackByEnemySlash(SubCharacter* attacker, u_short atk) {
     sceVu0FVECTOR s_pos; // r29+0x80
-    sceVu0FVECTOR s_vec; // r29+0x90    
-    unsigned short cur_frame; // r17    
-    unsigned short st; // r18    
-    unsigned short ed; // r19        
+    sceVu0FVECTOR s_vec; // r29+0x90  
+    u_short cur_frame; // r17    
+    u_short st; // r18    
+    u_short ed; // r19        
     CL_BATTLE_QUE que; // r29+0xA0
     cur_frame = shCharacterAnimeFrameGet(attacker);
     st = sh2_attack_list[atk].atk_start;
@@ -679,7 +819,7 @@ static void shBattleAttackByEnemySlash(SubCharacter* attacker, u_short atk) {
                 
                 case 44:
                 case 45:
-                    SeCallPos(0x3EEA, 0.7f, s_pos, 0);
+                    SeCallPos(16106, 0.7f, s_pos, 0);
                     break;
             }
             
@@ -746,40 +886,40 @@ static void shBattleAttackByEnemyStrike(SubCharacter* attacker, u_short atk) {
         
         if (attacker->battle.se == 0) {
             switch (atk) {
-            case 0x26:
-            case 0x27:
+            case 38:
+            case 39:
                 break;
             
                 
-            case 0x28:
-            case 0x2A:
-                SeCallPos(0x2F46, 0.7f, s_pos, 0);
+            case 40:
+            case 42:
+                SeCallPos(12102, 0.7f, s_pos, 0);
                 break;
-            case 0x29:
-            case 0x2B:
-                SeCallPos(0x2F45, 0.7f, s_pos, 0);
+            case 41:
+            case 43:
+                SeCallPos(12101, 0.7f, s_pos, 0);
                 break;
-            case 0x31:
-                SeCallPos(0x3EEC, 0.7f, s_pos, 0);
+            case 49:
+                SeCallPos(16108, 0.7f, s_pos, 0);
                 break;
-            case 0x32:
-                SeCallPos(0x3EED, 0.7f, s_pos, 0);
+            case 50:
+                SeCallPos(16109, 0.7f, s_pos, 0);
                 break;
-            case 0x38:
-                SeCallPos(0x4844, 1.0f, s_pos, 0);
+            case 56:
+                SeCallPos(18500, 1.0f, s_pos, 0);
                 break;
             
                 
-            case 0x36:
-                SeCallPos(((shRandI() >> 10) & 1) + 0x4848, 1.0f, s_pos, 0);
+            case 54:
+                SeCallPos(((shRandI() >> 10) & 1) + 18504, 1.0f, s_pos, 0);
                 
                 break;
-            case 0x3B:
-                SeCallPos(((shRandI() >> 10) & 3) + 0x49A4, 0.7f, s_pos, 0);
+            case 59:
+                SeCallPos(((shRandI() >> 10) & 3) + 18852, 0.7f, s_pos, 0);
                 
                 break;
-            case 0x3D:                
-                SeCallPos(((shRandI() >> 10) & 1) + 0x49A2, 0.7f, s_pos, 0);
+            case 61:                
+                SeCallPos(((shRandI() >> 10) & 1) + 18850, 0.7f, s_pos, 0);
             }
             
             
@@ -849,7 +989,7 @@ static void shBattleAttackByEnemyFog(SubCharacter* attacker, u_short atk) {
         
         
         if (attacker->battle.se == 0) {
-            SeCallPos(0x2EE0, 0.7f, s_pos, 0);
+            SeCallPos(12000, 0.7f, s_pos, 0);
             attacker->battle.se = 1;
         }
     
@@ -947,7 +1087,7 @@ static void shBattleAttackByEnemyNeedle(SubCharacter* attacker, u_short atk) {
         
         if (attacker->battle.se == 0) {
             
-            SeCallPos(((shRandI() >> 10) & 1) + 0x2FDC, 0.8f, s_pos, 0);
+            SeCallPos(((shRandI() >> 10) & 1) + 12252, 0.8f, s_pos, 0);
             
             attacker->battle.se = 1;
         }
@@ -961,7 +1101,7 @@ static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk) {
     u_short cur_frame; // r2
     u_short st; // r2
     u_short ed; // r16    
-    CL_BATTLE_QUE que; // r29+0x80
+    CL_BATTLE_QUE que; // r29+128
 
     cur_frame = shCharacterAnimeFrameGet(attacker);
     st = sh2_attack_list[atk].atk_start;
@@ -1005,7 +1145,7 @@ static void shBattleAttackByEnemyShot(SubCharacter* attacker, u_short atk) {
             
             
             
-            SeCallPos(0x4719, 1.0f, s_pos, 1);
+            SeCallPos(18201, 1.0f, s_pos, 1);
         }
     }
     
@@ -1112,11 +1252,131 @@ int shBattleRequestNextAttackIsOk(u_short atk, u_short frame) {
 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh_character_battle", shBattleGetResult);
+void shBattleGetResult(SubCharacter* scp) {
+    CL_BATTLE_RESULT* result;
+    float damage_revise; float shock_revise;    
+    result = NULL;
+    
+    while ((result = clBattleGetResult((u_int)scp, result))->atr) {
+        switch (result->atr) {
+            
+                        
+            case 1:
+                if (result->btlid & 0xFF00) 
+                    scp->battle.atk_result = result->atr;
+                
+                
+                
+                scp->battle.target = result->obj.en;
+                
+                if (scp->kind <= HLL_JMS_CHARA_KIND && sh2jms.attack_no < 25) {
+                    switch ((u_char) sh2jms.weapon) {
+                        case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                        case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                            sh2jms.d_shock = 1;
+                            break;
+
+                    }                
+                }                
+                break;
+            
+            
+            case 2:
+            case 3:
+                if (sh2jms.wep_no_hit_floor == 0) {
+                    
+                    if (scp->kind <= HLL_JMS_CHARA_KIND && sh2jms.attack_no < 25) {
+                        switch ((u_char) sh2jms.weapon) {
+                            case WEAPON_ID(WEAPON_KAKUZAI_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_PIPE_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_NATA_CHARA_KIND):
+                            case WEAPON_ID(WEAPON_CSAW_CHARA_KIND):
+                                sh2jms.d_shock = 4;
+                                break;
+
+                        }
+                    }
+                    scp->battle.atk_result = result->atr;
+                }
+                
+                
+                if (scp->kind <= HLL_JMS_CHARA_KIND) { 
+                    if ((result->obj.pl)->pad != 0) {
+                        sh2_battle_wall_hit = sh2_attack_list[(u_char)result->btlid].ap;
+                    } else {
+                        sh2_battle_wall_hit = 0.0f;
+                    }
+                }
+                break;
+            
+            
+            
+            
+            
+            case 4:
+                if ((result->btlid & 0xFF00) == 0)
+                    break;
+                if (scp->kind <= RINU_CHARA_KIND && (u_char) result->btlid >= 25 && (u_char) result->btlid < 35) {
+                        
+                    
+                    break;
+                }
+    
+                
+                
+                shBattleDamageRevise(&damage_revise, &shock_revise, scp, result);
+    
+                
+                
+                
+                
+                
+                if (damage_revise >= 0.0f) {
+                    scp->battle.damage += damage_revise;
+                }
+                if (scp->battle.shock <= shock_revise && scp->battle.id == 0) {
+                    scp->battle.shock = shock_revise;
+                    sceVu0CopyVector(&scp->battle.pos, result->pos);
+                    sceVu0CopyVector(&scp->battle.vec, result->vec);
+                    scp->battle.id = (u_char)result->btlid;
+                    scp->battle.kind = result->kind;
+                    
+                    scp->battle.target = result->obj.en;
+                }
+    
+                
+                
+                
+                
+                
+                
+                if (scp->kind <= HLL_JMS_CHARA_KIND && (PlayerChectGuardSuccess() || shBattleNoDamageHuman())) {
+                    break;
+                }
+    
+                if (damage_revise > 0.0f) {
+                    shBattleSetEffectDamage(scp, result->pos, result->vec, (u_char)result->btlid);
+                }
+    
+                shBattleSetSoundDamage(scp, result);
+                
+                
+                
+                
+                break;    
+            default:
+                scp->battle.atk_result = result->atr;
+
+        }
+    
+    }
+}
 
 void shBattleInitAttackQueue(void) {
     shQzero(&sh2_attack_queue, sizeof(shAttackQueue));
-    sh2_attack_queue.rest = 0x14;
+    sh2_attack_queue.rest = 20;
     sh2_battle_wall_hit = 0.0f;
 }
 
@@ -1168,23 +1428,23 @@ void shBattleExecAttackQueue(void) {
                 case 3:
                     
                     switch (sh2_attack_queue.queue[i].atk_no) {
-                        case 0x34:
-                        case 0x33:
+                        case 52:
+                        case 51:
                             shBattleAttackByEnemyShot(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
                             
                             
                             
                             break;
-                        case 0x29:
-                        case 0x2B:
-                        case 0x31:
+                        case 41:
+                        case 43:
+                        case 49:
                             shBattleAttackByEnemyStrike(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
                             
                             
                             
                             break;
-                        case 0x40:
-                        case 0x41:
+                        case 64:
+                        case 65:
                             shBattleAttackByEnemyNeedle(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
                             break;
                         }
@@ -1202,7 +1462,7 @@ void shBattleExecAttackQueue(void) {
             }
         } else {
             
-            if (sh2_attack_queue.queue[i].atk_no >= 0x19) {
+            if (sh2_attack_queue.queue[i].atk_no >= 25) {
                 shBattleAttackByHumanFinish(sh2_attack_queue.queue[i].scp, sh2_attack_queue.queue[i].atk_no);
             
             
@@ -1258,7 +1518,7 @@ float shBattleGetJamesHP_Rate(void) {
 void shBattleSetJamesDamage(u_short id /* r2 */, float damage /* r29 */, float* vec /* r2 */) {
     sh2jms.player->battle.damage = damage;
     sh2jms.player->battle.id = id;
-    volatile_vec_copy((float *)&sh2jms.player->battle.vec, vec);
+    shVectorCopy((float *)&sh2jms.player->battle.vec, vec);
 }
 
 float shBattleEventWallHitCheck(void) {

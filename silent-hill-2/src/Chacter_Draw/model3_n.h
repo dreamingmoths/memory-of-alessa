@@ -4,38 +4,6 @@
 #include "sh2_common.h"
 #include "Chacter_Draw/model3_vu1_n.h"
 
-typedef struct sh_Model {
-    u_int id;
-    u_int revision;
-    u_int initial_matrices_offset;
-    u_int n_skeletons;
-    u_int skeleton_structure_offset;
-    u_int n_skeleton_pairs;
-    u_int skeleton_pairs_offset;
-    u_int default_pcms_offset;
-    u_int n_vu1_parts;
-    u_int vu1_parts_offset;
-    u_int n_vu0_parts;
-    u_int vu0_parts_offset;
-    u_int n_texture_blocks;
-    u_int texture_blocks_offset;
-    u_int n_text_poses;
-    u_int text_poses_offset;
-    u_int text_pos_params_offset;
-    u_int n_cluster_nodes;
-    u_int cluster_nodes_offset;
-    u_int n_clusters;
-    u_int clusters_offset;
-    u_int n_func_data;
-    u_int func_data_offset;
-    u_int hit_offset;
-    u_int box_offset;
-    u_int flag;
-    u_int relative_matrices_offset;
-    u_int relative_transes_offset;
-    void* pTexMAN[4];
-} sh_Model;
-
 // E:\work\sh2(CVS全取得)\src\Chacter_Draw\model3_n.c
 typedef struct HeadEnvPacket {
     // total size: 0x70
@@ -76,7 +44,6 @@ typedef struct EnvPacket {
 } EnvPacket;
 
 extern EnvPacket envpacketdata; // @ 0x002A9580
-extern Model3Junk model3_junk;  // size: 0x1C0, address: 0x419DC0
 
 // E:\work\sh2(CVS全取得)\src\Chacter_Draw\sh2gfw_CharacterOT.c
 u_long128* CharacterOt_RequestPacket(int qwc /* r2 */);
@@ -84,7 +51,7 @@ void CharacterOt_Append(u_int depth /* r3 */, u_long128* packet /* r2 */);
 
 int Model3NSkeletons(void* model_);
 
-s_char* Model3SkeletonStructure(sh_Model* model_);
+s_char* Model3SkeletonStructure(void* model_);
 
 int Model3NClusters(void* model_);
 

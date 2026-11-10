@@ -1,10 +1,12 @@
-#include "hh_class_blood_03.h"
-#include "hh_packet.h"
-#include "hh_class_wrapper.h"
-#include "hh_effect_object_def.h"
-#include "hh_effect_object_texture.h"
+#include "Effect2/hh_class_blood_03.h"
+#include "Effect2/hh_packet.h"
+#include "Effect2/hh_class_wrapper.h"
+#include "Effect2/hh_class_manager.h"
+#include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_effect_object_texture.h"
 #include "sce/libvifpk.h"
 #include "sce/libvu0.h"
+#include "Effect2/hh_object_vertex_info.h"
 
 extern int rand(void);
 
@@ -259,7 +261,7 @@ u_int HH_Class_Blood_03(void* pBlock, ImpactQueue_Element* pElement){
                 }
 
                 Object_Draw(pThis, pElement, position);
-                pThis->Timer += 1.0/60.0;
+                pThis->Timer += TIME_STEP_60FPS;
             }
             break;
         case 2:

@@ -63,7 +63,7 @@ int shSyncVInitSub(int* sid_p, int* hid_p, int intc_cause) {
     if (*sid_p == -1) {
         VERBOSE_ON_LINE(62, 2, "start to create semaphore\n");
         
-        sid = CreateSema2(NULL, 0x100, 0);
+        sid = CreateSema2(NULL, 0x100, NULL);
         
         
         

@@ -4,8 +4,16 @@
 #include "sh2_common.h"
 #include "Enemy/en_common.h"
 
-SubCharacter* enINSGetSubCharacter(struct EnLOCAL_DATA * dp /* r2 */);
-void enSetInsect(float* pos /* r19 */, int num /* r18 */);
+void enINSInitData(EnLOCAL_DATA* dp);
+
+void enSetInsect(float* pos, int num);
+
 void enKillAllInsect(void);
+
+void enWaitAllInsect(void);
+
+SubCharacter* enINSGetSubCharacter(EnLOCAL_DATA* dp);
+
+void enINSCtrlMain(EnLOCAL_DATA* dp);
 
 #endif // EN_INSECT_H

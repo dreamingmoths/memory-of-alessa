@@ -197,7 +197,7 @@ static u_int Object_Initialize(HH_Object_Water_07* pThis /* r16 */) {
     return result;
 }
 
-static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, unsigned int* pX_Index /* r17 */, unsigned int* pZ_Index /* r16 */) {
+static void CurrentPosition_AreaIndex_Calculator(ImpactQueue_Element* pElement /* r3 */, WaveArea_Infomeation* pInfo /* r2 */, u_int* pX_Index /* r17 */, u_int* pZ_Index /* r16 */) {
     float check_pos[4];
 
     sceVu0SubVector(check_pos, pElement->Option.Vector[0], pInfo->World_Location);
@@ -238,7 +238,7 @@ static float Specular_Calculator(float* View_Direction /* r18 */, float* Light_D
     return result * specular_coefficient;
 }
 
-static void SpecularRGBA_Calculator(signed int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
+static void SpecularRGBA_Calculator(int* iRGBA /* r2 */, float* RGBA_Base /* r2 */, float* RGBA_Specular_Base /* r2 */, float Specular_Ratio /* r29 */) {
     float brightness = 255.0f;
 
     asm("lqc2 vf30, 0(a1);\
@@ -618,7 +618,7 @@ u_int HH_Class_Water_07(void* pBlock /* r2 */, ImpactQueue_Element* pElement /* 
                 }
             }
             HH_Class_WaterCommon_WaveElement_Time_Count(pThis->Wave_Info, 0x28);
-            pThis->Timer += 1.0f / 30.0f;
+            pThis->Timer += TIME_STEP_30FPS;
             break;
         }
 

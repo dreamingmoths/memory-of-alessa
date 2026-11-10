@@ -8,44 +8,47 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_turning_00", func_01F6D9F0_ho
 int func_01F6DB90_hospital_turning_00(void) {
 
     switch (D_01F715C0_hospital_turning_00) {
-        
+
         case 0:
             func_00190A20(2);
             D_01F715C0_hospital_turning_00 = 1;
-        
+
         case 1:
-            if (func_0016C1C0(0x3D) == 0) return 0;
+            if (func_0016C1C0(0x3D) == 0)
+                return 0;
             func_001C2290(0xB, 0.5f);
             func_0013D280(0);
             D_01F715C0_hospital_turning_00 = 2;
             break;
-        
+
         case 2:
-            if (!func_001C2580(2)) return 0;
+            if (!func_001C2580(2))
+                return 0;
             D_01F715C0_hospital_turning_00 = 3;
-            
+
         case 3:
             func_0016D500(3, 0x39, &D_01F70850_hospital_turning_00);
             D_1D3168C |= 0x40;
             D_01F715C0_hospital_turning_00 = 4;
             break;
-        
+
         case 4:
             func_001C2290(5, 0.5f);
             D_01F715C0_hospital_turning_00 = 5;
 
         case 5:
-            if (func_001C2580(4) == 0) return 0;
+            if (func_001C2580(4) == 0)
+                return 0;
             D_01F715C0_hospital_turning_00 = 6;
 
         case 6:
-            if (func_0016C1C0(0x3E) == 0) return 0;
+            if (func_0016C1C0(0x3E) == 0)
+                return 0;
             D_01F715C0_hospital_turning_00 = 7;
 
         default:
             func_00190A20(0);
             return 1;
-        
     }
     return 0;
 }
@@ -72,7 +75,7 @@ void func_01F6E540_hospital_turning_00(void) {
             default:
                 return;
         }
-        temp_f0 = D_01F713B0_hospital_turning_00 - shGetDT();
+        temp_f0                        = D_01F713B0_hospital_turning_00 - shGetDT();
         D_01F713B0_hospital_turning_00 = temp_f0;
         if (temp_f0 <= 0.0f) {
             D_1D3168C &= ~0x100;
@@ -85,7 +88,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_turning_00", func_01F6E5E0_ho
 void func_01F6E720_hospital_turning_00(void) {
 
     int room;
-    room = RoomName();
+    room                           = RoomName();
     D_01F70F80_hospital_turning_00 = 1;
     switch (room) {
         case 0xBD:
@@ -93,7 +96,6 @@ void func_01F6E720_hospital_turning_00(void) {
             func_003027E0();
             break;
     }
-
 }
 
 void func_01F6E770_hospital_turning_00(void) {
@@ -103,7 +105,7 @@ void func_01F6E770_hospital_turning_00(void) {
     }
 
     switch (RoomName()) {
-        
+
         case 0xBD:
             if ((func_001646F0() == 0) && !(D_01F713A8_hospital_turning_00 <= 0.0f)) {
                 D_01F713A8_hospital_turning_00 -= shGetDT();
@@ -159,7 +161,7 @@ void func_01F6E770_hospital_turning_00(void) {
                 break;
             }
             break;
-        
+
         case 0xBC:
             if (!GET_BIT(D_1D3168C, 6)) {
                 func_0016CA40(1);
@@ -170,7 +172,7 @@ void func_01F6E770_hospital_turning_00(void) {
                 func_0016CA40(2);
                 D_1D31728 &= ~0x200;
             }
-        
+
         default:
             func_01F6DE50_hospital_turning_00();
             break;
@@ -180,7 +182,7 @@ void func_01F6E770_hospital_turning_00(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_turning_00", func_01F6EAF0_hospital_turning_00);
 
 void func_01F6EB70_hospital_turning_00(u_long128* arg0) {
-    vec_copy(arg0, &D_01F715F0_hospital_turning_00);
+    shVectorCopy(arg0, &D_01F715F0_hospital_turning_00);
 }
 
 int func_01F6EB90_hospital_turning_00(float fparg0) {

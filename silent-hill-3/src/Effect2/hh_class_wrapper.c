@@ -39,9 +39,9 @@ void ViewFrustum_Primitive_ClipMatrix_Create(void) {
         HH_ClassWrapper_ViewScreenMatrix_Get(vsm);
         sceVu0UnitMatrix(clip_mat);
 
-        scale = float_clamp(func_001B4100() / 1000.0f, 1.0f, 3.5f);
-        clip_mat[0][0] = (2.0f * vsm[0][0]) / 4080.0f + (scale * func_001B4170()) * (float_abs(func_001B4230() - 2048.0f)) / 2048.0f;
-        clip_mat[1][1] = (2.0f * vsm[1][1]) / 4080.0f + (scale * func_001B41C0()) * (float_abs(func_001B4250() - 2048.0f)) / 2048.0f;
+        scale = shFloatClamp(func_001B4100() / 1000.0f, 1.0f, 3.5f);
+        clip_mat[0][0] = (2.0f * vsm[0][0]) / 4080.0f + (scale * func_001B4170()) * (shFloatAbs(func_001B4230() - 2048.0f)) / 2048.0f;
+        clip_mat[1][1] = (2.0f * vsm[1][1]) / 4080.0f + (scale * func_001B41C0()) * (shFloatAbs(func_001B4250() - 2048.0f)) / 2048.0f;
     
         
         clip_mat[2][2] = (z_far + z_near) / (z_far - z_near);
@@ -219,7 +219,7 @@ INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142BC0);
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142BD0);
 
 float HH_ClassWrapper_Float_Clamp(float Src_Value, float Min, float Max) {
-    return float_min(float_max(Src_Value, Min), Max);
+    return shFloatMin(shFloatMax(Src_Value, Min), Max);
 }
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", func_00142C00);

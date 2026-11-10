@@ -1,9 +1,13 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from constants import ASM, READELF_PATH, SRC, VSM
+from yaml import safe_load as safe_load_yaml
+from json import load as read_json
 from os import stat, remove
 from io import TextIOBase
 from subprocess import run
+
+from constants import ASM, READELF_PATH, SRC, VSM
 
 def normalize_object_path(path: Path, prefix_path: Path):
     '''
@@ -69,6 +73,7 @@ class SplatSymbol:
     duplicate_by_name: bool
     duplicate_by_addr: bool
     attributes: dict | None
+    metadata: dict | None
 
 @dataclass
 class SplatSymbolAddrsAtlas:
@@ -76,7 +81,7 @@ class SplatSymbolAddrsAtlas:
     syms_by_name: dict[str, SplatSymbol] = field(default_factory=dict)
     syms_by_addr: dict[int, SplatSymbol] = field(default_factory=dict)
 
-def insert_into_atlas(atlas: SplatSymbolAddrsAtlas, name: str, addr: int, attributes=None):
+def insert_into_atlas(atlas: SplatSymbolAddrsAtlas, name: str, addr: int, attributes=None, metadata=None):
     syms = atlas.syms
     syms_by_addr = atlas.syms_by_addr
     syms_by_name = atlas.syms_by_name
@@ -94,7 +99,8 @@ def insert_into_atlas(atlas: SplatSymbolAddrsAtlas, name: str, addr: int, attrib
         addr=addr,
         duplicate_by_name=duplicate_by_name,
         duplicate_by_addr=duplicate_by_addr,
-        attributes=attributes
+        attributes=attributes,
+        metadata=metadata
     )
 
     syms_by_name[name] = splat_symbol
@@ -194,10 +200,17 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
 
     return "\n".join(symbol_addrs_lines) + "\n"
 
-READELF_FLAGS = ["-s", "--wide"]
+SYMTAB_READELF_FLAGS = ["-s", "--wide"]
+SECTION_HEADER_READELF_FLAGS = ["-S"]
 
 def read_symtab(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
-    proc = run([Path(readelf_path), *READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    proc = run([Path(readelf_path), *SYMTAB_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
+    if proc.returncode != 0:
+        raise Exception(proc.stderr.decode())
+    return proc.stdout.decode()
+
+def read_section_headers(filepath: Path | str, readelf_path: Path | str = READELF_PATH):
+    proc = run([Path(readelf_path), *SECTION_HEADER_READELF_FLAGS, Path(filepath).as_posix()], capture_output=True)
     if proc.returncode != 0:
         raise Exception(proc.stderr.decode())
     return proc.stdout.decode()
@@ -223,9 +236,49 @@ def parse_symtab_as_atlas(symtab_str: str) -> SplatSymbolAddrsAtlas:
             type=typeof == "FUNC" and "func" or None
         )
 
-        insert_into_atlas(symtab, name, int(address, 16), attributes)
+        metadata = dict(sh_index=sh_index, visibility=visibility, bind=bind)
+
+        insert_into_atlas(symtab, name, int(address, 16), attributes, metadata)
 
     return symtab
+
+def parse_section_header_indices(section_headers_str: str):
+    section_headers_lines = section_headers_str.splitlines()
+
+    section_names_by_index = dict()
+
+    for line in section_headers_lines:
+        if "[" not in line: continue
+
+        columns = line[line.index("[")+1:].strip().split()
+        index = columns[0][:-1]
+
+        if not index.isnumeric(): continue
+
+        name = columns[1]
+        section_names_by_index[index] = name
+
+    return section_names_by_index
+
+def get_configured_deduplications():
+    undollar = lambda name, target :                    \
+            "$" in name                                 \
+                and target.endswith(name.split("$")[1]) \
+                    and name.replace("$", "_")          \
+                    or name.split("$")[0]               \
+                or name
+
+    transform_source_symbol_name =                   \
+        lambda name, target : undollar(name, target) \
+            .replace(".", "_")
+
+    transform_target_symbol_name = \
+        lambda name : name         \
+            .replace(".", "_")     \
+            .replace("$", "_")     \
+            .rsplit("_0x", maxsplit=1)[0]
+
+    return (transform_source_symbol_name, transform_target_symbol_name)
 
 def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     IGNORE_RODATA = True
@@ -234,22 +287,7 @@ def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
     FIX_ISSUES = True
 
     if TRANSFORM_SYMBOLS:
-        undollar = lambda name, target :                    \
-                "$" in name                                 \
-                    and target.endswith(name.split("$")[1]) \
-                        and name.replace("$", "_")          \
-                        or name.split("$")[0]               \
-                    or name
-
-        transform_source_symbol_name =                   \
-            lambda name, target : undollar(name, target) \
-                .replace(".", "_")
-
-        transform_target_symbol_name = \
-            lambda name : name         \
-                .replace(".", "_")     \
-                .replace("$", "_")     \
-                .rsplit("_0x", maxsplit=1)[0]
+        (transform_source_symbol_name, transform_target_symbol_name) = get_configured_deduplications()
     else:
         transform_source_symbol_name = lambda name : name
         transform_target_symbol_name = lambda name : name
@@ -317,3 +355,98 @@ def atlas_diff(source: SplatSymbolAddrsAtlas, target: SplatSymbolAddrsAtlas):
                         print(target_sym)
 
                     continue
+
+type AddressConversion = Callable[[int], int]
+
+def get_to_vram_conversion(yaml: dict, rom=False) -> AddressConversion:
+    '''
+    From a parsed Splat YAML, get the function converting file offsets to
+    virtual addresses.
+
+    If `rom` is `True`, return a function assuming the binary has been
+    `objcopy`'d (so do not subtract a start offset).
+    '''
+
+    vram_start, offset = _read_yaml_for_vram_conversion(yaml, rom)
+
+    to_vram=lambda x, start=offset, vram=vram_start : x + vram - start
+
+    return to_vram
+
+def get_from_vram_conversion(yaml: dict, rom=False) -> AddressConversion:
+    '''
+    From a parsed Splat YAML, get the function converting virtual addresses to
+    file offsets.
+
+    If `rom` is `True`, return a function assuming the binary has been
+    `objcopy`'d (so do not subtract a start offset).
+    '''
+
+    vram_start, offset = _read_yaml_for_vram_conversion(yaml, rom)
+
+    to_vram=lambda x, start=offset, vram=vram_start : x - vram + start
+
+    return to_vram
+
+def _read_yaml_for_vram_conversion(yaml: dict, rom=False) -> tuple[int, int]:
+    segments: list = yaml["segments"]
+    first_code_segment = next(filter(lambda s : isinstance(s, dict) and s["type"] == "code", segments))
+    file_start = first_code_segment["start"]
+    vram_start = first_code_segment["vram"]
+    offset = not rom and file_start or 0
+    return vram_start, offset
+
+def load_yaml(yaml_path: Path):
+    with open(yaml_path) as yaml_file:
+        yaml = safe_load_yaml(yaml_file)
+    return yaml
+
+def load_json(json_path: Path):
+    with open(json_path) as json_file:
+        json = read_json(json_file)
+    return json
+
+@dataclass
+class ExecutableInfo:
+    name: str
+    atlas: SplatSymbolAddrsAtlas
+    target_path: Path
+    yaml_path: Path
+    to_vram: Callable
+
+type ExeInfoByName = dict[str, ExecutableInfo]
+
+def get_exe_info_by_name(root: Path, main_name: str, filter=None, exe_info_by_name=None, parse_attributes=False):
+    exe_info_by_name: dict[str, ExecutableInfo] = exe_info_by_name or dict()
+
+    for yaml_path in root.glob("**/*.yaml"):
+        yaml = load_yaml(yaml_path)
+
+        yaml_opts = yaml["options"]
+        if "basename" not in yaml_opts:
+            continue
+
+        basename = yaml_opts["basename"]
+        if filter and filter != basename:
+            continue
+
+        name = basename == main_name and "main" or target_path.name
+        target_path = Path(yaml_opts["target_path"])
+
+        atlas = SplatSymbolAddrsAtlas()
+        info = ExecutableInfo(
+            name=name, 
+            atlas=atlas,
+            target_path=target_path,
+            yaml_path=yaml_path,
+            to_vram=get_to_vram_conversion(yaml, rom=True)
+        )
+        exe_info_by_name[name] = info
+
+        sym_paths = "symbol_addrs_path" in yaml_opts and yaml_opts["symbol_addrs_path"] or "symbol_addrs.txt"
+        sym_paths = isinstance(sym_paths, list) and sym_paths or [sym_paths]
+
+        for sym_path in sym_paths:
+            parse_symbol_addrs(root / sym_path, atlas, parse_attributes=parse_attributes)
+
+    return exe_info_by_name

@@ -6,6 +6,7 @@
 #include "Collision/cl_main.h"
 
 #include "Event/event.h"
+#include "Event/item.h"
 #include "Event/stg_name.h"
 
 #include "Multi_thr/pad/keydata.h"
@@ -57,6 +58,12 @@ static void PlayerFunction(SubCharacter* this);
 static void shGetJamesLightPos_Calc_Chest(void);
 static void shGetJamesLightPos_Calc_Hand(void);
 static void shGetJamesFootPos(float* pos, float* vec, int kind);
+
+/**
+ * @note this is not a static function, but the one in `m3_boat` is, and it has
+ * a different signature.
+ */
+void close_to_value(float* now, float tgt, float mov);
 
 extern /* static */ int anime_change_check_upper; // @ 0x002A8DD0
 extern /* static */ int anime_change_check_lower; // @ 0x002A8DD8
@@ -379,11 +386,15 @@ static float PlayerCheckKeyInputStickDir(void) {
     return shAtan2(-y, x);
 }
 
+#ifdef HOLY_CANDLE
 static float PlayerCheckKeyStickClamp(float stick_val, float min, float max) {
     stick_val = (stick_val < min) ? min : ((stick_val > max) ? max : stick_val);
     return (stick_val - min) / (max - min);
 
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckKeyStickClamp);
+#endif
 
 static float PlayerCheckKeyInputStickPow(void) {
     float x, y, p; 
@@ -506,19 +517,19 @@ void PlayerCheckKeyInput(void) {
 
     
     
-    if (int_abs(pad[0].lstickY) < 0x26) pad[0].lstickY = 0;
-    if (int_abs(pad[0].lstickX) < 0x26) pad[0].lstickX = 0;
-    if (int_abs(pad[0].rstickY) < 0x26) pad[0].rstickY = 0;
-    if (int_abs(pad[0].rstickX) < 0x26) pad[0].rstickX = 0;
+    if (shAbs(pad[0].lstickY) < 0x26) pad[0].lstickY = 0;
+    if (shAbs(pad[0].lstickX) < 0x26) pad[0].lstickX = 0;
+    if (shAbs(pad[0].rstickY) < 0x26) pad[0].rstickY = 0;
+    if (shAbs(pad[0].rstickX) < 0x26) pad[0].rstickX = 0;
 
     if (playing.control_type == 0) {
-        asobi_x = int_abs(pad[0].lstickY) / 2;
+        asobi_x = shAbs(pad[0].lstickY) / 2;
         asobi_x = (asobi_x < 0) ? 0 : (asobi_x > 0x40) ? 0x40 : asobi_x;        
-        asobi_y = int_abs(pad[0].lstickX) / 2;
+        asobi_y = shAbs(pad[0].lstickX) / 2;
         asobi_y = (asobi_y < 0) ? 0 : (asobi_y > 0x40) ? 0x40 : asobi_y;
             
-        if (int_abs(pad[0].lstickY) < asobi_y) pad[0].lstickY = 0;        
-        if (int_abs(pad[0].lstickX) < asobi_x) pad[0].lstickX = 0;
+        if (shAbs(pad[0].lstickY) < asobi_y) pad[0].lstickY = 0;        
+        if (shAbs(pad[0].lstickX) < asobi_x) pad[0].lstickX = 0;
     } else {
         asobi_x = asobi_y = 0;
     }
@@ -699,32 +710,34 @@ static void PlayerCheckFootLine(SubCharacter* this) {
 
 
     GetPlayerPartsWorldMatrix(mat, 14);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.r_foot, (int) this, sp, ep);
     if (sh2jms.r_foot.kind == 1) {
          
-        vec_normalize(sh2jms.r_foot.hobj.chara.cp, sh2jms.r_foot.hobj.chara.cp);
-        // vec_normalize(sh2jms.r_foot.hobj.wall.nl, sh2jms.r_foot.hobj.wall.nl); // which one is correct?
+        shNormalizeVector(sh2jms.r_foot.hobj.chara.cp, sh2jms.r_foot.hobj.chara.cp);
+        // shNormalizeVector(sh2jms.r_foot.hobj.wall.nl, sh2jms.r_foot.hobj.wall.nl); // which one is correct?
     
     
     }
     GetPlayerPartsWorldMatrix(mat, 13);
-    volatile_vec_copy(sp, mat[3]);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, mat[3]);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 750.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.l_foot, (int) this, sp, ep);
     if (sh2jms.l_foot.kind == 1) {
         
-        vec_normalize(sh2jms.l_foot.hobj.chara.cp, sh2jms.l_foot.hobj.chara.cp);
-        // vec_normalize(sh2jms.l_foot.hobj.wall.nl, sh2jms.l_foot.hobj.wall.nl); // ???
+        shNormalizeVector(sh2jms.l_foot.hobj.chara.cp, sh2jms.l_foot.hobj.chara.cp);
+        // shNormalizeVector(sh2jms.l_foot.hobj.wall.nl, sh2jms.l_foot.hobj.wall.nl); // ???
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerSetHeightDummy);
+void PlayerSetHeightDummy(void) {
+    return;
+}
 
 void PlayerSetHeight(SubCharacter* this) {
     float rot_tmp; // r29+0x50
@@ -734,8 +747,8 @@ void PlayerSetHeight(SubCharacter* this) {
 
 
 
-    volatile_vec_copy(sp, &this->pos);
-    volatile_vec_copy(ep, sp);
+    shVectorCopy(sp, &this->pos);
+    shVectorCopy(ep, sp);
     sp[1] -= 250.0f;
     ep[1] += 1500.0f;
     clCheckHitEyesOnlyFloor(&sh2jms.ft_floor, (int) this, sp, ep);
@@ -770,7 +783,7 @@ void PlayerSetHeight(SubCharacter* this) {
                     
                     rot_tmp = shAtan2(this->pos.z - this->b_pos.z, this->pos.x - this->b_pos.x);
                     rot_tmp = shAngleRegulate(this->rot.y - rot_tmp);
-                    if (float_abs(rot_tmp) < QUARTER_TURN) {
+                    if (shFloatAbs(rot_tmp) < QUARTER_TURN) {
                         sh2jms.fall_type = 0;
                     } else {
                         sh2jms.fall_type = 1;
@@ -837,15 +850,54 @@ INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @1249);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckBodyAngle);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckSetParameterPhase1);
+static void PlayerCheckSetParameterPhase1(SubCharacter* this) {
+    int wep;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckSetParameterPhase2);
+    
+    PlayerCheckSideLine(this);
+    
+    PlayerSetSearchArea(this);
+    
+    wep = PlayerNowItemName(sh2jms.weapon);
+    if (wep != -1) {
+        sh2jms.shoot_val = ItemWeaponShoot(wep, 0);
+        sh2jms.reload_val = ItemWeaponReload(wep, 0);
+    }
+    
+    
+    PlayerGetTargetInfo();
+    
+    
+    PlayerCheckBothArmsAngle(this);
+
+}
+
+static void PlayerCheckSetParameterPhase2(SubCharacter* this) {
+    
+    PlayerCheckFootLine(this);
+    
+    PlayerSetHitColumn(this);
+    
+    PlayerCheckNeckAngle(this);
+    
+    
+    
+    PlayerCheckBodyAngle(this);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckModelParts);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set_all);
+static void james_anim_set_all(AnimeInfo* aip, int comp_type) {    
+    shCharacterAnimeSet(sh2jms.player, 2, comp_type, aip, (int)shCharacterGetAnimeAdrForPlay(sh2jms.player));
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", james_anim_set);
+    shCharacterAnimeSet(sh2jms.player, 1, comp_type, aip, (int)shCharacterGetAnimeAdrForPlay(sh2jms.player));
+
+}
+
+static void james_anim_set(AnimeInfo* aip, int body_type, int comp_type) {
+    shCharacterAnimeSet(sh2jms.player, body_type, comp_type, aip, (int)shCharacterGetAnimeAdrForPlay(sh2jms.player));
+
+}
 
 static AnimeInfo* PlayerGetStageAnime(int anime) {
     int i; // r5
@@ -3133,15 +3185,27 @@ INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", BoatPlayerCheckAnime);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerFunction);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos);
+void shGetJamesLightPos(float* pos, float* vec) {
+    shVectorCopy(pos, sh2jms.light_pos_revise);
+    shVectorCopy(vec, sh2jms.light_vec_revise);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPosOriginal);
+void shGetJamesLightPosOriginal(float* pos, float* vec) {
+    shVectorCopy(pos, sh2jms.light_pos);
+    shVectorCopy(vec, sh2jms.light_vec);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc_Chest);
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc_Hand);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesLightPos_Calc);
+void shGetJamesLightPos_Calc(void) {
+    if (sh2jms.player->status & 0x8000) {
+        shGetJamesLightPos_Calc_Hand();
+    }        
+    else shGetJamesLightPos_Calc_Chest();
+
+}
 
 void GetPlayerPartsMatrixForCameraCtrl(float (*mat)[4], u_int parts_name) {
     int i1; // r3
@@ -3266,7 +3330,18 @@ void shCharacterPlayerWorkInitAtGameStart(void) {
 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shCharacterSetPlayerLow);
+void shCharacterSetPlayerLow(SubCharacter* scp) {
+    shCharacterSetFunction(scp, PlayerFunction);
+    sh2jms.player = scp;
+    
+    
+    sh2jms.player->battle.hp = sh2jms.hp;
+    sh2jms.player->battle.hp_max = sh2jms.hp_max;
+
+
+
+
+}
 
 void PlayerGetTargetInfo(void) {
     
@@ -3348,13 +3423,97 @@ void PlayerRequestAttackFinish(shPlayerWork* w) {
     } 
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerCheckStraightLine);
+void PlayerCheckStraightLine(SubCharacter* this, float spd_roty) {
+    sceVu0FVECTOR sp;
+    sceVu0FVECTOR ep;
+    float roty;
+    sceVu0FVECTOR me;
+    sceVu0FVECTOR wall;
+
+    
+    sp[0] = this->pos.x;
+    sp[2] = this->pos.z;
+    
+    
+    
+    if (playing.control_type == 0) 
+        roty = this->rot.y + spd_roty;
+     else 
+        roty = spd_roty;
+    
+    sh2jms.rot_y = roty;
+
+    ep[0] = sp[0] + 900.0f * shSinF(roty);
+    ep[2] = sp[2] + 900.0f * shCosF(roty);
+    
+    
+    sp[1] = ep[1] = this->eye_y;
+    clCheckHitEyes(&this->eye, (u_int) this, sp, ep, 0);
+    
+    
+    sp[1] = -150.0f + this->pos.y;
+    
+    
+    
+    ep[1] = -150.0f + this->pos.y + 900.0f * shSinF(TO_RAD(-30)) / shCosF(TO_RAD(-30));
+    
+    
+    
+    clCheckHitEyes(&sh2jms.foot, (u_int)this, sp, ep, 0);
+        
+    if ((this->eye.kind == 1) || (sh2jms.foot.kind == 1)) {
+        
+                
+        me[0] = ep[0] - sp[0];
+        
+        me[1] = ep[1] - sp[1];
+        me[2] = ep[2] - sp[2];
+        me[3] = 1.0f;        
+        shVectorCopy(wall, sh2jms.foot.hobj.wall.nl);
+        shNormalizeVector(me, me);
+        shNormalizeVector(wall, wall);
+                        
+        sh2jms.inner_to_wall = vec3_dot_product(me, wall);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        sh2jms.dist_to_wall = shVectorDistXz(sh2jms.foot.hobj.wall.cp, sp);
+        
+        if (sh2jms.dist_to_wall < 250.0f) {            
+            sh2jms.cannot_run = 1;
+            
+            player_flg_off(&sh2jms.lower_st_flg, 1 << JMS_ST_U_WALL_F);
+        }
+    
+    }
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesFootPos);
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesKickStartPos);
+void shGetJamesKickStartPos(float* pos, float* vec) {
+    shGetJamesFootPos(pos, vec, 0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", shGetJamesTrampStartPos);
+void shGetJamesTrampStartPos(float* pos, float* vec) {
+    shGetJamesFootPos(pos, vec, 1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerNowItemName);
 
@@ -3374,9 +3533,17 @@ int PlayerSearchVIewButtonCheck(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetNeckAngleX);
+float PlayerGetNeckAngleX(void) {
+    SubCharacterDisp* d = (SubCharacterDisp*) sh2jms.player; 
+    
+    return d->anime2.rot_neck.x;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/m3_play", PlayerGetNeckAngleY);
+float PlayerGetNeckAngleY(void) {
+    SubCharacterDisp* d = (SubCharacterDisp*) sh2jms.player;
+    
+    return d->anime2.rot_neck.y;
+}
 
 void PlayerInitOnConnect(void) {
 
@@ -3503,15 +3670,3 @@ int PlayerReverseLightCalcIsOn(void) {
 int PlayerWaterRoadIsOn(void) {
     return sh2jms.water_road;
 }
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @905_0x0038C2D0);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @906_0x0038C2F0);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2145);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2146_0x0038C330);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2147);
-
-INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play", @2148);

@@ -47,9 +47,9 @@ typedef struct WaveArea_GridLink_Infomeation {
 } WaveArea_GridLink_Infomeation;
 
 static inline u_long hh_class_water_clamp(int i) {
-    u_long umax = clamp_n_reverse(i, 2) << 7;
+    u_long umax = shClampNReverse(i, 2) << 7;
     u_long c = SCE_GS_SET_CLAMP(3, 3, 127, umax, 127, 0);
-    u_long vmax = clamp_n(i, 2) << 7;
+    u_long vmax = shClampN(i, 2) << 7;
     return c | (vmax << 0x22);
 }
 

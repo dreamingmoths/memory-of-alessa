@@ -2,16 +2,16 @@
 #include "Multi_thr/filesys/filecmd.h"
 #include "Multi_thr/filesys/fileserv.h"
 
-static void warning_no_entry(union fsFileIndex* id /* r2 */);
-static int file_trans_merge_to_direct(union fsFileIndex* id /* r2 */);
+static void warning_no_entry(fsFileIndex* id);
+static int file_trans_merge_to_direct(fsFileIndex* id);
 
-static void warning_no_entry(union fsFileIndex* id /* r2 */) {
+static void warning_no_entry(fsFileIndex* id) {
     printf("fcread.c:20> WARNING! file entry is none! %x\n", id);
 }
 
-static int file_trans_merge_to_direct(union fsFileIndex* id /* r2 */) {    
-    int ret = 0; // r2
-    union fsFile* file; // r6
+static int file_trans_merge_to_direct(fsFileIndex* id) {    
+    int ret = 0;
+    fsFile* file;
 
     file = id->index.fp;
     if ((execEnv_hd_merge_file != 0) && (file->check.type & 0x10)) {
@@ -26,8 +26,8 @@ static int file_trans_merge_to_direct(union fsFileIndex* id /* r2 */) {
     return ret;
 }
 
-int FcFixFile(union fsFileIndex* id /* r2 */) {
-    union fsFile *file; // r7
+int FcFixFile(fsFileIndex* id) {
+    fsFile *file;
 
     if (id == NULL) {
         warning_no_entry(id);
@@ -48,30 +48,32 @@ int FcFixFile(union fsFileIndex* id /* r2 */) {
     return fcFixFile(file);    
 }
 
-int fcGetFileSize(union fsFile* file /* r2 */) {
-    union fsFile real[1];
+int fcGetFileSize(fsFile* file) {
+    fsFile real[1];
     
     fsCmdSetRealFile(real, file);    
     return real[0].check.pad2;
 }
 
-int FcGetFileSize(union fsFileIndex *id) {
-    union fsFile* file; // r2 not used?
-    int fid; // r2
+int FcGetFileSize(fsFileIndex* id) {
+    fsFile* file; 
+    int fid; 
 
     if (id == NULL) {
         warning_no_entry(id);
         return 0;
     }
+    
+    
     fid = FcFixFile(id);
-    if (fid != -1) {
-        fsSync(0, fid);
-    }
-    return fcGetFileSize(id->index.fp);
+    if (fid != -1) fsSync(0, fid);
+    
+    file = id->index.fp;
+    return fcGetFileSize(file);
 }
 
-int FcRead(union fsFileIndex* id /* r2 */, void* databuf /* r17 */) {
-    union fsFile* file; // r16
+int FcRead(fsFileIndex* id, void* databuf) {
+    fsFile* file;
     if (id == NULL) {
         warning_no_entry(id);
         return -1;
@@ -82,8 +84,8 @@ int FcRead(union fsFileIndex* id /* r2 */, void* databuf /* r17 */) {
     return fcRead(file, databuf);
 }
 
-int FcReadPart(union fsFileIndex* id /* r2 */, void* databuf /* r19 */, int offset /* r18 */, int size /* r17 */) {
-    union fsFile* file;
+int FcReadPart(fsFileIndex* id, void* databuf, int offset, int size) {
+    fsFile* file;
 
     if (id == NULL) {
         warning_no_entry(id);

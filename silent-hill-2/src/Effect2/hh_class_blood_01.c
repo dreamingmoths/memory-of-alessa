@@ -3,6 +3,7 @@
 #include "hh_class_wrapper.h"
 #include "hh_effect_object_def.h"
 #include "hh_effect_object_texture.h"
+#include "Effect2/hh_object_vertex_info.h"
 #include "sce/libvifpk.h"
 #include "sce/libvu0.h"
 
@@ -267,7 +268,7 @@ u_int HH_Class_Blood_01(void* pBlock, ImpactQueue_Element* pElement) {
                 }
 
                 Object_Draw(pThis, pElement, position);
-                pThis->Timer += 1.0/60.0;
+                pThis->Timer += TIME_STEP_60FPS;
             }
             break;
         case 2:
@@ -289,7 +290,7 @@ u_int HH_Class_Blood_01(void* pBlock, ImpactQueue_Element* pElement) {
                 }
 
                 Object_Draw(pThis, pElement, position);
-                pThis->Timer += 1.0/60.0;
+                pThis->Timer += TIME_STEP_60FPS;
             }
             break;
             break;

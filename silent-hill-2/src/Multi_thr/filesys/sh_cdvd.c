@@ -23,7 +23,7 @@ static int WaitExec(void)  {
     if (shCdWork.exec_sid != -1) {
         WaitSema(shCdWork.exec_sid);
     } else {
-        shCdWork.exec_sid = CreateSema2(0, 1, 0);
+        shCdWork.exec_sid = CreateSema2(0, 1, NULL);
     }
     exec_cnt++;
 }
@@ -39,7 +39,7 @@ static int WaitCmd(void) {
     if (shCdWork.cmd_sid != -1) {
         ret = WaitSema(shCdWork.cmd_sid);
     } else {
-        ret = CreateSema2(0, 1, 0);
+        ret = CreateSema2(0, 1, NULL);
         shCdWork.cmd_sid = ret;
     }
     cmd_cnt++;
@@ -127,7 +127,7 @@ void shCdCallbackFunc(void) {
 int shCdInitW(int cb_prio /* r18 */, void* stack /* r17 */, int stack_size /* r16 */) {
     int ret;
     if (shCdWork.wait_sid == -1) {
-        shCdWork.wait_sid = CreateSema2(0, 1, 0);
+        shCdWork.wait_sid = CreateSema2(0, 1, NULL);
     }
     ret = sceCdInitEeCB(cb_prio, stack, stack_size);
     sceCdCallback(&shCdCallbackFunc);
@@ -452,7 +452,7 @@ static int WaitHd(void) {
     if (shHdWork.hd_sid != -1) {
         WaitSema(shHdWork.hd_sid);
     } else {
-        shHdWork.hd_sid = CreateSema2(0, 1, 0);
+        shHdWork.hd_sid = CreateSema2(0, 1, NULL);
     }
     exec_cnt++;
 }

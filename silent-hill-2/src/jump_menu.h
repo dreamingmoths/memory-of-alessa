@@ -1,22 +1,31 @@
-// E:\work\sh2(CVS全取得)\src\jump_menu.c
 #ifndef JUMP_MENU_H
 #define JUMP_MENU_H
 
-#include "common.h"
+#include "sh2_common.h"
 
-typedef struct /* @anon7 */ {
+typedef struct /* anonymous in the dwarf info */ {
     // total size: 0x14
-    signed int x;       // offset 0x0, size 0x4
-    signed int z;       // offset 0x4, size 0x4
-    signed int flg;     // offset 0x8, size 0x4
-    signed int trg;     // offset 0xC, size 0x4
-    signed int glb_crd; // offset 0x10, size 0x4
+    int x;       // offset 0x0, size 0x4
+    int z;       // offset 0x4, size 0x4
+    int flg;     // offset 0x8, size 0x4
+    int trg;     // offset 0xC, size 0x4
+    int glb_crd; // offset 0x10, size 0x4
 } JumpMenuUserData;
 
-void JumpMenuPosNormal(void);
+// total size: 0x94
+typedef struct JumpMenu_List {
+    // Members
+    s_char string[128]; // offset 0x0, size 0x80
+    float pos_x; // offset 0x80, size 0x4
+    float pos_y; // offset 0x84, size 0x4
+    float pos_z; // offset 0x88, size 0x4
+    float rot; // offset 0x8C, size 0x4
+    int stg; // offset 0x90, size 0x4
+} JumpMenu_List;
 
+void JumpMenuPosNormal(void);
 void CheckModeJumpDataSet(void);
 
-extern int jump_menu_select; // size: 0x4, address: 0x11B6990
+extern int jump_menu_select;
 
-#endif
+#endif // JUMP_MENU_H

@@ -730,3 +730,15 @@ void PlayerCheckControl2D(SubCharacter* this) {
     PlayerCheckAttack2D(this);
     PlayerUpdateStatusLower2nd2D(this);
 }
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @905_0x0038C2D0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @906_0x0038C2F0);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @2145);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @2146_0x0038C330);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @2147);
+
+INCLUDE_RODATA("asm/nonmatchings/Chacter/m3_play_2d", @2148);

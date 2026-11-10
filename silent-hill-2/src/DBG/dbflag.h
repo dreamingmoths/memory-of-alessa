@@ -1,8 +1,7 @@
 #ifndef DBFLAG_H
 #define DBFLAG_H
 
-#include "common.h"
-#include "debug.h"
+#include "sh2_common.h"
 
 #include "Exec_Env/exec_env.h"
 

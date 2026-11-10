@@ -8,8 +8,6 @@
 
 void dbSwitchAllInit(int enable /* r16 */);
 
-static void dbSwitchHelpPrint(void);
-
 int dbSwitchIsVisible(void);
 
 void dbSwitchAllPrint(void);

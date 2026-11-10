@@ -1,12 +1,914 @@
 #include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_class_blood_00.h"
+#include "Effect2/hh_class_blood_01.h"
+#include "Effect2/hh_class_blood_02.h"
+#include "Effect2/hh_class_blood_03.h"
+#include "Effect2/hh_class_blood_04.h"
+#include "Effect2/hh_class_blood_05.h"
+#include "Effect2/hh_class_blood_footmark_00.h"
+#include "Effect2/hh_class_blood_pool_phenomenon_00.h"
+#include "Effect2/hh_class_blood_pool_phenomenon_01.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_00.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_01.h"
+#include "Effect2/hh_class_blood_splash_phenomenon_02.h"
+#include "Effect2/hh_class_blood_stick_00.h"
+#include "Effect2/hh_class_boatmask.h"
+#include "Effect2/hh_class_dust_00.h"
+#include "Effect2/hh_class_fire_phenomenon_00.h"
+#include "Effect2/hh_class_flame_00.h"
+#include "Effect2/hh_class_flame_01.h"
+#include "Effect2/hh_class_flame_02.h"
+#include "Effect2/hh_class_flame_03.h"
+#include "Effect2/hh_class_glass_break_phenomenon_00.h"
+#include "Effect2/hh_class_glass_piece_00.h"
+#include "Effect2/hh_class_manager.h"
+#include "Effect2/hh_class_object_execute.h"
+#include "Effect2/hh_class_plural_phenomenon_00.h"
+#include "Effect2/hh_class_plural_phenomenon_01.h"
+#include "Effect2/hh_class_raise_dust_phenomenon_00.h"
+#include "Effect2/hh_class_smoke_00.h"
+#include "Effect2/hh_class_water_00.h"
+#include "Effect2/hh_class_water_01.h"
+#include "Effect2/hh_class_water_02.h"
+#include "Effect2/hh_class_water_03.h"
+#include "Effect2/hh_class_water_04.h"
+#include "Effect2/hh_class_water_06.h"
+#include "Effect2/hh_class_water_07.h"
+#include "Effect2/hh_class_water_08.h"
+#include "Effect2/hh_class_water_09.h"
+#include "Effect2/hh_class_water_10.h"
+#include "Effect2/hh_class_water_11.h"
+#include "Effect2/hh_class_water_12.h"
+#include "Effect2/hh_class_water_13.h"
+#include "Effect2/hh_class_water_14.h"
+#include "Effect2/hh_class_water_15.h"
+#include "Effect2/hh_class_water_20.h"
+#include "Effect2/hh_class_water_30.h"
+#include "Effect2/hh_class_water_80.h"
+#include "Effect2/hh_class_water_90.h"
+#include "Effect2/hh_class_water_common.h"
+#include "Effect2/hh_class_water_pool_00.h"
+#include "Effect2/hh_class_water_splash_phenomenon_00.h"
+#include "Effect2/hh_class_wrapper.h"
 
-extern /* static */ Object_Class _pObject_Class_List[48];
-extern /* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationInfo_Table[48];
-extern /* static */ u_int _Object_Class_Priority_List[49];
-extern /* static */ int _AutoPost_Association_List[2][18];
-extern Object_Instance* _pHierarchyTable[48];
+#define OBJECT_CLASS_COUNT 48
+
+/* static */ Object_Class _pObject_Class_List[OBJECT_CLASS_COUNT] = {
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   NULL,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Plural_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Plural_Phenomenon_01,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Pool_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Pool_Phenomenon_01,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Splash_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Splash_Phenomenon_01,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Splash_Phenomenon_02,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Blood_Stick_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_FootMark_00,
+        /* .pMain = */   HH_Class_Blood_FootMark_00,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_FootMark_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_00,
+        /* .pMain = */   HH_Class_Blood_00,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_01,
+        /* .pMain = */   HH_Class_Blood_01,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_01,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_02,
+        /* .pMain = */   HH_Class_Blood_02,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_02,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_03,
+        /* .pMain = */   HH_Class_Blood_03,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_03,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_04,
+        /* .pMain = */   HH_Class_Blood_04,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_04,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Blood_05,
+        /* .pMain = */   HH_Class_Blood_05,
+        /* .pSuffix = */ HH_Class_Suffix_Blood_05,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Raise_Dust_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Dust_00,
+        /* .pMain = */   HH_Class_Dust_00,
+        /* .pSuffix = */ HH_Class_Suffix_Dust_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Water_Splash_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_20,
+        /* .pMain = */   HH_Class_Water_20,
+        /* .pSuffix = */ HH_Class_Suffix_Water_20,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Glass_Break_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_GlassPiece_00,
+        /* .pMain = */   HH_Class_GlassPiece_00,
+        /* .pSuffix = */ HH_Class_Suffix_GlassPiece_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Boat_Mask,
+        /* .pMain = */   HH_Class_Boat_Mask,
+        /* .pSuffix = */ HH_Class_Suffix_Boat_Mask,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_00,
+        /* .pMain = */   HH_Class_Water_00,
+        /* .pSuffix = */ HH_Class_Suffix_Water_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_01,
+        /* .pMain = */   HH_Class_Water_01,
+        /* .pSuffix = */ HH_Class_Suffix_Water_01,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_02,
+        /* .pMain = */   HH_Class_Water_02,
+        /* .pSuffix = */ HH_Class_Suffix_Water_02,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_03,
+        /* .pMain = */   HH_Class_Water_03,
+        /* .pSuffix = */ HH_Class_Suffix_Water_03,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_04,
+        /* .pMain = */   HH_Class_Water_04,
+        /* .pSuffix = */ HH_Class_Suffix_Water_04,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_06,
+        /* .pMain = */   HH_Class_Water_06,
+        /* .pSuffix = */ HH_Class_Suffix_Water_06,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_07,
+        /* .pMain = */   HH_Class_Water_07,
+        /* .pSuffix = */ HH_Class_Suffix_Water_07,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_08,
+        /* .pMain = */   HH_Class_Water_08,
+        /* .pSuffix = */ HH_Class_Suffix_Water_08,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_09,
+        /* .pMain = */   HH_Class_Water_09,
+        /* .pSuffix = */ HH_Class_Suffix_Water_09,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_10,
+        /* .pMain = */   HH_Class_Water_10,
+        /* .pSuffix = */ HH_Class_Suffix_Water_10,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_11,
+        /* .pMain = */   HH_Class_Water_11,
+        /* .pSuffix = */ HH_Class_Suffix_Water_11,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_12,
+        /* .pMain = */   HH_Class_Water_12,
+        /* .pSuffix = */ HH_Class_Suffix_Water_12,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_13,
+        /* .pMain = */   HH_Class_Water_13,
+        /* .pSuffix = */ HH_Class_Suffix_Water_13,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_14,
+        /* .pMain = */   HH_Class_Water_14,
+        /* .pSuffix = */ HH_Class_Suffix_Water_14,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_15,
+        /* .pMain = */   HH_Class_Water_15,
+        /* .pSuffix = */ HH_Class_Suffix_Water_15,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_30,
+        /* .pMain = */   HH_Class_Water_30,
+        /* .pSuffix = */ HH_Class_Suffix_Water_30,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_80,
+        /* .pMain = */   HH_Class_Water_80,
+        /* .pSuffix = */ HH_Class_Suffix_Water_80,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_90,
+        /* .pMain = */   HH_Class_Water_90,
+        /* .pSuffix = */ HH_Class_Suffix_Water_90,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Water_Pool_00,
+        /* .pMain = */   HH_Class_Water_Pool_00,
+        /* .pSuffix = */ HH_Class_Suffix_Water_Pool_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ NULL,
+        /* .pMain = */   HH_Class_Fire_Phenomenon_00,
+        /* .pSuffix = */ NULL,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Flame_00,
+        /* .pMain = */   HH_Class_Flame_00,
+        /* .pSuffix = */ HH_Class_Suffix_Flame_00,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Flame_01,
+        /* .pMain = */   HH_Class_Flame_01,
+        /* .pSuffix = */ HH_Class_Suffix_Flame_01,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Flame_02,
+        /* .pMain = */   HH_Class_Flame_02,
+        /* .pSuffix = */ HH_Class_Suffix_Flame_02,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Flame_03,
+        /* .pMain = */   HH_Class_Flame_03,
+        /* .pSuffix = */ HH_Class_Suffix_Flame_03,
+        /* .disable = */ false,
+    },
+    {
+        /* .pPrefix = */ HH_Class_Prefix_Smoke_00,
+        /* .pMain = */   HH_Class_Smoke_00,
+        /* .pSuffix = */ HH_Class_Suffix_Smoke_00,
+        /* .disable = */ false,
+    }
+};
+
+static int _blood_splash_02_list[1]             = {7};
+static int _blood_05_list[1]                    = {7};
+static int _fire_pheno_list[1]                  = {170};
+static int _glass_list_0x00370878[1]            = {138};
+static int _water_01_list_0x00370880[1]         = {99};
+static int _water_03_list[1]                    = {128};
+static int _water_04_list[1]                    = {133};
+static int _water_06_list[1]                    = {122};
+static int _water_07_list[1]                    = {124};
+static int _water_08_list[1]                    = {126};
+static int _water_09_list[1]                    = {130};
+static int _water_10_list[1]                    = {187};
+static int _water_11_list[1]                    = {182};
+static int _water_12_list[1]                    = {183};
+static int _water_13_list[1]                    = {171};
+static int _water_14_list[1]                    = {184};
+static int _water_15_list[1]                    = {185};
+static int _water_30_list[1]                    = {33};
+static int _water_80_list[1]                    = {14};
+static int _water_90_list[1]                    = {3};
+static int _boat_mask_list[1]                   = {14};
+
+/* static */ MemoryPool_AssociationInfomeation _MemoryPool_AssociationInfo_Table[OBJECT_CLASS_COUNT] = {
+{
+    /* .Existent = */ 0,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 0,
+        /* .Block_Index_Max = */ 0,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 2,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 16,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 4,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 4,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 80,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 2,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 80,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _blood_splash_02_list,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 2,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 200,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 500,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 42,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 42,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 500,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _blood_05_list,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 16,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 192,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 16,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 160,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 0,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _glass_list_0x00370878,
+},
+{
+    /* .Existent = */ 0,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _glass_list_0x00370878,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _boat_mask_list,
+},
+{
+    /* .Existent = */ 0,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 18800,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 5072,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_01_list_0x00370880,
+},
+{
+    /* .Existent = */ 0,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 3856,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 6432,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_03_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 6864,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_04_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8288,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_06_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8976,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_07_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 5888,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_08_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 3696,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_09_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 5184,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_10_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 5440,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_11_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 3712,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_12_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 3248,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_13_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 4288,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_14_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 6368,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_15_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 3040,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_30_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 9856,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_80_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8832,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _water_90_list,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 64,
+        /* .Block_Index_Max = */ 400,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 32,
+        /* .Block_Index_Max = */ 1,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _fire_pheno_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8048,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _fire_pheno_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8048,
+        /* .Block_Index_Max = */ 4,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _fire_pheno_list,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8048,
+        /* .Block_Index_Max = */ 3,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _fire_pheno_list,
+},
+{
+    /* .Existent = */ 1,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 8048,
+        /* .Block_Index_Max = */ 10,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 0,
+    /* .pLinkList = */ NULL,
+},
+{
+    /* .Existent = */ 2,
+    /* .DataPool_Info = */ {
+        /* .Block_Size = */ 1632,
+        /* .Block_Index_Max = */ 20,
+        /* .pBlock_Table = */ NULL,
+        /* .pFreeBlock_List = */ NULL,
+    },
+    /* .LinkList_Max = */ 1,
+    /* .pLinkList = */ _fire_pheno_list,
+}
+};
+/* static */ u_int _Object_Class_Priority_List[OBJECT_CLASS_COUNT + 1] ={
+    0,  3,  4,  5,  6,  7,  8,  9,  41, 10, 12, 16, 17, 14, 
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+    36, 37, 38, 39, 40, 11, 15, 13, 18, 19, 42, 43, 44, 45,
+    46, 47, 20, 21, 1,  2,  48
+};
+/* static */ int _AutoPost_Association_List[2][18] = {
+    { 99,  24, 128, 26, 133, 27, 122, 28, 124, 29, 126, 30, 130, 31, 187, 32, 182, 33 },
+    { 183, 34, 171, 35, 184, 36, 185, 37, 33,  38, 14,  39, 14,  22, 3,   40, 170, 42 },
+};
+extern Object_Instance* _pHierarchyTable[OBJECT_CLASS_COUNT];
 extern Object_Instance _Object_instance_table[600];
-extern Object_DataPool_Infomeation _Object_Data_Table[48];
+extern Object_DataPool_Infomeation _Object_Data_Table[OBJECT_CLASS_COUNT];
 extern ImpactQueue_Element _Queue[500];
 extern Object_Group_Infomeation _Object_Group_Info[1];
 

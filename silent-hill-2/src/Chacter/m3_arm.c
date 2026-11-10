@@ -135,7 +135,7 @@ static const AnimeInfo arm_anim[14] = {
 }; // @ 0x00399080
 
 // static struct _AnimeInfo d_arm_anim[1]; // size: 0xC, address: 0x0   unused???
-// static signed int darm_anime_adr_list[1]; // size: 0x4, address: 0x0 unused???
+// static int darm_anime_adr_list[1]; // size: 0x4, address: 0x0 unused???
 
 static int EnemyARMInit(SubCharacter* this);
 static void EnemyARMFunction(SubCharacter* this);
@@ -154,8 +154,8 @@ static void EnemyARMFunction(SubCharacter* this) {
                 
                 
                 
-                volatile_vec_copy(&pos, &this->pos);
-                volatile_vec_copy(&rot, &this->rot);
+                shVectorCopy(&pos, &this->pos);
+                shVectorCopy(&rot, &this->rot);
                 
                 EnemyARMInit(this);
                 
@@ -184,8 +184,8 @@ static void EnemyARMFunction(SubCharacter* this) {
                     }
                 }
                 
-                volatile_vec_copy(&this->pos, &pos);                
-                volatile_vec_copy(&this->rot, &rot);
+                shVectorCopy(&this->pos, &pos);                
+                shVectorCopy(&this->rot, &rot);
                 
                 this->step++;
             }
@@ -250,7 +250,7 @@ void shGetEnemyARMAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
     mat.d[3][3] = 1.0f;   
        
     sceVu0ApplyMatrix(&pos0[0], &lw_mat[0], &pos0[0]);
-    volatile_vec_copy(s_pos, pos0);
+    shVectorCopy(s_pos, pos0);
    
 
     sceVu0ApplyMatrix(&pos1[0], &mat.d[0], &wep_range[0]);    
@@ -263,5 +263,5 @@ void shGetEnemyARMAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
     vec[1] = pos1[1] - pos0[1];
     vec[2] = pos1[2] - pos0[2];
     vec[3] = 0.0f;
-    vec_normalize(vec, s_vec); 
+    shNormalizeVector(vec, s_vec); 
 }
