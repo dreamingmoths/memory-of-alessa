@@ -67,7 +67,11 @@ SH2_DATA: DataTable = [
     StructData(name="PS_DrawEnvData",                       type=Sh2.DrawEnvData,                       count=19                      ),
     StructData(name="RR_DrawEnvData",                       type=Sh2.DrawEnvData,                       count=21                      ),
     StructData(name="RU_DrawEnvData",                       type=Sh2.DrawEnvData,                       count=12                      ),
-    StructData(name="QP_DrawEnvData",                       type=Sh2.DrawEnvData,                       count=1                       )
+    StructData(name="QP_DrawEnvData",                       type=Sh2.DrawEnvData,                       count=1                       ),
+    StructData(name="EnONIAnime",                           type=Sh2.EnAnimeData,                       count=16                      ),
+    SimpleData(name="check_point",                          type="<52f",                                pattern=[13, 4]               ),
+    SimpleData(name="warp_check",                           type="<4c",                                 pattern=[4]                   ),
+    SimpleData(name="suicide_point",                        type="<8f",                                 pattern=[2, 4]                ),
 ]
 
 SH3_DATA: DataTable = []
