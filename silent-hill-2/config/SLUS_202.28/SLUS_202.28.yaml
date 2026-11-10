@@ -431,7 +431,7 @@ segments:
       - { start: 0x00122b20,    type: c,          name: Effect/ef_cartridge                              }
       - { start: 0x001242d0,    type: c,          name: Chacter/m3_maria_sub                             }
       - { start: 0x00128a00,    type: c,          name: Event/stg_overlay                                }
-      - { start: 0x00129200,    type: asm,        name: Enemy/en_oni                                     }
+      - { start: 0x00129200,    type: c,          name: Enemy/en_oni                                     }
       - { start: 0x0012c730,    type: c,          name: Multi_thr/scf/ps2_scf                            }
       - { start: 0x0012ca20,    type: c,          name: DBG/dbfreeze                                     }
       - { start: 0x0012cbb0,    type: c,          name: Effect/ef_rain                                   }
@@ -737,7 +737,7 @@ segments:
       - { start: 0x0024cb70,    type: .data,      name: Chacter/m3_nik                                   }
       - { start: 0x0024cba8,    type: .data,      name: DBG/dbswitch                                     }
       - { start: 0x0024cbc0,    type: .data,      name: Chacter/m3_maria_sub                             }
-      - { start: 0x0024cd90,    type: data,       name: Enemy/en_oni                                     }
+      - { start: 0x0024cd90,    type: .data,      name: Enemy/en_oni                                     }
       - { start: 0x0024cff8,    type: .data,      name: Multi_thr/scf/ps2_scf                            }
       - { start: 0x0024d010,    type: data,       name: SH2_common/data_load                             }
       - { start: 0x0024d5d0,    type: data,       name: Event/memo                                       }
@@ -1042,7 +1042,7 @@ segments:
       - { start: 0x00297790,    type: rodata,     name: Chacter/m3_maria_sub_rodata                      }
       - { start: 0x00298500,    type: .rodata,    name: Chacter/m3_maria_sub                             }
       - { start: 0x002988d0,    type: .rodata,    name: Event/stg_overlay                                }
-      - { start: 0x00298ac8,    type: rodata,     name: Enemy/en_oni_rodata                              }
+      - { start: 0x00298ac8,    type: .rodata,    name: Enemy/en_oni                                     }
       - { start: 0x00298b40,    type: .rodata,    name: DBG/dbfreeze                                     }
       - { start: 0x00298ba0,    type: .rodata,    name: SH2_common/data_load                             }
       - { start: 0x00298bc0,    type: rodata,     name: Effect/ef_smoke                                  }
