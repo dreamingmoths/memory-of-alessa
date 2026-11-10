@@ -3,6 +3,9 @@
 
 #pragma optimization_level 3
 
+#define LIB_SH_PAD_ENABLED  0x10
+#define LIB_SH_PAD_DISABLED 0x20
+
 #define LISTEN_FOR_TOGGLE(mode)                                                                   \
     check_mode = *mode;                                                                           \
     while (step != 0x11) {                                                                        \
@@ -18,12 +21,12 @@ enum LIB_SH_PAD_STEPS {
     OPEN_PORT               = 0x0,
     UNKNOWN                 = 0x10,
     SET_CURID               = 0x11,
-    RETRY_CURID             = 0x12,
+    CHECK_CURID             = 0x12,
     CHECK_PRESSMODE_SUPPORT = 0x20,
     ENTER_PRESSMODE         = 0x21,
-    RETRY_PRESSMODE         = 0x22,
+    CHECK_PRESSMODE         = 0x22,
     SET_VIBRATIONMODE       = 0x30,
-    RETRY_VIBRATIONMODE     = 0x31,
+    CHECK_VIBRATIONMODE     = 0x31,
     FINISH_SUB              = 0x40,
     CHECK_TOGGLE            = 0x41
 
@@ -34,6 +37,7 @@ typedef struct shPadData {
     u_char read_data;     // return value of scePadRead
     u_char should_vibrate;
     u_char actuator[6];   // actuator parameters for vibration motors
+    //
     u_char curID;         // upper half holds controller id whilst lower half holds controller id offset
     u_char pressMode;     // upper half holds pressure sensitivity status whilst lower half holds status to be set
     u_char analogMode;    // upper half holds analog lock status whilst lower half holds lock status to be set
@@ -53,7 +57,6 @@ u_long128* libShPadDmaBuffer[2][4] = {};
 u_short    libShPadStep[2][4]      = {};
 shPadData* libShPadData[2][4]      = {};
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadEnable00);
 void libShPadEnable00(void) {
     static shPadData data;
     static u_long128 buffer[16] __attribute__(( aligned(64) ));
@@ -62,7 +65,6 @@ void libShPadEnable00(void) {
     libShPadData[0][0]      = &data;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadEnable10);
 void libShPadEnable10(void) {
     static shPadData data;
     static u_long128 buffer[16] __attribute__(( aligned(64) ));
@@ -71,7 +73,6 @@ void libShPadEnable10(void) {
     libShPadData[1][0]      = &data;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadInit);
 void libShPadInit(void) {
     int i, j;
 
@@ -84,7 +85,6 @@ void libShPadInit(void) {
     }
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadStart);
 void libShPadStart(int port, int slot) {
     shPadData* paddata;
 
@@ -95,26 +95,23 @@ void libShPadStart(int port, int slot) {
     }
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadSetMode);
 void libShPadSetMode(int port, int slot, u_int controller_id, u_int press_mode, u_int analog_mode, u_int vibration_mode) {
     shPadData* paddata = libShPadData[port][slot];
 
     if (paddata != NULL) {
         paddata->subUnfinished = 1;
-        paddata->curID          |= controller_id &= 3;
-        paddata->pressMode      |= press_mode &= 3;
-        paddata->analogMode     |= analog_mode &= 3;
+        paddata->curID          |= controller_id  &= 3;
+        paddata->pressMode      |= press_mode     &= 3;
+        paddata->analogMode     |= analog_mode    &= 3;
         paddata->vibrationMode  |= vibration_mode &= 3;
     }
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadSlotTrans);
 int libShPadSlotTrans(int port, int slot) {
     libShPadStep[port][slot] = libShPadSlotTransSub(port, slot, libShPadStep[port][slot]);
     return libShPadStep[port][slot];
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadSlotTransSub);
 u_short libShPadSlotTransSub(int port, int slot, u_short step) {
     shPadData* paddata;
     int pad_state;
@@ -124,8 +121,8 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
 
     if (paddata != NULL && step != OPEN_PORT && step != UNKNOWN) {
         paddata->read_data = scePadRead(port, slot, paddata->pd);
-        if ((paddata->should_vibrate != 0) && (paddata->vibrationMode & 0x10)) {
-            paddata->should_vibrate = 0;
+        if (paddata->should_vibrate && (paddata->vibrationMode & 0x10)) {
+            paddata->should_vibrate = false;
             scePadSetActDirect(port, slot, &paddata->actuator);
         }
     }
@@ -144,7 +141,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 paddata->analogMode    &= ~0x30;
                 paddata->vibrationMode &= ~0x30;
             }
-            if (step != 0) {
+            if (step != OPEN_PORT) {
                 return SET_CURID;
             }
             break;
@@ -158,7 +155,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             if (paddata == NULL)
                 return step;
             if (paddata->isAvailable & 1) {
-                if (libShPadStep[port][slot] == 0) {
+                if (libShPadStep[port][slot] == OPEN_PORT) {
                     if ((libShPadDmaBuffer[port][slot] != NULL) && (scePadPortOpen(port, slot, libShPadDmaBuffer[port][slot]) == 1)) {
                         step = UNKNOWN;
                     }
@@ -240,10 +237,10 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 // curl up and cry, then query scePadInfoMode
                 controller_mode_id_offset = scePadInfoMode(port, slot, InfoModeCurExOffs, 0);
             }
-            // request to lock/unlock analog lock failed
-            if (scePadSetMainMode(port, slot, controller_mode_id_offset, analog_switch_lock) != 0) {
+            if (scePadSetMainMode(port, slot, controller_mode_id_offset, analog_switch_lock)) {
+                // request to change controller mode was accepted
                 if (controller_mode_id_offset == 1) {
-                    return RETRY_CURID;
+                    return CHECK_CURID;
                 }
                 // switching from analog to digital and vice versa
                 // may exit pressure sensitive mode; Therefore, pressMode should be updated.
@@ -254,7 +251,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 return SET_VIBRATIONMODE;
             }
         } break;
-        case RETRY_CURID:
+        case CHECK_CURID:
             // scePadSetMainMode is considered an async function; Therefore,
             // we use scePadGetReqState to check if execution was successful.
             // If not, we set step to 0x11 which will send us back to the previous case.
@@ -277,9 +274,8 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             pressMode = &paddata->pressMode;
 
             if (check_mode & 1) {
-                // current controller supports pressure sensitivity
-                // @bug: docs say this will return "other than 1" if it didn't, which might not be zero
-                if (scePadInfoPressMode(port, slot) != 0) {
+                if (scePadInfoPressMode(port, slot)) {
+                    // current controller supports pressure sensitivity
                     *pressMode = check_mode;
                     return ENTER_PRESSMODE;
                 }
@@ -288,19 +284,19 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             return SET_VIBRATIONMODE;
         }
         case ENTER_PRESSMODE:
-            // failed to request pressure-sensitivity
-            if (scePadEnterPressMode(port, slot) != 0) {
-                return RETRY_PRESSMODE;
+            if (scePadEnterPressMode(port, slot)) {
+                // request to enter pressure-sensitive mode was accepted
+                return CHECK_PRESSMODE;
             }
 
             paddata->pressMode |= 0x20;
             return SET_VIBRATIONMODE;
-        case RETRY_PRESSMODE:
+        case CHECK_PRESSMODE:
             switch (scePadGetReqState(port, slot)) {
                 case scePadReqStateFailed:
                     return ENTER_PRESSMODE;
                 case scePadReqStateComplete:
-                    check_mode = paddata->pressMode & (u32) (u_char) ~0x30;
+                    check_mode = paddata->pressMode & (u_int) (u_char) ~0x30;
                     check_mode |= 0x10;
                     paddata->pressMode = check_mode;
                     return SET_VIBRATIONMODE;
@@ -309,29 +305,29 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
         case SET_VIBRATIONMODE: {
             u_char* vibrationMode;
 
-            check_mode = paddata->vibrationMode;
-            check_mode &= ~0x30;
+            check_mode    = paddata->vibrationMode;
+            check_mode   &= ~0x30;
             vibrationMode = &paddata->vibrationMode;
 
             if (check_mode & 1) {
-                // couldn't send actuator params to controller
-                if (scePadSetActAlign(port, slot, "\00\01\xff\xff\xff\xff\xff") != 0) {
+                if (scePadSetActAlign(port, slot, "\00\01\xff\xff\xff\xff\xff")) {
+                    // actuator parameters were successfully sent
                     *vibrationMode = check_mode;
-                    return RETRY_VIBRATIONMODE;
+                    return CHECK_VIBRATIONMODE;
                 }
             }
 
             *vibrationMode = check_mode | 0x20;
             return FINISH_SUB;
         }
-        case RETRY_VIBRATIONMODE:
+        case CHECK_VIBRATIONMODE:
             switch (scePadGetReqState(port, slot)) {
                 case scePadReqStateFailed:
                     return SET_VIBRATIONMODE;
                 case scePadReqStateComplete:
                     paddata->should_vibrate = 1;
                     check_mode              = paddata->vibrationMode;
-                    check_mode &= ~0x30;
+                    check_mode             &= ~0x30;
 
                     paddata->vibrationMode = check_mode |= 0x10;
                     return FINISH_SUB;
@@ -351,7 +347,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             u_char* pressMode     = &paddata->pressMode;
             u_char* vibrationMode = &paddata->vibrationMode;
 
-            if (paddata->subUnfinished != 0) {
+            if (paddata->subUnfinished) {
                 step = SET_CURID;
             }
 
@@ -372,7 +368,6 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
 
 RODATA_PAD_TO(0x0038FDA0);
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadPortTrans);
 int libShPadPortTrans(int port) {
     int ret;
     int slot;
@@ -382,7 +377,6 @@ int libShPadPortTrans(int port) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadTrans);
 int libShPadTrans(void) {
     int ret;
     int port;
@@ -394,7 +388,6 @@ int libShPadTrans(void) {
     return ret;
 }
 
-// INCLUDE_ASM("asm/nonmatchings/shPad/lib_sh_pad", libShPadRead);
 s_char libShPadRead(int port, int slot, char* data) {
     int i;
     int ret;
