@@ -3,9 +3,6 @@
 
 #pragma optimization_level 3
 
-#define LIB_SH_PAD_ENABLED  0x10
-#define LIB_SH_PAD_DISABLED 0x20
-
 #define LISTEN_FOR_TOGGLE(mode)                                                                   \
     check_mode = *mode;                                                                           \
     while (step != 0x11) {                                                                        \
@@ -37,11 +34,13 @@ typedef struct shPadData {
     u_char read_data;     // return value of scePadRead
     u_char should_vibrate;
     u_char actuator[6];   // actuator parameters for vibration motors
-    //
+    // modes: top 4 bits holds current mode status where 0x10 is enabled and 0x20 is disabled
+    //        bottom 4 bits holds user toggle. 0x1 is enable and 0x2 is disable
     u_char curID;         // upper half holds controller id whilst lower half holds controller id offset
     u_char pressMode;     // upper half holds pressure sensitivity status whilst lower half holds status to be set
     u_char analogMode;    // upper half holds analog lock status whilst lower half holds lock status to be set
     u_char vibrationMode; // used for vibration.
+    // booleans
     u_char isAvailable;   // is controller available
     u_char subUnfinished; // used to indicate whether we traversed every step in libShPadSlotTransSub
     u_char reserved[18];
@@ -99,7 +98,7 @@ void libShPadSetMode(int port, int slot, u_int controller_id, u_int press_mode, 
     shPadData* paddata = libShPadData[port][slot];
 
     if (paddata != NULL) {
-        paddata->subUnfinished = 1;
+        paddata->subUnfinished = true;
         paddata->curID          |= controller_id  &= 3;
         paddata->pressMode      |= press_mode     &= 3;
         paddata->analogMode     |= analog_mode    &= 3;
@@ -269,9 +268,9 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
         case CHECK_PRESSMODE_SUPPORT: {
             u_char* pressMode;
 
-            check_mode = paddata->pressMode;
+            check_mode  = paddata->pressMode;
             check_mode &= ~0x30;
-            pressMode = &paddata->pressMode;
+            pressMode   = &paddata->pressMode;
 
             if (check_mode & 1) {
                 if (scePadInfoPressMode(port, slot)) {
@@ -296,8 +295,8 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 case scePadReqStateFailed:
                     return ENTER_PRESSMODE;
                 case scePadReqStateComplete:
-                    check_mode = paddata->pressMode & (u_int) (u_char) ~0x30;
-                    check_mode |= 0x10;
+                    check_mode         = paddata->pressMode & (u_int) (u_char) ~0x30;
+                    check_mode        |= 0x10;
                     paddata->pressMode = check_mode;
                     return SET_VIBRATIONMODE;
             }
@@ -325,7 +324,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 case scePadReqStateFailed:
                     return SET_VIBRATIONMODE;
                 case scePadReqStateComplete:
-                    paddata->should_vibrate = 1;
+                    paddata->should_vibrate = true;
                     check_mode              = paddata->vibrationMode;
                     check_mode             &= ~0x30;
 
@@ -337,7 +336,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             if (!(paddata->analogMode & 0x11)) {
                 paddata->curID &= ~0x3;
             }
-            paddata->subUnfinished = 0;
+            paddata->subUnfinished = false;
             step                   = CHECK_TOGGLE;
             break;
         case CHECK_TOGGLE: {
