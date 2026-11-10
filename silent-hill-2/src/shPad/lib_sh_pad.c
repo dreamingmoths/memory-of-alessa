@@ -333,7 +333,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
             }
             break;
         case FINISH_SUB:
-            if (!(paddata->analogMode & 0x11)) {
+            if (!(paddata->analogMode & (0x10 | 0x1) )) {
                 paddata->curID &= ~0x3;
             }
             paddata->subUnfinished = false;
@@ -400,12 +400,12 @@ s_char libShPadRead(int port, int slot, char* data) {
     for (i = 0; i < ret; i++)
         data[i] = pad[i];
 
-    for (; i < 0x20; i++)
+    for (; i < 32; i++)
         data[i] = 0;
 
-    if (data[0x1] != 0) {
-        data[0x2] = ~data[0x2];
-        data[0x3] = ~data[0x3];
+    if (data[1] != 0) {
+        data[2] = ~data[2];
+        data[3] = ~data[3];
     }
     return ret;
 }
