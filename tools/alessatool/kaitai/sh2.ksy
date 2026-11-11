@@ -5898,6 +5898,40 @@ types:
       - id: p_cl_head
         type: pointer('data')
 
+  spot_light_data:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  pld:
+    seq:
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
   pic_draw_data:
     seq:
       - id: ap
@@ -7413,6 +7447,448 @@ types:
 
       - id: decay
         type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  sh2gfw_spotl_matrix:
+    seq:
+      - id: color
+        type: q_worddata
+        size: 16
+
+      - id: dirvec
+        type: q_worddata
+        size: 16
+
+      - id: position
+        type: q_worddata
+        size: 16
+
+      - id: decayparm
+        type: q_worddata
+        size: 16
+
+  sh2gfw_pointl_matrix:
+    seq:
+      - id: color
+        type: q_worddata
+        size: 16
+
+      - id: position
+        type: q_worddata
+        size: 16
+
+      - id: decayparm
+        type: q_worddata
+        size: 16
+
+  sh2gfw_env_ctl:
+    seq:
+      - id: camera_p
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_zd
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_yd
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_rot
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_ido
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_parms
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_parms2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_mat
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: objclip_mat
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: block_index
+        type: q_worddata
+        size: 16
+
+      - id: p_light0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_vertex_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot0_wpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot0_wdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l0
+        type: sh2gfw_spotl_matrix
+
+      - id: spot1_wpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot1_wdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l1
+        type: sh2gfw_spotl_matrix
+
+      - id: character_light_factor
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: character_light_factor_other
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l2
+        type: sh2gfw_spotl_matrix
+
+      - id: point0_localpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: point_l0
+        type: sh2gfw_pointl_matrix
+
+      - id: light_mode
+        type: u2
+
+      - id: weather_mode
+        type: u2
+
+      - id: time_mode
+        type: u2
+
+      - id: now_block
+        type: u2
+
+      - id: mode_buf
+        type: u2
+        repeat: expr
+        repeat-expr: 4
+
+      - id: stat_ctl_1
+        type: q_worddata
+        size: 16
+
+      - id: stat_ctl_2
+        type: q_worddata
+        size: 16
+
+      - id: fogcolor
+        type: q_worddata
+        size: 16
+
+      - id: fogparm
+        type: q_worddata
+        size: 16
+
+      - id: move_fog_color
+        type: q_worddata
+        size: 16
+
+      - id: clearcolor
+        type: q_worddata
+        size: 16
+
+      - id: random_seeds
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_env
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_test
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_alp
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_col
+        type: q_worddata
+        size: 16
+
+      - id: compo_fill_col
+        type: q_worddata
+        size: 16
+
+      - id: noise_condition
+        type: q_worddata
+        size: 16
+
+      - id: copy_filter_color
+        type: q_worddata
+        size: 16
+
+  draw_env_data:
+    seq:
+      - id: map_id_name
+        type: s4
+
+      - id: parallel_lnum
+        type: s1
+
+      - id: fake_spot_num
+        type: s1
+
+      - id: fake_point_num
+        type: s1
+
+      - id: point_lnum
+        type: s1
+
+      - id: spot_lnum
+        type: s1
+
+      - id: night_or_day
+        type: s1
+
+      - id: shadow_color
+        type: s2
+
+      - id: shadow_force_light_no
+        type: s2
+
+      - id: shadow_dark_ness
+        type: s2
+
+      - id: p_light_dir0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_dir1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_dir2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_col0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_decay_parm0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: fog_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_3
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_4
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_5
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_6
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_7
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_8
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_9
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_a
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_b
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_c
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_d
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_e
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: move_fog_col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  now_block_no:
+    seq:
+      - id: map_now_block_no
+        type: s4
         repeat: expr
         repeat-expr: 4
 

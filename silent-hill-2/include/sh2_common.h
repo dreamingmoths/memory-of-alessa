@@ -21,34 +21,35 @@
 #define MATERIAL_TYPE_11 11
 #define MATERIAL_TYPE_12 12
 
-
-#define SH2_SOUND_1012  1012
-#define SH2_SOUND_1015  1015
-#define SH2_SOUND_19031 19031
-#define SH2_SOUND_19032 19032
-#define SH2_SOUND_19033 19033
-#define SH2_SOUND_19034 19034
-#define SH2_SOUND_19035 19035
-#define SH2_SOUND_19036 19036
-#define SH2_SOUND_19037 19037
-#define SH2_SOUND_19038 19038
-#define SH2_SOUND_19039 19039
-#define SH2_SOUND_19040 19040
-#define SH2_SOUND_19041 19041
+#define SH2_SOUND_1012                  1012
+#define SH2_SOUND_1015                  1015
+#define SH_SOUND_CHANGE_SELECTION_10000 10000
+#define SH_SOUND_ENTER_SELECTION_10002  10002
+#define SH_SOUND_CANCEL_SELECTION_10003 10003
+#define SH2_SOUND_19031                 19031
+#define SH2_SOUND_19032                 19032
+#define SH2_SOUND_19033                 19033
+#define SH2_SOUND_19034                 19034
+#define SH2_SOUND_19035                 19035
+#define SH2_SOUND_19036                 19036
+#define SH2_SOUND_19037                 19037
+#define SH2_SOUND_19038                 19038
+#define SH2_SOUND_19039                 19039
+#define SH2_SOUND_19040                 19040
+#define SH2_SOUND_19041                 19041
 
 // @todo: move to vec.h if possible, but arg order is different from the one we
 // have for sh3 `amusement_01`
 static inline float shVectorDistXz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
     float d;
-    asm volatile(
-        "lwc1 %2, 0(%0)\n\
-         lwc1 f8, 0(%1)\n\
-         lwc1 f9, 8(%0)\n\
-         lwc1 f10, 8(%1)\n\
-         sub.s %2, %2, f8\n\
-         sub.s f9, f9, f10\n\
+    asm("lwc1 %2, 0(%0);\
+         lwc1 f8, 0(%1);\
+         lwc1 f9, 8(%0);\
+         lwc1 f10, 8(%1);\
+         sub.s %2, %2, f8;\
+         sub.s f9, f9, f10;\
          mula.s %2, %2;\
-         madd.s %2, f9, f9\n\
+         madd.s %2, f9, f9;\
          sqrt.s %2, %2"
         : "+r"(v), "+r"(w), "+f"(d));
     return d;
@@ -56,14 +57,14 @@ static inline float shVectorDistXz(sceVu0FVECTOR w, sceVu0FVECTOR v) {
 
 static inline float shVectorDistXz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
-         lwc1 f8, 0(%1)\n\
-         lwc1 f9, 8(%0)\n\
-         lwc1 f10, 8(%1)\n\
-         sub.s %2, %2, f8\n\
-         sub.s f9, f9, f10\n\
+    asm("lwc1 %2, 0(%0);\
+         lwc1 f8, 0(%1);\
+         lwc1 f9, 8(%0);\
+         lwc1 f10, 8(%1);\
+         sub.s %2, %2, f8;\
+         sub.s f9, f9, f10;\
          mula.s %2, %2;\
-         madd.s %2, f9, f9\n\
+         madd.s %2, f9, f9;\
          sqrt.s %2, %2"
         : "+r"(v), "+r"(w), "+f"(d));
     return d;
@@ -76,7 +77,7 @@ static inline int ftoi(float f) {
 }
 
 static inline float itof(int i) {
-    float f; 
+    float f;
     asm("mtc1 %1, %0; cvt.s.w %0, %0" : "=f"(f) : "r"(i));
     return f;
 }
@@ -84,20 +85,11 @@ static inline float itof(int i) {
 static inline int vu0_ftoi(float x) {
     int ret;
 
-    #ifdef __MWERKS__
-    asm {
-        mfc1     ret, x
-        qmtc2.ni ret, vf4
-        vftoi4.x vf4, vf4
-        qmfc2.ni ret, vf4
-    }
-    #else
     asm("mfc1     %0,  %1 ;\
          qmtc2.ni %0,  vf4;\
          vftoi4.x vf4, vf4;\
          qmfc2.ni %0,  vf4;\
-    ": "=r"(ret): "f"(x));
-    #endif
+    " : "=r"(ret) : "f"(x));
 
     return ret;
 }

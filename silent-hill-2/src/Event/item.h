@@ -33,17 +33,23 @@
 #define APART_GATE_KEY   23
 #define APART_202_KEY    24
 #define SH2_ITEM_25      25
+#define SH2_ITEM_26      26
 #define SH2_ITEM_27      27
 #define SH2_ITEM_28      28
 #define SH2_ITEM_29      29
 #define SH2_ITEM_30      30
+#define SH2_ITEM_31      31
 #define SH2_ITEM_32      32
 #define SH2_ITEM_33      33
 #define SH2_ITEM_34      34
 #define SH2_ITEM_35      35
+#define SH2_ITEM_36      36
+#define SH2_ITEM_37      37
 #define SH2_ITEM_38      38
 #define SH2_ITEM_39      39
 #define SH2_ITEM_40      40
+#define SH2_ITEM_41      41
+#define SH2_ITEM_42      42
 #define SH2_ITEM_43      43
 #define SH2_ITEM_44      44
 #define SH2_ITEM_45      45
@@ -69,9 +75,11 @@
 #define SH2_ITEM_65      65
 #define SH2_ITEM_66      66
 #define SH2_ITEM_67      67
+#define SH2_ITEM_68      68
 #define SH2_ITEM_69      69
 #define SH2_ITEM_70      70
 #define SH2_ITEM_71      71
+#define SH2_ITEM_72      72
 #define SH2_ITEM_73      73
 #define SH2_ITEM_74      74
 

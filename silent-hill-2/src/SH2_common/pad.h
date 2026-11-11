@@ -21,6 +21,11 @@
 #define PAD_KEY_L2         (1 << 18)
 #define PAD_KEY_R2         (1 << 19)
 
+#define PAD_ANALOG_DOWN  0
+#define PAD_ANALOG_LEFT  1
+#define PAD_ANALOG_RIGHT 2
+#define PAD_ANALOG_UP    3
+
 // total size: 0x26
 struct shGameKeyAssign {
     // Members

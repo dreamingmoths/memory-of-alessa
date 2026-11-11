@@ -158,10 +158,13 @@ def find_smallest_float_string(f: float):
     assert f32.value == c_float(f).value
 
     size = len(float_string)
-
     for i in range(len(float_string), 0, -1):
         candidate = float_string[:i]
-        if c_float(float(candidate)).value != f32.value:
+        if candidate == "-": continue
+        try:
+            if c_float(float(candidate)).value != f32.value:
+                break
+        except:
             break
         size = i
 
@@ -422,17 +425,17 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
         else:
             raise NotImplementedError("n > 2")
 
-def migrate_asm_file(project: str, path: str | Path):
+def migrate_asm_file(project: str, path: str | Path, stream: TextIO):
     with open(path) as asm_file:
         asm_contents = asm_file.read()
-    
+
     data_labels = map(lambda m : m.group(1).replace('"', ""), finditer("^dlabel (.*+)", asm_contents, flags=MULTILINE))
     store = DataMigrationStore()
 
     for label in data_labels:
         if label.startswith("D_"): continue
         try:
-            run_data_migration(DataMigrationRequest(project, label, stdout, store))
+            run_data_migration(DataMigrationRequest(project, label, stream, store))
         except Exception as e:
             stderr.write(e)
 

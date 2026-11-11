@@ -105,6 +105,7 @@ NOTE: currently two lines in `sh2.py` need fixups after this last step as they u
 #include "GFW/sh2gfw_2d_filters.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_structs.h"
+#include "GFW/sh2_DrawEnvData.h"
 
 #include "LoadBg/loadbg_common.h"
 

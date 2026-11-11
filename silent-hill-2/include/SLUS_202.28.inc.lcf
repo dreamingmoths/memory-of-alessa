@@ -36,6 +36,7 @@ SECTIONS
 	.main	:
 	{
 		_ovl_start_addr      = 0x01F01E00;
+		_ovl_align_addr		 = 0x01F08E00;
 		## linker symbols for overlays deleted from the prototype ##
 		stage_town_west      = 0x01F07060;
 		stage_bowling        = 0x01F02A80;
