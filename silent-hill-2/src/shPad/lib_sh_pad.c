@@ -1,0 +1,454 @@
+#include "sce/libpad.h"
+#include "shPad/lib_sh_pad.h"
+
+#pragma optimization_level 3
+
+#define LISTEN_FOR_TOGGLE(mode)                                                                   \
+    check_mode = *mode;                                                                           \
+    while (step != 0x11) {                                                                        \
+        if (                                                                                      \
+            (check_mode & 0x10) && (check_mode & 2) || (check_mode & 0x20) && (check_mode & 1)) { \
+            step = 0x11;                                                                          \
+        } else {                                                                                  \
+            break;                                                                                \
+        }                                                                                         \
+    }
+
+#define TOGGLE_ENABLED  0x1
+#define TOGGLE_DISABLED 0x2
+#define STATUS_ENABLED  0x10
+#define STATUS_DISABLED 0x20
+
+enum LIB_SH_PAD_STEPS {
+    OPEN_PORT               = 0x0,
+    UNKNOWN                 = 0x10,
+    SET_CURID               = 0x11,
+    CHECK_CURID             = 0x12,
+    CHECK_PRESSMODE_SUPPORT = 0x20,
+    ENTER_PRESSMODE         = 0x21,
+    CHECK_PRESSMODE         = 0x22,
+    SET_VIBRATIONMODE       = 0x30,
+    CHECK_VIBRATIONMODE     = 0x31,
+    FINISH_SUB              = 0x40,
+    CHECK_TOGGLE            = 0x41
+
+};
+
+typedef struct shPadData {
+    u_char pd[32];        // data from scePadRead
+    s_char read_data;     // return value of scePadRead
+    u_char should_vibrate;
+    u_char actuator[6];   // actuator parameters for vibration motors
+    // modes: top 4 bits holds current mode status where 0x10 is enabled and 0x20 is disabled
+    //        bottom 4 bits holds user toggle. 0x1 is enable and 0x2 is disable
+    u_char curID;         // upper half holds controller id whilst lower half holds controller id offset
+    u_char pressMode;     // upper half holds pressure sensitivity status whilst lower half holds status to be set
+    u_char analogMode;    // upper half holds analog lock status whilst lower half holds lock status to be set
+    u_char vibrationMode; // used for vibration.
+    // booleans
+    s_char isAvailable;   // is controller available
+    u_char subUnfinished; // used to indicate whether we traversed every step in libShPadSlotTransSub
+    u_char reserved[18];
+} shPadData;
+
+static int libShPadSlotTrans(int port, int slot);
+
+static u_short libShPadSlotTransSub(int port, int slot, u_short step);
+
+static int libShPadPortTrans(int port);
+
+u_long128* libShPadDmaBuffer[2][4] = {};
+u_short    libShPadStep[2][4]      = {};
+shPadData* libShPadData[2][4]      = {};
+
+void libShPadEnable00(void) {
+    static u_long128 buffer[16] __attribute__(( aligned(64) ));
+    static shPadData data;
+
+    libShPadDmaBuffer[0][0] = &buffer;
+    libShPadData[0][0]      = &data;
+}
+
+void libShPadEnable10(void) {
+    static u_long128 buffer[16] __attribute__(( aligned(64) ));
+    static shPadData data;
+
+    libShPadDmaBuffer[1][0] = &buffer;
+    libShPadData[1][0]      = &data;
+}
+
+void libShPadInit(void) {
+    int i, j;
+
+    scePadInit(0);
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 4; j++) {
+            libShPadStep[i][j] = 0;
+        }
+    }
+}
+
+void libShPadStart(int port, int slot) {
+    shPadData* paddata;
+
+    paddata = libShPadData[port][slot];
+    if (paddata != NULL) {
+        paddata->isAvailable &= ~2;
+        paddata->isAvailable |= 1;
+    }
+}
+
+void libShPadSetMode(int port, int slot, u_int controller_id, u_int press_mode, u_int analog_mode, u_int vibration_mode) {
+    shPadData* paddata = libShPadData[port][slot];
+
+    if (paddata != NULL) {
+        paddata->subUnfinished = true;
+        paddata->curID          |= controller_id  &= 3;
+        paddata->pressMode      |= press_mode     &= 3;
+        paddata->analogMode     |= analog_mode    &= 3;
+        paddata->vibrationMode  |= vibration_mode &= 3;
+    }
+}
+
+int libShPadSlotTrans(int port, int slot) {
+    libShPadStep[port][slot] = libShPadSlotTransSub(port, slot, libShPadStep[port][slot]);
+    return libShPadStep[port][slot];
+}
+
+u_short libShPadSlotTransSub(int port, int slot, u_short step) {
+    shPadData* paddata;
+    int pad_state;
+    u_char check_mode;
+
+    paddata = libShPadData[port][slot];
+
+    if (paddata != NULL && step != OPEN_PORT && step != UNKNOWN) {
+        paddata->read_data = scePadRead(port, slot, paddata->pd);
+        if (paddata->should_vibrate && (paddata->vibrationMode & STATUS_ENABLED)) {
+            paddata->should_vibrate = false;
+            scePadSetActDirect(port, slot, &paddata->actuator);
+        }
+    }
+
+    if (step == OPEN_PORT || step == UNKNOWN)
+        pad_state = scePadStateDiscon;
+    else
+        pad_state = scePadGetState(port, slot);
+
+    switch (pad_state) {
+        case scePadStateDiscon:
+        case scePadStateError:
+            if (paddata != NULL) {
+                paddata->curID         &= ~(STATUS_ENABLED | STATUS_DISABLED);
+                paddata->pressMode     &= ~(STATUS_ENABLED | STATUS_DISABLED);
+                paddata->analogMode    &= ~(STATUS_ENABLED | STATUS_DISABLED);
+                paddata->vibrationMode &= ~(STATUS_ENABLED | STATUS_DISABLED);
+            }
+            if (step != OPEN_PORT) {
+                return SET_CURID;
+            }
+            break;
+        case scePadStateFindPad:
+        case scePadStateExecCmd:
+            return step;
+    }
+
+    switch (step) {
+        case OPEN_PORT:
+            if (paddata == NULL)
+                return step;
+            if ((u_char) paddata->isAvailable & 1) {
+                if (libShPadStep[port][slot] == OPEN_PORT) {
+                    if ((libShPadDmaBuffer[port][slot] != NULL) && (scePadPortOpen(port, slot, libShPadDmaBuffer[port][slot]) == 1)) {
+                        step = UNKNOWN;
+                    }
+                }
+            }
+            return step;
+        case UNKNOWN:
+            step = SET_CURID;
+        /* fallthrough */
+        case SET_CURID: {
+            u_char* analogMode;
+            u_char* curID;
+            u_char* pressMode;
+
+            int controller_id;
+            int controller_mode_id_offset;
+            int analog_switch_lock;
+
+            u_char new_analog_mode;
+            u_char new_curid;
+
+            curID      = &paddata->curID;
+            analogMode = &paddata->analogMode;
+            pressMode  = &paddata->pressMode;
+
+            new_analog_mode = *analogMode;
+            // table is empty?
+            if (scePadInfoMode(port, slot, InfoModeIdTable, -1) == 0) {
+                // current controller mode id
+                controller_id = scePadInfoMode(port, slot, InfoModecurID, 0);
+
+                new_analog_mode &= ~(STATUS_ENABLED);
+                *analogMode = new_analog_mode |= (STATUS_DISABLED);
+
+                new_curid = *curID;
+                new_curid &= ~(STATUS_ENABLED | STATUS_DISABLED);
+
+                //
+                if (controller_id == DIGITAL_CONTROLLER) {
+                    new_curid |= STATUS_DISABLED;
+                } else {
+                    new_curid |= STATUS_ENABLED;
+                }
+
+                *curID = new_curid;
+
+                check_mode = *pressMode;
+                check_mode &= ~(STATUS_ENABLED);
+                *pressMode = check_mode |= (STATUS_DISABLED);
+
+                return SET_VIBRATIONMODE;
+            }
+
+            if (new_analog_mode & TOGGLE_DISABLED) {
+                analog_switch_lock = 2;
+            } else if (new_analog_mode & TOGGLE_ENABLED) {
+                analog_switch_lock = 3;
+            } else {
+                analog_switch_lock = 2;
+            }
+
+            new_analog_mode &= ~(STATUS_ENABLED | STATUS_DISABLED);
+
+            // lock switch is unlocked
+            if (analog_switch_lock == 2) {
+                new_analog_mode |= (STATUS_DISABLED);
+            } else {
+                new_analog_mode |= (STATUS_ENABLED);
+            }
+
+            *analogMode = new_analog_mode;
+
+            // check if lower half of curID has the controller id offset
+            if (*curID & TOGGLE_DISABLED) {
+                controller_mode_id_offset = 0;
+            } else if (*curID & TOGGLE_ENABLED) {
+                controller_mode_id_offset = 1;
+            } else {
+                // curl up and cry, then query scePadInfoMode
+                controller_mode_id_offset = scePadInfoMode(port, slot, InfoModeCurExOffs, 0);
+            }
+            if (scePadSetMainMode(port, slot, controller_mode_id_offset, analog_switch_lock)) {
+                // request to change controller mode was accepted
+                if (controller_mode_id_offset == 1) {
+                    return CHECK_CURID;
+                }
+                // switching from analog to digital and vice versa
+                // may exit pressure sensitive mode; Therefore, pressMode should be updated.
+                check_mode = *pressMode;
+                check_mode &= ~(STATUS_ENABLED);
+                *pressMode = check_mode |= (STATUS_DISABLED);
+
+                return SET_VIBRATIONMODE;
+            }
+        } break;
+        case CHECK_CURID:
+            // scePadSetMainMode is considered an async function; Therefore,
+            // we use scePadGetReqState to check if execution was successful.
+            // If not, we set step to 0x11 which will send us back to the previous case.
+            // (essentially, retrying)
+            // Otherwise, we will continue to the next case
+            switch (scePadGetReqState(port, slot)) {
+                case scePadReqStateFailed:
+                    return SET_CURID;
+                case scePadReqStateComplete:
+                    // (we aren't doing anything with this?)
+                    scePadInfoMode(port, slot, InfoModecurID, 0);
+                    return CHECK_PRESSMODE_SUPPORT;
+            }
+            break;
+        case CHECK_PRESSMODE_SUPPORT: {
+            u_char* pressMode;
+
+            check_mode = paddata->pressMode;
+            check_mode &= ~(STATUS_ENABLED | STATUS_DISABLED);
+            pressMode = &paddata->pressMode;
+
+            if (check_mode & TOGGLE_ENABLED) {
+                if (scePadInfoPressMode(port, slot)) {
+                    // current controller supports pressure sensitivity
+                    *pressMode = check_mode;
+                    return ENTER_PRESSMODE;
+                }
+            }
+            *pressMode = check_mode | (STATUS_DISABLED);
+            return SET_VIBRATIONMODE;
+        }
+        case ENTER_PRESSMODE:
+            if (scePadEnterPressMode(port, slot)) {
+                // request to enter pressure-sensitive mode was accepted
+                return CHECK_PRESSMODE;
+            }
+
+            paddata->pressMode |= (STATUS_DISABLED);
+            return SET_VIBRATIONMODE;
+        case CHECK_PRESSMODE:
+            switch (scePadGetReqState(port, slot)) {
+                case scePadReqStateFailed:
+                    return ENTER_PRESSMODE;
+                case scePadReqStateComplete:
+                    check_mode         = paddata->pressMode & (u_char) ~(STATUS_ENABLED | STATUS_DISABLED);
+                    check_mode        |= (STATUS_ENABLED);
+                    paddata->pressMode = check_mode;
+                    return SET_VIBRATIONMODE;
+            }
+            break;
+        case SET_VIBRATIONMODE: {
+            u_char* vibrationMode;
+
+            check_mode    = paddata->vibrationMode;
+            check_mode   &= ~(STATUS_ENABLED | STATUS_DISABLED);
+            vibrationMode = &paddata->vibrationMode;
+
+            if (check_mode & TOGGLE_ENABLED) {
+                if (scePadSetActAlign(port, slot, "\00\01\xff\xff\xff\xff\xff")) {
+                    // actuator parameters were successfully sent
+                    *vibrationMode = check_mode;
+                    return CHECK_VIBRATIONMODE;
+                }
+            }
+
+            *vibrationMode = check_mode | STATUS_DISABLED;
+            return FINISH_SUB;
+        }
+        case CHECK_VIBRATIONMODE:
+            switch (scePadGetReqState(port, slot)) {
+                case scePadReqStateFailed:
+                    return SET_VIBRATIONMODE;
+                case scePadReqStateComplete:
+                    paddata->should_vibrate = true;
+                    check_mode              = paddata->vibrationMode;
+                    check_mode             &= ~(STATUS_ENABLED | STATUS_DISABLED);
+
+                    paddata->vibrationMode = check_mode |= STATUS_ENABLED;
+                    return FINISH_SUB;
+            }
+            break;
+        case FINISH_SUB:
+            if (!(paddata->analogMode & (STATUS_ENABLED | TOGGLE_ENABLED) )) {
+                paddata->curID &= ~(TOGGLE_ENABLED | TOGGLE_DISABLED);
+            }
+            paddata->subUnfinished = false;
+            step                   = CHECK_TOGGLE;
+            break;
+        case CHECK_TOGGLE: {
+
+            u_char* curID         = &paddata->curID;
+            u_char* analogMode    = &paddata->analogMode;
+            u_char* pressMode     = &paddata->pressMode;
+            u_char* vibrationMode = &paddata->vibrationMode;
+
+            if (paddata->subUnfinished) {
+                step = SET_CURID;
+            }
+
+            LISTEN_FOR_TOGGLE(curID);
+
+            if (scePadInfoMode(port, slot, InfoModeCurExOffs, 0) == 1) {
+                LISTEN_FOR_TOGGLE(pressMode);
+            }
+
+            LISTEN_FOR_TOGGLE(analogMode);
+
+            LISTEN_FOR_TOGGLE(vibrationMode);
+        }
+            return step;
+    }
+    return step;
+}
+
+RODATA_PAD_TO(0x0038FDA0);
+
+int libShPadPortTrans(int port) {
+    int ret;
+    int slot;
+
+    for (slot = 0; slot < 4; slot++)
+        ret = (libShPadSlotTrans(port, slot) != 0) << slot;
+    return ret;
+}
+
+int libShPadTrans(void) {
+    int ret;
+    int port;
+    int temp;
+
+    for (port = 0, temp = 0; port < 2; port++, temp += 4) {
+        ret = libShPadPortTrans(port) << temp;
+    }
+    return ret;
+}
+
+s_char libShPadRead(int port, int slot, char* data) {
+    int i;
+    int ret;
+    shPadData* paddata;
+    s_char* pad;
+
+    paddata = libShPadData[port][slot];
+    pad     = paddata->pd;
+    ret     = paddata ? paddata->read_data : 0;
+
+    for (i = 0; i < ret; i++)
+        data[i] = pad[i];
+
+    for (; i < 32; i++)
+        data[i] = 0;
+
+    if (data[1] != 0) {
+        data[2] = ~data[2];
+        data[3] = ~data[3];
+    }
+    return ret;
+}
+
+int libShPadSend(int port, int slot, u_short pow0, u_short pow1) {
+    int ret;
+    shPadData* paddata;
+    u_char old_act0;
+    u_char old_act1;
+    u_char upper_pow;
+
+    ret     = false;
+    paddata = libShPadData[port][slot];
+    if (paddata != NULL) {
+
+        old_act0 = paddata->actuator[0];
+        old_act1 = paddata->actuator[1];
+
+        upper_pow = pow0 >> 8;
+
+        pow0 &= (u_char) ~upper_pow;
+        pow0 = (pow0 | (old_act0 & upper_pow));
+        ret  = old_act0 != pow0;
+
+        if (ret) {
+            paddata->actuator[0] = pow0;
+        }
+
+        upper_pow = (pow1 >> 8);
+
+        pow1 &= (u_char) ~upper_pow;
+        pow1 |= old_act1 & upper_pow;
+
+        if (old_act1 != pow1) {
+            paddata->actuator[1] = pow1;
+            ret |= true;
+        }
+        paddata->should_vibrate = ret;
+    }
+    return ret;
+}
