@@ -3,7 +3,7 @@
 
 #include "sh2_common.h"
 
-typedef struct /* @anon3 */ {
+typedef struct _G_MAN {
     // total size: 0x10
     Q_WORDDATA* GS_kick; // offset 0x0, size 0x4
     Q_WORDDATA* GS_tail; // offset 0x4, size 0x4
@@ -18,5 +18,7 @@ void sh2gfw_setREF_tagchain(Q_WORDDATA** pqwd, Q_WORDDATA* gt);
 Q_WORDDATA* sh2gfw_setEND_gsctl(void);
 void sh2gfw_setCALL_gsctl(Q_WORDDATA* pf);
 void sh2gfw_setREF_TEXFLUSH(void);
+
+extern G_MAN GSCTL_man;
 
 #endif // SH2GFW_GSCTL_MAN_H
