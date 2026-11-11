@@ -6,142 +6,136 @@
 #include "vec.h"
 
 static const AnimeInfo arm_anim[14] = {
-    { // [0]
-        /* .name  = */ 0x0000,
-        /* .frame = */ 0x0000,
-        /* .speed = */ 0x0000,
-        /* .start = */ 0x0000,
-        /* .end   = */ 0x0000,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        NULL
     },
-    { // [1]
-        /* .name  = */ 0x1483,
-        /* .frame = */ 0x0031,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0000,
-        /* .end   = */ 0x0030,
-        /* .loop  = */ 0x01,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(1),
+        /* .frame = */ 49,
+        /* .speed = */ 2048,
+        /* .start = */ 0,
+        /* .end = */ 48,
+        /* .loop = */ 1,
+        /* .pad = */ 0,
     },
-    { // [2]
-        /* .name  = */ 0x1484,
-        /* .frame = */ 0x0011,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0031,
-        /* .end   = */ 0x0041,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(2),
+        /* .frame = */ 17,
+        /* .speed = */ 2048,
+        /* .start = */ 49,
+        /* .end = */ 65,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [3]
-        /* .name  = */ 0x1485,
-        /* .frame = */ 0x0011,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0042,
-        /* .end   = */ 0x0052,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(3),
+        /* .frame = */ 17,
+        /* .speed = */ 2048,
+        /* .start = */ 66,
+        /* .end = */ 82,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [4]
-        /* .name  = */ 0x1486,
-        /* .frame = */ 0x0011,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0053,
-        /* .end   = */ 0x0063,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(4),
+        /* .frame = */ 17,
+        /* .speed = */ 2048,
+        /* .start = */ 83,
+        /* .end = */ 99,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [5]
-        /* .name  = */ 0x1487,
-        /* .frame = */ 0x0011,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0064,
-        /* .end   = */ 0x0074,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(5),
+        /* .frame = */ 17,
+        /* .speed = */ 2048,
+        /* .start = */ 100,
+        /* .end = */ 116,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [6]
-        /* .name  = */ 0x1488,
-        /* .frame = */ 0x0010,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0075,
-        /* .end   = */ 0x0084,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(6),
+        /* .frame = */ 16,
+        /* .speed = */ 2048,
+        /* .start = */ 117,
+        /* .end = */ 132,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [7]
-        /* .name  = */ 0x1489,
-        /* .frame = */ 0x0010,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0085,
-        /* .end   = */ 0x0094,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(7),
+        /* .frame = */ 16,
+        /* .speed = */ 2048,
+        /* .start = */ 133,
+        /* .end = */ 148,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [8]
-        /* .name  = */ 0x148A,
-        /* .frame = */ 0x001F,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0095,
-        /* .end   = */ 0x00B3,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(8),
+        /* .frame = */ 31,
+        /* .speed = */ 2048,
+        /* .start = */ 149,
+        /* .end = */ 179,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [9]
-        /* .name  = */ 0x148B,
-        /* .frame = */ 0x001F,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x00B4,
-        /* .end   = */ 0x00D2,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(9),
+        /* .frame = */ 31,
+        /* .speed = */ 2048,
+        /* .start = */ 180,
+        /* .end = */ 210,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [10]
-        /* .name  = */ 0x148C,
-        /* .frame = */ 0x001F,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x00D3,
-        /* .end   = */ 0x00F1,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(10),
+        /* .frame = */ 31,
+        /* .speed = */ 2048,
+        /* .start = */ 211,
+        /* .end = */ 241,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [11]
-        /* .name  = */ 0x148D,
-        /* .frame = */ 0x001F,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x00F2,
-        /* .end   = */ 0x0110,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(11),
+        /* .frame = */ 31,
+        /* .speed = */ 2048,
+        /* .start = */ 242,
+        /* .end = */ 272,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [12]
-        /* .name  = */ 0x148E,
-        /* .frame = */ 0x0042,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0111,
-        /* .end   = */ 0x0152,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(12),
+        /* .frame = */ 66,
+        /* .speed = */ 2048,
+        /* .start = */ 273,
+        /* .end = */ 338,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     },
-    { // [13]
-        /* .name  = */ 0x148F,
-        /* .frame = */ 0x0042,
-        /* .speed = */ 0x0800,
-        /* .start = */ 0x0153,
-        /* .end   = */ 0x0194,
-        /* .loop  = */ 0x00,
-        /* .pad   = */ 0x00
+    {
+        /* .name = */ ARM_PLAY_ANIM(13),
+        /* .frame = */ 66,
+        /* .speed = */ 2048,
+        /* .start = */ 339,
+        /* .end = */ 404,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
     }
 }; // @ 0x00399080
 
-// static struct _AnimeInfo d_arm_anim[1]; // size: 0xC, address: 0x0   unused???
+// static struct _AnimeInfo d_arm_anim[1]; // size: 0xC, address: 0x0 unused???
 // static int darm_anime_adr_list[1]; // size: 0x4, address: 0x0 unused???
 
 static int EnemyARMInit(SubCharacter* this);
 static void EnemyARMFunction(SubCharacter* this);
 
 static int EnemyARMInit(SubCharacter* this) {
-    return 0;
+    return false;
 }
 
 static void EnemyARMFunction(SubCharacter* this) {
@@ -150,7 +144,7 @@ static void EnemyARMFunction(SubCharacter* this) {
     EnLOCAL_DATA* dp;
     switch (this->step) {
         case 0:
-            if (this->battle.status & 0x400) {
+            if (this->battle.status & (1 << 10)) {
                 
                 
                 
@@ -163,7 +157,7 @@ static void EnemyARMFunction(SubCharacter* this) {
                     
                     SCAnimeTypeSwitch(this, 1);
                     
-                    shCharacterEnemyARMAnimeSetP(this, ARM_PLAY_ANIM_5251, 1);
+                    shCharacterEnemyARMAnimeSetP(this, ARM_PLAY_ANIM(1), 1);
                     
                     
                     
@@ -172,10 +166,10 @@ static void EnemyARMFunction(SubCharacter* this) {
                     
                     
                     
-                    if (this->status & 4) {
+                    if (this->status & (1 << SCP_STATUS_BIT_ANIME_TYPE)) {
 
                     
-                        if (dp = enEntryEnemy(10)) {
+                        if (dp = enEntryEnemy(EnKIND_ARM)) {
                             this->enemy_p = dp;
                             enInitData(dp, this);
                         } else {
@@ -189,11 +183,11 @@ static void EnemyARMFunction(SubCharacter* this) {
                 
                 this->step++;
             }
-            /* fallthrough */
+
         
         
         case 1:
-            return;
+            break;
     }
 }
 
@@ -202,10 +196,10 @@ void shCharacterSetEnemyARMLow(SubCharacter* scp) {
 }
 
 int shCharacterEnemyARMAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
-    AnimeInfo* aip; // r18
+    AnimeInfo* aip;
 
     if (shCharacterGetModelID(scp) == EN_ARM_CHARA_KIND) {
-        aip = (AnimeInfo*)&arm_anim[anime_id - ARM_PLAY_ANIME_ID_START];         
+        aip = (AnimeInfo*) &arm_anim[anime_id - ARM_PLAY_ANIME_ID_START];         
         shCharacterAnimeSet(scp,
                             0,
                             (s_char) ((comp == 1) ? 4 : 2),
@@ -241,7 +235,7 @@ void shGetEnemyARMAttackPos(SubCharacter* scp, float* s_pos, float* s_vec, u_sho
         stp = stp->next;
     
 
-    mat = *(Matrix4*)stp->src_m.d;       
+    mat = *(Matrix4*) stp->src_m.d;       
     pos0[0] = stp->src_m.d[3][0];
     pos0[1] = stp->src_m.d[3][1];
     pos0[2] = stp->src_m.d[3][2];
