@@ -73,6 +73,7 @@ endif
 MAKE += MAKE_OPTIONS="--no-print-directory"
 MAKEFLAGS += $(MAKE_OPTIONS)
 
+all: everything
 include $(PROJECT)/Makefile
 ###############################################################
 BINARIES := $(SERIAL) $(OVERLAYS)
@@ -208,7 +209,7 @@ BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releas
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
 PS2ISO_HOST := https://github.com/anasrar/ps2iso/releases/download/v0.0.3
 ###############################################################
-all: $(TARGETS)
+everything: $(TARGETS)
 
 setup: $(SETUP)
 
@@ -368,10 +369,6 @@ $(BUILD)/$(VSM)/%.o: $(VSM)/%.vsm
 	@mkdir -p "$(@D)"
 	$(EE_DVP_AS) $(EE_DVP_AS_FLAGS) -o "$@" "$^"
 
-$(BUILD)/src/lib/wprtfsrc.c.o: $(SRC)/lib/wprtfsrc.c
-	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(TOOLS)/mwcps2/2.3.3/mwccps2.exe" "$<" "$@" -O3,p $(MWCC_NONOPT_FLAGS) \
-		 -u __FILE__ -d __FILE__=\"$(<F)\"
-
 $(BUILD)/%.c.o: $(PROJECT)/%.c
 	@mkdir -p "$(@D)"
 	@echo "* $(@)"
@@ -466,7 +463,7 @@ PHONY_TARGETS := \
 	clean-quick clean-project clean-project-build \
 	compiler-info death debug deep-clean diff expected \
 	extract heaven hell iso linker-info progress \
-	overlays-lowercase rebuild report setup sh2 sh3 \
+	everything overlays-lowercase rebuild report setup sh2 sh3 \
 	sh2-build sh3-build sh2-clean sh3-clean \
 	sh2-iso sh3-iso sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)

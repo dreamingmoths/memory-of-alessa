@@ -38,3 +38,8 @@ MWLD_FLAGS := \
 EE_DVP_AS_FLAGS := -I$(VSM) --defsym DEBUG=1
 
 BSS_ALIGNMENT := 8
+
+$(BUILD)/src/lib/wprtfsrc.c.o: $(SRC)/lib/wprtfsrc.c
+	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(TOOLS)/mwcps2/2.3.3/mwccps2.exe" "$<" "$@" -O3,p $(MWCC_NONOPT_FLAGS) \
+		 -u __FILE__ -d __FILE__=\"$(<F)\"
+
