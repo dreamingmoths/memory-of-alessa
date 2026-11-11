@@ -14,8 +14,8 @@
 
 #include "GFW/sh2_DrawEnvData_data.h"
 
-static DrawEnvData* NowDrawEnvData; // size: 0x4, address: 0x11EACC0
 NowBlockNo NowJmsMapId; // size: 0x10, address: 0x11EACD0
+static DrawEnvData* NowDrawEnvData; // size: 0x4, address: 0x11EACC0
 
 extern sh2gfw_Env_ctl Env_ctl; // size: 0x3F0, address: 0x2AD780
 extern sceVu0FVECTOR clip_volume;
@@ -85,8 +85,8 @@ void* Get_NowRoomShadowForceLight(int* ltype) {
     
     
     
-    num = SHADOW_FORCE_LIGHT_NUM();
-    return qwd + (num - 1);
+    qwd += SHADOW_FORCE_LIGHT_NUM() - 1;
+    return qwd;
 }
 
 #line 168
@@ -151,15 +151,29 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
     
     mapblock = BlockNumber(maptmp, 0, connect_pos[0], connect_pos[2]); // @note unused ?
 
-    mapid = maptmp[0];
-    maparea = (int) (mapid & 0x0FFFF000) >> 16;
+    mapblock = maptmp[0]; // @todo possible incorrect variable usage? replacing mapid with mapblock makes it match but it doesnt look right
+    maparea = (int) (mapblock & 0xFFFF000) >> 16;
     
     for (i = 0; i < 4; i++) NowJmsMapId.Map_NowBlockNo[i] = maptmp[i];
 
     ded = stg_drawenv_data[maparea];
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     #line 257
-    if (maparea - 2u < 2u) {
+    if (maparea - 2u < 2u) { // if ((maparea == 2) || (maparea == 3)) ?
         
         
         if (GET_GAME_FLAG(GAME_FLAG_251)) {
@@ -176,7 +190,7 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
         if (GET_GAME_FLAG(GAME_FLAG_251)) {
             SetLightMode(1);
             while (ded->map_id_name != -1) {
-                if (ded->map_id_name == mapid && ded->NightOrDay == 1)
+                if (ded->map_id_name == mapblock && ded->NightOrDay == 1)
                     break;
                 ded++;
             }
@@ -185,7 +199,7 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
             
             
             while (ded->map_id_name != -1) {
-                if (ded->map_id_name == mapid && ded->NightOrDay == 0)
+                if (ded->map_id_name == mapblock && ded->NightOrDay == 0)
                     break;
                 ded++;
             }
@@ -195,7 +209,7 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
 
 
         
-        while (ded->map_id_name != -1 && ded->map_id_name != mapid) ded++;
+        while (ded->map_id_name != -1 && ded->map_id_name != mapblock) ded++;
         SetLightMode(ded->NightOrDay);
     }
     NowDrawEnvData = ded;
@@ -233,6 +247,11 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
     }
 }
 
+static inline setEnvClearColor(int i, int v) {
+    Env_ctl.clearcolor.uc8[i] = v;
+}
+
+#ifdef HOLY_CANDLE
 #line 332
 void SetupDrawEnvData(int NightOrDay) {
     int i; // r16
@@ -368,7 +387,7 @@ void SetupDrawEnvData(int NightOrDay) {
             Env_ctl.clearcolor.uc8[0] = itmp[0];
             Env_ctl.clearcolor.uc8[1] = itmp[1];
             Env_ctl.clearcolor.uc8[2] = itmp[2];
-            Env_ctl.clearcolor.uc8[3] = (s8) itmp[3];
+            Env_ctl.clearcolor.uc8[3] = itmp[3];
         }
     
     } else {
@@ -477,7 +496,12 @@ void SetupDrawEnvData(int NightOrDay) {
 
 
 
-
+    
 
     #line 599
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/GFW/sh2_DrawEnvData", SetupDrawEnvData);
+INCLUDE_RODATA("asm/nonmatchings/GFW/sh2_DrawEnvData", @676);
+INCLUDE_RODATA("asm/nonmatchings/GFW/sh2_DrawEnvData", @677);
+#endif
