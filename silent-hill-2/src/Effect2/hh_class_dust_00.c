@@ -10,11 +10,13 @@ static u_int Object_Initialize(HH_Object_Dust_00* pThis, ImpactQueue_Element* pE
 static void ParabolaMotion_Calculator(HH_Object_Dust_00* pThis, ImpactQueue_Element* pElement, float Time, float* Position);
 static u_int Object_Motion_00(HH_Object_Dust_00* pThis, ImpactQueue_Element* pElement);
 
+#define STQ(x) ((x) / 2048.0f)
+
 static sceVu0FMATRIX _square_00_vertex = {
     { -200.0f, -200.0f, 0.0f, 1.0f },
-    { -200.0f, 200.0f, 0.0f, 1.0f },
-    { 200.0f, -200.0f, 0.0f, 1.0f },
-    { 200.0f, 200.0f, 0.0f, 1.0f }
+    { -200.0f,  200.0f, 0.0f, 1.0f },
+    {  200.0f, -200.0f, 0.0f, 1.0f },
+    {  200.0f,  200.0f, 0.0f, 1.0f }
 };
 
 static sceVu0FMATRIX _square_00_normal = {
@@ -25,31 +27,31 @@ static sceVu0FMATRIX _square_00_normal = {
 };
 
 static sceVu0FMATRIX _square_00_stq = {
-    { 0.5f, 0.5f, 1.0f, 0.0f },
-    { 0.5f, 0.74804688f, 1.0f, 0.0f },
-    { 0.74804688f , 0.5f, 1.0f, 0.0f },
-    { 0.74804688f , 0.74804688f, 1.0f, 0.0f }
+    { 0.5f,         0.5f,         1.0f, 0.0f },
+    { 0.5f,         STQ(1532.0f), 1.0f, 0.0f },
+    { STQ(1532.0f), 0.5f,         1.0f, 0.0f },
+    { STQ(1532.0f), STQ(1532.0f), 1.0f, 0.0f }
 };
 
 static sceVu0FMATRIX _square_01_stq = {
-    { 0.75f, 0.5f, 1.0f, 0.0f },
-    { 0.75f, 0.74804688f, 1.0f, 0.0f },
-    { 0.99804688f, 0.5f, 1.0f, 0.0f },
-    { 0.99804688f, 0.74804688f, 1.0f, 0.0f }
+    { 0.75f,        0.5f,         1.0f, 0.0f },
+    { 0.75f,        STQ(1532.0f), 1.0f, 0.0f },
+    { STQ(2044.0f), 0.5f,         1.0f, 0.0f },
+    { STQ(2044.0f), STQ(1532.0f), 1.0f, 0.0f }
 };
 
 static sceVu0FMATRIX _square_10_stq = {
-    { 0.5f, 0.75f, 1.0f, 0.0f },
-    { 0.5f, 0.99804688f, 1.0f, 0.0f },
-    { 0.74804688f, 0.75f, 1.0f, 0.0f },
-    { 0.74804688f, 0.99804688f, 1.0f, 0.0f }
+    { 0.5f,         0.75f,        1.0f, 0.0f },
+    { 0.5f,         STQ(2044.0f), 1.0f, 0.0f },
+    { STQ(1532.0f), 0.75f,        1.0f, 0.0f },
+    { STQ(1532.0f), STQ(2044.0f), 1.0f, 0.0f }
 };
 
 static sceVu0FMATRIX _square_11_stq = {
-    { 0.75f, 0.75f, 1.0f, 0.0f },
-    { 0.75f, 0.99804688f, 1.0f, 0.0f },
-    { 0.99804688f, 0.75f, 1.0f, 0.0f },
-    { 0.99804688f, 0.99804688f, 1.0f, 0.0f }
+    { 0.75f,        0.75f,        1.0f, 0.0f },
+    { 0.75f,        STQ(2044.0f), 1.0f, 0.0f },
+    { STQ(2044.0f), 0.75f,        1.0f, 0.0f },
+    { STQ(2044.0f), STQ(2044.0f), 1.0f, 0.0f }
 };
 
 static sceVu0FVECTOR* _square_0x_stq_list[4] = { 
@@ -57,16 +59,16 @@ static sceVu0FVECTOR* _square_0x_stq_list[4] = {
     _square_10_stq, _square_11_stq
 };
 
-static Vertex_Infomeation_List _vertex_info_list[1] = { _square_00_vertex, _square_00_normal, 4, 4 };
-static float _rgba_start_list[1] = { 0.0f }; // size: 0x4, address: 0x36E8B0
-static float _rgba_end_list[1] = { 120.0f }; // size: 0x4, address: 0x36E8B8
-static float _scale_start_list[1] = { 0.1f }; // size: 0x4, address: 0x36E8C0
-static float _scale_end_list[1] = { 1.0f }; // size: 0x4, address: 0x36E8C8
-static Motion_Table_Infomeation _motion_info[3] = {
-    { 0.0f, 0.0f, 0.0f },
-    { 0.6f, 0.8f, 1.0f },
-    { 1.5f, 0.8f, -1.0f }
- };
+static Vertex_Infomeation_List _vertex_info_list[1] = {_square_00_vertex, _square_00_normal, 4, 4};
+static float _rgba_start_list[1]                    = {0.0f};   // size: 0x4, address: 0x36E8B0
+static float _rgba_end_list[1]                      = {120.0f}; // size: 0x4, address: 0x36E8B8
+static float _scale_start_list[1]                   = {0.1f};   // size: 0x4, address: 0x36E8C0
+static float _scale_end_list[1]                     = {1.0f};   // size: 0x4, address: 0x36E8C8
+static Motion_Table_Infomeation _motion_info[3]     = {
+    {0.0f, 0.0f,  0.0f},
+    {0.6f, 0.8f,  1.0f},
+    {1.5f, 0.8f, -1.0f}
+};
 
 
 #line 253
@@ -146,7 +148,7 @@ static u_int Object_Motion_00(HH_Object_Dust_00* pThis, ImpactQueue_Element* pEl
     if (current_step > 2)
         current_step = 2;
         
-    for(i = 0; i < current_step + 1; i++) {
+    for (i = 0; i < current_step + 1; i++) {
         local_time_start += pMotion_Info[i].diff_time;
         local_scale_start += pMotion_Info[i].diff_scale_ratio;
         local_rgba_start += pMotion_Info[i].diff_rgba_ratio;
@@ -158,17 +160,17 @@ static u_int Object_Motion_00(HH_Object_Dust_00* pThis, ImpactQueue_Element* pEl
     
     switch (pThis->Motion_Step) {
         case 0:
-            if(pThis->Timer > local_time_end){
+            if(pThis->Timer > local_time_end) {
                 pThis->Motion_Step++;
             }
             break;
         case 1:
-            if(pThis->Timer > local_time_end){
+            if (pThis->Timer > local_time_end) {
                 pThis->Motion_Step++;
             }
             break;
         case 2:
-            if(pThis->Timer > local_time_end){
+            if (pThis->Timer > local_time_end){ 
                 pThis->Motion_Step++;
             }
             break;
@@ -332,42 +334,42 @@ u_int HH_Class_Dust_00(void* pBlock, ImpactQueue_Element* pElement) {
     pThis = pBlock;
     
     switch (pThis->Step) {
-    case 0:
-        Object_Initialize(pThis, pElement);
-        pThis->Step++;
-        break;
-    case 1:
-        {
-            float position[4];
-            
-            ParabolaMotion_Calculator(pThis, pElement, pThis->Timer, position);
-            
-            Object_Motion_00(pThis, pElement);
-            #line 622
-            if ((position[1] + pElement->Option.Vector[0][1]) > 0.0f) {
-                pThis->Step = 2;
-                pThis->Step = 3; // @ bug?
+        case 0:
+            Object_Initialize(pThis, pElement);
+            pThis->Step++;
+            break;
+        case 1:
+            {
+                float position[4];
+                
+                ParabolaMotion_Calculator(pThis, pElement, pThis->Timer, position);
+                
+                Object_Motion_00(pThis, pElement);
+                #line 622
+                if ((position[1] + pElement->Option.Vector[0][1]) > 0.0f) {
+                    pThis->Step = 2;
+                    pThis->Step = 3; // @ bug?
+                }
+                
+                Object_Draw(pThis, pElement, position);
+                
+                pThis->Timer += TIME_STEP_60FPS;
+                break;
             }
-            
-            Object_Draw(pThis, pElement, position);
-            
-            pThis->Timer += TIME_STEP_60FPS;
+        case 2:
+            { 
+                float position[4];
+                
+                ParabolaMotion_Calculator(pThis, pElement,pThis->Timer, position);
+                position[1] = -pElement->Option.Vector[0][1];
+                Object_Draw(pThis, pElement, position);
+                
+                break;
+            }
+        case 3: default:
+            pThis->Header.Enable = false;
+            result = false;
             break;
-        }
-    case 2:
-        { 
-            float position[4];
-            
-            ParabolaMotion_Calculator(pThis, pElement,pThis->Timer, position);
-            position[1] = -pElement->Option.Vector[0][1];
-            Object_Draw(pThis, pElement, position);
-            
-            break;
-        }
-    case 3: default:
-        pThis->Header.Enable = false;
-        result = false;
-        break;
     }
     return result;
 }
