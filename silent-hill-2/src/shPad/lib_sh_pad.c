@@ -36,7 +36,7 @@ enum LIB_SH_PAD_STEPS {
 
 typedef struct shPadData {
     u_char pd[32];        // data from scePadRead
-    u_char read_data;     // return value of scePadRead
+    s_char read_data;     // return value of scePadRead
     u_char should_vibrate;
     u_char actuator[6];   // actuator parameters for vibration motors
     // modes: top 4 bits holds current mode status where 0x10 is enabled and 0x20 is disabled
@@ -46,7 +46,7 @@ typedef struct shPadData {
     u_char analogMode;    // upper half holds analog lock status whilst lower half holds lock status to be set
     u_char vibrationMode; // used for vibration.
     // booleans
-    u_char isAvailable;   // is controller available
+    s_char isAvailable;   // is controller available
     u_char subUnfinished; // used to indicate whether we traversed every step in libShPadSlotTransSub
     u_char reserved[18];
 } shPadData;
@@ -62,16 +62,16 @@ u_short    libShPadStep[2][4]      = {};
 shPadData* libShPadData[2][4]      = {};
 
 void libShPadEnable00(void) {
-    static shPadData data;
     static u_long128 buffer[16] __attribute__(( aligned(64) ));
+    static shPadData data;
 
     libShPadDmaBuffer[0][0] = &buffer;
     libShPadData[0][0]      = &data;
 }
 
 void libShPadEnable10(void) {
-    static shPadData data;
     static u_long128 buffer[16] __attribute__(( aligned(64) ));
+    static shPadData data;
 
     libShPadDmaBuffer[1][0] = &buffer;
     libShPadData[1][0]      = &data;
@@ -94,8 +94,8 @@ void libShPadStart(int port, int slot) {
 
     paddata = libShPadData[port][slot];
     if (paddata != NULL) {
-        paddata->isAvailable = paddata->isAvailable & ~2;
-        paddata->isAvailable = paddata->isAvailable | 1;
+        paddata->isAvailable &= ~2;
+        paddata->isAvailable |= 1;
     }
 }
 
@@ -158,7 +158,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
         case OPEN_PORT:
             if (paddata == NULL)
                 return step;
-            if (paddata->isAvailable & 1) {
+            if ((u_char) paddata->isAvailable & 1) {
                 if (libShPadStep[port][slot] == OPEN_PORT) {
                     if ((libShPadDmaBuffer[port][slot] != NULL) && (scePadPortOpen(port, slot, libShPadDmaBuffer[port][slot]) == 1)) {
                         step = UNKNOWN;
@@ -273,9 +273,9 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
         case CHECK_PRESSMODE_SUPPORT: {
             u_char* pressMode;
 
-            check_mode  = paddata->pressMode;
+            check_mode = paddata->pressMode;
             check_mode &= ~(STATUS_ENABLED | STATUS_DISABLED);
-            pressMode   = &paddata->pressMode;
+            pressMode = &paddata->pressMode;
 
             if (check_mode & TOGGLE_ENABLED) {
                 if (scePadInfoPressMode(port, slot)) {
@@ -300,7 +300,7 @@ u_short libShPadSlotTransSub(int port, int slot, u_short step) {
                 case scePadReqStateFailed:
                     return ENTER_PRESSMODE;
                 case scePadReqStateComplete:
-                    check_mode         = paddata->pressMode & (u_int) (u_char) ~(STATUS_ENABLED | STATUS_DISABLED);
+                    check_mode         = paddata->pressMode & (u_char) ~(STATUS_ENABLED | STATUS_DISABLED);
                     check_mode        |= (STATUS_ENABLED);
                     paddata->pressMode = check_mode;
                     return SET_VIBRATIONMODE;
@@ -400,7 +400,7 @@ s_char libShPadRead(int port, int slot, char* data) {
 
     paddata = libShPadData[port][slot];
     pad     = paddata->pd;
-    ret     = paddata ? (s_char) paddata->read_data : 0;
+    ret     = paddata ? paddata->read_data : 0;
 
     for (i = 0; i < ret; i++)
         data[i] = pad[i];
@@ -420,34 +420,33 @@ int libShPadSend(int port, int slot, u_short pow0, u_short pow1) {
     shPadData* paddata;
     u_char old_act0;
     u_char old_act1;
-    u_char temp_v1;
-    int temp;
+    u_char upper_pow;
 
-    ret     = 0;
+    ret     = false;
     paddata = libShPadData[port][slot];
     if (paddata != NULL) {
 
         old_act0 = paddata->actuator[0];
         old_act1 = paddata->actuator[1];
 
-        temp_v1 = pow0 >> 8;
+        upper_pow = pow0 >> 8;
 
-        pow0 &= (u_char) ~temp_v1;
-        pow0 = (pow0 | (old_act0 & temp_v1));
+        pow0 &= (u_char) ~upper_pow;
+        pow0 = (pow0 | (old_act0 & upper_pow));
         ret  = old_act0 != pow0;
 
-        if (ret != 0) {
+        if (ret) {
             paddata->actuator[0] = pow0;
         }
 
-        temp_v1 = (pow1 >> 8);
+        upper_pow = (pow1 >> 8);
 
-        pow1 &= (u_char) ~temp_v1;
-        pow1 |= (u_char) old_act1 & (u_int) temp_v1;
+        pow1 &= (u_char) ~upper_pow;
+        pow1 |= old_act1 & upper_pow;
 
         if (old_act1 != pow1) {
             paddata->actuator[1] = pow1;
-            ret |= 1;
+            ret |= true;
         }
         paddata->should_vibrate = ret;
     }
