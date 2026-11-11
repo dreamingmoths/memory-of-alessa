@@ -17,8 +17,8 @@ import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
-from utils import ensure_path_and_write, normalize_object_path, to_expected_path
-from constants import VSM
+from utils import ensure_path_and_write, normalize_object_path, relative_to_name, to_expected_path
+from constants import ASM, SRC, VSM
 
 import splat.scripts.split as split
 import splat.util.options as splat_options
@@ -261,9 +261,16 @@ def generate_objdiff_units(args: GenerationArgs):
         if len(entry.src_paths) > 1:
             raise Exception("Unhandled case: len(src_paths) > 1")
 
+        is_asmtu = segment_type == "asmtu"
         source_path = str(entry.src_paths[0])
         object_path = str(entry.object_path)
-        is_code = source_path.endswith(".c")
+        is_code = source_path.endswith(".c") or is_asmtu
+
+        if is_asmtu:
+            source_path = relative_to_name(source_path, ASM, include_base=False)
+            source_path = (Path(SRC) / source_path).with_suffix(".c").as_posix()
+        else:
+            source_path = relative_to_name(source_path, SRC, include_base=True)
 
         metadata = UnitMetadata(
             progress_categories=[parent.name == "engine" and "engine" or "stages"],
