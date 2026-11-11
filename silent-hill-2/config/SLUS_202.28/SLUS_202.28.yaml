@@ -85,15 +85,15 @@ segments:
       - { start: 0x00040110,    type: c,          name: Enemy/en_bos                                     }
       - { start: 0x00041ab0,    type: c,          name: Enemy/en_common                                  }
       - { start: 0x00047f50,    type: asm,        name: Enemy/en_draw                                    }
-      - { start: 0x00049bc0,    type: asm,        name: Enemy/en_edb                                     }
+      - { start: 0x00049bc0,    type: asmtu,      name: Enemy/en_edb                                     }
       - { start: 0x0004e720,    type: asm,        name: Enemy/en_effect                                  }
-      - { start: 0x00051250,    type: c,          name: Enemy/en_ike                                     }
-      - { start: 0x00053b10,    type: c,          name: Enemy/en_mkn                                     }
+      - { start: 0x00051250,    type: asmtu,      name: Enemy/en_ike                                     }
+      - { start: 0x00053b10,    type: asmtu,      name: Enemy/en_mkn                                     }
       - { start: 0x00057eb0,    type: c,          name: Enemy/en_nse                                     }
       - { start: 0x0005a760,    type: c,          name: Enemy/en_pap                                     }
       - { start: 0x0005db10,    type: c,          name: Enemy/en_red                                     }
-      - { start: 0x00060ab0,    type: c,          name: Enemy/en_scu                                     }
-      - { start: 0x00065700,    type: c,          name: Enemy/en_tyu                                     }
+      - { start: 0x00060ab0,    type: asmtu,      name: Enemy/en_scu                                     }
+      - { start: 0x00065700,    type: asmtu,      name: Enemy/en_tyu                                     }
       - { start: auto,          type: c,          name: Exec_Env/exec_env                                }
       - { start: auto,          type: c,          name: Exec_Env/local_env                               }
       - { start: 0x00068ed0,    type: c,          name: Fog/fog                                          }
@@ -194,8 +194,8 @@ segments:
       - { start: 0x000ce0b0,    type: c,          name: DBG/dbflag                                       }
       - { start: 0x000ce240,    type: c,          name: Item/otn_itemmain                                }
       - { start: 0x000db910,    type: c,          name: FilesList/fileslist_bg                           }
-      - { start: 0x000db9a0,    type: asm,        name: Enemy/en_fly                                     }
-      - { start: 0x000dbdc0,    type: c,          name: lib/wprtfsrc                                    }
+      - { start: 0x000db9a0,    type: asmtu,      name: Enemy/en_fly                                     }
+      - { start: 0x000dbdc0,    type: c,          name: lib/wprtfsrc                                     }
       - { start: 0x000dc570,    type: asm,        name: Multi_thr/kernel/wrap_printf                     }
       - { start: 0x000dc5b0,    type: asm,        name: MWCC/gcc_wrapper                                 }
       - { start: 0x000dc6a8,    type: asmtu,      name: sdk/lib_001DBFA8,      ld_align_segment_start: 8 }
@@ -448,7 +448,7 @@ segments:
       - { start: 0x001395d0,    type: c,          name: Chacter/m3_arm                                   }
       - { start: 0x00139a00,    type: c,          name: Chacter/m3_mary                                  }
       - { start: 0x00139ca0,    type: c,          name: Chacter/m3_mxx                                   }
-      - { start: 0x00139db0,    type: asm,        name: Enemy/en_arm                                     }
+      - { start: 0x00139db0,    type: asmtu,      name: Enemy/en_arm                                     }
       - { start: 0x0013b3b0,    type: c,          name: MC/mc                                            }
       - { start: 0x00143370,    type: c,          name: MC/mc_menu                                       }
       - { start: 0x001480d0,    type: c,          name: MC/savedata                                      }
@@ -613,16 +613,16 @@ segments:
       - { start: 0x001aa0b8,    type: data,       name: Effect/ef_broken_glass                           }
       - { start: 0x001aa0c0,    type: data,       name: Effect/ef_common_0x1aa0c0                        }
       - { start: 0x001aa160,    type: .data,      name: Enemy/en_bos                                     }
-      - { start: 0x001aa230,    type: .data,       name: Enemy/en_common                                  }
-      - { start: 0x001aa3e0,    type: data,       name: Enemy/en_edb                                     }
+      - { start: 0x001aa230,    type: .data,      name: Enemy/en_common                                  }
+      - { start: 0x001aa3e0,    type: .data,      name: Enemy/en_edb                                     }
       - { start: 0x001aa950,    type: data,       name: Enemy/en_effect                                  }
-      - { start: 0x001aa9a0,    type: data,       name: Enemy/en_ike                                     }
-      - { start: 0x001aab00,    type: data,       name: Enemy/en_mkn                                     }
+      - { start: 0x001aa9a0,    type: .data,      name: Enemy/en_ike                                     }
+      - { start: 0x001aab00,    type: .data,      name: Enemy/en_mkn                                     }
       - { start: 0x001aad10,    type: .data,      name: Enemy/en_nse                                     }
       - { start: 0x001aaeb0,    type: .data,      name: Enemy/en_pap                                     }
       - { start: 0x001ab0a0,    type: data,       name: Enemy/en_red                                     }
-      - { start: 0x001ab2a0,    type: data,       name: Enemy/en_scu                                     }
-      - { start: 0x001ab998,    type: data,       name: Enemy/en_tyu                                     }
+      - { start: 0x001ab2a0,    type: .data,      name: Enemy/en_scu                                     }
+      - { start: 0x001ab998,    type: .data,      name: Enemy/en_tyu                                     }
       - { start: 0x001abac0,    type: .data,      name: Exec_Env/exec_env                                }
       - { start: 0x001abae0,    type: .data,      name: Exec_Env/local_env                               }
       - { start: 0x001abb00,    type: data,       name: Fog/fog                                          }
@@ -749,7 +749,7 @@ segments:
       - { start: 0x0024e2a8,    type: data,       name: data_0x24e2a8                                    }
       - { start: 0x0024f000,    type: .data,      name: Chacter/m3_arm                                   }
       - { start: 0x0024F010,    type: data,       name: Chacter/m3_mary                                  }
-      - { start: 0x0024F0D0,    type: data,       name: Enemy/en_arm                                     }
+      - { start: 0x0024F0D0,    type: .data,      name: Enemy/en_arm                                     }
       - { start: 0x0024F180,    type: data,       name: MC/mc                                            }
       - { start: 0x0024F970,    type: data,       name: MC/mc_menu                                       }
       - { start: 0x0024F9A0,    type: data,       name: Event/stage/stg_tgs_trial                        }
@@ -894,6 +894,9 @@ segments:
       - { start: 0x0028e860,    type: .rodata,    name: Enemy/en_bos                                     }
       - { start: 0x0028e8b0,    type: .rodata,    name: Enemy/en_common                                  }
       - { start: 0x0028e8d0,    type: rodata,     name: rodata_0x28e8d0                                  }
+      - { start: 0x0028e9D0,    type: rodata,     name: Enemy/en_draw                                    }
+      - { start: 0x0028ea10,    type: .rodata,    name: Enemy/en_edb                                     }
+      - { start: 0x0028ec10,    type: .rodata,    name: Enemy/en_ike                                     }
       - { start: 0x0028ec80,    type: .rodata,    name: Enemy/en_mkn                                     }
       - { start: 0x0028ed30,    type: .rodata,    name: Enemy/en_nse                                     }
       - { start: 0x0028eda0,    type: .rodata,    name: Enemy/en_pap                                     }
@@ -1058,7 +1061,7 @@ segments:
       - { start: 0x00299780,    type: .rodata,    name: Chacter/m3_arm                                   }
       - { start: 0x00299830,    type: rodata,     name: Chacter/m3_mary_rodata                           }
       - { start: 0x00299960,    type: rodata,     name: Chacter/m3_mxx_rodata                            }
-      - { start: 0x002999f0,    type: rodata,     name: Enemy/en_arm                                     }
+      - { start: 0x002999f0,    type: .rodata,    name: Enemy/en_arm                                     }
       - { start: 0x00299a90,    type: .rodata,    name: MC/mc                                            }
       - { start: 0x0029a050,    type: .rodata,    name: MC/mc_menu                                       }
       - { start: 0x0029a160,    type: .rodata,    name: MC/savedata                                      }
@@ -1230,7 +1233,7 @@ segments:
       - { vram:  0x0116dcc0,    type: bss,        name: Font/fj_man                                      }
       - { vram:  0x0116dd40,    type: bss,        name: DBG/dbflag                                       }
       - { vram:  0x0116dd48,    type: .bss,       name: Item/otn_itemmain                                }
-      - { vram:  0x0116e670,    type: bss,        name: Enemy/en_fly                                     }
+      - { vram:  0x0116e670,    type: .bss,       name: Enemy/en_fly                                     }
       - { vram:  0x0116e940,    type: bss,        name: wrap_printf_bss                                  }
       - { vram:  0x0116E980,    type: bss,        name: crt0                                             } # GCC data
       - { vram:  0x0116EB00,    type: .bss,       name: sdk/lib_001E7928                                 } # GCC data
