@@ -85,20 +85,11 @@ static inline float itof(int i) {
 static inline int vu0_ftoi(float x) {
     int ret;
 
-#ifdef __MWERKS__
-    asm {
-        mfc1     ret, x
-        qmtc2.ni ret, vf4
-        vftoi4.x vf4, vf4
-        qmfc2.ni ret, vf4
-    }
-#else
     asm("mfc1     %0,  %1 ;\
          qmtc2.ni %0,  vf4;\
          vftoi4.x vf4, vf4;\
          qmfc2.ni %0,  vf4;\
     " : "=r"(ret) : "f"(x));
-#endif
 
     return ret;
 }
