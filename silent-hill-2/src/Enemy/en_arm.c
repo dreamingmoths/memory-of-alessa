@@ -7,7 +7,7 @@
 #include "Chacter/player_result.h"
 #include "Chacter/sh2_character_manage.h"
 #include "Chacter/m3_sc.h"
-#include "Chacter/m3_bos.h"
+#include "Chacter/m3_arm.h"
 #include "Chacter_Draw/sh2gfw_model_light.h"
 
 #include "Collision/cl_main.h"
@@ -68,21 +68,30 @@ extern struct EnANIME_DATA EnARMAnime[14] = {
     { ENEMY_ARM_ANIME_5263, false },
 };
 
-
-
-
-
-
-
-
-
-
-
-
+static void enARMCtrlAutomatic(EnLOCAL_DATA* dp);
+static void enARMCtrlSleep(EnLOCAL_DATA* dp);
+static void enARMCtrlGoPlayable(EnLOCAL_DATA* dp);
+static void enARMCtrlEvent(EnLOCAL_DATA* dp);
+static void enARMCtrlHand(EnLOCAL_DATA* dp);
+static void enARMCtrlWander(EnLOCAL_DATA* dp);
+static void enARMCtrlTurn(EnLOCAL_DATA* dp);
+static void enARMCtrlDamage(EnLOCAL_DATA* dp);
+static void enARMCtrlDead(EnLOCAL_DATA* dp);
+static void enARMCheckNearPlayer(EnLOCAL_DATA* dp);
+static int enARMGetDamageMotion(EnLOCAL_DATA* dp);
+static int enARMCanSeePlayer(EnLOCAL_DATA* dp);
+static int enARMCheckNearOther(EnLOCAL_DATA* dp);
+static void enARMAnimeSet(EnLOCAL_DATA* dp, int anim);
+static void enARMAnimeReset(EnLOCAL_DATA* dp, int anim);
+static void enARMAnimeExec(EnLOCAL_DATA* dp);
+static void enARMSetHandPos(EnLOCAL_DATA* dp, int d);
+static int enARMCheckFloor(EnLOCAL_DATA* dp, int d);
+static float enARMGetMoveSpeed(EnLOCAL_DATA* dp);
+static void enARMSoundSigns(EnLOCAL_DATA* dp);
 
 #ifdef HOLY_CANDLE
 void enARMInitData(EnLOCAL_DATA* dp) {
-    float vitarity[5] = { 500.0f, 800.0f, 1200.0f, 2500.0f, 4000.0f }; // r29+0x30
+    float vitarity[5] = { 500.0f, 800.0f, 1200.0f, 2500.0f, 4000.0f };
     int mode; // r17
 
 
@@ -101,9 +110,9 @@ void enARMInitData(EnLOCAL_DATA* dp) {
     enSetHP(dp, vitarity[mode], vitarity[mode]);
     enFlagSetMoved(dp);
     
-    ENEMY_FLAG_SET(ENEMY_FLAG_15 | ENEMY_FLAG_10 | ENEMY_FLAG_6 | ENEMY_FLAG_1);
+    dp->flag |= (1 << 15) | (1 << 10) | (1 << 6) | (1 << 1);
     enARMAnimeSet(dp, 1);
-    dp->scu.dc = -1;
+    dp->arm.arm = -1;
     if (enCheckSleepIn(dp)) {
         enSleepIn(dp);
     }
@@ -113,8 +122,8 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMInitData);
 float vitarity[5] = { 500.0f, 800.0f, 1200.0f, 2500.0f, 4000.0f };
 #endif
 
-void enARMCtrlMain(EnLOCAL_DATA* dp /* r2 */) {
-    void (* enCtrlARMFunc[6])(EnLOCAL_DATA*) = {
+void enARMCtrlMain(EnLOCAL_DATA* dp) {
+    void (*enCtrlARMFunc[6])(EnLOCAL_DATA*) = {
         enDummyCtrl,
         enARMCtrlAutomatic,
         enARMCtrlSleep,
@@ -126,10 +135,8 @@ void enARMCtrlMain(EnLOCAL_DATA* dp /* r2 */) {
     enCtrlARMFunc[dp->mlv](dp);
 }
 
-
-
-void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
-    void (*enCtrlARMSubFunc[4])(EnLOCAL_DATA* dp /* r17 */) = { 
+static void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
+    void (*enCtrlARMSubFunc[4])(EnLOCAL_DATA* dp) = { 
         enARMCtrlWander,
         enARMCtrlTurn,
         enARMCtrlDamage,
@@ -143,15 +150,15 @@ void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
     case 2:
     case 4:
         enARMSetHandPos(dp, 0);
-        dp->scu.dc = 0;
+        dp->arm.arm = 0;
         break;
     case 3:
     case 5:
         enARMSetHandPos(dp, 1);
-        dp->scu.dc = 1;
+        dp->arm.arm = 1;
         break;
     default:
-        dp->scu.dc = -1;
+        dp->arm.arm = -1;
         break;
     }
 
@@ -171,39 +178,30 @@ void enARMCtrlAutomatic(EnLOCAL_DATA* dp) {
     }
 }
 
-
-
-void enARMCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
+static void enARMCtrlSleep(EnLOCAL_DATA* dp) {
     if (enCheckSleepOut(dp)) {
         enSleepOut(dp);
         ENEMY_MLV(3);
         ENEMY_STEP(0);
     }
-    dp->scu.dc = -1;
+    dp->arm.arm = -1;
 }
 
-
-
-void enARMCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */) {
+static void enARMCtrlGoPlayable(EnLOCAL_DATA* dp) {
     ENEMY_MLV(1);
     ENEMY_STEP(0);
-    dp->scu.dc = -1;
+    dp->arm.arm = -1;
 }
 
-
-
-void enARMCtrlEvent(EnLOCAL_DATA* dp /* r2 */) {
-    /* @note empty function */ void* tmp; // r2
+static void enARMCtrlEvent(EnLOCAL_DATA* dp) {
+    /* @note empty function */ void* tmp;
 }
 
-#line 270
-void enARMCtrlHand(EnLOCAL_DATA* dp) {
+static void enARMCtrlHand(EnLOCAL_DATA* dp) {
     /* @note empty function */
 }
 
-
-#ifdef HOLY_CANDLE
-void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
+static void enARMCtrlWander(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec;
     s_char s;
     if (enCheckDamage(dp)) {
@@ -219,13 +217,13 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
         if (enARMCheckNearOther(dp)) {
             ENEMY_STEP(1);
             enSetTimer(dp, 0);
-            dp->scu.dcm = 0;
+            dp->arm.attack = 0;
             return;
         }
         switch (enARMCanSeePlayer(dp)) {
             case 0:
                 s = 1;
-                dp->scu.dcm = 0;
+                dp->arm.attack = 0;
                 break;
             case 1:
                 if (dp->timer == 0) {
@@ -233,40 +231,40 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
                 } else {
                     s = 1;
                 }
-                dp->scu.dcm = 0;
+                dp->arm.attack = 0;
                 break;
             case 2:
                 s = 3;
-                dp->scu.dcm += 1; // ++ doesn't match
+                dp->arm.attack++;
                 
         }
-        if (dp->sslv >= 2 && (dp->sslv != s && s < 3 || !ENEMY_FLAG_CHECK(ENEMY_FLAG_2)) 
-        || dp->scu.dcm >= 5) {
+        if (dp->sslv >= 2 && (dp->sslv != s && s < 3 || !(dp->flag & (1 << 2))) 
+        || dp->arm.attack > 4) {
             enSetTimer(dp, (60 * 3));
-            dp->scu.dcm = 0;
+            dp->arm.attack = 0;
             s = 1;
         }
         dp->sslv = s;
-        if (dp->scu.dc == -1) {
+        if (dp->arm.arm == -1) {
             if (dp->anim == 7 || dp->anim == 10 || dp->anim == 11) {
               
                 
-                dp->scu.dc = 0;
+                dp->arm.arm = 0;
             } else {
-                dp->scu.dc = 1;
+                dp->arm.arm = 1;
             }
         }
         if (s < 3) {
-            enARMAnimeSet(dp, 3 - dp->scu.dc);
+            enARMAnimeSet(dp, 3 - dp->arm.arm);
         } else {
-            enARMAnimeSet(dp, 5 - dp->scu.dc);
+            enARMAnimeSet(dp, 5 - dp->arm.arm);
             enAttackStart(dp);
         }
     }
     enARMGetMoveSpeed(dp);
     if (dp->sslv == 1) {
         shSinCosV_Scale(&vec, dp->scp->rot.y, 1000.0f);
-        vec_add_alt(&vec, &dp->scp->pos, &vec);
+        shAddVector(&vec, &dp->scp->pos, &vec);
         enSetPath(dp, &vec, &dp->scp->pos);
     } else {
         if (dp->sslv == 3) {
@@ -279,10 +277,8 @@ void enARMCtrlWander(EnLOCAL_DATA* dp /* r17 */) {
     dp->scp->rot.y = dp->path.angle;
     enARMCheckNearPlayer(dp);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMCtrlWander);
-#endif
-void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
+
+static void enARMCtrlTurn(EnLOCAL_DATA* dp) {
     if (enCheckDamage(dp)) {
         ENEMY_STEP(2);
         return;
@@ -290,20 +286,20 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->sslv == 0) {
         enInitPath(&dp->path, dp->scp->rot.y);
         dp->anim_n = -1;
-        if (dp->scu.dc == -1) {
+        if (dp->arm.arm == -1) {
             if (dp->anim == 7
             || dp->anim == 10 
             || dp->anim == 11) {
-                dp->scu.dc = 0;
+                dp->arm.arm = 0;
             } else {
-                dp->scu.dc = 1;
+                dp->arm.arm = 1;
             }
         }
         if (enARMCanSeePlayer(dp) == 2) {
-            enARMAnimeSet(dp, 5 - dp->scu.dc);
+            enARMAnimeSet(dp, 5 - dp->arm.arm);
             enAttackStart(dp);
         } else {
-            enARMAnimeSet(dp, 3 - dp->scu.dc);
+            enARMAnimeSet(dp, 3 - dp->arm.arm);
         }
         dp->sslv++;
     }
@@ -315,7 +311,7 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
     enARMGetMoveSpeed(dp);
     if (dp->p_dist > 5000.0f) {
         dp->anim_s /= 4;
-        dp->mkn.dc = 4;
+        dp->arm.scount = 4;
     }
     dp->path.markangle = dp->path.angle + (TO_RAD(3) * dp->arm.dir);
     enMoveAngle(&dp->path, TO_RAD(3));
@@ -324,10 +320,10 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
     if (dp->anim_n == -1) {
         if (++dp->sslv < 4) {
             if (enARMCanSeePlayer(dp) == 2) {
-                enARMAnimeSet(dp, 5 - dp->scu.dc);
+                enARMAnimeSet(dp, 5 - dp->arm.arm);
                 enAttackStart(dp);
                 return;}
-            enARMAnimeSet(dp, 3 - dp->scu.dc);
+            enARMAnimeSet(dp, 3 - dp->arm.arm);
             
             return;}
         ENEMY_STEP(0);
@@ -335,13 +331,11 @@ void enARMCtrlTurn(EnLOCAL_DATA* dp /* r16 */) {
 
 }
 
-
-
-void enARMCtrlDamage(EnLOCAL_DATA* dp) {
+static void enARMCtrlDamage(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
         case 0:
             enReduceHP(dp);
-            ENEMY_FLAG_UNSET(ENEMY_FLAG_15);
+            dp->flag &= ~(1 << 15); 
             enARMAnimeReset(dp, enARMGetDamageMotion(dp));
             ENEMY_NEXT_SUB_STEP();
             break;
@@ -367,8 +361,8 @@ void enARMCtrlDamage(EnLOCAL_DATA* dp) {
                 } else {
                     ENEMY_STEP(0);
                     enSetTimer(dp, 0);
-                    dp->scu.dcm = 0;
-                    ENEMY_FLAG_SET(ENEMY_FLAG_15);
+                    dp->arm.attack = 0;
+                    dp->flag |= (1 << 15);                    
                 }
             }
             break;
@@ -381,10 +375,7 @@ void enARMCtrlDamage(EnLOCAL_DATA* dp) {
     enARMCheckNearPlayer(dp);
 }
 
-
-
-
-void enARMCtrlDead(EnLOCAL_DATA* dp) {
+static void enARMCtrlDead(EnLOCAL_DATA* dp) {
 
     
     
@@ -402,18 +393,13 @@ void enARMCtrlDead(EnLOCAL_DATA* dp) {
     }
 }
 
-
-
-void enARMCheckNearPlayer(EnLOCAL_DATA* dp) {
+static void enARMCheckNearPlayer(EnLOCAL_DATA* dp) {
     enCheckNearPlayer(dp, &dp->arm.near_count, &dp->arm.dist, 200.0f);
 }
 
-
-
-
-int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
-    int m; /* r16 */ int id; /* r2 */ int dd; /* r6 */ int arm; /* r3 */
-    float a; // r29+0x20
+static int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
+    int m; int id; int dd; int arm;
+    float a;
 
     
     a = shAngleRegulate(shAtanV(&dp->scp->battle.vec) - dp->scp->rot.y);
@@ -455,9 +441,7 @@ int enARMGetDamageMotion(EnLOCAL_DATA* dp) {
 }
 
 
-
-#ifdef HOLY_CANDLE
-int enARMCanSeePlayer(EnLOCAL_DATA* dp /* r16 */) {
+static int enARMCanSeePlayer(EnLOCAL_DATA* dp) {
     float a = enCalcAngleDifference(enGetPlayerDirection(dp), dp->scp->rot.y); sceVu0FVECTOR vec;
     if (enLocalWork.Status & 1) return 0;
     if ((dp->p_dist > 2500.0f || a > TO_RAD(120)) && dp->anim < 6) {
@@ -466,19 +450,16 @@ int enARMCanSeePlayer(EnLOCAL_DATA* dp /* r16 */) {
         
         
         shSinCosV_Scale(&vec, dp->scp->rot.y, 1000.0f);
-        vec_add(&dp->scp->pos, &vec, &vec);
+        shAddVector(&vec, &dp->scp->pos, &vec);
         if (enCheckFloor(&vec) != 1) return 2;
     }
     
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMCanSeePlayer);
-#endif
 
-int enARMCheckNearOther(EnLOCAL_DATA* dp /* r18 */) {
-    EnLOCAL_DATA* tp = &enLocalWork.Data[0]; /* r16 */
-    int i; /* r17 */ float* tpos; /* r2 */ float d; /* r29+0x40 */
+static int enARMCheckNearOther(EnLOCAL_DATA* dp) {
+    EnLOCAL_DATA* tp = &enLocalWork.Data[0]; 
+    int i; float* tpos; float d;
 
     for (i = 0; i < ENEMY_MAX; i++, tp++) {
         if (tp != dp && tp->kind == 10) {
@@ -499,8 +480,7 @@ int enARMCheckNearOther(EnLOCAL_DATA* dp /* r18 */) {
     return 0;
 }
 
-
-void enARMAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
+static void enARMAnimeSet(EnLOCAL_DATA* dp, int anim) {
     if (anim == dp->anim) {
         enAnimeRestart(dp);
         return;
@@ -508,31 +488,27 @@ void enARMAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
     
     FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnARMAnime) / sizeof(EnANIME_DATA), 579);
     enAnimeSet(dp, anim, (&EnARMAnime)[anim].Anime);
-    dp->scu.dc = -1;
+    dp->arm.arm = -1;
 }
 
-
-
-void enARMAnimeReset(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
+static void enARMAnimeReset(EnLOCAL_DATA* dp, int anim) {
     
     FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnARMAnime) / sizeof(EnANIME_DATA), 588);
     enAnimeSet(dp, anim, (&EnARMAnime)[anim].Anime);
-    dp->scu.dc = -1;
+    dp->arm.arm = -1;
 }
 
-
-#ifdef HOLY_CANDLE
-void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
-    int of; /* r2 */ sceVu0FVECTOR pos; // r29+0x20
+static void enARMAnimeExec(EnLOCAL_DATA* dp) {
+    int of; sceVu0FVECTOR pos;
     enAnimeExec(dp, &EnARMAnime, 5251);
     if (dp->anim >= 2 && dp->anim < 6
     && dp->anim_step == 0 && dp->anim_n == -1) {
         dp->anim_step = 1;
-        if (dp->p_dist < 5000.0f || ++dp->mkn.dc >= 4) {
+        if (dp->p_dist < 5000.0f || ++dp->arm.scount >= 4) {
             
-            dp->mkn.dc = 0;
-            enARMGetHandPos(&pos, dp, dp->scu.dc ^ 1);
-            vec_add(&dp->scp->pos, &pos, &pos);
+            dp->arm.scount = 0;
+            enARMGetHandPos(&pos, dp, dp->arm.arm ^ 1);
+            shAddVector(&pos, &dp->scp->pos,&pos);
             pos[1] = dp->scp->pos.y;
             
             switch (enCheckFloor(&pos)) {
@@ -546,26 +522,17 @@ void enARMAnimeExec(EnLOCAL_DATA* dp /* r16 */) {
     }
     
     
-    if (dp->anim_n == -1 || ENEMY_FLAG_CHECK(ENEMY_FLAG_0)) return;
+    if (dp->anim_n == -1 || dp->flag & 1) return;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMAnimeExec);
-#endif
 
-#ifdef HOLY_CANDLE
-void enARMSetHandPos(EnLOCAL_DATA* dp /* r16 */, int d /* r2 */) {
-    sceVu0FVECTOR vec; // r29+0x20
+static void enARMSetHandPos(EnLOCAL_DATA* dp, int d) {
+    sceVu0FVECTOR vec;
     enARMGetHandPos(&vec, dp, d);
-    vec_add_alt(&vec, &dp->scp->pos, &dp->arm.hand_pos);
+    shAddVector(&dp->arm.hand_pos, &dp->scp->pos, &vec);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_arm", enARMSetHandPos);
-#endif
 
-
-
-void enARMGetHandPos(float* vec /* r17 */, EnLOCAL_DATA* dp /* r16 */, int d /* r2 */) {
-    sceVu0FMATRIX mat; // r29+0x30
+static void enARMGetHandPos(float* vec, EnLOCAL_DATA* dp, int d) {
+    sceVu0FMATRIX mat;
     enGetSkeletonMatrix(mat, dp, d + 11);
     shVectorZeroXyz(vec);
     vec[0] = 550.0f;
@@ -576,21 +543,15 @@ void enARMGetHandPos(float* vec /* r17 */, EnLOCAL_DATA* dp /* r16 */, int d /* 
     shVectorTransform(vec, mat);
 }
 
-
-
-
-
-int enARMCheckFloor(EnLOCAL_DATA* dp /* r2 */, int d /* r2 */) {
+static int enARMCheckFloor(EnLOCAL_DATA* dp, int d) {
     sceVu0FVECTOR pos;
-    enARMGetHandPos(&pos, dp, d);
-    enCheckFloor(&pos);
+    enARMGetHandPos(pos, dp, d);
+    return enCheckFloor(pos);
 }
 
-
-
-float enARMGetMoveSpeed(EnLOCAL_DATA* dp /* r16 */) {
-    float speed_rate[5] = { 0.7f, 0.8f, 1.0f, 1.2f, 1.5f }; // r29+0x20
-    float r; // r29+0x40
+static float enARMGetMoveSpeed(EnLOCAL_DATA* dp) {
+    float speed_rate[5] = { 0.7f, 0.8f, 1.0f, 1.2f, 1.5f };
+    float r;
 
 
     
@@ -599,20 +560,19 @@ float enARMGetMoveSpeed(EnLOCAL_DATA* dp /* r16 */) {
     r = speed_rate[enGetMode()];
     r *= (0.6f + (dp->scp->battle.hp_rate / 250.0f));
     if (dp->p_dist > 5000.0f) r *= 4.0f;
-    dp->anim_s = r * 4096.0f;
+    dp->anim_s = ftoi(4096.0f * r);
     return r;
 }
 
-
 #ifdef HOLY_CANDLE
-void enARMSoundSigns(EnLOCAL_DATA* dp /* r16 */) {
-    int signs; // r3
+static void enARMSoundSigns(EnLOCAL_DATA* dp) {
+    int signs;
     if ((dp->arm.count -= shGetDF()) <= 0) {
         dp->arm.count = enCalcTimer(60);
         do {
-            signs = shRandI() >> 0x14 & 3;
-        } while (signs == dp->mkn.dcm);
-        dp->mkn.dcm = signs;
+            signs = (shRandI() >> 20) & 3;
+        } while (signs == dp->arm.signs);
+        dp->arm.signs = signs;
         
         enSoundCall(signs + 12258, 1.0f, &dp->scp->pos);
     }
