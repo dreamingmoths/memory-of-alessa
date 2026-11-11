@@ -478,7 +478,7 @@ segments:
       - { start: 0x00156a70,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_00      }
       - { start: 0x00157550,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_01      }
       - { start: 0x00157b00,    type: c,          name: Effect2/hh_class_blood_stick_00                  }
-      - { start: 0x00157f40,    type: asm,        name: Effect2/hh_class_dust_00                         }
+      - { start: 0x00157f40,    type: c,          name: Effect2/hh_class_dust_00                         }
       - { start: 0x00158790,    type: asm,        name: Effect2/hh_class_glass_break_phenomenon_00       }
       - { start: 0x00159110,    type: asm,        name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x00159ce0,    type: c,          name: Effect2/hh_class_manager                         }
@@ -768,7 +768,9 @@ segments:
       - { start: 0x0026eda0,    type: data,       name: Effect2/hh_class_blood_splash_phenomenon_00      }
       - { start: 0x0026edd0,    type: .data,      name: Effect2/hh_class_blood_splash_phenomenon_01      }
       - { start: 0x0026edf0,    type: .data,      name: Effect2/hh_class_blood_stick_00                  }
-      - { start: 0x0026ee10,    type: data,       name: data_0x26ee10                                    }
+      - { start: 0x0026ee10,    type: .data,      name: Effect2/hh_class_dust_00                         }
+      - { start: 0x0026f010,    type: data,       name: Effect2/hh_class_glass_break_phenomenon_00       }
+      - { start: 0x0026f030,    type: data,       name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x0026f410,    type: .data,      name: Effect2/hh_class_object_execute                  }
       - { start: 0x0026f450,    type: .data,      name: Effect2/hh_class_plural_phenomenon_00            }
       - { start: 0x0026f460,    type: .data,      name: Effect2/hh_class_raise_dust_phenomenon_00        }

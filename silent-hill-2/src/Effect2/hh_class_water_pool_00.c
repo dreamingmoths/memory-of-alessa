@@ -20,104 +20,104 @@ static sceVu0FMATRIX _square_00_vertex = {
     { -1.0f, 0.0f, -1.0f, 1.0f },
 };
 
-sceVu0FMATRIX _square_00_stq = {
+static sceVu0FMATRIX _square_00_stq = {
     {0.0f, 0.0f, 1.0f, 0.0f},
     {0.0f, 0.24804687f, 1.0f, 0.0f},
     {0.24804687f, 0.0f, 1.0f, 0.0f},
     {0.24804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_01_stq = {
+static sceVu0FMATRIX _square_01_stq = {
     {0.25f, 0.0f, 1.0f, 0.0f},
     {0.25f, 0.24804687f, 1.0f, 0.0f},
     {0.49804687f, 0.0f, 1.0f, 0.0f},
     {0.49804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_02_stq = {
+static sceVu0FMATRIX _square_02_stq = {
     {0.5f, 0.0f, 1.0f, 0.0f},
     {0.5f, 0.24804687f, 1.0f, 0.0f},
     {0.74804687f, 0.0f, 1.0f, 0.0f},
     {0.74804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_03_stq = {
+static sceVu0FMATRIX _square_03_stq = {
     {0.75f, 0.0f, 1.0f, 0.0f},
     {0.75f, 0.24804687f, 1.0f, 0.0f},
     {0.99804687f, 0.0f, 1.0f, 0.0f},
     {0.99804687f, 0.24804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_10_stq = {
+static sceVu0FMATRIX _square_10_stq = {
     {0.0f, 0.25f, 1.0f, 0.0f},
     {0.0f, 0.49804687f, 1.0f, 0.0f},
     {0.24804687f, 0.25f, 1.0f, 0.0f},
     {0.24804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_11_stq = {
+static sceVu0FMATRIX _square_11_stq = {
     {0.25f, 0.25f, 1.0f, 0.0f},
     {0.25f, 0.49804687f, 1.0f, 0.0f},
     {0.49804687f, 0.25f, 1.0f, 0.0f},
     {0.49804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_12_stq = {
+static sceVu0FMATRIX _square_12_stq = {
     {0.5f, 0.25f, 1.0f, 0.0f},
     {0.5f, 0.49804687f, 1.0f, 0.0f},
     {0.74804687f, 0.25f, 1.0f, 0.0f},
     {0.74804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_13_stq = {
+static sceVu0FMATRIX _square_13_stq = {
     {0.75f, 0.25f, 1.0f, 0.0f},
     {0.75f, 0.49804687f, 1.0f, 0.0f},
     {0.99804687f, 0.25f, 1.0f, 0.0f},
     {0.99804687f, 0.49804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_20_stq = {
+static sceVu0FMATRIX _square_20_stq = {
     {0.0f, 0.5f, 1.0f, 0.0f},
     {0.0f, 0.74804687f, 1.0f, 0.0f},
     {0.24804687f, 0.5f, 1.0f, 0.0f},
     {0.24804687f, 0.74804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_21_stq = {
+static sceVu0FMATRIX _square_21_stq = {
     {0.25f, 0.5f, 1.0f, 0.0f},
     {0.25f, 0.74804687f, 1.0f, 0.0f},
     {0.49804687f, 0.5f, 1.0f, 0.0f},
     {0.49804687f, 0.74804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_22_stq = {
+static sceVu0FMATRIX _square_22_stq = {
     {0.5f, 0.5f, 1.0f, 0.0f},
     {0.5f, 0.74804687f, 1.0f, 0.0f},
     {0.74804687f, 0.5f, 1.0f, 0.0f},
     {0.74804687f, 0.74804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_23_stq = {
+static sceVu0FMATRIX _square_23_stq = {
     {0.75f, 0.5f, 1.0f, 0.0f},
     {0.75f, 0.74804687f, 1.0f, 0.0f},
     {0.99804687f, 0.5f, 1.0f, 0.0f},
     {0.99804687f, 0.74804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_30_stq = {
+static sceVu0FMATRIX _square_30_stq = {
     {0.0f, 0.75f, 1.0f, 0.0f},
     {0.0f, 0.99804687f, 1.0f, 0.0f},
     {0.24804687f, 0.75f, 1.0f, 0.0f},
     {0.24804687f, 0.99804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_31_stq = {
+static sceVu0FMATRIX _square_31_stq = {
     {0.25f, 0.75f, 1.0f, 0.0f},
     {0.25f, 0.99804687f, 1.0f, 0.0f},
     {0.49804687f, 0.75f, 1.0f, 0.0f},
     {0.49804687f, 0.99804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_32_stq = {
+static sceVu0FMATRIX _square_32_stq = {
     {0.5f, 0.75f, 1.0f, 0.0f},
     {0.5f, 0.99804687f, 1.0f, 0.0f},
     {0.74804687f, 0.75f, 1.0f, 0.0f},
     {0.74804687f, 0.99804687f, 1.0f, 0.0f},
 };
-sceVu0FMATRIX _square_33_stq = {
+static sceVu0FMATRIX _square_33_stq = {
     {0.75f, 0.75f, 1.0f, 0.0f},
     {0.75f, 0.99804687f, 1.0f, 0.0f},
     {0.99804687f, 0.75f, 1.0f, 0.0f},
     {0.99804687f, 0.99804687f, 1.0f, 0.0f},
 };
 
-static sceVu0FMATRIX* _square_stq_list[16] = {
+static sceVu0FVECTOR* _square_stq_list[16] = {
     _square_00_stq, _square_01_stq, _square_02_stq, _square_03_stq, 
     _square_10_stq, _square_11_stq, _square_12_stq, _square_13_stq, 
     _square_20_stq, _square_21_stq, _square_22_stq, _square_23_stq,
