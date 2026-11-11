@@ -432,10 +432,6 @@ void SetupDrawEnvData(int NightOrDay) {
         Env_ctl.camera_parms[3] = ded->SpotParm[2];
     }
 
-
-
-
-
     #line 516
     Env_ctl.CopyFilterColor.fl32[1] = 0;
     
@@ -494,14 +490,12 @@ void SetupDrawEnvData(int NightOrDay) {
     
     if (!sh2gfw_Check_JmsSpotOnOff()) sh2gfw_Get_NightOrDay();
 
-
-
-    
-
     #line 599
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2_DrawEnvData", SetupDrawEnvData);
+
 INCLUDE_RODATA("asm/nonmatchings/GFW/sh2_DrawEnvData", @676);
+
 INCLUDE_RODATA("asm/nonmatchings/GFW/sh2_DrawEnvData", @677);
 #endif
