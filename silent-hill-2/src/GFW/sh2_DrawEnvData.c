@@ -247,10 +247,6 @@ void Set_DrawEnvData(int mapid, int NightOrDay) {
     }
 }
 
-static inline setEnvClearColor(int i, int v) {
-    Env_ctl.clearcolor.uc8[i] = v;
-}
-
 #ifdef HOLY_CANDLE
 #line 332
 void SetupDrawEnvData(int NightOrDay) {
@@ -494,6 +490,8 @@ void SetupDrawEnvData(int NightOrDay) {
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/GFW/sh2_DrawEnvData", SetupDrawEnvData);
+
+RODATA_PAD_TO(0x00399BD0);
 
 INCLUDE_RODATA("asm/nonmatchings/GFW/sh2_DrawEnvData", @676);
 
