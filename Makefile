@@ -465,7 +465,7 @@ PHONY_TARGETS := \
 	compiler-info death debug deep-clean diff expected \
 	extract heaven hell iso linker-info progress \
 	everything overlays-lowercase rebuild report setup sh2 sh3 \
-	sh2-build sh3-build sh2-clean sh3-clean \
+	sh2-build sh3-build sh2-clean sh3-clean sh2-ci sh3-ci \
 	sh2-iso sh3-iso sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)
 ifeq ($(filter $(PHONY_TARGETS) $(OBJDIFF_CONFIG),$(MAKECMDGOALS)),)
