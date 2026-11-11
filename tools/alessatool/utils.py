@@ -48,6 +48,15 @@ def to_expected_path(base_path: str):
     base_path = base_path.replace(f"{SRC}/", f"{ASM}/")
     return Path(base_path)
 
+def to_source_path(base_path: str):
+    '''
+    Convert an assembled expectde file's object path to a corresponding source
+    path, compiled from an `.c` file of the same name.
+    '''
+    base_path = base_path.replace(".s.o", ".c.o")
+    base_path = base_path.replace(f"{ASM}/", f"{SRC}/")
+    return Path(base_path)
+
 def ensure_path_and_write(output_path: Path, contents: str):
     output_path.parent.mkdir(exist_ok=True, parents=True)
     with open(output_path, "w") as f:

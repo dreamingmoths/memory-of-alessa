@@ -17,7 +17,7 @@ import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
-from utils import ensure_path_and_write, normalize_object_path, relative_to_name, to_expected_path
+from utils import ensure_path_and_write, normalize_object_path, relative_to_name, to_expected_path, to_source_path
 from constants import ASM, SRC, VSM
 
 import splat.scripts.split as split
@@ -269,6 +269,7 @@ def generate_objdiff_units(args: GenerationArgs):
         if is_asmtu:
             source_path = relative_to_name(source_path, ASM, include_base=False)
             source_path = (Path(SRC) / source_path).with_suffix(".c").as_posix()
+            object_path = to_source_path(object_path).as_posix()
         else:
             source_path = relative_to_name(source_path, SRC, include_base=True)
 
