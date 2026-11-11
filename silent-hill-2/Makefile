@@ -26,6 +26,13 @@ MWCC_NONOPT_FLAGS := -sym=on,elf -sdatathreshold 0 -str readonly \
 	-cwd source -i "$(SRC)" -i "$(INCLUDE)" -i "$(COMMON_INCLUDE)"
 MWCC_FLAGS := $(MWCC_OPT_FLAGS) $(MWCC_NONOPT_FLAGS)
 
+OLD_MWCC := $(TOOLS)/mwcps2/2.3.3/mwccps2.exe
+OLD_MWCC_TAR := mwcps2-2.3.3-000906.tar.gz
+OLD_MWCC_OPT_FLAGS = -O3,p
+OLD_MWCC_FLAGS := $(OLD_MWCC_OPT_FLAGS) $(MWCC_NONOPT_FLAGS)
+
+MWCC_DOWNLOADS := $(MWCC) $(OLD_MWCC)
+
 MWLD := $(TOOLS)/mwcps2/2.4/mwldps2.exe
 MWLD_TAR := mwcps2-2.4-001213.tar.gz
 MWLD_OVERLAY_FLAGS := \
@@ -39,7 +46,16 @@ EE_DVP_AS_FLAGS := -I$(VSM) --defsym DEBUG=1
 
 BSS_ALIGNMENT := 8
 
+$(OLD_MWCC):
+	@mkdir -p "$(@D)"
+	wget -O- $(COMPILERS_HOST)/$(OLD_MWCC_TAR) | tar xzv -C "$(@D)"
+	chmod +x $(OLD_MWCC)
+
 $(BUILD)/src/lib/wprtfsrc.c.o: $(SRC)/lib/wprtfsrc.c
-	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(TOOLS)/mwcps2/2.3.3/mwccps2.exe" "$<" "$@" -O3,p $(MWCC_NONOPT_FLAGS) \
+	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(OLD_MWCC)" "$<" "$@" $(OLD_MWCC_FLAGS) \
+		 -u __FILE__ -d __FILE__=\"$(<F)\"
+
+$(BUILD)/src/shPad/lib_sh_pad.c.o: $(SRC)/shPad/lib_sh_pad.c
+	MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(OLD_MWCC)" "$<" "$@" $(OLD_MWCC_FLAGS) \
 		 -u __FILE__ -d __FILE__=\"$(<F)\"
 

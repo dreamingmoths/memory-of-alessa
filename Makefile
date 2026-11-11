@@ -199,7 +199,7 @@ endif
 endif
 endif
 
-TOOLCHAIN := $(WIBO) $(MWCC) $(MWLD) $(AS) \
+TOOLCHAIN := $(WIBO) $(MWCC_DOWNLOADS) $(MWLD) $(AS) \
 	$(BINUTILS_VERSION_FILE) $(MWCCGAP_PATCH_VERSION_FILE)
 SETUP := $(SOURCE_PREREQS) $(TOOLCHAIN)
 
@@ -294,6 +294,7 @@ death:
 	rm -rf $(BINUTILS)
 	rm -f $(OBJDIFF_CONFIG)
 	$(foreach tool,$(TOOLCHAIN),rm -f "$(tool)";)
+	rm -rf $(TOOLS)/mwcps2
 	unlink $(ROM_SYMLINK)
 	$(GIT) submodule foreach --recursive $(GIT) reset --hard
 
