@@ -50,7 +50,7 @@ def to_expected_path(base_path: str):
 
 def to_source_path(base_path: str):
     '''
-    Convert an assembled expectde file's object path to a corresponding source
+    Convert an assembled expected file's object path to a corresponding source
     path, compiled from an `.c` file of the same name.
     '''
     base_path = base_path.replace(".s.o", ".c.o")
