@@ -1993,7 +1993,7 @@ void enAnimeSetDirectFrame(EnLOCAL_DATA* dp, int anim, int id, int frame) {
 }
 
 #line 2554
-void enAnimeExec(EnLOCAL_DATA * dp /* r22 */, EnANIME_DATA * pa /* r21 */, short anm_none /* r20 */) {
+void enAnimeExec(EnLOCAL_DATA* dp /* r22 */, EnANIME_DATA * pa /* r21 */, short anm_none /* r20 */) {
     int n; /* r16 */ int limit; /* r17 */ int speed; /* r18 */ int loop; /* r2 */ int f; /* r19 */
     AnimeInfo* ai; /* r2 */
     if (ENEMY_FLAG_CHECK(ENEMY_FLAG_0) || dp->anim_n < 0) { return; }
