@@ -73,6 +73,7 @@ endif
 MAKE += MAKE_OPTIONS="--no-print-directory"
 MAKEFLAGS += $(MAKE_OPTIONS)
 
+all: everything
 include $(PROJECT)/Makefile
 ###############################################################
 BINARIES := $(SERIAL) $(OVERLAYS)
@@ -127,11 +128,9 @@ PS2ISO := $(TOOLS)/$(PS2ISO_BINARY)
 ISO_BUILD_FILES := $(ISO)/files
 
 MWCCGAP_ENTRYPOINT := $(TOOLS)/mwccgap/mwccgap.py
-MWCCGAP := $(PYTHON) $(MWCCGAP_ENTRYPOINT)
-MWCCGAP_FLAGS := \
+MWCCGAP := $(PYTHON) $(MWCCGAP_ENTRYPOINT) \
 	--use-wibo \
     --wibo-path="$(WIBO)" \
-    --mwcc-path="$(MWCC)" \
     --as-path=$(AS) \
     --src-dir="$(SRC)" \
 	--asm-dir-prefix="$(CONFIG)" \
@@ -145,7 +144,7 @@ ifeq ($(NON_MATCHING),1)
 	CC = MWCIncludes="$(SRC)" $(WIBO) $(MWCC) $(MWCC_FLAGS) -c "$<" -o "$@" \
 		-u __FILE__ -d __FILE__=\"$(<F)\" -d NON_MATCHING=1 -d HOLY_CANDLE=1
 else
-	CC = MWCIncludes="$(SRC)" $(MWCCGAP) $(MWCCGAP_FLAGS) "$<" "$@" $(MWCC_FLAGS) \
+	CC = MWCIncludes="$(SRC)" $(MWCCGAP) --mwcc-path="$(MWCC)" "$<" "$@" $(MWCC_FLAGS) \
 		 -u __FILE__ -d __FILE__=\"$(<F)\"
 endif
 
@@ -210,7 +209,7 @@ BINUTILS_HOST := https://github.com/decompals/binutils-mips-ps2-decompals/releas
 OBJDIFF_HOST := https://github.com/encounter/objdiff/releases/download/v3.6.0
 PS2ISO_HOST := https://github.com/anasrar/ps2iso/releases/download/v0.0.3
 ###############################################################
-all: $(TARGETS)
+everything: $(TARGETS)
 
 setup: $(SETUP)
 
@@ -464,7 +463,7 @@ PHONY_TARGETS := \
 	clean-quick clean-project clean-project-build \
 	compiler-info death debug deep-clean diff expected \
 	extract heaven hell iso linker-info progress \
-	overlays-lowercase rebuild report setup sh2 sh3 \
+	everything overlays-lowercase rebuild report setup sh2 sh3 \
 	sh2-build sh3-build sh2-clean sh3-clean \
 	sh2-iso sh3-iso sh2-report sh3-report split
 .PHONY: $(PHONY_TARGETS)

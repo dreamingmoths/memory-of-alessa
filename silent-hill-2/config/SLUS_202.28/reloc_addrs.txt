@@ -40122,8 +40122,8 @@ rom:0x0DC044 reloc:MIPS_26                             symbol:ReferSemaStatus
 rom:0x0DC06C reloc:MIPS_26                             symbol:SignalSema
 rom:0x0DC0C8 reloc:MIPS_HI16                           symbol:wrap_printf_sid
 rom:0x0DC0CC reloc:MIPS_LO16                           symbol:wrap_printf_sid
-rom:0x0DC0E0 reloc:MIPS_HI16                           symbol:"@14_0x003930C0"
-rom:0x0DC0E8 reloc:MIPS_LO16                           symbol:"@14_0x003930C0"
+rom:0x0DC0E0 reloc:MIPS_HI16                           symbol:"rodata_14_0x003930C0"
+rom:0x0DC0E8 reloc:MIPS_LO16                           symbol:"rodata_14_0x003930C0"
 rom:0x0DC0F4 reloc:MIPS_26                             symbol:CreateSema
 rom:0x0DC0FC reloc:MIPS_HI16                           symbol:wrap_printf_sid
 rom:0x0DC104 reloc:MIPS_LO16                           symbol:wrap_printf_sid
@@ -40198,10 +40198,10 @@ rom:0x0DC38C reloc:MIPS_LO16                           symbol:wrap_printf_sid
 rom:0x0DC390 reloc:MIPS_26                             symbol:SignalSema
 rom:0x0DC3AC reloc:MIPS_HI16                           symbol:wrap_printf_help
 rom:0x0DC3B0 reloc:MIPS_LO16                           symbol:wrap_printf_help
-rom:0x0DC3BC reloc:MIPS_HI16                           symbol:"@42_0x003930D0"
-rom:0x0DC3C4 reloc:MIPS_LO16                           symbol:"@42_0x003930D0"
-rom:0x0DC3C8 reloc:MIPS_HI16                           symbol:"@43_0x00393120"
-rom:0x0DC3CC reloc:MIPS_LO16                           symbol:"@43_0x00393120"
+rom:0x0DC3BC reloc:MIPS_HI16                           symbol:"rodata_42_0x003930D0"
+rom:0x0DC3C4 reloc:MIPS_LO16                           symbol:"rodata_42_0x003930D0"
+rom:0x0DC3C8 reloc:MIPS_HI16                           symbol:"rodata_43_0x00393120"
+rom:0x0DC3CC reloc:MIPS_LO16                           symbol:"rodata_43_0x00393120"
 rom:0x0DC3D0 reloc:MIPS_26                             symbol:printf_sub
 rom:0x0DC3FC reloc:MIPS_HI16                           symbol:wrap_printf_skip_f
 rom:0x0DC400 reloc:MIPS_LO16                           symbol:wrap_printf_skip_f
