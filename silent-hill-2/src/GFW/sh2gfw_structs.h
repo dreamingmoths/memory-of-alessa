@@ -205,6 +205,20 @@ typedef struct sh2gfw_LoadModel_MEMMAN {
     u_long128* pCL_head; // offset 0x14, size 0x4
 } sh2gfw_LoadModel_MEMMAN;
 
+typedef struct SpotLightData {
+    // total size: 0x40
+    sceVu0FVECTOR Col; // offset 0x0, size 0x10
+    sceVu0FVECTOR DecayParm; // offset 0x10, size 0x10
+    sceVu0FVECTOR Pos; // offset 0x20, size 0x10
+    sceVu0FVECTOR Dir; // offset 0x30, size 0x10
+} SpotLightData;
+
+typedef struct PLD {
+    // total size: 0x20
+    sceVu0FVECTOR Dir; // offset 0x0, size 0x10
+    sceVu0FVECTOR Col; // offset 0x10, size 0x10
+} PLD;
+
 // @note: may belong elsewhere
 extern sh2gfw_Area_Data_Man Area_Data_Man;
 extern sh2gfw_TRANS_MAN sh2_TR_MAN;

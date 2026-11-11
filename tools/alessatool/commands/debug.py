@@ -17,8 +17,8 @@ from constants import *
 from re import findall
 from bisect import bisect_left
 
-from utils import ExecutableInfo, SplatSymbol, \
-    get_exe_info_by_name, relative_to_name
+from utils import ExecutableInfo, SplatSymbol, SplatSymbolAddrsAtlas, get_configured_deduplications, \
+    get_exe_info_by_name, parse_symtab_as_atlas, read_symtab, relative_to_name
 
 @dataclass
 class DebugArgs:
@@ -41,13 +41,20 @@ class MismatchingFileEntry:
 
 SYMBOL_IGNORELIST = ["d"]
 
-def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableInfo], debug_args: DebugArgs) -> bool:
+def parse_mw_mapfile(
+    mapfile_path: Path, 
+    exe_info_by_name: dict[str, ExecutableInfo], 
+    symtab_atlas: SplatSymbolAddrsAtlas, 
+    debug_args: DebugArgs
+) -> bool:
     with open(mapfile_path) as mapfile_file:
         mapfile_lines = mapfile_file.readlines()
 
     current_filename = None
     reason = []
     trace_index = -1
+
+    (transform_source_symbol_name, transform_target_symbol_name) = get_configured_deduplications()
 
     for index, line in enumerate(mapfile_lines):
         line = line.strip()
@@ -112,12 +119,25 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
         if current_filename not in exe_info_by_name:
             continue
 
+        is_anonymous_symbol = object_file.endswith(".c.o") and symbol_name.startswith("@")
+
+        symtab_symbol = address in symtab_atlas.syms_by_addr and symtab_atlas.syms_by_addr[address] or None
+        is_local = symtab_symbol and symtab_symbol.metadata["bind"] == "LOCAL" or False # note assumes not duplicated by address
+
         syms_by_addr = exe_info_by_name[current_filename].atlas.syms_by_addr
+
         if address in syms_by_addr:
             target_symbol: SplatSymbol = syms_by_addr[address]
 
             if target_symbol.duplicate_by_addr:
                 continue
+
+            if symtab_symbol and not symtab_symbol.duplicate_by_addr and not is_anonymous_symbol and not "@" in symtab_symbol.name:
+                transformed_source = transform_source_symbol_name(symtab_symbol.name, symbol_name)
+                transformed_target = transform_target_symbol_name(symbol_name)
+                if transformed_source not in transformed_target and transformed_target not in transformed_source:
+                    reason += [f"{symbol_name} was placed at vram address 0x{address:X}, but symtab has {transformed_source} ({object_file})"]
+                    trace_index = index
 
             if target_symbol.addr != address:
                 reason += [f"{target_symbol.name} was placed at vram address 0x{address:X}, but symbol_addrs has 0x{target_symbol.addr:X} ({object_file})"]
@@ -130,8 +150,8 @@ def parse_mw_mapfile(mapfile_path: Path, exe_info_by_name: dict[str, ExecutableI
             if target_symbol.duplicate_by_name:
                 continue
 
-            if object_file.endswith(".c.o") and symbol_name.startswith("@"):
-                # don't bother trying to match anonymous symbols
+            if is_anonymous_symbol or is_local:
+                # don't bother trying to match local symbols here
                 continue
 
             if target_symbol.addr != address:
@@ -243,13 +263,14 @@ def debug_nonmatching(args: DebugArgs):
     print("🐞 alessatool/debug 🐞")
 
     exe_info_by_name = get_exe_info_by_name(root, serial)
+    symtab_atlas = parse_symtab_as_atlas(read_symtab(root / exe_info_by_name["main"].target_path))
 
     mapfile_path = Path(BUILD) / serial / f"{serial}.xMAP"
     mapfile_status = False
     bindiff_status = False
 
     if mapfile_path.exists():
-        mapfile_status = parse_mw_mapfile(mapfile_path, exe_info_by_name, args)
+        mapfile_status = parse_mw_mapfile(mapfile_path, exe_info_by_name, symtab_atlas, args)
 
     bindiff_status = run_bin_diff(args, debug_info, exe_info_by_name)
 

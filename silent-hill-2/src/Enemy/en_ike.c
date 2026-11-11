@@ -529,3 +529,10 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEGetMoveSpeed);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKESoundSwing);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKESoundSigns);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1522_0x0038E510);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1562);
+
+INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1563);
+
