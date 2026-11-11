@@ -35,7 +35,7 @@ SECTION_ALIGNMENT_PAIRS: list[tuple[str, int]] = [
     (".bss", 0x10),
 ]
 
-TRACKED_SEGMENT_TYPES = ["asm", "c", "data", "rodata"]
+TRACKED_SEGMENT_TYPES = ["asm", "asmtu", "c", "data", "rodata"]
 VSM_SEGMENT_TYPES = ["o", "vudata", "vutext"]
 
 @dataclass
@@ -247,6 +247,9 @@ def generate_objdiff_units(args: GenerationArgs):
         if segment.name.startswith("sdk/") or segment.name == "sdk":
             continue
         if segment.name.startswith("cri/") or segment.name.startswith("crimw/"):
+            continue
+        if segment.name == "sound/shd_vs_sp":
+            # ignore gcc sound library until we explicitly decide to match it
             continue
         if segment.name == "crt0":
             continue
