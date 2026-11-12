@@ -480,7 +480,7 @@ segments:
       - { start: 0x00157b00,    type: c,          name: Effect2/hh_class_blood_stick_00                  }
       - { start: 0x00157f40,    type: c,          name: Effect2/hh_class_dust_00                         }
       - { start: 0x00158790,    type: asm,        name: Effect2/hh_class_glass_break_phenomenon_00       }
-      - { start: 0x00159110,    type: asm,        name: Effect2/hh_class_glass_piece_00                  }
+      - { start: 0x00159110,    type: c,          name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x00159ce0,    type: c,          name: Effect2/hh_class_manager                         }
       - { start: 0x0015ad80,    type: c,          name: Effect2/hh_class_object_execute                  }
       - { start: 0x0015b560,    type: c,          name: Effect2/hh_class_plural_phenomenon_00            }
@@ -770,7 +770,7 @@ segments:
       - { start: 0x0026edf0,    type: .data,      name: Effect2/hh_class_blood_stick_00                  }
       - { start: 0x0026ee10,    type: .data,      name: Effect2/hh_class_dust_00                         }
       - { start: 0x0026f010,    type: data,       name: Effect2/hh_class_glass_break_phenomenon_00       }
-      - { start: 0x0026f030,    type: data,       name: Effect2/hh_class_glass_piece_00                  }
+      - { start: 0x0026f030,    type: .data,      name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x0026f410,    type: .data,      name: Effect2/hh_class_object_execute                  }
       - { start: 0x0026f450,    type: .data,      name: Effect2/hh_class_plural_phenomenon_00            }
       - { start: 0x0026f460,    type: .data,      name: Effect2/hh_class_raise_dust_phenomenon_00        }
@@ -1284,7 +1284,7 @@ segments:
       - { vram: 0x011EACE0,     type: bss,        name: LoadBg/loadbg_camdata                            }
       - { vram: 0x011EB500,     type: bss,        name: LoadBg/loadbg_common                             }
       - { vram: 0x011EB510,     type: bss,        name: Chacter/bg_chara                                 }
-      - { vram: 0x011EB540,     type: bss,        name: Effect2/hh_class_glass_piece_00                  }
+      - { vram: 0x011EB540,     type: .bss,       name: Effect2/hh_class_glass_piece_00                  }
       - { vram:  0x011eb550,    type: .bss,       name: Effect2/hh_class_water_01                        }
       - { vram:  0x011eb570,    type: .bss,       name: Effect2/hh_class_water_02                        }
       - { vram:  0x011eb5f0,    type: .bss,       name: Effect2/hh_class_water_10                        }
