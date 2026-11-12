@@ -73,6 +73,7 @@ SH2_DATA: DataTable = [
     SimpleData(name="warp_check",                           type="<4c",                                pattern=[4]                    ),
     SimpleData(name="suicide_point",                        type="<8f",                                pattern=[2, 4]                 ),
     StructData(name="arm_anim",                             type=Sh2.AnimeInfo,                        count=14                       ),
+    StructData(name="_flame_init_parm_table_0x003797E0",    type=Sh2.SmokeInitializeParameter,         count=4                        ),
 ]
 
 SH3_DATA: DataTable = []
