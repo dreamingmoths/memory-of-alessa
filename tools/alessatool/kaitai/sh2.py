@@ -11145,6 +11145,57 @@ class Sh2(KaitaiStruct):
             self.free._fetch_instances()
 
 
+    class SmokeInitializeParameter(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SmokeInitializeParameter, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.particle_draw_num = self._io.read_u4le()
+            self.flag = []
+            for i in range(3):
+                self.flag.append(self._io.read_u4le())
+
+            self.convergence_coff = self._io.read_f4le()
+            self.convergence_coff_sub = self._io.read_f4le()
+            self.gravity_suppress_coff = self._io.read_f4le()
+            self.base_alpha = self._io.read_f4le()
+            self.base_scale = self._io.read_f4le()
+            self.base_time = self._io.read_f4le()
+            self.rand_time_width = self._io.read_f4le()
+            self._unnamed9 = self._io.read_bytes(4)
+            self.verocity_0 = []
+            for i in range(4):
+                self.verocity_0.append(self._io.read_s4le())
+
+            self.length_max = []
+            for i in range(4):
+                self.length_max.append(self._io.read_s4le())
+
+            self.rgba = []
+            for i in range(4):
+                self.rgba.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.flag)):
+                pass
+
+            for i in range(len(self.verocity_0)):
+                pass
+
+            for i in range(len(self.length_max)):
+                pass
+
+            for i in range(len(self.rgba)):
+                pass
+
+
+
     class SndRoadArea(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.SndRoadArea, self).__init__(_io)

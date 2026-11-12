@@ -4445,6 +4445,54 @@ types:
         repeat: expr
         repeat-expr: 2
 
+  smoke_initialize_parameter:
+    seq:
+      - id: particle_draw_num
+        type: u4
+
+      - id: flag
+        type: u4
+        repeat: expr
+        repeat-expr: 3
+
+      - id: convergence_coff
+        type: f4
+
+      - id: convergence_coff_sub
+        type: f4
+
+      - id: gravity_suppress_coff
+        type: f4
+
+      - id: base_alpha
+        type: f4
+
+      - id: base_scale
+        type: f4
+
+      - id: base_time
+        type: f4
+
+      - id: rand_time_width
+        type: f4
+
+      - size: 4
+
+      - id: verocity_0
+        type: s4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: length_max
+        type: s4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
   en_sound_queue:
     seq:
       - id: scp
