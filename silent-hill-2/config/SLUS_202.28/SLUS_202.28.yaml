@@ -692,7 +692,7 @@ segments:
       - { start: 0x00243698,    type: data,       name: sdk/libgcc/impure                                }
       - { start: 0x00243988,    type: data,       name: sdk/lib_00343288                                 }
       - { start: 0x002439A0,    type: .data,      name: sdk/lib_001DE918                                 }
-      # - { start: 0x002439A0,    type: data,       name: sdk/lib_003432A0                                 }
+#     - { start: 0x002439A0,    type: data,       name: sdk/lib_003432A0                                 }
       - { start: 0x00243E00,    type: .data,      name: sdk/lib_001E7928                                 }
       - { start: 0x00245870,    type: .data,      name: sdk/lib_001E93E0                                 }
       - { start: 0x00245920,    type: .data,      name: sdk/lib_001ED3F0                                 }
@@ -807,7 +807,7 @@ segments:
       - { start: 0x00275f00,    type: .data,      name: Effect2/hh_class_water_09                        }
       - { start: 0x00276260,    type: .data,      name: Enemy/en_insect                                  }
       - { start: 0x002762b0,    type: data,       name: sh2shd/sh2shd_shadow_env                         }
-      - { start: 0x002764e0,    type: data,       name: Effect2/hh_class_fire_phenomenon_00              }
+      - { start: 0x002764e0,    type: .data,      name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x00277110,    type: data,       name: Effect2/hh_class_flame_00                        }
       - { start: 0x00278550,    type: data,       name: Effect2/hh_class_flame_01                        }
       - { start: 0x00279990,    type: .data,      name: Effect2/hh_class_smoke_00                        }
@@ -961,7 +961,7 @@ segments:
       - { start: 0x00293460,    type: .rodata,    name: DBG/dbkernel                                     }
       - { start: 0x00293470,    type: .rodata,    name: DBG/dbflag                                       }
       - { start: 0x00293570,    type: .rodata,    name: Item/otn_itemmain                                }
-      - { start: 0x002937c0,    type: .rodata,    name: lib/wprtfsrc                                      }
+      - { start: 0x002937c0,    type: .rodata,    name: lib/wprtfsrc                                     }
       - { start: 0x00293878,    type: .rodata,    name: sdk/lib_001DBFE0                                 }
       - { start: 0x002938a8,    type: rodata,     name: sdk/lib_003931A8                                 }
       - { start: 0x002939b0,    type: .rodata,    name: sdk/lib_001DC188                                 }
@@ -1072,7 +1072,7 @@ segments:
       - { start: 0x0029a3a0,    type: .rodata,    name: DBG/dbsw_map                                     }
       - { start: 0x0029a640,    type: rodata,     name: view/vc_newest_rodata                            }
       - { start: 0x0029a650,    type: .rodata,    name: Multi_thr/scf/sh2_scf                            }
-      - { start: 0x0029a6c0,    type: .rodata,    name: DBG/dbalocate                                   }
+      - { start: 0x0029a6c0,    type: .rodata,    name: DBG/dbalocate                                    }
       - { start: 0x0029a700,    type: .rodata,    name: Chacter/bg_chara                                 }
       - { start: 0x0029a850,    type: rodata,     name: Effect2/hh_class_glass_break_phenomenon_00       }
       - { start: 0x0029a870,    type: .rodata,    name: Effect2/hh_class_manager                         }
@@ -1167,7 +1167,7 @@ segments:
       - { vram:  0x0049fa20,    type: bss,        name: Effect/ef_common                                 }
       - { vram:  0x00550678,    type: bss,        name: Effect/ef_malloc                                 }
       - { vram:  0x00550680,    type: bss,        name: Effect/ef_packet                                 }
-      - { vram:  0x005506a0,    type: .bss,        name: Enemy/en_common                                  }
+      - { vram:  0x005506a0,    type: .bss,       name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: bss,        name: Enemy/en_draw                                    }
       - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
       - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }
