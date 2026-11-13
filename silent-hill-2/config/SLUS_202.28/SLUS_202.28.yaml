@@ -33,7 +33,7 @@ segments:
       - { start: 0x00003670,    type: asm,        name: Chacter/item_screen_obj                          }
       - { start: 0x00003d10,    type: c,          name: Chacter/m3_angela                                }
       - { start: 0x00004290,    type: asm,        name: Chacter/m3_anime_subfunc                         }
-      - { start: 0x00004620,    type: asm,        name: Chacter/m3_bgobj                                 }
+      - { start: 0x00004620,    type: c,          name: Chacter/m3_bgobj                                 }
       - { start: 0x00004bd0,    type: asm,        name: Chacter/m3_djames                                }
       - { start: 0x00005250,    type: c,          name: Chacter/m3_dmaria                                }
       - { start: 0x00005550,    type: c,          name: Chacter/m3_eddie                                 }
@@ -584,7 +584,7 @@ segments:
       - { start: 0x001a7b00,    type: .data,      name: Chacter/anime                                    }
       - { start: 0x001a7b10,    type: data,       name: Chacter/item_screen_obj                          }
       - { start: 0x001a8290,    type: data,       name: Chacter/kt                                       }
-      - { start: 0x001a83d0,    type: data,       name: Chacter/m3_bgobj                                 }
+      - { start: 0x001a83d0,    type: .data,      name: Chacter/m3_bgobj                                 }
       - { start: 0x001a87b0,    type: data,       name: Chacter/m3_djames                                }
       - { start: 0x001a8d90,    type: data,       name: Chacter/m3_dmaria                                }
       - { start: 0x001a8e90,    type: data,       name: Chacter/m3_eddie                                 }
@@ -862,7 +862,7 @@ segments:
       # -----------------------------------------    rodata   ------------------------------------------ #
       - { start: 0x00289700,    type: .rodata,    name: Chacter/anime                                    }
       - { start: 0x002897c0,    type: rodata,     name: Chacter/m3_angela_rodata                         }
-      - { start: 0x00289990,    type: rodata,     name: Chacter/m3_bgobj                                 }
+      - { start: 0x00289990,    type: .rodata,    name: Chacter/m3_bgobj                                 }
       - { start: 0x0028a580,    type: rodata,     name: Chacter/m3_djames                                }
       - { start: 0x0028ae80,    type: rodata,     name: Chacter/m3_dmaria_rodata                         }
       - { start: 0x0028b040,    type: rodata,     name: Chacter/m3_eddie_rodata                          }
@@ -1131,7 +1131,7 @@ segments:
       - { vram:  0x003c7e00,    type: .bss,       name: Chacter/anime                                    }
 #     - { vram:  0x003c7e60,    type: bss,        name: Chacter/kt                                       }
       - { vram:  0x003c7ea0,    type: bss,        name: Chacter/m3_angela                                }
-      - { vram:  0x003c7eb0,    type: bss,        name: Chacter/m3_bgobj                                 }
+      - { vram:  0x003c7eb0,    type: .bss,       name: Chacter/m3_bgobj                                 }
       - { vram:  0x003c7ec0,    type: bss,        name: Chacter/m3_djames                                }
       - { vram:  0x003c7ed0,    type: bss,        name: Chacter/m3_play                                  }
       - { vram:  0x003c8428,    type: bss,        name: Chacter/m3_play_2d                               }
@@ -1167,7 +1167,7 @@ segments:
       - { vram:  0x0049fa20,    type: bss,        name: Effect/ef_common                                 }
       - { vram:  0x00550678,    type: bss,        name: Effect/ef_malloc                                 }
       - { vram:  0x00550680,    type: bss,        name: Effect/ef_packet                                 }
-      - { vram:  0x005506a0,    type: .bss,        name: Enemy/en_common                                  }
+      - { vram:  0x005506a0,    type: .bss,       name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: bss,        name: Enemy/en_draw                                    }
       - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
       - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }
