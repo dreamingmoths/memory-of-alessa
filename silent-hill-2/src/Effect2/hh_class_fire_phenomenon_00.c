@@ -5,8 +5,6 @@
 #include "Effect2/hh_class_manager.h"
 #include "Effect2/hh_class_fire_phenomenon_00.h"
 
-static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_Element* pElement);
-
 static Descriptor_Post_Infomeation _post_info_demo[23] = {
     {
         /* .location = */ {-100550.0f, -3600.0f, -74800.0f, 0.0f},
@@ -441,6 +439,7 @@ static Descriptor_Post_Infomeation _post_info_normal[16] = {
     }
 };
 
+static u_int Object_Initialize(HH_Object_Fire_Phenomenon_00* pThis, ImpactQueue_Element* pElement);
 
 static inline float shGetDemoFrame(void) {
     return demo_frame;
