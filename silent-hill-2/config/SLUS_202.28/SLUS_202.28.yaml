@@ -30,7 +30,7 @@ segments:
       - { start: 0x00000700,    type: asm,        name: crt0                                             }
       - { start: 0x000007c0,    type: c,          name: Chacter/anime                                    }
       - { start: 0x00003580,    type: c,          name: Chacter/bg_obj_stay                              }
-      - { start: 0x00003670,    type: asm,        name: Chacter/item_screen_obj                          }
+      - { start: 0x00003670,    type: c,          name: Chacter/item_screen_obj                          }
       - { start: 0x00003d10,    type: c,          name: Chacter/m3_angela                                }
       - { start: 0x00004290,    type: asm,        name: Chacter/m3_anime_subfunc                         }
       - { start: 0x00004620,    type: c,          name: Chacter/m3_bgobj                                 }
@@ -582,7 +582,7 @@ segments:
       - { start: 0x001a6900,    type: vutext,     name: vsm/vutext/yuvprg                                }
       # ------------------------------------------    data   ------------------------------------------- #
       - { start: 0x001a7b00,    type: .data,      name: Chacter/anime                                    }
-      - { start: 0x001a7b10,    type: data,       name: Chacter/item_screen_obj                          }
+      - { start: 0x001a7b10,    type: .data,      name: Chacter/item_screen_obj                          }
       - { start: 0x001a8290,    type: data,       name: Chacter/kt                                       }
       - { start: 0x001a83d0,    type: .data,      name: Chacter/m3_bgobj                                 }
       - { start: 0x001a87b0,    type: data,       name: Chacter/m3_djames                                }
