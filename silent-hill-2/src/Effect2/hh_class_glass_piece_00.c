@@ -9,7 +9,7 @@
 #define STQ(x) ((x) / 2048.0f)
 
 static sceVu0FVECTOR _elastic_vec  = {1.0f, -0.8f, 1.0f, 1.0f};
-static sceVu0FVECTOR _friction_vec = {0.69999999f, 0.69999999f, 0.69999999f, 1.0f};
+static sceVu0FVECTOR _friction_vec = {0.7f, 0.7, 0.7, 1.0f};
 
 static sceVu0FMATRIX _square_00_vertex = {
     {  20.0f,  20.0f, 0.0f, 1.0f },
@@ -37,29 +37,29 @@ static sceVu0FMATRIX _square_01_normal = {
 };
 
 static sceVu0FMATRIX _square_stq_00 = {
-    { 0.0f,         0.0f,         1.0f, 0.0f },
-    { 0.0f,         STQ(1240.0f), 1.0f, 0.0f },
-    { STQ(1240.0f), 0.0f,         1.0f, 0.0f },
-    { STQ(1240.0f), STQ(1240.0f), 1.0f, 0.0f },
+    { 0.0f,        0.0f,        1.0f, 0.0f },
+    { 0.0f,        STQ(124.0f), 1.0f, 0.0f },
+    { STQ(124.0f), 0.0f,        1.0f, 0.0f },
+    { STQ(124.0f), STQ(124.0f), 1.0f, 0.0f },
 };
 
 static sceVu0FMATRIX _square_stq_01 = {
     { 0.0f,         STQ(128.0f), 1.0f, 0.0f },
     { 0.0f,         STQ(252.0f), 1.0f, 0.0f },
-    { STQ(1240.0f), STQ(128.0f), 1.0f, 0.0f },
-    { STQ(1240.0f), STQ(252.0f), 1.0f, 0.0f },
+    { STQ(124.0f),  STQ(128.0f), 1.0f, 0.0f },
+    { STQ(124.0f),  STQ(252.0f), 1.0f, 0.0f },
 };
 static sceVu0FMATRIX _square_stq_02 = {
     { 0.0f,         STQ(256.0f), 1.0f, 0.0f },
     { 0.0f,         STQ(380.0f), 1.0f, 0.0f },
-    { STQ(1240.0f), STQ(256.0f), 1.0f, 0.0f },
-    { STQ(1240.0f), STQ(380.0f), 1.0f, 0.0f },
+    { STQ(124.0f),  STQ(256.0f), 1.0f, 0.0f },
+    { STQ(124.0f),  STQ(380.0f), 1.0f, 0.0f },
 };
 static sceVu0FMATRIX _square_stq_10 = {
     { STQ(128.0f), 0.0f,         1.0f, 0.0f },
-    { STQ(128.0f), STQ(1240.0f), 1.0f, 0.0f },
+    { STQ(128.0f), STQ(124.0f),  1.0f, 0.0f },
     { STQ(252.0f), 0.0f,         1.0f, 0.0f },
-    { STQ(252.0f), STQ(1240.0f), 1.0f, 0.0f },
+    { STQ(252.0f), STQ(124.0f),  1.0f, 0.0f },
 };
 static sceVu0FMATRIX _square_stq_11 = {
     { STQ(128.0f), STQ(128.0f), 1.0f, 0.0f },
@@ -75,9 +75,9 @@ static sceVu0FMATRIX _square_stq_12 = {
 };
 static sceVu0FMATRIX _square_stq_20 = {
     { STQ(256.0f), 0.0f,         1.0f, 0.0f },
-    { STQ(256.0f), STQ(1240.0f), 1.0f, 0.0f },
+    { STQ(256.0f), STQ(124.0f),  1.0f, 0.0f },
     { STQ(380.0f), 0.0f,         1.0f, 0.0f },
-    { STQ(380.0f), STQ(1240.0f), 1.0f, 0.0f },
+    { STQ(380.0f), STQ(124.0f),  1.0f, 0.0f },
 };
 static sceVu0FMATRIX _square_stq_21 = {
     { STQ(256.0f), STQ(128.0f), 1.0f, 0.0f },
@@ -115,13 +115,13 @@ static Vertex_Infomeation_List _vertex_info_list[2] = {
 
 static u_int Object_Initialize( HH_Object_GlassPiece_00* pThis,  ImpactQueue_Element* pElement);
 
-static void ParabolaMotion_Calculator( HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* element, float Time, float* Position) ;
+static void ParabolaMotion_Calculator( HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* element, float Time, sceVu0FVECTOR Position) ;
 
-static u_int Object_Draw( HH_Object_GlassPiece_00* pThis,  ImpactQueue_Element* pElement, float* Current_Position);
+static u_int Object_Draw( HH_Object_GlassPiece_00* pThis,  ImpactQueue_Element* pElement, sceVu0FVECTOR Current_Position);
 
-static float Specular_Calculator(float* Normal_Vector);
+static float Specular_Calculator(sceVu0FVECTOR Normal_Vector);
 
-static void SpecularRGBA_Calculator(int* iRGBA, float* RGBA_Base, float* RGBA_Specular_Base, float* Normal_Vector);
+static void SpecularRGBA_Calculator(int* iRGBA, sceVu0FVECTOR RGBA_Base, sceVu0FVECTOR RGBA_Specular_Base, sceVu0FVECTOR Normal_Vector);
 
 #line 306
 static u_int Object_Initialize(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* pElement) {
@@ -168,7 +168,7 @@ static u_int Object_Initialize(HH_Object_GlassPiece_00* pThis, ImpactQueue_Eleme
 }
 
 #line 372
-static void ParabolaMotion_Calculator(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* element, float Time, float* Position) {
+static void ParabolaMotion_Calculator(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* element, float Time, sceVu0FVECTOR Position) {
     sceVu0FMATRIX time_mat;
 
 
@@ -181,7 +181,7 @@ static void ParabolaMotion_Calculator(HH_Object_GlassPiece_00* pThis, ImpactQueu
     sceVu0ApplyMatrix(Position, time_mat, pThis->Verocity_0);
 }
 
-u_int Object_Draw(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* pElement, float* Current_Position) {
+u_int Object_Draw(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* pElement, sceVu0FVECTOR Current_Position) {
     u_int result = false;
     sceVif1Packet* pPk = HH_Vif1Packet_Current_Get();
     Vertex_Infomeation_List* pInfo = &_vertex_info_list[pThis->Vertex_Kind];
@@ -274,7 +274,7 @@ u_int Object_Draw(HH_Object_GlassPiece_00* pThis, ImpactQueue_Element* pElement,
 }
 
 #line 500
-static float Specular_Calculator(float* Normal_Vector) {
+static float Specular_Calculator(sceVu0FVECTOR Normal_Vector) {
     float result;
     float specular_coefficient = 1.0f;
     float input_light_power;
