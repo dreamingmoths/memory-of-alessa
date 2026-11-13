@@ -136,7 +136,142 @@ void ConnectCharaWorkReset(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", ConnectCharaWorkAdminOut);
 
-INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", ConnectCharaWorkAdminIn);
+static inline float float_square(float x) {
+    return x *= x;
+}
+
+static inline int meow(SubCharacter* a, SubCharacter* b, float p) {
+    float x, y, z; 
+    z = float_square(a->pos.z - b->pos.z);
+    x = float_square(a->pos.x - b->pos.x);
+    y = float_square(a->pos.y - b->pos.y);
+    return x + y + z < float_square(p);
+}
+
+void ConnectCharaWorkAdminIn(void) { // @note: not properly line matched
+    SubCharacter* scp;
+    SubCharacter* next;
+    Model_List* mp;
+    Item_List* ip;
+    Enemy_List* ep;
+    sceVu0FVECTOR pos;
+    sceVu0FVECTOR rot;
+    int kind;
+    int flag;
+    int room;
+
+    room = RoomNameJms();
+    shVectorZeroXyz(pos);
+    shVectorZeroXyz(rot);
+
+    scp = shCharacter_Manage_GetCharacterList();
+
+    
+    while (scp != NULL) {
+        next = scp->next;
+        if ((scp->kind >> 8) == 2) {
+            scp->battle.status &= ~(1 << 10);
+            scp->status &= ~(1 << 4);
+        } else if (scp->kind >= 0x400) {
+            shCharacter_Manage_Delete(scp, 0, 0);
+        }
+        scp = next;
+    }
+    
+    scp = shCharacterGetSubCharacter(LLL_MAR_CHARA_KIND, 0);
+    if (GET_GAME_FLAG(GAME_FLAG_15)) {
+        if (scp == NULL) 
+            scp = CharaWorkCreate(LLL_MAR_CHARA_KIND, 0, pos, rot, 0);        
+        if (scp != NULL) scp->status |= (1 << 4);        
+    } else {
+        CharaDataDeleteOne(LLL_MAR_CHARA_KIND);
+    }
+    
+    
+    for (mp = stage->mdl_list; mp != NULL && mp->kind != 0; mp++) {
+        if ((mp->flag_off == 0) || !(GET_GAME_FLAG(mp->flag_off)))
+            if ((mp->flag_on == 0) || (GET_GAME_FLAG(mp->flag_on))) {
+                if (room == RoomName(0, mp->pos[0], mp->pos[2])) {
+                    scp = shCharacterGetSubCharacter(mp->kind, mp->id);
+                    if (scp == NULL) {
+                        scp = CharaWorkCreate(mp->kind, mp->id, mp->pos, mp->rot, 0);
+                    }
+                    
+                    if (scp != NULL) scp->status |= (1 << 4);                    
+                }
+            }             
+    }
+    shVectorZeroXyz(pos);
+    shVectorZeroXyz(rot);    
+    for (ip = stage->gi_list; ip != NULL; ip++) {
+        kind = (ip->st >> 29) & 7;
+        if (kind == 7) break;
+        flag = ip->st & 0x3FFF;
+        if (!GET_GAME_FLAG(flag) && !(GET_GAME_FLAG(flag + 1))) {
+            if (room == RoomName(0, ip->pos_x, ip->pos_z)) {
+                pos[0] = ip->pos_x;
+                pos[1] = CharToFloat2((char*) &ip->pos_y);
+                pos[2] = ip->pos_z;
+                rot[1] = CharToFloat2((char*) &ip->rot_y);
+                switch (kind) {
+                    default:
+                    case 0: case 1: kind = ITEM_X_HANDBUL_CHARA_KIND; break;
+                    case 2: kind = ITEM_X_SHOTBUL_CHARA_KIND; break;
+                    case 3: kind = ITEM_X_RIFLEBUL_CHARA_KIND; break;
+                    case 4: kind = ITEM_X_DRINK_CHARA_KIND; break;
+                    case 5: kind = ITEM_X_FIRSTAID_CHARA_KIND; break;
+                    case 6: kind = ITEM_X_AMPLE_CHARA_KIND; break;
+                }
+                scp = shCharacterGetSubCharacter(kind, flag);
+                if (scp == NULL) scp = CharaWorkCreate(kind, flag , pos, rot, 0);                    
+                if (scp != NULL) scp->status |= (1 << 4);                    
+            }                
+        }                   
+    }
+
+
+    
+    
+    for (ep = stage->en_list; ep != NULL && ep->kind != 0; ep++) {    
+        if (CharaAdminEnemyEntryCheck(ep, room) != 0) {
+            scp = shCharacterGetSubCharacter(ep->kind, ep->id);
+            if (scp != NULL) {
+                if (meow(sh2jms.player, scp, 500.0f)) {
+                    
+                    
+                    
+                    shCharacter_Manage_Delete(scp, 0, 0);
+                    scp = NULL;
+                }
+            }
+            if (scp == NULL) {
+                pos[0] = ep->pos_x;
+                pos[1] = ep->pos_y;
+                pos[2] = ep->pos_z;
+                rot[1] = itof(ep->rot_y) / 4096.0f;
+                scp = CharaWorkCreate(ep->kind, ep->id, pos, rot, ep->status);
+            }
+            
+            if (scp != NULL) {
+                scp->battle.status |= (1 << 10);
+                scp->status |= (1 << 4);
+            }
+        }
+    }
+    
+    shCharacter_Manage_Delete(NULL, RHLL_JMS_CHARA_KIND, 0);
+    shCharacter_Manage_Delete(NULL, RLLL_JMS_CHARA_KIND, 0);
+    if ((Sh2sys.main_status >> 4) & 1) {
+        shVectorZeroXyz(pos);
+        shVectorZeroXyz(rot);
+        if (stage->pc_model == 1) {
+            scp = CharaWorkCreate(RHLL_JMS_CHARA_KIND, 0, pos, rot, 0);
+        } else {
+            scp = CharaWorkCreate(RLLL_JMS_CHARA_KIND, 0, pos, rot, 0);
+        }
+        if (scp != NULL) scp->status |= (1 << 4);        
+    }
+}
 
 void ConnectCharaWorkAdminClear(void) {
     SubCharacter* scp;  // r2
