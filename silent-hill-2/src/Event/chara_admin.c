@@ -136,16 +136,16 @@ void ConnectCharaWorkReset(void) {
 
 INCLUDE_ASM("asm/nonmatchings/Event/chara_admin", ConnectCharaWorkAdminOut);
 
-static inline float float_square(float x) {
+static inline float floatSquare(float x) {
     return x *= x;
 }
 
-static inline int meow(SubCharacter* a, SubCharacter* b, float p) {
+static inline int isSubCharacterCloseEnough(SubCharacter* a, SubCharacter* b, float p) {
     float x, y, z; 
-    z = float_square(a->pos.z - b->pos.z);
-    x = float_square(a->pos.x - b->pos.x);
-    y = float_square(a->pos.y - b->pos.y);
-    return x + y + z < float_square(p);
+    z = floatSquare(a->pos.z - b->pos.z);
+    x = floatSquare(a->pos.x - b->pos.x);
+    y = floatSquare(a->pos.y - b->pos.y);
+    return x + y + z < floatSquare(p);
 }
 
 void ConnectCharaWorkAdminIn(void) { // @note: not properly line matched
@@ -236,7 +236,7 @@ void ConnectCharaWorkAdminIn(void) { // @note: not properly line matched
         if (CharaAdminEnemyEntryCheck(ep, room) != 0) {
             scp = shCharacterGetSubCharacter(ep->kind, ep->id);
             if (scp != NULL) {
-                if (meow(sh2jms.player, scp, 500.0f)) {
+                if (isSubCharacterCloseEnough(sh2jms.player, scp, 500.0f)) {
                     
                     
                     
