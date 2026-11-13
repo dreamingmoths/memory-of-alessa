@@ -770,7 +770,7 @@ void shCharacterWorldScreenObjectSetNew(SubCharacter* this, float scale) {
     i = 0;
     for (;sp != NULL; sp = sp->next, i++) {
         sp->src_m = *(Matrix4*) work->matrices[i];
-        shMulMatrix((float (*)[4])&sp->src_m, rm, (float (*)[4])&sp->src_m);
+        shMulMatrix((sceVu0FVECTOR*) &sp->src_m, rm, (sceVu0FVECTOR*) &sp->src_m);
         
         sp->des_m = sp->src_m;
         sp->des_t = sp->src_t = *(Vector4*) sp->src_m.d[3];
