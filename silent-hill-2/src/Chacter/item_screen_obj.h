@@ -13,5 +13,7 @@ typedef struct shItemScreenObjectSettingData {
 } shItemScreenObjectSettingData;
 
 void shCharacterWorldScreenObjectSetNew(SubCharacter* this, float scale);
+void shCharacterSetItemScreenItemLow(SubCharacter* scp);
+void shCharacterSetWorldScreenItemLow(SubCharacter* scp);
 
 #endif // ITEM_SCREEN_OBJ_H
