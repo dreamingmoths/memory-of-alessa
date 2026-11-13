@@ -8,7 +8,7 @@
 
 static shItemScreenObjectSettingData item_screen_obj_data[58] = {
     {
-        /* .charaId = */ ITEM_X_BIRTHDAY_CHARA_KIND,
+        /* .charaId = */ 0x748, // @todo this maps to the BFAW birthday card in greatest hits. what is it in the v0.10 prototype?
         /* .scale = */ 10.0f,
         /* .rot = */         {
             /* .x = */ 0.0f,
