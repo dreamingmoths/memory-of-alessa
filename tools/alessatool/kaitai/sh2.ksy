@@ -4493,6 +4493,63 @@ types:
         repeat: expr
         repeat-expr: 4
 
+  hh_object_smoke_00_particle:
+    seq:
+      - id: location
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: verocity_0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: time
+        type: f4
+
+      - id: scale
+        type: f4
+
+      - id: convergence_coff
+        type: f4
+
+      - id: life_time
+        type: f4
+
+      - id: texture_kind
+        type: u4
+
+      - size: 12
+
+  hh_object_smoke_00:
+    seq:
+      - id: header
+        type: object_data_block_header
+
+      - id: step
+        type: u1
+
+      - size: 3
+
+      - id: timer
+        type: f4
+
+      - id: particle_draw_num
+        type: u4
+
+      - size: 4
+
+      - id: particle
+        type: hh_object_smoke_00_particle
+        repeat: expr
+        repeat-expr: 20
+
   en_sound_queue:
     seq:
       - id: scp
