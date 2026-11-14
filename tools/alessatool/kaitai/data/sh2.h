@@ -8,8 +8,13 @@
 
 /*
  
-to rebuild with alessastruct:
+to rebuild with alessastruct, use the following command:
 
+```sh
+alessatool migrate --update
+```
+
+if the above does not work, or if you are curious, here are manual instructions:
 
 ```sh
 alessastruct --platform=ps2 --output=tools/alessatool/kaitai/sh2.ksy  \
