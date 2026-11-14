@@ -11,7 +11,7 @@
 #define enDrawX(value)   (EN_DRAW_ORIGIN_X + vu0_ftoi((value) / view_rate + 2048.0f))
 #define enDrawY(value)   (EN_DRAW_ORIGIN_Y + vu0_ftoi((value) / view_rate * EN_ASPECT_RATIO + 2048.0f))
 
-extern float view_rate;
+float view_rate = 0.0f;
 
 static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
     u_long128 xyz = *(u_long128*) vector;
