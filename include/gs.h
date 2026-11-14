@@ -9,6 +9,7 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+#define SCREEN_ASPECT_RATIO  ((float) (SCREEN_WIDTH) / (float) (SCREEN_HEIGHT))
 
 // Annoyingly, (v << 4) vs (u_int)(v * 16) causes regalloc issues
 // Maybe they didn't want fractional coords xd

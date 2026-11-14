@@ -7,9 +7,8 @@
 
 #define EN_DRAW_ORIGIN_X ((int) X_COORD(-1568))
 #define EN_DRAW_ORIGIN_Y ((int) Y_COORD(-1948))
-#define EN_ASPECT_RATIO  (4.0f / 3.0f)
 #define enDrawX(value)   (EN_DRAW_ORIGIN_X + vu0_ftoi((value) / view_rate + 2048.0f))
-#define enDrawY(value)   (EN_DRAW_ORIGIN_Y + vu0_ftoi((value) / view_rate * EN_ASPECT_RATIO + 2048.0f))
+#define enDrawY(value)   (EN_DRAW_ORIGIN_Y + vu0_ftoi((value) / view_rate * SCREEN_ASPECT_RATIO + 2048.0f))
 
 float view_rate = 0.0f;
 
