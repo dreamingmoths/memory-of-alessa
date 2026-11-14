@@ -58,7 +58,7 @@ void enDrawRadar(void) {
     spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, -2, 0);
     spkAddressData(SCE_GS_SET_ALPHA(0, 1, 0, 1, 0), SCE_GS_ALPHA_1);
     spkAddressData(SCE_GS_SET_TEST(0, 0, 0, 0, 0, 0, 1, 1), SCE_GS_TEST_1);
-    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0), SCE_GIF_REGLIST, 15), 
+    spkCloseOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 15), 
                        GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ2, SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2, SCE_GS_XYZ2));
     (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
     (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 0, 0, 16, FLOAT_ONE);

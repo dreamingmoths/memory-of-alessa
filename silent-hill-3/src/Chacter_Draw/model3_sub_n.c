@@ -32,7 +32,7 @@ void Model3Init(void) {
                 0,
                 SCE_GS_TRUE,
                 SCE_GS_FALSE,
-                SCE_GS_SET_PRIM(SCE_GS_PRIM_POINT, 0, 0, 0, 0, 0, 0, 0, 0),
+                0,
                 SCE_GIF_PACKED,
                 1
             ),
