@@ -888,12 +888,12 @@ static int titleCheckPad(void) {
         if (analog_data == 0.0f) {
             analog_data = -1.000001f;
         } else {
-            analog_data -= (itof(96 - an) / 19.2f) * shGetDT();
+            analog_data -= (shIntToFloat(96 - an) / 19.2f) * shGetDT();
         }
     } else if (analog_data == 0.0f) {
         analog_data = 1.000001f;
     } else {
-        analog_data += (itof(an - 160) / 19.2f) * shGetDT();
+        analog_data += (shIntToFloat(an - 160) / 19.2f) * shGetDT();
     }
     if ((shPadTrigger(0, PAD_KEY_DPAD_UP) != 0) || (shPadRepeat(0, PAD_KEY_DPAD_UP) != 0) || (analog_data < -1.0f)) {
         analog_data += 1.0f;

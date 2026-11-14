@@ -152,7 +152,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
     enMoveAngle(&dp->path, enREDGetRotSpeed());
     dp->scp->rot.y = dp->path.angle;
-    dp->anim_s = ftoi(4096.0f * enREDGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));    
+    dp->anim_s = shFloatToInt(4096.0f * enREDGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));    
 
     
     t = enREDCanSeePlayer(dp);
@@ -371,10 +371,10 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
             
             
             if (dp->p_dist > 5000.0f) {
-                enSoundCall3D((ftoi(3.0f * shRandF()) * 2) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+                enSoundCall3D((shFloatToInt(3.0f * shRandF()) * 2) + 0x3EE4, 1.0f, &dp->scp->pos.x);
             
             } else 
-                enSoundCall(ftoi(6.0f * shRandF()) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+                enSoundCall(shFloatToInt(6.0f * shRandF()) + 0x3EE4, 1.0f, &dp->scp->pos.x);
         }
     
     

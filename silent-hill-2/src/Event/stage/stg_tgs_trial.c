@@ -302,7 +302,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_tgs_trial", EvProgTrialStartSet);
             }
             EvSubPictureStart();
             EvSubPictureDisplayOnly();
-            EvProgBoxWithKeyOpen(0x80 - ftoi((128.0f * ev_timer) / 2.0f));
+            EvProgBoxWithKeyOpen(0x80 - shFloatToInt((128.0f * ev_timer) / 2.0f));
             
             EvSubPictureEnd();
             break;

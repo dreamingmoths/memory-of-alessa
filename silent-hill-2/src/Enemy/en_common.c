@@ -644,7 +644,7 @@ int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
         dp->endurance = 0.0f;bi->hp_rate = 0.0f;bi->hp = 0.0f;
     }
     
-    bi->damage /= itof(++dp->d_count);
+    bi->damage /= shIntToFloat(++dp->d_count);
     dp->last_atk = bi->id;
     return 1;
 }
@@ -2013,7 +2013,7 @@ void enAnimeExec(EnLOCAL_DATA* dp /* r22 */, EnANIME_DATA * pa /* r21 */, short 
     } else {
         n = dp->anim_n;
     } // TODO: Figure out cast on below line
-    n += ((dp->anim_s * ((ftoi(144000.0f * shGetDT()) * shAbs(speed)) >> 0xC)) >> 0xC);
+    n += ((dp->anim_s * ((shFloatToInt(144000.0f * shGetDT()) * shAbs(speed)) >> 0xC)) >> 0xC);
     if (ENEMY_FLAG_CHECK(ENEMY_FLAG_7)) {
         if (dp->anim_s > 0) {
             if (n >= dp->anim_step) {

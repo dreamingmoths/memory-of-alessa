@@ -248,7 +248,7 @@ void ConnectCharaWorkAdminIn(void) { // @note: not properly line matched
                 pos[0] = ep->pos_x;
                 pos[1] = ep->pos_y;
                 pos[2] = ep->pos_z;
-                rot[1] = itof(ep->rot_y) / 4096.0f;
+                rot[1] = shIntToFloat(ep->rot_y) / 4096.0f;
                 scp = CharaWorkCreate(ep->kind, ep->id, pos, rot, ep->status);
             }
             
@@ -466,7 +466,7 @@ static void DeleteEnemyWorkOut(void) {
 
 int CharaAdminEnemyEntryCheck(Enemy_List* ep, int room) {
     if (GET_ENEMY_FLAG(ep->id)) return 0;
-    if (room && room != RoomName(0, itof(ep->pos_x), itof(ep->pos_z)))
+    if (room && room != RoomName(0, shIntToFloat(ep->pos_x), shIntToFloat(ep->pos_z)))
         return 0;
     if (!CharaAdminEnemyEntryCondition(ep->condition)) return 0;
     

@@ -272,8 +272,8 @@ void fontPutSelectBar(void) {
     *pCur++ = SCE_GIF_SET_TAG(1, SCE_GS_TRUE, SCE_GS_FALSE, NULL, SCE_GIF_REGLIST, 3);
     *pCur++ = GIF_REG(SCE_GS_RGBAQ, 0) | GIF_REG(SCE_GS_XYZ2, 1) | GIF_REG(SCE_GS_XYZ2, 2);
     *pCur++ = SCE_GS_SET_RGBAQ(16, 32, 192, a + 16, 0);
-    *pCur++ = ASM_GS_SET_XYZ(x0, y0, z);
-    *pCur++ = ASM_GS_SET_XYZ(x1, y1, z);
+    *pCur++ = shFastSetXyz(x0, y0, z);
+    *pCur++ = shFastSetXyz(x1, y1, z);
     *pCur++ = 0;
     
     font.pCur = pCur;
@@ -326,8 +326,8 @@ void fontPutYesNoSelectBar(void) {
     *pCur++ = SCE_GIF_SET_TAG(1, SCE_GS_TRUE, SCE_GS_FALSE, NULL, SCE_GIF_REGLIST, 3);
     *pCur++ = GIF_REG(SCE_GS_RGBAQ, 0) | GIF_REG(SCE_GS_XYZ2, 1) | GIF_REG(SCE_GS_XYZ2, 2);
     *pCur++ = SCE_GS_SET_RGBAQ(16, 32, 192, a + 16, 0);
-    *pCur++ = ASM_GS_SET_XYZ(x0, y0, z);
-    *pCur++ = ASM_GS_SET_XYZ(x1, y1, z);
+    *pCur++ = shFastSetXyz(x0, y0, z);
+    *pCur++ = shFastSetXyz(x1, y1, z);
     *pCur++ = 0;
     
     font.pCur = pCur;

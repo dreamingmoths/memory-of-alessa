@@ -83,7 +83,7 @@
 
 // Crucially though, the final register is used as a 64bit store, thus the garbage is not
 // important, and the 2 instructions are effectively just packing a SCE_GS_SET_XYZ blazingly fast!
-static inline long ASM_GS_SET_XYZ(int x, int y, int z) {
+static inline long shFastSetXyz(int x, int y, int z) {
     long a;
     asm("pextlh %0, %2, %1;\
          pextlw %0, %3, %0" : "+r"(a) : "r"(x), "r"(y), "r"(z));

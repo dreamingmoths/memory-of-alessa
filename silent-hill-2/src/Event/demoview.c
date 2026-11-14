@@ -1000,13 +1000,13 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
 
     if (playing.subtitles == true) {
         if (info->adr_msg_time != NULL) {
-            if (ftoi(msg_frame) > (info->adr_msg_time[demo_msg_no].end)) {
+            if (shFloatToInt(msg_frame) > (info->adr_msg_time[demo_msg_no].end)) {
                 
                 fontClear();
                 demo_msg_no++;
                 DdsUnsetFlag(DDS_FLAG_SUBTITLES_SHOWN);
             }
-            if ((ftoi(msg_frame) > info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
+            if ((shFloatToInt(msg_frame) > info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
                 
                 fontMessageNum(msg_buffer, info->msg_start + demo_msg_no);
                 demo_status |= 8;
@@ -1015,7 +1015,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
     }
     
     if (demo_status & 1) frm_dcm = 0.0f;
-    else frm_dcm = demo_frame - (float)ftoi((float)ftoi(demo_frame));
+    else frm_dcm = demo_frame - (float)shFloatToInt((float)shFloatToInt(demo_frame));
     
     
     for (i = 0; i < 3; i++) {
@@ -1106,10 +1106,10 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
     msg_frame += 30.0f * shGetDT();
     // ??? lmao
     if (demo_frame >= total_demo_frame) return 1;
-    if (demo_frame - (float)ftoi((float)ftoi(demo_frame)) > 0.9999f) 
-        demo_frame = 1.0f + (float)ftoi((float)ftoi(demo_frame));    
-    if (msg_frame - (float)ftoi((float)ftoi(msg_frame)) > 0.9999f) 
-        msg_frame = 1.0f + (float)ftoi((float)ftoi(msg_frame));    
+    if (demo_frame - (float)shFloatToInt((float)shFloatToInt(demo_frame)) > 0.9999f) 
+        demo_frame = 1.0f + (float)shFloatToInt((float)shFloatToInt(demo_frame));    
+    if (msg_frame - (float)shFloatToInt((float)shFloatToInt(msg_frame)) > 0.9999f) 
+        msg_frame = 1.0f + (float)shFloatToInt((float)shFloatToInt(msg_frame));    
     return 0;
 }
 

@@ -29,8 +29,8 @@ float view_rate = 0.0f;
 
 #define EN_DRAW_ORIGIN_X ((int) X_COORD(-1568))
 #define EN_DRAW_ORIGIN_Y ((int) Y_COORD(-1948))
-#define enDrawX(value)   (EN_DRAW_ORIGIN_X + vu0_ftoi((value) / view_rate + 2048.0f))
-#define enDrawY(value)   (EN_DRAW_ORIGIN_Y + vu0_ftoi((value) / view_rate * SCREEN_ASPECT_RATIO + 2048.0f))
+#define enDrawX(value)   (EN_DRAW_ORIGIN_X + shVu0FloatToInt((value) / view_rate + 2048.0f))
+#define enDrawY(value)   (EN_DRAW_ORIGIN_Y + shVu0FloatToInt((value) / view_rate * SCREEN_ASPECT_RATIO + 2048.0f))
 
 void enDrawRadar(void) {
     EnLOCAL_DATA* dp; // r16

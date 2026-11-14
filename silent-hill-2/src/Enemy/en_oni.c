@@ -433,7 +433,7 @@ static void enONICtrlChase(EnLOCAL_DATA* dp) {
     enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
     enMoveAngle(&dp->path, enONIGetRotSpeed());
     dp->scp->rot.y = dp->path.angle;
-    dp->anim_s = ftoi(4096.0f * enONIGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));
+    dp->anim_s = shFloatToInt(4096.0f * enONIGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));
     
     if ((dp->type == 2) && (enGetMode() >= SH2_BATTLE_LEVEL_NORMAL) && (enCalcAngleDifference(dp->scp->rot.y, enGetPlayerDirection(dp)) < TO_RAD(5))) {
         
@@ -913,7 +913,7 @@ static void enONICtrlSuicide(EnLOCAL_DATA* dp) {
         } else {
             t = 4096;
         }
-        ts = ftoi(4096.0f * shGetDT());
+        ts = shFloatToInt(4096.0f * shGetDT());
         td = t - dp->anim_s;
         if (td < -ts) dp->anim_s -= ts;
         else if (td > ts) dp->anim_s += ts;
@@ -1148,7 +1148,7 @@ static float enONIGetWalkSpeed(EnLOCAL_DATA* dp) {
     if (dp->type == 1) {
         r *= 1.5f;
     }
-    dp->anim_s = ftoi(4096.0f * r);
+    dp->anim_s = shFloatToInt(4096.0f * r);
     return r;
 }
 
@@ -1161,7 +1161,7 @@ static float enONIGetAttackSpeed(EnLOCAL_DATA* dp) {
     
     
     r = enONIGetSpeed(dp) * speed_rate[enGetMode()];
-    dp->anim_s = ftoi(4096.0f * r);
+    dp->anim_s = shFloatToInt(4096.0f * r);
     return r;
 }
 
@@ -1207,7 +1207,7 @@ static void enONISoundLife(EnLOCAL_DATA* dp) {
         dp->sound_wait++;
     } else if ((dp->anim == 2) || (shRandF() < (0.2f * shGetDT()))) {
         
-        enSoundCall(ftoi(2.0f * shRandF()) + 16118, 1.0f, &dp->scp->pos);
+        enSoundCall(shFloatToInt(2.0f * shRandF()) + 16118, 1.0f, &dp->scp->pos);
         
         dp->sound_wait = 0;
     }

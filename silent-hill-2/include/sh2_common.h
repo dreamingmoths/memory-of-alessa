@@ -70,19 +70,19 @@ static inline float shVectorDistXz_reverse(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     return d;
 }
 
-static inline int ftoi(float f) {
+static inline int shFloatToInt(float f) {
     int i;
     asm("cvt.w.s %0, %0; mfc1 %1, %0" : "=f"(f), "=r"(i));
     return i;
 }
 
-static inline float itof(int i) {
+static inline float shIntToFloat(int i) {
     float f;
     asm("mtc1 %1, %0; cvt.s.w %0, %0" : "=f"(f) : "r"(i));
     return f;
 }
 
-static inline int vu0_ftoi(float x) {
+static inline int shVu0FloatToInt(float x) {
     int ret;
 
     asm("mfc1     %0,  %1 ;\

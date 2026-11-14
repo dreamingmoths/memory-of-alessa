@@ -491,7 +491,7 @@ static void ChizuDisplay(void) {
     picture_set_ap(&pic0, get_gp_data_buf_addr());
     pic0.otp = 1;    
     // @todo: add macro/inline
-    pic0.us0 = vu0_ftoi(u0); pic0.vt0 = vu0_ftoi(v0); pic0.us1 = vu0_ftoi(u1); pic0.vt1 = vu0_ftoi(v1); pic0.status |= 4;
+    pic0.us0 = shVu0FloatToInt(u0); pic0.vt0 = shVu0FloatToInt(v0); pic0.us1 = shVu0FloatToInt(u1); pic0.vt1 = shVu0FloatToInt(v1); pic0.status |= 4;
     PictureDraw(&pic0);
     
     ChizuMarkerDraw();

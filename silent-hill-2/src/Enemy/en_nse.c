@@ -332,7 +332,7 @@ static void enNSECtrlWander(EnLOCAL_DATA* dp) {
         if (d < -0.01f) d = -0.01f;        
         if (d > 0.01f) d = 0.01f;
         dp->bos.target[0] += d;
-        dp->anim_s = ftoi(4096.0f * dp->bos.target[0] * enNSEGetWalkSpeed(dp));
+        dp->anim_s = shFloatToInt(4096.0f * dp->bos.target[0] * enNSEGetWalkSpeed(dp));
     }
     
     shSinCosV_Scale(vec, a, 1000.0f);
@@ -422,7 +422,7 @@ static void enNSECtrlChase(EnLOCAL_DATA* dp) {
         if (d < -0.01f) d = -0.01f;        
         if (d > 0.01f) d = 0.01f;    
         dp->bos.target[0] += d;
-        dp->anim_s = ftoi(4096.0f * dp->bos.target[0] * enNSEGetWalkSpeed(dp));
+        dp->anim_s = shFloatToInt(4096.0f * dp->bos.target[0] * enNSEGetWalkSpeed(dp));
     }
     
     enMoveAngle(&dp->path, enNSEGetRotSpeed());
@@ -861,7 +861,7 @@ static void enNSEAutoRecovery(EnLOCAL_DATA* dp) {
     
     
     
-    enAddEnduranceDT(dp, itof(recover_rate[enGetMode()]));
+    enAddEnduranceDT(dp, shIntToFloat(recover_rate[enGetMode()]));
 }
 
 static float enNSEGetWalkSpeed(EnLOCAL_DATA* dp) {
@@ -874,7 +874,7 @@ static float enNSEGetWalkSpeed(EnLOCAL_DATA* dp) {
     
     r = speed_rate[enGetMode()];
     r *= (0.5f + (dp->scp->battle.hp_rate / 200.0f));
-    dp->anim_s = ftoi(4096.0f * r);
+    dp->anim_s = shFloatToInt(4096.0f * r);
     return r;
 }
 
@@ -913,7 +913,7 @@ static float enNSEGetAttackSpeed(EnLOCAL_DATA* dp) {
     
     r = speed_rate[enGetMode()];
     r *= (0.5f + (dp->scp->battle.hp_rate / 200.0f));
-    dp->anim_s = ftoi(4096.0f * r);
+    dp->anim_s = shFloatToInt(4096.0f * r);
     return r;
 }
 
@@ -941,7 +941,7 @@ static void enNSESetDownTime(EnLOCAL_DATA* dp) {
 
 static void enNSESetMoveCount(EnLOCAL_DATA* dp) {
     int n;
-    n = ftoi(8.0f - 0.4f * enGetMode() + shSway1f(-2.0f, 0.5f));
+    n = shFloatToInt(8.0f - 0.4f * enGetMode() + shSway1f(-2.0f, 0.5f));
     enSetAnimeCount(dp, n * 2048);
 }
 

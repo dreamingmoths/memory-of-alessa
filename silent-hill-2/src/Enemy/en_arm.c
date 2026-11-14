@@ -560,7 +560,7 @@ static float enARMGetMoveSpeed(EnLOCAL_DATA* dp) {
     r = speed_rate[enGetMode()];
     r *= (0.6f + (dp->scp->battle.hp_rate / 250.0f));
     if (dp->p_dist > 5000.0f) r *= 4.0f;
-    dp->anim_s = ftoi(4096.0f * r);
+    dp->anim_s = shFloatToInt(4096.0f * r);
     return r;
 }
 

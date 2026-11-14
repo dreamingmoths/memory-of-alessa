@@ -223,8 +223,8 @@ static void MemoDisplay(void) { // @note: not line matched
                 sh2sys_step_4();
             
             case 2:
-                MemoPictureBaseDraw(ftoi(64.0f * alpha) + 64);
-                MemoPictureLayerDraw(ftoi(64.0f * alpha) + 64);
+                MemoPictureBaseDraw(shFloatToInt(64.0f * alpha) + 64);
+                MemoPictureLayerDraw(shFloatToInt(64.0f * alpha) + 64);
                 if (ScreenEffectFadeCheck()) {
                     if ((data[select].status) == 1) {
                         sh2sys_set_4(4); return;
@@ -235,8 +235,8 @@ static void MemoDisplay(void) { // @note: not line matched
             } 
             break;
         case 3:
-            MemoPictureBaseDraw(ftoi(64.0f * alpha) + 0x40);
-            MemoPictureLayerDraw(ftoi(64.0f * alpha) + 0x40);
+            MemoPictureBaseDraw(shFloatToInt(64.0f * alpha) + 0x40);
+            MemoPictureLayerDraw(shFloatToInt(64.0f * alpha) + 0x40);
             if (shPadTrigger(0, key_config.enter + key_config.cancel)) {
                 if ((data[select].status) == 2) {
                     sh2sys_set_4(4);
@@ -270,8 +270,8 @@ static void MemoDisplay(void) { // @note: not line matched
             alpha -= shGetDT();
             if (alpha < 0.0f) alpha = 0.0f;
 
-            MemoPictureBaseDraw(ftoi(64.0f * alpha) + 64);
-            MemoPictureLayerDraw(ftoi(64.0f * alpha) + 64);
+            MemoPictureBaseDraw(shFloatToInt(64.0f * alpha) + 64);
+            MemoPictureLayerDraw(shFloatToInt(64.0f * alpha) + 64);
             if (fontGetStatus() != -1) {
                 fontClear();
                 ScreenEffectFadeStart(2, 0.0f);
@@ -280,8 +280,8 @@ static void MemoDisplay(void) { // @note: not line matched
             }
             break;
         case 6:
-            MemoPictureBaseDraw(ftoi(64.0f * alpha) + 64);
-            MemoPictureLayerDraw(ftoi(64.0f * alpha) + 64);
+            MemoPictureBaseDraw(shFloatToInt(64.0f * alpha) + 64);
+            MemoPictureLayerDraw(shFloatToInt(64.0f * alpha) + 64);
             if (ScreenEffectFadeCheck()) {
                 sh2sys_step_4();
                 return;
