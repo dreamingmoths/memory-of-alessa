@@ -316,6 +316,23 @@ The result will be in `ctx.c`. Any macros such as `UNLINKED(...)` or
 `UNMIGRATED(...)` can be removed so that the result is formatted as a definition
 (like `AnimeInfo anime_info = { /* ... */ };`).
 
+### what to do when a `StructData` type is missing, incorrect, or outdated
+
+1. first, make sure your struct lives in a header file and is properly
+formatted. for example, make sure any `float[4]` members are `sceVu0FVECTOR`.
+
+2. make sure your header file is included in the alessastruct header file, for
+   sh2 currently `tools/alessatool/kaitai/data/sh2.h`.
+
+3. run the following command:
+
+```sh
+alessatool migrate --update
+```
+
+this will download alessastruct and the kaitai struct compiler as needed, and
+automatically rebuild the kaitai types.
+
 ### migration syntax
 
 *(This section is likely to change.)*

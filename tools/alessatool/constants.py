@@ -20,7 +20,15 @@ VSM = "vsm"
 BINUTILS_PATH_PREFIX = f"{TOOLS}/binutils-mips-ps2-decompals/mips-ps2-decompals"
 ADDR2LINE_PATH = f"{BINUTILS_PATH_PREFIX}-addr2line"
 READELF_PATH = f"{BINUTILS_PATH_PREFIX}-readelf"
-ALESSATOOL = "tools/alessatool"
+
+ALESSATOOL = f"{TOOLS}/alessatool"
+ALESSASTRUCT = f"{TOOLS}/alessastruct"
+ALESSATOOL_KAITAI = f"{ALESSATOOL}/kaitai"
+ALESSASTRUCT_SH2_PYTHON = f"{ALESSATOOL_KAITAI}/sh2.py"
+
+KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER = f"{TOOLS}/kaitai-struct-compiler-0.11"
+KAITAI_STRUCT_COMPILER = f"{KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER}/bin/kaitai-struct-compiler"
+KAITAI_STRUCT_COMPILER_ZIP = f"{TOOLS}/kaitai-struct-compiler.zip"
 
 FUNCTION_SYMBOL_LABEL = "glabel"
 END_FUNCTION_SYMBOL_LABEL = "endlabel"

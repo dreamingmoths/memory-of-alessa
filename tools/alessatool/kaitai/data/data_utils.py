@@ -301,6 +301,9 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
                     if isinstance(element, float):
                         # float array
                         stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(find_smallest_float_string, value)).replace("\0", "")}}},\n")
+                    elif isinstance(element, int):
+                        # int array
+                        stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(str, value)).replace("\0", "")}}},\n")
                     else:
                         # string array
                         stream.write(f"{indent}/* .{attr_str} = */ \"{"".join(map(chr, value)).replace("\0", "")}\",\n")

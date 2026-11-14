@@ -30,10 +30,10 @@ segments:
       - { start: 0x00000700,    type: asm,        name: crt0                                             }
       - { start: 0x000007c0,    type: c,          name: Chacter/anime                                    }
       - { start: 0x00003580,    type: c,          name: Chacter/bg_obj_stay                              }
-      - { start: 0x00003670,    type: asm,        name: Chacter/item_screen_obj                          }
+      - { start: 0x00003670,    type: c,          name: Chacter/item_screen_obj                          }
       - { start: 0x00003d10,    type: c,          name: Chacter/m3_angela                                }
       - { start: 0x00004290,    type: asm,        name: Chacter/m3_anime_subfunc                         }
-      - { start: 0x00004620,    type: asm,        name: Chacter/m3_bgobj                                 }
+      - { start: 0x00004620,    type: c,          name: Chacter/m3_bgobj                                 }
       - { start: 0x00004bd0,    type: asm,        name: Chacter/m3_djames                                }
       - { start: 0x00005250,    type: c,          name: Chacter/m3_dmaria                                }
       - { start: 0x00005550,    type: c,          name: Chacter/m3_eddie                                 }
@@ -479,8 +479,8 @@ segments:
       - { start: 0x00157550,    type: c,          name: Effect2/hh_class_blood_splash_phenomenon_01      }
       - { start: 0x00157b00,    type: c,          name: Effect2/hh_class_blood_stick_00                  }
       - { start: 0x00157f40,    type: c,          name: Effect2/hh_class_dust_00                         }
-      - { start: 0x00158790,    type: asm,        name: Effect2/hh_class_glass_break_phenomenon_00       }
-      - { start: 0x00159110,    type: asm,        name: Effect2/hh_class_glass_piece_00                  }
+      - { start: 0x00158790,    type: c,          name: Effect2/hh_class_glass_break_phenomenon_00       }
+      - { start: 0x00159110,    type: c,          name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x00159ce0,    type: c,          name: Effect2/hh_class_manager                         }
       - { start: 0x0015ad80,    type: c,          name: Effect2/hh_class_object_execute                  }
       - { start: 0x0015b560,    type: c,          name: Effect2/hh_class_plural_phenomenon_00            }
@@ -531,7 +531,7 @@ segments:
       - { start: 0x00181300,    type: c,          name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x001816f0,    type: c,          name: Effect2/hh_class_flame_00                        }
       - { start: 0x00182150,    type: c,          name: Effect2/hh_class_flame_01                        }
-      - { start: 0x00182bf0,    type: asm,        name: Effect2/hh_class_smoke_00                        }
+      - { start: 0x00182bf0,    type: c,          name: Effect2/hh_class_smoke_00                        }
       - { start: 0x001835c0,    type: c,          name: Effect2/hh_class_water_pool_00                   }
       - { start: 0x00183e40,    type: c,          name: Chacter/m3_play_event                            }
       - { start: 0x00184830,    type: c,          name: Chacter/m3_play_efect                            }
@@ -582,9 +582,9 @@ segments:
       - { start: 0x001a6900,    type: vutext,     name: vsm/vutext/yuvprg                                }
       # ------------------------------------------    data   ------------------------------------------- #
       - { start: 0x001a7b00,    type: .data,      name: Chacter/anime                                    }
-      - { start: 0x001a7b10,    type: data,       name: Chacter/item_screen_obj                          }
+      - { start: 0x001a7b10,    type: .data,      name: Chacter/item_screen_obj                          }
       - { start: 0x001a8290,    type: data,       name: Chacter/kt                                       }
-      - { start: 0x001a83d0,    type: data,       name: Chacter/m3_bgobj                                 }
+      - { start: 0x001a83d0,    type: .data,      name: Chacter/m3_bgobj                                 }
       - { start: 0x001a87b0,    type: data,       name: Chacter/m3_djames                                }
       - { start: 0x001a8d90,    type: data,       name: Chacter/m3_dmaria                                }
       - { start: 0x001a8e90,    type: data,       name: Chacter/m3_eddie                                 }
@@ -692,7 +692,7 @@ segments:
       - { start: 0x00243698,    type: data,       name: sdk/libgcc/impure                                }
       - { start: 0x00243988,    type: data,       name: sdk/lib_00343288                                 }
       - { start: 0x002439A0,    type: .data,      name: sdk/lib_001DE918                                 }
-      # - { start: 0x002439A0,    type: data,       name: sdk/lib_003432A0                                 }
+#     - { start: 0x002439A0,    type: data,       name: sdk/lib_003432A0                                 }
       - { start: 0x00243E00,    type: .data,      name: sdk/lib_001E7928                                 }
       - { start: 0x00245870,    type: .data,      name: sdk/lib_001E93E0                                 }
       - { start: 0x00245920,    type: .data,      name: sdk/lib_001ED3F0                                 }
@@ -769,8 +769,8 @@ segments:
       - { start: 0x0026edd0,    type: .data,      name: Effect2/hh_class_blood_splash_phenomenon_01      }
       - { start: 0x0026edf0,    type: .data,      name: Effect2/hh_class_blood_stick_00                  }
       - { start: 0x0026ee10,    type: .data,      name: Effect2/hh_class_dust_00                         }
-      - { start: 0x0026f010,    type: data,       name: Effect2/hh_class_glass_break_phenomenon_00       }
-      - { start: 0x0026f030,    type: data,       name: Effect2/hh_class_glass_piece_00                  }
+      - { start: 0x0026f010,    type: .data,      name: Effect2/hh_class_glass_break_phenomenon_00       }
+      - { start: 0x0026f030,    type: .data,      name: Effect2/hh_class_glass_piece_00                  }
       - { start: 0x0026f410,    type: .data,      name: Effect2/hh_class_object_execute                  }
       - { start: 0x0026f450,    type: .data,      name: Effect2/hh_class_plural_phenomenon_00            }
       - { start: 0x0026f460,    type: .data,      name: Effect2/hh_class_raise_dust_phenomenon_00        }
@@ -807,10 +807,10 @@ segments:
       - { start: 0x00275f00,    type: .data,      name: Effect2/hh_class_water_09                        }
       - { start: 0x00276260,    type: .data,      name: Enemy/en_insect                                  }
       - { start: 0x002762b0,    type: data,       name: sh2shd/sh2shd_shadow_env                         }
-      - { start: 0x002764e0,    type: data,       name: Effect2/hh_class_fire_phenomenon_00              }
+      - { start: 0x002764e0,    type: .data,      name: Effect2/hh_class_fire_phenomenon_00              }
       - { start: 0x00277110,    type: data,       name: Effect2/hh_class_flame_00                        }
       - { start: 0x00278550,    type: data,       name: Effect2/hh_class_flame_01                        }
-      - { start: 0x00279990,    type: data,       name: Effect2/hh_class_smoke_00                        }
+      - { start: 0x00279990,    type: .data,      name: Effect2/hh_class_smoke_00                        }
       - { start: 0x0027a060,    type: .data,      name: Effect2/hh_class_water_pool_00                   }
       - { start: 0x0027a5a0,    type: .data,      name: Chacter/m3_play_event                            }
       - { start: 0x0027a630,    type: .data,      name: Chacter/m3_play_efect                            }
@@ -862,7 +862,7 @@ segments:
       # -----------------------------------------    rodata   ------------------------------------------ #
       - { start: 0x00289700,    type: .rodata,    name: Chacter/anime                                    }
       - { start: 0x002897c0,    type: rodata,     name: Chacter/m3_angela_rodata                         }
-      - { start: 0x00289990,    type: rodata,     name: Chacter/m3_bgobj                                 }
+      - { start: 0x00289990,    type: .rodata,    name: Chacter/m3_bgobj                                 }
       - { start: 0x0028a580,    type: rodata,     name: Chacter/m3_djames                                }
       - { start: 0x0028ae80,    type: rodata,     name: Chacter/m3_dmaria_rodata                         }
       - { start: 0x0028b040,    type: rodata,     name: Chacter/m3_eddie_rodata                          }
@@ -961,7 +961,7 @@ segments:
       - { start: 0x00293460,    type: .rodata,    name: DBG/dbkernel                                     }
       - { start: 0x00293470,    type: .rodata,    name: DBG/dbflag                                       }
       - { start: 0x00293570,    type: .rodata,    name: Item/otn_itemmain                                }
-      - { start: 0x002937c0,    type: .rodata,    name: lib/wprtfsrc                                      }
+      - { start: 0x002937c0,    type: .rodata,    name: lib/wprtfsrc                                     }
       - { start: 0x00293878,    type: .rodata,    name: sdk/lib_001DBFE0                                 }
       - { start: 0x002938a8,    type: rodata,     name: sdk/lib_003931A8                                 }
       - { start: 0x002939b0,    type: .rodata,    name: sdk/lib_001DC188                                 }
@@ -1072,9 +1072,9 @@ segments:
       - { start: 0x0029a3a0,    type: .rodata,    name: DBG/dbsw_map                                     }
       - { start: 0x0029a640,    type: rodata,     name: view/vc_newest_rodata                            }
       - { start: 0x0029a650,    type: .rodata,    name: Multi_thr/scf/sh2_scf                            }
-      - { start: 0x0029a6c0,    type: .rodata,    name: DBG/dbalocate                                   }
+      - { start: 0x0029a6c0,    type: .rodata,    name: DBG/dbalocate                                    }
       - { start: 0x0029a700,    type: .rodata,    name: Chacter/bg_chara                                 }
-      - { start: 0x0029a850,    type: rodata,     name: Effect2/hh_class_glass_break_phenomenon_00       }
+      - { start: 0x0029a850,    type: .rodata,    name: Effect2/hh_class_glass_break_phenomenon_00       }
       - { start: 0x0029a870,    type: .rodata,    name: Effect2/hh_class_manager                         }
       - { start: 0x0029a8a0,    type: .rodata,    name: Effect2/hh_class_water_02                        }
       - { start: 0x0029a8c0,    type: .rodata,    name: Effect2/hh_class_water_11                        }
@@ -1131,7 +1131,7 @@ segments:
       - { vram:  0x003c7e00,    type: .bss,       name: Chacter/anime                                    }
 #     - { vram:  0x003c7e60,    type: bss,        name: Chacter/kt                                       }
       - { vram:  0x003c7ea0,    type: bss,        name: Chacter/m3_angela                                }
-      - { vram:  0x003c7eb0,    type: bss,        name: Chacter/m3_bgobj                                 }
+      - { vram:  0x003c7eb0,    type: .bss,       name: Chacter/m3_bgobj                                 }
       - { vram:  0x003c7ec0,    type: bss,        name: Chacter/m3_djames                                }
       - { vram:  0x003c7ed0,    type: bss,        name: Chacter/m3_play                                  }
       - { vram:  0x003c8428,    type: bss,        name: Chacter/m3_play_2d                               }
@@ -1284,7 +1284,7 @@ segments:
       - { vram: 0x011EACE0,     type: bss,        name: LoadBg/loadbg_camdata                            }
       - { vram: 0x011EB500,     type: bss,        name: LoadBg/loadbg_common                             }
       - { vram: 0x011EB510,     type: bss,        name: Chacter/bg_chara                                 }
-      - { vram: 0x011EB540,     type: bss,        name: Effect2/hh_class_glass_piece_00                  }
+      - { vram: 0x011EB540,     type: .bss,       name: Effect2/hh_class_glass_piece_00                  }
       - { vram:  0x011eb550,    type: .bss,       name: Effect2/hh_class_water_01                        }
       - { vram:  0x011eb570,    type: .bss,       name: Effect2/hh_class_water_02                        }
       - { vram:  0x011eb5f0,    type: .bss,       name: Effect2/hh_class_water_10                        }

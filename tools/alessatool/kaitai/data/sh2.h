@@ -8,8 +8,13 @@
 
 /*
  
-to rebuild with alessastruct:
+to rebuild with alessastruct, use the following command:
 
+```sh
+alessatool migrate --update
+```
+
+if the above does not work, or if you are curious, here are manual instructions:
 
 ```sh
 alessastruct --platform=ps2 --output=tools/alessatool/kaitai/sh2.ksy  \
@@ -82,6 +87,7 @@ NOTE: currently two lines in `sh2.py` need fixups after this last step as they u
 #include "Effect2/hh_effect_object_def.h"
 #include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_memory_manage.h"
+#include "Effect2/hh_class_smoke_00.h"
 
 #include "Enemy/en_arm.h"
 #include "Enemy/en_common.h"

@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from kaitai.data.data_utils import DataMigrationRequest, migrate_asm_file, run_data_migration
+from kaitai.data.update import clean_alessastruct_dependencies, update_alessastruct
 
 @dataclass
 class BaseMigrateArgs:
@@ -29,7 +30,15 @@ class SymbolMigrateArgs(BaseMigrateArgs):
 class AsmFileMigrateArgs(BaseMigrateArgs):
     asm_path: Path
 
-type MigrateArgs = SymbolMigrateArgs | AsmFileMigrateArgs
+@dataclass
+class UpdateMigrateArgs:
+    update: bool
+
+@dataclass
+class CleanMigrateArgs:
+    clean: bool
+
+type MigrateArgs = SymbolMigrateArgs | AsmFileMigrateArgs | UpdateMigrateArgs | CleanMigrateArgs
 
 def migrate_data(args: MigrateArgs):
     project = args.project
@@ -40,6 +49,10 @@ def migrate_data(args: MigrateArgs):
         with open(args.output_path, "w") as stream:
             request = DataMigrationRequest(project, name, stream)
             run_data_migration(request)
+    elif args.update:
+        update_alessastruct()
+    elif args.clean:
+        clean_alessastruct_dependencies()
     else:
         asm_path = args.asm_path
 

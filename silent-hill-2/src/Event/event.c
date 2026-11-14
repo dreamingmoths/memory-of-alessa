@@ -464,11 +464,11 @@ static int EventCheckLook(Event_List* el, Jms jms) {
     return false;
 }
 
-static inline float float_square(float x) {
+static inline float floatSquare(float x) {
     return x *= x;
 }
 
-static inline float float_add(float a, float b) {
+static inline float floatAdd(float a, float b) {
     return b + a;
 }
 
@@ -486,7 +486,7 @@ static int EventCheckLookPoint(float x, float z, Jms jms) {
         return false;
 
     
-    if (float_add(float_square(pos_z), float_square(pos_x)) > 160000.0f)
+    if (floatAdd(floatSquare(pos_z), floatSquare(pos_x)) > 160000.0f)
         return false;
 
     
