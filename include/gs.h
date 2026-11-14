@@ -4,6 +4,7 @@
 /* miscellaneous GS/GIF helpers, with commentary from @Mc-muffin */
 
 #include "sce/eetypes.h"
+#include "sce/libvu0.h"
 #include "macros.h"
 
 #define SCREEN_WIDTH 640
@@ -86,6 +87,16 @@ static inline long ASM_GS_SET_XYZ(int x, int y, int z) {
     asm("pextlh %0, %2, %1;\
          pextlw %0, %3, %0" : "+r"(a) : "r"(x), "r"(y), "r"(z));
     return a;
+}
+
+static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
+    u_long128 xyz = *(u_long128*) vector;
+    asm("\
+        pexch        t7,  %0;\
+        pextuw       %0,  zero, %0;\
+        pextlw       %0,  %0, t7"
+    : "+r"(xyz) :: "t7");
+    return xyz;
 }
 
 #define PP_NARG(...) \
