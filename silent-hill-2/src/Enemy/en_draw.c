@@ -5,13 +5,24 @@
 #include "sce/libgraph.h"
 #include "Fog/spack.h"
 
-#define EN_DRAW_ORIGIN_X (X_COORD(-1568))
-#define EN_DRAW_ORIGIN_Y (Y_COORD(-1948))
+#define EN_DRAW_ORIGIN_X ((int) X_COORD(-1568))
+#define EN_DRAW_ORIGIN_Y ((int) Y_COORD(-1948))
 #define EN_ASPECT_RATIO  (4.0f / 3.0f)
 #define enDrawX(value)   (EN_DRAW_ORIGIN_X + vu0_ftoi((value) / view_rate + 2048.0f))
 #define enDrawY(value)   (EN_DRAW_ORIGIN_Y + vu0_ftoi((value) / view_rate * EN_ASPECT_RATIO + 2048.0f))
 
 extern float view_rate;
+
+static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
+    u_long128 xyz = *(u_long128*) vector;
+    asm("\
+        pexch        t7,  %0;\
+        pextuw       %0,  zero, %0;\
+        pextlw       %0,  %0, t7"
+    : "+r"(xyz) :: "t7");
+    return xyz;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_draw", enDrawRadar);
 
@@ -43,17 +54,6 @@ static void enDrawWall(sceVu0FVECTOR wall_pos1, sceVu0FVECTOR wall_pos2, sceVu0F
     }
     (*spack.pos++) = xyz;
     (*spack.pos++) = shFastPackXyz(scr);
-}
-
-
-static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
-    u_long128 xyz = *(u_long128*) vector;
-    asm("\
-        pexch        t7,  %0;\
-        pextuw       %0,  zero, %0;\
-        pextlw       %0,  %0, t7"
-    : "+r"(xyz) :: "t7");
-    return xyz;
 }
 
 #line 1233
