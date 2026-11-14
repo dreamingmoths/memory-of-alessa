@@ -346,6 +346,16 @@ def main():
         help="name of the symbol to migrate (must be in `PROJECT_DATA_CONFIG`)"
     )
     migrate_group.add_argument(
+        "--update",
+        action="store_true",
+        help="update alessastruct and rebuild kaitai types"
+    )
+    migrate_group.add_argument(
+        "--clean",
+        action="store_true",
+        help="clean alessastruct dependencies"
+    )
+    migrate_group.add_argument(
         "--asm-path",
         type=Path,
         help="path to the asm file to migrate (experimental)"
