@@ -337,7 +337,7 @@ def main():
     migrate_parser.add_argument(
         "--project",
         default="silent-hill-3",
-        help="name of the project to debug (e.g., `silent-hill-2`)"
+        help="name of the project folder to work in (e.g., `silent-hill-2`)"
     )
     migrate_group = migrate_parser.add_mutually_exclusive_group(required=True)
     migrate_group.add_argument(
