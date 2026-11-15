@@ -4,7 +4,26 @@
 #include "common.h"
 #include "Effect/ef_common.h"
 
-int InitEffectObjectGunFire(EFCTObject* pObj /* r18 */, int nIndex /* r2 */, float* Pos /* r2 */, float* vec /* r17 */, int wep_kind /* r19 */, u_char light_status /* r16 */);
-int InitEffectObjectGunSmoke(EFCTObject* pObj /* r17 */, int nIndex /* r2 */, float* Pos /* r2 */, int wep_kind /* r18 */, u_char light_status /* r16 */);
+int InitEffectObjectGunFire(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, sceVu0FVECTOR vec, int wep_kind, u_char light_status);
+
+int InitEffectObjectGunSmoke(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, int wep_kind, u_char light_status);
+
+void DrawBloodSpray(void* task);
+
+void DrawBloodDrop(void* task);
+
+void DrawBloodPool(void* task);
+
+void DrawGunFire(void* task);
+
+void DrawGunSmoke(void* task);
+
+u_short GetStageEffectLayerNum(short EffectKind);
+
+void InitBloodTexEnv(EFCTTexEnvInfo* pTexInfo);
+
+void InitGunFireTexEnv(EFCTTexEnvInfo* pTexInfo);
+
+void InitGunSmokeTexEnv(EFCTTexEnvInfo* pTexInfo);
 
 #endif // EF_STAGE_H
