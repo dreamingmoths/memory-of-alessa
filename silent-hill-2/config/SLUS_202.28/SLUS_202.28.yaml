@@ -629,7 +629,7 @@ segments:
       - { start: 0x001abc30,    type: data,       name: Fog/fogdata                                      }
       - { start: 0x001abc68,    type: data,       name: SH2_common/sh_vu0                                }
       - { start: 0x001abc70,    type: data,       name: Font/dic                                         }
-      - { start: 0x001abcc0,    type: data,       name: GFW/gfw_test/kari_probe_draw                     }
+      - { start: 0x001abcc0,    type: .data,      name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x001abd10,    type: data,       name: GFW/sh2_get_drawenv                              }
       - { start: 0x001abd50,    type: data,       name: GFW/sh2_set_drawenv                              }
       - { start: 0x001abd60,    type: .data,      name: GFW/sh2gfw_2d_filters                            }
@@ -909,7 +909,7 @@ segments:
       - { start: 0x0028eff8,    type: .rodata,    name: Exec_Env/local_env                               }
       - { start: 0x0028f010,    type: .rodata,    name: Fog/fog                                          }
       - { start: 0x0028f0d0,    type: rodata,     name: Fog/spack_rodata                                 }
-      - { start: 0x0028f328,    type: rodata,     name: GFW/gfw_test/kari_probe_draw                     }
+      - { start: 0x0028f328,    type: .rodata,    name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x0028f720,    type: rodata,     name: GFW/sh2_get_drawenv                              }
       - { start: 0x0028f760,    type: rodata,     name: GFW/sh2_set_drawenv                              }
       - { start: 0x0028f7c0,    type: .rodata,    name: GFW/sh2gfw_2d_filters                            }
