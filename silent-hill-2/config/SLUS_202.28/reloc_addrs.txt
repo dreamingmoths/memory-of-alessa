@@ -38402,6 +38402,8 @@ rom:0x0D8EF4 reloc:MIPS_LO16           addend:+0x30    symbol:spack
 rom:0x0D8F00 reloc:MIPS_26                             symbol:zs
 rom:0x0D8F14 reloc:MIPS_26                             symbol:zs
 rom:0x0D8F30 reloc:MIPS_26                             symbol:zs
+rom:0x0D8F44 reloc:MIPS_HI16           addend:+0xCB0   symbol:sh2skelton
+rom:0x0D8F4C reloc:MIPS_LO16           addend:+0xCB0   symbol:sh2skelton
 rom:0x0D8F54 reloc:MIPS_HI16           addend:+0x30    symbol:spack
 rom:0x0D8F58 reloc:MIPS_LO16           addend:+0x30    symbol:spack
 rom:0x0D8F60 reloc:MIPS_HI16           addend:+0x30    symbol:spack
