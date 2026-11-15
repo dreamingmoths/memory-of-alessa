@@ -62,14 +62,14 @@ class DataMigrationStore:
             exe_info_by_name=self.exe_info_by_name,
             parse_attributes=True
         )
-        exe_info = exe_info_by_name[executable == serial and "main" or executable]
+        exe_info = exe_info_by_name[executable == serial and "main" or f"{executable}.bin"]
 
         if self.project is not None:
             assert self.project == project, "the store is intended to hold data for only one project"
             return
 
         atlas = exe_info.atlas
-        executable_path = exe_info.target_path / executable
+        executable_path = root / exe_info.target_path
         splat_yaml = load_yaml(exe_info.yaml_path)
         kaitai_yaml = load_yaml(data_config.library_path)
 
