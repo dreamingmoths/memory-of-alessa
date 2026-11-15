@@ -96,7 +96,7 @@ static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
         pexch        t7,  %0;\
         pextuw       %0,  zero, %0;\
         pextlw       %0,  %0, t7"
-    : "+r"(xyz) :: "t7");
+    : "+r"(xyz) :: "$15");
     return xyz;
 }
 
