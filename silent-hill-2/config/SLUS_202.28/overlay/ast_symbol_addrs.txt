@@ -30,5 +30,7 @@ stg_apart_stair_vec_01F032F0                                     = 0x01f032f0; /
 stg_apart_stair_light                                            = 0x01f03330; // size:16
 stg_apart_stair_clr                                              = 0x01f03340; // size:16
 stg_apart_stair_cam_data_01F03350                                = 0x01f03350; // size:64
+stg_apart_stair_data_01F03390                                    = 0x01f03390; // size:16 type:f32
+stg_apart_stair_data_01F033A0                                    = 0x01f033A0; // size:16 type:f32
 stg_apart_stair_scu_play_anim_adr                                = 0x01f03400; // size:4
 stg_apart_stair_red_play_anim_adr                                = 0x01f03408; // size:4

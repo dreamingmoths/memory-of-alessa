@@ -268,6 +268,16 @@ typedef struct PLD {
     sceVu0FVECTOR Col; // offset 0x10, size 0x10
 } PLD;
 
+// total size: 0x40
+typedef struct DynamicLight {
+    // Members
+    sceVu0FVECTOR NowCamDir; // offset 0x0, size 0x10
+    sceVu0FVECTOR BeforeCamDir; // offset 0x10, size 0x10
+    sceVu0FVECTOR NowDir; // offset 0x20, size 0x10
+    sceVu0FVECTOR BeforeDir; // offset 0x30, size 0x10
+} DynamicLight;
+
+
 // @note: may belong elsewhere
 extern sh2gfw_Area_Data_Man Area_Data_Man;
 extern sh2gfw_TRANS_MAN sh2_TR_MAN;
