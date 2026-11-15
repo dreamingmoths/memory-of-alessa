@@ -73,7 +73,7 @@ void EFCTDoTask(void);
 void EFCTSetPassingTimePerFrame(float time /* r29 */);
 void EFCTKickPacket(void);
 
-u_int InitEffectVertexSprite(sceVu0FVECTOR pos /* @note not in dwarf */, float width, float height, u_short PlaneKind, struct EFCTVertexData** pVertex, float* rot, u_char* rgba);
+u_int InitEffectVertexSprite(sceVu0FVECTOR pos /* @note not in dwarf */, float width, float height, u_short PlaneKind, EFCTVertexData** pVertex, sceVu0FVECTOR rot, u_char* rgba);
 
 void EFCTSetGunFire(float* pos /* r19 */, float* vec /* r18 */);
 void EFCTSetBrokenGlass(float* parent_pos /* r20 */, float* parent_direction /* r19 */, float (*chara_pos)[4] /* r18 */);
