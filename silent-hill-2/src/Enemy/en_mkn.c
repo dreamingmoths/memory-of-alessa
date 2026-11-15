@@ -42,7 +42,9 @@ static void enMKNCtrlConfuse(EnLOCAL_DATA* dp);
 static void enMKNCtrlDown(EnLOCAL_DATA* dp);
 static void enMKNSetMoveCount(EnLOCAL_DATA* dp);
 
-EnANIME_DATA EnMKNAnime[32] = {
+#define EN_MKN_ANIME_MAX 32
+
+EnANIME_DATA EnMKNAnime[EN_MKN_ANIME_MAX] = {
     {
         /* .anime = */ MANNEQUIN_PLAY_ANIM(1),
         /* .loop = */ false,
