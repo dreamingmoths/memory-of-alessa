@@ -3,6 +3,9 @@
 
 #include "sce/eetypes.h"
 
+#define SHADOW_LIGHT_MAX 32
+#define FAKE_LIGHT_MAX   2
+
 typedef struct sh2gfw_AREA_HEAD {
     // total size: 0x10
     u_int area_id;           // offset 0x0, size 0x4
@@ -205,6 +208,23 @@ typedef struct sh2gfw_LoadModel_MEMMAN {
     u_long128* pCL_head; // offset 0x14, size 0x4
 } sh2gfw_LoadModel_MEMMAN;
 
+typedef struct shShadingParams {
+    // total size: 0x60
+    sceVu0FVECTOR m3_rgbamax_vu0; // offset 0x0, size 0x10
+    sceVu0FVECTOR m3_rgbamax_vu1; // offset 0x10, size 0x10
+    sceVu0FVECTOR m3_global_ambient_vu0; // offset 0x20, size 0x10
+    sceVu0FVECTOR m3_global_ambient_vu1; // offset 0x30, size 0x10
+    sceVu0FVECTOR m3_camdir; // offset 0x40, size 0x10
+    sceVu0FVECTOR m3_mono_vector; // offset 0x50, size 0x10
+} shShadingParams;
+
+typedef struct PointLightData {
+    // total size: 0x30
+    sceVu0FVECTOR Col; // offset 0x0, size 0x10
+    sceVu0FVECTOR DecayParm; // offset 0x10, size 0x10
+    sceVu0FVECTOR Pos; // offset 0x20, size 0x10
+} PointLightData;
+
 typedef struct SpotLightData {
     // total size: 0x40
     sceVu0FVECTOR Col; // offset 0x0, size 0x10
@@ -212,6 +232,35 @@ typedef struct SpotLightData {
     sceVu0FVECTOR Pos; // offset 0x20, size 0x10
     sceVu0FVECTOR Dir; // offset 0x30, size 0x10
 } SpotLightData;
+
+typedef struct ShadowLight_Data {
+    // total size: 0x10
+    void* SubChara; // offset 0x0, size 0x4
+    void* pDed; // offset 0x4, size 0x4
+    short lightKind; // offset 0x8, size 0x2
+    s_char visible_flg; // offset 0xA, size 0x1
+    s_char force_flg; // offset 0xB, size 0x1
+    float influence_factor; // offset 0xC, size 0x4
+} ShadowLight_Data;
+
+typedef struct ParallelLightData {
+    // total size: 0x20
+    sceVu0FVECTOR Dir; // offset 0x0, size 0x10
+    sceVu0FVECTOR Col; // offset 0x10, size 0x10
+} ParallelLightData;
+
+typedef struct ShadowLight_Work {
+    // total size: 0x204
+    int Store_Num; // offset 0x0, size 0x4
+    ShadowLight_Data ShadowLd[SHADOW_LIGHT_MAX]; // offset 0x4, size 0x200
+} ShadowLight_Work;
+
+typedef struct FakeLight_Work {
+    // total size: 0x10
+    int UniFakeLightNo[FAKE_LIGHT_MAX]; // offset 0x0, size 0x8
+    int FakeLightNum; // offset 0x8, size 0x4
+    int pad; // offset 0xC, size 0x4
+} FakeLight_Work;
 
 typedef struct PLD {
     // total size: 0x20

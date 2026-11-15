@@ -103,7 +103,7 @@ segments:
       - { start: 0x0006fc40,    type: c,          name: Fog/spack                                        }
       - { start: 0x00071920,    type: c,          name: Font/dic                                         }
       - { start: 0x00072de0,    type: asm,        name: GFW/gfw_test/camera                              }
-      - { start: 0x00073030,    type: asm,        name: GFW/gfw_test/kari_probe_draw                     }
+      - { start: 0x00073030,    type: asmtu,      name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x000745e0,    type: asm,        name: GFW/gfw_test/sh2_dmachain_regist                 }
       - { start: 0x000748b0,    type: asm,        name: GFW/gfw_test/sh2gfw_shcamtest                    }
       - { start: 0x00074ac0,    type: c,          name: GFW/gfw_test/sh2gfw_util                         }
