@@ -81,7 +81,7 @@ segments:
       - { start: 0x0003c590,    type: c,          name: Effect/ef_common                                 }
       - { start: 0x0003e5f0,    type: c,          name: Effect/ef_malloc                                 }
       - { start: 0x0003e700,    type: c,          name: Effect/ef_packet                                 }
-      - { start: 0x0003e840,    type: asm,        name: Effect/ef_stage                                  }
+      - { start: 0x0003e840,    type: c,          name: Effect/ef_stage                                  }
       - { start: 0x00040110,    type: c,          name: Enemy/en_bos                                     }
       - { start: 0x00041ab0,    type: c,          name: Enemy/en_common                                  }
       - { start: 0x00047f50,    type: c,          name: Enemy/en_draw                                    }
@@ -892,7 +892,7 @@ segments:
       - { start: 0x0028e510,    type: rodata,     name: Effect/ef_broken_glass                           }
       - { start: 0x0028e570,    type: .rodata,    name: Effect/ef_common                                 }
       - { start: 0x0028e710,    type: .rodata,    name: Effect/ef_malloc                                 }
-      - { start: 0x0028e768,    type: rodata,     name: Effect/ef_stage                                  }
+      - { start: 0x0028e768,    type: .rodata,    name: Effect/ef_stage                                  }
       - { start: 0x0028e860,    type: .rodata,    name: Enemy/en_bos                                     }
       - { start: 0x0028e8b0,    type: .rodata,    name: Enemy/en_common                                  }
       - { start: 0x0028e8d0,    type: rodata,     name: rodata_0x28e8d0                                  }
