@@ -86,6 +86,7 @@ int InitEffectObjectGunFire(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, sce
     return true;
 }
 
+#ifdef NON_MATCHING
 static inline float sway(float x) { return shSway1f(-x, x / 2.0f); }
 
 #line 221
@@ -131,7 +132,9 @@ int InitEffectObjectGunSmoke(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, in
     
     return true;
 }
-
+#else
+INCLUDE_ASM("asm/nonmatchings/Effect/ef_stage", InitEffectObjectGunSmoke);
+#endif
 
 
 #line 267
@@ -231,16 +234,6 @@ static void GunFireLocalRotV(EFCTVertexData* pVertex, sceVu0FVECTOR Direction, f
     sceVu0FVECTOR rot; // r29+0x70
     int i; // r4
 
-
-
-
-
-
-
-
-
-
-
     #line 374
     vwVectorToAngle(rot, Direction);
     rot[2] = Angle;
@@ -257,29 +250,6 @@ static void GunFireLocalRotV(EFCTVertexData* pVertex, sceVu0FVECTOR Direction, f
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Effect\ef_stage.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0013E830 -> 0x0013E8D4
-*/
-// Range: 0x13E830 -> 0x13E8D4
 #line 413
 static void GetGunSmokeObjectSize(int weapon_kind, sceVu0FVECTOR width, sceVu0FVECTOR height) {
     switch (weapon_kind) {
@@ -346,7 +316,6 @@ static void GetGunSmokeColor(u_char light, u_char* rgba) {
 }
 
 
-
 #line 480
 void DrawBloodSpray(void* task) {
     EFCTTask* pTask = (EFCTTask*) task; // r16
@@ -401,13 +370,6 @@ void DrawBloodSpray(void* task) {
     
     
     if (pTask->pObj->pAnimData->Status == 2) {
-    
-        
-        
-        
-        
-        
-        
         #line 541
         EFCTCutEffectTask(pTask);
     }
@@ -432,15 +394,6 @@ void DrawBloodDrop(void* task) {
 
     
     IsNext = EFCTNextFrame(pTask->pObj, 0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     #line 575
     if (IsNext == true) {
@@ -479,16 +432,7 @@ void DrawBloodPool(void* task) {
 
     
     IsNext = EFCTNextFrame(pTask->pObj, 0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     #line 622
     if (IsNext == true) {
         
@@ -526,16 +470,7 @@ void DrawGunFire(void* task) {
 
     #line 657
     EFCTNextFrame(pTask->pObj, 0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     #line 669
     EFCTThreeDWork(pTask->pObj);
     
@@ -547,20 +482,8 @@ void DrawGunFire(void* task) {
     
     
     if (pTask->pObj->pAnimData->Status == 2) {
-    
-        
-        
-        
-        
-        
-        
         #line 687
         EFCTCutEffectTask(pTask);
-    
-    
-    
-    
-    
         #line 694
     }
 }
@@ -575,27 +498,12 @@ void DrawGunSmoke(void* task) {
         ASSERT(0);
     }
 
-
     #line 709
     EFCTNextFrame(pTask->pObj, 0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     #line 721
     SetGunSmokeObjectPos(pTask->pObj);
-    
-    
-    
-    
-    
-    
+
     #line 729
     EFCTTinyThreeDWork(pTask->pObj);
     
@@ -611,13 +519,6 @@ void DrawGunSmoke(void* task) {
     
 
     if (pTask->pObj->pAnimData->Status == 2) {
-        
-        
-        
-        
-        
-        
-        
         #line 751
         EFCTCutEffectTask(pTask);
     }
@@ -636,8 +537,7 @@ static void SetBloodSprayGravityParam(EFCTObject* pObj) {
     pObj->trans[1] += 35.0f * t * t; // @note SQUARE macro doesn't match
 }
 
-
-
+#line 770
 static void SetBloodSprayObjectPos(EFCTObject* pObj) {
     const float swayMax = 20.0f, zero = 0.0f; // @hack none of these const floats are in dwarf
     if (pObj->pAnimData->CurrentFrameNo == pObj->pAnimData->StartFrameNo) {
@@ -691,26 +591,6 @@ static void SetBloodDropObjectPos(EFCTObject* pObj) {
         pObj->trans[2] = shSway1f(-96.0f, 96.0f);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     #line 844
     SetEffectVertexSpriteXZ(pObj->width, pObj->height, pObj->pVertex);
     SpriteLocalRot(pObj->pVertex, (s32) pObj->VertexNum, pObj->rot);
@@ -762,9 +642,6 @@ static void SetBloodPoolObjectPos(EFCTObject* pObj) {
 #line 892
 static void SetGunSmokeObjectPos(EFCTObject* pObj) {
     float ratio; // r2
-
-
-
 
     #line 899
     ratio = EFCTGetPassingTimePerFrame() / 0.8f;
@@ -826,83 +703,6 @@ static void SetBloodSpraySTValue(EFCTObject* pObj) {
     pObj->pVertex[3].stq[1] = 0.125f * (FrameNumber + 1);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #line 1036
 static void SetGunFireSTValue(EFCTObject* pObj) {
     int i; // r8
@@ -924,18 +724,6 @@ static void SetGunFireSTValue(EFCTObject* pObj) {
 static void SetGunSmokeSTValue(EFCTObject* pObj) {
     int S; // r16
     int T; // r17
-
-
-
-
-
-
-
-
-
-
-
-
 
     #line 1070
     switch (shRandI() % 3) {
@@ -991,36 +779,12 @@ u_short GetStageEffectLayerNum(short EffectKind) {
     return Ret; // @info default case not accounted for
 }
 
-
-
-
 #line 1127
 void InitBloodTexEnv(EFCTTexEnvInfo* pTexInfo) {
     pTexInfo->transparency = 0;
     pTexInfo->tfx = 0;
     pTexInfo->clut_id = 2;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #line 1155
 void InitGunFireTexEnv(EFCTTexEnvInfo* pTexInfo) {
@@ -1038,20 +802,6 @@ void InitGunSmokeTexEnv(EFCTTexEnvInfo* pTexInfo) {
     pTexInfo->clut_id = 0;
     return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #line 1186
 static void EFCTDecreaseAlpha(EFCTObject* pObj) {
