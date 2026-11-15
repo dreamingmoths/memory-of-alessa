@@ -75,7 +75,8 @@ SH2_DATA: DataTable = [
     StructData(name="arm_anim",                             type=Sh2.AnimeInfo,                        count=14                       ),
     StructData(name="_flame_init_parm_table_0x003797E0",    type=Sh2.SmokeInitializeParameter,         count=4                        ),
     SimpleData(name="result_message",                       type="<15H",                               pattern=[15]                   ),
-    StructData(name="EnMKNAnime",                           type=Sh2.EnAnimeData,                      count=32                       )
+    StructData(name="EnMKNAnime",                           type=Sh2.EnAnimeData,                      count=32                       ),
+    StructData(name="stg_apart_stair_clActWallList_ap88",   type=Sh2.ClHitpolyPlane,                   count=2, executable="ast"      )
 ]
 
 SH3_DATA: DataTable = []

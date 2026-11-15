@@ -347,6 +347,9 @@ The `count` field is how many elements are in the array part if any, for example
 can be used for multidimensional arrays such as `float[4][4]`, where we would
 write `pattern=[4, 4]`.
 
+`executable` should be specified when the data to be migrated is in an overlay.
+For example, for `stg_apart_stair`, pass `executable="ast"`.
+
 `hex=False` can be used to specify that numbers are decompiled as decimal
 numbers rather than hexadecimal.
 

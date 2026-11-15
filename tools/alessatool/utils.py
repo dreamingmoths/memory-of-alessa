@@ -439,8 +439,8 @@ def get_exe_info_by_name(root: Path, main_name: str, filter=None, exe_info_by_na
         if filter and filter != basename:
             continue
 
-        name = basename == main_name and "main" or target_path.name
         target_path = Path(yaml_opts["target_path"])
+        name = basename == main_name and "main" or target_path.name
 
         atlas = SplatSymbolAddrsAtlas()
         info = ExecutableInfo(
