@@ -43,6 +43,7 @@
     } while (0)
 #define ENEMY_FLAG_SET(_flag)          dp->flag |= _flag;
 #define ENEMY_FLAG_UNSET(_flag)        dp->flag &= ~_flag;
+#define ENEMY_RESET() SET_DP_STATE_LV(dp, 0, 0)
 #define ENEMY_FLAG_CHECK(_flag)        (dp->flag & _flag)
 #define ENEMY_BATTLE_FLAG_SET(_flag)   dp->scp->battle.status |= _flag;
 #define ENEMY_BATTLE_FLAG_UNSET(_flag) dp->scp->battle.status &= ~_flag;
@@ -105,6 +106,13 @@ typedef struct EnANIME_DATA {
     u_short Anime; // offset 0x0, size 0x2
     u_char Loop;   // offset 0x2, size 0x1
 } EnANIME_DATA;
+
+typedef struct EnANIME_RANGE {
+    // total size: 0x6
+    u_short Anime; // offset 0x0, size 0x2
+    short Start; // offset 0x2, size 0x2
+    short End; // offset 0x4, size 0x2
+} EnANIME_RANGE;
 
 // total size: 0x8
 typedef struct EnSKELETON_DATA {

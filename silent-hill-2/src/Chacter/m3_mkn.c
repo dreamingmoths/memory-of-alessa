@@ -8,12 +8,6 @@
 
 #include "Enemy/en_common.h"
 
-#define MANNEQUIN_PLAY_ANIME_ID_START 5100
-#define MANNEQUIN_PLAY_ANIM(id) (id + MANNEQUIN_PLAY_ANIME_ID_START)
-
-#define MANNEQUIN_DRAMA_ANIME_ID_START 6100
-#define MANNEQUIN_DRAMA_ANIM(id) (id + MANNEQUIN_DRAMA_ANIME_ID_START)
-
 const AnimeInfo mkn_anim[35] = {
     {NULL},
     {
