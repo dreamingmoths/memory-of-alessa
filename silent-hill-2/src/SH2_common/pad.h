@@ -4,8 +4,12 @@
 #include "sh2_common.h"
 #include "shPad/lib_sh_pad.h"
 
+#define PAD_KEY_0          (1 << 0)
+#define PAD_KEY_1          (1 << 1)
 #define PAD_KEY_SELECT     (1 << 2)
 #define PAD_KEY_START      (1 << 3)
+#define PAD_KEY_4          (1 << 4)
+#define PAD_KEY_5          (1 << 5)
 #define PAD_KEY_6          (1 << 6)
 #define PAD_KEY_7          (1 << 7)
 #define PAD_KEY_DPAD_RIGHT (1 << 8)

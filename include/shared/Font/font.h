@@ -42,4 +42,29 @@ typedef struct FONT_STREAM_DATA {
     u_int rgb_d;
 } FONT_STREAM_DATA;
 
+/**
+ * @brief Font color options.
+ * 
+ * @see `fontSetColor` in font.c.
+ */
+typedef enum _SilentHillFontColor {
+    FontColorGray         = 0,
+    FontColorSmokyRose    = 1,
+    FontColorBlue         = 2,
+    FontColorGreen        = 3,
+    FontColorTeal         = 4,
+    FontColorOlive        = 5,
+    FontColorPurple       = 6,
+    FontColorRed          = 7,
+    FontColorVeryDarkBlue = 8,
+    FontColorBlack        = 9,
+    FontColorContrastGray = 10,
+    FontColorBrightBlue   = 11,
+    FontColorLightRed     = 12,
+    FontColorEmerald      = 13,
+    FontColorCyan         = 14,
+    FontColorLime         = 15,
+    FontColorDarkGray     = 16
+} SilentHillFontColor;
+
 #endif // FONT_SHARED_H
