@@ -53,14 +53,23 @@ typedef struct ThreadParam {
     int     wakeupCount;
 } ThreadParam;
 
+int SetAlarm(u_short, void (*)(int, u_short, void*), void*);
+void InvalidDCache(void*, void*);
+void SyncDCache(void*, void*);
+
+// semaphore operations
 int CreateSema(SemaParam* param);
 int SignalSema(int);
 int iSignalSema(int);
 int WaitSema(int);
+int PollSema(int);
+int ReferSemaStatus(int, SemaParam*);
+int iReferSemaStatus(int, SemaParam*);
 int DeleteSema(int);
-int SetAlarm(u_short, void (*)(int, u_short, void*), void*);
-void InvalidDCache(void*, void*);
-void SyncDCache(void*, void*);
+
+
+// multithreading
+int CreateThread(ThreadParam*);
 int StartThread(int, void *arg);
 int GetThreadId(void);
 

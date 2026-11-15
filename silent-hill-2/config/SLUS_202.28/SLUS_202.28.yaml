@@ -688,6 +688,8 @@ segments:
       - { start: 0x002407E0,    type: data,       name: FilesList/fileslist_bg                           }
       - { start: 0x00240930,    type: data,       name: FilesList/fileslist_bg_ap                        }
       - { start: 0x00241A50,    type: data,       name: FilesList/fileslist_bg_ps                        }
+      - { start: 0x00241A50,    type: data,       name: FilesList/fileslist_bg_ps                        }
+      - { start: 0x00243680,    type: .data,      name: lib/wprtfsrc                                     }
       - { start: 0x00243688,    type: .data,      name: sdk/lib_001DE3D0                                 }
       - { start: 0x00243698,    type: data,       name: sdk/libgcc/impure                                }
       - { start: 0x00243988,    type: data,       name: sdk/lib_00343288                                 }
@@ -1234,7 +1236,7 @@ segments:
       - { vram:  0x0116dd40,    type: bss,        name: DBG/dbflag                                       }
       - { vram:  0x0116dd48,    type: .bss,       name: Item/otn_itemmain                                }
       - { vram:  0x0116e670,    type: .bss,       name: Enemy/en_fly                                     }
-      - { vram:  0x0116e940,    type: bss,        name: wrap_printf_bss                                  }
+      - { vram:  0x0116e940,    type: .bss,       name: lib/wprtfsrc                                     }
       - { vram:  0x0116E980,    type: bss,        name: crt0                                             } # GCC data
       - { vram:  0x0116EB00,    type: .bss,       name: sdk/lib_001E7928                                 } # GCC data
       - { vram:  0x0116EDD8,    type: .bss,       name: sdk/lib_001EBB18                                 } # GCC data
