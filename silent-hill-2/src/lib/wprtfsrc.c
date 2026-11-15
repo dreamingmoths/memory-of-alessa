@@ -125,6 +125,7 @@ void SignalSemaMax(int sid) {
 void shSignalSemaMax(int sid) {
     SemaParam sema[1];
     int wait;
+
     if (ReferSemaStatus(sid, sema) != -1) {
         wait = sema->maxCount - sema->currentCount;
         while (wait > 0) {
