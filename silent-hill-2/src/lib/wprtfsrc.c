@@ -259,8 +259,7 @@ int printf(const char* format, ...) {
                 printf_sub(
                     wrap_printf_help
                         ? "== iprintf begin ==\n%s== iprintf end ==\n"
-                        : "%s",
-                    buf);
+                        : "%s", buf);
             }
 
             ret = vfprintf(_impure_ptr->_stdout, format, argp);
