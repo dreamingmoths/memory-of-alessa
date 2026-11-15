@@ -86,8 +86,9 @@ int InitEffectObjectGunFire(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, sce
     return true;
 }
 
-#ifdef NON_MATCHING
-static inline float sway(float x) { return shSway1f(-x, x / 2.0f); }
+// @hack weird inlines needed for match. seems to be a meme
+static inline float shSwayWidth(float x) { float n = -x; float h = x / 2.0f; return shSway1f(n, h); }
+static inline float shSwayHeight(float x) { float h = x / 2.0f; float n = -x; return shSway1f(n, h); }
 
 #line 221
 int InitEffectObjectGunSmoke(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, int wep_kind, u_char light_status) {
@@ -112,8 +113,8 @@ int InitEffectObjectGunSmoke(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, in
     
     
     shVectorZero(pObj->trans);
-    pObj->trans[0] = sway(0.1f * width);
-    pObj->trans[1] = sway(0.1f * height);
+    pObj->trans[0] = shSwayWidth(0.1f * width);//shSway1f(-(0.1f * width), 0.1f * width / 2.0f);
+    pObj->trans[1] = shSwayHeight(0.1f * height);
 
     
     GetGunSmokeColor(light_status, rgba);
@@ -132,9 +133,6 @@ int InitEffectObjectGunSmoke(EFCTObject* pObj, int nIndex, sceVu0FVECTOR Pos, in
     
     return true;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Effect/ef_stage", InitEffectObjectGunSmoke);
-#endif
 
 
 #line 267
