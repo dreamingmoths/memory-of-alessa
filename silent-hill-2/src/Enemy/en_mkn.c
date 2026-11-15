@@ -602,7 +602,7 @@ static void enMKNCtrlChase(EnLOCAL_DATA* dp /* r16 */) {
     t = enMKNCanSeePlayer(dp);
     if ((t == 2) && (dp->anim_loop)) {
         ENEMY_STEP(ENEMY_MKN_STATE_ATTACK);
-    } else if ((t == 0) && (!(dp->p_dist <= enMKNGetFeelRange()) || (enLocalWork.Status & 1))) {
+    } else if ((t == 0) && ((dp->p_dist > enMKNGetFeelRange()) || (enLocalWork.Status & 1))) {
 
         if ((dp->type >= 2) || (enGetMode() < 2)) {
             ENEMY_STEP(ENEMY_MKN_STATE_WANDER);
@@ -653,7 +653,7 @@ static void enMKNCtrlAround(EnLOCAL_DATA* dp /* r16 */) {
     } else {
         if (dp->p_dist < enMKNGetFeelRange()) {
             ENEMY_STEP(ENEMY_MKN_STATE_CHASE);
-        } else if (!(dp->p_dist <= 3500.0f)) {
+        } else if ((dp->p_dist > 3500.0f)) {
             ENEMY_STEP(ENEMY_MKN_STATE_WANDER);
         }
     }
