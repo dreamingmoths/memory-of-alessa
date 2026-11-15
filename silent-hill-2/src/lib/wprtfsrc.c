@@ -5,6 +5,8 @@
 #include "lib/newlib/reent.h"
 #include "Chacter/skelton.h"
 
+extern void* _gp;
+
 static int wrap_printf_enable_f;
 static int wrap_printf_skip_f;
 static int wrap_printf_help;
@@ -82,7 +84,7 @@ int shCreateThread2(void (*entry)(void*), void* stack, int stackSize, int prio, 
     thread->stackSize    = stackSize;
     thread->initPriority = prio;
     thread->option       = option;
-    thread->gpReg        = &sh2skelton.work[13].des_m.d[2];
+    thread->gpReg        = &_gp;
 
     return CreateThread(thread);
 }
