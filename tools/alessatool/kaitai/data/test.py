@@ -57,7 +57,7 @@ def run_project_test(project: str) -> TestResult:
                     project=project,
                     name=data.name,
                     stream=stream,
-                    store=store
+                    store=data.executable and DataMigrationStore() or store # @todo: fix caching bug
                 )
                 run_data_migration(request)
             print(bold(f"🟣 test: {data.name}"))
