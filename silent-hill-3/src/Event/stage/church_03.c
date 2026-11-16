@@ -5,15 +5,15 @@ int func_01F6D680_church_03(void) {
     SubCharacter* god;
     int temp_v0;
 
-    switch(D_01F6DF80_church_03) {
+    switch (D_01F6DF80_church_03) {
         case 0:
-        func_001C2290(2, 0);
-        func_00316C50(0);
-        D_1D316AC |= 0x20000000;
-        D_01F6DF80_church_03++;
+            func_001C2290(2, 0);
+            func_00316C50(0);
+            D_1D316AC |= 0x20000000;
+            D_01F6DF80_church_03++;
     }
-    
-    god = shCharacterGetSubCharacter(GOD_CHARA_KIND, 0x1CD);
+
+    god     = shCharacterGetSubCharacter(GOD_CHARA_KIND, 0x1CD);
     temp_v0 = func_0016C540(&D_01F6DDB0_church_03, &D_01F6DE10_church_03);
     if (temp_v0 != 0) {
         D_1D316AC &= 0xDFFFFFFF;
@@ -35,16 +35,16 @@ int func_01F6D7B0_church_03(void) {
     SubCharacter* god;
     int temp_s1;
 
-    switch(D_01F6DF80_church_03) {
+    switch (D_01F6DF80_church_03) {
         case 0:
-        D_1D316AC |= 0x20000000;
-        func_001C2290(3, 0.5f);
-        D_01F6DF88_church_03 = (D_01F6DF88_struct*) &D_01F6DE30_church_03;
-        D_01F6DF80_church_03 += 1;
+            D_1D316AC |= 0x20000000;
+            func_001C2290(3, 0.5f);
+            D_01F6DF88_church_03 = (D_01F6DF88_struct*) &D_01F6DE30_church_03;
+            D_01F6DF80_church_03 += 1;
     }
-    
-    god = shCharacterGetSubCharacter(0x214, 0x1CD);
-    temp_s1 = func_0016C540(&D_01F6DE90_church_03, &D_01F6DEF0_church_03);
+
+    god      = shCharacterGetSubCharacter(0x214, 0x1CD);
+    temp_s1  = func_0016C540(&D_01F6DE90_church_03, &D_01F6DEF0_church_03);
     temp_f20 = func_001643C0();
 
     if (!(D_01F6DF88_church_03->unk0 <= 0.0f) && (D_01F6DF88_church_03->unk0 <= temp_f20)) {

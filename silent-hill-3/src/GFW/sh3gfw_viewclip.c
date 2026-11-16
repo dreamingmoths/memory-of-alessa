@@ -83,7 +83,7 @@ void sh3gfw_set_objclip_matrix(void) {
     sceVu0UnitMatrix(wvm);
     
     sh3gde_Get_EyeDir(tmp); tmp[1] = 0.0f;
-    vec_normalize(tmp, wvm[2]);
+    shNormalizeVector(tmp, wvm[2]);
     vec_cross_product(wvm[2], y_dirvec, wvm[0]);
     vec_copy_reverse(y_dirvec, wvm[1]);
     func_001B3E80(tmp);

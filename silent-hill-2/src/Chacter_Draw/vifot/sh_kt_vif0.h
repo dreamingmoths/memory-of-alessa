@@ -7,6 +7,8 @@ typedef struct {
     sceDmaChan* dma;
 } Vif0Work;
 
+extern Vif0Work vif0_work;
+
 void ktVif0Init(void);
 
 void ktVif0Wait(void);

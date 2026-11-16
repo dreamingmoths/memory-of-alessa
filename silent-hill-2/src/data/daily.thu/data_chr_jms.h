@@ -1,5 +1,5 @@
-#ifndef DATA_CHR_HHH_JMS_H
-#define DATA_CHR_HHH_JMS_H
+#ifndef DATA_CHR_JMS_H
+#define DATA_CHR_JMS_H
 
 #include "data/fs_structs.h"
 
@@ -262,4 +262,4 @@ extern /* static */ char z_data_chr_jms_rlll_jms_mdl__name[26]; // size: 0x1A, a
 extern fsFile z_data_chr_jms_rlll_jms_mdl__info[1]; // size: 0x10, address: 0x3AC6A0
 extern fsFileIndex data_chr_jms_rlll_jms_mdl[1]; // size: 0x8, address: 0x3A0F98
 
-#endif DATA_CHR_HHH_JMS_H
+#endif // DATA_CHR_JMS_H

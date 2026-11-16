@@ -1000,13 +1000,13 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
 
     if (playing.subtitles == true) {
         if (info->adr_msg_time != NULL) {
-            if (ftoi(msg_frame) > (info->adr_msg_time[demo_msg_no].end)) {
+            if (shFloatToInt(msg_frame) > (info->adr_msg_time[demo_msg_no].end)) {
                 
                 fontClear();
                 demo_msg_no++;
                 DdsUnsetFlag(DDS_FLAG_SUBTITLES_SHOWN);
             }
-            if ((ftoi(msg_frame) > info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
+            if ((shFloatToInt(msg_frame) > info->adr_msg_time[demo_msg_no].start) && !(DdsGetFlag(DDS_FLAG_SUBTITLES_SHOWN))) {
                 
                 fontMessageNum(msg_buffer, info->msg_start + demo_msg_no);
                 demo_status |= 8;
@@ -1015,7 +1015,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
     }
     
     if (demo_status & 1) frm_dcm = 0.0f;
-    else frm_dcm = demo_frame - (float)ftoi((float)ftoi(demo_frame));
+    else frm_dcm = demo_frame - (float)shFloatToInt((float)shFloatToInt(demo_frame));
     
     
     for (i = 0; i < 3; i++) {
@@ -1056,7 +1056,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
             color[k] = next.light[i].color[k] * frm_dcm + last.light[i].color[k] * (1.0f - frm_dcm);
         }
         shSubVector(normal, interest, position);
-        vec_normalize(normal, normal);
+        shNormalizeVector(normal, normal);
         falloff_s = next.light[i].falloff[0] * frm_dcm + last.light[i].falloff[0] * (1.0f - frm_dcm);                             
         falloff_e = next.light[i].falloff[1] * frm_dcm + last.light[i].falloff[1] * (1.0f - frm_dcm);
         cone = next.light[i].cone[0] * frm_dcm + last.light[i].cone[0] * (1.0f - frm_dcm);
@@ -1073,7 +1073,7 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
         }
         shVectorZero(normal);
         shSubVector(normal, normal, position);
-        vec_normalize(normal, normal);
+        shNormalizeVector(normal, normal);
         normal[3] = 0;
         sh2gfw_Set_PallarelLight(normal, color, j + 1);
     }
@@ -1106,10 +1106,10 @@ int DdsPlay(DramaDemo_PlayInfo* info) {
     msg_frame += 30.0f * shGetDT();
     // ??? lmao
     if (demo_frame >= total_demo_frame) return 1;
-    if (demo_frame - (float)ftoi((float)ftoi(demo_frame)) > 0.9999f) 
-        demo_frame = 1.0f + (float)ftoi((float)ftoi(demo_frame));    
-    if (msg_frame - (float)ftoi((float)ftoi(msg_frame)) > 0.9999f) 
-        msg_frame = 1.0f + (float)ftoi((float)ftoi(msg_frame));    
+    if (demo_frame - (float)shFloatToInt((float)shFloatToInt(demo_frame)) > 0.9999f) 
+        demo_frame = 1.0f + (float)shFloatToInt((float)shFloatToInt(demo_frame));    
+    if (msg_frame - (float)shFloatToInt((float)shFloatToInt(msg_frame)) > 0.9999f) 
+        msg_frame = 1.0f + (float)shFloatToInt((float)shFloatToInt(msg_frame));    
     return 0;
 }
 

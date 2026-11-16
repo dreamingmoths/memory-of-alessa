@@ -81,7 +81,7 @@ static inline void vec_add(void* x, void* y, void* out) {
         : "+r"(x), "+r"(y), "+r"(out));
 }
 
-static inline void vec_add_xyz(void* x, void* y, void* out) {
+static inline void shAddVectorXyz(void* x, void* y, void* out) {
     asm("\
         lqc2 vf4, 0(%0)\n\
         lqc2 vf5, 0(%1)\n\
@@ -138,7 +138,7 @@ static inline void vec_scale_xyz(float s, void* v, void* out) {
 static inline void shVectorZero(void* x) { asm("sq zero, 0(%0)" : "+r"(x)); }
 static inline void shVectorZeroXyz(void* x) { asm("sqc2 vf0, 0(%0)" : "+r"(x)); }
 
-static inline float vec_normalize(float* out, float* in) {
+static inline float shNormalizeVector(float* out, float* in) {
     asm("lqc2 vf4, 0(%0)\n\
         vmul.xyz vf5, vf4, vf4\n\
         vaddy.x vf5, vf5, vf5y\n\
@@ -148,6 +148,18 @@ static inline float vec_normalize(float* out, float* in) {
         vmulq.xyz vf4, vf4, Q\n\
         sqc2 vf4, 0(%1)"
         : "=r"(out), "+r"(in));
+}
+
+
+static inline void shVectorCrossProduct(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+    asm volatile("\
+        lqc2    vf5, 0x0(%1);\
+        lqc2    vf6, 0x0(%2);\
+        vsub.w  vf4, vf0, vf0;\
+        vopmula.xyz	ACC, vf5, vf6;\
+        vopmsub.xyz	vf4, vf6, vf5;\
+        sqc2    vf4, 0x0(%0);\
+    ": : "r" (v0) , "r" (v1) ,"r" (v2) : "memory");
 }
 
 static inline float vec_cross_product(float* v, float* w, float* out) {
@@ -177,7 +189,7 @@ static inline void vec_copy_reverse(void* src, void* dst) {
         : "+r"(dst), "+r"(src)::"t7");
 }
 
-static inline void vec_copy_vu0(void* dst, void* src) {
+static inline void shVectorCopyVu0(void* dst, void* src) {
     asm("\
          lqc2 vf4, 0(%1)\n\
          vmove.w vf4, vf0\n\
@@ -185,7 +197,7 @@ static inline void vec_copy_vu0(void* dst, void* src) {
         : "+r"(dst), "+r"(src));
 }
 
-static inline void vec_copy_xyz(void* dst, void* src) {
+static inline void shVectorCopyXyz(void* dst, void* src) {
     asm("\
          lq t7, 0(%1)\n\
          sd t7, 0(%0)\n\
@@ -312,9 +324,10 @@ static inline float sh3_vec3_dot_product(void* v, void* w) {
     return d;
 }
 
-static inline float vec3_dist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
+static inline float shVectorDist(sceVu0FVECTOR v, sceVu0FVECTOR w) {
     float d;
-    asm("lwc1 %2, 0(%0)\n\
+    asm volatile(
+        "lwc1 %2, 0(%0)\n\
          lwc1 f8, 0(%1)\n\
          lwc1 f9, 4(%0)\n\
          sub.s %2, %2, f8;\

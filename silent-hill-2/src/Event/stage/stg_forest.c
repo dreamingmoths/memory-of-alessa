@@ -680,7 +680,7 @@ static float stg_forest_Asahi_col[4] = {
         dist = 0.0f;
         farcliptrim = 0.0f;
     } else if (EventProgressCheck() == 2) {
-        dist = vec3_dist_xz(origin, nowpos);
+        dist = shVectorDistXz(origin, nowpos);
         farcliptrim = 2000.0f;
     } else {
         dist = 10000.0f;

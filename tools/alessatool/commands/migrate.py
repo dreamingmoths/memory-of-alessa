@@ -12,12 +12,52 @@ alessatool migrate --project=silent-hill-2 --name=_pObject_Class_List
 '''
 
 from dataclasses import dataclass
+from pathlib import Path
 
-from kaitai.data.data_utils import DataMigrationRequest, run_data_migration
+from kaitai.data.data_utils import DataMigrationRequest, migrate_asm_file, run_data_migration
+from kaitai.data.update import clean_alessastruct_dependencies, update_alessastruct
 
 @dataclass
-class MigrateArgs(DataMigrationRequest):
-    pass
+class BaseMigrateArgs:
+    project: str
+    output_path: Path
+
+@dataclass
+class SymbolMigrateArgs(BaseMigrateArgs):
+    name: str
+
+@dataclass
+class AsmFileMigrateArgs(BaseMigrateArgs):
+    asm_path: Path
+
+@dataclass
+class UpdateMigrateArgs:
+    update: bool
+
+@dataclass
+class CleanMigrateArgs:
+    clean: bool
+
+type MigrateArgs = SymbolMigrateArgs | AsmFileMigrateArgs | UpdateMigrateArgs | CleanMigrateArgs
 
 def migrate_data(args: MigrateArgs):
-    run_data_migration(args)
+    project = args.project
+
+    if args.name is not None:
+        name = args.name
+
+        with open(args.output_path, "w") as stream:
+            request = DataMigrationRequest(project, name, stream)
+            run_data_migration(request)
+    elif args.update:
+        update_alessastruct()
+    elif args.clean:
+        clean_alessastruct_dependencies()
+    else:
+        asm_path = args.asm_path
+
+        with open(args.output_path, "w") as stream:
+            stream.write("\n")
+
+        with open(args.output_path, "a") as stream:
+            migrate_asm_file(project, asm_path, stream)

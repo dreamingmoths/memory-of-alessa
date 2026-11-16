@@ -6,12 +6,12 @@ int func_01F6D680_hospital_b_02(void) {
     unk_01F6D680_hospital_b_02_struct* temp_v0;
 
     if (func_00190A20(8) != 0) {
-        temp_v0 = func_00190AC0();
-        temp_v0->unk0 = 0x21;
+        temp_v0        = func_00190AC0();
+        temp_v0->unk0  = 0x21;
         temp_v0->unk10 = 20000.0f;
         temp_v0->unk14 = 0;
         temp_v0->unk18 = -100131.25f;
-        temp_v0->unk4 = 0;
+        temp_v0->unk4  = 0;
     }
     return 1;
 }
@@ -79,9 +79,9 @@ int func_01F6E5E0_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
     }
     if (func_0013D080(0, 0, 1, 1) != 0) {
         if (temp_s1 != 0) {
-            temp_t0 = (4 - temp_s1) * 4;
+            temp_t0   = (4 - temp_s1) * 4;
             temp_a3_2 = arg0->unk8AC >> temp_t0;
-            a1 = (temp_a3_2 & 0xF);
+            a1        = (temp_a3_2 & 0xF);
             a1++;
             a1 %= 10;
             a1 <<= temp_t0;
@@ -97,16 +97,16 @@ int func_01F6E5E0_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_02", func_01F6E5E0_hospital_b_02);
 #endif
 
-void func_01F6E700_hospital_b_02(unk_01F6E700_hospital_b_02_struct *arg0) {
-    u_int *temp;
+void func_01F6E700_hospital_b_02(unk_01F6E700_hospital_b_02_struct* arg0) {
+    u_int* temp;
     func_0029F9B0();
     shQzero(arg0, 0x8B0);
-    temp = D_01D31640;
+    temp         = D_01D31640;
     arg0->unk8AC = D_1D318EC;
-   
+
     if ((GetRiddleLevel() & 0xFF) >= 2) {
-        arg0->unk8A8 = 0x9271;  // oven code if riddle is hard
-        
+        arg0->unk8A8 = 0x9271; // oven code if riddle is hard
+
     } else {
         arg0->unk8A8 = temp[0x2A8 / 4];
     }
@@ -148,7 +148,7 @@ int func_01F6E780_hospital_b_02(void) {
                 temp_s0->unk8A0 = 2U;
             }
             break;
-            
+
         case 2:
             func_01F6E4C0_hospital_b_02(temp_s0);
             if (func_001C2580(4) != 0) {
@@ -157,14 +157,14 @@ int func_01F6E780_hospital_b_02(void) {
             break;
         case 3:
             temp_v0_2 = func_01F6E5E0_hospital_b_02(temp_s0);
-            if (temp_v0_2  == 2) {
+            if (temp_v0_2 == 2) {
                 temp_s0->unk8A0 = 6;
-            } else if (temp_v0_2  == 1) {
+            } else if (temp_v0_2 == 1) {
                 temp_s0->unk8A0 = 4;
             }
             func_01F6E4C0_hospital_b_02(temp_s0);
             break;
-    
+
         case 4:
             func_0016BC00(1);
             func_01F6E4C0_hospital_b_02(temp_s0);
@@ -178,7 +178,7 @@ int func_01F6E780_hospital_b_02(void) {
                 temp_s0->unk8A0 = 5U;
             }
             break;
-    
+
         case 6:
             func_01F6E4C0_hospital_b_02(temp_s0);
             func_0016BC00(1);
@@ -187,7 +187,7 @@ int func_01F6E780_hospital_b_02(void) {
                 D_1D31694[0] |= 0x10000;
             }
             break;
-    
+
         default:
             func_0016C1B0();
             func_001C2290(5, 0.8f);
@@ -244,14 +244,13 @@ int func_01F6F780_hospital_b_02(void) {
             }
             func_0016C1B0();
             D_01F74100_hospital_b_02 += 1;
-            break;        
+            break;
         default:
             ret = 1;
             D_1D31698[0] &= ~0x10;
             D_1D31694[0] |= 0x80000000;
             D_1D3172C[0] |= 0x02000000;
             D_1D317C0[3] |= 4;
-
     }
     return ret;
 }
@@ -287,7 +286,7 @@ int func_01F6F930_hospital_b_02(void) {
             func_0016C1B0();
             D_01F74110_hospital_b_02 += 1;
             break;
-            
+
         default:
             ret = 1;
             D_1D31698[0] &= ~0x10;
@@ -314,22 +313,21 @@ void func_01F6FBA0_hospital_b_02(void) {
         D_01F74148_hospital_b_02 = 0;
         return;
     }
-    
-    if (D_01F74148_hospital_b_02 == 0) {
-        func_0018FE60((u_long128 *)&sp20);
 
-        if((sp20[1] > -2514.0f)){
+    if (D_01F74148_hospital_b_02 == 0) {
+        func_0018FE60((u_long128*) &sp20);
+
+        if (sp20[1] > -2514.0f) {
             var_f0 = sp20[1] - -2514.0f;
-        }
-        else{
+        } else {
             var_f0 = -2514.0f - sp20[1];
         }
 
         if (var_f0 <= 1000.0f) {
             SeCall(15105, -0.7853982f, (1000.0f - var_f0) / 1000.0f);
             D_01F74148_hospital_b_02 = 1;
-        }    
-    }    
+        }
+    }
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_02", func_01F6FBA0_hospital_b_02);

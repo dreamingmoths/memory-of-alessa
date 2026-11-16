@@ -4,7 +4,7 @@ int func_01F6D680_hospital_b_00(void) {
     int ret;
 
     ret = 0;
-    if (!(GET_FLAG(D_1D31694, 3))){
+    if (!(GET_FLAG(D_1D31694, 3))) {
         D_01F706F8_hospital_b_00 = 1;
         D_1D31694[0] |= 8;
         func_00190A20(5);
@@ -27,7 +27,7 @@ int func_01F6D680_hospital_b_00(void) {
                 D_1D31694[0] |= 0x10;
             }
             D_01F706F8_hospital_b_00 = 3;
-            break;        
+            break;
         case 3:
             func_00190A20(6);
             D_01F706F8_hospital_b_00 = 4;
@@ -40,9 +40,8 @@ int func_01F6D680_hospital_b_00(void) {
             D_1D31694[0] &= ~8;
             func_00190A20(0);
             ret = 1;
-    
-        }
-        return ret;
+    }
+    return ret;
 }
 
 void func_01F6D820_hospital_b_00(void) {
@@ -53,14 +52,14 @@ void func_01F6D820_hospital_b_00(void) {
     if (GET_FLAG(D_1D31694, 5)) {
         return;
     }
- 
-    birthday_room_ammo_total = GetItemCount(0xF); // handgun ammo
-    birthday_room_ammo_total += GetItemCount(0x10) * 2; // shotgun ammo 
-    birthday_room_ammo_total += GetItemCount(0x11); // smg ammo 
+
+    birthday_room_ammo_total = GetItemCount(0xF);       // handgun ammo
+    birthday_room_ammo_total += GetItemCount(0x10) * 2; // shotgun ammo
+    birthday_room_ammo_total += GetItemCount(0x11);     // smg ammo
     birthday_room_ammo_score = birthday_room_ammo_total;
 
-    birthday_room_drug_total = GetItemCount(0x12) * 4; // health drink
-    birthday_room_drug_total += GetItemCount(0x13) * 8; // first aid kit
+    birthday_room_drug_total = GetItemCount(0x12) * 4;   // health drink
+    birthday_room_drug_total += GetItemCount(0x13) * 8;  // first aid kit
     birthday_room_drug_total += GetItemCount(0x14) * 12; // ampoule
     birthday_room_drug_score = birthday_room_drug_total;
 
@@ -68,7 +67,7 @@ void func_01F6D820_hospital_b_00(void) {
 
     if (!(birthday_room_ammo_score > birthday_room_drug_score)) {
         if (action >= 3) {
-            birthday_room_ammo_score += 30;  // Add 30 points if playing on Hard
+            birthday_room_ammo_score += 30; // Add 30 points if playing on Hard
         }
         if (birthday_room_ammo_score <= 30) {
             birthday_shotgun_shells++; // Add flag to spawn 6 Shotgun Shells
@@ -80,12 +79,12 @@ void func_01F6D820_hospital_b_00(void) {
             birthday_submachine_gun_bullets++; // Add flag to spawn 32 Submachine Gun Bullets
         }
         if (birthday_room_ammo_score <= 120) {
-            birthday_handgun_bullets++;  // Add flag to spawn 10 Handgun Bullets
+            birthday_handgun_bullets++; // Add flag to spawn 10 Handgun Bullets
         }
         birthday_handgun_bullets += 2; // Add flag to spawn 20 Handgun Bullets
     } else {
         if (action >= 3) {
-            birthday_room_drug_score += 30;  // Add 30 points if playing on Hard
+            birthday_room_drug_score += 30; // Add 30 points if playing on Hard
         }
         if (birthday_room_drug_score <= 30) {
             birthday_ampoules++; // Add flag to spawn 1 Ampoules
@@ -99,7 +98,7 @@ void func_01F6D820_hospital_b_00(void) {
         if (birthday_room_drug_score <= 120) {
             birthday_first_aid_kits++; // Add flag to spawn 1 First Aid Kit
         }
-        birthday_health_drinks += 2;  // Add flag to spawn 2 Health Drinks
+        birthday_health_drinks += 2; // Add flag to spawn 2 Health Drinks
     }
 
     D_1D31694[0] |= 0x20;
@@ -111,7 +110,7 @@ int func_01F6DA90_hospital_b_00(u_short* arg0) {
     ret = 0;
     switch (*arg0) {
         case 15:
-            if ((birthday_handgun_bullets > D_01F706F0_hospital_b_00)) {
+            if (birthday_handgun_bullets > D_01F706F0_hospital_b_00) {
                 D_01F706F0_hospital_b_00++;
                 ret = 1;
             }
@@ -122,14 +121,14 @@ int func_01F6DA90_hospital_b_00(u_short* arg0) {
                 ret = 1;
             }
             break;
-    
+
         case 17:
             if (birthday_submachine_gun_bullets > D_01F706E0_hospital_b_00) {
                 D_01F706E0_hospital_b_00++;
                 ret = 1;
             }
             break;
-   
+
         case 18:
             if (birthday_health_drinks > D_01F706D8_hospital_b_00) {
                 D_01F706D8_hospital_b_00++;
@@ -149,10 +148,8 @@ int func_01F6DA90_hospital_b_00(u_short* arg0) {
                 ret = 1;
             }
             break;
-
     }
     return ret;
-    
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_b_00", func_01F6DBF0_hospital_b_00);
@@ -162,12 +159,12 @@ void func_01F6DD80_hospital_b_00(void) {
     int count;
     int entry;
 
-    if (!GET_FLAG(D_1D31698, 14)) {                
-        for (i = 0, count = 0; D_01F706C0_hospital_b_00 > count; i++, count++) {                      
-                entry = D_01F70640_hospital_b_00[i];
-                if (!GET_FLAG(D_01D31640, entry)) {
-                    return;
-                }                         
+    if (!GET_FLAG(D_1D31698, 14)) {
+        for (i = 0, count = 0; D_01F706C0_hospital_b_00 > count; i++, count++) {
+            entry = D_01F70640_hospital_b_00[i];
+            if (!GET_FLAG(D_01D31640, entry)) {
+                return;
+            }
         }
         D_1D31698[0] |= 0x4000;
     }
@@ -177,7 +174,7 @@ int func_01F6DE10_hospital_b_00(void) {
     int ret;
 
     ret = 0;
-    if (!(GET_FLAG(D_1D31694, 2)))  {
+    if (!(GET_FLAG(D_1D31694, 2))) {
         func_0016C3C0();
         D_1D31694[0] |= 4;
         func_00190A20(5);
@@ -191,32 +188,32 @@ int func_01F6DE10_hospital_b_00(void) {
         fontClear();
         D_01F70630_hospital_b_00 = 6;
     }
-    switch (D_01F70630_hospital_b_00) { 
+    switch (D_01F70630_hospital_b_00) {
 
         case 1:
             if (func_00190C00() == 0) {
                 return 0;
             }
             D_01F70630_hospital_b_00 = 2;
-            
+
         case 2:
             if (func_0016BED0(0x3C, 0x26) == 0) {
                 return 0;
             }
-            if (!(GET_FLAG(D_1D31698, 22)))  {
+            if (!(GET_FLAG(D_1D31698, 22))) {
                 D_1D31698[0] |= 0x400000;
-                D_01F70628_hospital_b_00 = 1;            
+                D_01F70628_hospital_b_00 = 1;
             }
-            if (!(GET_FLAG(D_1D316F4, 26)))  {
+            if (!(GET_FLAG(D_1D316F4, 26))) {
                 D_1D316F4[0] |= 0x04000000;
             }
             D_01F70630_hospital_b_00 = 3;
             break;
-            
+
         case 3:
             func_00190A20(6);
             D_01F70630_hospital_b_00 = 4;
-            
+
         case 4:
             if (func_00190C00() == 0) {
                 return 0;
@@ -229,13 +226,13 @@ int func_01F6DE10_hospital_b_00(void) {
                 D_01F70630_hospital_b_00 = 6;
             }
             break;
-            
+
         case 5:
             if (func_0016C1C0(0x27) == 0) {
                 return 0;
             }
             D_01F70630_hospital_b_00 = 6;
-            
+
         default:
             D_1D31694[0] &= ~4;
             func_00190A20(0);
@@ -270,7 +267,7 @@ int func_01F6E110_hospital_b_00(void) {
             func_001C2290(3, 0.5f);
             func_0019B4B0(7);
             D_01F70618_hospital_b_00 += 1;
-    
+
         case 1:
             if (func_001C2580(2) == 0) {
                 return 0;
@@ -295,25 +292,25 @@ int func_01F6E230_hospital_b_00(void) {
     unk_01F6E230_hospital_b_00_struct* temp_v0;
 
     if (func_00190A20(8) != 0) { // sus
-        temp_v0 = func_00190AC0();
-        temp_v0->unk0 = 0xB;
+        temp_v0        = func_00190AC0();
+        temp_v0->unk0  = 0xB;
         temp_v0->unk10 = -99987.5f;
-        temp_v0->unk14 = 1643.67f; 
+        temp_v0->unk14 = 1643.67f;
         temp_v0->unk18 = -99872.05f;
-        temp_v0->unk4 = 0;
+        temp_v0->unk4  = 0;
     }
     return 1;
 }
 
 int func_01F6E290_hospital_b_00(void) {
-    
-    if ((!(GET_FLAG(D_1D317C0, 0x19))) && ((GET_FLAG(D_1D317C0, 0x1B)))) {
+
+    if ((!(GET_FLAG(D_1D317C0, 0x19))) && (GET_FLAG(D_1D317C0, 0x1B))) {
         SET_FLAG(D_1D317C0, 0x30);
     }
-    if (((GET_FLAG(D_1D317C0, 0x30))) && ((GET_FLAG(D_1D317C0, 0x19)))) {
+    if ((GET_FLAG(D_1D317C0, 0x30)) && (GET_FLAG(D_1D317C0, 0x19))) {
         SET_FLAG(D_1D317C0, 0x31);
     }
-    if ((!(GET_FLAG(D_1D317C0, 0x1B))) && ((GET_FLAG(D_1D317C0, 0x19)))) {        
+    if ((!(GET_FLAG(D_1D317C0, 0x1B))) && (GET_FLAG(D_1D317C0, 0x19))) {
         SET_FLAG(D_1D317C0, 0x32);
     }
     return 1;
@@ -329,19 +326,20 @@ void func_01F6E360_hospital_b_00(void) {
         return;
     }
     var_s0 = D_01F70510_hospital_b_00;
-    while (var_s0->unk0 != 0){
-        if (shCharacterGetSubCharacter((short)var_s0->unk0, var_s0->unk4) == 0) {
+    while (var_s0->unk0 != 0) {
+        if (shCharacterGetSubCharacter((short) var_s0->unk0, var_s0->unk4) == 0) {
             var_s1 = D_01F6F8C0_hospital_b_00;
             while (var_s1 != NULL && var_s1->unk0 != 0) {
                 if ((var_s1->unk0 != var_s0->unk0) || (var_s1->unk2 != var_s0->unk4)) {
                     var_s1 += 1;
+                } else {
+                    break;
                 }
-                else { break; }
             }
             if ((var_s1 != NULL) && (func_0016B4E0(var_s1) != 0)) {
                 shQzero(&sp30, 0x40);
-                sp30.unk4 = var_s1->unk0;
-                sp30.unk6 = var_s1->unk2;
+                sp30.unk4  = var_s1->unk0;
+                sp30.unk6  = var_s1->unk2;
                 sp30.unk10 = var_s1->unk4;
                 sp30.unk14 = var_s1->unkC;
                 sp30.unk18 = var_s1->unk8;
@@ -359,17 +357,18 @@ void func_01F6E4E0_hospital_b_00(void) {
 
     SubCharacter* scp;
     int var_s0;
-    int* cur; 
-    
-    cur = &D_01F70528_hospital_b_00;
+    int* cur;
+
+    cur    = &D_01F70528_hospital_b_00;
     var_s0 = 0;
     for (cur = &D_01F70528_hospital_b_00; *cur != 0; cur++) {
         scp = shCharacterGetSubCharacter(SLURPER_E_CHARA_KIND, *cur);
         if (scp != NULL) {
-            
-            if(!func_001E2110(scp)) var_s0++;            
+
+            if (!func_001E2110(scp))
+                var_s0++;
             if ((*cur != 0x140) && (GET_FLAG(D_1D31694, 11)) && (GetActionLevel() < 3) && (1 < var_s0)) {
-            shCharacter_Manage_Delete(SLURPER_E_CHARA_KIND, *cur);                
+                shCharacter_Manage_Delete(SLURPER_E_CHARA_KIND, *cur);
             }
         }
     }
@@ -382,7 +381,7 @@ void func_01F6E5B0_hospital_b_00(void) {
     int* cur;
 
     action = GetActionLevel();
-    score = birthday_room_ammo_total + birthday_room_drug_total;
+    score  = birthday_room_ammo_total + birthday_room_drug_total;
 
     for (cur = &D_01F70540_hospital_b_00; *cur != 0; cur++) {
         scp = shCharacterGetSubCharacter(NURSE_CHARA_KIND, *cur);
@@ -412,7 +411,7 @@ void func_01F6E5B0_hospital_b_00(void) {
 #ifdef HOLY_CANDLE
 int func_01F6E6C0_hospital_b_00(void) {
     int ret;
-    
+
     ret = 0;
     if (!GET_FLAG(D_1D31698, 4)) {
         D_01F70600_hospital_b_00 = 0;
@@ -423,7 +422,7 @@ int func_01F6E6C0_hospital_b_00(void) {
         SeCall(19033, 0.0f, 1.0f);
     }
     D_01F70608_hospital_b_00 += shGetDT();
-    switch (D_01F70600_hospital_b_00) {    
+    switch (D_01F70600_hospital_b_00) {
         case 0:
             if (D_01F70608_hospital_b_00 < 0.5f) {
                 return 0;
@@ -436,14 +435,14 @@ int func_01F6E6C0_hospital_b_00(void) {
             }
             func_0016C1B0();
             D_01F70600_hospital_b_00++;
-            break;        
+            break;
         default:
             ret = 1;
             D_1D31698[0] &= ~0x10;
             D_1D31728[0] |= 0x04000000;
             D_1D31694[0] |= 0x20000000;
             D_1D317C0[0] |= 0x01000000;
-        }
+    }
     return ret;
 }
 #else
@@ -454,25 +453,25 @@ void func_01F6E880_hospital_b_00(void) {
 
     D_01F70610_hospital_b_00 = 0;
 
-    switch (RoomName()) {                             
+    switch (RoomName()) {
         case 0xC0:
             D_1D31728[0] |= 0x40000000;
             D_1D31728[0] |= 0x80000000;
             break;
-        
+
         case 0xC2:
             break;
-            
+
         case 0xC1:
             D_1D31698[0] |= 0x400;
             D_1D3172C[0] |= 2;
-            break;        
-    
+            break;
+
         case 0xC3:
             D_1D3172C[0] |= 0x20;
             func_01F6DBF0_hospital_b_00();
             break;
-        
+
         case 0xC4:
             D_01F70618_hospital_b_00 = 0;
             D_1D3172C[0] |= 0x40;
@@ -484,18 +483,18 @@ void func_01F6E880_hospital_b_00(void) {
 void func_01F6E980_hospital_b_00(void) {
 
     D_01F70610_hospital_b_00 = 1;
-    switch (RoomName()) {        
+    switch (RoomName()) {
         case 0xC2:
             func_01F6E4E0_hospital_b_00();
             break;
-        
+
         case 0xC3:
-            if ((GET_FLAG(D_1D31694, 6))){
+            if (GET_FLAG(D_1D31694, 6)) {
                 D_1D31694[0] &= ~0x40;
             }
             func_01F6E5B0_hospital_b_00();
             break;
-        }
+    }
 }
 
 void func_01F6EA00_hospital_b_00(void) {
@@ -503,7 +502,7 @@ void func_01F6EA00_hospital_b_00(void) {
     if (D_01F70610_hospital_b_00 == 0) {
         func_01F6E980_hospital_b_00();
     }
-    switch (RoomName()) {                             
+    switch (RoomName()) {
         case 0xBE:
             if ((GET_FLAG(D_1D31694, 20)) && !(GET_FLAG(D_1D31694, 21))) {
                 func_01F6E360_hospital_b_00();

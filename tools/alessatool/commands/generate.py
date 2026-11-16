@@ -17,8 +17,8 @@ import json
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
-from utils import ensure_path_and_write, normalize_object_path, to_expected_path
-from constants import VSM
+from utils import ensure_path_and_write, normalize_object_path, relative_to_name, to_expected_path, to_source_path
+from constants import ASM, SRC, VSM
 
 import splat.scripts.split as split
 import splat.util.options as splat_options
@@ -35,7 +35,7 @@ SECTION_ALIGNMENT_PAIRS: list[tuple[str, int]] = [
     (".bss", 0x10),
 ]
 
-TRACKED_SEGMENT_TYPES = ["asm", "c", "data", "rodata"]
+TRACKED_SEGMENT_TYPES = ["asm", "asmtu", "c", "data", "rodata"]
 VSM_SEGMENT_TYPES = ["o", "vudata", "vutext"]
 
 @dataclass
@@ -248,6 +248,9 @@ def generate_objdiff_units(args: GenerationArgs):
             continue
         if segment.name.startswith("cri/") or segment.name.startswith("crimw/"):
             continue
+        if segment.name == "sound/shd_vs_sp":
+            # ignore gcc sound library until we explicitly decide to match it
+            continue
         if segment.name == "crt0":
             continue
         if segment_type not in TRACKED_SEGMENT_TYPES:
@@ -258,9 +261,17 @@ def generate_objdiff_units(args: GenerationArgs):
         if len(entry.src_paths) > 1:
             raise Exception("Unhandled case: len(src_paths) > 1")
 
+        is_asmtu = segment_type == "asmtu"
         source_path = str(entry.src_paths[0])
         object_path = str(entry.object_path)
-        is_code = source_path.endswith(".c")
+        is_code = source_path.endswith(".c") or is_asmtu
+
+        if is_asmtu:
+            source_path = relative_to_name(source_path, ASM, include_base=False)
+            source_path = (Path(SRC) / source_path).with_suffix(".c").as_posix()
+            object_path = to_source_path(object_path).as_posix()
+        else:
+            source_path = relative_to_name(source_path, SRC, include_base=True)
 
         metadata = UnitMetadata(
             progress_categories=[parent.name == "engine" and "engine" or "stages"],

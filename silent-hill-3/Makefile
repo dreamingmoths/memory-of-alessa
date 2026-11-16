@@ -63,6 +63,8 @@ MWLD_FLAGS := \
 	-main "entry" -map -sym off,noelf \
 	-noinhibit-exec $(MWLD_OVERLAY_FLAGS)
 
+MWCC_DOWNLOADS := $(MWCC)
+
 EE_DVP_AS_FLAGS := -I$(VSM)
 
 BSS_ALIGNMENT := 16

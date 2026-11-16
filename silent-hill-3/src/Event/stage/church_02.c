@@ -15,13 +15,13 @@ int func_01F6D680_church_02(void) {
         case 1:
             if (func_0016C540(&D_01F769C0_church_02, &D_01F76A20_church_02) != 0) {
                 D_01F77580_church_02++;
-            case 2:
-                func_00190A20(0);
-                func_001C2290(5, 0.5f);
-                D_01F77580_church_02 = 0;
-                ret = 1;
-                D_1D31644[0] |= 0x10;
-                D_1D317D0[0] |= 0x400000;
+                case 2:
+                    func_00190A20(0);
+                    func_001C2290(5, 0.5f);
+                    D_01F77580_church_02 = 0;
+                    ret                  = 1;
+                    D_1D31644[0] |= 0x10;
+                    D_1D317D0[0] |= 0x400000;
             }
             break;
     }
@@ -107,7 +107,7 @@ int func_01F6D7B0_church_02(void) {
 }
 
 #else
-INCLUDE_ASM("asm/nonmatchings/Event/stage/church_02", func_01F6D7B0_church_02); //SeCall memes
+INCLUDE_ASM("asm/nonmatchings/Event/stage/church_02", func_01F6D7B0_church_02); // SeCall memes
 #endif
 
 int func_01F6DB40_church_02(void) {
@@ -130,7 +130,7 @@ int func_01F6DB40_church_02(void) {
         default:
             D_01F77580_church_02 = 0;
             return 1;
-        }
+    }
 }
 
 int func_01F6DC10_church_02(void) {
@@ -162,7 +162,7 @@ int func_01F6DCE0_church_02(void) {
             func_00190A20(2);
             func_0016CD00(&D_01F76AD0_church_02);
             D_01F77580_church_02++;
-    
+
         case 1:
             if (!GET_FLAG(D_1D316F8, 0xA)) {
                 if (func_0016C1C0(0x9D) == 0) {
@@ -198,22 +198,22 @@ int func_01F6DE30_church_02(void) {
         case 0:
             func_00190A20(2);
             D_01F77580_church_02++;
-    
-        case 1:    
+
+        case 1:
             if (!GET_FLAG(D_1D316F8, 0xA)) {
                 D_01F77908_church_02 = 0xCB;
             } else {
                 D_01F77908_church_02 = 0xCC;
-            }                    
+            }
             D_01F77580_church_02++;
-    
+
         case 2:
             if (func_0016BED0(0xD8, D_01F77908_church_02) == 0) {
                 return 0;
             }
             D_1D316F8[0] |= 0x01000000;
             func_00190A20(0);
-        
+
         default:
             D_01F77580_church_02 = 0;
             return 1;
@@ -240,14 +240,14 @@ int func_01F6F820_church_02(void) {
     int ret = 0;
 
     switch (D_01F77580_church_02) {
-    case 0:
-        func_001C2290(3, 0.5f);
-        func_00190A20(2);
-        D_01F77580_church_02++;
-        /* fallthrough */
-    case 1:
-        ret = func_0016C540(&D_01F76E10_church_02, &D_01F76E70_church_02);
-        break;
+        case 0:
+            func_001C2290(3, 0.5f);
+            func_00190A20(2);
+            D_01F77580_church_02++;
+            /* fallthrough */
+        case 1:
+            ret = func_0016C540(&D_01F76E10_church_02, &D_01F76E70_church_02);
+            break;
     }
     if (ret != 0) {
         D_01F77580_church_02 = 0;
@@ -316,8 +316,7 @@ int func_01F70020_church_02(void) {
 }
 
 void func_01F70050_church_02(void) {
-    if ((func_01F6FE40_church_02(0xE) != -1) || (func_01F6FE40_church_02(0xD) != -1)
-        || (func_01F6FE40_church_02(0xC) != -1) || (func_01F6FE40_church_02(0xB) != -1)) {
+    if ((func_01F6FE40_church_02(0xE) != -1) || (func_01F6FE40_church_02(0xD) != -1) || (func_01F6FE40_church_02(0xC) != -1) || (func_01F6FE40_church_02(0xB) != -1)) {
         func_001DE5B0(&func_01F715C0_church_02, 0, 1);
     }
 }
@@ -378,9 +377,9 @@ void func_01F729F0_church_02(void) {
         return;
     }
     D_01F77580_church_02 = 0;
-    switch (RoomName()) { //I will debug the rest another time
+    switch (RoomName()) { // I will debug the rest another time
         case CHURCH_LIBRARY:
-            if (GetExtraNewGame() == 1 && (GetRiddleLevel() & 0xFF) == 2) { //Royal Flush Riddle
+            if (GetExtraNewGame() == 1 && (GetRiddleLevel() & 0xFF) == 2) { // Royal Flush Riddle
                 D_1D316A8[0] |= 0x800000;
             }
             break;

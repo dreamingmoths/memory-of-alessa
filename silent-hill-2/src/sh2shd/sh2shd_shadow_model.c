@@ -1,15 +1,17 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
+#include "vec.h"
 #include "GFW/sh2_GsAllEnv.h"
 #include "sh2shd/sh2shd_structs.h"
 #include "Heap/utilheap.h"
 #include "sh2shd/sh2shd_shadow_model.h"
 #include "sh2shd/sh2shd_char_jms.h"
+#include "sh2shd/sh2shd_shadow_env.h"
 #include "Event/demoview.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter_Draw/light_n.h"
 #include "SH2_common/map_ids.h"
-#include "vec.h"
+#include "view/camera_dat.h"
 
 static void sh2shd_renew_shadow_man(CAMERA_DAT* cam, int glb_coord, int map_id);
 static void make_chara_reftag_pool_and_kick_packet_for_spot(void);
@@ -142,11 +144,11 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
             vec_copy_reverse(&scp->pos, chr_pos);
             chr_pos[1] = 0;
             vec_sub_reverse(chr_pos, cam_pos, cam_pos);
-            vec_normalize(cam_pos, cam_pos);
+            shNormalizeVector(cam_pos, cam_pos);
             vec_copy_reverse(light_pos, light_vec);
             light_vec[1] = 0;
             vec_sub_reverse(chr_pos, light_vec, light_vec);
-            vec_normalize(light_vec, light_vec);
+            shNormalizeVector(light_vec, light_vec);
             if (vec3_dot_product(cam_pos, light_vec) < -0.707f) {
                 vwGetViewPosition(cam_pos);
                 vec_sub_reverse(cam_pos, &scp->pos, cam_pos);
@@ -465,7 +467,450 @@ Q_WORDDATA* sh2shd_exe_shadow(CAMERA_DAT* cam) {
     return shadow_man.kick_packet.head;
 }
 
-INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_renew_shadow_man);
+#ifdef NON_MATCHING
+void sh2shd_renew_shadow_man(CAMERA_DAT* cam, int glb_coord, int map_id) {
+    int  i; // r16
+    sceVu0FVECTOR virtual_spot_c_back; // r29+0x90
+    sceVu0FMATRIX drop_shadow_matrix; // r29+0xA0
+    sceVu0FVECTOR spot_cam_vector; // r29+0xE0
+    sceVu0FVECTOR cam_pos; // r29+0xF0
+    SHADOW_ENV shadow_env; // r29+0x228
+    int demo_no; // r17
+    float dis; // r29+0x240
+    sceVu0FVECTOR inverse_vector; // r29+0x100
+    float length_chara; // r20
+
+    
+    
+    
+    
+    
+    demo_no = DramaDemoNumber();
+    
+    vwGetViewPosition(&cam_pos);
+    
+    
+    if (shadow_man.spot_char_num > 0) {
+        int i;
+        
+        
+
+        
+        shadow_set_micro_params(&shadow_micro_frame, cam, &drop_shadow_matrix, 0);
+        
+        
+        if (shadow_man.char_man_num > 0) {
+            for (i = 0; i < 16; i++) {
+                if ((shadow_man.char_man[i] != NULL)) {
+                    if (((shadow_man.char_man[i]->light_kind == 0) || 
+                         (shadow_man.char_man[i]->light_kind == 6) || 
+                         (shadow_man.char_man[i]->light_kind == 7) || 
+                         (shadow_man.char_man[i]->light_kind == 8))) {
+                        float spot_cam_angle;
+                        sceVu0FVECTOR virtual_spot_pos; // r29+0x110
+                        sceVu0FVECTOR chara_pos; // r29+0x120
+                        sceVu0FVECTOR normal; // r29+0x130
+                        float height; // r29+0x230
+
+
+                        
+                        spot_cam_angle = get_spot_camera_angle(&cam_pos, &shadow_man.char_man[i]->light_pos, &shadow_man.char_man[i]->light_dir, &shadow_man.char_man[i]->light_param);
+                        
+                        
+                        
+                        
+                        shSubVector(&spot_cam_vector, &shadow_man.char_man[i]->light_pos, &cam_pos); 
+                        spot_cam_vector[3] = vec3_length(&spot_cam_vector);
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        shVectorCopy(&virtual_spot_pos, &shadow_man.char_man[i]->light_pos);
+                        
+                        
+                        
+                        
+                        
+                        if (spot_cam_angle > 0.0f) {
+                            virtual_spot_pos[1] = shadow_man.char_man[i]->light_pos[1] - (400.0f * spot_cam_angle);
+                        }
+                        
+                        
+                        
+                        if ((demo_no == 0) && 
+                            (((shadow_man.char_man[i]->kind < LLL_JMS_CHARA_KIND) || (HHH_JMS_CHARA_KIND < shadow_man.char_man[i]->kind)) && 
+                            ((shadow_man.char_man[i]->kind < WEAPON_ID_NONE) || (WEAPON_NATA_CHARA_KIND < shadow_man.char_man[i]->kind)))) {
+                                    get_distance_from_light_to_chara(shadow_man.char_man[i], &inverse_vector);
+                            
+                                    shAddVector(&virtual_spot_pos, &virtual_spot_pos, &inverse_vector);
+                            }
+                        
+                        
+                        if (demo_no == 0) {
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            sh2shd_get_shadow_env_chr(&shadow_env, shadow_man.char_man[i], glb_coord, map_id);
+                            
+                            
+                            
+                            
+                            
+                            if (spot_cam_angle > 0.5f)
+                                if (shadow_env.leng > 1.5f * spot_cam_vector[3])
+                                    shadow_env.leng = 1.5f * spot_cam_vector[3];
+                        } else {
+
+                            
+                            sh2shd_get_demo_shadow_env_for_char(&shadow_env, shadow_man.char_man[i], demo_no);
+                        }
+
+
+
+                        if ((shadow_man.char_man[i]->light_kind >= 6) && (shadow_man.char_man[i]->light_kind < 9)) {
+
+                            
+                            shCharacterGetGroundInfoForShadow(&chara_pos, &normal, &height, shadow_man.char_man[i]->kind, shadow_man.char_man[i]->id);
+                            
+                            
+                            sh2shd_calc_light_position_for_self_spot(&virtual_spot_pos, shadow_man.char_man[i]->kind, shadow_man.char_man[i]->id, &jms_shadow_env, &chara_pos, height);
+                            
+                            
+                            
+                            if (demo_no == 0xA) {
+                            
+                                virtual_spot_pos[0] = -58387.0f;
+                                virtual_spot_pos[1] = -1500.0f;
+                                virtual_spot_pos[2] = 19326.0f;
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            shadow_env.clip_kind = 0x3E7;
+                            shadow_env.leng = 6000.0f;
+                        }
+                        
+                        sh2shd_renew_char_man_for_spot(shadow_man.char_man[i], &virtual_spot_pos, length_chara, &shadow_env);
+                    }
+                }
+            }
+        }
+    }
+    
+    if (shadow_man.spot_bg_num > 0) {
+        int spot_cam_flag; // r21
+        
+        
+        int count = 0;
+        
+        
+        for (i = 0; i < 4; i++) {
+        
+            if (shadow_man.outdoor_man[i] != NULL) {
+                float spot_cam_angle;
+                
+
+                count++;
+                spot_cam_angle = get_spot_camera_angle(&cam_pos, &shadow_man.outdoor_man[i]->light_pos, &shadow_man.outdoor_man[i]->light_dir, &shadow_man.outdoor_man[i]->light_param);
+                
+                
+                
+                
+                if (spot_cam_angle > 0.0f) 
+                    spot_cam_flag = 1;
+                else 
+                    spot_cam_flag = 0;
+
+                shVectorCopy(&virtual_spot_c_back, shadow_man.outdoor_man[i]->light_pos);
+                
+                
+                
+                if (demo_no == 0)
+                    sh2shd_get_shadow_env_bg(&shadow_env, shadow_man.outdoor_man[i]->raw_data);
+                else
+                    
+                    sh2shd_get_demo_shadow_env_for_bg(&shadow_env, demo_no);
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                shadow_set_micro_params(&shadow_micro_frame + 1, cam, &drop_shadow_matrix, spot_cam_flag);
+                
+                if (shadow_man.outdoor_man[i]->light_kind == 0)
+                    sh2shd_renew_outdoor_man(shadow_man.outdoor_man[i], &virtual_spot_c_back, &shadow_env);
+                
+            }
+        }
+    }
+
+
+
+    
+    if (shadow_man.point_char_num > 0) {
+        float light_leng; // r29+0x240
+        sceVu0FVECTOR vec; // r29+0x140
+        sceVu0FVECTOR chara_pos; // r29+0x150
+
+
+
+
+
+
+
+
+
+
+
+
+
+        shadow_set_micro_params(&shadow_micro_frame_point, cam, drop_shadow_matrix, 0 /* spot cam flag? */);
+        
+        
+        if (shadow_man.char_man_num > 0) {
+            for (i = 0; i < 16; i++) {   
+                if ((shadow_man.char_man[i] != NULL))
+                    if (shadow_man.char_man[i]->light_kind == 5) {
+                        
+                        if (demo_no != 0)
+                            sh2shd_get_demo_shadow_env_for_char(&shadow_env, shadow_man.char_man[i], demo_no);
+                        else {
+                            
+                            
+                            
+                            shadow_env.clip_kind = 0x3E7;
+                            
+                            
+                            sh2shd_get_shadow_env_chr(&shadow_env, shadow_man.char_man[i], glb_coord, map_id);
+                            
+                            
+                            
+                            shadow_env.leng = shadow_man.char_man[i]->light_param[2];
+
+
+
+
+
+                            
+                            chara_pos[0] = shadow_man.char_man[i]->scp->pos.x;
+                            chara_pos[1] = shadow_man.char_man[i]->scp->pos.y;
+                            chara_pos[2] = shadow_man.char_man[i]->scp->pos.z;
+                            chara_pos[3] = 1.0f;
+                            shSubVector(&vec, &chara_pos, shadow_man.char_man[i]->light_pos);
+                            light_leng = vec3_dot_product(&vec, &vec);
+                            light_leng = 0.3f * sqrtf(light_leng);
+                            
+                            shadow_man.char_man[i]->light_pos[1] -= light_leng;
+                            
+                                shadow_env.leng *= 1.2f;
+                        }
+                        
+                        sh2shd_renew_char_man(shadow_man.char_man[i], shadow_man.char_man[i]->light_pos, shadow_env.leng, &shadow_env);
+                    }
+            }
+        }
+    }
+
+    
+    if (shadow_man.self_num > 0) {
+        sceVu0FVECTOR chara_pos; // r29+0x160
+        sceVu0FVECTOR normal; // r29+0x170
+        sceVu0FVECTOR plane; // r29+0x180
+        sceVu0FVECTOR virtual_light_position; // r29+0x190
+        sceVu0FVECTOR tmp_light_position; // r29+0x1A0
+        float height; // r29+0x234
+        int  weapon_flag; // r2
+        int  count; // r18
+        
+        for (i = 0; i < 16; i++) {
+            
+            if ((shadow_man.char_man[i] != NULL))
+                
+                if ((shadow_man.char_man[i]->kind >= 0x100) && (shadow_man.char_man[i]->kind < 0x104) && (check_self_para((u16) shadow_man.char_man[i]->light_kind) != 0)) {
+
+                
+                    shCharacterGetGroundInfoForShadow(&chara_pos, &normal, &height, shadow_man.char_man[i]->kind, shadow_man.char_man[i]->id);
+                    
+                    
+                    chara_pos[1] = 100.0f + height;
+                    
+                    normal[0] = 0.0f;
+                    normal[1] = -1.0f;
+                    normal[2] = 0;
+                    sh2shd_make_stencil_drop_shadow_plane(plane, chara_pos, normal);
+                    
+                    sh2shd_calc_light_position_for_self(virtual_light_position, shadow_man.char_man[i]->kind, shadow_man.char_man[i]->id, &jms_shadow_env, &chara_pos, height);
+                    
+                    
+                    
+                    shVectorCopy(&tmp_light_position, &virtual_light_position);
+                    if (tmp_light_position[1] > 0.0f)
+                        tmp_light_position[1] *= -1.0f;
+                    sceVu0DropShadowMatrix(drop_shadow_matrix, tmp_light_position, plane[0], plane[1], plane[2], 0);
+                    
+                    
+                    
+                    shadow_set_micro_params(&shadow_micro_frame_parallel, cam, &drop_shadow_matrix, 0);
+                    
+                    
+                    
+                    shAddVector(&virtual_light_position, &virtual_light_position, &chara_pos);
+                    
+                    
+                    sh2shd_renew_char_man_parallel(shadow_man.char_man[i], virtual_light_position);
+                    
+                    break;
+                }
+        
+        }
+        
+        for (i = 0; i < 16; i++) {
+        
+            if (shadow_man.char_man[i] != NULL)
+                
+                if ((shadow_man.char_man[i]->kind >= 0x800) && (shadow_man.char_man[i]->kind < 0x809)) {
+                
+                    if ((shadow_man.char_man[i]->light_kind == 1) || (shadow_man.char_man[i]->light_kind == 3)) {
+                    
+                        
+                        
+                        sh2shd_renew_char_man_parallel(shadow_man.char_man[i], &virtual_light_position);
+                    }
+                    break;
+                }
+
+        }
+    }
+
+    
+    
+    
+    if (shadow_man.parallel_char_num > 0) {
+        sceVu0FVECTOR light_pos; // r29+0x1B0
+        int count = 0; // r17
+        sceVu0FVECTOR dir; // r29+0x1C0
+        sceVu0FMATRIX mat; // r29+0x1D0
+        int glb_coord; // r29+0x238
+        int map_id; // r29+0x23C
+
+        
+        for (i = 0; i < 16; i++) {
+        
+            if (shadow_man.char_man[i] != NULL) {
+            
+                if (count == 0) {
+                    
+                    
+                    
+                    get_map_id(&glb_coord, &map_id);
+                    
+                    count++;
+                    shVectorCopy(&dir, &shadow_man.char_man[i]->light_dir);
+                    shScaleVector(&dir, &dir, -1.0f);
+                    if (demo_no == 77)
+                        sceVu0DropShadowMatrix(drop_shadow_matrix, dir, 0.0f, 0.10f, 0.0f, 0.0f); 
+                    else {
+                        sceVu0DropShadowMatrix(drop_shadow_matrix, dir, 0.0f, 100.0f, 0.0f, 0.0f);
+                    }
+                    
+                    shCharacterGetPartsMatrixForShadow(mat, shadow_man.char_man[i]->kind, shadow_man.char_man[i]->id, 0U);
+                    
+                    
+                    vec_scale(10000.0f, &dir, &light_pos);
+                    vec_add(&light_pos, &mat[3], &light_pos);
+                    
+                    
+                    shadow_set_micro_params(&shadow_micro_frame_parallel + 1, cam, &drop_shadow_matrix, 0);
+                }
+
+                shVectorCopy(&shadow_man.char_man[i]->light_pos, &light_pos[0]);
+                
+                if (shadow_man.char_man[i]->light_kind == 4)
+                    sh2shd_renew_char_man_parallel(shadow_man.char_man[i], &shadow_man.char_man[i]->light_pos);
+            }
+        }
+    }
+
+    
+    if (shadow_man.parallel_bg_num > 0) {
+        sceVu0FVECTOR dir; // r29+0x210
+        demo_no = 0;
+            
+        for (i = 0; i < 4; i++) {
+            
+            if ((shadow_man.outdoor_man[i] != NULL) &&
+                (shadow_man.outdoor_man[i]->light_kind == 4)) {
+                
+                if (demo_no == 0) {
+                    
+                    
+                    
+                    
+                    demo_no++;
+                    
+                    shVectorCopy(&dir, &shadow_man.outdoor_man[i]->light_dir);
+                    shScaleVector(&dir, &dir, -1.0f);
+                    
+                    
+                    shScaleVector(&shadow_man.outdoor_man[i]->light_pos, &dir, 10000.0f);
+                    shAddVector(&shadow_man.outdoor_man[i]->light_pos, &shadow_man.outdoor_man[i]->light_pos, &shadow_man.outdoor_man[i]->shape->local_world[3]);
+                    
+                    
+                    
+                    sceVu0DropShadowMatrix(drop_shadow_matrix, dir, 0.0f, 0.01f, 0.0f, 0);
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    shadow_set_micro_params(&shadow_micro_frame_parallel + 2, cam, drop_shadow_matrix, 0);
+                }
+                sh2shd_get_shadow_env_bg(&shadow_env, shadow_man.outdoor_man[i]->raw_data);
+                if (shadow_man.outdoor_man[i]->light_kind == 4) {
+                    sh2shd_renew_outdoor_man_for_parallel(shadow_man.outdoor_man[i], &shadow_man.outdoor_man[i]->light_pos[0], &shadow_env);
+                }
+            }
+        }
+    }
+
+
+
+
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", sh2shd_renew_shadow_man)
+#endif
+
 
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_model", make_chara_reftag_pool_and_kick_packet_for_spot);
 

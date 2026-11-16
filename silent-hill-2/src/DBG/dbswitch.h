@@ -1,7 +1,7 @@
 #ifndef DBSWITCH_H
 #define DBSWITCH_H
 
-#include "common.h"
+#include "sh2_common.h"
 
 typedef enum DBSW_ID {
     DBSW_SYS = 0,

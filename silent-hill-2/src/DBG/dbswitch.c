@@ -1,15 +1,15 @@
-#include "dbswitch.h"
+#include "DBG/dbswitch.h"
 
-extern /* static */ u_int dbSwitchStat[2]; // size: 0x8, address: 0x34C4A8
-extern /* static */ int dbSwitchX; // size: 0x4, address: 0x11B6E48
-extern /* static */ int dbSwitchY; // size: 0x4, address: 0x11B6E50
-extern /* static */ int dbSwitchDispF; // size: 0x4, address: 0x11B6E58
+static int dbSwitchX = 0; // size: 0x4, address: 0x11B6E48
+static int dbSwitchY = 0; // size: 0x4, address: 0x11B6E50
+static int dbSwitchDispF = 0; // size: 0x4, address: 0x11B6E58
+static u_int dbSwitchStat[2] = {0}; // size: 0x8, address: 0x34C4A8
 
 #line 17
 void dbSwitchDispIndicator(int enable /* r2 */, int o /* r2 */, int x /* r2 */, int dx /* r2 */, int dy /* r2 */) {
-    int just, bit, Y; // r2
-    char* sym[2][2] = {"-\n", "\x8a-\n", "O\n", "\x8aO\n"}; // r29+0x20
-
+    int Y; // r16
+    s_char* sym[2][2] = {"-\n", "\x8a-\n", "O\n", "\x8aO\n"}; // r29+0x20
+    int bit, just; // r2
     if (enable) {
 
         dy = -dy;

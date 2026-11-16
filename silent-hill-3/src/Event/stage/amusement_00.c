@@ -74,7 +74,7 @@ int func_01F6D880_amusement_00(void) {
             D_01F72DD0_amusement_00 = &D_01F72960_amusement_00;
             D_01F72D80_amusement_00++;
         case 1:
-            ret = func_0016C540(&D_01F72AF0_amusement_00, &D_01F72B50_amusement_00);
+            ret    = func_0016C540(&D_01F72AF0_amusement_00, &D_01F72B50_amusement_00);
             float2 = func_001643C0();
             float1 = func_001643C0();
             float3 = D_01F72DD0_amusement_00->unk0;
@@ -185,14 +185,14 @@ int func_01F6DA30_amusement_00(void) {
             }
             break;
         case 7:
-            ret = func_0016C540(&D_01F72B90_amusement_00, &D_01F72BF0_amusement_00);
+            ret                     = func_0016C540(&D_01F72B90_amusement_00, &D_01F72BF0_amusement_00);
             D_01F72D80_amusement_00 = 8;
             func_00258910();
             func_001EC590(0);
             func_001C2290(0.0f, 1);
             break;
         case 8:
-            ret = func_0016C540(&D_01F72B90_amusement_00, &D_01F72BF0_amusement_00);
+            ret    = func_0016C540(&D_01F72B90_amusement_00, &D_01F72BF0_amusement_00);
             float1 = func_001643C0();
             float2 = D_01F72DA8_amusement_00->unk0;
             if (float2 > 0.0f && float2 <= float1) {
@@ -219,45 +219,45 @@ void func_01F6DEA0_amusement_00(float fparg0) {
     sh3gfw_AREA_HEAD* areaHead1;
     sh3gfw_AREA_HEAD* areaHead2;
 
-    picLoad1 = func_00170430(0);
-    picDraw1 = func_00170450(0);
-    areaHead1 = (sh3gfw_AREA_HEAD*) (D_01F72DB8_amusement_00 + 64);
-    picLoad1->ap = areaHead1;
-    picLoad1->tex_adr = -1;
+    picLoad1           = func_00170430(0);
+    picDraw1           = func_00170450(0);
+    areaHead1          = (sh3gfw_AREA_HEAD*) (D_01F72DB8_amusement_00 + 64);
+    picLoad1->ap       = areaHead1;
+    picLoad1->tex_adr  = -1;
     picLoad1->clut_adr = -1;
-    picLoad1->otp = 0;
+    picLoad1->otp      = 0;
     sh3_PictureLoadImageWrapped(picLoad1);
 
     shQzero(picDraw1, 68);
-    picDraw1->ap = areaHead1;
-    picDraw1->tex = -1;
-    picDraw1->clut = -1;
+    picDraw1->ap     = areaHead1;
+    picDraw1->tex    = -1;
+    picDraw1->clut   = -1;
     picDraw1->status = (short) (picDraw1->status | 1);
-    picDraw1->otp = 1;
+    picDraw1->otp    = 1;
     sh3_PictureDrawWrapped(picDraw1);
 
-    picLoad2 = func_00170430(1);
-    picDraw2 = func_00170450(1);
-    areaHead2 = (sh3gfw_AREA_HEAD*) (D_01F72DC0_amusement_00 + 64);
-    picLoad2->ap = areaHead2;
-    picLoad2->tex_adr = -1;
+    picLoad2           = func_00170430(1);
+    picDraw2           = func_00170450(1);
+    areaHead2          = (sh3gfw_AREA_HEAD*) (D_01F72DC0_amusement_00 + 64);
+    picLoad2->ap       = areaHead2;
+    picLoad2->tex_adr  = -1;
     picLoad2->clut_adr = -1;
-    picLoad2->otp = 2;
+    picLoad2->otp      = 2;
     sh3_PictureLoadImageWrapped(picLoad2);
     shQzero(picDraw2, 68);
 
-    picDraw2->ap = areaHead2;
-    picDraw2->tex = -1;
-    picDraw2->clut = -1;
+    picDraw2->ap     = areaHead2;
+    picDraw2->tex    = -1;
+    picDraw2->clut   = -1;
     picDraw2->status = (short) (picDraw2->status | 1);
     if (fparg0 < 1.0f) {
-        picDraw2->a = (char) (128.0f * fparg0);
-        picDraw2->alpha_a = 0;
-        picDraw2->alpha_b = 1;
-        picDraw2->alpha_c = 0;
-        picDraw2->alpha_d = 1;
+        picDraw2->a         = (char) (128.0f * fparg0);
+        picDraw2->alpha_a   = 0;
+        picDraw2->alpha_b   = 1;
+        picDraw2->alpha_c   = 0;
+        picDraw2->alpha_d   = 1;
         picDraw2->alpha_fix = 0;
-        picDraw2->status = (short) (picDraw2->status | 32);
+        picDraw2->status    = (short) (picDraw2->status | 32);
     }
 
     picDraw2->otp = 3;
@@ -268,13 +268,13 @@ int func_01F6E020_amusement_00(void) {
     Vector4 vector;
 
     vector = D_01F72C10_amusement_00;
-    
+
     switch (D_01F72D80_amusement_00) {
-    case 0:
-        func_00190A20(2);
-        D_01F72D80_amusement_00++;
+        case 0:
+            func_00190A20(2);
+            D_01F72D80_amusement_00++;
     }
-        
+
     if (func_0016C1C0(26) == 0) {
         return 0;
     }
@@ -297,108 +297,108 @@ int func_01F6E120_amusement_00(void) {
     float sound_fa1;
 
     switch (D_01F72D80_amusement_00) {
-    case 0:
-        func_00190A20(0);
-        func_00190A20(5);
-        D_01F72D98_amusement_00 = 1.0f;
-        D_01F72D80_amusement_00 = 1;
-    case 1:
-        if (func_00190C00() == 0) {
-            return 0;
-        }
-        func_001C2290(0.8f, 3);
-        D_01F72D80_amusement_00 = 2;
-    case 2:
-        func_0016F550(73, 0);
-        func_0016F550(72, 4);
-        D_01F72D80_amusement_00 = 3;
-    case 3:
-        if (func_00151150(0, 1) == 0 || func_001C2580(2) == 0) {
-            return 0;
-        }
-        D_01F72D80_amusement_00 = 4;
-    case 4:
-        if (func_001C2580(4) != 0) {
-            func_0016BC00(1);
-            D_01F72D80_amusement_00 = 5;
-        } else if (func_001C2580(3) == 0) {
-            func_0016BC00(0);
-            func_001C2290(0.8f, 5);
-            func_0016C1A0();
-            return 0;
-        }
-        func_01F6E420_amusement_00(1.0f);
-        return 0;
-    case 5:
-        D_01F72D80_amusement_00 = 6;
-        D_1D3169C |= 0x800;
-        ItemGet(69);
-        sound_fa0 = 1.0f;
-        sound_fa1 = 0.0f;
-        SeCall(11041, sound_fa0, sound_fa1);
-    case 6:
-        func_0016BC00(1);
-        func_01F6E420_amusement_00(1.0f);
-        if (func_0016C1C0(62) == 0) {
-            return 0;
-        }
-        D_01F72D80_amusement_00 = 7;
-        return 0;
-    case 7:
-        func_0016BC00(0);
-        float1 = D_01F72D98_amusement_00 - (0.8f * shGetDT());
-        D_01F72D98_amusement_00 = float1;
-        if (float1 < 0.0f) {
-            D_01F72D98_amusement_00 = 0.0f;
-            D_01F72D80_amusement_00 = 8;
+        case 0:
+            func_00190A20(0);
+            func_00190A20(5);
+            D_01F72D98_amusement_00 = 1.0f;
+            D_01F72D80_amusement_00 = 1;
+        case 1:
+            if (func_00190C00() == 0) {
+                return 0;
+            }
             func_001C2290(0.8f, 3);
-        }
-        func_01F6E420_amusement_00(D_01F72D98_amusement_00);
-        return 0;
-    case 8:
-        func_0016BC00(0);
-        func_01F6E420_amusement_00(0.0f);
-        if (func_001C2580(2) != 0) {
-            D_01F72D80_amusement_00 = 9;
-        }
-        return 0;
-    case 9:
-        func_0016C1B0();
-        func_001C2290(0.8f, 5);
-        func_00190A20(6);
-        D_01F72D80_amusement_00 = 10;
-    case 10:
-        if (func_00190C00() == 0) {
+            D_01F72D80_amusement_00 = 2;
+        case 2:
+            func_0016F550(73, 0);
+            func_0016F550(72, 4);
+            D_01F72D80_amusement_00 = 3;
+        case 3:
+            if (func_00151150(0, 1) == 0 || func_001C2580(2) == 0) {
+                return 0;
+            }
+            D_01F72D80_amusement_00 = 4;
+        case 4:
+            if (func_001C2580(4) != 0) {
+                func_0016BC00(1);
+                D_01F72D80_amusement_00 = 5;
+            } else if (func_001C2580(3) == 0) {
+                func_0016BC00(0);
+                func_001C2290(0.8f, 5);
+                func_0016C1A0();
+                return 0;
+            }
+            func_01F6E420_amusement_00(1.0f);
             return 0;
-        }
-        func_00190A20(0);
-        D_01F72D80_amusement_00 = 0;
-    default:
-        return 1;
+        case 5:
+            D_01F72D80_amusement_00 = 6;
+            D_1D3169C |= 0x800;
+            ItemGet(69);
+            sound_fa0 = 1.0f;
+            sound_fa1 = 0.0f;
+            SeCall(11041, sound_fa0, sound_fa1);
+        case 6:
+            func_0016BC00(1);
+            func_01F6E420_amusement_00(1.0f);
+            if (func_0016C1C0(62) == 0) {
+                return 0;
+            }
+            D_01F72D80_amusement_00 = 7;
+            return 0;
+        case 7:
+            func_0016BC00(0);
+            float1                  = D_01F72D98_amusement_00 - (0.8f * shGetDT());
+            D_01F72D98_amusement_00 = float1;
+            if (float1 < 0.0f) {
+                D_01F72D98_amusement_00 = 0.0f;
+                D_01F72D80_amusement_00 = 8;
+                func_001C2290(0.8f, 3);
+            }
+            func_01F6E420_amusement_00(D_01F72D98_amusement_00);
+            return 0;
+        case 8:
+            func_0016BC00(0);
+            func_01F6E420_amusement_00(0.0f);
+            if (func_001C2580(2) != 0) {
+                D_01F72D80_amusement_00 = 9;
+            }
+            return 0;
+        case 9:
+            func_0016C1B0();
+            func_001C2290(0.8f, 5);
+            func_00190A20(6);
+            D_01F72D80_amusement_00 = 10;
+        case 10:
+            if (func_00190C00() == 0) {
+                return 0;
+            }
+            func_00190A20(0);
+            D_01F72D80_amusement_00 = 0;
+        default:
+            return 1;
     }
 }
-              
+
 void func_01F6E420_amusement_00(float fparg0) {
     PicDraw_Data* temp_s0;
     PicLoadImage_Data* temp_s1;
 
-    temp_s1 = func_00170430(4);
-    temp_s0 = func_00170450(4);
-    temp_s1->ap = func_00170410(4);
-    temp_s1->tex_adr = -1;
+    temp_s1           = func_00170430(4);
+    temp_s0           = func_00170450(4);
+    temp_s1->ap       = func_00170410(4);
+    temp_s1->tex_adr  = -1;
     temp_s1->clut_adr = -1;
-    temp_s1->otp = 2;
+    temp_s1->otp      = 2;
     sh3_PictureLoadImageWrapped(temp_s1);
     shQzero(temp_s0, 68);
-    temp_s0->ap = func_00170410(4);
-    temp_s0->tex = -1;
+    temp_s0->ap   = func_00170410(4);
+    temp_s0->tex  = -1;
     temp_s0->clut = -1;
     temp_s0->status |= 1;
-    temp_s0->a = (char) (128.0f * fparg0);
-    temp_s0->alpha_a = 0;
-    temp_s0->alpha_b = 1;
-    temp_s0->alpha_c = 0;
-    temp_s0->alpha_d = 1;
+    temp_s0->a         = (char) (128.0f * fparg0);
+    temp_s0->alpha_a   = 0;
+    temp_s0->alpha_b   = 1;
+    temp_s0->alpha_c   = 0;
+    temp_s0->alpha_d   = 1;
     temp_s0->alpha_fix = 0;
     temp_s0->status |= 32;
     temp_s0->x0 = -1872;
@@ -446,8 +446,8 @@ int func_01F6E590_amusement_00(void) {
 u_int func_01F6E6A0_amusement_00(int arg0) {
     int x;
     switch (arg0) {
-    case 1:
-        x = GET_BIT(D_1D3169C, 9) ? 0 : 1;
+        case 1:
+            x = GET_BIT(D_1D3169C, 9) ? 0 : 1;
     }
     return x;
 }
@@ -496,10 +496,10 @@ void func_01F6E810_amusement_00(void) {
     Vector4 vector1;
     Vector4 vector2;
     D_01F72D90_amusement_00 = 1;
-    switch ((short)RoomName()) {
+    switch ((short) RoomName()) {
         case 214:
             if (!GET_BIT(D_1D3169C, 6)) {
-                vector1 = D_01F72C20_amusement_00;
+                vector1                 = D_01F72C20_amusement_00;
                 D_01F72DA0_amusement_00 = func_0016D240(1.0f, 5000.0f, 15200, &vector1, 0, 0);
                 break;
             } else {
@@ -508,7 +508,7 @@ void func_01F6E810_amusement_00(void) {
             }
         case 215:
             if (!GET_BIT(D_1D3169C, 6)) {
-                vector2 = D_01F72C30_amusement_00;
+                vector2                 = D_01F72C30_amusement_00;
                 D_01F72DA0_amusement_00 = func_0016D240(1.0f, 5000.0f, 15200, &vector2, 0, 0);
                 break;
             } else {
@@ -626,7 +626,6 @@ void func_01F6E920_amusement_00(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/amusement_00", func_01F6E920_amusement_00);
 #endif
 
-
 #ifdef HOLY_CANDLE
 int func_01F6ED00_amusement_00(void) {
     Vector4 vector;
@@ -642,7 +641,7 @@ int func_01F6ED00_amusement_00(void) {
             f = 1500.0f + 3000.0f * shRandF();
             D_01F72D80_amusement_00++;
             D_01F72D88_amusement_00 = f;
-    
+
         case 1:
             func_001908A0(&vector.x, &vector.z);
 
@@ -659,7 +658,7 @@ int func_01F6ED00_amusement_00(void) {
             vector.y = 0.0f;
             vector.x = 23000.0f;
             vector.z = -18200.0f;
-            
+
             func_0015DCD0(1.0f, 10000.0f, 15202, &vector, 0, 0); // candle moment
             D_01F72D80_amusement_00 = 0;
 

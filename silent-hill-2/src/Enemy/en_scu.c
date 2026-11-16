@@ -1,4 +1,22 @@
-#include "common.h"
+#include "sh2_common.h"
+#include "SH2_common/sh_vu0.h"
+
+#include "vec.h"
+
+#include "Enemy/en_common.h"
+
+#pragma fast_fptosi on
+
+static void enSCUSoundCrawl(EnLOCAL_DATA* dp);
+static float enSCUGetCrawlSpeed(EnLOCAL_DATA* dp);
+static void enSCUSoundCrawlInit(EnLOCAL_DATA* dp);
+static int enSCUCanSeePlayer(EnLOCAL_DATA* dp);
+static int enSCUCheckUpper(EnLOCAL_DATA* dp);
+static void enSCUAnimeSet(EnLOCAL_DATA* dp, int anim);
+static void enSCUAutoRecovery(EnLOCAL_DATA* dp);
+static int enSCUCheckAmbush(EnLOCAL_DATA* dp);
+static float enSCUGetRotSpeed(void);
+static void enSCUCtrlCrawl(EnLOCAL_DATA* dp);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUInitData);
 
@@ -26,7 +44,210 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAmbush);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlWaitCar);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlCrawl);
+#line 898
+static void enSCUCtrlCrawl(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec; // r29+48
+    int t; // r17
+    if (enCheckDamage(dp)) {
+        if (dp->sslv == 2 || dp->sslv <= 0) {
+            enResetDamage(dp);
+        } else if (enCheckSpray(dp)) {
+            enReduceHP(dp);
+            enSCUAnimeSet(dp, 24);
+            enSetTimer(dp, 180);
+            dp->sslv = 6;
+        } else {
+            enReduceHP(dp);
+            enSCUAnimeSet(dp, 26);
+            enSetHitBack(dp);
+            if (enCheckInstantDeath(dp)) {
+                enKillCountUp(dp);
+                ENEMY_STEP(11);
+                return;
+            }
+            dp->sslv = 5;
+            enSetTimer(dp, 10);
+        }
+    }
+    switch (dp->sslv) {
+        case -1:
+            enFlagSetNoDamage(dp);
+            enSCUAnimeSet(dp, 29);
+            enSetNewSize(dp, 250.0f, 200.0f, 100.0f, 200.0f);
+            dp->sslv--;
+            break;
+        case -2:
+            if (dp->anim_n == -1) {
+                dp->sslv = 0;
+            }
+            break;
+        case 0:
+            enSCUAnimeSet(dp, 28);
+            if (!(dp->type & (1 << 4)) && (dp->endurance < dp->endurance_max)) {
+                
+                enFlagSetLieDown(dp);
+            } else {
+                enFlagResetLieDown(dp);
+            }
+            enFlagResetNoDamage(dp);
+            enFlagSetRotFloor(dp);
+            enInitPath(&dp->path, dp->scp->rot.y);
+            shSinCosV_Scale(vec, dp->scp->rot.y + shSway1f(-QUARTER_TURN, 0.5f), 1000.0f);
+            
+            shAddVector(dp->scu.target, (float*) &dp->scp->pos, vec);
+            dp->lie = 0;
+            enSCUSoundCrawlInit(dp);
+            enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+            dp->flag |= (1 << 9);
+            dp->sslv++;
+        case 1: /* fallthrough */
+            enSCUSoundCrawl(dp);
+            if (shVectorDistXz((float*) &dp->scp->pos, dp->scu.target) < 400.0f || shRandF() < 0.002f) {
+            
+                shSinCosV_Scale(vec, dp->scp->rot.y + shSway1f(-QUARTER_TURN, 0.5f), 1000.0f);
+                
+                shAddVector(dp->scu.target, (float*) &dp->scp->pos, vec);
+            }
+            t = enSCUCanSeePlayer(dp);
+            if ((enCheckFinishedByHuman(dp)) &&
+                (dp->p_dist < 1000.0f)) {
+                dp->anim_loop = 0;
+                enAnimePause(dp);
+                enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                dp->sslv = 3;
+            } else {
+                if (enReduceTimer(dp) <= 0) {
+                    if (((t == 2 || shRandF() < 0.02f || enSCUCheckAmbush(dp))) && (((dp->type & (1 << 4)) == 0)) && (dp->type != -1) && (enSCUCheckUpper(dp) == 0)) {
+                        
+                        
+
+                        if (enGetMode() == 0) {
+                        
+                            dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
+                            enKillCountUp(dp);
+                            ENEMY_STEP(11);
+                            break;
+                        }
+                        enSCUAnimeSet(dp, 22);
+                        enFlagResetRotFloor(dp);
+                        enFlagResetLieDown(dp);
+                        enFlagSetNoDamage(dp);
+                        enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                        enAddHP(dp, 10.0f);
+                        dp->sslv = 2;
+                    } else if (shRandF() < 0.1f) {
+                        enSCUAnimeSet(dp, 24);
+                        enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                        dp->sslv = 4;
+                    } else {
+                        dp->anim_loop = 0;
+                        enAnimePause(dp);
+                        enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                        dp->sslv = 3;
+                        enAddHP(dp, 10.0f);
+                    }
+                    break;
+                }
+                if ((dp->type & (1 << 4)) && (dp->p_dist < 2000.0f) &&
+                    !enSCUCheckUpper(dp)) {
+                    enSCUAnimeSet(dp, 22);
+                    dp->type &= ~(1 << 4);
+                    enFlagResetRotFloor(dp);
+                    enFlagResetLieDown(dp);
+                    enFlagSetNoDamage(dp);
+                    enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                    dp->sslv = 2;
+                    break;
+                }
+                    
+                if (enSetPath(dp, dp->ins.rot_add, &dp->scp->pos)) {
+                    shSinCosV_Scale(vec, dp->path.markangle, 1000.0f);
+                    shAddVector(dp->scu.target, (float*) &dp->scp->pos, vec);
+                    dp->path.timer = 0;
+                }
+                
+                enMoveAngle(&dp->path, enSCUGetRotSpeed());
+                shSinCosV_Scale(dp->vec, dp->scp->rot.y = dp->path.angle, enSCUGetCrawlSpeed(dp));
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enResetDamage(dp);
+                enFlagResetNoDamage(dp);
+                if (enSCUCanSeePlayer(dp) <= 0) {
+                    ENEMY_STEP(1);
+                } else {
+                    ENEMY_STEP(2);
+                }
+                dp->flag &= ~(1 << 9);
+            }
+            break;
+        case 3:
+            if ((enReduceTimer(dp) <= 0) && (enCheckFinishedByHuman(dp) == 0)) {
+                t = enSCUCanSeePlayer(dp);
+                if (((t == 2 || dp->p_dist < 1000.0f || dp->scp->battle.hp == dp->scp->battle.hp_max)) && 
+                    ((dp->type != -1))                               && 
+                    !(dp->type & (1 << 4))                           && 
+                    (enSCUCheckUpper(dp) == 0)) {
+                    #line 1042
+                    if (enCheckFinishedByHuman(dp)) break;
+
+
+                    #line 1046
+                    if (enGetMode() == 0) {
+                    
+                        enSCUAnimeSet(dp, 26);
+                        dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
+                        enKillCountUp(dp);
+                        ENEMY_STEP(11);
+                        break;
+                    }
+                        
+                    enSCUAnimeSet(dp, 22);
+                    enFlagResetRotFloor(dp);
+                    enFlagSetNoDamage(dp);
+                    enFlagResetLieDown(dp);
+                    enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                    enAddHP(dp, 10.0f);
+                    dp->sslv = 2;
+                } else if (shRandF() < 0.1f) {
+                    enSCUAnimeSet(dp, 24);
+                    enSetTimer(dp, (int) (120.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                    dp->sslv = 4;
+                } else {
+                    dp->sslv = 0;
+                }
+            }
+            break;
+        case 4:
+            if (enReduceTimer(dp) <= 0) {
+                enAddHP(dp, 10.0f);
+                if (((100.0f * shRandF()) < dp->scp->battle.hp_rate) && 
+                    (enCheckFinishedByHuman(dp) == 0)) {
+                    dp->sslv = 0;
+                } else {
+                    enSCUAnimeSet(dp, 26);
+                    enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                    dp->sslv = 3;
+                }
+            }
+            break;
+        case 5:
+            if (dp->hb_s == 0.0f && enReduceTimer(dp) <= 0) {
+                ENEMY_STEP(10);
+                dp->flag &= ~(1 << 9);
+            }
+            break;
+        case 6:
+            if (enReduceTimer(dp) <= 0) {
+                enSCUAnimeSet(dp, 26);
+                enSetTimer(dp, (int) (180.0f * (1.0f + shSway1f(-0.5f, 0.5f))));
+                dp->sslv = 3;
+            }
+            break;
+    }
+    enSCUAutoRecovery(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAttack);
 

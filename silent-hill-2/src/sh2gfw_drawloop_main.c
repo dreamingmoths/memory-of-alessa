@@ -6,9 +6,11 @@
 
 #include "GFW/sh2_GsAllEnv.h"
 #include "GFW/gfw_test/sh2gfw_shcamtest.h"
+#include "GFW/sh2_DrawEnvData.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_2d_filters.h"
 #include "GFW/sh2_shadow_main.h"
+#include "GFW/sh2gfw_GSCTL_man.h"
 
 #include "Multi_thr/intc/syncv.h"
 
@@ -24,16 +26,47 @@
 #include "Font/fj_man.h"
 #include "view/camera_dat.h"
 
-static void Calc_Set_Matrix(void);
-static void Spack_All_Draw(void);
-static void kari_setdmatag_and_draw(void);
-static void Exec_PreDraw_OVfunc(void);
-static void Draw_Character_And_Shadow(void);
-static void Noise_and_FontDraw(int loopmode);
+#include "Event/event.h"
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", all_Frame_Buffer_Clear);
+static void Exec_PreDraw_OVfunc(void);
+static void Noise_and_FontDraw(int loopmode);
+static void GSFilterExec4NextLoop(void);
+static void Calc_Set_Matrix(void);
+static void gs_loppstart_init(void);
+static void kari_setdmatag_and_draw(void);
+static void Draw_Character_And_Shadow(void);
+static void Spack_All_Draw(void);
+static int FOG_ROOM(void);
+static int DrawSpecialPolyforDemo(void);
+static int Check_DrawOrder(void);
+
+void all_Frame_Buffer_Clear(void) {
+    Q_WORDDATA* kick;
+    sh2gfw_init_GSPACKMAN(&GSCTL_man);
+    sh2gfw_RotateTBuff(&shGs_AllEnv);
+    sh2gfw_setREF_gsctl(shGs_AllEnv.DefaultEnv);
+    sh2gfw_InclimentLoopCounter(&shGs_AllEnv);
+    
+    sh2gfw_RotateTBuff(&shGs_AllEnv);
+    sh2gfw_setREF_gsctl(shGs_AllEnv.DefaultEnv);
+    sh2gfw_InclimentLoopCounter(&shGs_AllEnv);
+    
+    sh2gfw_RotateTBuff(&shGs_AllEnv);
+    sh2gfw_setREF_gsctl(shGs_AllEnv.DefaultEnv);
+    
+    
+    
+    kick = sh2gfw_setEND_gsctl();
+    d1cSend(kick);
+    
+    d1sSync(0, -1);
+    
+    shDBG_font_init(); sh2gfw_init_Perf();
+
+}
 
 UNMIGRATED(Q_WORDDATA mct); // size: 0x10, address: 0x2ADB80
+UNMIGRATED(u_long res);
 UNMIGRATED(u_long res2);
 
 #line 139
@@ -84,10 +117,55 @@ void DrawLopp_Pre(void) {
     sh2shd_reset_shadow();
 }
 
+void kari_drawloop_main_2dSYNC(void) {
+    
+    
+    
+    
+    
+    
+    
+    
+    fjFontDrawExecVif1();
+    
+    
+    GSFilterExec4NextLoop();
+    
+    
+    d2sSync(0, -1);
+    d1sSync(0, -1);
+}
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", kari_drawloop_main_2dSYNC);
+void draw_main_3dSYNC(void) {
+    
+    
+    
+    GSFilterExec4NextLoop();
+    
+    
+    
+    
+    
+    
+    
+    d2sSync(0, -1);
+    d1sSync(0, -1);
+    
+    res = *T0_COUNT;
+    kari_DBG_print_junbi(&res, &res2);
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", draw_main_3dSYNC);
+
+
+
+
+
+
+
+
+
+
+
+}
 
 #line 252
 void DrawLopp_Post(void) {
@@ -145,9 +223,15 @@ void DrawLopp_Post(void) {
     mct.ui32[1] = mct.ui32[0];
 }
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Get_FrameRate);
+u_int Get_FrameRate(void) {
+    return mct.ui32[1];
+}
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Exec_PreDraw_OVfunc);
+static void Exec_PreDraw_OVfunc(void) {
+    if ((stage != NULL) && (stage->gfw_func != NULL) && (stage->gfw_func->PreDraw != NULL)) {            
+        stage->gfw_func->PreDraw();            
+    }    
+}
 
 void draw_main(void) {
     sh2gfw_Store_Perf2(*T0_COUNT, DRAW_MAIN_PERF_MD);
@@ -183,7 +267,18 @@ INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", GSFilterExec4NextLoop);
 
 INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Calc_Set_Matrix);
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", gs_loppstart_init);
+static void gs_loppstart_init(void) {
+    Q_WORDDATA* kick;
+    
+    sh2gfw_init_GSPACKMAN(&GSCTL_man);
+    
+    sh2gfw_RotateTBuff(&shGs_AllEnv);
+    sh2gfw_setREF_gsctl(shGs_AllEnv.DefaultEnv);
+    
+    
+    kick = sh2gfw_setEND_gsctl();
+    d1cSend(kick);
+}
 
 INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", kari_setdmatag_and_draw);
 
@@ -239,8 +334,75 @@ void Draw_Character_And_Shadow(void) {
 
 INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Spack_All_Draw);
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", FOG_ROOM);
+static int FOG_ROOM(void) {
+    int* mp;
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", DrawSpecialPolyforDemo);
+    mp = Get_NowMapId();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    switch (*mp) {
+        case 0x50001:
+        case 0x90048:
+        case 0xB00B9:
+        case 0xB00BD:
+        case 0xB00C1:
+        case 0xC0029:
+        case 0xC0047:
+        case 0xC005B:
+        case 0xD0035:
+        case 0xD0049:
+        case 0xE0005:
+            return 1;
+    }
+    
+    
+    
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/sh2gfw_drawloop_main", Check_DrawOrder);
+static int DrawSpecialPolyforDemo(void) {
+    
+    if ((stage != NULL) && (stage->gfw_func != NULL) && (stage->gfw_func->SpecDraw != NULL)) {
+        stage->gfw_func->SpecDraw();
+        return 1;        
+    }
+    
+    return 0;
+
+}
+
+static int Check_DrawOrder(void) {
+    int* mp;
+    if (DramaDemoNumber()) {
+        
+        return 1;
+    }
+   
+    mp = Get_NowMapId();
+    
+    switch (*mp) {        
+        case 0x90016:
+        case 0xA007D:
+            return 0;
+    }
+
+    return 1;
+
+}

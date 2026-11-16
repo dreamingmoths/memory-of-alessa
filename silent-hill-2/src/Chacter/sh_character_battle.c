@@ -553,7 +553,7 @@ void shGetHumanAttackSprayPos(int i, float* s_pos, float* s_vec, float* result) 
     vec[1] = pos1[1] - s_pos[1];
     vec[2] = pos1[2] - s_pos[2];
     vec[3] = 0.0f;
-    vec_normalize(vec, result);
+    shNormalizeVector(vec, result);
 
     
 }

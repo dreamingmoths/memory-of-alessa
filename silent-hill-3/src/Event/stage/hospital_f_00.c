@@ -52,24 +52,24 @@ int func_01F6D810_hospital_f_00(void) {
         D_1D31688 |= 0x4000;
         func_00190A20(2);
     }
-    
+
     if (GET_BIT(D_1D31644, 5)) {
-        var_a0 = 0x20;
+        var_a0  = 0x20;
         temp_v1 = 0x5AA;
     } else {
         var_a0 = 0x1E;
         if (GET_BIT(D_1D31684, 0xC)) {
-            var_a0 = 0x1F;
+            var_a0  = 0x1F;
             temp_v1 = 0x5AA;
         } else {
             temp_v1 = 0x5AA;
         }
     }
-    
+
     if (func_0016C1C0(var_a0) == 0) {
         return 0;
     }
-    
+
     if (!GET_FLAG(D_01D31640, temp_v1)) {
         D_01D31640[temp_v1 >> 5] |= (1 << (temp_v1 & 0x1F));
     }
@@ -90,24 +90,24 @@ int func_01F6D920_hospital_f_00(void) {
     t = GET_BIT(D_1D31688, 0xC) ? 0x31 : 0x30;
     switch (D_01F6FA80_hospital_f_00) {
         case 0:
-        if (func_0016C1C0(t) == 0) {
-            return 0;
-        }
-        if ((func_00168440() != 0) || ((GET_BIT(D_1D31688, 0xC)))) {
-            break;
-        }
-            
-        D_01F6FA80_hospital_f_00 += 1;
-        func_0016C3C0();
-        func_0018FE60((u_long128*)&sp10);
-        func_0015DCD0(1.0f, 10000.0f, 0x2B21, (float*)&sp10, 0, 0);
-        
+            if (func_0016C1C0(t) == 0) {
+                return 0;
+            }
+            if ((func_00168440() != 0) || (GET_BIT(D_1D31688, 0xC))) {
+                break;
+            }
+
+            D_01F6FA80_hospital_f_00 += 1;
+            func_0016C3C0();
+            func_0018FE60((u_long128*) &sp10);
+            func_0015DCD0(1.0f, 10000.0f, 0x2B21, (float*) &sp10, 0, 0);
+
         default:
-        if (func_0016C1C0(0xF) == 0) {
-            return 0;
-        }
-        ItemGet(0x12);
-        D_1D31688 |= 0x1000;
+            if (func_0016C1C0(0xF) == 0) {
+                return 0;
+            }
+            ItemGet(0x12);
+            D_1D31688 |= 0x1000;
     }
 
     D_1D31688 &= ~0x2000;
@@ -119,15 +119,15 @@ int func_01F6DA80_hospital_f_00(void) {
     float temp_f20;
     int ret;
 
-    switch(D_01F6FAC0_hospital_f_00) {
+    switch (D_01F6FAC0_hospital_f_00) {
         case 0:
-            func_001C2290(6, 0.0f);            
+            func_001C2290(6, 0.0f);
             D_1D316AC |= 0x20000000;
             D_01F6FAB8_hospital_f_00 = &D_01F6F930_hospital_f_00;
             D_01F6FAC0_hospital_f_00 += 1;
             break;
     }
-    
+
     ret = func_0016C540(&D_01F6F940_hospital_f_00, &D_01F6F9A0_hospital_f_00);
     if (ret != 0) {
         D_1D3171C &= 0x7FFFFFFF;
@@ -190,9 +190,9 @@ int func_01F6DC00_hospital_f_00(void) {
     return 1;
 }
 
-void func_01F6DDC0_hospital_f_00(PictureGroup *arg0) {
-    PictureLoad *temp_s2 = &arg0->unk10;
-    Picture *temp_s0 = &arg0->unk64;
+void func_01F6DDC0_hospital_f_00(PictureGroup* arg0) {
+    PictureLoad* temp_s2 = &arg0->unk10;
+    Picture* temp_s0     = &arg0->unk64;
 
     temp_s2->unk00 = func_00170410(0);
     temp_s2->unk04 = -1;
@@ -245,8 +245,8 @@ void func_01F6DDC0_hospital_f_00(PictureGroup *arg0) {
     PictureDraw(temp_s0);
 }
 
-void func_01F6DF60_hospital_f_00(PictureGroup *arg0) {
-    Picture *temp_s0 = &arg0->unk20;
+void func_01F6DF60_hospital_f_00(PictureGroup* arg0) {
+    Picture* temp_s0 = &arg0->unk20;
 
     arg0->unk00.unk00 = func_00170410(1);
     arg0->unk00.unk04 = -1;
@@ -263,14 +263,14 @@ void func_01F6DF60_hospital_f_00(PictureGroup *arg0) {
     PictureDraw(temp_s0);
 }
 
-void func_01F6DFF0_hospital_f_00(PictureGroup *arg0) {
+void func_01F6DFF0_hospital_f_00(PictureGroup* arg0) {
     func_01F6DF60_hospital_f_00(arg0);
     if (arg0->unkB0 != 0) {
         func_01F6DDC0_hospital_f_00(arg0);
     }
 }
 
-void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
+void func_01F6E030_hospital_f_00(PictureGroup* arg0) {
     func_001DE5B0(func_01F6DFF0_hospital_f_00, arg0, 1);
 }
 
@@ -278,7 +278,7 @@ void func_01F6E030_hospital_f_00(PictureGroup *arg0) {
 int func_01F6E050_hospital_f_00(void) {
     float var_f12;
     float var_f12_2;
-    PictureGroup *temp_s0;
+    PictureGroup* temp_s0;
 
     temp_s0 = (PictureGroup*) func_00156410(9);
 
@@ -378,14 +378,13 @@ int func_01F6E050_hospital_f_00(void) {
 INCLUDE_ASM("asm/nonmatchings/Event/stage/hospital_f_00", func_01F6E050_hospital_f_00);
 #endif
 
-
 void func_01F6E3C0_hospital_f_00(void) {
-    SubCharacter *scp;
+    SubCharacter* scp;
     int var_s0;
-    int *var_s1;
+    int* var_s1;
     var_s0 = 0;
     for (var_s1 = &D_01F6F9C0_hospital_f_00; *var_s1 != 0; var_s1++) {
-        scp = shCharacterGetSubCharacter(NURSE_CHARA_KIND , *var_s1);
+        scp = shCharacterGetSubCharacter(NURSE_CHARA_KIND, *var_s1);
         if (scp == 0) {
             continue;
         }
@@ -396,9 +395,9 @@ void func_01F6E3C0_hospital_f_00(void) {
             continue;
         }
         if (!GET_BIT(D_1D31680, 9)) {
-            shCharacter_Manage_Delete(NURSE_CHARA_KIND , *var_s1);
+            shCharacter_Manage_Delete(NURSE_CHARA_KIND, *var_s1);
         } else if (1 < var_s0) {
-            shCharacter_Manage_Delete(NURSE_CHARA_KIND , *var_s1);
+            shCharacter_Manage_Delete(NURSE_CHARA_KIND, *var_s1);
         }
     }
 }
@@ -408,7 +407,7 @@ int func_01F6E490_hospital_f_00(void) {
     int ret;
 
     ret = 0;
-    
+
     if (!GET_BIT(D_1D31688, 4)) {
         D_01F6FA88_hospital_f_00 = 0;
         D_1D31688 |= 0x10;
@@ -417,26 +416,26 @@ int func_01F6E490_hospital_f_00(void) {
         func_0016C1A0();
         SeCall(19033, 0.0f, 1.0f);
     }
-    
+
     D_01F6FA90_hospital_f_00 += shGetDT();
-    
+
     switch (D_01F6FA88_hospital_f_00) {
-        
+
         case 0:
             if (D_01F6FA90_hospital_f_00 < 0.5f) {
                 return 0;
             }
             SeCall(19032, 0.0f, 1.0f);
             D_01F6FA88_hospital_f_00 += 1;
-        
+
         case 1:
             if (D_01F6FA90_hospital_f_00 < 1.5f) {
                 return 0;
             }
             func_0016C1B0();
             D_01F6FA88_hospital_f_00 += 1;
-            break;    
-        
+            break;
+
         default:
             ret = 1;
             D_1D31688 &= ~0x10;
@@ -463,12 +462,12 @@ void func_01F6E640_hospital_f_00(void) {
     }
     D_01F6FA98_hospital_f_00 = 0;
 
-    switch (RoomName()) { 
+    switch (RoomName()) {
 
         case HOSPITAL_1F_RECEPTION:
             D_1D31720 |= 2;
             break;
-        
+
         case HOSPITAL_1F_VISITING_ROOM:
             if (!GET_BIT(D_1D31684, 0xC) && !GET_BIT(D_1D31644, 5)) {
                 D_1D31684 |= 0x800;
@@ -476,7 +475,7 @@ void func_01F6E640_hospital_f_00(void) {
             }
             D_1D31684 &= ~0x800;
             break;
-        
+
         case HOSPITAL_1F_C4_ROOM:
             if (GET_BIT(D_1D31684, 0xC) && !GET_BIT(D_1D31684, 0xF) && !GET_BIT(D_1D31688, 2) && !GET_BIT(D_1D31644, 5) && !GET_BIT(D_1D31684, 0xE)) {
                 D_1D31684 |= 0x2000;
@@ -484,13 +483,13 @@ void func_01F6E640_hospital_f_00(void) {
             } else {
                 D_1D31684 &= ~0x2000;
             }
-    
+
             if (GET_BIT(D_1D3168C, 9)) {
                 D_01F6FAC0_hospital_f_00 = 0;
                 return;
             }
             break;
-        
+
         case HOSPITAL_1F_DOCTORS_LOUNGE:
             D_1D31720 |= 8;
             break;
@@ -505,7 +504,6 @@ void func_01F6E850_hospital_f_00(void) {
             func_01F6E3C0_hospital_f_00();
             break;
     }
-    
 }
 
 void func_01F6E890_hospital_f_00(void) {
@@ -516,7 +514,7 @@ void func_01F6E890_hospital_f_00(void) {
     sp10 = D_01F6F9D0_hospital_f_00;
     sp20 = D_01F6F9E0_hospital_f_00;
     sp30 = D_01F6F9F0_hospital_f_00;
-    
+
     if (func_0019B580(2) == 0) {
         func_001C7BC0(&sp20, &sp10, &sp30, 0x200);
     }
@@ -537,10 +535,10 @@ void func_01F6E900_hospital_f_00(void) {
             } else {
                 D_1D31720 &= ~4;
             }
-    
+
             func_01F6E890_hospital_f_00();
             break;
-        
+
         case HOSPITAL_1F_VISITING_ROOM:
             if (GET_BIT(D_1D31684, 0xB)) {
                 func_0016CA40(1);
@@ -551,7 +549,7 @@ void func_01F6E900_hospital_f_00(void) {
             D_1D31720 &= ~0x10;
             D_1D31720 &= ~0x20;
             break;
-        
+
         case HOSPITAL_1F_C4_ROOM:
             if (GET_BIT(D_1D31684, 0xD)) {
                 func_0016CA40(1);
@@ -565,7 +563,7 @@ void func_01F6E900_hospital_f_00(void) {
             } else {
                 D_1D31720 &= ~0x200;
             }
-    
+
             if (!GET_BIT(D_1D3168C, 9)) {
                 func_0016CA40(7);
                 break;
@@ -576,5 +574,4 @@ void func_01F6E900_hospital_f_00(void) {
 }
 
 int func_01F6EB00_hospital_f_00(void) {
-
 }

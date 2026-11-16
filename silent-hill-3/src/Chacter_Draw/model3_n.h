@@ -85,7 +85,7 @@ typedef struct EnvPacket {
 } EnvPacket;
 
 int Model3NSkeletons(void* model_);
-s_char* Model3SkeletonStructure(sh_Model* model);
+s_char* Model3SkeletonStructure(void* model_);
 int Model3NClusters(void* model_);
 void Model3DrawPre(void);
 void sh2_Model_MakeMatrixParams(void);

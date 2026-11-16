@@ -7,7 +7,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6D7B0_building
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6D980_building_b_02);
 
-void func_01F6DB60_building_b_02(void) { //I will debug it later
+void func_01F6DB60_building_b_02(void) { // I will debug it later
     SubCharacter* scp;
     int var_s0;
     int* var_s1;
@@ -19,11 +19,11 @@ void func_01F6DB60_building_b_02(void) { //I will debug it later
         if (scp == 0) {
             continue;
         }
-        
+
         if (func_001E2110(scp) == 0) {
             var_s0++;
         }
-        if ((*var_s1 == 0xDB || *var_s1 == 0xDC)) {
+        if (*var_s1 == 0xDB || *var_s1 == 0xDC) {
             continue;
         }
         if (!GET_BIT(D_1D31670, 0x11)) {
@@ -45,7 +45,7 @@ void func_01F6DB60_building_b_02(void) { //I will debug it later
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6DC70_building_b_02);
 
 #ifdef HOLY_CANDLE
-int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_building_b_03
+int func_01F6DE10_building_b_02(void) { // this is similar to func_01F6E700_building_b_03
     int var_s0;
 
     var_s0 = 0;
@@ -61,14 +61,14 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
     D_01F6EF08_building_b_02 += shGetDT();
 
     switch (D_01F6EF00_building_b_02) {
-        
+
         case 0:
             if (D_01F6EF08_building_b_02 < 0.5f) {
                 return 0;
             }
             SeCall(19032, 0.0f, 1.0f);
             D_01F6EF00_building_b_02 += 1;
-        
+
         case 1:
             if (D_01F6EF08_building_b_02 < 1.5f) {
                 return 0;
@@ -76,14 +76,13 @@ int func_01F6DE10_building_b_02(void) { //this is similar to func_01F6E700_build
             func_0016C1B0();
             D_01F6EF00_building_b_02 += 1;
             break;
-        
+
         default:
             var_s0 = 1;
             D_1D31670 &= 0xFFBFFFFF;
             D_1D31714 |= 0x40000;
             D_1D31670 |= 0x100;
             D_1D317AC |= 0x08000000;
-    
     }
     return var_s0;
 }
@@ -92,13 +91,13 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_02", func_01F6DE10_building
 #endif
 
 void func_01F6DFD0_building_b_02(void) {
-    
+
     D_01F6EF10_building_b_02 = 0;
- 
+
     switch (RoomName()) {
 
         case BUILDING_OTHERWORLD_STAIRS_BEHIND_PAINTING:
-            D_1D31714 |= 0x200000; //first time entering the stairs
+            D_1D31714 |= 0x200000; // first time entering the stairs
             break;
 
         case BUILDING_OTHERWORLD_4F_SILVER_COIN_ROOM:
@@ -106,63 +105,60 @@ void func_01F6DFD0_building_b_02(void) {
             break;
 
         case BUILDING_OTHERWORLD_4F_BED_ROOM:
-            D_1D317B0 |= 0x400; //first time entering this room
+            D_1D317B0 |= 0x400; // first time entering this room
             break;
-
-        }
+    }
 }
 
 void func_01F6E050_building_b_02(void) {
-    
-    D_01F6EF10_building_b_02 = 1; //it probably has something to do with spawning the extra dog
+
+    D_01F6EF10_building_b_02 = 1; // it probably has something to do with spawning the extra dog
 
     switch (RoomName()) {
-        
+
         case BUILDING_OTHERWORLD_4F_SILVER_COIN_CORRIDOR:
-            func_01F6DB60_building_b_02(); //I need to verify this with higher action level difficulties
-        
+            func_01F6DB60_building_b_02(); // I need to verify this with higher action level difficulties
+
         default:
             break;
-        
     }
-    
 }
 
 void func_01F6E090_building_b_02(void) {
-    
+
     if (D_01F6EF10_building_b_02 == 0) {
-        func_01F6E050_building_b_02(); //I need to verify this with higher action level difficulties
+        func_01F6E050_building_b_02(); // I need to verify this with higher action level difficulties
     }
 
     switch (RoomName()) {
-        
+
         case BUILDING_OTHERWORLD_4F_HALL:
             if (func_00190950() != 0) {
-                clAddDynamicWall(&D_01F6EB80_building_b_02); 
+                clAddDynamicWall(&D_01F6EB80_building_b_02);
                 break;
             }
             break;
-            
+
         case BUILDING_OTHERWORLD_4F_SILVER_COIN_ROOM:
-            if (!GET_BIT(D_1D31670, 0xF)) { //check if you have the silver coin
+            if (!GET_BIT(D_1D31670, 0xF)) { // check if you have the silver coin
                 func_0016CA40(1);
-                D_1D31714 |= 0x02000000; //if you dont
+                D_1D31714 |= 0x02000000; // if you dont
             } else {
-                D_1D31714 &= 0xFDFFFFFF; //when you grab it
+                D_1D31714 &= 0xFDFFFFFF; // when you grab it
             }
-            
-            if (!GET_BIT(D_1D31644, 0x14)) { //if you havent solved the vending machine puzzle yet
+
+            if (!GET_BIT(D_1D31644, 0x14)) { // if you havent solved the vending machine puzzle yet
                 D_1D31714 |= 0x04000000;
                 D_1D31714 |= 0x08000000;
                 break;
             }
-            D_1D31714 &= 0xFBFFFFFF; //after you solved it
+            D_1D31714 &= 0xFBFFFFFF; // after you solved it
             D_1D31714 &= 0xF7FFFFFF;
             break;
-            
+
         case BUILDING_OTHERWORLD_4F_SILVER_COIN_CORRIDOR:
             if (GET_BIT(D_1D31670, 0x12) && !GET_BIT(D_1D31670, 0x13)) {
-                func_01F6DC70_building_b_02(D_1D31670); //it probably has something to do with spawning the extra dog, but I need to match it first
+                func_01F6DC70_building_b_02(D_1D31670); // it probably has something to do with spawning the extra dog, but I need to match it first
             }
             break;
     }

@@ -7,32 +7,32 @@ UNCURSE_CONSTRUCT_STAR();
 int func_01F6D680_construct_00(void) {
     int ret;
 
-    switch (D_01F6FA40_construct_00) {        
+    switch (D_01F6FA40_construct_00) {
         case 0:
             func_00190A20(2);
-        
+
             SeCall(13002, 0.0f, 1.0f); // I hate you SeCall
-        
+
             func_0013D250(0, &D_01F6F8B0_construct_00, 1.0f);
             D_01F6FA38_construct_00 = 0.0f;
             D_1D316AC[0] |= 0x20000000;
             D_01F6FA40_construct_00 += 1;
             /* fallthrough */
-        
+
         case 1:
-            D_01F6FA38_construct_00 +=  shGetDT();
+            D_01F6FA38_construct_00 += shGetDT();
             if (D_01F6FA38_construct_00 < 0.5f) {
                 return 0;
             }
             D_01F6FA40_construct_00 += 1;
-        
+
         default:
             ret = func_0016C540(&D_01F6F950_construct_00, &D_01F6F9B0_construct_00);
             if (ret == 1) {
                 func_001C2290(5, 0.5f);
                 D_1D316AC[0] &= 0xDFFFFFFF;
                 func_00190A20(0);
-            }            
+            }
     }
 
     return ret;
@@ -46,13 +46,13 @@ UNCURSE_CONSTRUCT_MOON();
 #pragma supress_warnings off
 
 #ifdef HOLY_CANDLE
-int func_01F6D7E0_construct_00(void) { //check 3th floor sign
+int func_01F6D7E0_construct_00(void) { // check 3th floor sign
     float volume, zero;
 
-    if (!GET_FLAG(D_1D31668, 0)) { 
+    if (!GET_FLAG(D_1D31668, 0)) {
         D_01F6FA00_construct_00 = 0;
         func_0016C3C0();
-        D_1D31668[0] |= 1; 
+        D_1D31668[0] |= 1;
         func_00190A20(2);
     }
     switch (D_01F6FA00_construct_00) {
@@ -62,13 +62,13 @@ int func_01F6D7E0_construct_00(void) { //check 3th floor sign
             }
             D_01F6FA00_construct_00 += 1;
             func_0016C3C0();
-    
+
             SeCall(19026, 0.0f, 1.0f);
         default:
             if (func_0016C1C0(3) == 0) {
                 return 0;
             }
-            D_1D31668[0] &= ~1; 
+            D_1D31668[0] &= ~1;
             func_00190A20(0);
             return 1;
     }
@@ -78,8 +78,8 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/construct_00", func_01F6D7E0_construct
 #endif
 
 #ifdef HOLY_CANDLE
-int func_01F6D8D0_construct_00(void) { //check 4th floor
-    if (!GET_FLAG(D_1D31668, 1)) { 
+int func_01F6D8D0_construct_00(void) { // check 4th floor
+    if (!GET_FLAG(D_1D31668, 1)) {
         D_01F6FA08_construct_00 = 0;
         func_0016C3C0();
         D_1D31668[0] |= 2;
@@ -94,15 +94,15 @@ int func_01F6D8D0_construct_00(void) { //check 4th floor
             D_01F6FA08_construct_00 += 1;
             func_0016C3C0();
             SeCall(19026, 0.0f, 1.0f);
-        
+
         default:
             if (func_0016C1C0(3) == 0) {
                 return 0;
             }
             D_1D31668[0] &= ~2;
             func_00190A20(0);
-            return 1;    
-    }  
+            return 1;
+    }
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/construct_00", func_01F6D8D0_construct_00);
@@ -134,32 +134,32 @@ int func_01F6D9C0_construct_00(void) {
                 func_001C2290(3, var_f12);
                 func_0016C1A0();
                 D_01F6FA30_construct_00 = 1;
-                
-            case 1:
-                if (func_001C2580(2) == 0) {
-                    return 0;
-                }
-                SeCall(13000, 0.0f, 1.0f);
-                D_01F6FA30_construct_00 = 2;
-                
-            default:
-                temp_f0 = D_01F6FA28_construct_00 + shGetDT();
-                D_01F6FA28_construct_00 = temp_f0;
-                if (temp_f0 < 5.3f) {
-                    return 0;
-                }
-                if (func_00151150(0, 1) != 0) {
-                    var_f12_2 = 0.8f;
-                } else {
-                    var_f12_2 = 1.2f;
-                }
-                func_001C2290(5, var_f12_2);
-                func_0016C1B0();
-                D_1D31664[0] |= 0x02000000;
-        }
-        func_00190A20(0);
-        D_1D31664[0] &= 0xFEFFFFFF;
-        return 1;
+
+                case 1:
+                    if (func_001C2580(2) == 0) {
+                        return 0;
+                    }
+                    SeCall(13000, 0.0f, 1.0f);
+                    D_01F6FA30_construct_00 = 2;
+
+                default:
+                    temp_f0                 = D_01F6FA28_construct_00 + shGetDT();
+                    D_01F6FA28_construct_00 = temp_f0;
+                    if (temp_f0 < 5.3f) {
+                        return 0;
+                    }
+                    if (func_00151150(0, 1) != 0) {
+                        var_f12_2 = 0.8f;
+                    } else {
+                        var_f12_2 = 1.2f;
+                    }
+                    func_001C2290(5, var_f12_2);
+                    func_0016C1B0();
+                    D_1D31664[0] |= 0x02000000;
+            }
+            func_00190A20(0);
+            D_1D31664[0] &= 0xFEFFFFFF;
+            return 1;
     }
 }
 #else
@@ -175,7 +175,7 @@ int func_01F6DBC0_construct_00(void) {
         D_01F6FA20_construct_00 = 0;
         D_1D31664[0] |= 0x08000000;
     }
-    switch (D_01F6FA20_construct_00) {              
+    switch (D_01F6FA20_construct_00) {
         case 0:
             func_00190A20(5);
             D_01F6FA20_construct_00 = 1;
@@ -188,7 +188,7 @@ int func_01F6DBC0_construct_00(void) {
             SeCall(11041, 0.0f, 1.0f);
             D_1D31664[0] |= 0x10000000;
             D_01F6FA20_construct_00 = 2;
-    
+
         case 2:
             if (func_0016C1C0(0x34) == 0) {
                 return 0;
@@ -196,11 +196,11 @@ int func_01F6DBC0_construct_00(void) {
             func_0016C3C0();
             func_003174B0(0.2f);
             D_01F6FA20_construct_00 = 3;
-            break;    
+            break;
         case 3:
             func_00190A20(6);
             D_01F6FA20_construct_00 = 4;
-    
+
         case 4:
             if (func_00190C00() == 0) {
                 return 0;
@@ -243,22 +243,21 @@ int func_01F6DD90_construct_00(void) {
             if (func_001C2580(2) == 0) {
                 return 0;
             }
-            func_0018FE60((u_long128*)&sp20);
-            func_0018FE80((u_long128*)&sp10);
+            func_0018FE60((u_long128*) &sp20);
+            func_0018FE80((u_long128*) &sp10);
 
             if (sp20[0] < 19960.0f) {
                 if (sp20[2] > 21140.0f && sp20[2] < 22400.0f) {
                     sp20[0] = 19960.0f;
                 }
             }
-            
+
             func_00190000(&sp20, sp20[5]);
             SeCall(13001, 0.0f, 1.0f);
             D_01F6FA18_construct_00 += 1;
-        
     }
-    
-    temp_f0 = D_01F6FA10_construct_00 + shGetDT();
+
+    temp_f0                 = D_01F6FA10_construct_00 + shGetDT();
     D_01F6FA10_construct_00 = temp_f0;
     if (temp_f0 < 1.0f) {
         return 0;
@@ -281,8 +280,8 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/construct_00", func_01F6DD90_construct
 void func_01F6DFB0_construct_00(void) {
     float temp_f1;
     float var_f20;
-    float *tmp = (float*) D_01D31640;
-    var_f20 = func_001E08A0();
+    float* tmp = (float*) D_01D31640;
+    var_f20    = func_001E08A0();
     switch (func_0016DC80()) {
         case 3:
             var_f20 *= 4.0f;
@@ -299,9 +298,9 @@ void func_01F6DFB0_construct_00(void) {
         case 6:
             var_f20 = 0.0f;
             break;
-        }
+    }
 
-    temp_f1 = tmp[0x28C / 4] - var_f20;
+    temp_f1        = tmp[0x28C / 4] - var_f20;
     tmp[0x28C / 4] = temp_f1;
     if (temp_f1 <= 0.0f) {
         D_1D31664[0] |= 0x20000000;
@@ -320,7 +319,7 @@ void func_01F6E0B0_construct_00(void) {
         case 0x66:
             D_01F6FA40_construct_00 = 0;
             break;
-        case 0x63:    
+        case 0x63:
             D_1D31708[0] |= 0x80000000;
             D_1D3170C[0] |= 1;
             if (GET_FLAG(D_1D316AC, 0x1C)) {
@@ -328,7 +327,7 @@ void func_01F6E0B0_construct_00(void) {
                 D_1D316AC[0] &= 0xEFFFFFFF;
                 break;
             }
-        break;
+            break;
         case 0x65:
             D_1D31708[0] |= 0x04000000;
             D_1D31708[0] |= 0x08000000;

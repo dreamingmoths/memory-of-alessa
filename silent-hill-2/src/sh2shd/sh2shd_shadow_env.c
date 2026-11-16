@@ -5,6 +5,7 @@
 extern /* static */ float tmp_time_1450;
 static float get_demo_frame(void);
 
+RODATA_PAD_TO(0x0039B850);
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_env", sh2shd_get_shadow_env_bg);
 
 INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_shadow_env", sh2shd_get_shadow_env_chr);

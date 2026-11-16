@@ -18,6 +18,7 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ void enREDCtrlEvent(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlWander(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlChase(EnLOCAL_DATA* dp);
+/* static */ void enREDCtrlBerserk(EnLOCAL_DATA* dp);
 /* static */ void enREDCtrlHand(void);
 
 /* static */ void enREDCtrlAttack(EnLOCAL_DATA* dp);
@@ -34,7 +35,7 @@ extern /* static */ float hp_roof_pos[4];
 /* static */ float enREDGetWalkSpeed(EnLOCAL_DATA* dp);
 
 /* static */ float enREDGetRotSpeed(void);
-/* static */ void enREDSetSlowTime(EnLOCAL_DATA * dp /* r16 */);
+/* static */ void enREDSetSlowTime(EnLOCAL_DATA* dp /* r16 */);
 /* static */ void enREDSetMoveCount(EnLOCAL_DATA* dp);
 /* static */ void enREDSoundLife(EnLOCAL_DATA* dp /* r16 */);
 
@@ -81,7 +82,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
             dp->path.markangle = enCalcDirection(&hp_roof_pos, &dp->scp->pos);
             enMoveAngle(&dp->path, enREDGetRotSpeed());
             dp->scp->rot.y = dp->path.angle;            
-            if (vec3_dist_xz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
+            if (shVectorDistXz_reverse(&hp_roof_pos, &dp->scp->pos) < 50.0f) {
                 SET_GAME_FLAG(202); // @todo: add define
             }
     }
@@ -151,7 +152,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enSetPath(dp, enGetPlayerPos(dp), &dp->scp->pos);
     enMoveAngle(&dp->path, enREDGetRotSpeed());
     dp->scp->rot.y = dp->path.angle;
-    dp->anim_s = ftoi(4096.0f * enREDGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));    
+    dp->anim_s = shFloatToInt(4096.0f * enREDGetWalkSpeed(dp) * enCalcSpeedRate(dp->scp->rot.y, &dp->scp->pos, enGetPlayerPos(dp)));    
 
     
     t = enREDCanSeePlayer(dp);
@@ -177,7 +178,49 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     enREDSoundLife(dp);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlBerserk);
+/* static */ void enREDCtrlBerserk(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec;
+    float d;
+    int t;
+    SubCharacter* scp;
+    float* pos;
+    if (enCheckDamage(dp)) {
+        if (enREDSetDamage(dp)) {
+            ENEMY_STEP(7);
+            return;
+        }
+        if (enCheckSpray(dp)) {
+            ENEMY_STEP(6);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enREDAnimeSet(dp, 1);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    enREDGetWalkSpeed(dp);
+    scp = enGetNearCharacter(dp);
+    
+    pos = &scp->pos;
+    shSubVector(vec, &dp->scp->pos, pos);
+    d = vec3_length(vec);
+    if (d < 250.0f) {
+        shVectorCopy(vec, pos);
+    } else {
+        shScaleVector(vec, vec, 250.0f / d);
+        shAddVector(vec, pos, vec);
+    }
+    enSetPath(dp, vec, (float*) &dp->scp->pos.x);
+    enMoveAngle(&dp->path, enREDGetRotSpeed());
+    dp->scp->rot.y = dp->path.angle;
+    
+    t = enREDCanSeeCharacter(dp, scp);
+    if (t >= 2) {
+        ENEMY_STEP(4);
+    }
+    enREDSoundLife(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlStair);
 
@@ -328,10 +371,10 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCanSeeCharacter);
             
             
             if (dp->p_dist > 5000.0f) {
-                enSoundCall3D((ftoi(3.0f * shRandF()) * 2) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+                enSoundCall3D((shFloatToInt(3.0f * shRandF()) * 2) + 0x3EE4, 1.0f, &dp->scp->pos.x);
             
             } else 
-                enSoundCall(ftoi(6.0f * shRandF()) + 0x3EE4, 1.0f, &dp->scp->pos.x);
+                enSoundCall(shFloatToInt(6.0f * shRandF()) + 0x3EE4, 1.0f, &dp->scp->pos.x);
         }
     
     

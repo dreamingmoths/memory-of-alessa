@@ -189,8 +189,8 @@ int LoadBgCharaIsMapEdge(void) {
     
     px = fabsf(px);
     pz = fabsf(pz);
-    x = ftoi(px);
-    z = ftoi(pz);
+    x = shFloatToInt(px);
+    z = shFloatToInt(pz);
     x %= 20000;
     z %= 20000;
     if ((x > 2750.0f) && (x < 17250.0f))

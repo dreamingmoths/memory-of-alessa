@@ -71,50 +71,54 @@ typedef struct sh2gfw_Env_ctl {
     union Q_WORDDATA CopyFilterColor;    // offset 0x3E0, size 0x10
 } sh2gfw_Env_ctl;
 
-// total size: 0x1F0
 typedef struct DrawEnvData {
-    // Members
-    int map_id_name;          // offset 0x0, size 0x4
-    char parallelLNum;        // offset 0x4, size 0x1
-    char FakeSpotNum;         // offset 0x5, size 0x1
-    char FakePointNum;        // offset 0x6, size 0x1
-    char pointLNum;           // offset 0x7, size 0x1
-    char spotLNum;            // offset 0x8, size 0x1
-    char NightOrDay;          // offset 0x9, size 0x1
-    short ShadowColor;        // offset 0xA, size 0x2
+    // total size: 0x1F0
+    int map_id_name; // offset 0x0, size 0x4
+    char parallelLNum; // offset 0x4, size 0x1
+    char FakeSpotNum; // offset 0x5, size 0x1
+    char FakePointNum; // offset 0x6, size 0x1
+    char pointLNum; // offset 0x7, size 0x1
+    char spotLNum; // offset 0x8, size 0x1
+    char NightOrDay; // offset 0x9, size 0x1
+    short ShadowColor; // offset 0xA, size 0x2
     short ShadowForceLightNo; // offset 0xC, size 0x2
-    short ShadowDarkNess;     // offset 0xE, size 0x2
-    float pLight_Dir0[4];     // offset 0x10, size 0x10
-    float pLight_Col0[4];     // offset 0x20, size 0x10
-    float pLight_Dir1[4];     // offset 0x30, size 0x10
-    float pLight_Col1[4];     // offset 0x40, size 0x10
-    float pLight_Dir2[4];     // offset 0x50, size 0x10
-    float pLight_Col2[4];     // offset 0x60, size 0x10
-    float SpotCol0[4];        // offset 0x70, size 0x10
-    float SpotDecayParm0[4];  // offset 0x80, size 0x10
-    float SpotParm[4];        // offset 0x90, size 0x10
-    float FogParm[4];         // offset 0xA0, size 0x10
-    float Ld_0[4];            // offset 0xB0, size 0x10
-    float Ld_1[4];            // offset 0xC0, size 0x10
-    float Ld_2[4];            // offset 0xD0, size 0x10
-    float Ld_3[4];            // offset 0xE0, size 0x10
-    float Ld_4[4];            // offset 0xF0, size 0x10
-    float Ld_5[4];            // offset 0x100, size 0x10
-    float Ld_6[4];            // offset 0x110, size 0x10
-    float Ld_7[4];            // offset 0x120, size 0x10
-    float Ld_8[4];            // offset 0x130, size 0x10
-    float Ld_9[4];            // offset 0x140, size 0x10
-    float Ld_A[4];            // offset 0x150, size 0x10
-    float Ld_B[4];            // offset 0x160, size 0x10
-    float Ld_C[4];            // offset 0x170, size 0x10
-    float Ld_D[4];            // offset 0x180, size 0x10
-    float Ld_E[4];            // offset 0x190, size 0x10
-    float MoveFogCol[4];      // offset 0x1A0, size 0x10
-    float Ambient[4];         // offset 0x1B0, size 0x10
-    float BaseAmbient[4];     // offset 0x1C0, size 0x10
-    float BaseColor[4];       // offset 0x1D0, size 0x10
-    float VertexAmbient[4];   // offset 0x1E0, size 0x10
+    short ShadowDarkNess; // offset 0xE, size 0x2
+    sceVu0FVECTOR pLight_Dir0; // offset 0x10, size 0x10
+    sceVu0FVECTOR pLight_Col0; // offset 0x20, size 0x10
+    sceVu0FVECTOR pLight_Dir1; // offset 0x30, size 0x10
+    sceVu0FVECTOR pLight_Col1; // offset 0x40, size 0x10
+    sceVu0FVECTOR pLight_Dir2; // offset 0x50, size 0x10
+    sceVu0FVECTOR pLight_Col2; // offset 0x60, size 0x10
+    sceVu0FVECTOR SpotCol0; // offset 0x70, size 0x10
+    sceVu0FVECTOR SpotDecayParm0; // offset 0x80, size 0x10
+    sceVu0FVECTOR SpotParm; // offset 0x90, size 0x10
+    sceVu0FVECTOR FogParm; // offset 0xA0, size 0x10
+    sceVu0FVECTOR Ld_0; // offset 0xB0, size 0x10
+    sceVu0FVECTOR Ld_1; // offset 0xC0, size 0x10
+    sceVu0FVECTOR Ld_2; // offset 0xD0, size 0x10
+    sceVu0FVECTOR Ld_3; // offset 0xE0, size 0x10
+    sceVu0FVECTOR Ld_4; // offset 0xF0, size 0x10
+    sceVu0FVECTOR Ld_5; // offset 0x100, size 0x10
+    sceVu0FVECTOR Ld_6; // offset 0x110, size 0x10
+    sceVu0FVECTOR Ld_7; // offset 0x120, size 0x10
+    sceVu0FVECTOR Ld_8; // offset 0x130, size 0x10
+    sceVu0FVECTOR Ld_9; // offset 0x140, size 0x10
+    sceVu0FVECTOR Ld_A; // offset 0x150, size 0x10
+    sceVu0FVECTOR Ld_B; // offset 0x160, size 0x10
+    sceVu0FVECTOR Ld_C; // offset 0x170, size 0x10
+    sceVu0FVECTOR Ld_D; // offset 0x180, size 0x10
+    sceVu0FVECTOR Ld_E; // offset 0x190, size 0x10
+    sceVu0FVECTOR MoveFogCol; // offset 0x1A0, size 0x10
+    sceVu0FVECTOR Ambient; // offset 0x1B0, size 0x10
+    sceVu0FVECTOR BaseAmbient; // offset 0x1C0, size 0x10
+    sceVu0FVECTOR BaseColor; // offset 0x1D0, size 0x10
+    sceVu0FVECTOR VertexAmbient; // offset 0x1E0, size 0x10
 } DrawEnvData;
+
+typedef struct NowBlockNo {
+    // total size: 0x10
+    sceVu0IVECTOR Map_NowBlockNo; // offset 0x0, size 0x10
+} NowBlockNo;
 
 extern sh2gfw_Env_ctl Env_ctl; // size: 0x3F0, address: 0x2AD780 Env_ctl;
 
@@ -142,6 +146,6 @@ void Get_NowPallarelCol(float* pdir, int nn);
 
 void Set_DrawEnvData(int mapid, int NightOrDay);
 
-void SetupDrawEnvData(void);
+void SetupDrawEnvData(int NightOrDay); // @note arg not in dwarf
 
 #endif // SH2_DRAWENVDATA_H

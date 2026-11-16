@@ -13,8 +13,9 @@
 #include "sce/libdmapk.h"
 #include "light_n.h"
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
-#include "vifot/sh_kt_vif0.h"
-#include "vifot/sh_kt_vif0pkbuf.h"
+#include "Chacter_Draw/vifot/sh_kt_pkbuf.h"
+#include "Chacter_Draw/vifot/sh_kt_vif0.h"
+#include "Chacter_Draw/vifot/sh_kt_vif0pkbuf.h"
 #include "Chacter_Draw/model3_structs.h"
 
 void InitTriangleNormal(TriangleNormal* p) {

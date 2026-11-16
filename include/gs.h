@@ -4,10 +4,12 @@
 /* miscellaneous GS/GIF helpers, with commentary from @Mc-muffin */
 
 #include "sce/eetypes.h"
+#include "sce/libvu0.h"
 #include "macros.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+#define SCREEN_ASPECT_RATIO  ((float) (SCREEN_WIDTH) / (float) (SCREEN_HEIGHT))
 
 // Annoyingly, (v << 4) vs (u_int)(v * 16) causes regalloc issues
 // Maybe they didn't want fractional coords xd
@@ -81,11 +83,21 @@
 
 // Crucially though, the final register is used as a 64bit store, thus the garbage is not
 // important, and the 2 instructions are effectively just packing a SCE_GS_SET_XYZ blazingly fast!
-static inline long ASM_GS_SET_XYZ(int x, int y, int z) {
+static inline long shFastSetXyz(int x, int y, int z) {
     long a;
     asm("pextlh %0, %2, %1;\
          pextlw %0, %3, %0" : "+r"(a) : "r"(x), "r"(y), "r"(z));
     return a;
+}
+
+static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
+    u_long128 xyz = *(u_long128*) vector;
+    asm("\
+        pexch        t7,  %0;\
+        pextuw       %0,  zero, %0;\
+        pextlw       %0,  %0, t7"
+    : "+r"(xyz) :: "$15");
+    return xyz;
 }
 
 #define PP_NARG(...) \

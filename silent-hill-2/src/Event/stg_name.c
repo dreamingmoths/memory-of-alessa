@@ -891,8 +891,8 @@ int RoomName(int glb_crd, float pos_x, float pos_z) {
     int x;  
     int z;
    
-    x = ftoi(16.0f + pos_x / 20000.0f);
-    z = ftoi(16.0f + pos_z / 20000.0f);
+    x = shFloatToInt(16.0f + pos_x / 20000.0f);
+    z = shFloatToInt(16.0f + pos_z / 20000.0f);
     tpwoin = z + (x << 5);
     
     
@@ -1252,8 +1252,8 @@ int BlockNumber(int* ret, int glb_crd, float pos_x, float pos_z) {
         return 0;    
     }
     
-    x = (pos_x >= 0.0f ? 1 : -1) + ftoi(pos_x / 20000.0f);
-    z = (pos_z >= 0.0f ? 1 : -1) + ftoi(pos_z / 20000.0f);    
+    x = (pos_x >= 0.0f ? 1 : -1) + shFloatToInt(pos_x / 20000.0f);
+    z = (pos_z >= 0.0f ? 1 : -1) + shFloatToInt(pos_z / 20000.0f);    
     xz = ((z > 0 ? z - 1 : z) + 16) + (((x > 0 ? x - 1 : x) + 16) << 5);
 
     switch (glb_crd) {

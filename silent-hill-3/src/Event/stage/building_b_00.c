@@ -14,7 +14,7 @@ int func_01F6D9B0_building_b_00(void) {
         func_00190A20(2);
     }
     switch (D_01F6FB00_building_b_00) {
-        
+
         case 0:
             if (func_0016C1C0(0x29) == 0) {
                 return 0;
@@ -29,12 +29,12 @@ int func_01F6D9B0_building_b_00(void) {
             D_1D31670[0] |= 0x1000;
             D_01F6FB00_building_b_00 += 1;
         default:
-            
+
             if (func_0016C1C0(0x33) == 0) {
                 return 0;
             }
-        func_003174B0(0.2f);
-    }    
+            func_003174B0(0.2f);
+    }
     D_1D31670[0] &= ~0x800;
     func_00190A20(0);
     return 1;
@@ -42,7 +42,6 @@ int func_01F6D9B0_building_b_00(void) {
 #else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6D9B0_building_b_00);
 #endif
-
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6DB00_building_b_00);
 
@@ -72,7 +71,7 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
             }
             SeCall(19032, 0.0f, 1.0f);
             D_01F6FB08_building_b_00 += 1;
-        
+
         case 1:
             if (D_01F6FB10_building_b_00 < 1.5f) {
                 return 0;
@@ -80,14 +79,13 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
             func_0016C1B0();
             D_01F6FB08_building_b_00 += 1;
             break;
-           
+
         default:
             var_s0 = 1;
             D_1D31670[0] &= 0xFFBFFFFF;
             D_1D31710[0] |= 0x40000000;
             D_1D31670[0] |= 0x40;
             D_1D317A8 |= 0x100000;
-            
     }
     return var_s0;
 }
@@ -95,24 +93,22 @@ int func_01F6E0B0_building_b_00(void) { // same elevator bullshit as the others 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/building_b_00", func_01F6E0B0_building_b_00);
 #endif
 
-
 void func_01F6E270_building_b_00(void) {
 
     switch (RoomName()) {
 
         case BUILDING_OTHERWORLD_1F_HALL:
-            D_1D31714 |= 0x2;    
+            D_1D31714 |= 0x2;
             break;
-        
+
         case BUILDING_OTHERWORLD_1F_LAST_FAIRY_TAIL_PIECE_ROOM:
             D_1D31714 |= 0x10;
             break;
-        
     }
 }
 
 void func_01F6E2D0_building_b_00(void) {
-    switch (RoomName()) {                              
+    switch (RoomName()) {
         case 0x81:
             if (!GET_BIT(D_1D31644, 0x16)) {
                 func_0016CA40(1);
@@ -120,7 +116,7 @@ void func_01F6E2D0_building_b_00(void) {
                 break;
             }
             break;
-            
+
         case 0x7F:
             if (!GET_FLAG(D_1D31670, 0xC)) {
                 func_0016CA40(7);
@@ -129,7 +125,7 @@ void func_01F6E2D0_building_b_00(void) {
                 D_1D31714 &= ~4;
             }
             break;
-        
+
         case 0x7E:
             if (!GET_FLAG(D_1D31670, 0x15) && (GET_FLAG(D_1D31670, 0x18) || GET_FLAG(D_1D31670, 0x19))) {
                 D_1D31670[1] |= 0x10;

@@ -12,6 +12,21 @@
 #define DMAC_TO_SPR             9
 
 #define ExitHandler()           __asm__ volatile("sync.l; ei")
+#ifndef EI
+#define EI()                    __asm__ volatile("ei")
+#endif
+#ifndef DI
+#define DI(x) \
+{ \
+      u_int stat; \
+      do { \
+        __asm__ volatile (".p2align 3"); \
+        __asm__ volatile ("di"); \
+        __asm__ volatile ("sync.p"); \
+        __asm__ volatile ("mfc0 %0, $12" : "=r"(stat):); \
+      } while (stat & 0x00010000); \
+}
+#endif
 
 typedef struct
 {
@@ -38,14 +53,23 @@ typedef struct ThreadParam {
     int     wakeupCount;
 } ThreadParam;
 
+int SetAlarm(u_short, void (*)(int, u_short, void*), void*);
+void InvalidDCache(void*, void*);
+void SyncDCache(void*, void*);
+
+// semaphore operations
 int CreateSema(SemaParam* param);
 int SignalSema(int);
 int iSignalSema(int);
 int WaitSema(int);
+int PollSema(int);
+int ReferSemaStatus(int, SemaParam*);
+int iReferSemaStatus(int, SemaParam*);
 int DeleteSema(int);
-int SetAlarm(u_short, void (*)(int, u_short, void*), void*);
-void InvalidDCache(void*, void*);
-void SyncDCache(void*, void*);
+
+
+// multithreading
+int CreateThread(ThreadParam*);
 int StartThread(int, void *arg);
 int GetThreadId(void);
 

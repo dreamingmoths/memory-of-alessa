@@ -5,15 +5,8 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_mkn.h"
 #include "Chacter/m3_sc.h"
-#include "Chacter/m3_sc.h"
 
 #include "Enemy/en_common.h"
-
-#define MANNEQUIN_PLAY_ANIME_ID_START 5100
-#define MANNEQUIN_PLAY_ANIM(id) (id + MANNEQUIN_PLAY_ANIME_ID_START)
-
-#define MANNEQUIN_DRAMA_ANIME_ID_START 6100
-#define MANNEQUIN_DRAMA_ANIM(id) (id + MANNEQUIN_DRAMA_ANIME_ID_START)
 
 const AnimeInfo mkn_anim[35] = {
     {NULL},
@@ -487,7 +480,7 @@ int shCharacterEnemyMKNAnimeSetP(SubCharacter* scp /* r17 */, int anime_id /* r1
     AnimeInfo* aip; // r18
 
     if (shCharacterGetModelID(scp) == EN_MKN_CHARA_KIND) {
-        aip = (AnimeInfo*) &mkn_anim[anime_id - 0x13EC];
+        aip = (AnimeInfo*) &mkn_anim[anime_id - MANNEQUIN_PLAY_ANIME_ID_START];
         shCharacterAnimeSet(scp,
                             0,
                             (s_char) (comp == 1 ? 4 : 2),
@@ -553,7 +546,7 @@ void shGetEnemyMKNAttackPos(SubCharacter* scp /* r2 */, float* s_pos /* r18 */, 
     vec[2] = pos1[2] - pos0[2];
     vec[3] = 0.0f;
     
-    vec_normalize(vec, s_vec);
+    shNormalizeVector(vec, s_vec);
 }
 
 

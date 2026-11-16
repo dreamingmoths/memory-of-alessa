@@ -173,7 +173,7 @@ int SeCallPos(int sd_no, float volume, float* pos, int status) {
         }
     }
     if ((status & 4) || (pos == NULL)) 
-        distance = 255 - ftoi(255.0f * volume);
+        distance = 255 - shFloatToInt(255.0f * volume);
     else distance = SeCallPosDistance(volume, pos);    
     if (pos != NULL) direction = SeCallPosDirection(pos);
     else direction = 0;
@@ -219,18 +219,18 @@ int SeCallPosChange(int sd_no, float volume, float* pos, int status) {
     
     if (pos == NULL) {
         direction = 0;
-        distance = ftoi(255.0f - 255.0f * volume);
+        distance = shFloatToInt(255.0f - 255.0f * volume);
     } else {
         direction = SeCallPosDirection(pos);
         if (status & 4) 
-            distance = 255 - ftoi(255.0f * volume);
+            distance = 255 - shFloatToInt(255.0f * volume);
         else distance = SeCallPosDistance(volume, pos);
         
     }
     if (status & 8) {
         for (i = 0; i < 4; i++)
             if (sd_no == se_2d_manage_data[i].sd) break;        
-        work = ftoi(128.0f * shGetDT());
+        work = shFloatToInt(128.0f * shGetDT());
         if (distance < se_2d_manage_data[i].pre_dist - work) 
             distance = se_2d_manage_data[i].pre_dist - work;
         else if (work + se_2d_manage_data[i].pre_dist < distance) 
@@ -253,11 +253,11 @@ int SeCallPosDirection(float* pos) {
     sceVu0FVECTOR pos0; // r29+0x10
     float sign; // r29+0x20
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     vu0_transform_vector_alt(fv, pos0, VbWvsMatrix.wvm);
     fv[0] -= 750.0f;
     fv[1] = 0.0f;
-    vec_normalize(fv, fv);
+    shNormalizeVector(fv, fv);
     sign = float_sign(-fv[0]);
     return (sign * (70.0f - (70.0f * fv[2])));
 }
@@ -268,7 +268,7 @@ int SeCallPosDistance(float volume, float* pos) {
     float len; /* r29+0x20 */ float work_0; /* r29+0x20 */ float work_1; // r29+0x20
 
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     shSubVector(fvec, vcWork.cam_pos, &sh2jms.player->pos);
     len = vec3_lenght_alt(fvec);    
     work_0 = (len - 1500.0f) * 0.000100000005f;
@@ -287,7 +287,7 @@ float SeCallPosDistanceF(float* pos) {
     float len; /* r29+0x20 */ float work_0; /* r29+0x20 */ float work_1; // r29+0x20
 
 
-    vec_copy_vu0(pos0, pos);
+    shVectorCopyVu0(pos0, pos);
     shSubVector(fvec, vcWork.cam_pos, &sh2jms.player->pos);
     len = vec3_lenght_alt(fvec);    
     work_0 = (len - 1500.0f) * 0.000100000005f;
@@ -686,7 +686,7 @@ void Se3dManager(void) {
                 
                 direction = SeCallPosDirection(se_3d_channel_data[i].pos);
                 if (se_3d_channel_data[i].status & 4) 
-                    distance = 255 - ftoi(255.0f * se_3d_channel_data[i].vol);
+                    distance = 255 - shFloatToInt(255.0f * se_3d_channel_data[i].vol);
                 else distance = SeCallPosDistance(se_3d_channel_data[i].vol, se_3d_channel_data[i].pos);
                 
                 ret = shSd3dMove(i, direction, distance, 0.0f, 0.0f);
@@ -1150,7 +1150,7 @@ void SeBgmManager(void) {
                 bgm.track[i].status = 2;
                 bgm.track[i].volume = 1.0f;
             }
-            shSdTrack(i + 1, ftoi(127.0f * bgm.track[i].volume));
+            shSdTrack(i + 1, shFloatToInt(127.0f * bgm.track[i].volume));
         } else if (bgm.track[i].status == 3) {
             if (bgm.track[i].fade_out_type == 4) 
                 bgm.track[i].volume = 0.0f;
@@ -1160,7 +1160,7 @@ void SeBgmManager(void) {
                 bgm.track[i].status = 0;
                 bgm.track[i].volume = 0.0f;
             }
-            shSdTrack(i + 1, ftoi(127.0f * bgm.track[i].volume));
+            shSdTrack(i + 1, shFloatToInt(127.0f * bgm.track[i].volume));
         }
     
     
@@ -1195,11 +1195,11 @@ void SeBgmManager(void) {
     }
     if (bgm.volume > volume) {
         bgm.volume = shFloatMax(bgm.volume - shGetDT() / 2.0f, volume);
-        shSdCall(0x3FC, ftoi(127.0f * bgm.volume), 0, 0);
+        shSdCall(0x3FC, shFloatToInt(127.0f * bgm.volume), 0, 0);
     }
     else if (bgm.volume < volume) {
         bgm.volume = shFloatMin(bgm.volume + shGetDT() / 2.0f, volume);
-        shSdCall(0x3FC, ftoi(127.0f * bgm.volume), 0, 0);
+        shSdCall(0x3FC, shFloatToInt(127.0f * bgm.volume), 0, 0);
     }
 }
 

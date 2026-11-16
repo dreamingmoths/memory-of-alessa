@@ -78,7 +78,7 @@ extern utilHeapCtrl* shadow_calcheap;                     // size: 0x4, address:
 extern Q_WORDDATA Shadow_Calcwork[6400];                  // size: 0x19000, address: 0x110C2F0
 
 static inline void hword_struct_copy(short* _dst, short* _src) {
-    // @todo: specific var order needed for match
+    // @todo: this is just a memset. delete it lol
     short* src;
     short* dst;
     int i;
@@ -94,5 +94,13 @@ static inline void hword_struct_copy(short* _dst, short* _src) {
         dst += 2;
     } while (i > 0);
 }
+
+
+typedef struct SHADOW_ENV {
+    // total size: 0x8
+    short block; // offset 0x0, size 0x2
+    short clip_kind; // offset 0x2, size 0x2
+    float leng; // offset 0x4, size 0x4
+} SHADOW_ENV;
 
 #endif // SH2SHD_SHADOW_MODEL_H

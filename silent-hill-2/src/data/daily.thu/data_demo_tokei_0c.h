@@ -19,4 +19,4 @@ extern /* static  */ char z_data_demo_tokei_0c_hhh_jms_cls__name[31]; // size: 0
 extern fsFile z_data_demo_tokei_0c_hhh_jms_cls__info[1]; // size: 0x10, address: 0x3AF0D0
 extern fsFileIndex data_demo_tokei_0c_hhh_jms_cls[1]; // size: 0x8, address: 0x3A2140
 
-#endif DATA_DEMO_TOKEI_0C_H
+#endif // DATA_DEMO_TOKEI_0C_H

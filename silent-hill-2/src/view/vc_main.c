@@ -417,7 +417,7 @@ int vcRetSmoothCamMvF(sceVu0FVECTOR old_pos, sceVu0FVECTOR now_pos, sceVu0FVECTO
 
 
 
-    mv_vec = vec3_dist(now_pos, old_pos) / (float)intrpt;
+    mv_vec = shVectorDist(now_pos, old_pos) / (float)intrpt;
 
     
     if (mv_vec > 100.0f) return 0;
@@ -610,7 +610,7 @@ float vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, float far_watch_ra
 
 
     
-    xyz_dist = vec3_dist(w_p->cam_pos, w_p->chara_head_pos);
+    xyz_dist = shVectorDist(w_p->cam_pos, w_p->chara_head_pos);
 
     
     if (xyz_dist < 250.0f) ret_eff_rate = max_rate;
@@ -748,7 +748,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_T
         param->timer = 0.0f;
         param->rail_ang_y = w_p->chara_eye_ang_y;
         
-        vec_copy_xyz(param->rail_sta_pos, w_p->chara_pos);
+        shVectorCopyXyz(param->rail_sta_pos, w_p->chara_pos);
 
 
 
@@ -762,7 +762,7 @@ void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_T
         
     case VC_TDSC_MAIN:
         if (param->active_f != 0) {
-            param->rail_sta_to_chara_dist = vec3_dist_xz(w_p->through_door.rail_sta_pos, w_p->chara_pos);
+            param->rail_sta_to_chara_dist = shVectorDistXz(w_p->through_door.rail_sta_pos, w_p->chara_pos);
 
             
             param->timer += shGetDT();
@@ -1554,7 +1554,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
                 
                 vec_sub_xyz_reverse(w_p->watch_tgt_pos, far_watch_pos, vec);
                 vec_scale_xyz(far_watch_rate, vec, vec);
-                vec_add_xyz(w_p->watch_tgt_pos, vec, w_p->watch_tgt_pos);
+                shAddVectorXyz(w_p->watch_tgt_pos, vec, w_p->watch_tgt_pos);
                 
             }
             break;
@@ -1627,7 +1627,7 @@ void vcMakeNormalWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang_z_p, VC_
 
 
     
-    cam2chara_dist = vec3_dist_xz(w_p->cam_pos, w_p->chara_pos);
+    cam2chara_dist = shVectorDistXz(w_p->cam_pos, w_p->chara_pos);
     
     switch (cam_mv_type) {
         default:
@@ -1854,7 +1854,7 @@ void vcMixSelfViewEffectToWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang
     
     vec_sub_xyz(eff_pos, watch_tgt_pos, eff_pos);
     vec_scale_xyz(effect_rate, eff_pos, eff_pos);
-    vec_add_xyz(watch_tgt_pos, eff_pos, watch_tgt_pos);
+    shAddVectorXyz(watch_tgt_pos, eff_pos, watch_tgt_pos);
     
 }
 
@@ -2003,7 +2003,7 @@ void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_
     w_p->cam_tgt_mv_ang_y = shAtanV(tgt_vec);
     
     if (shGetDT() != 0.0f || (vcWork.flags & VC_WARP_CAM_TGT_F)) {
-        vec_add_xyz(w_p->cam_tgt_pos, tgt_vec, w_p->cam_tgt_pos);
+        shAddVectorXyz(w_p->cam_tgt_pos, tgt_vec, w_p->cam_tgt_pos);
 
         
         // flipped last 2 params
@@ -2056,7 +2056,7 @@ void vcMakeIdealCamPosByHeadPos(sceVu0FVECTOR ideal_pos, VC_WORK* w_p, VC_AREA_S
 
 
         
-        vec_copy_xyz(ideal_pos, w_p->chara_pos);
+        shVectorCopyXyz(ideal_pos, w_p->chara_pos);
         ideal_pos[1] = w_p->chara_top_y;
     } else {
 
@@ -2146,7 +2146,7 @@ void vcMakeIdealCamPosForFixAngCam(sceVu0FVECTOR ideal_pos, VC_WORK* w_p) {
     zero_front_dist = 3500.0f * ratio;
     full_front_dist = 750.0f * ratio;
 
-    chara2cam_dist = vec3_dist_xz(w_p->cam_pos, w_p->chara_pos);
+    chara2cam_dist = shVectorDistXz(w_p->cam_pos, w_p->chara_pos);
     
     if (chara2cam_dist >= zero_front_dist) {
         base_front_r = 0.0f;
@@ -2634,7 +2634,7 @@ void vcMakeBasicCamTgtMvVec(sceVu0FVECTOR tgt_mv_vec, sceVu0FVECTOR ideal_pos, V
     now2ideal_tgt_ang_y = shAtanV(xz_vec);
     
     if (now2ideal_tgt_dist < max_tgt_mv_xz_len) {
-        vec_copy_xyz(tgt_mv_vec, xz_vec);
+        shVectorCopyXyz(tgt_mv_vec, xz_vec);
     } else {
 
         
@@ -2659,7 +2659,7 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
     VC_ROAD_DATA* cur_rd_p = w_p->cur_near_road.road_p; 
     float min_tgt_y, max_tgt_y;
 
-    to_chara_dist = vec3_dist_xz(w_p->cam_tgt_pos, w_p->chara_pos);
+    to_chara_dist = shVectorDistXz(w_p->cam_tgt_pos, w_p->chara_pos);
 
     
     if (cur_rd_p->mv_y_type == VC_MV_LOCUS_CIRCLE || cur_rd_p->mv_y_type == VC_MV_THROUGH_DOOR) {
@@ -2792,7 +2792,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
     VC_NEAR_ROAD_DATA* use_nearest_p;
     sceVu0FVECTOR pre_tgt_pos, chk_pos, post_tgt_pos, sincos_y, pos;
     
-    vec_add_xyz(tgt_mv_vec, w_p->cam_tgt_pos, pre_tgt_pos);
+    shAddVectorXyz(tgt_mv_vec, w_p->cam_tgt_pos, pre_tgt_pos);
     pre_tgt_pos[1] = 0;
     pre_tgt_pos[3] = 1.0f;
     
@@ -2824,7 +2824,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
     shVectorZero(sincos_y);
     shSinCosV(&sincos_y, flip_ang_y);
     vec_scale_xyz(chk_near_dist, sincos_y, chk_pos);
-    vec_add_xyz(pre_tgt_pos, chk_pos, chk_pos);
+    shAddVectorXyz(pre_tgt_pos, chk_pos, chk_pos);
     
 
     if (!(w_p->cur_near_road.road_p->flags & VC_RD_MARGE_ROAD_F)) {
@@ -2853,7 +2853,7 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p,
 
     
     vec_scale_xyz(flip_dist, sincos_y, post_tgt_pos);
-    vec_add_xyz(pre_tgt_pos, post_tgt_pos, post_tgt_pos);
+    shAddVectorXyz(pre_tgt_pos, post_tgt_pos, post_tgt_pos);
 
 
 
@@ -2963,7 +2963,7 @@ float vcFlipFromCamExclusionArea(float* flip_ang_y_p, float* old_cam_excl_area_r
 
 
     
-    dist = vec3_dist_xz(chara_pos, in_pos);
+    dist = shVectorDistXz(chara_pos, in_pos);
     
     if (dist < cam_excl_area_r) ret_flip_dist = cam_excl_area_r - dist;
     else ret_flip_dist = 0.0f;
@@ -3485,7 +3485,7 @@ void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(sceVu0FVECTOR cam_mat_ang,
     shMulMatrix(cam_mat, base_mat, ofs_mat);
     
     shVectorZeroXyz(cam_mat[3]);
-    vec_copy_xyz(cam_mat[3], cam_pos);
+    shVectorCopyXyz(cam_mat[3], cam_pos);
     
     vwMatrixToAngleYXZ(cam_mat_ang, cam_mat);
 }

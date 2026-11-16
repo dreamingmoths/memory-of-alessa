@@ -73,6 +73,8 @@ void EFCTDoTask(void);
 void EFCTSetPassingTimePerFrame(float time /* r29 */);
 void EFCTKickPacket(void);
 
+u_int InitEffectVertexSprite(sceVu0FVECTOR pos /* @note not in dwarf */, float width, float height, u_short PlaneKind, EFCTVertexData** pVertex, sceVu0FVECTOR rot, u_char* rgba);
+
 void EFCTSetGunFire(float* pos /* r19 */, float* vec /* r18 */);
 void EFCTSetBrokenGlass(float* parent_pos /* r20 */, float* parent_direction /* r19 */, float (*chara_pos)[4] /* r18 */);
 void EFCTSetSmoke(float* pos /* r19 */, u_char kind /* r18 */);
@@ -89,6 +91,8 @@ void EFCTThreeDWork(EFCTObject* pObj /* r17 */);
 void EFCTCutEffectTask(EFCTTask* ptr /* r16 */);
 
 int InitEffectAnimData(u_short TotalFrame /* r17 */, float DrawFrameWait /* r20 */, short StartFrame /* r16 */, EFCTAnimationData** pAnim /* r18 */);
+float GetSpriteRotAngle(float around_rot, u_int plane_num, u_int index, int rand_rot_range);
+
 
 void SetEffectVertexSpriteXY(float width /* r29 */, float height /* r29 */, EFCTVertexData* VertexData /* r2 */);
 void SetEffectVertexSpriteXZ(float width /* r29 */, float height /* r29 */, EFCTVertexData* VertexData /* r2 */);

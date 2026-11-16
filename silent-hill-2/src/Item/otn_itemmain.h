@@ -17,7 +17,7 @@ void set_position(int step);
 
 void item_turn(void);
 
-void item_position(float* f0, float* f1, int count, float* r0);
+void item_position(sceVu0FVECTOR f0, sceVu0FVECTOR f1, int count, sceVu0FVECTOR r0);
 
 int move_near(float f0, float f1, float f2, float f3);
 
@@ -57,7 +57,7 @@ void stock_line(int leftx, int hoge);
 
 void look_combine(void);
 
-void look_zanzo(float* za0, float* za1, float* za2, float* za3);
+void look_zanzo(sceVu0FVECTOR za0, sceVu0FVECTOR za1, sceVu0FVECTOR za2, sceVu0FVECTOR za3);
 
 void look_blackscr(int num);
 
@@ -66,15 +66,5 @@ void item_fade_in(void);
 void item_fade_out(void);
 
 void item_examine_fade_out(void);
-
-extern struct /* @anon1 */ {
-    // total size: 0x14
-    unsigned char kind;  // offset 0x0, size 0x1
-    unsigned char count; // offset 0x1, size 0x1
-    unsigned char del;   // offset 0x2, size 0x1
-    float pos[2];        // offset 0x4, size 0x8
-    float rot;           // offset 0xC, size 0x4
-    float item_scale;    // offset 0x10, size 0x4
-};
 
 #endif // OTN_ITEMMAIN_H

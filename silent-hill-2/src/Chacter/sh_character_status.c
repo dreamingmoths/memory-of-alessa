@@ -167,7 +167,7 @@ int shBattleCheckTargetChara(SubCharacter* scp) {
 
         sh2_target_info[20 - rest_tgt].in_area = in_area;
         sh2_target_info[20 - rest_tgt].adr.scp = tgt;
-        sh2_target_info[20 - rest_tgt].distance = vec3_dist(&scp->pos, &tgt->pos);
+        sh2_target_info[20 - rest_tgt].distance = shVectorDist(&scp->pos, &tgt->pos);
         
         rest_tgt--;        
     }    

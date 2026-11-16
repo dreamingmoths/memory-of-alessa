@@ -22,6 +22,41 @@ class Sh2(KaitaiStruct):
     def _fetch_instances(self):
         pass
 
+    class Aaa(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Aaa, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.decay = []
+            for i in range(4):
+                self.decay.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.col)):
+                pass
+
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.decay)):
+                pass
+
+
+
     class AnimeInfo(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.AnimeInfo, self).__init__(_io)
@@ -1470,6 +1505,227 @@ class Sh2(KaitaiStruct):
             pass
 
 
+    class DemoLightWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DemoLightWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.parallel = []
+            for i in range(3):
+                self.parallel.append(self._io.read_s2le())
+
+            self.parallel_cid = []
+            for i in range(3):
+                self.parallel_cid.append(self._io.read_s2le())
+
+            self.point = []
+            for i in range(3):
+                self.point.append(self._io.read_s2le())
+
+            self.point_cid = []
+            for i in range(3):
+                self.point_cid.append(self._io.read_s2le())
+
+            self.spot = self._io.read_s2le()
+            self.amb = self._io.read_s2le()
+            self.ref = self._io.read_s2le()
+            self._unnamed7 = self._io.read_bytes(2)
+            self.demo_p_light0 = []
+            for i in range(4):
+                self.demo_p_light0.append(self._io.read_f4le())
+
+            self.demo_p_color0 = []
+            for i in range(4):
+                self.demo_p_color0.append(self._io.read_f4le())
+
+            self.demo_p_light1 = []
+            for i in range(4):
+                self.demo_p_light1.append(self._io.read_f4le())
+
+            self.demo_p_color1 = []
+            for i in range(4):
+                self.demo_p_color1.append(self._io.read_f4le())
+
+            self.demo_p_light2 = []
+            for i in range(4):
+                self.demo_p_light2.append(self._io.read_f4le())
+
+            self.demo_p_color2 = []
+            for i in range(4):
+                self.demo_p_color2.append(self._io.read_f4le())
+
+            self.demo_ambient = []
+            for i in range(4):
+                self.demo_ambient.append(self._io.read_f4le())
+
+            self.demo_vertex_ambient = []
+            for i in range(4):
+                self.demo_vertex_ambient.append(self._io.read_f4le())
+
+            self.demo_base_ambient = []
+            for i in range(4):
+                self.demo_base_ambient.append(self._io.read_f4le())
+
+            self.demo_base_vertex_color = []
+            for i in range(4):
+                self.demo_base_vertex_color.append(self._io.read_f4le())
+
+            self.demo_spotcol = []
+            for i in range(4):
+                self.demo_spotcol.append(self._io.read_f4le())
+
+            self.demo_spotdir = []
+            for i in range(4):
+                self.demo_spotdir.append(self._io.read_f4le())
+
+            self.demo_spotpos = []
+            for i in range(4):
+                self.demo_spotpos.append(self._io.read_f4le())
+
+            self.demo_spotdecay = []
+            for i in range(4):
+                self.demo_spotdecay.append(self._io.read_f4le())
+
+            self.demo_pointcol0 = []
+            for i in range(4):
+                self.demo_pointcol0.append(self._io.read_f4le())
+
+            self.demo_pointpos0 = []
+            for i in range(4):
+                self.demo_pointpos0.append(self._io.read_f4le())
+
+            self.demo_pointdecay0 = []
+            for i in range(4):
+                self.demo_pointdecay0.append(self._io.read_f4le())
+
+            self.demo_pointcol1 = []
+            for i in range(4):
+                self.demo_pointcol1.append(self._io.read_f4le())
+
+            self.demo_pointpos1 = []
+            for i in range(4):
+                self.demo_pointpos1.append(self._io.read_f4le())
+
+            self.demo_pointdecay1 = []
+            for i in range(4):
+                self.demo_pointdecay1.append(self._io.read_f4le())
+
+            self.demo_pointcol2 = []
+            for i in range(4):
+                self.demo_pointcol2.append(self._io.read_f4le())
+
+            self.demo_pointpos2 = []
+            for i in range(4):
+                self.demo_pointpos2.append(self._io.read_f4le())
+
+            self.demo_pointdecay2 = []
+            for i in range(4):
+                self.demo_pointdecay2.append(self._io.read_f4le())
+
+            self.demo_ref_light_dir = []
+            for i in range(4):
+                self.demo_ref_light_dir.append(self._io.read_f4le())
+
+            self.demo_ref_light_col = []
+            for i in range(4):
+                self.demo_ref_light_col.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.parallel)):
+                pass
+
+            for i in range(len(self.parallel_cid)):
+                pass
+
+            for i in range(len(self.point)):
+                pass
+
+            for i in range(len(self.point_cid)):
+                pass
+
+            for i in range(len(self.demo_p_light0)):
+                pass
+
+            for i in range(len(self.demo_p_color0)):
+                pass
+
+            for i in range(len(self.demo_p_light1)):
+                pass
+
+            for i in range(len(self.demo_p_color1)):
+                pass
+
+            for i in range(len(self.demo_p_light2)):
+                pass
+
+            for i in range(len(self.demo_p_color2)):
+                pass
+
+            for i in range(len(self.demo_ambient)):
+                pass
+
+            for i in range(len(self.demo_vertex_ambient)):
+                pass
+
+            for i in range(len(self.demo_base_ambient)):
+                pass
+
+            for i in range(len(self.demo_base_vertex_color)):
+                pass
+
+            for i in range(len(self.demo_spotcol)):
+                pass
+
+            for i in range(len(self.demo_spotdir)):
+                pass
+
+            for i in range(len(self.demo_spotpos)):
+                pass
+
+            for i in range(len(self.demo_spotdecay)):
+                pass
+
+            for i in range(len(self.demo_pointcol0)):
+                pass
+
+            for i in range(len(self.demo_pointpos0)):
+                pass
+
+            for i in range(len(self.demo_pointdecay0)):
+                pass
+
+            for i in range(len(self.demo_pointcol1)):
+                pass
+
+            for i in range(len(self.demo_pointpos1)):
+                pass
+
+            for i in range(len(self.demo_pointdecay1)):
+                pass
+
+            for i in range(len(self.demo_pointcol2)):
+                pass
+
+            for i in range(len(self.demo_pointpos2)):
+                pass
+
+            for i in range(len(self.demo_pointdecay2)):
+                pass
+
+            for i in range(len(self.demo_ref_light_dir)):
+                pass
+
+            for i in range(len(self.demo_ref_light_col)):
+                pass
+
+
+
     class DramaDemoAnimInfo(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.DramaDemoAnimInfo, self).__init__(_io)
@@ -1540,6 +1796,282 @@ class Sh2(KaitaiStruct):
             self.adr_voice._fetch_instances()
 
 
+    class DrawEnvData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DrawEnvData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.map_id_name = self._io.read_s4le()
+            self.parallel_lnum = self._io.read_s1()
+            self.fake_spot_num = self._io.read_s1()
+            self.fake_point_num = self._io.read_s1()
+            self.point_lnum = self._io.read_s1()
+            self.spot_lnum = self._io.read_s1()
+            self.night_or_day = self._io.read_s1()
+            self.shadow_color = self._io.read_s2le()
+            self.shadow_force_light_no = self._io.read_s2le()
+            self.shadow_dark_ness = self._io.read_s2le()
+            self.p_light_dir0 = []
+            for i in range(4):
+                self.p_light_dir0.append(self._io.read_f4le())
+
+            self.p_light_col0 = []
+            for i in range(4):
+                self.p_light_col0.append(self._io.read_f4le())
+
+            self.p_light_dir1 = []
+            for i in range(4):
+                self.p_light_dir1.append(self._io.read_f4le())
+
+            self.p_light_col1 = []
+            for i in range(4):
+                self.p_light_col1.append(self._io.read_f4le())
+
+            self.p_light_dir2 = []
+            for i in range(4):
+                self.p_light_dir2.append(self._io.read_f4le())
+
+            self.p_light_col2 = []
+            for i in range(4):
+                self.p_light_col2.append(self._io.read_f4le())
+
+            self.spot_col0 = []
+            for i in range(4):
+                self.spot_col0.append(self._io.read_f4le())
+
+            self.spot_decay_parm0 = []
+            for i in range(4):
+                self.spot_decay_parm0.append(self._io.read_f4le())
+
+            self.spot_parm = []
+            for i in range(4):
+                self.spot_parm.append(self._io.read_f4le())
+
+            self.fog_parm = []
+            for i in range(4):
+                self.fog_parm.append(self._io.read_f4le())
+
+            self.ld_0 = []
+            for i in range(4):
+                self.ld_0.append(self._io.read_f4le())
+
+            self.ld_1 = []
+            for i in range(4):
+                self.ld_1.append(self._io.read_f4le())
+
+            self.ld_2 = []
+            for i in range(4):
+                self.ld_2.append(self._io.read_f4le())
+
+            self.ld_3 = []
+            for i in range(4):
+                self.ld_3.append(self._io.read_f4le())
+
+            self.ld_4 = []
+            for i in range(4):
+                self.ld_4.append(self._io.read_f4le())
+
+            self.ld_5 = []
+            for i in range(4):
+                self.ld_5.append(self._io.read_f4le())
+
+            self.ld_6 = []
+            for i in range(4):
+                self.ld_6.append(self._io.read_f4le())
+
+            self.ld_7 = []
+            for i in range(4):
+                self.ld_7.append(self._io.read_f4le())
+
+            self.ld_8 = []
+            for i in range(4):
+                self.ld_8.append(self._io.read_f4le())
+
+            self.ld_9 = []
+            for i in range(4):
+                self.ld_9.append(self._io.read_f4le())
+
+            self.ld_a = []
+            for i in range(4):
+                self.ld_a.append(self._io.read_f4le())
+
+            self.ld_b = []
+            for i in range(4):
+                self.ld_b.append(self._io.read_f4le())
+
+            self.ld_c = []
+            for i in range(4):
+                self.ld_c.append(self._io.read_f4le())
+
+            self.ld_d = []
+            for i in range(4):
+                self.ld_d.append(self._io.read_f4le())
+
+            self.ld_e = []
+            for i in range(4):
+                self.ld_e.append(self._io.read_f4le())
+
+            self.move_fog_col = []
+            for i in range(4):
+                self.move_fog_col.append(self._io.read_f4le())
+
+            self.ambient = []
+            for i in range(4):
+                self.ambient.append(self._io.read_f4le())
+
+            self.base_ambient = []
+            for i in range(4):
+                self.base_ambient.append(self._io.read_f4le())
+
+            self.base_color = []
+            for i in range(4):
+                self.base_color.append(self._io.read_f4le())
+
+            self.vertex_ambient = []
+            for i in range(4):
+                self.vertex_ambient.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.p_light_dir0)):
+                pass
+
+            for i in range(len(self.p_light_col0)):
+                pass
+
+            for i in range(len(self.p_light_dir1)):
+                pass
+
+            for i in range(len(self.p_light_col1)):
+                pass
+
+            for i in range(len(self.p_light_dir2)):
+                pass
+
+            for i in range(len(self.p_light_col2)):
+                pass
+
+            for i in range(len(self.spot_col0)):
+                pass
+
+            for i in range(len(self.spot_decay_parm0)):
+                pass
+
+            for i in range(len(self.spot_parm)):
+                pass
+
+            for i in range(len(self.fog_parm)):
+                pass
+
+            for i in range(len(self.ld_0)):
+                pass
+
+            for i in range(len(self.ld_1)):
+                pass
+
+            for i in range(len(self.ld_2)):
+                pass
+
+            for i in range(len(self.ld_3)):
+                pass
+
+            for i in range(len(self.ld_4)):
+                pass
+
+            for i in range(len(self.ld_5)):
+                pass
+
+            for i in range(len(self.ld_6)):
+                pass
+
+            for i in range(len(self.ld_7)):
+                pass
+
+            for i in range(len(self.ld_8)):
+                pass
+
+            for i in range(len(self.ld_9)):
+                pass
+
+            for i in range(len(self.ld_a)):
+                pass
+
+            for i in range(len(self.ld_b)):
+                pass
+
+            for i in range(len(self.ld_c)):
+                pass
+
+            for i in range(len(self.ld_d)):
+                pass
+
+            for i in range(len(self.ld_e)):
+                pass
+
+            for i in range(len(self.move_fog_col)):
+                pass
+
+            for i in range(len(self.ambient)):
+                pass
+
+            for i in range(len(self.base_ambient)):
+                pass
+
+            for i in range(len(self.base_color)):
+                pass
+
+            for i in range(len(self.vertex_ambient)):
+                pass
+
+
+
+    class DynamicLight(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DynamicLight, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.now_cam_dir = []
+            for i in range(4):
+                self.now_cam_dir.append(self._io.read_f4le())
+
+            self.before_cam_dir = []
+            for i in range(4):
+                self.before_cam_dir.append(self._io.read_f4le())
+
+            self.now_dir = []
+            for i in range(4):
+                self.now_dir.append(self._io.read_f4le())
+
+            self.before_dir = []
+            for i in range(4):
+                self.before_dir.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.now_cam_dir)):
+                pass
+
+            for i in range(len(self.before_cam_dir)):
+                pass
+
+            for i in range(len(self.now_dir)):
+                pass
+
+            for i in range(len(self.before_dir)):
+                pass
+
+
+
     class Element1(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.Element1, self).__init__(_io)
@@ -1588,6 +2120,23 @@ class Sh2(KaitaiStruct):
             self.anime = self._io.read_u2le()
             self.loop = self._io.read_u1()
             self._unnamed2 = self._io.read_bytes(1)
+
+
+        def _fetch_instances(self):
+            pass
+
+
+    class EnAnimeRange(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnAnimeRange, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.anime = self._io.read_u2le()
+            self.start = self._io.read_s2le()
+            self.end = self._io.read_s2le()
 
 
         def _fetch_instances(self):
@@ -2365,6 +2914,23 @@ class Sh2(KaitaiStruct):
             self.ambush._fetch_instances()
 
 
+    class EnSkeletonData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnSkeletonData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.num1 = self._io.read_s2le()
+            self.num2 = self._io.read_s2le()
+            self.rate = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class EnSoundQueue(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.EnSoundQueue, self).__init__(_io)
@@ -2434,6 +3000,43 @@ class Sh2(KaitaiStruct):
             pass
 
 
+    class EventCamSetData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EventCamSetData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.itr = []
+            for i in range(4):
+                self.itr.append(self._io.read_f4le())
+
+            self.rot = []
+            for i in range(4):
+                self.rot.append(self._io.read_f4le())
+
+            self.roll = self._io.read_f4le()
+            self._unnamed4 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.itr)):
+                pass
+
+            for i in range(len(self.rot)):
+                pass
+
+
+
     class EventDoorSound(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.EventDoorSound, self).__init__(_io)
@@ -2470,6 +3073,29 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
+
+
+    class FakeLightWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.FakeLightWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.uni_fake_light_no = []
+            for i in range(2):
+                self.uni_fake_light_no.append(self._io.read_s4le())
+
+            self.fake_light_num = self._io.read_s4le()
+            self.pad = self._io.read_s4le()
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.uni_fake_light_no)):
+                pass
+
 
 
     class FilesBgBlock(KaitaiStruct):
@@ -3784,6 +4410,76 @@ class Sh2(KaitaiStruct):
 
 
 
+    class HhObjectSmoke00(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.HhObjectSmoke00, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.header = Sh2.ObjectDataBlockHeader(self._io, self, self._root)
+            self.step = self._io.read_u1()
+            self._unnamed2 = self._io.read_bytes(3)
+            self.timer = self._io.read_f4le()
+            self.particle_draw_num = self._io.read_u4le()
+            self._unnamed5 = self._io.read_bytes(4)
+            self.particle = []
+            for i in range(20):
+                self.particle.append(Sh2.HhObjectSmoke00Particle(self._io, self, self._root))
+
+
+
+        def _fetch_instances(self):
+            pass
+            self.header._fetch_instances()
+            for i in range(len(self.particle)):
+                pass
+                self.particle[i]._fetch_instances()
+
+
+
+    class HhObjectSmoke00Particle(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.HhObjectSmoke00Particle, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.location = []
+            for i in range(4):
+                self.location.append(self._io.read_f4le())
+
+            self.verocity_0 = []
+            for i in range(4):
+                self.verocity_0.append(self._io.read_f4le())
+
+            self.rgba = []
+            for i in range(4):
+                self.rgba.append(self._io.read_f4le())
+
+            self.time = self._io.read_f4le()
+            self.scale = self._io.read_f4le()
+            self.convergence_coff = self._io.read_f4le()
+            self.life_time = self._io.read_f4le()
+            self.texture_kind = self._io.read_u4le()
+            self._unnamed8 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.location)):
+                pass
+
+            for i in range(len(self.verocity_0)):
+                pass
+
+            for i in range(len(self.rgba)):
+                pass
+
+
+
     class IVector4(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.IVector4, self).__init__(_io)
@@ -4603,6 +5299,23 @@ class Sh2(KaitaiStruct):
 
 
 
+    class MotionTableInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.MotionTableInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.diff_time = self._io.read_f4le()
+            self.diff_scale_ratio = self._io.read_f4le()
+            self.diff_rgba_ratio = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class MovieWrk(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.MovieWrk, self).__init__(_io)
@@ -4647,6 +5360,27 @@ class Sh2(KaitaiStruct):
                 pass
 
             for i in range(len(self.out_vol)):
+                pass
+
+
+
+    class NowBlockNo(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.NowBlockNo, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.map_now_block_no = []
+            for i in range(4):
+                self.map_now_block_no.append(self._io.read_s4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.map_now_block_no)):
                 pass
 
 
@@ -4999,6 +5733,34 @@ class Sh2(KaitaiStruct):
 
 
 
+    class ParallelLightData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ParallelLightData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.dir = []
+            for i in range(4):
+                self.dir.append(self._io.read_f4le())
+
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.dir)):
+                pass
+
+            for i in range(len(self.col)):
+                pass
+
+
+
     class PicDrawData(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.PicDrawData, self).__init__(_io)
@@ -5127,6 +5889,69 @@ class Sh2(KaitaiStruct):
                 pass
 
             for i in range(len(self.stage_score)):
+                pass
+
+
+
+    class Pld(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Pld, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.dir = []
+            for i in range(4):
+                self.dir.append(self._io.read_f4le())
+
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.dir)):
+                pass
+
+            for i in range(len(self.col)):
+                pass
+
+
+
+    class PointLightData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.PointLightData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+            self.decay_parm = []
+            for i in range(4):
+                self.decay_parm.append(self._io.read_f4le())
+
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.col)):
+                pass
+
+            for i in range(len(self.decay_parm)):
+                pass
+
+            for i in range(len(self.pos)):
                 pass
 
 
@@ -5884,6 +6709,63 @@ class Sh2(KaitaiStruct):
 
 
 
+    class SaveData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SaveData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.version = self._io.read_u4le()
+            self.scene = self._io.read_u2le()
+            self._unnamed2 = self._io.read_bytes(10)
+            self.jms_pos = []
+            for i in range(4):
+                self.jms_pos.append(self._io.read_f4le())
+
+            self.playing = Sh2.PlayingInfo(self._io, self, self._root)
+            self.game_flag = Sh2.GameFlag(self._io, self, self._root)
+            self.item = Sh2.Item(self._io, self, self._root)
+            self.chara = Sh2.CharacterInfo(self._io, self, self._root)
+            self.key_config = Sh2.PadKeyConfig(self._io, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.jms_pos)):
+                pass
+
+            self.playing._fetch_instances()
+            self.game_flag._fetch_instances()
+            self.item._fetch_instances()
+            self.chara._fetch_instances()
+            self.key_config._fetch_instances()
+
+
+    class SaveDataAll(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SaveDataAll, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.d = Sh2.SaveData(self._io, self, self._root)
+            self.pad = []
+            for i in range(1456):
+                self.pad.append(self._io.read_s1())
+
+
+
+        def _fetch_instances(self):
+            pass
+            self.d._fetch_instances()
+            for i in range(len(self.pad)):
+                pass
+
+
+
     class SceCdClock(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.SceCdClock, self).__init__(_io)
@@ -6221,12 +7103,11 @@ class Sh2(KaitaiStruct):
             self.z = self._io.read_u4le()
             self.pad96 = self._io.read_bits_int_le(15)
             self.adc = self._io.read_bits_int_le(1) != 0
-            self.pad112 = Sh2.U16(self._io, self, self._root)
+            self.pad112 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.pad112._fetch_instances()
 
 
     class SceGifPackXyzf(KaitaiStruct):
@@ -6243,12 +7124,11 @@ class Sh2(KaitaiStruct):
             self.f = self._io.read_bits_int_le(12)
             self.pad108 = self._io.read_bits_int_le(3)
             self.adc = self._io.read_bits_int_le(1) != 0
-            self.pad112 = Sh2.U16(self._io, self, self._root)
+            self.pad112 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.pad112._fetch_instances()
 
 
     class SceGifTag(KaitaiStruct):
@@ -6261,7 +7141,7 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.nloop = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.pad16 = Sh2.U16(self._io, self, self._root)
+            self.pad16 = self._io.read_bits_int_le(16)
             self.id = self._io.read_bits_int_le(14)
             self.pre = self._io.read_bits_int_le(1) != 0
             self.prim = self._io.read_bits_int_le(11)
@@ -6287,7 +7167,6 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
-            self.pad16._fetch_instances()
 
 
     class SceGsAlpha(KaitaiStruct):
@@ -7268,14 +8147,13 @@ class Sh2(KaitaiStruct):
             self.ta0 = self._io.read_bits_int_le(8)
             self.pad08 = self._io.read_bits_int_le(7)
             self.aem = self._io.read_bits_int_le(1) != 0
-            self.pad16 = Sh2.U16(self._io, self, self._root)
+            self.pad16 = self._io.read_bits_int_le(16)
             self.ta1 = self._io.read_bits_int_le(8)
             self.pad40 = self._io.read_bits_int_le(24)
 
 
         def _fetch_instances(self):
             pass
-            self.pad16._fetch_instances()
 
 
     class SceGsTexclut(KaitaiStruct):
@@ -7394,18 +8272,14 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.ofx = Sh2.U16(self._io, self, self._root)
-            self.pad16 = Sh2.U16(self._io, self, self._root)
-            self.ofy = Sh2.U16(self._io, self, self._root)
-            self.pad48 = Sh2.U16(self._io, self, self._root)
+            self.ofx = self._io.read_bits_int_le(16)
+            self.pad16 = self._io.read_bits_int_le(16)
+            self.ofy = self._io.read_bits_int_le(16)
+            self.pad48 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.ofx._fetch_instances()
-            self.pad16._fetch_instances()
-            self.ofy._fetch_instances()
-            self.pad48._fetch_instances()
 
 
     class SceGsXyz(KaitaiStruct):
@@ -7416,15 +8290,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.x = Sh2.U16(self._io, self, self._root)
-            self.y = Sh2.U16(self._io, self, self._root)
+            self.x = self._io.read_bits_int_le(16)
+            self.y = self._io.read_bits_int_le(16)
             self.z = self._io.read_bits_int_le(32)
 
 
         def _fetch_instances(self):
             pass
-            self.x._fetch_instances()
-            self.y._fetch_instances()
 
 
     class SceGsXyzf(KaitaiStruct):
@@ -7435,16 +8307,14 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.x = Sh2.U16(self._io, self, self._root)
-            self.y = Sh2.U16(self._io, self, self._root)
+            self.x = self._io.read_bits_int_le(16)
+            self.y = self._io.read_bits_int_le(16)
             self.z = self._io.read_bits_int_le(24)
             self.f = self._io.read_bits_int_le(8)
 
 
         def _fetch_instances(self):
             pass
-            self.x._fetch_instances()
-            self.y._fetch_instances()
 
 
     class SceGsZbuf(KaitaiStruct):
@@ -8331,6 +9201,281 @@ class Sh2(KaitaiStruct):
             self.p_pad._fetch_instances()
 
 
+    class Sh2gfwEnvCtl(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Sh2gfwEnvCtl, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.camera_p = []
+            for i in range(4):
+                self.camera_p.append(self._io.read_f4le())
+
+            self.camera_zd = []
+            for i in range(4):
+                self.camera_zd.append(self._io.read_f4le())
+
+            self.camera_yd = []
+            for i in range(4):
+                self.camera_yd.append(self._io.read_f4le())
+
+            self.camera_rot = []
+            for i in range(4):
+                self.camera_rot.append(self._io.read_f4le())
+
+            self.camera_ido = []
+            for i in range(4):
+                self.camera_ido.append(self._io.read_f4le())
+
+            self.camera_parms = []
+            for i in range(4):
+                self.camera_parms.append(self._io.read_f4le())
+
+            self.camera_parms2 = []
+            for i in range(4):
+                self.camera_parms2.append(self._io.read_f4le())
+
+            self.camera_mat = []
+            for i in range(16):
+                self.camera_mat.append(self._io.read_f4le())
+
+            self.objclip_mat = []
+            for i in range(16):
+                self.objclip_mat.append(self._io.read_f4le())
+
+            self._raw_block_index = self._io.read_bytes(16)
+            _io__raw_block_index = KaitaiStream(BytesIO(self._raw_block_index))
+            self.block_index = Sh2.QWorddata(_io__raw_block_index, self, self._root)
+            self.p_light0 = []
+            for i in range(4):
+                self.p_light0.append(self._io.read_f4le())
+
+            self.p_light1 = []
+            for i in range(4):
+                self.p_light1.append(self._io.read_f4le())
+
+            self.p_light2 = []
+            for i in range(4):
+                self.p_light2.append(self._io.read_f4le())
+
+            self.p_color0 = []
+            for i in range(4):
+                self.p_color0.append(self._io.read_f4le())
+
+            self.p_color1 = []
+            for i in range(4):
+                self.p_color1.append(self._io.read_f4le())
+
+            self.p_color2 = []
+            for i in range(4):
+                self.p_color2.append(self._io.read_f4le())
+
+            self.ambient = []
+            for i in range(4):
+                self.ambient.append(self._io.read_f4le())
+
+            self.vertex_ambient = []
+            for i in range(4):
+                self.vertex_ambient.append(self._io.read_f4le())
+
+            self.base_ambient = []
+            for i in range(4):
+                self.base_ambient.append(self._io.read_f4le())
+
+            self.base_vertex_color = []
+            for i in range(4):
+                self.base_vertex_color.append(self._io.read_f4le())
+
+            self.spot0_wpos = []
+            for i in range(4):
+                self.spot0_wpos.append(self._io.read_f4le())
+
+            self.spot0_wdir = []
+            for i in range(4):
+                self.spot0_wdir.append(self._io.read_f4le())
+
+            self.spot_l0 = Sh2.Sh2gfwSpotlMatrix(self._io, self, self._root)
+            self.spot1_wpos = []
+            for i in range(4):
+                self.spot1_wpos.append(self._io.read_f4le())
+
+            self.spot1_wdir = []
+            for i in range(4):
+                self.spot1_wdir.append(self._io.read_f4le())
+
+            self.spot_l1 = Sh2.Sh2gfwSpotlMatrix(self._io, self, self._root)
+            self.character_light_factor = []
+            for i in range(4):
+                self.character_light_factor.append(self._io.read_f4le())
+
+            self.character_light_factor_other = []
+            for i in range(4):
+                self.character_light_factor_other.append(self._io.read_f4le())
+
+            self.spot_l2 = Sh2.Sh2gfwSpotlMatrix(self._io, self, self._root)
+            self.point0_localpos = []
+            for i in range(4):
+                self.point0_localpos.append(self._io.read_f4le())
+
+            self.point_l0 = Sh2.Sh2gfwPointlMatrix(self._io, self, self._root)
+            self.light_mode = self._io.read_u2le()
+            self.weather_mode = self._io.read_u2le()
+            self.time_mode = self._io.read_u2le()
+            self.now_block = self._io.read_u2le()
+            self.mode_buf = []
+            for i in range(4):
+                self.mode_buf.append(self._io.read_u2le())
+
+            self._raw_stat_ctl_1 = self._io.read_bytes(16)
+            _io__raw_stat_ctl_1 = KaitaiStream(BytesIO(self._raw_stat_ctl_1))
+            self.stat_ctl_1 = Sh2.QWorddata(_io__raw_stat_ctl_1, self, self._root)
+            self._raw_stat_ctl_2 = self._io.read_bytes(16)
+            _io__raw_stat_ctl_2 = KaitaiStream(BytesIO(self._raw_stat_ctl_2))
+            self.stat_ctl_2 = Sh2.QWorddata(_io__raw_stat_ctl_2, self, self._root)
+            self._raw_fogcolor = self._io.read_bytes(16)
+            _io__raw_fogcolor = KaitaiStream(BytesIO(self._raw_fogcolor))
+            self.fogcolor = Sh2.QWorddata(_io__raw_fogcolor, self, self._root)
+            self._raw_fogparm = self._io.read_bytes(16)
+            _io__raw_fogparm = KaitaiStream(BytesIO(self._raw_fogparm))
+            self.fogparm = Sh2.QWorddata(_io__raw_fogparm, self, self._root)
+            self._raw_move_fog_color = self._io.read_bytes(16)
+            _io__raw_move_fog_color = KaitaiStream(BytesIO(self._raw_move_fog_color))
+            self.move_fog_color = Sh2.QWorddata(_io__raw_move_fog_color, self, self._root)
+            self._raw_clearcolor = self._io.read_bytes(16)
+            _io__raw_clearcolor = KaitaiStream(BytesIO(self._raw_clearcolor))
+            self.clearcolor = Sh2.QWorddata(_io__raw_clearcolor, self, self._root)
+            self._raw_random_seeds = self._io.read_bytes(16)
+            _io__raw_random_seeds = KaitaiStream(BytesIO(self._raw_random_seeds))
+            self.random_seeds = Sh2.QWorddata(_io__raw_random_seeds, self, self._root)
+            self._raw_compo_shadow_env = self._io.read_bytes(16)
+            _io__raw_compo_shadow_env = KaitaiStream(BytesIO(self._raw_compo_shadow_env))
+            self.compo_shadow_env = Sh2.QWorddata(_io__raw_compo_shadow_env, self, self._root)
+            self._raw_compo_shadow_test = self._io.read_bytes(16)
+            _io__raw_compo_shadow_test = KaitaiStream(BytesIO(self._raw_compo_shadow_test))
+            self.compo_shadow_test = Sh2.QWorddata(_io__raw_compo_shadow_test, self, self._root)
+            self._raw_compo_shadow_alp = self._io.read_bytes(16)
+            _io__raw_compo_shadow_alp = KaitaiStream(BytesIO(self._raw_compo_shadow_alp))
+            self.compo_shadow_alp = Sh2.QWorddata(_io__raw_compo_shadow_alp, self, self._root)
+            self._raw_compo_shadow_col = self._io.read_bytes(16)
+            _io__raw_compo_shadow_col = KaitaiStream(BytesIO(self._raw_compo_shadow_col))
+            self.compo_shadow_col = Sh2.QWorddata(_io__raw_compo_shadow_col, self, self._root)
+            self._raw_compo_fill_col = self._io.read_bytes(16)
+            _io__raw_compo_fill_col = KaitaiStream(BytesIO(self._raw_compo_fill_col))
+            self.compo_fill_col = Sh2.QWorddata(_io__raw_compo_fill_col, self, self._root)
+            self._raw_noise_condition = self._io.read_bytes(16)
+            _io__raw_noise_condition = KaitaiStream(BytesIO(self._raw_noise_condition))
+            self.noise_condition = Sh2.QWorddata(_io__raw_noise_condition, self, self._root)
+            self._raw_copy_filter_color = self._io.read_bytes(16)
+            _io__raw_copy_filter_color = KaitaiStream(BytesIO(self._raw_copy_filter_color))
+            self.copy_filter_color = Sh2.QWorddata(_io__raw_copy_filter_color, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.camera_p)):
+                pass
+
+            for i in range(len(self.camera_zd)):
+                pass
+
+            for i in range(len(self.camera_yd)):
+                pass
+
+            for i in range(len(self.camera_rot)):
+                pass
+
+            for i in range(len(self.camera_ido)):
+                pass
+
+            for i in range(len(self.camera_parms)):
+                pass
+
+            for i in range(len(self.camera_parms2)):
+                pass
+
+            for i in range(len(self.camera_mat)):
+                pass
+
+            for i in range(len(self.objclip_mat)):
+                pass
+
+            self.block_index._fetch_instances()
+            for i in range(len(self.p_light0)):
+                pass
+
+            for i in range(len(self.p_light1)):
+                pass
+
+            for i in range(len(self.p_light2)):
+                pass
+
+            for i in range(len(self.p_color0)):
+                pass
+
+            for i in range(len(self.p_color1)):
+                pass
+
+            for i in range(len(self.p_color2)):
+                pass
+
+            for i in range(len(self.ambient)):
+                pass
+
+            for i in range(len(self.vertex_ambient)):
+                pass
+
+            for i in range(len(self.base_ambient)):
+                pass
+
+            for i in range(len(self.base_vertex_color)):
+                pass
+
+            for i in range(len(self.spot0_wpos)):
+                pass
+
+            for i in range(len(self.spot0_wdir)):
+                pass
+
+            self.spot_l0._fetch_instances()
+            for i in range(len(self.spot1_wpos)):
+                pass
+
+            for i in range(len(self.spot1_wdir)):
+                pass
+
+            self.spot_l1._fetch_instances()
+            for i in range(len(self.character_light_factor)):
+                pass
+
+            for i in range(len(self.character_light_factor_other)):
+                pass
+
+            self.spot_l2._fetch_instances()
+            for i in range(len(self.point0_localpos)):
+                pass
+
+            self.point_l0._fetch_instances()
+            for i in range(len(self.mode_buf)):
+                pass
+
+            self.stat_ctl_1._fetch_instances()
+            self.stat_ctl_2._fetch_instances()
+            self.fogcolor._fetch_instances()
+            self.fogparm._fetch_instances()
+            self.move_fog_color._fetch_instances()
+            self.clearcolor._fetch_instances()
+            self.random_seeds._fetch_instances()
+            self.compo_shadow_env._fetch_instances()
+            self.compo_shadow_test._fetch_instances()
+            self.compo_shadow_alp._fetch_instances()
+            self.compo_shadow_col._fetch_instances()
+            self.compo_fill_col._fetch_instances()
+            self.noise_condition._fetch_instances()
+            self.copy_filter_color._fetch_instances()
+
+
     class Sh2gfwGiftagHead(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.Sh2gfwGiftagHead, self).__init__(_io)
@@ -8536,6 +9681,62 @@ class Sh2(KaitaiStruct):
                 pass
                 self.p_tex_man[i]._fetch_instances()
 
+
+
+    class Sh2gfwPointlMatrix(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Sh2gfwPointlMatrix, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self._raw_color = self._io.read_bytes(16)
+            _io__raw_color = KaitaiStream(BytesIO(self._raw_color))
+            self.color = Sh2.QWorddata(_io__raw_color, self, self._root)
+            self._raw_position = self._io.read_bytes(16)
+            _io__raw_position = KaitaiStream(BytesIO(self._raw_position))
+            self.position = Sh2.QWorddata(_io__raw_position, self, self._root)
+            self._raw_decayparm = self._io.read_bytes(16)
+            _io__raw_decayparm = KaitaiStream(BytesIO(self._raw_decayparm))
+            self.decayparm = Sh2.QWorddata(_io__raw_decayparm, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            self.color._fetch_instances()
+            self.position._fetch_instances()
+            self.decayparm._fetch_instances()
+
+
+    class Sh2gfwSpotlMatrix(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Sh2gfwSpotlMatrix, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self._raw_color = self._io.read_bytes(16)
+            _io__raw_color = KaitaiStream(BytesIO(self._raw_color))
+            self.color = Sh2.QWorddata(_io__raw_color, self, self._root)
+            self._raw_dirvec = self._io.read_bytes(16)
+            _io__raw_dirvec = KaitaiStream(BytesIO(self._raw_dirvec))
+            self.dirvec = Sh2.QWorddata(_io__raw_dirvec, self, self._root)
+            self._raw_position = self._io.read_bytes(16)
+            _io__raw_position = KaitaiStream(BytesIO(self._raw_position))
+            self.position = Sh2.QWorddata(_io__raw_position, self, self._root)
+            self._raw_decayparm = self._io.read_bytes(16)
+            _io__raw_decayparm = KaitaiStream(BytesIO(self._raw_decayparm))
+            self.decayparm = Sh2.QWorddata(_io__raw_decayparm, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            self.color._fetch_instances()
+            self.dirvec._fetch_instances()
+            self.position._fetch_instances()
+            self.decayparm._fetch_instances()
 
 
     class Sh2gfwTexHead(KaitaiStruct):
@@ -8917,6 +10118,35 @@ class Sh2(KaitaiStruct):
 
         def _fetch_instances(self):
             pass
+
+
+    class ShBoatWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShBoatWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.boat_p = Sh2.Pointer(u"sub_character", self._io, self, self._root)
+            self.status_now = self._io.read_u1()
+            self.status_prev = self._io.read_u1()
+            self._unnamed3 = self._io.read_bytes(2)
+            self.sub_st_flg = self._io.read_u4le()
+            self.anime_st_flg = self._io.read_u4le()
+            self.anime_pause = self._io.read_u4le()
+            self.anim_change = self._io.read_u1()
+            self.anime_change_now = self._io.read_u1()
+            self.anime_change_prev = self._io.read_u1()
+            self._unnamed10 = self._io.read_bytes(1)
+            self.anime_change_timer = self._io.read_f4le()
+            self.anime_speed = self._io.read_s2le()
+            self._unnamed13 = self._io.read_bytes(2)
+
+
+        def _fetch_instances(self):
+            pass
+            self.boat_p._fetch_instances()
 
 
     class ShCharaInfo(KaitaiStruct):
@@ -10059,6 +11289,62 @@ class Sh2(KaitaiStruct):
 
 
 
+    class ShShadingParams(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShShadingParams, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.m3_rgbamax_vu0 = []
+            for i in range(4):
+                self.m3_rgbamax_vu0.append(self._io.read_f4le())
+
+            self.m3_rgbamax_vu1 = []
+            for i in range(4):
+                self.m3_rgbamax_vu1.append(self._io.read_f4le())
+
+            self.m3_global_ambient_vu0 = []
+            for i in range(4):
+                self.m3_global_ambient_vu0.append(self._io.read_f4le())
+
+            self.m3_global_ambient_vu1 = []
+            for i in range(4):
+                self.m3_global_ambient_vu1.append(self._io.read_f4le())
+
+            self.m3_camdir = []
+            for i in range(4):
+                self.m3_camdir.append(self._io.read_f4le())
+
+            self.m3_mono_vector = []
+            for i in range(4):
+                self.m3_mono_vector.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.m3_rgbamax_vu0)):
+                pass
+
+            for i in range(len(self.m3_rgbamax_vu1)):
+                pass
+
+            for i in range(len(self.m3_global_ambient_vu0)):
+                pass
+
+            for i in range(len(self.m3_global_ambient_vu1)):
+                pass
+
+            for i in range(len(self.m3_camdir)):
+                pass
+
+            for i in range(len(self.m3_mono_vector)):
+                pass
+
+
+
     class ShSkelton(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.ShSkelton, self).__init__(_io)
@@ -10128,6 +11414,102 @@ class Sh2(KaitaiStruct):
                 self.work[i]._fetch_instances()
 
             self.free._fetch_instances()
+
+
+    class ShadowLightData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShadowLightData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.sub_chara = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.p_ded = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.light_kind = self._io.read_s2le()
+            self.visible_flg = self._io.read_s1()
+            self.force_flg = self._io.read_s1()
+            self.influence_factor = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+            self.sub_chara._fetch_instances()
+            self.p_ded._fetch_instances()
+
+
+    class ShadowLightWork(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShadowLightWork, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.store_num = self._io.read_s4le()
+            self.shadow_ld = []
+            for i in range(32):
+                self.shadow_ld.append(Sh2.ShadowLightData(self._io, self, self._root))
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.shadow_ld)):
+                pass
+                self.shadow_ld[i]._fetch_instances()
+
+
+
+    class SmokeInitializeParameter(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SmokeInitializeParameter, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.particle_draw_num = self._io.read_u4le()
+            self.flag = []
+            for i in range(3):
+                self.flag.append(self._io.read_u4le())
+
+            self.convergence_coff = self._io.read_f4le()
+            self.convergence_coff_sub = self._io.read_f4le()
+            self.gravity_suppress_coff = self._io.read_f4le()
+            self.base_alpha = self._io.read_f4le()
+            self.base_scale = self._io.read_f4le()
+            self.base_time = self._io.read_f4le()
+            self.rand_time_width = self._io.read_f4le()
+            self._unnamed9 = self._io.read_bytes(4)
+            self.verocity_0 = []
+            for i in range(4):
+                self.verocity_0.append(self._io.read_s4le())
+
+            self.length_max = []
+            for i in range(4):
+                self.length_max.append(self._io.read_s4le())
+
+            self.rgba = []
+            for i in range(4):
+                self.rgba.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.flag)):
+                pass
+
+            for i in range(len(self.verocity_0)):
+                pass
+
+            for i in range(len(self.length_max)):
+                pass
+
+            for i in range(len(self.rgba)):
+                pass
+
 
 
     class SndRoadArea(KaitaiStruct):
@@ -10218,6 +11600,48 @@ class Sh2(KaitaiStruct):
                 self.near_sound_ary[i]._fetch_instances()
 
             for i in range(len(self.on_chan)):
+                pass
+
+
+
+    class SpotLightData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SpotLightData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.col = []
+            for i in range(4):
+                self.col.append(self._io.read_f4le())
+
+            self.decay_parm = []
+            for i in range(4):
+                self.decay_parm.append(self._io.read_f4le())
+
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.dir = []
+            for i in range(4):
+                self.dir.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.col)):
+                pass
+
+            for i in range(len(self.decay_parm)):
+                pass
+
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.dir)):
                 pass
 
 
@@ -10549,12 +11973,11 @@ class Sh2(KaitaiStruct):
             self.tie = self._io.read_bits_int_le(1) != 0
             self.str = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(7)
-            self.tag = Sh2.U16(self._io, self, self._root)
+            self.tag = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.tag._fetch_instances()
 
 
     class TDctrl(KaitaiStruct):
@@ -10586,14 +12009,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.cpnd = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(15)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TDenablew(KaitaiStruct):
@@ -10604,14 +12026,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.cpnd = self._io.read_bits_int_le(1) != 0
             self.p1 = self._io.read_bits_int_le(15)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TDmadr(KaitaiStruct):
@@ -10675,14 +12096,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.qwc = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.qwc = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.qwc._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TDrbor(KaitaiStruct):
@@ -10906,12 +12325,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.loopcnt = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TGifStat(KaitaiStruct):
@@ -10953,12 +12371,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.nloop = self._io.read_bits_int_le(15)
             self.eop = self._io.read_bits_int_le(1) != 0
-            self.tag = Sh2.U16(self._io, self, self._root)
+            self.tag = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.tag._fetch_instances()
 
 
     class TGifTag1(KaitaiStruct):
@@ -11261,13 +12678,12 @@ class Sh2(KaitaiStruct):
             self.amod = self._io.read_bits_int_le(1) != 0
             self.slbg = self._io.read_bits_int_le(1) != 0
             self.alp = self._io.read_bits_int_le(8)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
             self.p1 = self._io.read_u4le()
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TGsSiglblid(KaitaiStruct):
@@ -11412,14 +12828,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.comp = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.comp = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.comp._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TTcount(KaitaiStruct):
@@ -11430,14 +12844,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.count = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.count = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.count._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TThold(KaitaiStruct):
@@ -11448,14 +12860,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.hold = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.hold = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.hold._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TTmode(KaitaiStruct):
@@ -11779,14 +13189,13 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.immediate = Sh2.U16(self._io, self, self._root)
+            self.immediate = self._io.read_bits_int_le(16)
             self.num = self._io.read_bits_int_le(8)
             self.cmd = self._io.read_bits_int_le(8)
 
 
         def _fetch_instances(self):
             pass
-            self.immediate._fetch_instances()
 
 
     class TVifCycle(KaitaiStruct):
@@ -11799,12 +13208,11 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.cl = self._io.read_bits_int_le(8)
             self.wl = self._io.read_bits_int_le(8)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.p0._fetch_instances()
 
 
     class TVifItop(KaitaiStruct):
@@ -11847,14 +13255,12 @@ class Sh2(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.mark = Sh2.U16(self._io, self, self._root)
-            self.p0 = Sh2.U16(self._io, self, self._root)
+            self.mark = self._io.read_bits_int_le(16)
+            self.p0 = self._io.read_bits_int_le(16)
 
 
         def _fetch_instances(self):
             pass
-            self.mark._fetch_instances()
-            self.p0._fetch_instances()
 
 
     class TVifMask(KaitaiStruct):
@@ -13128,6 +14534,162 @@ class Sh2(KaitaiStruct):
             pass
             self.v._fetch_instances()
             for i in range(len(self.dummy)):
+                pass
+
+
+
+    class WaveAreaGridLinkInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveAreaGridLinkInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.p_grid_y_value_link = []
+            for i in range(2):
+                self.p_grid_y_value_link.append(Sh2.Pointer(u"data", self._io, self, self._root))
+
+            self.vertical_horizontal_flag = self._io.read_u4le()
+            self.length = self._io.read_u4le()
+            self.x_index_max = []
+            for i in range(2):
+                self.x_index_max.append(self._io.read_u4le())
+
+            self.x_index_start = []
+            for i in range(2):
+                self.x_index_start.append(self._io.read_u4le())
+
+            self.z_index_start = []
+            for i in range(2):
+                self.z_index_start.append(self._io.read_u4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.p_grid_y_value_link)):
+                pass
+                self.p_grid_y_value_link[i]._fetch_instances()
+
+            for i in range(len(self.x_index_max)):
+                pass
+
+            for i in range(len(self.x_index_start)):
+                pass
+
+            for i in range(len(self.z_index_start)):
+                pass
+
+
+
+    class WaveAreaInfomeation(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveAreaInfomeation, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.world_location = []
+            for i in range(4):
+                self.world_location.append(self._io.read_f4le())
+
+            self.grid_wh = []
+            for i in range(4):
+                self.grid_wh.append(self._io.read_f4le())
+
+            self.grid_index = []
+            for i in range(2):
+                self.grid_index.append(self._io.read_u4le())
+
+            self.p_view_area_list = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.view_area_list_max = self._io.read_u4le()
+            self.p_grid_y_value = Sh2.Pointer(u"data", self._io, self, self._root)
+            self._unnamed6 = self._io.read_bytes(12)
+            self.specular_base_rgba = []
+            for i in range(4):
+                self.specular_base_rgba.append(self._io.read_f4le())
+
+            self.ambient0_base_rgba = []
+            for i in range(4):
+                self.ambient0_base_rgba.append(self._io.read_f4le())
+
+            self.ambient1_base_rgba = []
+            for i in range(4):
+                self.ambient1_base_rgba.append(self._io.read_f4le())
+
+            self.light_base_rgba = []
+            for i in range(4):
+                self.light_base_rgba.append(self._io.read_f4le())
+
+            self.p_st_defference = Sh2.Pointer(u"data", self._io, self, self._root)
+            self._unnamed12 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.world_location)):
+                pass
+
+            for i in range(len(self.grid_wh)):
+                pass
+
+            for i in range(len(self.grid_index)):
+                pass
+
+            self.p_view_area_list._fetch_instances()
+            self.p_grid_y_value._fetch_instances()
+            for i in range(len(self.specular_base_rgba)):
+                pass
+
+            for i in range(len(self.ambient0_base_rgba)):
+                pass
+
+            for i in range(len(self.ambient1_base_rgba)):
+                pass
+
+            for i in range(len(self.light_base_rgba)):
+                pass
+
+            self.p_st_defference._fetch_instances()
+
+
+    class WaveElement(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.WaveElement, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.enable = self._io.read_u4le()
+            self.area = self._io.read_u4le()
+            self.attribute = self._io.read_u4le()
+            self.wave_origin = self._io.read_u4le()
+            self.post_history = []
+            for i in range(8):
+                self.post_history.append(self._io.read_u4le())
+
+            self.power = self._io.read_f4le()
+            self.impact_grid_index = []
+            for i in range(2):
+                self.impact_grid_index.append(self._io.read_u4le())
+
+            self.max_distance0 = self._io.read_f4le()
+            self.lost_time = self._io.read_f4le()
+            self.timer = self._io.read_f4le()
+            self.arrival = self._io.read_f4le()
+            self.omega = self._io.read_f4le()
+            self.verocity = self._io.read_f4le()
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.post_history)):
+                pass
+
+            for i in range(len(self.impact_grid_index)):
                 pass
 
 

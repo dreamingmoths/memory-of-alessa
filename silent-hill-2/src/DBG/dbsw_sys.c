@@ -1,9 +1,37 @@
-#include "dbsw_sys.h"
+#include "DBG/dbsw_sys.h"
 
 #pragma divbyzerocheck off
 
-char* dbSwitchSysHelp(int Y /* r2 */) {
-    char* help = NULL;
+static int dbSwitchSys(int Y /* r2 */);
+
+static void dbSwitchSetSys(int Y /* r2 */, int on /* r2 */);
+
+static void printR_date(void);
+
+static void printR_cmdserv(CmdServStat* stat /* r18 */, char* prefix /* r17 */, int* exec /* r2 */);
+
+static void printR_fileserv(void);
+
+static void printR_loadinit(void);
+
+static void printR_test(void);
+
+static void printR_padstep(int port /* r8 */, int slot /* r2 */);
+
+static void printR_paddata(s_char* paddata /* r2 */);
+
+static void printR_keydata(shGameKeyData* key /* r16 */);
+
+static void printR_padport(int port /* r22 */, int slot /* r21 */, int pad_normalize /* r20 */, int pad_adjust /* r19 */, int dispstep /* r18 */, int disppad /* r17 */, int dispkey /* r16 */);
+
+static void printR_pad00(void);
+
+static void printR_pad10(void);
+
+static void printR_lang(void);
+
+s_char* dbSwitchSysHelp(int Y /* r2 */) {
+    s_char* help = NULL;
     switch (Y) {
         case 0:
             help = "display this help";
@@ -86,10 +114,9 @@ static void dbSwitchSetSys(int Y /* r2 */, int on /* r2 */) {
 
 // thanks: Bl00D4NGEL
 static void printR_date(void) {
-    int var;
-    char* str; // r16
     Old_Rtc rtc[1];
-    char strbuf[32]; // r29+0x20
+    s_char strbuf[32]; // r29+0x20
+    s_char* str; // r16
 
     shCdReadClock(&rtc);
     str = strbuf;
@@ -100,9 +127,9 @@ static void printR_date(void) {
 }
 
 static void printR_cmdserv(CmdServStat* stat /* r18 */, char* prefix /* r17 */, int* exec /* r2 */) {
-    char syms[4] = {'|', '/', '-', '\x81'};
-    char sym = ' ';
-    if (exec) {
+    s_char syms[4] = {'|', '/', '-', '\x81'};
+    s_char sym = ' ';
+    if (exec != NULL) {
         if (stat->clen) {
             sym = syms[(*exec)++ % 4];
         } else {
@@ -123,16 +150,16 @@ static void printR_cmdserv(CmdServStat* stat /* r18 */, char* prefix /* r17 */, 
 }
 // thanks: Sassy Gaur (Anon)
 static void printR_fileserv(void) {
-    CmdServStat stat[1]; // r29+0x10
     static int exec[1] = {0};  // @ 0x0034DB98
+    CmdServStat stat[1]; // r29+0x10
 
     fsGetStat(stat);
     printR_cmdserv(stat, "fs", exec);
 }
 
 static void printR_loadinit(void) {
-    CmdServStat stat[1]; // r29+0x10
     static int exec[1] = {0};  // @ 0x0034DB98
+    CmdServStat stat[1]; // r29+0x10
 
     lisGetStat(stat);
     printR_cmdserv(stat, "lis", exec);
@@ -147,10 +174,10 @@ static void printR_padstep(int port /* r8 */, int slot /* r2 */) {
 }
 
 //thanks: Piccio23, dreamingmoths
-static void printR_paddata(char* paddata /* r2 */) {
+static void printR_paddata(s_char* paddata /* r2 */) {
+    u_int padp[8] = {0}; // r29+0x20
     int idx; // r2
     int ofs; // r5
-    u_int padp[8] = {0}; // r29+0x20
 
 
     for (idx = 31; idx >= 0; idx--) {
@@ -175,7 +202,7 @@ static void printR_keydata(shGameKeyData* key /* r16 */) {
                  key->f.CANCEL);
     dbfntprintfR("SKIP:%1d  PAUSE:%1d\nACTION:%1d   DASH:%1d\nLSLIDE:%1d RSLIDE:%1d\nREADY:%1d   VIEW:%1d\n",
                  key->f.SKIP,
-                 key->f.CANCEL,
+                 key->f.CANCEL, //@bug
                  key->f.ACTION,
                  key->f.DASH,
                  key->f.LSLIDE,
@@ -193,8 +220,8 @@ static void printR_keydata(shGameKeyData* key /* r16 */) {
 }
 
 static void printR_padport(int port /* r22 */, int slot /* r21 */, int pad_normalize /* r20 */, int pad_adjust /* r19 */, int dispstep /* r18 */, int disppad /* r17 */, int dispkey /* r16 */) {
-    u_char paddata[32]; // r29+0x80
     shGameKeyData key[1]; // r29+0xA8
+    u_char paddata[32]; // r29+0x80
 
     if (disppad || dispkey) {
         libShPadRead(port, slot, paddata);
@@ -244,7 +271,7 @@ void printR_pad10(void) {
 }
 
 void printR_lang(void) {
-    char* str;
+    s_char* str;
     switch (sh2ScfGetDefaultLanguage() & 0xFF) {
         case 0: str = "JPN"; break;
         case 1: str = "ENG"; break;

@@ -3,6 +3,12 @@
 
 #include "Effect2/hh_class_manager.h"
 
+typedef struct HH_Object_Plural_Phenomenon_01 {
+    struct Object_DataBlock_Header Header; // offset 0x0, size 0x10
+    u_int Step; // offset 0x10, size 0x4
+    float Timer; // offset 0x14, size 0x4
+} HH_Object_Plural_Phenomenon_01;
+
 u_int HH_Class_Plural_Phenomenon_01(void* pBlock, struct ImpactQueue_Element* pElement);
 
 #endif // HH_CLASS_PLURAL_PHENOMENON_01_H

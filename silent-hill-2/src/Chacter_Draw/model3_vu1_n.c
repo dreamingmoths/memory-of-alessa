@@ -12,6 +12,7 @@
 
 #include "Chacter/character.h"
 
+#include "Chacter_Draw/vifot/sh_kt_pkbuf.h"
 #include "Chacter_Draw/model_common.h"
 #include "Chacter_Draw/model3_n.h"
 #include "Chacter_Draw/model3_sub_n.h"

@@ -1,4 +1,4 @@
-#include "dbsw_map.h"
+#include "DBG/dbsw_map.h"
 
 static int dbSwitchMap(int Y /* r2 */);
 
@@ -6,8 +6,8 @@ static void printR_mapblock(void);
 
 static void init_map(int i /* r2 */);
 
-char* dbSwitchMapHelp(int Y /* r2 */) {
-    char* help = NULL;
+s_char* dbSwitchMapHelp(int Y /* r2 */) {
+    s_char* help = NULL;
 
     switch (Y) {
         case 0: help = "display map-info."; break;

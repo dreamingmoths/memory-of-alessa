@@ -39,7 +39,7 @@ int func_01F6D8B0_hospital_f_02(void) {
         D_1D31684 |= 0x400000;
         func_00190A20(5);
     }
-    switch (D_01F6FF98_hospital_f_02) { 
+    switch (D_01F6FF98_hospital_f_02) {
         case 1:
             if (func_00190C00() == 0) {
                 return 0;
@@ -64,8 +64,8 @@ int func_01F6D8B0_hospital_f_02(void) {
             D_1D316F4 |= 0x200000;
             func_00190A20(0);
             ret = 1;
-        }
-    return ret;        
+    }
+    return ret;
 }
 
 int func_01F6DA20_hospital_f_02(void) {
@@ -142,7 +142,7 @@ int func_01F6E3A0_hospital_f_02(void) {
         SeCall(19033, 0.0f, 1.0f);
     }
     D_01F6FF88_hospital_f_02 += shGetDT();
-    switch (D_01F6FF80_hospital_f_02) { 
+    switch (D_01F6FF80_hospital_f_02) {
         case 0:
             if (D_01F6FF88_hospital_f_02 < 0.5f) {
                 return 0;
@@ -155,14 +155,14 @@ int func_01F6E3A0_hospital_f_02(void) {
             }
             func_0016C1B0();
             D_01F6FF80_hospital_f_02 += 1;
-            break;       
+            break;
         default:
             ret = 1;
             D_1D31688 &= ~0x10;
             D_1D31724 |= 1;
             D_1D31684 |= 0x400;
             D_1D317BC |= 0x8000;
-        }
+    }
     return ret;
 }
 #else
@@ -246,25 +246,25 @@ void func_01F6E630_hospital_f_02(void) {
             if (GET_BIT(D_1D31684, 0x1C)) {
                 var_a0 += 1;
             }
-            if (GET_BIT(D_1D31688, 0x0)) var_a0++;
+            if (GET_BIT(D_1D31688, 0x0))
+                var_a0++;
             if (var_a0 >= 3) {
                 D_1D31688 |= 0x2;
             } else {
                 D_1D31688 &= ~0x2;
             }
-        break;
+            break;
 
         case 0xB4:
             D_01F6FFA0_hospital_f_02 = 0;
             break;
-        
-        }
+    }
 }
 
 void func_01F6E950_hospital_f_02(void) {
     D_01F6FF90_hospital_f_02 = 1;
 
-    switch(RoomName()) {
+    switch (RoomName()) {
         case 0xB4:
             if (GET_BIT(D_1D31680, 0x16)) {
                 func_01F6D680_hospital_f_02();
@@ -272,7 +272,6 @@ void func_01F6E950_hospital_f_02(void) {
         default:
             break;
     }
-        
 }
 
 void func_01F6E9B0_hospital_f_02(void) {

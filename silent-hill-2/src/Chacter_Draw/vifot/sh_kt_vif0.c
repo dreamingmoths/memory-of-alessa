@@ -2,7 +2,7 @@
 #include "Chacter_Draw/vifot/sh_kt_vif0.h"
 #include "sce/eeregs.h"
 
-UNMIGRATED(Vif0Work vif0_work); // size: 0x4, address: 0x3E66D0
+Vif0Work vif0_work;
 
 
 #line 34

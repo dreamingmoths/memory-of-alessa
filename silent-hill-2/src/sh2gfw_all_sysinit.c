@@ -4,6 +4,7 @@
 #include "sce/libgraph.h"
 #include "sce/libvu0.h"
 
+#include "Chacter_Draw/vifot/sh_kt_pkbuf.h"
 #include "Chacter_Draw/vifot/sh_kt_vif0.h"
 #include "Chacter_Draw/vifot/sh_kt_vif1.h"
 #include "Chacter_Draw/vifot/sh_kt_vif0pkbuf.h"

@@ -245,7 +245,7 @@ static void CalcInfluence(Light* l /* r16 */, float* center /* r2 */, float radi
 
             if (l->kind == 3) {
                 float scale; // @note: not in dwarf
-                vec_normalize(diff, diff);
+                shNormalizeVector(diff, diff);
                 scale = vec3_dot_product(diff, l->dir);
                 l->inf_fac *= shFloatClamp(l->s_a * scale + l->s_b, 0.0f, 1.0f);
             }

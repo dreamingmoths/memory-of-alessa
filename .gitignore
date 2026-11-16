@@ -17,6 +17,8 @@ tools/alessatool/analyze.py
 tools/alessatool/migrate.py
 tools/mwccgap.version
 tools/ps2iso_*
+tools/alessastruct
+tools/kaitai-struct-compiler-0.11
 
 **/iso/*.iso
 **/iso/files

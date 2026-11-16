@@ -1,11 +1,11 @@
-#include "sh2gfw_SyncDBG.h"
+#include "DBG/sh2gfw_SyncDBG.h"
 
-extern /* static */ int DBG_Perf_index; // size: 0x4, address: 0x491820
-extern int Index_VertNum; // size: 0x4, address: 0x491828
-extern int Index_SemiTrans; // size: 0x4, address: 0x491830
-extern int Vertex_Num[6]; // size: 0x18, address: 0x491840
-extern int SemiTransTex_VertNum[6]; // size: 0x18, address: 0x491860
-extern int DBG_Perf[16]; // size: 0x40, address: 0x491880
+static int DBG_Perf_index = 0; // size: 0x4, address: 0x491820
+int Index_VertNum = 0; // size: 0x4, address: 0x491828
+int Index_SemiTrans = 0; // size: 0x4, address: 0x491830
+int DBG_Perf[16]; // size: 0x40, address: 0x491880
+int SemiTransTex_VertNum[6]; // size: 0x18, address: 0x491860
+static int Vertex_Num[6]; // size: 0x18, address: 0x491840
 
 void sh2gfw_Init_AllVertCounter(void) {
     int i; // r4

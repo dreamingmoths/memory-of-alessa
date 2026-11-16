@@ -1,7 +1,7 @@
 #ifndef DB_FNT_PRINT_H
 #define DB_FNT_PRINT_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "mw/mw_stdarg.h"
 #include "DBG/shDBG_fontHandle.h"
 
@@ -29,12 +29,12 @@ void dbfntlocate(int x /* r2 */, int y /* r2 */);
 
 void dbfntlocateR(int x /* r2 */, int y /* r2 */);
 
-void dbfntprint(char* buf /* r16 */);
+void dbfntprint(s_char* buf /* r16 */);
 
-void dbfntprintR(char* buf /* r16 */);
+void dbfntprintR(s_char* buf /* r16 */);
 
-int dbfntprintf(char* fmt /* r29+0x228 */, ...);
+int dbfntprintf(s_char* fmt /* r29+0x228 */, ...);
 
-int dbfntprintfR(char* fmt /* r29+0x228 */, ...);
+int dbfntprintfR(s_char* fmt /* r29+0x228 */, ...);
 
 #endif

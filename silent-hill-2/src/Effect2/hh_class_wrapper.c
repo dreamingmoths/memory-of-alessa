@@ -117,9 +117,123 @@ u_int HH_ClassWrapper_RotTrans_PerspectiveProjection_Clip(int * Dst_iVector /* r
     result = ((u_long) clip & 0x3ffff) ? 1 : 0; *pReverse_W = reverse_w; return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_Transform_PerspectiveProjection_Clip_forTriangleStrip);
+#line 313
+void HH_ClassWrapper_Transform_PerspectiveProjection_Clip_forTriangleStrip(int* Dst_iVector, float* STQ_fVector, sceVu0FVECTOR* LocalScreen_Matrix, sceVu0FVECTOR* LocalScreen_ClipMatrix, float* Src_fVector) {
+       asm ("lqc2 vf24, 0(%0)\n\
+        lqc2 vf25, 0x10(%0)\n\
+        lqc2 vf26, 0x20(%0)\n\
+        lqc2 vf27, 0x30(%0)\n\
+        lqc2 vf28, 0(%1)\n\
+        lqc2 vf29, 0x10(%1)\n\
+        lqc2 vf30, 0x20(%1)\n\
+        lqc2 vf31, 0x30(%1)"
+    : 
+    : "r"(LocalScreen_Matrix), "r"(LocalScreen_ClipMatrix));
+    #line 344
+    asm ("
+        lqc2 vf3, 0(%2)\n\
+        lqc2 vf4, 0(%3)\n\
+        
+        vmulax.xyzw acc, vf28, vf4x\n\
+        vmadday.xyzw acc, vf29, vf4y\n\
+        vmaddaz.xyzw acc, vf30, vf4z\n\
+        vmaddw.xyzw vf7, vf31, vf0w\n vclipw.xyz vf7, vf7w\n\
+        
+        
+        
+        vmulax.xyzw acc, vf24, vf4x\n\
+        vmadday.xyzw acc, vf25, vf4y\n\
+        vmaddaz.xyzw acc, vf26, vf4z\n\
+        vmaddw.xyzw vf5, vf27, vf0w\n\
+        vdiv Q, vf0w, vf5w\n\
+        vwaitq\n\
+        
+        vmulq.xy vf3xy, vf3xy, Q\n\
+        vaddq.z vf3z, vf0z, Q\n\
+        sqc2 vf3, 0(%2)\n\
+        
+        vmulq.xyz vf5, vf5, Q\n\
+        vftoi4.xyz vf6xyz, vf5xyz\n\
+        vsubw.w vf6w, vf0w, vf0w\n\
+        
+        cfc2 $t1, vi18\n\
+          
+    
+        and $t1, %1, $t1\n\
+        beqz $t1, j\n\
+        
+    
+    
+    
+    
+        ctc2 %0, vi1\n\
+        vmfir.w vf6w, vi1\n\
+        j:
+        sqc2 vf6, 0(%4)"
+    : 
+    : "r"(0x8000), "r"(0x3FFFF), "f"(STQ_fVector), "r"(Src_fVector), "r"(Dst_iVector)
+    : "memory", "t1");
+    #line 420
+}
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N);
+#line 461
+void HH_ClassWrapper_Transform_PerspectiveProjection_Clip_N(int* Dst_iVector, float* STQ_fVector, sceVu0FVECTOR* LocalScreen_Matrix, sceVu0FVECTOR* LocalScreen_ClipMatrix, float* Src_fVector, u_int Clip_Mask) {
+     asm ("lqc2 vf24, 0(%0)\n\
+        lqc2 vf25, 0x10(%0)\n\
+        lqc2 vf26, 0x20(%0)\n\
+        lqc2 vf27, 0x30(%0)\n\
+        lqc2 vf28, 0(%1)\n\
+        lqc2 vf29, 0x10(%1)\n\
+        lqc2 vf30, 0x20(%1)\n\
+        lqc2 vf31, 0x30(%1)"
+    : 
+    : "r"(LocalScreen_Matrix), "r"(LocalScreen_ClipMatrix));
+    #line 492
+    asm ("
+        lqc2 vf3, 0(%2)\n\
+        lqc2 vf4, 0(%3)\n\
+        
+        vmulax.xyzw acc, vf28, vf4x\n\
+        vmadday.xyzw acc, vf29, vf4y\n\
+        vmaddaz.xyzw acc, vf30, vf4z\n\
+        vmaddw.xyzw vf7, vf31, vf0w\n vclipw.xyz vf7, vf7w\n\
+        
+        
+        
+        vmulax.xyzw acc, vf24, vf4x\n\
+        vmadday.xyzw acc, vf25, vf4y\n\
+        vmaddaz.xyzw acc, vf26, vf4z\n\
+        vmaddw.xyzw vf5, vf27, vf0w\n\
+        vdiv Q, vf0w, vf5w\n\
+        vwaitq\n\
+        
+        vmulq.xy vf3xy, vf3xy, Q\n\
+        vaddq.z vf3z, vf0z, Q\n\
+        sqc2 vf3, 0(%2)\n\
+        
+        vmulq.xyz vf5, vf5, Q\n\
+        vftoi4.xyz vf6xyz, vf5xyz\n\
+        vsubw.w vf6w, vf0w, vf0w\n\
+        
+        cfc2 $t1, vi18\n\
+          
+    
+        and $t1, %1, $t1\n\
+        beqz $t1, j\n\
+        
+    
+    
+    
+    
+        ctc2 %0, vi1\n\
+        vmfir.w vf6w, vi1\n\
+        j:
+        sqc2 vf6, 0(%4)"
+    : 
+    : "r"(0x8000), "r"(Clip_Mask), "f"(STQ_fVector), "r"(Src_fVector), "r"(Dst_iVector)
+    : "memory", "t1");
+#line 566
+}
 
 INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_Point_Clip_Judge);
 
@@ -228,7 +342,44 @@ float HH_ClassWrapper_SpotLight_ColorRatio_Calculator(float* Light_Position, flo
     return result;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_SpecularRatio0_Calculator);
+#line 974
+float HH_ClassWrapper_SpecularRatio0_Calculator(float* View_Direction, float* Light_Direction, float* Normal_Vector, float Cos_Value) {
+    float result;
+    float specular_coefficient = 1.0f;
+    float input_light_power;
+    sceVu0FVECTOR reverse_light_dir;
+    sceVu0FVECTOR tmp_vec;
+    float cos_theta;
+    float cos_beta;
+    
+
+    
+    
+    
+    cos_theta = sceVu0InnerProduct(Light_Direction, Normal_Vector);
+    if (cos_theta < 0.0f) {
+        cos_theta = -cos_theta;
+    }
+    sceVu0ScaleVectorXYZ(tmp_vec, Normal_Vector, 2.0f * cos_theta);
+    sceVu0SubVector(reverse_light_dir, tmp_vec, Light_Direction);
+    sceVu0Normalize(reverse_light_dir, reverse_light_dir);
+    
+    cos_beta = sceVu0InnerProduct(reverse_light_dir, View_Direction);
+    
+    if (cos_beta < 0.0f) {
+        cos_beta = -cos_beta;
+    }
+    if (cos_beta < Cos_Value) {
+        result = 0.0f;
+    } 
+    else {
+        result = 1.0f - ((1.0f - cos_beta) / (1.0f - Cos_Value));
+    }
+    
+    return result * specular_coefficient;
+
+
+}
 
 void HH_ClassWrapper_SpecularRGBA_Add_BaseRGBA(s32* iRGBA, float* RGBA_Base, float* Specular_RGBA_Base, float Specular_Ratio) {
     asm ("lqc2 $vf30, 0(%1)\n\
@@ -256,7 +407,27 @@ u_long128* HH_ClassWrapper_GS_EnvironmentRegister_Frame_NoMask_Get(void) {
     return sh2gfw_Get_FrameNormalRegAddr();
 }
 
-INCLUDE_ASM("asm/nonmatchings/Effect2/hh_class_wrapper", HH_ClassWrapper_Packet_ADC_Flag_OnceMore_Set);
+#line 1338
+void HH_ClassWrapper_Packet_ADC_Flag_OnceMore_Set(u_int* pPacket_End, u_int Mesh_Width, u_int Mesh_Height) {
+    u_int w_index;
+    u_int h_index;
+    u_int mesh_width = (Mesh_Width - 1) * 2;
+    u_int status_accumlate;
+    
+    pPacket_End--;
+    for (h_index = 0; h_index < Mesh_Height; h_index++) {
+        for (w_index = 0; w_index < mesh_width; w_index++) {
+            status_accumlate = *(pPacket_End - 12) | *(pPacket_End - 24);
+            
+            *pPacket_End |= status_accumlate & 0x8000;
+            
+        
+            pPacket_End -= 12;
+        }
+        #line 1361
+        pPacket_End -= 28;
+    }
+}
 
 u_int HH_ClassWrapper_JMS_WorldPosition_Get(float* Position) {
     u_int result = 0;

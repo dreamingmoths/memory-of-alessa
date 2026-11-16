@@ -2,10 +2,15 @@
 #include "math.h"
 #include "SH2_common/playing_info.h"
 #include "DS_Pad/ds_sequencer.h"
+#include "DS_Pad/dss_wrapper.h"
 
-UNMIGRATED(/* static */ u_char _Peripheral_Controller_SendData[2][6]);
-UNMIGRATED(/* static */ u_int _edit_flag);
-UNMIGRATED(/* static */ u_int _sequencer_init);
+static u_int _sequencer_init;
+static u_int _edit_flag;
+static u_char _Peripheral_Controller_SendData[2][6] = {
+    { 255, 255, 255, 255, 255, 255 },
+    { 255, 255, 255, 255, 255, 255 },
+};
+
 
 #line 89
 float DSS_Wrapper_AllVibrationRatio_Get(void) {

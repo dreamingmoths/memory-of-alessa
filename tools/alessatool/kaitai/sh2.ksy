@@ -2623,6 +2623,47 @@ types:
 
       - size: 1
 
+  sh_boat_work:
+    seq:
+      - id: boat_p
+        type: pointer('sub_character')
+
+      - id: status_now
+        type: u1
+
+      - id: status_prev
+        type: u1
+
+      - size: 2
+
+      - id: sub_st_flg
+        type: u4
+
+      - id: anime_st_flg
+        type: u4
+
+      - id: anime_pause
+        type: u4
+
+      - id: anim_change
+        type: u1
+
+      - id: anime_change_now
+        type: u1
+
+      - id: anime_change_prev
+        type: u1
+
+      - size: 1
+
+      - id: anime_change_timer
+        type: f4
+
+      - id: anime_speed
+        type: s2
+
+      - size: 2
+
   text_pos:
     seq:
       - id: block_index
@@ -3298,6 +3339,17 @@ types:
 
       - size: 8
 
+  motion_table_infomeation:
+    seq:
+      - id: diff_time
+        type: f4
+
+      - id: diff_scale_ratio
+        type: f4
+
+      - id: diff_rgba_ratio
+        type: f4
+
   hh_class_wrapper_work:
     seq:
       - id: view_frustum_primitive_clip_matrix
@@ -3332,6 +3384,1171 @@ types:
         type: pointer('data')
 
       - size: 8
+
+  sce_gif_tag:
+    seq:
+      - id: nloop
+        type: b15
+
+      - id: eop
+        type: b1
+
+      - id: pad16
+        type: b16
+
+      - id: id
+        type: b14
+
+      - id: pre
+        type: b1
+
+      - id: prim
+        type: b11
+
+      - id: flg
+        type: b2
+
+      - id: nreg
+        type: b4
+
+      - id: regs0
+        type: b4
+
+      - id: regs1
+        type: b4
+
+      - id: regs2
+        type: b4
+
+      - id: regs3
+        type: b4
+
+      - id: regs4
+        type: b4
+
+      - id: regs5
+        type: b4
+
+      - id: regs6
+        type: b4
+
+      - id: regs7
+        type: b4
+
+      - id: regs8
+        type: b4
+
+      - id: regs9
+        type: b4
+
+      - id: regs10
+        type: b4
+
+      - id: regs11
+        type: b4
+
+      - id: regs12
+        type: b4
+
+      - id: regs13
+        type: b4
+
+      - id: regs14
+        type: b4
+
+      - id: regs15
+        type: b4
+
+  sce_gif_pack_rgbaq:
+    seq:
+      - id: r
+        type: u4
+
+      - id: g
+        type: u4
+
+      - id: b
+        type: u4
+
+      - id: a
+        type: u4
+
+  sce_gif_pack_ad:
+    seq:
+      - id: data
+        type: u8
+
+      - id: addr
+        type: u8
+
+  sce_gif_pack_st:
+    seq:
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+      - id: q
+        type: f4
+
+      - id: pad96
+        type: u4
+
+  sce_gif_pack_uv:
+    seq:
+      - id: u
+        type: s4
+
+      - id: v
+        type: s4
+
+      - id: pad64
+        type: s8
+
+  sce_gif_pack_xyzf:
+    seq:
+      - id: x
+        type: s4
+
+      - id: y
+        type: s4
+
+      - id: z
+        type: u4
+
+      - id: f
+        type: b12
+
+      - id: pad108
+        type: b3
+
+      - id: adc
+        type: b1
+
+      - id: pad112
+        type: b16
+
+  sce_gif_pack_xyz:
+    seq:
+      - id: x
+        type: s4
+
+      - id: y
+        type: s4
+
+      - id: z
+        type: u4
+
+      - id: pad96
+        type: b15
+
+      - id: adc
+        type: b1
+
+      - id: pad112
+        type: b16
+
+  sce_gif_pack_fog:
+    seq:
+      - id: pad
+        type: u4
+        repeat: expr
+        repeat-expr: 3
+
+      - id: f
+        type: u4
+
+  sce_gif_pack_nop:
+    seq:
+      - id: pad
+        type: u8
+        repeat: expr
+        repeat-expr: 2
+
+  sce_gs_alpha:
+    seq:
+      - id: a
+        type: b2
+
+      - id: b
+        type: b2
+
+      - id: c
+        type: b2
+
+      - id: d
+        type: b2
+
+      - id: pad8
+        type: b24
+
+      - id: fix
+        type: b8
+
+      - id: pad40
+        type: b24
+
+  sce_gs_bitbltbuf:
+    seq:
+      - id: sbp
+        type: b14
+
+      - id: pad14
+        type: b2
+
+      - id: sbw
+        type: b6
+
+      - id: pad22
+        type: b2
+
+      - id: spsm
+        type: b6
+
+      - id: pad30
+        type: b2
+
+      - id: dbp
+        type: b14
+
+      - id: pad46
+        type: b2
+
+      - id: dbw
+        type: b6
+
+      - id: pad54
+        type: b2
+
+      - id: dpsm
+        type: b6
+
+      - id: pad62
+        type: b2
+
+  sce_gs_clamp:
+    seq:
+      - id: wms
+        type: b2
+
+      - id: wmt
+        type: b2
+
+      - id: minu
+        type: b10
+
+      - id: maxu
+        type: b10
+
+      - id: minv
+        type: b10
+
+      - id: maxv
+        type: b10
+
+      - id: pad44
+        type: b20
+
+  sce_gs_colclamp:
+    seq:
+      - id: clamp
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_dimx:
+    seq:
+      - id: dimx00
+        type: b3
+
+      - id: pad00
+        type: b1
+
+      - id: dimx01
+        type: b3
+
+      - id: pad01
+        type: b1
+
+      - id: dimx02
+        type: b3
+
+      - id: pad02
+        type: b1
+
+      - id: dimx03
+        type: b3
+
+      - id: pad03
+        type: b1
+
+      - id: dimx10
+        type: b3
+
+      - id: pad10
+        type: b1
+
+      - id: dimx11
+        type: b3
+
+      - id: pad11
+        type: b1
+
+      - id: dimx12
+        type: b3
+
+      - id: pad12
+        type: b1
+
+      - id: dimx13
+        type: b3
+
+      - id: pad13
+        type: b1
+
+      - id: dimx20
+        type: b3
+
+      - id: pad20
+        type: b1
+
+      - id: dimx21
+        type: b3
+
+      - id: pad21
+        type: b1
+
+      - id: dimx22
+        type: b3
+
+      - id: pad22
+        type: b1
+
+      - id: dimx23
+        type: b3
+
+      - id: pad23
+        type: b1
+
+      - id: dimx30
+        type: b3
+
+      - id: pad30
+        type: b1
+
+      - id: dimx31
+        type: b3
+
+      - id: pad31
+        type: b1
+
+      - id: dimx32
+        type: b3
+
+      - id: pad32
+        type: b1
+
+      - id: dimx33
+        type: b3
+
+      - id: pad33
+        type: b1
+
+  sce_gs_dthe:
+    seq:
+      - id: dthe
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_fba:
+    seq:
+      - id: fba
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_finish:
+    seq:
+      - id: pad00
+        type: u8
+
+  sce_gs_fog:
+    seq:
+      - id: pad00
+        type: b56
+
+      - id: f
+        type: b8
+
+  sce_gs_fogcol:
+    seq:
+      - id: fcr
+        type: b8
+
+      - id: fcg
+        type: b8
+
+      - id: fcb
+        type: b8
+
+      - id: pad24
+        type: b40
+
+  sce_gs_frame:
+    seq:
+      - id: fbp
+        type: b9
+
+      - id: pad09
+        type: b7
+
+      - id: fbw
+        type: b6
+
+      - id: pad22
+        type: b2
+
+      - id: psm
+        type: b6
+
+      - id: pad30
+        type: b2
+
+      - id: fbmsk
+        type: b32
+
+  sce_gs_hwreg:
+    seq:
+      - id: wdata
+        type: u8
+
+  sce_gs_label:
+    seq:
+      - id: id
+        type: u4
+
+      - id: idmsk
+        type: u4
+
+  sce_gs_miptbp1:
+    seq:
+      - id: tbp1
+        type: b14
+
+      - id: tbw1
+        type: b6
+
+      - id: tbp2
+        type: b14
+
+      - id: tbw2
+        type: b6
+
+      - id: tbp3
+        type: b14
+
+      - id: tbw3
+        type: b6
+
+      - id: pad60
+        type: b4
+
+  sce_gs_miptbp2:
+    seq:
+      - id: tbp4
+        type: b14
+
+      - id: tbw4
+        type: b6
+
+      - id: tbp5
+        type: b14
+
+      - id: tbw5
+        type: b6
+
+      - id: tbp6
+        type: b14
+
+      - id: tbw6
+        type: b6
+
+      - id: pad60
+        type: b4
+
+  sce_gs_pabe:
+    seq:
+      - id: pabe
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_prim:
+    seq:
+      - id: prim
+        type: b3
+
+      - id: iip
+        type: b1
+
+      - id: tme
+        type: b1
+
+      - id: fge
+        type: b1
+
+      - id: abe
+        type: b1
+
+      - id: aa1
+        type: b1
+
+      - id: fst
+        type: b1
+
+      - id: ctxt
+        type: b1
+
+      - id: fix
+        type: b1
+
+      - id: pad11
+        type: b53
+
+  sce_gs_prmode:
+    seq:
+      - id: pad00
+        type: b3
+
+      - id: iip
+        type: b1
+
+      - id: tme
+        type: b1
+
+      - id: fge
+        type: b1
+
+      - id: abe
+        type: b1
+
+      - id: aa1
+        type: b1
+
+      - id: fst
+        type: b1
+
+      - id: ctxt
+        type: b1
+
+      - id: fix
+        type: b1
+
+      - id: pad11
+        type: b53
+
+  sce_gs_prmodecont:
+    seq:
+      - id: ac
+        type: b1
+
+      - id: pad01
+        type: b63
+
+  sce_gs_rgbaq:
+    seq:
+      - id: r
+        type: b8
+
+      - id: g
+        type: b8
+
+      - id: b
+        type: b8
+
+      - id: a
+        type: b8
+
+      - id: q
+        type: f4
+
+  sce_gs_scanmsk:
+    seq:
+      - id: msk
+        type: b2
+
+      - id: pad02
+        type: b62
+
+  sce_gs_scissor:
+    seq:
+      - id: scax0
+        type: b11
+
+      - id: pad11
+        type: b5
+
+      - id: scax1
+        type: b11
+
+      - id: pad27
+        type: b5
+
+      - id: scay0
+        type: b11
+
+      - id: pad43
+        type: b5
+
+      - id: scay1
+        type: b11
+
+      - id: pad59
+        type: b5
+
+  sce_gs_signal:
+    seq:
+      - id: id
+        type: u4
+
+      - id: idmsk
+        type: u4
+
+  sce_gs_st:
+    seq:
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+  sce_gs_test:
+    seq:
+      - id: ate
+        type: b1
+
+      - id: atst
+        type: b3
+
+      - id: aref
+        type: b8
+
+      - id: afail
+        type: b2
+
+      - id: date
+        type: b1
+
+      - id: datm
+        type: b1
+
+      - id: zte
+        type: b1
+
+      - id: ztst
+        type: b2
+
+      - id: pad19
+        type: b45
+
+  sce_gs_tex0:
+    seq:
+      - id: tbp0
+        type: b14
+
+      - id: tbw
+        type: b6
+
+      - id: psm
+        type: b6
+
+      - id: tw
+        type: b4
+
+      - id: th
+        type: b4
+
+      - id: tcc
+        type: b1
+
+      - id: tfx
+        type: b2
+
+      - id: cbp
+        type: b14
+
+      - id: cpsm
+        type: b4
+
+      - id: csm
+        type: b1
+
+      - id: csa
+        type: b5
+
+      - id: cld
+        type: b3
+
+  sce_gs_tex1:
+    seq:
+      - id: lcm
+        type: b1
+
+      - id: pad01
+        type: b1
+
+      - id: mxl
+        type: b3
+
+      - id: mmag
+        type: b1
+
+      - id: mmin
+        type: b3
+
+      - id: mtba
+        type: b1
+
+      - id: pad10
+        type: b9
+
+      - id: l
+        type: b2
+
+      - id: pad21
+        type: b11
+
+      - id: k
+        type: b12
+
+      - id: pad44
+        type: b20
+
+  sce_gs_tex2:
+    seq:
+      - id: pad00
+        type: b20
+
+      - id: psm
+        type: b6
+
+      - id: pad26
+        type: b11
+
+      - id: cbp
+        type: b14
+
+      - id: cpsm
+        type: b4
+
+      - id: csm
+        type: b1
+
+      - id: csa
+        type: b5
+
+      - id: cld
+        type: b3
+
+  sce_gs_texa:
+    seq:
+      - id: ta0
+        type: b8
+
+      - id: pad08
+        type: b7
+
+      - id: aem
+        type: b1
+
+      - id: pad16
+        type: b16
+
+      - id: ta1
+        type: b8
+
+      - id: pad40
+        type: b24
+
+  sce_gs_texclut:
+    seq:
+      - id: cbw
+        type: b6
+
+      - id: cou
+        type: b6
+
+      - id: cov
+        type: b10
+
+      - id: pad22
+        type: b42
+
+  sce_gs_texflush:
+    seq:
+      - id: pad00
+        type: u8
+
+  sce_gs_trxdir:
+    seq:
+      - id: xdr
+        type: b2
+
+      - id: pad02
+        type: b62
+
+  sce_gs_trxpos:
+    seq:
+      - id: ssax
+        type: b11
+
+      - id: pad11
+        type: b5
+
+      - id: ssay
+        type: b11
+
+      - id: pad27
+        type: b5
+
+      - id: dsax
+        type: b11
+
+      - id: pad43
+        type: b5
+
+      - id: dsay
+        type: b11
+
+      - id: dir
+        type: b2
+
+      - id: pad61
+        type: b3
+
+  sce_gs_trxreg:
+    seq:
+      - id: rrw
+        type: b12
+
+      - id: pad12
+        type: b20
+
+      - id: rrh
+        type: b12
+
+      - id: pad44
+        type: b20
+
+  sce_gs_uv:
+    seq:
+      - id: u
+        type: b14
+
+      - id: pad14
+        type: b2
+
+      - id: v
+        type: b14
+
+      - id: pad30
+        type: b34
+
+  sce_gs_xyoffset:
+    seq:
+      - id: ofx
+        type: b16
+
+      - id: pad16
+        type: b16
+
+      - id: ofy
+        type: b16
+
+      - id: pad48
+        type: b16
+
+  sce_gs_xyz:
+    seq:
+      - id: x
+        type: b16
+
+      - id: y
+        type: b16
+
+      - id: z
+        type: b32
+
+  sce_gs_xyzf:
+    seq:
+      - id: x
+        type: b16
+
+      - id: y
+        type: b16
+
+      - id: z
+        type: b24
+
+      - id: f
+        type: b8
+
+  sce_gs_zbuf:
+    seq:
+      - id: zbp
+        type: b9
+
+      - id: pad09
+        type: b15
+
+      - id: psm
+        type: b4
+
+      - id: pad28
+        type: b4
+
+      - id: zmsk
+        type: b1
+
+      - id: pad33
+        type: b31
+
+  wave_element:
+    seq:
+      - id: enable
+        type: u4
+
+      - id: area
+        type: u4
+
+      - id: attribute
+        type: u4
+
+      - id: wave_origin
+        type: u4
+
+      - id: post_history
+        type: u4
+        repeat: expr
+        repeat-expr: 8
+
+      - id: power
+        type: f4
+
+      - id: impact_grid_index
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: max_distance0
+        type: f4
+
+      - id: lost_time
+        type: f4
+
+      - id: timer
+        type: f4
+
+      - id: arrival
+        type: f4
+
+      - id: omega
+        type: f4
+
+      - id: verocity
+        type: f4
+
+  wave_area_infomeation:
+    seq:
+      - id: world_location
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: grid_wh
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: grid_index
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: p_view_area_list
+        type: pointer('data')
+
+      - id: view_area_list_max
+        type: u4
+
+      - id: p_grid_y_value
+        type: pointer('data')
+
+      - size: 12
+
+      - id: specular_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient0_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient1_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_base_rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_st_defference
+        type: pointer('data')
+
+      - size: 12
+
+  wave_area_grid_link_infomeation:
+    seq:
+      - id: p_grid_y_value_link
+        type: pointer('data')
+        repeat: expr
+        repeat-expr: 2
+
+      - id: vertical_horizontal_flag
+        type: u4
+
+      - id: length
+        type: u4
+
+      - id: x_index_max
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: x_index_start
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: z_index_start
+        type: u4
+        repeat: expr
+        repeat-expr: 2
+
+  smoke_initialize_parameter:
+    seq:
+      - id: particle_draw_num
+        type: u4
+
+      - id: flag
+        type: u4
+        repeat: expr
+        repeat-expr: 3
+
+      - id: convergence_coff
+        type: f4
+
+      - id: convergence_coff_sub
+        type: f4
+
+      - id: gravity_suppress_coff
+        type: f4
+
+      - id: base_alpha
+        type: f4
+
+      - id: base_scale
+        type: f4
+
+      - id: base_time
+        type: f4
+
+      - id: rand_time_width
+        type: f4
+
+      - size: 4
+
+      - id: verocity_0
+        type: s4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: length_max
+        type: s4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  hh_object_smoke_00_particle:
+    seq:
+      - id: location
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: verocity_0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rgba
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: time
+        type: f4
+
+      - id: scale
+        type: f4
+
+      - id: convergence_coff
+        type: f4
+
+      - id: life_time
+        type: f4
+
+      - id: texture_kind
+        type: u4
+
+      - size: 12
+
+  hh_object_smoke_00:
+    seq:
+      - id: header
+        type: object_data_block_header
+
+      - id: step
+        type: u1
+
+      - size: 3
+
+      - id: timer
+        type: f4
+
+      - id: particle_draw_num
+        type: u4
+
+      - size: 4
+
+      - id: particle
+        type: hh_object_smoke_00_particle
+        repeat: expr
+        repeat-expr: 20
 
   en_sound_queue:
     seq:
@@ -3420,6 +4637,28 @@ types:
         type: u1
 
       - size: 1
+
+  en_anime_range:
+    seq:
+      - id: anime
+        type: u2
+
+      - id: start
+        type: s2
+
+      - id: end
+        type: s2
+
+  en_skeleton_data:
+    seq:
+      - id: num1
+        type: s2
+
+      - id: num2
+        type: s2
+
+      - id: rate
+        type: f4
 
   item:
     seq:
@@ -4249,6 +5488,28 @@ types:
 
       - size: 12
 
+  event_cam_set_data:
+    seq:
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: itr
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rot
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: roll
+        type: f4
+
+      - size: 12
+
   sh2gfw_area_head:
     seq:
       - id: area_id
@@ -4752,6 +6013,166 @@ types:
 
       - id: p_cl_head
         type: pointer('data')
+
+  sh_shading_params:
+    seq:
+      - id: m3_rgbamax_vu0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_rgbamax_vu1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_global_ambient_vu0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_global_ambient_vu1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_camdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_mono_vector
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  point_light_data:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  spot_light_data:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  shadow_light_data:
+    seq:
+      - id: sub_chara
+        type: pointer('data')
+
+      - id: p_ded
+        type: pointer('data')
+
+      - id: light_kind
+        type: s2
+
+      - id: visible_flg
+        type: s1
+
+      - id: force_flg
+        type: s1
+
+      - id: influence_factor
+        type: f4
+
+  parallel_light_data:
+    seq:
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  shadow_light_work:
+    seq:
+      - id: store_num
+        type: s4
+
+      - id: shadow_ld
+        type: shadow_light_data
+        repeat: expr
+        repeat-expr: 32
+
+  fake_light_work:
+    seq:
+      - id: uni_fake_light_no
+        type: s4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: fake_light_num
+        type: s4
+
+      - id: pad
+        type: s4
+
+  pld:
+    seq:
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  dynamic_light:
+    seq:
+      - id: now_cam_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: before_cam_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: now_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: before_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
 
   pic_draw_data:
     seq:
@@ -6096,6 +7517,623 @@ types:
 
       - size: 2
 
+  demo_light_work:
+    seq:
+      - id: parallel
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: parallel_cid
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: point
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: point_cid
+        type: s2
+        repeat: expr
+        repeat-expr: 3
+
+      - id: spot
+        type: s2
+
+      - id: amb
+        type: s2
+
+      - id: ref
+        type: s2
+
+      - size: 2
+
+      - id: demo_p_light0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_light1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_light2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_p_color2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_base_vertex_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotcol
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_spotdecay
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointcol2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointpos2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_pointdecay2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ref_light_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: demo_ref_light_col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  aaa:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  sh2gfw_spotl_matrix:
+    seq:
+      - id: color
+        type: q_worddata
+        size: 16
+
+      - id: dirvec
+        type: q_worddata
+        size: 16
+
+      - id: position
+        type: q_worddata
+        size: 16
+
+      - id: decayparm
+        type: q_worddata
+        size: 16
+
+  sh2gfw_pointl_matrix:
+    seq:
+      - id: color
+        type: q_worddata
+        size: 16
+
+      - id: position
+        type: q_worddata
+        size: 16
+
+      - id: decayparm
+        type: q_worddata
+        size: 16
+
+  sh2gfw_env_ctl:
+    seq:
+      - id: camera_p
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_zd
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_yd
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_rot
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_ido
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_parms
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_parms2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: camera_mat
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: objclip_mat
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: block_index
+        type: q_worddata
+        size: 16
+
+      - id: p_light0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_color2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_vertex_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot0_wpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot0_wdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l0
+        type: sh2gfw_spotl_matrix
+
+      - id: spot1_wpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot1_wdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l1
+        type: sh2gfw_spotl_matrix
+
+      - id: character_light_factor
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: character_light_factor_other
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_l2
+        type: sh2gfw_spotl_matrix
+
+      - id: point0_localpos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: point_l0
+        type: sh2gfw_pointl_matrix
+
+      - id: light_mode
+        type: u2
+
+      - id: weather_mode
+        type: u2
+
+      - id: time_mode
+        type: u2
+
+      - id: now_block
+        type: u2
+
+      - id: mode_buf
+        type: u2
+        repeat: expr
+        repeat-expr: 4
+
+      - id: stat_ctl_1
+        type: q_worddata
+        size: 16
+
+      - id: stat_ctl_2
+        type: q_worddata
+        size: 16
+
+      - id: fogcolor
+        type: q_worddata
+        size: 16
+
+      - id: fogparm
+        type: q_worddata
+        size: 16
+
+      - id: move_fog_color
+        type: q_worddata
+        size: 16
+
+      - id: clearcolor
+        type: q_worddata
+        size: 16
+
+      - id: random_seeds
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_env
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_test
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_alp
+        type: q_worddata
+        size: 16
+
+      - id: compo_shadow_col
+        type: q_worddata
+        size: 16
+
+      - id: compo_fill_col
+        type: q_worddata
+        size: 16
+
+      - id: noise_condition
+        type: q_worddata
+        size: 16
+
+      - id: copy_filter_color
+        type: q_worddata
+        size: 16
+
+  draw_env_data:
+    seq:
+      - id: map_id_name
+        type: s4
+
+      - id: parallel_lnum
+        type: s1
+
+      - id: fake_spot_num
+        type: s1
+
+      - id: fake_point_num
+        type: s1
+
+      - id: point_lnum
+        type: s1
+
+      - id: spot_lnum
+        type: s1
+
+      - id: night_or_day
+        type: s1
+
+      - id: shadow_color
+        type: s2
+
+      - id: shadow_force_light_no
+        type: s2
+
+      - id: shadow_dark_ness
+        type: s2
+
+      - id: p_light_dir0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_dir1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_dir2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_light_col2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_col0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_decay_parm0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: fog_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_2
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_3
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_4
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_5
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_6
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_7
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_8
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_9
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_a
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_b
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_c
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_d
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ld_e
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: move_fog_col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: base_color
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vertex_ambient
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  now_block_no:
+    seq:
+      - id: map_now_block_no
+        type: s4
+        repeat: expr
+        repeat-expr: 4
+
   load_bg_common_info_t:
     seq:
       - id: glb_crd
@@ -6659,6 +8697,46 @@ types:
         repeat: expr
         repeat-expr: 512
 
+  save_data:
+    seq:
+      - id: version
+        type: u4
+
+      - id: scene
+        type: u2
+
+      - size: 10
+
+      - id: jms_pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: playing
+        type: playing_info
+
+      - id: game_flag
+        type: game_flag
+
+      - id: item
+        type: item
+
+      - id: chara
+        type: character_info
+
+      - id: key_config
+        type: pad_key_config
+
+  save_data_all:
+    seq:
+      - id: d
+        type: save_data
+
+      - id: pad
+        type: s1
+        repeat: expr
+        repeat-expr: 1456
+
   sce_cd_clock:
     seq:
       - id: stat
@@ -6839,10 +8917,10 @@ types:
   t_tcount:
     seq:
       - id: count
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_tmode:
     seq:
@@ -6882,18 +8960,18 @@ types:
   t_tcomp:
     seq:
       - id: comp
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_thold:
     seq:
       - id: hold
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_ipu_cmd_write:
     seq:
@@ -7076,7 +9154,7 @@ types:
         type: b1
 
       - id: tag
-        type: u16
+        type: b16
 
   t_gif_tag1:
     seq:
@@ -7139,7 +9217,7 @@ types:
         type: b1
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif0_stat:
     seq:
@@ -7219,10 +9297,10 @@ types:
   t_vif_mark:
     seq:
       - id: mark
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif_cycle:
     seq:
@@ -7233,7 +9311,7 @@ types:
         type: b8
 
       - id: p0
-        type: u16
+        type: b16
 
   t_vif_mode:
     seq:
@@ -7304,7 +9382,7 @@ types:
   t_vif_code:
     seq:
       - id: immediate
-        type: u16
+        type: b16
 
       - id: num
         type: b8
@@ -7516,7 +9594,7 @@ types:
         type: b7
 
       - id: tag
-        type: u16
+        type: b16
 
   t_dmadr:
     seq:
@@ -7529,10 +9607,10 @@ types:
   t_dqwc:
     seq:
       - id: qwc
-        type: u16
+        type: b16
 
       - id: p0
-        type: u16
+        type: b16
 
   t_dtadr:
     seq:
@@ -7787,7 +9865,7 @@ types:
   t_denabler:
     seq:
       - id: p0
-        type: u16
+        type: b16
 
       - id: cpnd
         type: b1
@@ -7798,7 +9876,7 @@ types:
   t_denablew:
     seq:
       - id: p0
-        type: u16
+        type: b16
 
       - id: cpnd
         type: b1
@@ -7830,7 +9908,7 @@ types:
         type: b8
 
       - id: p0
-        type: u16
+        type: b16
 
       - id: p1
         type: u4
@@ -8127,940 +10205,6 @@ types:
 
       - id: lblid
         type: b32
-
-  sce_gif_tag:
-    seq:
-      - id: nloop
-        type: b15
-
-      - id: eop
-        type: b1
-
-      - id: pad16
-        type: u16
-
-      - id: id
-        type: b14
-
-      - id: pre
-        type: b1
-
-      - id: prim
-        type: b11
-
-      - id: flg
-        type: b2
-
-      - id: nreg
-        type: b4
-
-      - id: regs0
-        type: b4
-
-      - id: regs1
-        type: b4
-
-      - id: regs2
-        type: b4
-
-      - id: regs3
-        type: b4
-
-      - id: regs4
-        type: b4
-
-      - id: regs5
-        type: b4
-
-      - id: regs6
-        type: b4
-
-      - id: regs7
-        type: b4
-
-      - id: regs8
-        type: b4
-
-      - id: regs9
-        type: b4
-
-      - id: regs10
-        type: b4
-
-      - id: regs11
-        type: b4
-
-      - id: regs12
-        type: b4
-
-      - id: regs13
-        type: b4
-
-      - id: regs14
-        type: b4
-
-      - id: regs15
-        type: b4
-
-  sce_gif_pack_rgbaq:
-    seq:
-      - id: r
-        type: u4
-
-      - id: g
-        type: u4
-
-      - id: b
-        type: u4
-
-      - id: a
-        type: u4
-
-  sce_gif_pack_ad:
-    seq:
-      - id: data
-        type: u8
-
-      - id: addr
-        type: u8
-
-  sce_gif_pack_st:
-    seq:
-      - id: s
-        type: f4
-
-      - id: t
-        type: f4
-
-      - id: q
-        type: f4
-
-      - id: pad96
-        type: u4
-
-  sce_gif_pack_uv:
-    seq:
-      - id: u
-        type: s4
-
-      - id: v
-        type: s4
-
-      - id: pad64
-        type: s8
-
-  sce_gif_pack_xyzf:
-    seq:
-      - id: x
-        type: s4
-
-      - id: y
-        type: s4
-
-      - id: z
-        type: u4
-
-      - id: f
-        type: b12
-
-      - id: pad108
-        type: b3
-
-      - id: adc
-        type: b1
-
-      - id: pad112
-        type: u16
-
-  sce_gif_pack_xyz:
-    seq:
-      - id: x
-        type: s4
-
-      - id: y
-        type: s4
-
-      - id: z
-        type: u4
-
-      - id: pad96
-        type: b15
-
-      - id: adc
-        type: b1
-
-      - id: pad112
-        type: u16
-
-  sce_gif_pack_fog:
-    seq:
-      - id: pad
-        type: u4
-        repeat: expr
-        repeat-expr: 3
-
-      - id: f
-        type: u4
-
-  sce_gif_pack_nop:
-    seq:
-      - id: pad
-        type: u8
-        repeat: expr
-        repeat-expr: 2
-
-  sce_gs_alpha:
-    seq:
-      - id: a
-        type: b2
-
-      - id: b
-        type: b2
-
-      - id: c
-        type: b2
-
-      - id: d
-        type: b2
-
-      - id: pad8
-        type: b24
-
-      - id: fix
-        type: b8
-
-      - id: pad40
-        type: b24
-
-  sce_gs_bitbltbuf:
-    seq:
-      - id: sbp
-        type: b14
-
-      - id: pad14
-        type: b2
-
-      - id: sbw
-        type: b6
-
-      - id: pad22
-        type: b2
-
-      - id: spsm
-        type: b6
-
-      - id: pad30
-        type: b2
-
-      - id: dbp
-        type: b14
-
-      - id: pad46
-        type: b2
-
-      - id: dbw
-        type: b6
-
-      - id: pad54
-        type: b2
-
-      - id: dpsm
-        type: b6
-
-      - id: pad62
-        type: b2
-
-  sce_gs_clamp:
-    seq:
-      - id: wms
-        type: b2
-
-      - id: wmt
-        type: b2
-
-      - id: minu
-        type: b10
-
-      - id: maxu
-        type: b10
-
-      - id: minv
-        type: b10
-
-      - id: maxv
-        type: b10
-
-      - id: pad44
-        type: b20
-
-  sce_gs_colclamp:
-    seq:
-      - id: clamp
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_dimx:
-    seq:
-      - id: dimx00
-        type: b3
-
-      - id: pad00
-        type: b1
-
-      - id: dimx01
-        type: b3
-
-      - id: pad01
-        type: b1
-
-      - id: dimx02
-        type: b3
-
-      - id: pad02
-        type: b1
-
-      - id: dimx03
-        type: b3
-
-      - id: pad03
-        type: b1
-
-      - id: dimx10
-        type: b3
-
-      - id: pad10
-        type: b1
-
-      - id: dimx11
-        type: b3
-
-      - id: pad11
-        type: b1
-
-      - id: dimx12
-        type: b3
-
-      - id: pad12
-        type: b1
-
-      - id: dimx13
-        type: b3
-
-      - id: pad13
-        type: b1
-
-      - id: dimx20
-        type: b3
-
-      - id: pad20
-        type: b1
-
-      - id: dimx21
-        type: b3
-
-      - id: pad21
-        type: b1
-
-      - id: dimx22
-        type: b3
-
-      - id: pad22
-        type: b1
-
-      - id: dimx23
-        type: b3
-
-      - id: pad23
-        type: b1
-
-      - id: dimx30
-        type: b3
-
-      - id: pad30
-        type: b1
-
-      - id: dimx31
-        type: b3
-
-      - id: pad31
-        type: b1
-
-      - id: dimx32
-        type: b3
-
-      - id: pad32
-        type: b1
-
-      - id: dimx33
-        type: b3
-
-      - id: pad33
-        type: b1
-
-  sce_gs_dthe:
-    seq:
-      - id: dthe
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_fba:
-    seq:
-      - id: fba
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_finish:
-    seq:
-      - id: pad00
-        type: u8
-
-  sce_gs_fog:
-    seq:
-      - id: pad00
-        type: b56
-
-      - id: f
-        type: b8
-
-  sce_gs_fogcol:
-    seq:
-      - id: fcr
-        type: b8
-
-      - id: fcg
-        type: b8
-
-      - id: fcb
-        type: b8
-
-      - id: pad24
-        type: b40
-
-  sce_gs_frame:
-    seq:
-      - id: fbp
-        type: b9
-
-      - id: pad09
-        type: b7
-
-      - id: fbw
-        type: b6
-
-      - id: pad22
-        type: b2
-
-      - id: psm
-        type: b6
-
-      - id: pad30
-        type: b2
-
-      - id: fbmsk
-        type: b32
-
-  sce_gs_hwreg:
-    seq:
-      - id: wdata
-        type: u8
-
-  sce_gs_label:
-    seq:
-      - id: id
-        type: u4
-
-      - id: idmsk
-        type: u4
-
-  sce_gs_miptbp1:
-    seq:
-      - id: tbp1
-        type: b14
-
-      - id: tbw1
-        type: b6
-
-      - id: tbp2
-        type: b14
-
-      - id: tbw2
-        type: b6
-
-      - id: tbp3
-        type: b14
-
-      - id: tbw3
-        type: b6
-
-      - id: pad60
-        type: b4
-
-  sce_gs_miptbp2:
-    seq:
-      - id: tbp4
-        type: b14
-
-      - id: tbw4
-        type: b6
-
-      - id: tbp5
-        type: b14
-
-      - id: tbw5
-        type: b6
-
-      - id: tbp6
-        type: b14
-
-      - id: tbw6
-        type: b6
-
-      - id: pad60
-        type: b4
-
-  sce_gs_pabe:
-    seq:
-      - id: pabe
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_prim:
-    seq:
-      - id: prim
-        type: b3
-
-      - id: iip
-        type: b1
-
-      - id: tme
-        type: b1
-
-      - id: fge
-        type: b1
-
-      - id: abe
-        type: b1
-
-      - id: aa1
-        type: b1
-
-      - id: fst
-        type: b1
-
-      - id: ctxt
-        type: b1
-
-      - id: fix
-        type: b1
-
-      - id: pad11
-        type: b53
-
-  sce_gs_prmode:
-    seq:
-      - id: pad00
-        type: b3
-
-      - id: iip
-        type: b1
-
-      - id: tme
-        type: b1
-
-      - id: fge
-        type: b1
-
-      - id: abe
-        type: b1
-
-      - id: aa1
-        type: b1
-
-      - id: fst
-        type: b1
-
-      - id: ctxt
-        type: b1
-
-      - id: fix
-        type: b1
-
-      - id: pad11
-        type: b53
-
-  sce_gs_prmodecont:
-    seq:
-      - id: ac
-        type: b1
-
-      - id: pad01
-        type: b63
-
-  sce_gs_rgbaq:
-    seq:
-      - id: r
-        type: b8
-
-      - id: g
-        type: b8
-
-      - id: b
-        type: b8
-
-      - id: a
-        type: b8
-
-      - id: q
-        type: f4
-
-  sce_gs_scanmsk:
-    seq:
-      - id: msk
-        type: b2
-
-      - id: pad02
-        type: b62
-
-  sce_gs_scissor:
-    seq:
-      - id: scax0
-        type: b11
-
-      - id: pad11
-        type: b5
-
-      - id: scax1
-        type: b11
-
-      - id: pad27
-        type: b5
-
-      - id: scay0
-        type: b11
-
-      - id: pad43
-        type: b5
-
-      - id: scay1
-        type: b11
-
-      - id: pad59
-        type: b5
-
-  sce_gs_signal:
-    seq:
-      - id: id
-        type: u4
-
-      - id: idmsk
-        type: u4
-
-  sce_gs_st:
-    seq:
-      - id: s
-        type: f4
-
-      - id: t
-        type: f4
-
-  sce_gs_test:
-    seq:
-      - id: ate
-        type: b1
-
-      - id: atst
-        type: b3
-
-      - id: aref
-        type: b8
-
-      - id: afail
-        type: b2
-
-      - id: date
-        type: b1
-
-      - id: datm
-        type: b1
-
-      - id: zte
-        type: b1
-
-      - id: ztst
-        type: b2
-
-      - id: pad19
-        type: b45
-
-  sce_gs_tex0:
-    seq:
-      - id: tbp0
-        type: b14
-
-      - id: tbw
-        type: b6
-
-      - id: psm
-        type: b6
-
-      - id: tw
-        type: b4
-
-      - id: th
-        type: b4
-
-      - id: tcc
-        type: b1
-
-      - id: tfx
-        type: b2
-
-      - id: cbp
-        type: b14
-
-      - id: cpsm
-        type: b4
-
-      - id: csm
-        type: b1
-
-      - id: csa
-        type: b5
-
-      - id: cld
-        type: b3
-
-  sce_gs_tex1:
-    seq:
-      - id: lcm
-        type: b1
-
-      - id: pad01
-        type: b1
-
-      - id: mxl
-        type: b3
-
-      - id: mmag
-        type: b1
-
-      - id: mmin
-        type: b3
-
-      - id: mtba
-        type: b1
-
-      - id: pad10
-        type: b9
-
-      - id: l
-        type: b2
-
-      - id: pad21
-        type: b11
-
-      - id: k
-        type: b12
-
-      - id: pad44
-        type: b20
-
-  sce_gs_tex2:
-    seq:
-      - id: pad00
-        type: b20
-
-      - id: psm
-        type: b6
-
-      - id: pad26
-        type: b11
-
-      - id: cbp
-        type: b14
-
-      - id: cpsm
-        type: b4
-
-      - id: csm
-        type: b1
-
-      - id: csa
-        type: b5
-
-      - id: cld
-        type: b3
-
-  sce_gs_texa:
-    seq:
-      - id: ta0
-        type: b8
-
-      - id: pad08
-        type: b7
-
-      - id: aem
-        type: b1
-
-      - id: pad16
-        type: u16
-
-      - id: ta1
-        type: b8
-
-      - id: pad40
-        type: b24
-
-  sce_gs_texclut:
-    seq:
-      - id: cbw
-        type: b6
-
-      - id: cou
-        type: b6
-
-      - id: cov
-        type: b10
-
-      - id: pad22
-        type: b42
-
-  sce_gs_texflush:
-    seq:
-      - id: pad00
-        type: u8
-
-  sce_gs_trxdir:
-    seq:
-      - id: xdr
-        type: b2
-
-      - id: pad02
-        type: b62
-
-  sce_gs_trxpos:
-    seq:
-      - id: ssax
-        type: b11
-
-      - id: pad11
-        type: b5
-
-      - id: ssay
-        type: b11
-
-      - id: pad27
-        type: b5
-
-      - id: dsax
-        type: b11
-
-      - id: pad43
-        type: b5
-
-      - id: dsay
-        type: b11
-
-      - id: dir
-        type: b2
-
-      - id: pad61
-        type: b3
-
-  sce_gs_trxreg:
-    seq:
-      - id: rrw
-        type: b12
-
-      - id: pad12
-        type: b20
-
-      - id: rrh
-        type: b12
-
-      - id: pad44
-        type: b20
-
-  sce_gs_uv:
-    seq:
-      - id: u
-        type: b14
-
-      - id: pad14
-        type: b2
-
-      - id: v
-        type: b14
-
-      - id: pad30
-        type: b34
-
-  sce_gs_xyoffset:
-    seq:
-      - id: ofx
-        type: u16
-
-      - id: pad16
-        type: u16
-
-      - id: ofy
-        type: u16
-
-      - id: pad48
-        type: u16
-
-  sce_gs_xyz:
-    seq:
-      - id: x
-        type: u16
-
-      - id: y
-        type: u16
-
-      - id: z
-        type: b32
-
-  sce_gs_xyzf:
-    seq:
-      - id: x
-        type: u16
-
-      - id: y
-        type: u16
-
-      - id: z
-        type: b24
-
-      - id: f
-        type: b8
-
-  sce_gs_zbuf:
-    seq:
-      - id: zbp
-        type: b9
-
-      - id: pad09
-        type: b15
-
-      - id: psm
-        type: b4
-
-      - id: pad28
-        type: b4
-
-      - id: zmsk
-        type: b1
-
-      - id: pad33
-        type: b31
 
   sce_gs_disp_env:
     seq:

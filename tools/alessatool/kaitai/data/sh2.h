@@ -6,10 +6,15 @@
  * used for decomp.me contexts and alessastruct.
  */
 
- /*
+/*
  
-to rebuild with alessastruct:
+to rebuild with alessastruct, use the following command:
 
+```sh
+alessatool migrate --update
+```
+
+if the above does not work, or if you are curious, here are manual instructions:
 
 ```sh
 alessastruct --platform=ps2 --output=tools/alessatool/kaitai/sh2.ksy  \
@@ -23,6 +28,10 @@ then:
 ```sh
 kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir tools/alessatool/kaitai
 ```
+
+NOTE: currently two lines in `sh2.py` need fixups after this last step as they use reserved python keywords:
+`global` -> `global_`
+`as`     -> `as_`
 
  */
 #define __ALESSASTRUCT_README__
@@ -76,7 +85,9 @@ kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir 
 #include "Effect2/hh_class_object_execute.h"
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_effect_object_def.h"
+#include "Effect2/hh_class_water_common.h"
 #include "Effect2/hh_memory_manage.h"
+#include "Effect2/hh_class_smoke_00.h"
 
 #include "Enemy/en_arm.h"
 #include "Enemy/en_common.h"
@@ -100,6 +111,7 @@ kaitai-struct-compiler --target python tools/alessatool/kaitai/sh2.ksy --outdir 
 #include "GFW/sh2gfw_2d_filters.h"
 #include "GFW/sh2gfw_LightSet.h"
 #include "GFW/sh2gfw_structs.h"
+#include "GFW/sh2_DrawEnvData.h"
 
 #include "LoadBg/loadbg_common.h"
 

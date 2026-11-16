@@ -15,16 +15,16 @@ typedef struct {
 } unk_01F6E230_hospital_b_00_struct;
 
 typedef struct {
-    s16 unk0;
-    s16 unk2;
+    short unk0;
+    short unk2;
     int unk4;
     int unk8;
-    s16 unkC;
-    s16 unkE;
-    s16 unk10;
-    s16 pad12;
-    s16 pad14;
-    s16 unk16;
+    short unkC;
+    short unkE;
+    short unk10;
+    short pad12;
+    short pad14;
+    short unk16;
 } Unk01F6F8C0;
 
 typedef struct {
@@ -34,10 +34,10 @@ typedef struct {
 
 typedef struct {
     int pad0;
-    s16 unk4;
-    s16 unk6;
-    s16 pad8;
-    s16 padA;
+    short unk4;
+    short unk6;
+    short pad8;
+    short padA;
     int padC;
     f32 unk10;
     f32 unk14;

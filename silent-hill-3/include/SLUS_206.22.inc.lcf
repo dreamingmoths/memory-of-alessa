@@ -94,6 +94,8 @@ SECTIONS
 		ALIGNALL(0x4);
 
 		mall_f_01_data.data.s.o (.data)
+        ALIGNALL(0x10);
+        mall_f_01.c.o (.rodata)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);

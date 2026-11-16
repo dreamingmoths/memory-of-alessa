@@ -211,7 +211,37 @@ INCLUDE_ASM("asm/nonmatchings/Font/font", fontPrintStrWide);
 
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontGetMesWidth);
 
+#ifdef NON_MATCHING
+#line 1485
+void fontSetColor(int num) {
+    UNLINKED(u_int font_color[17][2], {
+        { COLOR_RGBA(128, 128, 128, 0), COLOR_RGBA(128, 128, 128, 0) },
+        { COLOR_RGBA(128,  96,  96, 0), COLOR_RGBA(128,  96,  96, 0) },
+        { COLOR_RGBA( 48,  48, 128, 0), COLOR_RGBA( 48,  48, 128, 0) },
+        { COLOR_RGBA( 96, 128,  96, 0), COLOR_RGBA( 96, 128,  96, 0) },
+        { COLOR_RGBA( 48, 128, 128, 0), COLOR_RGBA( 48, 128, 128, 0) },
+        { COLOR_RGBA(128, 128,  48, 0), COLOR_RGBA(128, 128,  48, 0) },
+        { COLOR_RGBA(128,  48, 128, 0), COLOR_RGBA(128,  48, 128, 0) },
+        { COLOR_RGBA(160,  80,  80, 0), COLOR_RGBA( 80, 160,  80, 0) },
+        { COLOR_RGBA(  0,   0,  48, 0), COLOR_RGBA( 32,  32,  80, 0) },
+        { COLOR_RGBA(  0,   0,   0, 0), COLOR_RGBA(  0,   0,   0, 0) },
+        { COLOR_RGBA(144, 144, 144, 0), COLOR_RGBA( 32,  32,  32, 0) },
+        { COLOR_RGBA( 40,  16, 224, 0), COLOR_RGBA( 40,  16, 224, 0) },
+        { COLOR_RGBA(160,  88, 112, 0), COLOR_RGBA(160,  88, 112, 0) },
+        { COLOR_RGBA( 56, 208, 136, 0), COLOR_RGBA( 56, 208, 136, 0) },
+        { COLOR_RGBA( 16, 248, 248, 0), COLOR_RGBA( 16, 248, 248, 0) },
+        { COLOR_RGBA(168, 184,  32, 0), COLOR_RGBA(168, 184,  32, 0) },
+        { COLOR_RGBA( 32,  32,  32, 0), COLOR_RGBA( 32,  32,  32, 0) }
+    });
+
+    FJ_ASSERT_ON_LINE(num >= 0 && num <= 16, 1508);
+
+    font.rgb_u = font_color[num][0];
+    font.rgb_d = font_color[num][1];
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Font/font", fontSetColor);
+#endif
 
 void fontSetColorDirect(u_char r /* r2 */, u_char g /* r2 */, u_char b /* r2 */, u_char alp /* r2 */) {
     font.rgb_u = font.rgb_d = COLOR_RGB(r, g, b);
@@ -272,8 +302,8 @@ void fontPutSelectBar(void) {
     *pCur++ = SCE_GIF_SET_TAG(1, SCE_GS_TRUE, SCE_GS_FALSE, NULL, SCE_GIF_REGLIST, 3);
     *pCur++ = GIF_REG(SCE_GS_RGBAQ, 0) | GIF_REG(SCE_GS_XYZ2, 1) | GIF_REG(SCE_GS_XYZ2, 2);
     *pCur++ = SCE_GS_SET_RGBAQ(16, 32, 192, a + 16, 0);
-    *pCur++ = ASM_GS_SET_XYZ(x0, y0, z);
-    *pCur++ = ASM_GS_SET_XYZ(x1, y1, z);
+    *pCur++ = shFastSetXyz(x0, y0, z);
+    *pCur++ = shFastSetXyz(x1, y1, z);
     *pCur++ = 0;
     
     font.pCur = pCur;
@@ -326,8 +356,8 @@ void fontPutYesNoSelectBar(void) {
     *pCur++ = SCE_GIF_SET_TAG(1, SCE_GS_TRUE, SCE_GS_FALSE, NULL, SCE_GIF_REGLIST, 3);
     *pCur++ = GIF_REG(SCE_GS_RGBAQ, 0) | GIF_REG(SCE_GS_XYZ2, 1) | GIF_REG(SCE_GS_XYZ2, 2);
     *pCur++ = SCE_GS_SET_RGBAQ(16, 32, 192, a + 16, 0);
-    *pCur++ = ASM_GS_SET_XYZ(x0, y0, z);
-    *pCur++ = ASM_GS_SET_XYZ(x1, y1, z);
+    *pCur++ = shFastSetXyz(x0, y0, z);
+    *pCur++ = shFastSetXyz(x1, y1, z);
     *pCur++ = 0;
     
     font.pCur = pCur;

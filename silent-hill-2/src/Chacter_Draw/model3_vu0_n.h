@@ -162,17 +162,6 @@ typedef struct AllPacket {
     struct TriangleSpecularNormal specular_normal[2];                // offset 0xC80, size 0x360
 } AllPacket;
 
-typedef struct ktVif1Ot2 {
-    // total size: 0x20
-    struct _sceDmaTag* top_1; // offset 0x0, size 0x4
-    struct _sceDmaTag* top_2; // offset 0x4, size 0x4
-    u_int n_bits_1;           // offset 0x8, size 0x4
-    u_int n_bits_2;           // offset 0xC, size 0x4
-    u_int length_1;           // offset 0x10, size 0x4
-    u_int length_2;           // offset 0x14, size 0x4
-    u_int mask_1;             // offset 0x18, size 0x4
-    u_int mask_2;             // offset 0x1C, size 0x4
-};
 typedef struct PersData {
     // total size: 0x70
     float vsp[2][4];   // offset 0x0, size 0x20
