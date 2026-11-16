@@ -137,7 +137,7 @@ segments:
       - { start: 0x000897d0,    type: c,          name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x00089bc0,    type: c,          name: Multi_thr/dma/texslot                            }
       - { start: 0x00089e30,    type: c,          name: Multi_thr/util/cmd_serv                          }
-      - { start: 0x0008b280,    type: asm,        name: Multi_thr/util/utilexcl                          }
+      - { start: 0x0008b280,    type: c,          name: Multi_thr/util/utilexcl                          }
       - { start: 0x0008b390,    type: c,          name: Multi_thr/util/utilstr                           }
       - { start: 0x0008bbc0,    type: c,          name: shPad/lib_sh_pad                                 }
       - { start: 0x0008c760,    type: c,          name: sh2shd/sh2shd_char_jms                           }
@@ -646,7 +646,7 @@ segments:
       - { start: 0x001b6b20,    type: .data,      name: Multi_thr/dma/sh_dma1                            }
       - { start: 0x001b6b38,    type: .data,      name: Multi_thr/dma/sh_dma2                            }
       - { start: 0x001b6b50,    type: .data,      name: Multi_thr/dma/texslot                            }
-      - { start: 0x001b6ba0,    type: data,       name: Multi_thr/util/utilexcl                          }
+      - { start: 0x001b6ba0,    type: .data,      name: Multi_thr/util/utilexcl                          }
       - { start: 0x001b6bb0,    type: .data,      name: shPad/lib_sh_pad                                 }
       - { start: 0x001b6c00,    type: data,       name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x001b6c20,    type: .data,      name: shGs/sh2gfw_GS_NewLoopEnv                        }
