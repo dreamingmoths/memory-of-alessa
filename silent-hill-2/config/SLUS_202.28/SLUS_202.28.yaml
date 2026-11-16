@@ -1228,7 +1228,7 @@ segments:
       - { vram:  0x0116d380,    type: bss,        name: Multi_thr/boot/bootoptitem                       }
       - { vram:  0x0116d788,    type: .bss,       name: Event/title                                      }
       - { vram:  0x0116d9e8,    type: bss,        name: SH2_common/pad                                   }
-      - { vram:  0x0116db70,    type: bss,        name: Chacter/sh2_character_manage                     }
+      - { vram:  0x0116db70,    type: .bss,       name: Chacter/sh2_character_manage                     }
       - { vram:  0x0116db78,    type: bss,        name: Event/chizu                                      }
       - { vram:  0x0116dbc8,    type: bss,        name: Event/chara_admin                                }
       - { vram:  0x0116dc70,    type: bss,        name: Fog/spkTexMan                                    }

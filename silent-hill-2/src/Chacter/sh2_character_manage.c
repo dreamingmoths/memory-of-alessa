@@ -1,16 +1,16 @@
-#include "sh2_common.h"
+#include "Chacter/sh2_character_manage.h"
+#include "Chacter/m3_sc.h"
+#include "Chacter/sh_character_status.h"
 
-#include "vec.h"
+#include "Enemy/en_common.h"
 
 #include "GFW/sh2gfw_Init_ModelDrawData.h"
 
-#include "Chacter/character.h"
-#include "Chacter/m3_sc.h"
+#include "vec.h"
 
-extern void shBattleInitEnemyCheckWork();
-extern int id_counter; // size: 0x4, address: 0x116DB70
+static int id_counter; // size: 0x4, address: 0x116DB70
 
-void shCharacter_Manage_Init() {
+int shCharacter_Manage_Init(void) {
     id_counter = 0x1000;
     shBattleInitEnemyCheckWork();
 }
@@ -63,10 +63,10 @@ int shCharacter_Manage_Create(short kind, short id, float* pos, float* rot, u_in
     return -1;
 }
 
-int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* r2 */, short id /* r2 */) {
-    SubCharacter * del_scp; // r16
+int shCharacter_Manage_Delete(SubCharacter* scp, short kind, short id) {
+    SubCharacter* del_scp;
 
-    int delete_on = 0; // r7
+    int delete_on = 0;
 
     if (scp != NULL) {
         del_scp = scp;
@@ -86,7 +86,7 @@ int shCharacter_Manage_Delete(struct SubCharacter * scp /* r2 */, short kind /* 
         return 0;
     }
 
-    if (del_scp->kind >> 8 == 2 || del_scp->kind == 0x421) {
+    if (GET_KIND_TYPE(del_scp->kind) == ENEMY_CHARA_KIND || del_scp->kind == ITEM_B_NIK_CHARA_KIND) {
         enDeleteEnemy(del_scp->enemy_p);
     }
 
@@ -99,11 +99,10 @@ SubCharacter* shCharacter_Manage_GetCharacterList() {
     return sh2chara.head;
 }
 
-#ifdef BROKEN
-int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
-{
-    sh2gfw_ModelDraw_MAN *pMD;
-    SubCharacterDisp *scp_d = (SubCharacterDisp *)scp;
+#ifdef NON_MATCHING
+int shCharacter_Manage_SetDataAdresss(SubCharacter* scp) {
+    sh2gfw_ModelDraw_MAN* pMD;
+    SubCharacterDisp* scp_d = (SubCharacterDisp*) scp;
 
     if (scp_d == NULL)
     {
@@ -118,22 +117,22 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
 
     if (scp_d->model_adr == NULL)
     {
-        SCSetModel(&scp_d->sc, (u_long)pMD->sh_Model, (u_long)pMD->pAnime);
-        scp_d->model_adr = (u_long)pMD->sh_Model;
-        scp_d->anime_adr = (u_long)pMD->pAnime;
-        scp_d->clani_adr = (u_long)pMD->pCluster;
-        (scp_d->anime).anime = (void *)scp_d->anime_adr;
+        SCSetModel(&scp_d->sc, (u_long) pMD->sh_Model, (u_long) pMD->pAnime);
+        scp_d->model_adr = (u_long) pMD->sh_Model;
+        scp_d->anime_adr = (u_long) pMD->pAnime;
+        scp_d->clani_adr = (u_long) pMD->pCluster;
+        (scp_d->anime).anime = (void*) scp_d->anime_adr;
         scp_d->sc.function(&scp_d->sc);
     }
     else
     {
-        scp_d->model_adr = (u_long)pMD->sh_Model;
-        scp_d->anime_adr = (u_long)pMD->pAnime;
-        scp_d->clani_adr = (u_long)pMD->pCluster;
-        (scp_d->anime).anime = (void *)scp_d->anime_adr;
-        scp_d->models[0] = (void *)scp_d->model_adr;
-        scp_d->models[1] = (void *)scp_d->model_adr;
-        scp_d->models[2] = (void *)scp_d->model_adr;
+        scp_d->model_adr = (u_long) pMD->sh_Model;
+        scp_d->anime_adr = (u_long) pMD->pAnime;
+        scp_d->clani_adr = (u_long) pMD->pCluster;
+        (scp_d->anime).anime = (void*) scp_d->anime_adr;
+        scp_d->models[0] = (void*) scp_d->model_adr;
+        scp_d->models[1] = (void*) scp_d->model_adr;
+        scp_d->models[2] = (void*) scp_d->model_adr;
     }
 
     return 1;
@@ -142,11 +141,17 @@ int shCharacter_Manage_SetDataAdresss(SubCharacter *scp)
 INCLUDE_ASM("asm/nonmatchings/Chacter/sh2_character_manage", shCharacter_Manage_SetDataAdresss);
 #endif
 
+void shCharacter_Manage_SetJamesAnimeAdresss(SubCharacter* scp, u_int address) {
+    SubCharacterDisp* scp_d;
 
-INCLUDE_ASM("asm/nonmatchings/Chacter/sh2_character_manage", shCharacter_Manage_SetJamesAnimeAdresss);
+    scp_d = (SubCharacterDisp*) scp;
+    scp_d->anime_adr = address;
+    scp_d->anime.anime = (void*) scp_d->anime_adr;
+}
+
 int shCharacter_Manage_Create_After_MC_Load(Character_Info* chara) {
-    SubCharacter * scp; // r2
-    int i; // r16
+    SubCharacter* scp;
+    int i;
     
     for (i = 0; i < chara->total; i++) {
         scp = (SubCharacter*) shCharacterCreate(0, 0, 0, 0, chara->ci_sc[i].kind);
