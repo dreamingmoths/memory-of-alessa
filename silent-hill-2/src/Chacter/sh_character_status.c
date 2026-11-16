@@ -63,7 +63,7 @@ void shBattleCheckTargetMyArea(shInArea* in_area, SubCharacter* scp, SubCharacte
 
     switch (GET_KIND_TYPE(tgt->kind)) {
         case 7:
-            if (!(scp->status & 0x200)) {
+            if (!(scp->status & (1 << SCP_STATUS_BIT_LIGHT_ON_NOW))) {
                 in_area->look_on = in_area->feel_on = 0;
             }
             if (tgt_pos[1] < scp->eye_y - 600.0f || tgt_pos[1] > scp->eye_y + 1000.0f) {
@@ -110,12 +110,12 @@ static asm float _shLength(register float* x, register float* y) { // @todo: wri
 }
 
 int shBattleAroundTargetEnemy(void) {
-    SubCharacter* tgt; // r4
+    SubCharacter* tgt;
 
     for (tgt = sh2chara.head; tgt != NULL;  tgt = tgt->next) {       
         
         if (((GET_KIND_TYPE(tgt->kind)) == ENEMY_CHARA_KIND) 
-            && (tgt->battle.status & 0x400) && !(tgt->battle.status & 2)) {
+            && (tgt->battle.status & (1 << 10)) && !(tgt->battle.status & 2)) {
             return 1;
         }
     }
@@ -126,13 +126,13 @@ int shBattleAroundTargetEnemy(void) {
 }
 
 int shBattleCheckTargetChara(SubCharacter* scp) {
-    int i; // r16
-    int j; // r17
-    SubCharacter* tgt; // r16
-    shInArea in_area; // r29+0x6C
-    sceVu0FVECTOR look_center; // r29+0x40
-    sceVu0FVECTOR feel_center; // r29+0x50    
-    shInAreaTgtInfo dummy; // r29+0x60
+    int i;
+    int j;
+    SubCharacter* tgt;
+    shInArea in_area;
+    sceVu0FVECTOR look_center;
+    sceVu0FVECTOR feel_center;
+    shInAreaTgtInfo dummy;
     look_center[0] = scp->pos.x + (scp->battle.look.center * shSinF(scp->rot.y));
     look_center[1] = scp->eye_y;
     look_center[2] = scp->pos.z + (scp->battle.look.center * shCosF(scp->rot.y));
@@ -160,7 +160,7 @@ int shBattleCheckTargetChara(SubCharacter* scp) {
             default: continue;                
         }            
                         
-        if ((GET_KIND_TYPE(tgt->kind) == ENEMY_CHARA_KIND) && !(tgt->battle.status & 0x400)) continue;
+        if ((GET_KIND_TYPE(tgt->kind) == ENEMY_CHARA_KIND) && !(tgt->battle.status & (1 << 10))) continue;
           
         shBattleCheckTargetMyArea(&in_area, scp, tgt, look_center, feel_center);
         if ((in_area.look_on == 0 && in_area.feel_on == 0 && in_area.light_on == 0) || rest_tgt == 0) continue;
@@ -286,10 +286,10 @@ SubCharacter* shBattleGetTargetEnemy(SubCharacter* scp) {
 }
 
 SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key) {
-    int i; // r16
-    float to_target; // r29+0x90
-    float rot_tmp; // r29+0x90
-    CL_VHIT_RESULT eye; // r29+0x50
+    int i;
+    float to_target;
+    float rot_tmp;
+    CL_VHIT_RESULT eye;
     if (rest_tgt == 20)
         return NULL;
     
@@ -323,11 +323,11 @@ SubCharacter* shBattleChangeTargetEnemy(SubCharacter* scp, int key) {
 }
 
 u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
-    int i; // r16
-    CL_VHIT_RESULT eye; // r29+0x30
+    int i;
+    CL_VHIT_RESULT eye;
 
     switch (kind) {
-        case 0: // ???
+        case 0:
             if (rest_tgt == 20) 
                 return 0;
             
@@ -354,7 +354,7 @@ u_int shBattleGetTargetChara(SubCharacter* scp, int kind) {
 }
 
 SubCharacter* shCameraGetNearTarget(int i, int type) {
-    int kind; // r4
+    int kind;
 
     if (rest_tgt_buf == 20)
         return NULL;
@@ -372,8 +372,8 @@ SubCharacter* shCameraGetNearTarget(int i, int type) {
 }
 
 SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp) {
-    int i; // r16
-    CL_VHIT_RESULT eye; // r29+0x50
+    int i;
+    CL_VHIT_RESULT eye;
 
     
     if (rest_tgt == 20) 
@@ -404,8 +404,8 @@ SubCharacter* shBattleGetNearDeadlyTargetEnemy(SubCharacter* scp) {
 }
 
 SubCharacter* shBattleGetTargetHuman(SubCharacter* scp, u_int type) {
-    sceVu0FVECTOR pos1; // r29+0x30
-    sceVu0FVECTOR pos2; // r29+0x40
+    sceVu0FVECTOR pos1;
+    sceVu0FVECTOR pos2;
     float scalar1; float scalar2; 
     SubCharacter* p; SubCharacter* p1; SubCharacter* p2; 
     switch (type) {
@@ -449,19 +449,19 @@ SubCharacter* shBattleGetTargetHuman(SubCharacter* scp, u_int type) {
 }
 
 int shBattleListenHumanSound(SubCharacter* scp, SubCharacter* tgt) {
-    if (tgt->battle.status & 0x200) {
+    if (tgt->battle.status & (1 << 9)) {
         return 1;
     } 
     return 0;
 }
 
 int shBattleSeeHumanLight(SubCharacter* scp) {
-    SPOT_LIGHT spot; // r29+0x20
-    sceVu0FVECTOR light_center; // r29+0x50
-    sceVu0FVECTOR scp_center; // r29+0x60
-    float angle; // r29+0x70
-    float light_radius; // r1    
-    float dist; // r29+0x70
+    SPOT_LIGHT spot;
+    sceVu0FVECTOR light_center;
+    sceVu0FVECTOR scp_center;
+    float angle;
+    float light_radius; 
+    float dist;
 
     if (item.light_switch == 0) {
         return -1;
