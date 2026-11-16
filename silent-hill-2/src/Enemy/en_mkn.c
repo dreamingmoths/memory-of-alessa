@@ -455,7 +455,42 @@ static void enMKNCtrlMannequin(EnLOCAL_DATA* dp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlMannequin2);
+static void enMKNCtrlMannequin2(EnLOCAL_DATA* dp) {
+    switch (dp->sslv) {
+        case 0:
+            enMKNAnimeSet(dp, 27);
+            enSetSize(dp, 250.0f, 200.0f, 100.0f, 200.0f);
+            enFlagSetDead(dp);
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        case 1:
+            if (dp->type == 7) {
+                enMKNAnimeSet(dp, 23);
+                enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                enFlagSetMoved(dp);
+                enFlagSetNoDamage(dp);
+                enFlagResetDead(dp);
+                enSoundCall(shFloatToInt(4.0f * shRandF()) + 12505, 1.0f, &dp->scp->pos);
+                switch (enGetPlace()) {
+                    case 0:
+                        dp->type = 1;
+                        break;
+                    default:
+                        dp->type = 4;
+                        break;
+                }
+                ENEMY_NEXT_SUB_STEP();
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enResetDamage(dp);
+                enFlagResetNoDamage(dp);
+                ENEMY_STEP(ENEMY_MKN_STATE_PRECAUTION);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlWaitFall);
 
