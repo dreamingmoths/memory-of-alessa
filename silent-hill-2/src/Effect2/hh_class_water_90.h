@@ -3,14 +3,17 @@
 
 #include "Effect2/hh_class_manager.h"
 
+#define HH_WATER_90_TEX_ID 13
+#define HH_WATER_90_CLUT_ID 0
+
 typedef struct HH_Object_Water_90 {
     // total size: 0x2280
     struct Object_DataBlock_Header Header; // offset 0x0, size 0x10
     u_char Step; // offset 0x10, size 0x1
     u_char Motion_Step; // offset 0x11, size 0x1
     float Timer; // offset 0x14, size 0x4
-    float ST_Defference[4]; // offset 0x20, size 0x10
-    float Location_Defference[4]; // offset 0x30, size 0x10
+    sceVu0FVECTOR ST_Defference; // offset 0x20, size 0x10
+    sceVu0FVECTOR Location_Defference; // offset 0x30, size 0x10
     struct Wave_Element Wave_Info[20]; // offset 0x40, size 0x690
     float Area00_Grid_Y_Value[1768]; // offset 0x6D0, size 0x1BA0
     float* pArea_Grid_Y_Value_Table[1]; // offset 0x2270, size 0x4
