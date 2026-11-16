@@ -123,6 +123,7 @@ do {                                 \
 #define GAME_FLAG_146  146
 #define GAME_FLAG_147  147
 #define GAME_FLAG_148  148
+#define GAME_FLAG_149  149
 #define GAME_FLAG_150  150
 #define GAME_FLAG_152  152
 #define GAME_FLAG_153  153

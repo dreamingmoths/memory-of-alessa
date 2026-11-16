@@ -150,6 +150,18 @@ static inline float shNormalizeVector(float* out, float* in) {
         : "=r"(out), "+r"(in));
 }
 
+
+static inline void shVectorCrossProduct(sceVu0FVECTOR v0, sceVu0FVECTOR v1, sceVu0FVECTOR v2) {
+    asm volatile("\
+        lqc2    vf5, 0x0(%1);\
+        lqc2    vf6, 0x0(%2);\
+        vsub.w  vf4, vf0, vf0;\
+        vopmula.xyz	ACC, vf5, vf6;\
+        vopmsub.xyz	vf4, vf6, vf5;\
+        sqc2    vf4, 0x0(%0);\
+    ": : "r" (v0) , "r" (v1) ,"r" (v2) : "memory");
+}
+
 static inline float vec_cross_product(float* v, float* w, float* out) {
     asm("lqc2 vf5, 0(%0)\n\
         lqc2 vf6, 0(%1)\n\

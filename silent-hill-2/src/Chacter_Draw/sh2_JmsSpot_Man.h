@@ -33,15 +33,6 @@ typedef struct James_SpotLight_Man {
     float DarkFactor; // offset 0x40, size 0x4
 } James_SpotLight_Man;
 
-// total size: 0x40
-typedef struct DynamicLight {
-    // Members
-    sceVu0FVECTOR NowCamDir; // offset 0x0, size 0x10
-    sceVu0FVECTOR BeforeCamDir; // offset 0x10, size 0x10
-    sceVu0FVECTOR NowDir; // offset 0x20, size 0x10
-    sceVu0FVECTOR BeforeDir; // offset 0x30, size 0x10
-} DynamicLight;
-
 void sh2gfw_ALLInit_SpotMan(void);
 void sh2gfw_Propagate_JmsGunLight(void);
 void sh2gfw_Set_JmsGunLight(void);

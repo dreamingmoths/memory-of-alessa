@@ -30,6 +30,7 @@ class SimpleData:
     to_str: Callable[[any], str] = None
     address: int = -1
     executable: str = None
+    hex: bool = False
 
 type DataTable = list[SimpleData | StructData]
 
