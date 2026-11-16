@@ -204,7 +204,7 @@ void enMKNInitData(EnLOCAL_DATA* dp) {
         700.0f,
         1500.0f,
         9999.0f
-    }; // r29+0x40
+    };
     float endurance[5] = {
         10.0f,
         190.0f,
@@ -212,8 +212,8 @@ void enMKNInitData(EnLOCAL_DATA* dp) {
         380.0f,
         450.0f
     }; // r29+0x60
-    int mode = enGetMode(); // r16
-    float rate;             // r20
+    int mode = enGetMode();
+    float rate;
 
     ENEMY_MLV(ENEMY_MKN_MODE_AUTOMATIC);
     ENEMY_RESET();
@@ -302,12 +302,12 @@ void enMKNCtrlMain(EnLOCAL_DATA* dp) {
         enMKNCtrlEvent,
         enMKNCtrlHand,
         enWaitRegenerate
-    }; // r29+0x10
+    };
 
     enCtrlMKNFunc[dp->mlv](dp);
 }
 
-static void enMKNCtrlAutomatic(EnLOCAL_DATA* dp /* r16 */) {
+static void enMKNCtrlAutomatic(EnLOCAL_DATA* dp) {
     void (*enCtrlMKNSubFunc[13])(EnLOCAL_DATA*) = {
         enMKNCtrlMannequin,
         enMKNCtrlMannequin2,
@@ -337,7 +337,7 @@ static void enMKNCtrlAutomatic(EnLOCAL_DATA* dp /* r16 */) {
     }
 }
 
-static void enMKNCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
+static void enMKNCtrlSleep(EnLOCAL_DATA* dp) {
     if (enCheckSleepOut(dp)) {
         enSleepOut(dp);
         switch (dp->type) {
@@ -363,13 +363,13 @@ static void enMKNCtrlSleep(EnLOCAL_DATA* dp /* r16 */) {
     }
 }
 
-static void enMKNCtrlGoPlayable(EnLOCAL_DATA* dp /* r2 */) {
+static void enMKNCtrlGoPlayable(EnLOCAL_DATA* dp) {
     ENEMY_MLV(ENEMY_MKN_MODE_AUTOMATIC);
     ENEMY_STEP(ENEMY_MKN_STATE_WANDER);
 }
 
-static void enMKNCtrlEvent(EnLOCAL_DATA* dp /* r2 */) {
-    void* tmp = NULL; // r2
+static void enMKNCtrlEvent(EnLOCAL_DATA* dp) {
+    void* tmp = NULL;
     /* empty */
 }
 
@@ -377,9 +377,9 @@ static void enMKNCtrlHand(void) {
     /* empty */
 }
 
-static void enMKNCtrlMannequin(EnLOCAL_DATA* dp /* r17 */) {
-    int t;                                            // r2
-    EnANIME_RANGE pose[2] = {{3, 0, 11}, {0, 0, 11}}; // r29+0x40
+static void enMKNCtrlMannequin(EnLOCAL_DATA* dp) {
+    int t;
+    EnANIME_RANGE pose[2] = {{3, 0, 11}, {0, 0, 11}};
 
     if (enCheckDamage(pose)) {
         enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
@@ -461,16 +461,16 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlWaitFall);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlWaitJump);
 
 #line 783
-static void enMKNCtrlWander(EnLOCAL_DATA* dp /* r16 */) {
+static void enMKNCtrlWander(EnLOCAL_DATA* dp) {
     float d;
     float r;
-    int t; // r2
+    int t;
     sceVu0FVECTOR vec;
     if (enCheckDamage()) {
         ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
         return;
     }
-    switch (dp->sslv) { /* irregular */
+    switch (dp->sslv) {
         case 0:
             shVectorCopy(dp->mkn.stpos, &dp->scp->pos);
             enMKNAnimeSet(dp, 1);
@@ -552,8 +552,8 @@ static void enMKNCtrlWander(EnLOCAL_DATA* dp /* r16 */) {
     enMKNSoundLife(dp);
 }
 
-static void enMKNCtrlPrecaution(EnLOCAL_DATA* dp /* r16 */) {
-    int t; // r2
+static void enMKNCtrlPrecaution(EnLOCAL_DATA* dp) {
+    int t;
     if (enCheckDamage()) {
         ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
         return;
@@ -579,8 +579,8 @@ static void enMKNCtrlPrecaution(EnLOCAL_DATA* dp /* r16 */) {
     enMKNSoundLife(dp);
 }
 
-static void enMKNCtrlChase(EnLOCAL_DATA* dp /* r16 */) {
-    int t; // r2
+static void enMKNCtrlChase(EnLOCAL_DATA* dp) {
+    int t;
     if (enCheckDamage()) {
         ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
         return;
@@ -604,7 +604,7 @@ static void enMKNCtrlChase(EnLOCAL_DATA* dp /* r16 */) {
         ENEMY_STEP(ENEMY_MKN_STATE_ATTACK);
     } else if ((t == 0) && ((dp->p_dist > enMKNGetFeelRange()) || (enLocalWork.Status & 1))) {
 
-        if ((dp->type >= 2) || (enGetMode() < 2)) {
+        if ((dp->type >= 2) || (enGetMode() <= SH2_BATTLE_LEVEL_EASY)) {
             ENEMY_STEP(ENEMY_MKN_STATE_WANDER);
         } else {
             ENEMY_STEP(ENEMY_MKN_STATE_AROUND);
@@ -616,10 +616,10 @@ static void enMKNCtrlChase(EnLOCAL_DATA* dp /* r16 */) {
     enMKNSoundLife(dp);
 }
 
-static void enMKNCtrlAround(EnLOCAL_DATA* dp /* r16 */) {
-    float a;           // r20
-    int t;             // r2
-    sceVu0FVECTOR vec; // r29+0x30
+static void enMKNCtrlAround(EnLOCAL_DATA* dp) {
+    float a;
+    int t;
+    sceVu0FVECTOR vec;
     if (enCheckDamage()) {
         ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
         return;
@@ -715,7 +715,51 @@ static void enMKNCtrlAttack(EnLOCAL_DATA* dp) {
         enMKNAutoRecovery(dp);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlDamage);
+static void enMKNCtrlDamage(EnLOCAL_DATA* dp) {
+    float d;
+    switch (dp->sslv) {
+        case 0:
+            enSetCommunication(2, 1, (float*) &dp->scp->pos, 1000.0f, 2);
+            
+            d = enReduceHP(dp);
+            if (enCheckSpray(dp)) {
+                ENEMY_STEP(ENEMY_MKN_STATE_CONFUSE);
+                break;
+            }
+            if ((d <= 0.0f) || ((d < 100.0f) && (shRandF() > (0.8f + (0.002f * d))))) {
+                
+                enMKNAnimeSet(dp, enGetDownMotion(dp));
+            } else {
+                enMKNAnimeReset(dp, enGetDamageMotion(dp));
+            }
+            if ((dp->anim >= 14) && (dp->anim < 22)) {
+                dp->lie = enGetLieDirection(dp->anim);
+                enSetNewSize(dp, 400.0f, 200.0f, 100.0f, 200.0f);
+                
+                ENEMY_SUB_STEP(2);
+            } else {
+                ENEMY_SUB_STEP(1);
+            }
+            enSetHitBack(dp);
+            break;
+        case 1:
+            if ((dp->anim_n == -1) && (dp->hb_s == 0.0f)) {
+                ENEMY_STEP(ENEMY_MKN_STATE_PRECAUTION);
+            } else if (enCheckDamage(dp)) {
+                ENEMY_SUB_STEP(0);    
+            }
+            break;
+        case 2:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
+            }
+            if (dp->anim_n == -1) {
+                ENEMY_STEP(ENEMY_MKN_STATE_DOWN);
+                enFlagResetNoDamage(dp);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlConfuse);
 
@@ -764,7 +808,7 @@ static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
                 return;
             }
             if ((enReduceTimer(dp) <= 0) && (enCheckFinishedByHuman(dp) == 0)) {
-                if (enGetMode() == 0) {
+                if (enGetMode() == SH2_BATTLE_LEVEL_BEGINNER) {
                     dp->scp->battle.hp_rate = 0.0f;
                     dp->scp->battle.hp = 0.0f;
                     enKillCountUp(dp);
@@ -837,7 +881,7 @@ static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
                 return;
             }
             if (dp->hb_s == 0 && enReduceTimer(dp) <= 0) {
-                if (enGetMode() == 0) {
+                if (enGetMode() == SH2_BATTLE_LEVEL_BEGINNER) {
                     dp->scp->battle.hp_rate = 0.0f;
                     dp->scp->battle.hp = 0.0f;
                     enKillCountUp(dp);
