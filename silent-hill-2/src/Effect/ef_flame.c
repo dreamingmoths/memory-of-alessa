@@ -40,9 +40,9 @@ static int GetBehindAngelaFlameSortIndex(u_int index);
 static float GetBehindAngelaFlameLifeTimer(u_int index);
 
 /* @todo: migrate data */
-extern /* static */ u_short camera_cut;                      // size: 0x2, address: 0x11D2240
-extern /* static */ u_short behind_angela_flame_num;         // size: 0x2, address: 0x11D2248
-extern /* static */ u_short behind_angela_flame_start_index; // size: 0x2, address: 0x11D2250
+static u_short camera_cut = 0;                               // size: 0x2, address: 0x11D2240
+static u_short behind_angela_flame_num = 0;                  // size: 0x2, address: 0x11D2248
+static u_short behind_angela_flame_start_index = 0;          // size: 0x2, address: 0x11D2250
 extern float behind_angela_flame_pos_buf[12][4];             // size: 0xC0, address: 0x11D22A0
 extern /* struct */ EFCTFlameObject flame_obj[36];           // size: 0x14D00, address: 0x11D2360
 extern float behind_angela_flame_life_time_buf[12];          // size: 0x30, address: 0x11D2270

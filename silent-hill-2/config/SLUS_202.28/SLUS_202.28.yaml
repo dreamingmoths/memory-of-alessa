@@ -436,7 +436,7 @@ segments:
       - { start: 0x0012ca20,    type: c,          name: DBG/dbfreeze                                     }
       - { start: 0x0012cbb0,    type: c,          name: Effect/ef_rain                                   }
       - { start: 0x0012d7e0,    type: c,          name: SH2_common/data_load                             }
-      - { start: 0x0012de00,    type: asm,        name: Effect/ef_smoke                                  }
+      - { start: 0x0012de00,    type: c,          name: Effect/ef_smoke                                  }
       - { start: 0x0012ed10,    type: c,          name: Effect/ef_flame                                  }
       - { start: 0x00130be0,    type: c,          name: Event/memo                                       }
       - { start: 0x00132c90,    type: c,          name: Effect/ef_sparks                                 }
@@ -1052,7 +1052,7 @@ segments:
       - { start: 0x00298ac8,    type: .rodata,    name: Enemy/en_oni                                     }
       - { start: 0x00298b40,    type: .rodata,    name: DBG/dbfreeze                                     }
       - { start: 0x00298ba0,    type: .rodata,    name: SH2_common/data_load                             }
-      - { start: 0x00298bc0,    type: rodata,     name: Effect/ef_smoke                                  }
+      - { start: 0x00298bc0,    type: .rodata,    name: Effect/ef_smoke                                  }
       - { start: 0x00298c50,    type: .rodata,    name: Effect/ef_flame                                  }
       - { start: 0x00298da0,    type: .rodata,    name: Event/memo                                       }
       - { start: 0x00298e00,    type: .rodata,    name: Effect/ef_sparks                                 }
@@ -1270,8 +1270,10 @@ segments:
       - { vram:  0x011b6f00,    type: .bss,       name: Chacter/m3_maria_sub                             }
       - { vram:  0x011b6f40,    type: bss,        name: bss_0x11b6f40                                    }
       - { vram:  0x011b6f48,    type: .bss,       name: DBG/dbfreeze                                     }
-      - { vram:  0x011b6f50,    type: bss,        name: bss_0x11b6f50                                    }
-      - { vram:  0x011d2260,    type: .bss,       name: Effect/ef_flame                                  }
+      - { vram:  0x011b6f50,    type: bss,        name: Effect/ef_rain                                   }
+      - { vram:  0x011b6ff0,    type: bss,        name: SH2_common/data_load                             }
+      - { vram:  0x011c8040,    type: .bss,       name: Effect/ef_smoke                                  }
+      - { vram:  0x011d2240,    type: .bss,       name: Effect/ef_flame                                  }
       - { vram:  0x011d2270,    type: bss,        name: bss_0x11d2270                                    }
       - { vram:  0x011e7060,    type: .bss,       name: Event/memo                                       }
       - { vram:  0x011e7080,    type: .bss,       name: DS_Pad/ds_sequencer                              }
