@@ -275,4 +275,35 @@ void enAnimeExec(EnLOCAL_DATA* dp, EnANIME_DATA* pa, short anm_none);
 void enSetTransWalk(EnLOCAL_DATA* dp);
 extern EnLOCAL_WORK enLocalWork; // size: 0x1E10, address: 0x5506A0
 
+extern void enSCUCtrlMain(EnLOCAL_DATA*);
+extern void enMKNCtrlMain(EnLOCAL_DATA*);
+extern void enTYUCtrlMain(EnLOCAL_DATA*);
+extern void enREDCtrlMain(EnLOCAL_DATA*);
+extern void enONICtrlMain(EnLOCAL_DATA*);
+extern void enNSECtrlMain(EnLOCAL_DATA*);
+extern void enIKECtrlMain(EnLOCAL_DATA*);
+extern void enPAPCtrlMain(EnLOCAL_DATA*);
+extern void enEDBCtrlMain(EnLOCAL_DATA*);
+extern void enARMCtrlMain(EnLOCAL_DATA*);
+extern void enBOSCtrlMain(EnLOCAL_DATA*);
+extern void enNIKCtrlMain(EnLOCAL_DATA*);
+extern void enTY2CtrlMain(EnLOCAL_DATA*);
+extern void enTY3CtrlMain(EnLOCAL_DATA*);
+extern void enINSCtrlMain(EnLOCAL_DATA*);
+extern void enSCUInitData(EnLOCAL_DATA*);
+extern void enMKNInitData(EnLOCAL_DATA*);
+extern void enTYUInitData(EnLOCAL_DATA*);
+extern void enREDInitData(EnLOCAL_DATA*);
+extern void enONIInitData(EnLOCAL_DATA*);
+extern void enNSEInitData(EnLOCAL_DATA*);
+extern void enIKEInitData(EnLOCAL_DATA*);
+extern void enPAPInitData(EnLOCAL_DATA*);
+extern void enEDBInitData(EnLOCAL_DATA*);
+extern void enARMInitData(EnLOCAL_DATA*);
+extern void enBOSInitData(EnLOCAL_DATA*);
+extern void enNIKInitData(EnLOCAL_DATA*);
+extern void enTY2InitData(EnLOCAL_DATA*);
+extern void enTY3InitData(EnLOCAL_DATA*);
+extern void enINSInitData(EnLOCAL_DATA*);
+
 #endif
