@@ -424,8 +424,8 @@ void SetFlameSmokeValid(u_int arg0, u_int arg1) { // @note: signature different 
 
 #line 427
 static int IsFinishSmoke(EFCTSmokeObject* smoke) {
-    s32 i;
-    s32 ret;
+    int i;
+    int ret;
 
     ret = 1;
 
