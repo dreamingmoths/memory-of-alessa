@@ -1,4 +1,5 @@
 #include "sh2_common.h"
+#include "SH2_common/sh2dt.h"
 
 #include "Event/event.h"
 #include "Event/event_sub.h"
@@ -43,6 +44,8 @@
 #include "data/daily.thu/data_demo_ana_c.h"
 #include "data/daily.thu/data_demo_dust.h"
 #include "data/daily.thu/data_demo_kao.h"
+#include "data/daily.thu/data_demo_tokei_0a1.h"
+#include "data/daily.thu/data_demo_tokei_0a2.h"
 #include "data/daily.thu/data_demo_tokei_0b.h"
 #include "data/daily.thu/data_demo_tokei_0c.h"
 #include "data/daily.thu/data_chr_item.h"
@@ -316,6 +319,11 @@ extern /* static */ u_long128* stg_apart_e2f_anim_adr; // @ 0x01F07798
 
 extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
 
+extern DramaDemo_PlayInfo stg_apart_e2f_info_1_01F07320; // @ 0x01F07320
+
+extern DramaDemo_PlayInfo stg_apart_e2f_info_2; // @ 0x01F07350
+
+
 /* static */ int stg_apart_e2f_EvProgThreeNameOnWall(void) {
     switch (ev_p_step) {
         case 0:
@@ -544,7 +552,160 @@ extern /* static */ u_long128* stg_apart_e2f_kao_dds; // @ 0x01F077A0
     return 0;
 }
 
+
+#ifdef NON_MATCHING
+/* static */ int stg_apart_e2f_EvProgClockNeedleMove(void) {
+
+    int work; // r16
+
+    float f; int a;
+  
+    switch (ev_p_step) {
+        case 0:
+            SET_GAME_FLAG(77);
+            SCNowPlayableEventSwitch(sh2jms.player, true);
+            if (GET_GAME_FLAG(81)) {
+                CharaDataLoadDemo(stg_apart_e2f_chara_1, 0);
+                FcRead(data_demo_tokei_0a1_clock_open_dds, MemShare_gp_data_buf);
+                fsSync(0, -1);
+                stg_apart_e2f_mv_se = 0;
+                EV_PROG_STEP(10);
+            } else {
+                SeCallPos(16002, 1.0f, (sceVu0FVECTOR){0.0f}, 0);
+                EV_PROG_STEP(2);
+            }
+            break;
+        case 10:
+            
+            if (EvSubItemUse0(25, 22, 16001, 0, (sceVu0FVECTOR){0.0f}, 0)) {
+                CharaAdminPlayableDisplay(0);
+                SCNowDemoEventSwitch(sh2jms.player, 1);
+                EV_PROG_STEP(24);
+        case 24:
+                work = DramaDemoMain(&stg_apart_e2f_info_1_01F07320);
+                if ((demo_frame > (total_demo_frame - 15.0f))) {
+                    ScreenEffectFadeStart(2, 0.5f);
+                }
+                if ((demo_frame > 45.0f) && (stg_apart_e2f_mv_se == 0)) {
+                    SeCallPos(16002, 1.0f, (sceVu0FVECTOR){0.0f}, 0);
+                    stg_apart_e2f_mv_se = 1;
+                }
+                if (work != 0) {
+                    EV_PROG_STEP(2);
+                    ScreenEffectFadeStart(3, 0.0f);
+                    CharaAdminReCreate(ITEM_B_CLO_CHARA_KIND, 0, 0, stg_apart_e2f_clock_vec_0[0], stg_apart_e2f_clock_vec_0[1], 0);
+                }
+            }
+            break;
+        case 2:
+            if (EvSubFileLoadAndFadeOut(NULL, data_pic_apt_clock_open_tex, data_pic_apt_clock_hari_tex)) {
+                ScreenEffectFadeStart(4, 0.0f);
+                stg_apart_e2f_mv_se = 0;
+                EV_PROG_STEP(3);
+            }
+            break;
+        case 3:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            stg_apart_e2f_EvProgSubClockNeedleDraw(1);
+            EvSubPictureEnd();
+            if (ScreenEffectFadeCheck()) {
+                EV_PROG_STEP(8);
+            }
+            break;
+        case 8:
+            EvSubPictureStart();
+            EvSubPictureDisplayOnly();
+            stg_apart_e2f_EvProgSubClockNeedleDraw(1);
+            EvSubPictureEnd();
+            if (!GET_GAME_FLAG(83)) {
+            if (shPadPress(0, 0x500)) {
+                game_flag.clock += shFloatToInt(shIntToFloat(1920) * shGetDT());
+                if (game_flag.clock > 0xB400) {
+                    game_flag.clock -= 0xB400;
+                }
+            } else if (shPadPress(0, 0xA00)) {
+                work = game_flag.clock;
+                work -= shFloatToInt(shIntToFloat(1920) * shGetDT());
+                if (work < 0) {
+                    work += 0xB400;
+                }
+                game_flag.clock = work;
+            }           
+            }
+            if (shPadPress(0, 0xF00)) {
+                if (stg_apart_e2f_mv_se == 0) {
+                    SeCall(16003, 1.0f, 0);
+                }
+                stg_apart_e2f_mv_se = 1;
+            } else {
+                if (stg_apart_e2f_mv_se != 0) {
+                    SeStop(16003);
+                    if ((35008 < game_flag.clock) && (game_flag.clock < 35392)) {
+                        SeCall(17004, 1.0f, 0);
+                        if (playing.riddle_level == 0) {
+                            game_flag.flag[2] |= 0x80000;
+                        }
+                    }
+                }
+                stg_apart_e2f_mv_se = 0;
+            }
+            if (shPadTrigger(0, key_config.cancel)) {
+                ScreenEffectFadeStart(1, 0.0f);
+                SeStop(16003);
+                if (GET_GAME_FLAG(81)) {
+                    CharaDataLoadDemo(stg_apart_e2f_chara_2, 1);
+                    FcRead(data_demo_tokei_0a2_clock_close_dds, MemShare_gp_data_buf);
+                }
+                EV_PROG_STEP(4);
+            }
+            break;
+        case 4:
+            if (!ScreenEffectFadeCheck()) break;
+            if (GET_GAME_FLAG(81)) {
+                CharaDataLoadDemo(stg_apart_e2f_chara_2, 0);
+                ScreenEffectFadeStart(4, 0.5f);
+                stg_apart_e2f_mv_se = 0;
+                EV_PROG_STEP(25);
+                
+            } else {
+                
+                SeCallPos(16011, 1.0f, (sceVu0FVECTOR){0.0f}, 0);
+                ScreenEffectFadeStart(4, 0.0f);
+                EV_PROG_STEP(13);
+                break;
+            }
+            
+        case 25:
+            work = DramaDemoMain(&stg_apart_e2f_info_2);
+            if ((demo_frame > 50.0f) && (stg_apart_e2f_mv_se == 0)) {
+                
+                SeCallPos(16011, 1.0f, (sceVu0FVECTOR){0.0f}, 0);
+                stg_apart_e2f_mv_se = 1;
+            }
+            if (work != 0) {
+                EV_PROG_STEP(6);                
+            }
+            break;
+        case 6:
+            CharaDataDeleteOne(HHH_JMS_CHARA_KIND);
+            CharaAdminPlayableDisplay(1);
+            SCNowDemoEventSwitch(sh2jms.player, false);
+            CharaAdminReCreate(ITEM_B_CLO_CHARA_KIND, 0, 0, stg_apart_e2f_clock_vec_0[0], stg_apart_e2f_clock_vec_0[1], 0);
+            vcReturnPreAutoCamWork(1);
+            EV_PROG_STEP(13);
+            /* fallthrough */
+        case 13:
+            SCNowPlayableEventSwitch(sh2jms.player, false);
+            UNSET_GAME_FLAG(81);
+            return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgClockNeedleMove);
+#endif
+
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_apart_e2f", stg_apart_e2f_EvProgSubClockNeedleDraw);
 

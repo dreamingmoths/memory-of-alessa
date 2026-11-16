@@ -666,7 +666,200 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlDamage);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlConfuse);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlDown);
+static void enMKNCtrlDown(EnLOCAL_DATA* dp /* r16 */) {
+    switch (dp->sslv) {
+        case 0:
+            enResetDamage(dp);
+            enFlagSetRotFloor(dp);
+            enFlagSetLieDown(dp);
+            enSetNewSize(dp, 250.0f, 200.0f, 100.0f, 200.0f);
+            if (enCheckDeath(dp)) {
+                enFlagResetMoved(dp);
+                if ((enCheckAimedByHuman(dp) == 0) || (enCheckInstantDeath(dp))) {
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                    return;
+                }
+                enMKNSetDc(dp);
+                ENEMY_SUB_STEP(4);
+                return;
+            }
+            enMKNSetDownTime(dp);
+            if ((dp->scp->en_first_status == 3) || (dp->scp->en_first_status == 4)) {
+                dp->timer += enCalcTimer(600);
+            }
+            ENEMY_NEXT_SUB_STEP();
+            return;
+        case 1:
+            if (enCheckDamage(dp)) {
+                enMKNAnimeReset(dp, dp->lie + 26);
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                if (enCheckDeath(dp)) {
+                    enFlagResetMoved(dp);
+                    if ((enCheckAimedByHuman(dp) == 0) || (enCheckInstantDeath(dp))) {
+                        enKillCountUp(dp);
+                        ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                        return;
+                    }
+                    enMKNSetDc(dp);
+                    ENEMY_SUB_STEP(4);
+                    return;
+                }
+                ENEMY_SUB_STEP(3);
+                enSetTimer(dp, 90);
+                return;
+            }
+            if ((enReduceTimer(dp) <= 0) && (enCheckFinishedByHuman(dp) == 0)) {
+                if (enGetMode() == 0) {
+                    dp->scp->battle.hp_rate = 0.0f;
+                    dp->scp->battle.hp = 0.0f;
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                    return;
+                }
+                if (dp->type == 5) {
+                    dp->timer += enCalcTimer(600);
+                    return;
+                }
+                enMKNAnimeSet(dp, dp->lie + 22);
+                enAddHP(dp, 50.0f);
+                enFlagResetRotFloor(dp);
+                enFlagResetLieDown(dp);
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                ENEMY_SUB_STEP(2);
+                return;
+            }
+            if (dp->flag & (1 << 13)) {
+                if ((dp->anim >= 24) && (dp->anim < 26)) {
+                    if (100.0f * shRandF() > dp->scp->battle.hp_rate) {
+                        enMKNAnimeReset(dp, dp->lie + 26);
+                        enAddHP(dp, 10.0f);
+                        return;
+                    }
+                } else {
+                    if ((200.0f * shRandF()) < (100.0f + dp->scp->battle.hp_rate)) {
+                        enMKNAnimeSet(dp, dp->lie + 24);
+                        return;
+                    }
+                    enAddHP(dp, 10.0f);
+                    return;
+                }
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                enResetDamage(dp);
+                enFlagResetNoDamage(dp);
+                if (enMKNCanSeePlayer(dp) <= 0) {
+                    ENEMY_STEP(ENEMY_MKN_STATE_PRECAUTION);
+                    return;
+                }
+                ENEMY_STEP(ENEMY_MKN_STATE_CHASE);
+                return;
+            }
+            break;
+        case 3:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                if (enCheckDeath(dp)) {
+                    enFlagResetMoved(dp);
+                    if ((enCheckAimedByHuman(dp) == 0) || (enCheckInstantDeath(dp))) {
+                        enKillCountUp(dp);
+                        ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                        return;
+                    }
+                    enMKNSetDc(dp);
+                    ENEMY_SUB_STEP(4);
+                    return;
+                }
+                if (enCheckInstantDeath(dp)) {
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                    return;
+                }
+                enSetTimer(dp, 90);
+                return;
+            }
+            if (dp->hb_s == 0 && enReduceTimer(dp) <= 0) {
+                if (enGetMode() == 0) {
+                    dp->scp->battle.hp_rate = 0.0f;
+                    dp->scp->battle.hp = 0.0f;
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                    return;
+                }
+                if (dp->type == 5) {
+                    enSetTimer(dp, 600);
+                    ENEMY_SUB_STEP(1);
+                    return;
+                }
+                if (enCheckFinishedByHuman(dp)) {
+                    ENEMY_SUB_STEP(5);
+                    return;
+                }
+                enMKNAnimeSet(dp, dp->lie + 22);
+                enAddHP(dp, 50.0f);
+                enFlagResetRotFloor(dp);
+                enFlagResetLieDown(dp);
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                ENEMY_SUB_STEP(2);
+                return;
+            }
+            break;
+        case 4:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                dp->hb_s *= (float) (dp->mkn.dcm - dp->mkn.dc) / (float) (dp->mkn.dcm + 1);
+                if (++dp->mkn.dc >= dp->mkn.dcm || enCheckInstantDeath(dp)) {
+                    enKillCountUp(dp);
+                    ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                    return;
+                }
+                enSetTimer(dp, 200);
+                return;
+            }
+            if (enReduceTimer(dp) <= 0) {
+                enKillCountUp(dp);
+                ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                return;
+            }
+            break;
+        case 5:
+            if (enCheckDamage(dp)) {
+                enReduceHP(dp);
+                enSetHitBack(dp);
+                if (enCheckDeath(dp)) {
+                    enFlagResetMoved(dp);
+                    if ((enCheckAimedByHuman(dp) == 0) || (enCheckInstantDeath(dp))) {
+                        enKillCountUp(dp);
+                        ENEMY_STEP(ENEMY_MKN_STATE_DYING);
+                        return;
+                    }
+                    enMKNSetDc(dp);
+                    ENEMY_SUB_STEP(4);
+                    return;
+                }
+                enSetTimer(dp, 90);
+                ENEMY_SUB_STEP(3);
+                return;
+            }
+            if (!enCheckFinishedByHuman(dp)) {
+                enMKNAnimeSet(dp, dp->lie + 22);
+                enAddHP(dp, 50.0f);
+                enFlagResetRotFloor(dp);
+                enFlagResetLieDown(dp);
+                enFlagSetNoDamage(dp);
+                enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                ENEMY_SUB_STEP(2);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer);
 
