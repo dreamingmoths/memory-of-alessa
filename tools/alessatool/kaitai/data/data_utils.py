@@ -217,6 +217,9 @@ def to_kaitai_id(s: str):
     s = camel_to_snake(s)
     return sub(r"(\d+)", lambda m : "_" + m.group(1), s)
 
+def to_upper_hex(i: int):
+    return f"{i:#X}".replace("0X", "0x")
+
 def reflect_kaitai_structure(yaml: dict, type: Type[KaitaiStruct]):
     '''
     Get the YAML for the Kaitai type from the `.ksy` yaml.
@@ -284,7 +287,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
             if isinstance(value, int):
                 # number
                 if data.hex:
-                    stream.write(f"{indent}/* .{attr_str} = */ 0x{value:X},\n")
+                    stream.write(f"{indent}/* .{attr_str} = */ {to_upper_hex(value)},\n")
                 else:
                     stream.write(f"{indent}/* .{attr_str} = */ {value},\n")
 
@@ -349,12 +352,14 @@ def migrate_struct_data(request: StructDataMigrationRequest):
         
         request.stream.write("});\n")
 
-def default_to_str(value):
+def default_to_str(value, hex=False):
     if isinstance(value, float):
         return find_smallest_float_string(value)
     if isinstance(value, bytes):
         assert len(value) == 1
         return str(int(value[0]))
+    if hex and isinstance(value, int):
+        return f"0x{value:08X}"
     return str(value)
 
 def make_pointer_to_str(atlas: SplatSymbolAddrsAtlas, executable_file: BytesIO, from_vram: AddressConversion):
@@ -390,7 +395,7 @@ def migrate_simple_data(request: SimpleDataMigrationRequest):
             to_str = data.to_str or make_pointer_to_str(atlas, file, from_vram)
         else:
             fmt = data.type
-            to_str = data.to_str or default_to_str
+            to_str = data.to_str or (lambda value : default_to_str(value, hex=data.hex))
 
         sym = data.address >= 0 and atlas.syms_by_addr[data.address] or atlas.syms_by_name[data.name]
         if is_string:

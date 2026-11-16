@@ -4638,6 +4638,17 @@ types:
 
       - size: 1
 
+  en_anime_range:
+    seq:
+      - id: anime
+        type: u2
+
+      - id: start
+        type: s2
+
+      - id: end
+        type: s2
+
   en_skeleton_data:
     seq:
       - id: num1
@@ -6003,6 +6014,55 @@ types:
       - id: p_cl_head
         type: pointer('data')
 
+  sh_shading_params:
+    seq:
+      - id: m3_rgbamax_vu0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_rgbamax_vu1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_global_ambient_vu0
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_global_ambient_vu1
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_camdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: m3_mono_vector
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  point_light_data:
+    seq:
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: decay_parm
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
   spot_light_data:
     seq:
       - id: col
@@ -6025,6 +6085,61 @@ types:
         repeat: expr
         repeat-expr: 4
 
+  shadow_light_data:
+    seq:
+      - id: sub_chara
+        type: pointer('data')
+
+      - id: p_ded
+        type: pointer('data')
+
+      - id: light_kind
+        type: s2
+
+      - id: visible_flg
+        type: s1
+
+      - id: force_flg
+        type: s1
+
+      - id: influence_factor
+        type: f4
+
+  parallel_light_data:
+    seq:
+      - id: dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  shadow_light_work:
+    seq:
+      - id: store_num
+        type: s4
+
+      - id: shadow_ld
+        type: shadow_light_data
+        repeat: expr
+        repeat-expr: 32
+
+  fake_light_work:
+    seq:
+      - id: uni_fake_light_no
+        type: s4
+        repeat: expr
+        repeat-expr: 2
+
+      - id: fake_light_num
+        type: s4
+
+      - id: pad
+        type: s4
+
   pld:
     seq:
       - id: dir
@@ -6033,6 +6148,28 @@ types:
         repeat-expr: 4
 
       - id: col
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  dynamic_light:
+    seq:
+      - id: now_cam_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: before_cam_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: now_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: before_dir
         type: f4
         repeat: expr
         repeat-expr: 4

@@ -24,6 +24,6 @@ segments:
     subsegments:
       - [0x0, databin, ast_overlay_header]
       - [0x80, c, Event/stage/stg_apart_stair]
-      - [0xC80, data, Event/stage/stg_apart_stair_data]
-      - { vram: 0x1F03400, type: bss, name: Event/stage/stg_apart_stair_bss }
+      - [0xC80, .data, Event/stage/stg_apart_stair]
+      - { vram: 0x1F03400, type: .bss, name: Event/stage/stg_apart_stair }
   - [0x1600]

@@ -188,12 +188,12 @@ SECTIONS
 		. = ALIGN(0x80);
 		ALIGNALL(0x4);
 
-		stg_apart_stair_data.data.s.o (.data)
+		stg_apart_stair.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_apart_stair_bss.bss.s.o (.bss)
+		stg_apart_stair.c.o (.bss)
 	}	>	ast.bin
 
 	.aey.bin :

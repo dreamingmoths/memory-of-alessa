@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from kaitai.data.data_includes import STG_APART_STAIR_EV_POS
 from kaitai.sh2 import Sh2
 from kaitai.data.data_types import DataTable, SimpleData, StructData, StgName, ProjectDataConfig, Pointer
 
@@ -76,7 +77,29 @@ SH2_DATA: DataTable = [
     StructData(name="_flame_init_parm_table_0x003797E0",    type=Sh2.SmokeInitializeParameter,         count=4                        ),
     SimpleData(name="result_message",                       type="<15H",                               pattern=[15]                   ),
     StructData(name="EnMKNAnime",                           type=Sh2.EnAnimeData,                      count=32                       ),
-    StructData(name="stg_apart_stair_clActWallList_ap88",   type=Sh2.ClHitpolyPlane,                   count=2, executable="ast"      )
+    StructData(name="stg_apart_stair_clActWallList_ap88",   type=Sh2.ClHitpolyPlane,                   count=2,       executable="ast"),
+    StructData(name="stg_apart_stair_pjames_stage_anim",    type=Sh2.AnimeInfo,                        count=24,      executable="ast"),
+    SimpleData(name="stg_apart_stair_ev_pos",               type=f"<121I",                             pattern=[121], executable="ast"),
+#   SimpleData(name="stg_apart_stair_ev_pos",               type=f"<{STG_APART_STAIR_EV_POS}",         pattern=[161], executable="ast"),
+    StructData(name="stg_apart_stair_ev_list",              type=Sh2.EventList,                        count=36,      executable="ast"),
+    StructData(name="stg_apart_stair_gi_list",              type=Sh2.ItemList,                         count=6,       executable="ast"),
+    SimpleData(name="stg_apart_stair_colvec",               type="<4f",                                pattern=[4],   executable="ast"),
+    SimpleData(name="stg_apart_stair_colref",               type="<4f",                                pattern=[4],   executable="ast"),
+    SimpleData(name="stg_apart_stair_ldir",                 type="<4f",                                pattern=[4],   executable="ast"),
+    StructData(name="stg_apart_stair_DynamicLW",            type=Sh2.DynamicLight,                     count=1,       executable="ast"),
+    SimpleData(name="stg_apart_stair_ev_prog",              type=Pointer,                              pattern=[8],   executable="ast"),
+    StructData(name="stg_apart_stair_mdl_list",             type=Sh2.ModelList,                        count=2,       executable="ast"),
+    StructData(name="stg_apart_stair_SpecialDrawFunctions", type=Sh2.GfwFunc,                          count=1,       executable="ast"),
+    StructData(name="stg_apart_stair_en_list",              type=Sh2.EnemyList,                        count=2,       executable="ast"),
+    StructData(name="stage_apart_stair",                    type=Sh2.StageData,                        count=1,       executable="ast"),
+    StructData(name="stg_apart_stair_boss_anim",            type=Sh2.DramaDemoMessageTime,             count=2,       executable="ast"),
+    StructData(name="stg_apart_stair_boss",                 type=Sh2.DramaDemoPlayInfo,                count=1,       executable="ast"),
+    StructData(name="stg_apart_stair_chara_data_01F032A0",  type=Sh2.CharaDataDemoList,                count=4,       executable="ast"),
+    SimpleData(name="stg_apart_stair_vec_01F032F0",         type="<16f",                               pattern=[4, 4],executable="ast"),
+    SimpleData(name="stg_apart_stair_light",                type="<4f",                                pattern=[4],   executable="ast"),
+    SimpleData(name="stg_apart_stair_clr",                  type="<4f",                                pattern=[4],   executable="ast"),
+    StructData(name="stg_apart_stair_cam_data_01F03350",    type=Sh2.EventCamSetData,                  count=1,       executable="ast"),
+
 ]
 
 SH3_DATA: DataTable = []
