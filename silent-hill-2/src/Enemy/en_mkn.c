@@ -6,6 +6,7 @@
 
 #include "Enemy/en_common.h"
 #include "Chacter/m3_mkn.h"
+#include "Chacter/sh2_battle_list.h"
 #include "Font/fj_man.h"
 
 static void enMKNAnimeSet(EnLOCAL_DATA* dp, int anim);
