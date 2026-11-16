@@ -1,7 +1,7 @@
 #ifndef SH2_CHARACTER_MANAGE_H
 #define SH2_CHARACTER_MANAGE_H
 
-#include "common.h"
+#include "sh2_common.h"
 #include "Chacter/character.h"
 
 int shCharacter_Manage_Init(void);
