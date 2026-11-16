@@ -660,13 +660,66 @@ static void enMKNCtrlAround(EnLOCAL_DATA* dp /* r16 */) {
     enMKNSoundLife(dp);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlAttack);
+static void enMKNCtrlAttack(EnLOCAL_DATA* dp) {
+    if (enCheckDamage()) {
+        ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
+        return;
+    }
+    switch (dp->sslv) {
+        case 0:
+            if (shRandF() < enMKNGetAttackProbability()) {
+                if (dp->anim == 3) {
+                    enMKNAnimeSet(dp, 4);
+                } else if ((dp->anim == 4) || (shRandI() & 0x8000)) {
+                    enMKNAnimeSet(dp, 3);
+                } else {
+                    enMKNAnimeSet(dp, 4);
+                }
+                enMKNGetAttackSpeed(dp);
+            } else {
+                enMKNAnimeSet(dp, 2);
+                ENEMY_SUB_STEP(2);
+                break;
+            }
+            enAttackStart(dp);
+            ENEMY_NEXT_SUB_STEP();
+            break;
+        
+        case 1:
+            enAttackCheck(dp, dp->anim == 3 ? (u_char) 38 : (u_char) 39);
+            
+            if (dp->anim_n == -1) {
+                if ((shRandF() < enMKNGetRepertAttackProbability()) &&
+                    (enMKNCanSeePlayer(dp) == 2)) {
+            
+                    ENEMY_SUB_STEP(0);
+                } else {
+                    ENEMY_STEP(ENEMY_MKN_STATE_CHASE);
+                }
+                return;
+            }
+            break;
+        case 2:
+            enMKNSoundLife(dp);
+            if (dp->anim_n == -1) {
+                if (enMKNCanSeePlayer(dp) == 2) {
+                    ENEMY_SUB_STEP(0);
+                } else {
+                    ENEMY_STEP(ENEMY_MKN_STATE_CHASE);
+                }
+            }
+            break;
+    }
+
+        enMoveAngleToPlayer(dp, enMKNGetRotSpeed());
+        enMKNAutoRecovery(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlDamage);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlConfuse);
 
-static void enMKNCtrlDown(EnLOCAL_DATA* dp /* r16 */) {
+static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
         case 0:
             enResetDamage(dp);
@@ -814,7 +867,7 @@ static void enMKNCtrlDown(EnLOCAL_DATA* dp /* r16 */) {
             if (enCheckDamage(dp)) {
                 enReduceHP(dp);
                 enSetHitBack(dp);
-                dp->hb_s *= (float) (dp->mkn.dcm - dp->mkn.dc) / (float) (dp->mkn.dcm + 1);
+                dp->hb_s *= shIntToFloat(dp->mkn.dcm - dp->mkn.dc) / (dp->mkn.dcm + 1);
                 if (++dp->mkn.dc >= dp->mkn.dcm || enCheckInstantDeath(dp)) {
                     enKillCountUp(dp);
                     ENEMY_STEP(ENEMY_MKN_STATE_DYING);
@@ -865,7 +918,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer2);
 
-static void enMKNAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
+static void enMKNAnimeSet(EnLOCAL_DATA* dp, int anim) {
     if (anim == dp->anim) {
         enAnimeRestart(dp);
         dp->anim_s = 4096;
@@ -885,7 +938,7 @@ static void enMKNAnimeSet(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
     }
 }
 
-static void enMKNAnimeReset(EnLOCAL_DATA* dp /* r17 */, int anim /* r16 */) {
+static void enMKNAnimeReset(EnLOCAL_DATA* dp, int anim) {
     FJ_ASSERT_ON_LINE(anim >= 0 && anim < sizeof(EnMKNAnime) / sizeof(EnANIME_DATA), 1455);
     if (anim == 28) {
         enAnimeSetDirectFrame(dp, anim, EnMKNAnime[anim].Anime, 0);
