@@ -20,7 +20,6 @@ MEMORY
 KEEP_SECTION
 {
 	.rodata,
-	.text,
 	.data,
 	.vutext,
 	.vudata
@@ -136,7 +135,7 @@ SECTIONS
 
 		. = ALIGN(0x80);
 		xxx_overlay_header.s.o (.data)
-		stg_xxx.s.o (.text)
+		. = . + 0x20;
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x4);

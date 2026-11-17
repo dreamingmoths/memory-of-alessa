@@ -12,6 +12,8 @@
 #include "Multi_thr/dma/dma1cmd.h"
 #include "GFW/sh2_DrawEnvData.h"
 
+#pragma force_active on
+
 static void EFCTInitEffectTask(void);
 static void SetGunFire(float* Pos /* r21 */, float* vec /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);
 static void SetGunSmoke(float* Pos /* r20 */, int wep_kind /* r19 */, u_char light /* r18 */);

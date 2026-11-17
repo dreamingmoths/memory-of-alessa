@@ -12,6 +12,8 @@
 #include "Chacter/chara_list.h"
 #include "vec.h"
 
+#pragma force_active on
+
 static SubCharacter* shCharacterGetFreeList(void);
 static void AddFreeList(SubCharacter* scp);
 static void shCharacterSortList(SubCharacter* scp /* r2 */);

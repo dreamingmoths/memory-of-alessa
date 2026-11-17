@@ -28,6 +28,8 @@
 
 #include "gamemain.h"
 
+#pragma force_active on
+
 // @todo: clean up
 // @todo: migrate bss
 

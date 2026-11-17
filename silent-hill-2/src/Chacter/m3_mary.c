@@ -2,6 +2,8 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
+#pragma force_active on
+
 #define MARY_DRAMA_ANIME_ID_START  4000
 #define MARY_PLAY_ANIME_ID_START   4090
 
