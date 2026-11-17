@@ -12,22 +12,24 @@
 #include "Effect2/hh_class_wrapper.h"
 #include "Effect2/hh_class_water_90.h"
 
+#pragma divbyzerocheck off
+
 #define HH_WATER_90_GRID_INDEX_GET(_x, _z) x_grid_max * (_z) + (_x)
 
 static u_int _area00_view_list[1] = {0};  // @ 0x37D7A8
 static WaveArea_Infomeation _Area_Info_List[1] = {
     {
-         /* .World_Location = */ {0.0f, 0.0f, 0.0f, 1.0f},
-         /* .Grid_WH = */ {13500.0f, 0.0f, 13500.0f, 300.0f},
-         /* .Grid_Index = */ {20, 1},
-         /* .pViewArea_List = */ &_area00_view_list,
-         /* .ViewArea_List_Max = */ 1,
-         /* .pGrid_Y_Value = */ NULL,
-         /* .Specular_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
-         /* .Ambient0_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
-         /* .Ambient1_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
-         /* .Light_BaseRGBA = */ {0.0f, 0.0f, 0.0f, 0.0f},
-         /* .pST_Defference = */ NULL
+        /* .worldLocation = */ {-16800.0f, 3500.0f, 2100.0f, 1.0f},
+        /* .gridWh = */ {15600.0f, 0.0f, 10200.0f, 300.0f},
+        /* .gridIndex = */ {52, 34},
+        /* .pViewAreaList = */ _area00_view_list,
+        /* .viewAreaListMax = */ 1,
+        /* .pGridYValue = */ NULL,
+        /* .specularBaseRgba = */ {},
+        /* .ambient0BaseRgba = */ {},
+        /* .ambient1BaseRgba = */ {},
+        /* .lightBaseRgba = */ {},
+        /* .pStDefference = */ NULL,
     }
 }; // @ 0x37D7B0
 
@@ -64,18 +66,19 @@ static u_int Object_Initialize(HH_Object_Water_90* pThis) {
 }
 
 // @note: cleanup pls
+static u_long _GifTag[2] = {
+    SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
+    GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)};
+static u_long _GifTag_Tri[2] = {
+    SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 0, 1, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
+    GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2)};
+static sceVu0FVECTOR Light_Base = {18.0f, 18.0f, 18.0f, 0.0f}; // @ 0x0037D700
+static sceVu0FVECTOR Ambient_Color = {50.0f, 50.0f, 50.0f, 70.0f}; // @ 0x0037D710
+static float amb_alpha = 40.0f; // @ 0x0037D880
+static float light_alpha = 50.0f; // @ 0x0037D888
+static float fog_ratio_f = 1.0f; // @ 0x0037D720
 #line 389
 static u_int Object_Draw(HH_Object_Water_90* pThis, float* pGrid_Y_Value, float* WorldLocation, u_int Grid_X_Max, u_int Grid_Z_Max) {
-    static u_long _GifTag[2] = {
-        SCE_GIF_SET_TAG(0, 0, 0, 0, SCE_GIF_PACKED, 1),
-        GIF_REG(SCE_GIF_PACKED_AD, 0) | GIF_REG(SCE_GS_PRIM, 1) | GIF_REG(SCE_GS_PRIM, 2) | GIF_REG(SCE_GS_PRIM, 3)};
-    static u_long _GifTag_Tri[2] = {
-        SCE_GIF_SET_TAG(0, 0, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 3),
-        GIF_REG(SCE_GS_ST, 0) | GIF_REG(SCE_GS_RGBAQ, 1) | GIF_REG(SCE_GS_XYZF2, 2) | GIF_REG(SCE_GS_PRIM, 3)};
-    static sceVu0FVECTOR Light_Base = {80.0f, 80.0f, 80.0f, 80.0f}; // @ 0x0037D700
-    static sceVu0FVECTOR Ambient_Color = {16.0f, 16.0f, 16.0f, 70.0f}; // @ 0x0037D710
-    static float fog_ratio_f = 1.0f; // @ 0x0037D720
-    static sceVu0FVECTOR _n = {0.0f, -1.0f, 0.0f, 0.0f}; // @ 0x0037D730
     static u_int flag = 0; // @ 0x01F01BE0
     u_int result = false; // r2
     sceVif1Packet* pPk; // r16
@@ -99,8 +102,6 @@ static u_int Object_Draw(HH_Object_Water_90* pThis, float* pGrid_Y_Value, float*
     u_int* pPk_Current; // r19
     u_int* pPk_End; // r2
     sceVu0FVECTOR rev; // r29+0x1B0
-    static float light_alpha; // @ 0x0037D888
-    static float amb_alpha; // @ 0x0037D880
     
     
     pPk = HH_Vif1Packet_Current_Get(); // line 420
@@ -146,9 +147,9 @@ static u_int Object_Draw(HH_Object_Water_90* pThis, float* pGrid_Y_Value, float*
            
            
     if (flag) {
-        static float x; // @ 0x0037D898
-        static float z; // @ 0x0037D8A8
-        static float y; // @ 0x0037D8A0
+        static float x = 0.7768225f; // @ 0x0037D898
+        static float y = 0.28888759f; // @ 0x0037D8A0
+        static float z = 0.559206f; // @ 0x0037D8A8
            
         
         
@@ -429,14 +430,14 @@ u_int HH_Class_Suffix_Water_90(void) {
     return result;
 }
 
-#pragma divbyzerocheck off
 #line 802
 u_int HH_Class_Water_90(void* pBlock, ImpactQueue_Element* pElement) {
     u_int result;
     HH_Object_Water_90* pThis;
+    static u_int run = 1; // @ 0x37D8F8
     static float degree = 10.0f; // @ 0x37D780
     static float base_move = 128.0f; // @ 0x37D788
-    static float _interval = 30.0f; // @ 0x37D790
+    static float _interval = 10.0f; // @ 0x37D790
     
     result = true;
     pThis = pBlock;
@@ -451,7 +452,6 @@ u_int HH_Class_Water_90(void* pBlock, ImpactQueue_Element* pElement) {
             break;
         case HH_EFFECT_STEP_DRAW:
             {
-                static u_int run = 1; // @ 0x37D8F8
                 if (run != 0) {
                     Grid_Work_Initialize(pThis);
                 }
@@ -596,4 +596,3 @@ u_int HH_Class_Water_90(void* pBlock, ImpactQueue_Element* pElement) {
     }
     return result;
 }
-#pragma divbyzerocheck on
