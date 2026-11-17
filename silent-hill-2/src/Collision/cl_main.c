@@ -12,6 +12,8 @@
 #include "Collision/cl_main.h"
 #include "Collision/cl_calc2.h"
 
+#pragma force_active on
+
 static void clCollectCharaALL(void);
 static void clAddCollectVector(float* v0, float* v1);
 static void clCheckBg2Chara(int no);

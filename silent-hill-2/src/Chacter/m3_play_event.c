@@ -7,6 +7,8 @@
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/playing_info.h"
 
+#pragma force_active on
+
 // @todo: clean-up and migrate data
 
 static void event_jms_stand(void);

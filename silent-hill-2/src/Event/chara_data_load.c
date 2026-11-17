@@ -21,6 +21,8 @@
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2sys.h"
 
+#pragma force_active on
+
 extern /* static */ CharaData_ItemFile bullet_and_drug_file[6];
 extern /* static */ CharaData_StandardList enemy_list[15];
 extern /* static */ CharaData_WeaponFile weapon_file[10];
