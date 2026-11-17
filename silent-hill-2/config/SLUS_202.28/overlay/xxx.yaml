@@ -22,7 +22,6 @@ segments:
     start: 0x0
     subsegments:
       - [0x0, databin, xxx_overlay_header]
-      # - [0x80, asm, Event/stage/stg_xxx]
-      # - [0x100, data, Event/stage/stg_xxx_data]
-      - [0x80, data, Event/stage/stg_xxx_data]
+      - [0x80, asm, Event/stage/stg_xxx]
+      - [0x100, data, Event/stage/stg_xxx_data]
   - [0x200]
