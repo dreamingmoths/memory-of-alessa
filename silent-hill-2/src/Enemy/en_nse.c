@@ -967,18 +967,10 @@ static void enNSESoundSigns(EnLOCAL_DATA* dp) {
 
 #pragma divbyzerocheck on
 
-#ifdef NON_MATCHING
 static void enNSESoundVoice(EnLOCAL_DATA* dp) {
-    enSoundCall(ftoi(4.0f * shRandF()) + 12109, 0.7f, &dp->scp->pos);
+    enSoundCall(shFloatToInt(4.0f * shRandF()) + 12109, 0.7f, &dp->scp->pos);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_nse", enNSESoundVoice);
-#endif
 
-#ifdef NON_MATCHING
 static void enNSESoundAttackVoice(EnLOCAL_DATA* dp) {
-    enSoundCall(ftoi(6.0f * shRandF()) + 12107, 1.0f, &dp->scp->pos);
+    enSoundCall(shFloatToInt(6.0f * shRandF()) + 12107, 1.0f, &dp->scp->pos);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_nse", enNSESoundAttackVoice);
-#endif
