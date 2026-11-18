@@ -143,7 +143,7 @@ segments:
       - { start: 0x0008c760,    type: c,          name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x0008f6c0,    type: c,          name: shGs/sh2gfw_GS_NewLoopEnv                        }
       - { start: 0x0008fcd0,    type: c,          name: shGs/sh2gfw_GsInit                               }
-      - { start: 0x000913c0,    type: asm,        name: sound/sd0712/ee/sd_call                          }
+      - { start: 0x000913c0,    type: c,          name: sound/sd0712/ee/sd_call                          }
       - { start: 0x00092560,    type: c,          name: sound/sh_sound                                   }
       - { start: 0x000955b0,    type: asm,        name: taskman/shtskman                                 }
       - { start: 0x00095930,    type: asm,        name: view/vb_main                                     }
@@ -650,7 +650,7 @@ segments:
       - { start: 0x001b6bb0,    type: .data,      name: shPad/lib_sh_pad                                 }
       - { start: 0x001b6c00,    type: data,       name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x001b6c20,    type: .data,      name: shGs/sh2gfw_GS_NewLoopEnv                        }
-      - { start: 0x001b6c30,    type: data,       name: select/sound/sd0712/ee/sd_call                   }
+      - { start: 0x001b6c30,    type: .data,      name: sound/sd0712/ee/sd_call                          }
       - { start: 0x001b8c70,    type: .data,      name: sound/sh_sound                                   }
       - { start: 0x001b9ae0,    type: data,       name: view/vb_main                                     }
       - { start: 0x001b9af0,    type: data,       name: view/vc_main                                     }
@@ -929,7 +929,7 @@ segments:
       - { start: 0x00290490,    type: .rodata,     name: shPad/lib_sh_pad                                }
       - { start: 0x002904a0,    type: .rodata,    name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x00290760,    type: .rodata,    name: shGs/sh2gfw_GsInit                               }
-      - { start: 0x002907d0,    type: rodata,     name: sound/sd0712/ee/sd_call                          }
+      - { start: 0x002907d0,    type: .rodata,    name: sound/sd0712/ee/sd_call                          }
       - { start: 0x00290830,    type: .rodata,    name: sound/sh_sound                                   }
       - { start: 0x00290c10,    type: .rodata,    name: view/vc_main                                     }
       - { start: 0x002910a0,    type: .rodata,    name: main                                             }
@@ -1204,7 +1204,7 @@ segments:
       - { vram:  0x010138c8,    type: .bss,       name: Multi_thr/dma/sh_dma2                            }
       - { vram:  0x01013900,    type: .bss,       name: shPad/lib_sh_pad                                 }
       - { vram:  0x01013b80,    type: bss,        name: sh2shd/sh2shd_char_jms                           }
-      - { vram:  0x01013b90,    type: bss,        name: sound/sd0712/ee/sd_call                          }
+      - { vram:  0x01013b90,    type: .bss,       name: sound/sd0712/ee/sd_call                          }
       - { vram:  0x010e0480,    type: .bss,       name: sound/sh_sound                                   }
       - { vram:  0x010e58d8,    type: bss,        name: taskman/shtskman                                 }
       - { vram:  0x010e5910,    type: bss,        name: view/vb_main                                     }

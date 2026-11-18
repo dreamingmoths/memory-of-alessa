@@ -11709,6 +11709,76 @@ types:
       - id: pad13
         type: u4
 
+  sd_call_data:
+    seq:
+      - id: call
+        type: u4
+
+      - id: direct
+        type: u4
+
+      - id: dist
+        type: u4
+
+      - id: pitch
+        type: u4
+
+  sd_env_buf:
+    seq:
+      - id: base
+        type: pointer('data')
+
+      - id: size
+        type: s4
+
+      - id: pointer
+        type: s4
+
+      - id: mode
+        type: s4
+
+  sd_env:
+    seq:
+      - id: angle1
+        type: s4
+
+      - id: angle2
+        type: s4
+
+      - id: mode
+        type: s4
+
+      - id: level
+        type: f4
+
+      - id: minlevel
+        type: f4
+
+      - id: pitch
+        type: f4
+
+      - id: cutoff
+        type: f4
+
+      - id: pos
+        type: pointer('data')
+
+  sd3d_data_struct:
+    seq:
+      - id: loop
+        type: u1
+
+      - size: 7
+
+      - id: ofst
+        type: u8
+
+      - id: size
+        type: u8
+
+      - id: sr
+        type: u8
+
   change_list:
     seq:
       - id: sd_se

@@ -131,6 +131,4 @@ void SeBgmManager(void);
 int BgmPageSet(void);
 void SeMasterVolumeChange(void);
 
-extern void sd_setpath(char* dp /* r2 */); // M:\select\sound\sd0712\ee\sd_call.c we need to find a home for lil bro
-
 #endif // SH_SOUND_H

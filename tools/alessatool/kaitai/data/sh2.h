@@ -140,6 +140,7 @@ NOTE: currently two lines in `sh2.py` need fixups after this last step as they u
 #include "shared/Fog/fog.h"
 
 #include "sound/sh_sd_call.h"
+#include "sound/sd0712/ee/sd_call.h"
 #include "sound/sh_sound.h"
 #include "sound/snd_select.h"
 

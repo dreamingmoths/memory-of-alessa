@@ -8777,6 +8777,85 @@ class Sh2(KaitaiStruct):
             pass
 
 
+    class Sd3dDataStruct(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.Sd3dDataStruct, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.loop = self._io.read_u1()
+            self._unnamed1 = self._io.read_bytes(7)
+            self.ofst = self._io.read_u8le()
+            self.size = self._io.read_u8le()
+            self.sr = self._io.read_u8le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
+    class SdCallData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SdCallData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.call = self._io.read_u4le()
+            self.direct = self._io.read_u4le()
+            self.dist = self._io.read_u4le()
+            self.pitch = self._io.read_u4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
+    class SdEnv(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SdEnv, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.angle1 = self._io.read_s4le()
+            self.angle2 = self._io.read_s4le()
+            self.mode = self._io.read_s4le()
+            self.level = self._io.read_f4le()
+            self.minlevel = self._io.read_f4le()
+            self.pitch = self._io.read_f4le()
+            self.cutoff = self._io.read_f4le()
+            self.pos = Sh2.Pointer(u"data", self._io, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            self.pos._fetch_instances()
+
+
+    class SdEnvBuf(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.SdEnvBuf, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.base = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.size = self._io.read_s4le()
+            self.pointer = self._io.read_s4le()
+            self.mode = self._io.read_s4le()
+
+
+        def _fetch_instances(self):
+            pass
+            self.base._fetch_instances()
+
+
     class Se2dManageData(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.Se2dManageData, self).__init__(_io)

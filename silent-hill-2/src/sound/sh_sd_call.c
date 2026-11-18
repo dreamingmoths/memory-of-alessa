@@ -1,4 +1,5 @@
 #include "sound/sh_sd_call.h"
+#include "sound/sd0712/ee/sd_call.h"
 #include "sce/eekernel.h"
 #include "Multi_thr/filesys/sh_cdvd.h"
 #include "DBG/dbflag.h"
