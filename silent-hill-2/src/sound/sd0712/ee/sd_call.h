@@ -4,40 +4,35 @@
 #include "sh2_common.h"
 
 typedef struct SdCallData {
-    // Members
-    u_int call;   // offset 0x0, size 0x4
-    u_int direct; // offset 0x4, size 0x4
-    u_int dist;   // offset 0x8, size 0x4
-    u_int pitch;  // offset 0xC, size 0x4
+    u_int call;
+    u_int direct;
+    u_int dist;
+    u_int pitch;
 } SdCallData;
 
 typedef struct {
-    // Members
-    void* base;  // offset 0x0, size 0x4
-    int size;    // offset 0x4, size 0x4
-    int pointer; // offset 0x8, size 0x4
-    int mode;    // offset 0xC, size 0x4
+    void* base;
+    int size;
+    int pointer;
+    int mode;
 } SdEnvBuf;
 
 typedef struct {
-    // Members
-    int angle1;          // offset 0x0, size 0x4
-    int angle2;          // offset 0x4, size 0x4
-    int mode;            // offset 0x8, size 0x4
-    float level;         // offset 0xC, size 0x4
-    float minlevel;      // offset 0x10, size 0x4
-    float pitch;         // offset 0x14, size 0x4
-    float cutoff;        // offset 0x18, size 0x4
-    sceVu0FVECTOR(*pos); // offset 0x1C, size 0x4
+    int angle1;
+    int angle2;
+    int mode;
+    float level;
+    float minlevel;
+    float pitch;
+    float cutoff;
+    sceVu0FVECTOR(*pos);
 } SdEnv;
 
-// total size: 0x20
 typedef struct Sd3dDataStruct {
-    // Members
-    u_char loop; // offset 0x0, size 0x1
-    u_long ofst; // offset 0x8, size 0x4
-    u_long size; // offset 0x10, size 0x4
-    u_long sr;   // offset 0x18, size 0x4
+    u_char loop;
+    u_long ofst;
+    u_long size;
+    u_long sr;
 } Sd3dDataStruct;
 
 int sd_call(int call, int direct, int dist, int pitch);
