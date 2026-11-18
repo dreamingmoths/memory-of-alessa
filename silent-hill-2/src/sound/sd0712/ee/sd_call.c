@@ -42,32 +42,32 @@ enum SD_CALL_CALLS {
     SD_3D_MODE_OFF  = 1041,
 };
 
-static int dpath = 0; // size: 0x4, address: 0x1013B90
-static int sdsif_rdata[64]; // size: 0x100, address: 0x10E0380
-static int sdsif_idata[64] __attribute__(( aligned(64) )); // size: 0x100, address: 0x10E0280
-static u_char sd_stat_core0[24]; // size: 0x18, address: 0x10E0230
-static u_char sd_stat_core1[24]; // size: 0x18, address: 0x10E0210
-static sceSifClientData sdsif_bd; // size: 0x28, address: 0x10E01E0
-static int sd_str_status[2]; // size: 0x8, address: 0x10E01D0
-static int sd_read_status; // size: 0x4, address: 0x10E01C8
-volatile static int sd_stat_timer; // size: 0x4, address: 0x10E01C0
-static SdCallData sd_call_data[64]; // size: 0x400, address: 0x10DFDC0
-volatile static int sd_que; // size: 0x4, address: 0x10DFDB0
-static int se_mvol; // size: 0x4, address: 0x10DFDA8
-static int gDataTopAddr; // size: 0x4, address: 0x10DFDA0
-static int gcount; // size: 0x4, address: 0x10DFD98
-static int idout; // size: 0x4, address: 0x10DFD90
-static u_char* gDataIOPPtr[2]; // size: 0x8, address: 0x10DFD88
-static int se_stemono; // size: 0x4, address: 0x10DFD80
-static SdEnv env3d[8]; // size: 0x100, address: 0x10DFC80
-static SdEnv dmy_env; // size: 0x20, address: 0x10DFC60
-static SdEnvBuf out_buf_env; // size: 0x10, address: 0x10DFC50
-static SdEnvBuf in_buf_env[8]; // size: 0x80, address: 0x10DFBD0
-static SdEnvBuf dmy_buf_env; // size: 0x10, address: 0x10DFBC0
-static short ibuf[409600] __attribute__(( aligned(64) )); // size: 0xC8000, address: 0x1017BC0
-static short obuf[8192]; // size: 0x4000, address: 0x1013BA0
+static int dpath = 0;
+static int sdsif_rdata[64];
+static int sdsif_idata[64] __attribute__(( aligned(64) ));
+static u_char sd_stat_core0[24];
+static u_char sd_stat_core1[24];
+static sceSifClientData sdsif_bd;
+static int sd_str_status[2];
+static int sd_read_status;
+volatile static int sd_stat_timer;
+static SdCallData sd_call_data[64];
+volatile static int sd_que;
+static int se_mvol;
+static int gDataTopAddr;
+static int gcount;
+static int idout;
+static u_char* gDataIOPPtr[2];
+static int se_stemono;
+static SdEnv env3d[8];
+static SdEnv dmy_env;
+static SdEnvBuf out_buf_env;
+static SdEnvBuf in_buf_env[8];
+static SdEnvBuf dmy_buf_env;
+static short ibuf[409600] __attribute__(( aligned(64) ));
+static short obuf[8192]; 
 
-static Sd3dDataStruct Sd3dData[258] = { // size: 0x2040, address: 0x2B6530,
+static Sd3dDataStruct Sd3dData[258] = {
     {
         /* .loop = */ 0,
         /* .ofst = */ 0,
@@ -1619,7 +1619,7 @@ static Sd3dDataStruct Sd3dData[258] = { // size: 0x2040, address: 0x2B6530,
 };
 
 int sd_call(int call, int direct, int dist, int pitch) {
-    static int sdinitflag; // @ 0x01013B98
+    static int sdinitflag;
 
 
 
@@ -1732,7 +1732,7 @@ int sd_radio(int ch, int vol, int pan, int pitch) {
 
 
 int sd_stat(void) {
-    int stat = sd_read_status; // r2
+    int stat = sd_read_status;
     stat |= sd_str_status[0] << 4;
     stat |= sd_str_status[1] << 8;
 
@@ -1774,7 +1774,7 @@ static void sd_sendpath(void) {
 
 
 void sd_vsync(void) {
-    int i; // r16
+    int i;
 
 
 
@@ -1809,7 +1809,7 @@ void sd_vsync(void) {
 
 
 static int SdSifInit(void) {
-    int i; // r3
+    int i;
 
 
 
@@ -1877,7 +1877,7 @@ static int SdSifCall(int n, int ssize, int rsize) {
 
 
 static void SdSifRet(void*) {
-    int i; // r5
+    int i;
     for (i = 0; i < 24; i++) {
 
         sd_stat_core0[i] = (&sdsif_rdata[2])[i];
@@ -1948,10 +1948,10 @@ static void SdSifRet(void*) {
 
 
 static int Sd3dInit(void) {
-    void* gpbuffwork; // r2
-    int i; // r16
-    int idvs, gCallbackThreadID; // r2
-    int trans_flag; // r29+0x2C
+    void* gpbuffwork;
+    int i;
+    int idvs, gCallbackThreadID;
+    int trans_flag;
     for (i = 0; i < 120; i++) {
 
         sceGsSyncV(0);
@@ -2133,8 +2133,8 @@ int sd_3d_call(int call, int arg1, int arg2, float arg3, float arg4) {
 
 
 static int Sd3dPrePlay(int call, int arg1, int arg2, float arg3, float arg4) {
-    int ret; // r2
-    int i; // r16
+    int ret;
+    int i;
     ret = -1;
     for (i = 0; i < 8; i++) {
 
@@ -2151,7 +2151,7 @@ static int Sd3dPrePlay(int call, int arg1, int arg2, float arg3, float arg4) {
 
 
 
-static void Sd3dPlay(int call /* r2 */, int arg1 /* r2 */, int arg2 /* r2 */, float arg3 /* r20 */, float arg4 /* unused */, int no /* r2 */) {
+static void Sd3dPlay(int call, int arg1, int arg2, float arg3, float arg4 /* unused */, int no) {
     u_char loop; // r16
     u_long ofst, size, sr; // r2
     int temp = ~7; //@note: not in dwarf
@@ -2213,7 +2213,7 @@ int sd_3d_move(int no, int arg1, int arg2, float arg3, float arg4 /* unused */) 
 
 
 void sd_3d_allstop(void) {
-    int i; // r16
+    int i;
     for (i = 0; i < 8; i++) {
 
         sd_3d_stop(i);
