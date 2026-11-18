@@ -994,7 +994,46 @@ static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer);
+static int enMKNCanSeePlayer(EnLOCAL_DATA* dp) {
+    float* ppos =  enGetPlayerPos(dp);
+    float dist; float a; 
+    int wcd = enGetWorldCondition();
+    dist = enCheckPath2(dp, ppos, (float*) &dp->scp->pos);
+    if (dist >= 0.0f) {
+        if ((wcd >= 2) && enCheckSeeLight(dp) && !(enLocalWork.Status & 1)) {
+            
+            return 1;
+        }
+        return 0;
+    }
+    dist = dp->p_dist;
+    switch (wcd) {
+        case 0:
+            if (dist > 5000.0f) return 0;        
+            break;
+        case 1:
+            if (dist > 2000.0f) return 0;        
+            break;
+            
+        case 2: case 3:
+            if (dist > 4000.0f) return 0;        
+            break;
+        case 4:
+            if (dist > 1100.0f) return 0;        
+            break;
+    }
+    a = enCalcDirection(ppos, (float*) &dp->scp->pos);
+    a = enCalcAngleDifference(a, dp->scp->rot.y);
+    if ((dist < 1100.0f) && (a < TO_RAD(15)) && !(enCheckNoDamageHuman(dp))) {
+        
+        return 2;
+    }
+    if (enLocalWork.Status & 1) return 0;
+    if ((wcd >= 2) && (enCheckSeeLight(dp))) return 1;
+    
+    if (a > TO_RAD(60)) return 0;
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer2);
 
