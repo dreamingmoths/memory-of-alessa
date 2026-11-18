@@ -34,6 +34,7 @@ extern int sceRead(int fd, void* buf, int nbyte);
 extern int sceLseek(int fd, int offset, int where); // I am putting these as extern cause this is how they are put in the sdk
 
 int sceFsReset(void);
+extern int sceSifInitIopHeap(void);
 void *sceSifAllocIopHeap(unsigned int);
 void sceSifLoadFileReset(void);
 int sceSifSyncIop(void);
