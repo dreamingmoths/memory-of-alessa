@@ -5,6 +5,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "vec.h"
 
+#pragma force_active on
 DemoLight_Work DemoLightWork; // size: 0x1B0, address: 0xE1CA80
 
 void sh2gfw_Init_DemoLight_Work(void) {

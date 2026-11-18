@@ -1442,14 +1442,12 @@ void enInitPath(EnPATH_DATA* p, float angle) {
     p->timer = 0;
 }
 
-#ifdef HOLY_CANDLE
-#line 1941
-int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /* r18 */) {
-    EnPATH_DATA* p = &dp->path; // r16
-    sceVu0FVECTOR vec; /* r29+0x70 */ float dist; /* r20 */ float ma; /* r21 */ 
-    float a; /* r29+0x90 */ float a1; /* r22 */ float a2; /* r24 */
-    float d1; /* r23 */ float d2; /* r29+0x90 */ int k; /* r17 */
-    /* r29+0x80 */ s_char timer[12] = {
+int enSetPath(EnLOCAL_DATA* dp, float* target, float* pos) {
+    EnPATH_DATA* p = &dp->path;
+    sceVu0FVECTOR vec; float dist; float ma; 
+    float a; float a1; float a2;
+    float d1; float d2; int k; 
+    s_char timer[12] = {
         0, 
         30, 
         20,
@@ -1468,8 +1466,8 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
 
 
     dist = enCheckPath(dp, target, pos);
-    vec_sub(target, pos, vec);
-    ma = shAtanV(&vec);
+    shSubVector(vec, target, pos);
+    ma = shAtanV(vec);
     if (dist < 0.0f) {
         p->markangle = ma;
         p->dist = -dist;
@@ -1485,122 +1483,118 @@ int enSetPath(EnLOCAL_DATA* dp /* r19 */, float* target /* r17 */, float* pos /*
     p->dist = dist;
     dist += 50.0f;
     switch (k = p->step) {
-    case 0:
-        p->step = 1;
-        a1 = TO_RAD(15) + ma;
-        shSinCosV_Scale(&vec, a1, dist);
-        vec_add(pos, vec, vec);
-        d1 = enCheckPath(dp, &vec, pos);
-        a2 = ma - TO_RAD(15);
-        shSinCosV_Scale(&vec, a2, dist);
-        vec_add(pos, vec, vec);
-        a = enCheckPath(dp, &vec, pos);
-        if (d1 < 0.0f && a >= 0.0f) {
-            ma = a1;
-        } else if (d1 >= 0.0f && a < 0.0f) {
-            ma = a2;
-        } 
-        else if (d1 >= 0.0f && a >= 0.0f && ((++p->deadend) >= 3)) {
-            ma += PI;
-            p->step = -1;
-        } else {
-            ma -= TO_RAD(1);
-            p->step = 2;
-        }
-        
-        break;
-    case 1:
-        a2 = shAngleRegulate(ma - p->angle);
-        if (a2 == 0.0f) { a2 = TO_RAD(1); }
-        if (shFloatAbs(a2) < TO_RAD(15)) { a1 = ma; }
-        else { a1 = p->angle + TO_RAD(15) * float_sign(a2); };
-        shSinCosV_Scale(&vec, a1, dist);
-        vec_add(pos, vec, vec);
-        d1 = enCheckPath(dp, &vec, pos);
-        if (d1 < 0.0f) {
-            ma = a1;
-            p->timer = (dist = (timer[dp->kind] * 60) / 60.0f) * (1.0f + shSway1f(-0.5f, 0.5f));
-            
-            break;
-        } 
-        shSinCosV_Scale(&vec, ma, dist);
-        vec_add(pos, vec, vec);
-        d2 = enCheckPath(dp, &vec, pos);
-        if (d2 < 0.0f) {
-            p->timer = (timer[dp->kind] * 60) / 60.0f;
-            break;
-        } 
-        if (d1 < d2) {
-            a1 = ma;
-            d1 = d2;
-        }
-        d1 = float_sign(d1); a2 = p->angle - TO_RAD(15) * a2;
-        shSinCosV_Scale(&vec, a2, dist);
-        vec_add(pos, vec, vec);
-        if (enCheckPath(dp, &vec, pos) < 0.0f) {
-            
-            ma = a2;
-            p->timer = (timer[dp->kind] * 60) / 60.0f;
-        } else if (d1 < 0.0f) {
-            ma = a1;
-            p->timer = (timer[dp->kind] * 60) / 60.0f;
-        } else {
-
-            ma = a1;
-            p->step = 2;
-        }
-        break;
-    case -1:
-        ma = p->markangle;
-        if (enCalcAngleDifference(ma, p->angle) < TO_RAD(15)) {
-            p->deadend = 0;
+        case 0:
             p->step = 1;
-        }
-        break;
+            a1 = TO_RAD(15) + ma;
+            shSinCosV_Scale(vec, a1, dist);
+            shAddVector(vec, pos, vec);
+            d1 = enCheckPath(dp, vec, pos);
+            a2 = ma - TO_RAD(15);
+            shSinCosV_Scale(vec, a2, dist);
+            shAddVector(vec, pos, vec);
+            d2 = enCheckPath(dp, vec, pos);
+            if (d1 < 0.0f && d2 >= 0.0f) {
+                ma = a1;
+            } else if (d1 >= 0.0f && d2 < 0.0f) {
+                ma = a2;
+            } 
+            else if (d1 >= 0.0f && d2 >= 0.0f && ((++p->deadend) >= 3)) {
+                ma = PI + ma;
+                p->step = -1;
+            } else {
+                ma -= TO_RAD(0.1);
+                p->step = 2;
+            }
+            
+            break;
+        case 1:
+            a = shAngleRegulate(ma - p->angle);
+            if (a == 0.0f) a = TO_RAD(1);
+            if (shFloatAbs(a) < TO_RAD(15)) a1 = ma;
+            else a1 = p->angle + TO_RAD(15) * float_sign(a); 
+            shSinCosV_Scale(vec, a1, dist);
+            shAddVector(vec, pos, vec);
+            d1 = enCheckPath(dp, vec, pos);
+            if (d1 < 0.0f) {
+                ma = a1;
+                p->timer = (((timer[dp->kind] * 60) / 60.0f) * (1.0f + shSway1f(-0.5f, 0.5f)));
+                
+                break;
+            } 
+            shSinCosV_Scale(vec, ma, dist);
+            shAddVector(vec, pos, vec);
+            d2 = enCheckPath(dp, vec, pos);
+            if (d2 < 0.0f) {
+                p->timer = (timer[dp->kind] * 60) / 60.0f;
+                break;
+            } 
+            if (d1 < d2) {
+                a1 = ma;
+                d1 = d2;
+            }
+            a = float_sign(a); a2 = p->angle - TO_RAD(15) * a;
+            shSinCosV_Scale(vec, a2, dist);
+            shAddVector(vec, pos, vec);
+            d2 = enCheckPath(dp, vec, pos);
+            if (d2 < 0.0f) {                
+                ma = a2;
+                p->timer = (timer[dp->kind] * 60) / 60.0f;
+            } else if (d1 < 0.0f) {
+                ma = a1;
+                p->timer = (timer[dp->kind] * 60) / 60.0f;
+            } else {
     
-    default:
-        a1 = ma + (TO_RAD(15) * k);
-        shSinCosV_Scale(&vec, a1, dist);
-        vec_add(pos, vec, vec);
-        d1 = enCheckPath(dp, &vec, pos);
-        a2 = ma - (TO_RAD(15) * k);
-        shSinCosV_Scale(&vec, a2, dist);
-        vec_add(pos, vec, vec);
-        a = enCheckPath(dp, &vec, pos);
-        if (d1 < 0.0f) {
-            if (a < 0.0f) {
-                if (++k >= 6) {
+                ma = a1;
+                p->step = 2;
+            }
+            break;
+        case -1:
+            ma = p->markangle;
+            if (enCalcAngleDifference(ma, p->angle) < TO_RAD(15)) {
+                p->deadend = 0;
+                p->step = 1;
+            }
+            break;
+        
+        default:
+            a1 = ma + (TO_RAD(15) * k);
+            shSinCosV_Scale(vec, a1, dist);
+            shAddVector(vec, pos, vec);
+            d1 = enCheckPath(dp, vec, pos);
+            a2 = ma - (TO_RAD(15) * k);
+            shSinCosV_Scale(vec, a2, dist);
+            shAddVector(vec, pos, vec);
+            d2 = enCheckPath(dp, vec, pos);
+            if (d1 < 0.0f) {
+                if (d2 < 0.0f) {
+                    if (++k >= 6) {
+                        ma = a1;
+                        k = 1;
+                    }
+                } else {
                     ma = a1;
                     k = 1;
                 }
-            } else {
-                ma = a1;
-                k = 1;
-            }
-        } else if (a < 0.0f) {
-            ma = a2;
-            k = 1;
-        } else {
-            if (d1 > a) {
-                ma = a1;
-            } else {
+            } else if (d2 < 0.0f) {
                 ma = a2;
+                k = 1;
+            } else {
+                if (d1 > d2) {
+                    ma = a1;
+                } else {
+                    ma = a2;
+                }
+                if (++k >= 6) {
+                    
+                    ma = PI + ma;
+                    k = -1;
+                }
             }
-            if (++k >= 6) {
-                
-                ma += PI;
-                k = -1;
-            }
-        }
-        p->step = k;
+            p->step = k;
     }
     p->markangle = shAngleRegulate(ma);
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetPath)
-char timer[12] = { 0, 30, 20, 0, 20, 20, 15, 12, 30, 15, 12, 12 };
-#endif
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
     sceVu0FVECTOR sp, ep; // r29+0x10
@@ -2323,18 +2317,17 @@ int enCheckForbiddenArea(float* sp, float* ep, float size) {
     return f;
 }
 
-#ifdef HOLY_CANDLE
-int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, float* ep /* r2 */, float size /* r29 */) {
-    float x0; // r1
-    float z0; // r2
-    float x1; // r3
-    float z1; // r4
-    float sx; // r5
-    float sz; // r6
-    float vx; // r7
-    float vz; // r8
-    float c; // r29
-    int f; // r2
+int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa, float* sp, float* ep, float size) {
+    float x0;
+    float z0;
+    float x1;
+    float z1;
+    float sx;
+    float sz;
+    float vx;
+    float vz; 
+    float c;
+    int f;
 
     x0 = fa->x0 - size;
     z0 = fa->z0 - size;
@@ -2356,7 +2349,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             f = 1;
             ep[0] = x0;
             ep[2] = c;
-            vx = c;
+            vx = x0 - sx;
             vz = c - sz;
         }
     }
@@ -2366,7 +2359,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             f = 1;
             ep[0] = x1;
             ep[2] = c;
-            vx = c;
+            vx = x1 - sx;
             vz = c - sz;
         }
     }
@@ -2377,10 +2370,10 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             ep[0] = c;
             ep[2] = z0;
             vx = c - sx;
-            vz = c;
+            vz = z0 - sz;
         }
     }
-    if ((sz > (z1 - (2.0f * size)))) {
+    if (sz > (z1 - (2.0f * size))) {
         c = sx + ((vx * (z1 - sz)) / vz);
         if ((c >= x0) && (c <= x1)) {
             f = 1;
@@ -2392,9 +2385,6 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
 
 
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForbiddenAreaSub);
-#endif
 
 void enEventDriven(int event /* r2 */, int id /* r2 */) {
     int i; // r3

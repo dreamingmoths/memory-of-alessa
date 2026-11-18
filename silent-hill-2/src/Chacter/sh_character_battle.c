@@ -41,6 +41,8 @@
 
 #include "vec.h"
 
+#pragma force_active on
+
 static void shBattleDamageRevise(float* damage, float* shock, SubCharacter* scp, CL_BATTLE_RESULT* result);
 static void shBattleSetEffectDamage(SubCharacter* scp, float* pos, float* vec, u_short atk);
 static void shBattleSetSoundDamage(SubCharacter* scp, CL_BATTLE_RESULT* result);

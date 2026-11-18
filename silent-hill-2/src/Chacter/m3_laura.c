@@ -2,6 +2,8 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
+#pragma force_active on
+
 #define LAURA_DRAMA_ANIME_ID_START 2500
 #define LAURA_PLAY_ANIME_ID_START  2900
 

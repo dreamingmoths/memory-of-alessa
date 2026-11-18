@@ -5,6 +5,7 @@
 #include "Font/fj_man.h"
 #include "vec.h"
 
+#pragma force_active on
 #pragma fast_fptosi on
 
 extern FOG_WORK fwork; // size: 0x15E90, address: 0x56B6D0

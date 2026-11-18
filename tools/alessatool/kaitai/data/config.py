@@ -99,7 +99,8 @@ SH2_DATA: DataTable = [
     SimpleData(name="stg_apart_stair_light",                type="<4f",                                pattern=[4],   executable="ast"),
     SimpleData(name="stg_apart_stair_clr",                  type="<4f",                                pattern=[4],   executable="ast"),
     StructData(name="stg_apart_stair_cam_data_01F03350",    type=Sh2.EventCamSetData,                  count=1,       executable="ast"),
-    StructData(name="Sd3dData",                             type=Sh2.Sd3dDataStruct,                   count=258),
+    StructData(name="Sd3dData",                             type=Sh2.Sd3dDataStruct,                   count=258                      ),
+    StructData(name="_Area_Info_List_0x0037D7B0",           type=Sh2.WaveAreaInfomeation,              count=1                        ),
 
 ]
 

@@ -2,6 +2,8 @@
 #include "Chacter/chara_list.h"
 #include "Chacter/m3_sc.h"
 
+#pragma force_active on
+
 // @todo: migrate data
 
 extern /* static */ AnimeInfo dmxx_anim[11]; // size: 0x84, address: 0x399260

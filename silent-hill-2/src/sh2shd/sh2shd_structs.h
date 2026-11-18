@@ -12,13 +12,13 @@ typedef struct SHADOW_PACKET_BUF {
 
 typedef struct SHADOW_SHAPE_FRAME {
     // total size: 0x70
-    float local_world[4][4];       // offset 0x0, size 0x40
-    float local_light_position[4]; // offset 0x40, size 0x10
-    Q_WORDDATA length;             // offset 0x50, size 0x10
-    u_int* pRefPacket;             // offset 0x60, size 0x4
-    u_int* pRawData;               // offset 0x64, size 0x4
-    u_int* pKickAddr;              // offset 0x68, size 0x4
-    short obj_id;                  // offset 0x6C, size 0x2
+    sceVu0FMATRIX local_world;          // offset 0x0, size 0x40
+    sceVu0FVECTOR local_light_position; // offset 0x40, size 0x10
+    Q_WORDDATA length;                  // offset 0x50, size 0x10
+    u_int* pRefPacket;                  // offset 0x60, size 0x4
+    u_int* pRawData;                    // offset 0x64, size 0x4
+    u_int* pKickAddr;                   // offset 0x68, size 0x4
+    short obj_id;                       // offset 0x6C, size 0x2
 } SHADOW_SHAPE_FRAME;
 
 typedef struct SHADOW_CHAR_MAN {
@@ -32,7 +32,7 @@ typedef struct SHADOW_CHAR_MAN {
     sceVu0FVECTOR light_pos;          // offset 0x20, size 0x10
     sceVu0FVECTOR light_dir;          // offset 0x30, size 0x10
     sceVu0FVECTOR light_param;        // offset 0x40, size 0x10
-    float drop_shadow_matrix[4][4];   // offset 0x50, size 0x40
+    sceVu0FMATRIX drop_shadow_matrix; // offset 0x50, size 0x40
     Q_WORDDATA* raw_data;             // offset 0x90, size 0x4
     struct SHADOW_SHAPE_FRAME* shape; // offset 0x94, size 0x4
 } SHADOW_CHAR_MAN;
@@ -73,30 +73,30 @@ typedef struct SHADOW_MAN {
 
 typedef struct SHADOW_MICRO_FRAME {
     // total size: 0x220
-    float drop_shadow[4][4];   // offset 0x0, size 0x40
-    float world_clip[4][4];    // offset 0x40, size 0x40
-    float clip_screen[4][4];   // offset 0x80, size 0x40
-    Q_WORDDATA color;          // offset 0xC0, size 0x10
-    Q_WORDDATA giftag_color;   // offset 0xD0, size 0x10
-    Q_WORDDATA giftag_dummy;   // offset 0xE0, size 0x10
-    Q_WORDDATA giftag_default; // offset 0xF0, size 0x10
-    Q_WORDDATA giftag_3;       // offset 0x100, size 0x10
-    Q_WORDDATA giftag_4;       // offset 0x110, size 0x10
-    Q_WORDDATA giftag_5;       // offset 0x120, size 0x10
-    Q_WORDDATA giftag_6;       // offset 0x130, size 0x10
-    Q_WORDDATA giftag_7;       // offset 0x140, size 0x10
-    Q_WORDDATA giftag_8;       // offset 0x150, size 0x10
-    Q_WORDDATA giftag_9;       // offset 0x160, size 0x10
-    Q_WORDDATA giftag_10;      // offset 0x170, size 0x10
-    Q_WORDDATA alpha0;         // offset 0x180, size 0x10
-    Q_WORDDATA alpha1;         // offset 0x190, size 0x10
-    Q_WORDDATA flags;          // offset 0x1A0, size 0x10
-    float y_unit[4];           // offset 0x1B0, size 0x10
-    float dummy[3][4];         // offset 0x1C0, size 0x30
-    float cam_pos[4];          // offset 0x1F0, size 0x10
-    float spot_cam_dir[4];     // offset 0x200, size 0x10
-    u_int* pKickAddr;          // offset 0x210, size 0x4
-    u_int* pRawData;           // offset 0x214, size 0x4
+    sceVu0FMATRIX drop_shadow;  // offset 0x0, size 0x40
+    sceVu0FMATRIX world_clip;   // offset 0x40, size 0x40
+    sceVu0FMATRIX clip_screen;  // offset 0x80, size 0x40
+    Q_WORDDATA color;           // offset 0xC0, size 0x10
+    Q_WORDDATA giftag_color;    // offset 0xD0, size 0x10
+    Q_WORDDATA giftag_dummy;    // offset 0xE0, size 0x10
+    Q_WORDDATA giftag_default;  // offset 0xF0, size 0x10
+    Q_WORDDATA giftag_3;        // offset 0x100, size 0x10
+    Q_WORDDATA giftag_4;        // offset 0x110, size 0x10
+    Q_WORDDATA giftag_5;        // offset 0x120, size 0x10
+    Q_WORDDATA giftag_6;        // offset 0x130, size 0x10
+    Q_WORDDATA giftag_7;        // offset 0x140, size 0x10
+    Q_WORDDATA giftag_8;        // offset 0x150, size 0x10
+    Q_WORDDATA giftag_9;        // offset 0x160, size 0x10
+    Q_WORDDATA giftag_10;       // offset 0x170, size 0x10
+    Q_WORDDATA alpha0;          // offset 0x180, size 0x10
+    Q_WORDDATA alpha1;          // offset 0x190, size 0x10
+    Q_WORDDATA flags;           // offset 0x1A0, size 0x10
+    sceVu0FVECTOR y_unit;       // offset 0x1B0, size 0x10
+    sceVu0FVECTOR dummy[3];     // offset 0x1C0, size 0x30
+    sceVu0FVECTOR cam_pos;      // offset 0x1F0, size 0x10
+    sceVu0FVECTOR spot_cam_dir; // offset 0x200, size 0x10
+    u_int* pKickAddr;           // offset 0x210, size 0x4
+    u_int* pRawData;            // offset 0x214, size 0x4
 } SHADOW_MICRO_FRAME;
 
 typedef struct SHADOW_OFF_WORK_BG {
@@ -137,9 +137,9 @@ typedef struct SHADOW_CHAR_HEAD {
 // total size: 0x10
 typedef struct SHADOW_OUTDOOR_HEAD {
     // Members
-    u_short kind; // offset 0x0, size 0x2
-    short map_id; // offset 0x2, size 0x2
-    short obj_num; // offset 0x4, size 0x2
+    u_short kind;   // offset 0x0, size 0x2
+    short map_id;   // offset 0x2, size 0x2
+    short obj_num;  // offset 0x4, size 0x2
     short reserve1; // offset 0x6, size 0x2
     short reserve2; // offset 0x8, size 0x2
     short reserve3; // offset 0xA, size 0x2
@@ -149,9 +149,39 @@ typedef struct SHADOW_OUTDOOR_HEAD {
 
 typedef struct SPOT_LIGHT {
     // Members
-    sceVu0FVECTOR c; // offset 0x0, size 0x10
-    sceVu0FVECTOR zdir; // offset 0x10, size 0x10
+    sceVu0FVECTOR c;     // offset 0x0, size 0x10
+    sceVu0FVECTOR zdir;  // offset 0x10, size 0x10
     sceVu0FVECTOR range; // offset 0x20, size 0x10
 } SPOT_LIGHT;
+
+typedef struct SHADOW_GEOM_HEAD {
+    // total size: 0x10
+    short vertex_num;     // offset 0x0, size 0x2
+    short prim;           // offset 0x2, size 0x2
+    short send_data_num;  // offset 0x4, size 0x2
+    short ee_memory_size; // offset 0x6, size 0x2
+    short boundary_x;     // offset 0x8, size 0x2
+    short boundary_y;     // offset 0xA, size 0x2
+    short boundary_z;     // offset 0xC, size 0x2
+    short boundary_r;     // offset 0xE, size 0x2
+} SHADOW_GEOM_HEAD;
+
+typedef struct SHADOW_ENV {
+    // total size: 0x8
+    short block;     // offset 0x0, size 0x2
+    short clip_kind; // offset 0x2, size 0x2
+    float leng;      // offset 0x4, size 0x4
+} SHADOW_ENV;
+
+typedef struct SHADOW_OUTDOOR_OBJ_HEAD {
+    // total size: 0x10
+    u_int map_id; // offset 0x0, size 0x4
+    short obj_id; // offset 0x4, size 0x2
+    short geom_num; // offset 0x6, size 0x2
+    short origin_x; // offset 0x8, size 0x2
+    short origin_y; // offset 0xA, size 0x2
+    short origin_z; // offset 0xC, size 0x2
+    short origin_w; // offset 0xE, size 0x2
+} SHADOW_OUTDOOR_OBJ_HEAD;
 
 #endif // SH2SHD_STRUCTS_H

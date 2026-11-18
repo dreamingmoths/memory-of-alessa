@@ -21,6 +21,8 @@
 
 #include "vec.h"
 
+#pragma force_active on
+
 static void efRainDropInitSpray(EF_RAINDROP_DATA* dat /* r16 */, float* pos /* r2 */);
 static int efRainDropDrawSpray(EF_RAINDROP_DATA* dat /* r16 */);
 

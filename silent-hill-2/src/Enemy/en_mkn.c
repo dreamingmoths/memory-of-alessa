@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
 
@@ -492,7 +492,98 @@ static void enMKNCtrlMannequin2(EnLOCAL_DATA* dp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlWaitFall);
+static void enMKNCtrlWaitFall(EnLOCAL_DATA* dp) {
+    float d;
+    float* ppos;
+    sceVu0FVECTOR pos, vec; 
+    if (enCheckDamage()) {
+        enReduceHP(dp);
+        enSetHitBack(dp);
+    }
+    switch (dp->sslv) {
+        case 0:
+            if (enGetPlayerDistance(dp) < 3000.0f) {
+                dp->flag |= 1 << 15;
+                enMKNAnimeReset(dp, 28);
+                enSetNewSize(dp, 250.0f, 200.0f, 100.0f, 200.0f);
+                
+                d = enGetPlayerPos(dp)[1] - dp->scp->pos.y;
+                d = SQRT((0.25f + ((2.0f * (30.0f * (30.0f * d))) / 9800.0f))) - 1.0f;
+                dp->anim_s = shFloatToInt(30720.0f / d);
+                dp->mkn.fall = 0.0f;
+                ENEMY_NEXT_SUB_STEP();
+            }
+            break;
+        case 1:
+            ppos = enGetPlayerPos(dp);
+            shSinCosV_Scale(vec, enGetPlayerAngle(dp), 1000.0f);
+            shAddVector(pos, ppos, vec);
+            if (enCheckPlayerHitEyes(dp, pos) >= 0.0f) {
+                shSubVector(pos, ppos, vec);
+            }
+            shSubVector(vec, pos, (float*) &dp->scp->pos);
+            if (vec3_length(vec) < 2500.0f) {
+                shVectorCopy(dp->vec, vec);
+            } else {
+                shSinCosV_Scale(dp->vec, shAtanV(&vec), 2500.0f);
+            }
+            dp->mkn.fall += 9800.0f * shGetDT();
+            dp->vec[1] = dp->mkn.fall;
+            shVectorCopy(pos, &dp->scp->pos);
+            if (pos[1] > ppos[1]) pos[1] = ppos[1];
+            if (((ppos[1] - dp->scp->pos.y) < 50.0f) && enCheckFloor(pos)) {
+                d = enLocalWork.HitResult.hobj.wall.cp[1];
+                if (d > dp->scp->pos.y) break;
+                    
+                    
+                switch (enGetStage()) {
+                    case 2:
+                        enSoundCall3D(40227, 1.0f, (float*) &dp->scp->pos);
+                        break;
+                    case 3:
+                        enSoundCall3D(40238, 1.0f, (float*) &dp->scp->pos);
+                        break;
+                }
+                
+                
+                
+                
+                dp->scp->pos.y = d;
+                dp->vec[1] = 0.0f;
+                enMKNAnimeSet(dp, 29);
+                dp->flag &= ~((1 << 15) | (1 << 1));
+                dp->type = 1;
+                enFlagSetRotFloor(dp);
+                enSetTimer(dp, 30);
+                ENEMY_NEXT_SUB_STEP();
+                
+            } else if (enGetPlayerDistance(dp) < 550.0f) {
+                
+                dp->scp->pos.x = pos[0];
+                dp->scp->pos.z = pos[2];
+            }
+            break;
+        case 2:
+            if (dp->anim_n == -1) {
+                if (enReduceTimer(dp) > 0) return;
+                enMKNAnimeSet(dp, 23);
+                enFlagResetRotFloor(dp);
+                enFlagSetMoved(dp);
+                enSetNewSize(dp, 150.0f, 800.0f, 750.0f, 750.0f);
+                enAddHP(dp, 100.0f);
+                enFlagSetNoDamage(dp);
+                ENEMY_NEXT_SUB_STEP();
+            }
+
+            break;
+        case 3:
+            if (dp->anim_n == -1) {
+                enFlagResetNoDamage(dp);
+                ENEMY_STEP(ENEMY_MKN_STATE_CHASE);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlWaitJump);
 
@@ -994,7 +1085,46 @@ static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer);
+static int enMKNCanSeePlayer(EnLOCAL_DATA* dp) {
+    float* ppos =  enGetPlayerPos(dp);
+    float dist; float a; 
+    int wcd = enGetWorldCondition();
+    dist = enCheckPath2(dp, ppos, (float*) &dp->scp->pos);
+    if (dist >= 0.0f) {
+        if ((wcd >= 2) && enCheckSeeLight(dp) && !(enLocalWork.Status & 1)) {
+            
+            return 1;
+        }
+        return 0;
+    }
+    dist = dp->p_dist;
+    switch (wcd) {
+        case 0:
+            if (dist > 5000.0f) return 0;        
+            break;
+        case 1:
+            if (dist > 2000.0f) return 0;        
+            break;
+            
+        case 2: case 3:
+            if (dist > 4000.0f) return 0;        
+            break;
+        case 4:
+            if (dist > 1100.0f) return 0;        
+            break;
+    }
+    a = enCalcDirection(ppos, (float*) &dp->scp->pos);
+    a = enCalcAngleDifference(a, dp->scp->rot.y);
+    if ((dist < 1100.0f) && (a < TO_RAD(15)) && !(enCheckNoDamageHuman(dp))) {
+        
+        return 2;
+    }
+    if (enLocalWork.Status & 1) return 0;
+    if ((wcd >= 2) && (enCheckSeeLight(dp))) return 1;
+    
+    if (a > TO_RAD(60)) return 0;
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer2);
 

@@ -46,6 +46,7 @@
 #include "GFW/sh2gfw_2d_filters.h"
 
 #pragma fast_fptosi on
+#pragma force_active on
 
 static int DdsPlay(DramaDemo_PlayInfo* info);
 static int DramaDemoInit(DramaDemo_PlayInfo* info);
