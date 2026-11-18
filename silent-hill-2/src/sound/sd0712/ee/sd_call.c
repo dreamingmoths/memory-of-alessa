@@ -37,8 +37,8 @@ enum SD_CALL_CALLS {
     SD_CALL_INIT    = 1000,
     SD_3D_MONO_ON   = 1005,
     SD_3D_MONO_OFF  = 1006,
-    SD_3D_MODE_ON   = 1041,
-    SD_3D_MODE_OFF  = 1040,
+    SD_3D_MODE_OFF  = 1041,
+    SD_3D_MODE_ON   = 1040,
     SD_3D_SET_VOL   = 1025,
 };
 
@@ -1645,10 +1645,10 @@ int sd_call(int call, int direct, int dist, int pitch) {
         case SD_3D_MONO_OFF:
             Sd3dSteMono(0);
             break;
-        case SD_3D_MODE_ON:
+        case SD_3D_MODE_OFF:
             Sd3dMode(0);
             break;
-        case SD_3D_MODE_OFF:
+        case SD_3D_MODE_ON:
             Sd3dMode(1);
             break;
         case SD_3D_SET_VOL:

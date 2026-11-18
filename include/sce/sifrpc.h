@@ -2,7 +2,7 @@
 #define SIFRPC_H
 
 #define SIF_RPCM_NOWAIT		0x01	// execute asynchronously
-#define SIF_RPCM_NOWBDC		0x02	/* don't write back to d-cache */
+#define SIF_RPCM_NOWBDC		0x02	// don't write back to d-cache
 
 typedef struct _sif_rpc_data {
     void* paddr;       /* packet address */
