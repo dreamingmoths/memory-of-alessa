@@ -32,6 +32,7 @@
 #include "SH2_common/sh2dt.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/playing_info.h"
+#include "SH2_common/pad.h"
 
 #include "vec.h"
 
@@ -222,7 +223,7 @@ void enExecTask(void) {
     max = 0;
     for (i = 0; i < 32; i++, dp ++) {
         if (dp->kind > 0 && dp->kind < 16) {
-            dp->p_dist = shVectorDist((float*) &dp->scp->pos, (float*) p_pos);dist[max] = dp->p_dist;
+            dp->p_dist = shVectorDist((float*) &dp->scp->pos, (float*) p_pos); dist[max] = dp->p_dist;
             num[max] = i;
             dp->flag &= ~0x1000;
             max++;
@@ -375,50 +376,50 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enInitData);
 void (*enInitDataFunc[15])(EnLOCAL_DATA*) = { enSCUInitData, enMKNInitData, enTYUInitData, enREDInitData, enONIInitData, enNSEInitData, enIKEInitData, enPAPInitData, enEDBInitData, enARMInitData, enBOSInitData, enNIKInitData, enTY2InitData, enTY3InitData, enINSInitData };
 #endif
 
-void enDeleteEnemy(EnLOCAL_DATA* dp /* r2 */) {
+void enDeleteEnemy(EnLOCAL_DATA* dp) {
     if (dp != NULL) {
-        dp->kind = 0;
+        dp->kind = EnKIND_NONE;
         fogEraseObj((dp - enLocalWork.Data) + 10);
     }
 }
 
-void enDummyCtrl(EnLOCAL_DATA* dp /* r2 */) {
-    void* tmp; // r2 // nice function
+void enDummyCtrl(EnLOCAL_DATA* dp) {
+    void* tmp;
 }
 
-int enTransID(int id /* r2 */) {
+int enTransID(int id) {
     switch (id) {
         case EN_SCU_CHARA_KIND:
-            return 1;
+            return EnKIND_SCU;
         case EN_MKN_CHARA_KIND:
-            return 2;
+            return EnKIND_MKN;
         case EN_TYU_CHARA_KIND:
-            return 3;
+            return EnKIND_TYU;
         case EN_TY2_CHARA_KIND:
-            return 13;
+            return EnKIND_TY2;
         case EN_TY3_CHARA_KIND:
-            return 14;
+            return EnKIND_TY3;
         case EN_RED_CHARA_KIND:
-            return 4;
+            return EnKIND_RED;
         case EN_ONI_CHARA_KIND:
-            return 5;
+            return EnKIND_ONI;
         case EN_NSE_CHARA_KIND:
         case EN_XOO_CHARA_KIND:
-            return 6;
+            return EnKIND_NSE;
         case EN_IKE_CHARA_KIND:
-            return 7;
+            return EnKIND_IKE;
         case EN_PAP_CHARA_KIND:
-            return 8;
+            return EnKIND_PAP;
         case EN_LLL_EDI_CHARA_KIND:
-            return 9;
+            return EnKIND_EDB;
         case EN_ARM_CHARA_KIND:
-            return 10;
+            return EnKIND_ARM;
         case EN_BOS_CHARA_KIND:
-            return 11;
+            return EnKIND_BOS;
         case ITEM_B_NIK_CHARA_KIND:
-            return 12;
+            return EnKIND_NIK;
         default:
-            return 0;
+            return EnKIND_NONE;
     }
 }
 
@@ -438,9 +439,9 @@ int enGetPlace(void) {
     
     switch (place) {
         case 9:
-            ret = 1;break;
+            ret = 1; break;
         case 10:
-            ret = 2;break;
+            ret = 2; break;
         case 11:
             ret = 3;
         break;
@@ -448,7 +449,7 @@ int enGetPlace(void) {
             ret = 4;
         break;
         case 13:
-            ret =5;
+            ret = 5;
         break;
     }
 
@@ -541,10 +542,10 @@ void enSetBattleTarget(EnLOCAL_DATA* dp /* r16 */, u_int type /* r2 */) {
     dp->scp->battle.target = shBattleGetTargetHuman(dp->scp, type);
 }
 
-void enSetHP(EnLOCAL_DATA* dp /* r17 */, float hp /* r21 */, float endurance /* r20 */) {
-    shBattleInfo* bi = &dp->scp->battle; // r16
+void enSetHP(EnLOCAL_DATA* dp, float hp, float endurance) {
+    shBattleInfo* bi = &dp->scp->battle;
     
-    if ((dp->kind == 1) || (dp->kind == 2) || (dp->kind == 6)) {
+    if ((dp->kind == EnKIND_SCU) || (dp->kind == EnKIND_MKN) || (dp->kind == EnKIND_NSE)) {
         switch (enGetPlace()) {
             case 2:
                 hp *= 1.5f;
@@ -612,16 +613,16 @@ float enAddEnduranceDT(EnLOCAL_DATA* dp /* r17 */, float n /* r20 */) {
 }
 
 //#line 777
-int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
-   shBattleInfo * bi = &dp->scp->battle; /* r16 */
+int enCheckDamage(EnLOCAL_DATA* dp) {
+   shBattleInfo * bi = &dp->scp->battle;
    if (bi->damage == 0.0f) {
         dp->d_count = (char) 0;
         return 0;
     }
     if ((bi->status & 0x40) 
     || (bi->id >= 25 && bi->id < 35 && !(bi->status & 0x4))
-    || (dp->kind == 1 && bi->id == 36) 
-    || (dp->kind == 3 && bi->id == 51)) {    
+    || (dp->kind == EnKIND_SCU && bi->id == 36) 
+    || (dp->kind == EnKIND_TYU && bi->id == 51)) {    
         
         
         bi->damage = 0.0f;
@@ -629,9 +630,9 @@ int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
         return 0;
     }
     if ((bi->id == 8) || (bi->id == 9)) {
-        if (dp->kind != 1 && dp->kind != 2 
-        && dp->kind != 6 && dp->kind != 3 
-        && dp->kind != 15 && dp->kind != 8 
+        if (dp->kind != EnKIND_SCU && dp->kind != EnKIND_MKN 
+        && dp->kind != EnKIND_NSE && dp->kind != EnKIND_TYU 
+        && dp->kind != EnKIND_INS && dp->kind != EnKIND_PAP 
         && (enGetSprayPower() >= 0) && enGetSprayPower() < 2) {
             
             bi->damage = 0.0f;
@@ -640,8 +641,8 @@ int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
         }
     }
     
-    if (shPadGetPort() == 6 && shPadPress(0, 0x40000)) {
-        dp->endurance = 0.0f;bi->hp_rate = 0.0f;bi->hp = 0.0f;
+    if (shPadGetPort() == 6 && shPadPress(0, PAD_KEY_L2)) {
+        dp->endurance = 0.0f; bi->hp_rate = 0.0f; bi->hp = 0.0f;
     }
     
     bi->damage /= shIntToFloat(++dp->d_count);
@@ -649,14 +650,14 @@ int enCheckDamage(EnLOCAL_DATA* dp /* r17 */) {
     return 1;
 }
 
-int enCheckSpray(EnLOCAL_DATA* dp /* r2 */) {
+int enCheckSpray(EnLOCAL_DATA* dp) {
     if ((dp->last_atk == 8) || (dp->last_atk == 9)) {
         return 1;
     }
     return 0;
 }
 
-void enResetDamage(EnLOCAL_DATA* dp /* r2 */) {
+void enResetDamage(EnLOCAL_DATA* dp) {
     dp->scp->battle.id = 0;
     dp->scp->battle.damage = 0.0f;
     dp->scp->battle.shock = 0.0f;
@@ -667,66 +668,66 @@ int enCheckDeath(EnLOCAL_DATA* dp) {
     return 0;
 }
 
-void enSetHitBack(EnLOCAL_DATA* dp /* r2 */) {
-    Vector4 vec; // r29
-    shBattleInfo* bi = &dp->scp->battle; // r3
-    shNormalizeVector((float*)&bi->vec, (float*)&vec);
-    dp->hb_x = vec.x;
-    dp->hb_z = vec.z;
+void enSetHitBack(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR vec;
+    shBattleInfo* bi = &dp->scp->battle;
+    shNormalizeVector(&bi->vec, vec);
+    dp->hb_x = vec[0];
+    dp->hb_z = vec[2];
     dp->hb_s = (2.0f * bi->shock);
     bi->shock = 0.0f;
 }
 
-int enCheckInstantDeath(EnLOCAL_DATA* dp /* r2 */) {
-    if ((dp->last_atk >= 0x19) && (dp->last_atk < 0x23)) {
+int enCheckInstantDeath(EnLOCAL_DATA* dp) {
+    if ((dp->last_atk >= 25) && (dp->last_atk < 35)) {
         return 1;
     }
     return 0;
 }
 
-void enSetSize(EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+void enSetSize(EnLOCAL_DATA* dp, float size, float tall, float center, float eye) {
     dp->size = dp->new_size = size;
     dp->tall = dp->new_tall = tall;
     dp->center_y = dp->new_center = center;    
     dp->eye_y = dp->new_eye = eye;
 }
 
-void enSetNewSize(EnLOCAL_DATA* dp /* r2 */, float size /* r29 */, float tall /* r29 */, float center /* r29 */, float eye /* r29 */) {
+void enSetNewSize(EnLOCAL_DATA* dp, float size, float tall, float center, float eye) {
     dp->new_size = size;
     dp->new_tall = tall;
     dp->new_center = center;
     dp->new_eye = eye;
 }
 
-void enSetSeeLightStatus(EnLOCAL_DATA* dp /* r2 */, float center /* r29 */, float radius /* r29 */) {
-    shBattleInfo* bi = &dp->scp->battle; // r2
+void enSetSeeLightStatus(EnLOCAL_DATA* dp, float center, float radius) {
+    shBattleInfo* bi = &dp->scp->battle;
     bi->look.center = center;
     bi->look.radius = radius;
     bi->feel.radius = 0.0f;
     bi->feel.center = 0.0f;
 }
 
-int enCheckSeeLight(EnLOCAL_DATA* dp /* r2 */) {
+int enCheckSeeLight(EnLOCAL_DATA* dp) {
     return shBattleSeeHumanLight(dp->scp) == 1;
 }
 
-int enCheckAimedByHuman(EnLOCAL_DATA* dp /* r2 */) {
+int enCheckAimedByHuman(EnLOCAL_DATA* dp) {
     return shBattleAimedByHuman(dp->scp);
 }
 
-int enCheckFinishedByHuman(EnLOCAL_DATA* dp /* r2 */) {
+int enCheckFinishedByHuman(EnLOCAL_DATA* dp) {
     return shBattleFinishedByHuman(dp->scp);
 }
 
-int enCheckNoDamageHuman(EnLOCAL_DATA* dp /* r2 */) {
-    if (dp->scp->battle.target->kind != 0x105) {
+int enCheckNoDamageHuman(EnLOCAL_DATA* dp) {
+    if (dp->scp->battle.target->kind != LLL_MAR_CHARA_KIND) {
         return shBattleNoDamageHumanJames();
     }
     
     return shBattleNoDamageHumanMaria();
 }
 
-void enAttackStart(EnLOCAL_DATA* dp /* r16 */) {
+void enAttackStart(EnLOCAL_DATA* dp) {
     shBattleAttackHitCheckInit(dp->scp);
     ENEMY_FLAG_SET(ENEMY_FLAG_2);
 }
@@ -748,7 +749,7 @@ int enAttackCheck(EnLOCAL_DATA* dp /* r2 */, int ID /* r2 */) {
     return result;
 }
 
-int enAttackCheckHug(EnLOCAL_DATA* dp /* r16 */, int ID /* r2 */)  {
+int enAttackCheckHug(EnLOCAL_DATA* dp, int ID)  {
     shBattleAttackHitCheckToHuman(dp->scp, ID);
     return dp->scp->battle.atk_result;
 }
@@ -771,12 +772,12 @@ int enCheckSleepOut(EnLOCAL_DATA* dp) {
     return 0;
 }
 
-void enSleepIn(EnLOCAL_DATA* dp /* r2 */) {
+void enSleepIn(EnLOCAL_DATA* dp) {
     dp->mlv = 2;
     ENEMY_BATTLE_FLAG_UNSET(MOVED_FLAG);
 }
 
-void enSleepOut(EnLOCAL_DATA* dp /* r2 */) {
+void enSleepOut(EnLOCAL_DATA* dp) {
     dp->mlv = 1;
     ENEMY_BATTLE_FLAG_UNSET((LIE_DOWN_FLAG | CRITICAL_FLAG | NO_DAMAGE_FLAG));
     ENEMY_BATTLE_FLAG_SET(MOVED_FLAG);
@@ -786,7 +787,7 @@ void enKillCountUp(EnLOCAL_DATA* dp /* r2 */) {
     GameKillEnemyCountUp(dp->last_atk);
 }
 
-float* enGetPlayerPos(EnLOCAL_DATA* dp /* r2 */) {
+float* enGetPlayerPos(EnLOCAL_DATA* dp) {
     if (dp->scp->battle.target == sh2jms.player) {
         return &sh2jms.column_mov.p;
     }
@@ -798,7 +799,7 @@ float enGetPlayerDistance(EnLOCAL_DATA* dp) {
 }
 
 float enGetPlayerDirection(EnLOCAL_DATA* dp) {
-    sceVu0FVECTOR vec; // r29+0x20
+    sceVu0FVECTOR vec;
     shSubVector(vec, enGetPlayerPos(dp), &dp->scp->pos);
     return shAtanV(&vec);
 }
@@ -816,7 +817,7 @@ int enCheckPlayerWeapon(void) {
     return 0;
 }
 
-float enGetPlayerAngle(EnLOCAL_DATA* dp /* r2 */) {
+float enGetPlayerAngle(EnLOCAL_DATA* dp) {
     return dp->scp->battle.target->rot.y;
 }
 
@@ -824,11 +825,11 @@ float enGetPlayerSize(void) {
     return sh2jms.column_mov.p[1][3];
 }
 
-int enCheckPlayerSound(EnLOCAL_DATA* dp /* r2 */) {
+int enCheckPlayerSound(EnLOCAL_DATA* dp) {
     return shBattleListenHumanSound(dp->scp, dp->scp->battle.target);
 }
 
-int enCheckPlayerCondition(EnLOCAL_DATA* dp /* r17 */) {
+int enCheckPlayerCondition(EnLOCAL_DATA* dp) {
     int r = 0; // r16
     int w; // r2
     float a; // r29+0x30
@@ -858,7 +859,7 @@ int enCheckPlayerSprayNow(void) {
 }
 
 int enGetSprayPower(void) {
-    int n = playing.spray_pow; // r2
+    int n = playing.spray_pow;
     if (n == 1) n = 0;        
     return n;
 }
@@ -924,7 +925,7 @@ void enFlagResetDead(EnLOCAL_DATA* dp) {
 
 void enFlagSetRotFloor(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_SET(ENEMY_FLAG_11);
-    dp->scp->status |= 0x80;
+    dp->scp->status |= (1 << SCP_STATUS_BIT_ROT_ZYX);
 }
 
 void enFlagResetRotFloor(EnLOCAL_DATA* dp) {
@@ -936,19 +937,19 @@ void enFlagResetRotFloorJust(EnLOCAL_DATA* dp) {
     ENEMY_FLAG_UNSET(ENEMY_FLAG_11);
     dp->trx = dp->trz = 0.0f;
     dp->scp->rot.x = dp->scp->rot.z = 0.0f;
-    dp->scp->status &= ~0x80;
+    dp->scp->status &= ~(1 << SCP_STATUS_BIT_ROT_ZYX);
 }
 
 void enFlagSetDisplay(EnLOCAL_DATA* dp) {
-    dp->scp->status |= 0x410;
+    dp->scp->status |= (1 << SCP_STATUS_BIT_4) | (1 << SCP_STATUS_BIT_10);
 }
 
 void enFlagResetDisplay(EnLOCAL_DATA* dp) {
-    dp->scp->status &= ~0x410;
+    dp->scp->status &= ~((1 << SCP_STATUS_BIT_4) | (1 << SCP_STATUS_BIT_10));
 }
 
 float enCalcDirection(float* pa, float* pb) {
-    sceVu0FVECTOR vec; // r29+0x10
+    sceVu0FVECTOR vec;
     shSubVector(vec, pa, pb);    
     return shAtanV(&vec);
 }
@@ -1081,17 +1082,17 @@ void enCheckNearPlayer(EnLOCAL_DATA* dp, int* count, float* dist, float limit) {
     shVectorZero(dp->vec);
 }
 
-void enSetRadioVolume(EnLOCAL_DATA* dp /* r2 */) {
-    if ((dp->kind == 4) && (dp->type == 0)) {
+void enSetRadioVolume(EnLOCAL_DATA* dp) {
+    if ((dp->kind == EnKIND_RED) && (dp->type == 0)) {
         dp->radio = 1.0f;
         return;
     }
-    if ((dp->kind == 7) || (dp->kind == 9) || (dp->kind == 4) || (dp->kind == 5) || (dp->kind == 0xB) || !(dp->scp->status & 0x10)) {
-        dp->radio = 0;
+    if ((dp->kind == EnKIND_IKE) || (dp->kind == EnKIND_EDB) || (dp->kind == EnKIND_RED) || (dp->kind == EnKIND_ONI) || (dp->kind == EnKIND_BOS) || !(dp->scp->status & (1 << SCP_STATUS_BIT_4))) {
+        dp->radio = 0.0f;
         return;
     }
     if (ENEMY_BATTLE_FLAG_CHECK(MOVED_FLAG)) {
-        if (dp->kind == 3) {
+        if (dp->kind == EnKIND_TYU) {
             dp->radio = 0.5f;
             return;
         }
@@ -1102,7 +1103,7 @@ void enSetRadioVolume(EnLOCAL_DATA* dp /* r2 */) {
         dp->radio = 1.0f;
         return;
     }
-    dp->radio = 0;
+    dp->radio = 0.0f;
 }
 
 void enMoveAngle(EnPATH_DATA* p /* r16 */, float delta /* r20 */) {
@@ -1152,13 +1153,13 @@ void enMoveExec(EnLOCAL_DATA* dp /* r16 */) {
         dp->eye_y = e;
     }
     if (dp->scp->battle.status & 2) {
-        if ((dp->kind != 7) && (dp->kind != 12) && (dp->kind != 5) && ((dp->kind != 8) || (dp->type != 1))) {
+        if ((dp->kind != EnKIND_IKE) && (dp->kind != EnKIND_NIK) && (dp->kind != EnKIND_ONI) && ((dp->kind != EnKIND_PAP) || (dp->type != 1))) {
             
             
             return;
         }
     }
-    if ((dp->kind != 7) && (dp->kind != 10) && (dp->kind != 15)) {
+    if ((dp->kind != EnKIND_IKE) && (dp->kind != EnKIND_ARM) && (dp->kind != EnKIND_INS)) {
         
         vec_copy_reverse(&dp->scp->pos, &dp->scp->b_pos);
     }
@@ -1210,7 +1211,7 @@ void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
     float s; /* r20 */ float t; /* r21 */ float c; /* r22 */ float e; /* r23 */ float* pos; /* r2 */ int ID; /* r16 */
     FOG_OBJ_DATA* od; /* r2 */
 
-    if ((dp->flag & 8) || ((dp->kind != 12) && !(dp->scp->status & 16))) {
+    if ((dp->flag & 8) || ((dp->kind != EnKIND_NIK) && !(dp->scp->status & 16))) {
         
         
         fogEraseObj(dp - enLocalWork.Data + 10);
@@ -1236,8 +1237,8 @@ void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
     } else if (dp->flag & 0x40) {
         if (!(dp->flag & 0x400)) {
             
-            if (dp->kind == 12) {
-                shScaleVector(vec, &(dp->arm.hand_pos), 0.8f);
+            if (dp->kind == EnKIND_NIK) {
+                shScaleVector(vec, dp->nik.swing, 0.8f);
             } else {
                 enGetSkeletonVector(&vec, dp, EnSkeletonDataC[dp->kind]);
                 shRotVectorY(&vec, &vec, dp->scp->rot.y);
@@ -1245,7 +1246,7 @@ void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
             column.p[0][0] += vec[0];
             column.p[0][2] += vec[2];
         }
-        if (dp->kind == 10) {
+        if (dp->kind == EnKIND_ARM) {
             column.p[1][1] = 500.0f + pos[1];
             column.p[0][1] += 500.0f + t;
         } else {
@@ -1263,7 +1264,7 @@ void enSetHitColumn(EnLOCAL_DATA* dp /* r17 */) {
             column.p[0][0] += vec[0];
             column.p[0][2] += vec[2];
         }
-        if ((dp->kind == 11) && (dp->slv < 5)) {
+        if ((dp->kind == EnKIND_BOS) && (dp->slv < 5)) {
             column.p[0][1] = 400.0f + pos[1];
             column.p[1][1] = 400.0f + (pos[1] - t);
         } else {
@@ -1381,7 +1382,7 @@ void enDyingExec(EnLOCAL_DATA* dp /* r16 */) {
         enFlagResetLieDown(dp);
         enFlagResetMoved(dp);
         fogEraseObj(dp - enLocalWork.Data + 10);
-        if ((dp->kind == 1) || (dp->kind == 2) || (dp->kind == 6) || (dp->kind == 3)) {
+        if ((dp->kind == EnKIND_SCU) || (dp->kind == EnKIND_MKN) || (dp->kind == EnKIND_NSE) || (dp->kind == EnKIND_TYU)) {
 
             float regenerate_rate[5] = {0.0f, 0.05f, 0.2f, 0.6f, 0.8f}; // r29+0x30
             
@@ -1427,12 +1428,11 @@ void enWaitRegenerate(EnLOCAL_DATA* dp) {
     }
 }
 
-//#line 1911
-void enFlyingFunc(SubCharacter* scp /* r2 */) {
+void enFlyingFunc(SubCharacter* scp) {
     void* tmp; // r2
 }
 
-void enDeleteCharacter(EnLOCAL_DATA* dp /* r2 */) {
+void enDeleteCharacter(EnLOCAL_DATA* dp) {
     shCharacter_Manage_Delete(dp->scp, dp->scp->kind, dp->scp->id);
 }
 
@@ -1597,7 +1597,7 @@ int enSetPath(EnLOCAL_DATA* dp, float* target, float* pos) {
 }
 
 float enCheckPath(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
-    sceVu0FVECTOR sp, ep; // r29+0x10
+    sceVu0FVECTOR sp, ep;
     shVectorCopy(sp, mpos);
     shVectorCopy(ep, tpos);
     if (ENEMY_FLAG_CHECK(ENEMY_FLAG_6)) {
@@ -1635,7 +1635,7 @@ float enCheckPath2(EnLOCAL_DATA* dp, float* tpos, float* mpos) {
 }
 
 float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
-    sceVu0FVECTOR tp; // r29+0x30
+    sceVu0FVECTOR tp;
     enMakeRotVector(tp, rot, range);
     shAddVector(tp, pos, tp);
     return enCheckHitEyes(dp, pos, tp);
@@ -1643,9 +1643,9 @@ float enCheckForward(EnLOCAL_DATA* dp, float* pos, float* rot, float range) {
 
 
 float enCheckHitEyes(EnLOCAL_DATA* dp, float* sp, float* ep) {
-    CL_VHIT_RESULT* res = &enLocalWork.HitResult; // r16
-    int f = 0; // r19
-    sceVu0FVECTOR cp; // r29+0x50
+    CL_VHIT_RESULT* res = &enLocalWork.HitResult;
+    int f = 0;
+    sceVu0FVECTOR cp;
     
 
     shVectorCopy(cp, ep);
@@ -1685,9 +1685,9 @@ float enCheckHitEyes2(EnLOCAL_DATA* dp, float* sp, float* ep) {
 }
 
 float enCheckPlayerHitEyes(EnLOCAL_DATA* dp, float* ep) {
-    CL_VHIT_RESULT* res = &enLocalWork.HitResult; // r16
-    sceVu0FVECTOR p1; // r29+0x20    
-    sceVu0FVECTOR p2; // r29+0x30
+    CL_VHIT_RESULT* res = &enLocalWork.HitResult;
+    sceVu0FVECTOR p1;   
+    sceVu0FVECTOR p2;
 
 
     shVectorCopy(p1, &dp->scp->battle.target->pos);
@@ -1705,7 +1705,7 @@ float enCheckPlayerHitEyes(EnLOCAL_DATA* dp, float* ep) {
 int enCheckFloor(float* pos) {
     CL_VHIT_RESULT* res = &enLocalWork.HitResult;
     sceVu0FVECTOR vec1, vec2;
-    int m; // r3
+    int m;
     shVectorCopy(vec1, pos);
     shVectorCopy(vec2, pos);
     vec1[1] -= 100.0f;
@@ -1728,7 +1728,7 @@ void enGetSkeletonVector(float* vec, EnLOCAL_DATA* dp, int n) {
     Matrix4* m; // not present in DWARF
     
     sp = dp->scp->sk_top;
-    if (!(dp->scp->status & 0x10)) {
+    if (!(dp->scp->status & (1 << SCP_STATUS_BIT_4))) {
         shVectorZero(vec);
         return;
     }
@@ -2386,35 +2386,35 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa, float* sp, float* ep, float siz
 
 }
 
-void enEventDriven(int event /* r2 */, int id /* r2 */) {
-    int i; // r3
-    EnLOCAL_DATA* dp = enLocalWork.Data; // r6
+void enEventDriven(int event, int id) {
+    int i;
+    EnLOCAL_DATA* dp = enLocalWork.Data;
 
     switch (event) {
         case 0:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if (dp->kind != 0 && dp->mlv != 0) {
+                if (dp->kind != EnKIND_NONE && dp->mlv != 0) {
                     dp->mlv = 0;
                 }
             }
             break;
         case 1:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if (dp->kind != 0 && dp->mlv != 1) {
+                if (dp->kind != EnKIND_NONE && dp->mlv != 1) {
                     dp->mlv = 3;
                 }
             }
             break;
         case 2:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if (dp->kind == 2 && dp->type == 6) {
+                if (dp->kind == EnKIND_MKN && dp->type == 6) {
                     dp->type = 7;
                 }
             }
             break;
         case 3:
             for (i = 0; i < ENEMY_MAX; i++, dp++) {
-                if (dp->kind == 4) {
+                if (dp->kind == EnKIND_RED) {
                     dp->mlv = 4;
                     dp->slv = 3;
                 }
