@@ -37,9 +37,9 @@ enum SD_CALL_CALLS {
     SD_CALL_INIT    = 1000,
     SD_3D_MONO_ON   = 1005,
     SD_3D_MONO_OFF  = 1006,
-    SD_3D_MODE_OFF  = 1041,
-    SD_3D_MODE_ON   = 1040,
     SD_3D_SET_VOL   = 1025,
+    SD_3D_MODE_ON   = 1040,
+    SD_3D_MODE_OFF  = 1041,
 };
 
 static int dpath = 0; // size: 0x4, address: 0x1013B90
@@ -1655,13 +1655,13 @@ int sd_call(int call, int direct, int dist, int pitch) {
             Sd3dSetMVol(direct);
             break;
         default:
-            if ((call >= 60000) && (call < 60087)) {
+            if (call >= 60000 && call < 60087) {
 
                 sd_str_status[0] = 2;
                 sd_str_status[1] = 2;
                 sd_stat_timer = 5;
             }
-            if ((call >= 5000) && (call < 5079)) {
+            if (call >= 5000 && call < 5079) {
 
                 sd_read_status = 1;
                 sd_stat_timer = 5;
@@ -1669,7 +1669,7 @@ int sd_call(int call, int direct, int dist, int pitch) {
     }
 
 
-    if (sd_que < 0x40) {
+    if (sd_que < 64) {
 
         sd_que++;
         sd_call_data[sd_que].call = call;
@@ -1690,7 +1690,7 @@ int sd_call(int call, int direct, int dist, int pitch) {
 
 int sd_se_stop(int call) {
 
-    if ((call < 10000) || (call > 19999)) return -2;
+    if (call < 10000 || call > 19999) return -2;
     return sd_call(call + 10000, 0, 0, 0);
 }
 
@@ -1701,7 +1701,7 @@ int sd_se_stop(int call) {
 
 int sd_se_change(int call, int direct, int dist, int pitch) {
 
-    if ((call < 10000) || (call > 19999)) return -2;
+    if (call < 10000 || call > 19999) return -2;
     return sd_call(call + 20000, direct, dist, pitch);
 }
 
@@ -1796,7 +1796,7 @@ void sd_vsync(void) {
 
 
         i++;
-        if (i >= 600001) break;
+        if (i > 600000) break;
     }
 
     sd_que = -1;
