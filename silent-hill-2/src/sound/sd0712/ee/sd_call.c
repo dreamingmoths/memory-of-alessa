@@ -2008,7 +2008,7 @@ static int Sd3dInit(void) {
     }
 
 
-    gpbuffwork = malloc(288); //@note: where is this used?
+    gpbuffwork = malloc(288); //@todo: where is this used?
 
 
 
@@ -2132,7 +2132,7 @@ int sd_3d_call(int call, int arg1, int arg2, float arg3, float arg4) {
 
 
 
-static int Sd3dPrePlay(int call /* r2 */, int arg1 /* r2 */, int arg2 /* r2 */, float arg3 /* r29+0x20 */, float arg4 /* r29+0x20 */) {
+static int Sd3dPrePlay(int call, int arg1, int arg2, float arg3, float arg4) {
     int ret; // r2
     int i; // r16
     ret = -1;
