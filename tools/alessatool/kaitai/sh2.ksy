@@ -12728,6 +12728,444 @@ types:
       - id: hero
         type: kanri
 
+  shadow_packet_buf:
+    seq:
+      - id: head
+        type: pointer('q_worddata')
+
+      - id: curr
+        type: pointer('q_worddata')
+
+  shadow_shape_frame:
+    seq:
+      - id: local_world
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: local_light_position
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: length
+        type: q_worddata
+        size: 16
+
+      - id: p_ref_packet
+        type: pointer('data')
+
+      - id: p_raw_data
+        type: pointer('data')
+
+      - id: p_kick_addr
+        type: pointer('data')
+
+      - id: obj_id
+        type: s2
+
+      - size: 2
+
+  shadow_char_man:
+    seq:
+      - id: scp
+        type: pointer('sub_character')
+
+      - id: kind
+        type: u2
+
+      - id: id
+        type: s2
+
+      - id: obj_num
+        type: u1
+
+      - size: 3
+
+      - id: spot_cam_angle
+        type: f4
+
+      - id: light_kind
+        type: s2
+
+      - size: 14
+
+      - id: light_pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_param
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: drop_shadow_matrix
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: raw_data
+        type: pointer('q_worddata')
+
+      - id: shape
+        type: pointer('shadow_shape_frame')
+
+      - size: 8
+
+  shadow_outdoor_man:
+    seq:
+      - id: kind
+        type: u2
+
+      - id: map_id
+        type: s2
+
+      - id: lighting_mode
+        type: u1
+
+      - id: obj_num
+        type: u1
+
+      - id: light_kind
+        type: s2
+
+      - size: 8
+
+      - id: light_pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: light_param
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: raw_data
+        type: pointer('q_worddata')
+
+      - id: shape
+        type: pointer('shadow_shape_frame')
+
+      - size: 8
+
+  shadow_man:
+    seq:
+      - id: change_flag
+        type: s1
+
+      - size: 1
+
+      - id: spot_char_num
+        type: s2
+
+      - id: spot_bg_num
+        type: s2
+
+      - id: self_num
+        type: s2
+
+      - id: parallel_char_num
+        type: s2
+
+      - id: parallel_bg_num
+        type: s2
+
+      - id: point_char_num
+        type: s2
+
+      - id: char_man_num
+        type: s2
+
+      - id: outdoor_man_num
+        type: s2
+
+      - id: enemy_num
+        type: s2
+
+      - id: chr_shadow_switch
+        type: s2
+
+      - id: bg_shadow_switch
+        type: s2
+
+      - id: char_man
+        type: pointer('shadow_char_man')
+        repeat: expr
+        repeat-expr: 16
+
+      - id: outdoor_man
+        type: pointer('shadow_outdoor_man')
+        repeat: expr
+        repeat-expr: 4
+
+      - id: reftag_pool
+        type: shadow_packet_buf
+
+      - id: kick_packet
+        type: shadow_packet_buf
+
+  shadow_micro_frame:
+    seq:
+      - id: drop_shadow
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: world_clip
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: clip_screen
+        type: f4
+        repeat: expr
+        repeat-expr: 16
+
+      - id: color
+        type: q_worddata
+        size: 16
+
+      - id: giftag_color
+        type: q_worddata
+        size: 16
+
+      - id: giftag_dummy
+        type: q_worddata
+        size: 16
+
+      - id: giftag_default
+        type: q_worddata
+        size: 16
+
+      - id: giftag_3
+        type: q_worddata
+        size: 16
+
+      - id: giftag_4
+        type: q_worddata
+        size: 16
+
+      - id: giftag_5
+        type: q_worddata
+        size: 16
+
+      - id: giftag_6
+        type: q_worddata
+        size: 16
+
+      - id: giftag_7
+        type: q_worddata
+        size: 16
+
+      - id: giftag_8
+        type: q_worddata
+        size: 16
+
+      - id: giftag_9
+        type: q_worddata
+        size: 16
+
+      - id: giftag_10
+        type: q_worddata
+        size: 16
+
+      - id: alpha0
+        type: q_worddata
+        size: 16
+
+      - id: alpha1
+        type: q_worddata
+        size: 16
+
+      - id: flags
+        type: q_worddata
+        size: 16
+
+      - id: y_unit
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: dummy
+        type: f4
+        repeat: expr
+        repeat-expr: 12
+
+      - id: cam_pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: spot_cam_dir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: p_kick_addr
+        type: pointer('data')
+
+      - id: p_raw_data
+        type: pointer('data')
+
+      - size: 8
+
+  shadow_off_work_bg:
+    seq:
+      - id: map_id
+        type: s2
+
+      - id: obj_id
+        type: s2
+        repeat: expr
+        repeat-expr: 32
+
+  shadow_off_work_char:
+    seq:
+      - id: kind
+        type: u2
+
+      - id: id
+        type: s2
+
+      - id: obj_id
+        type: s2
+        repeat: expr
+        repeat-expr: 22
+
+  jms_shadow_env:
+    seq:
+      - id: light_kind
+        type: s2
+
+      - size: 2
+
+      - id: bias
+        type: f4
+
+      - id: height_revision
+        type: f4
+
+      - id: scale
+        type: f4
+
+  shadow_char_head:
+    seq:
+      - id: char_id
+        type: s2
+
+      - id: kind
+        type: u2
+
+      - id: obj_num
+        type: s2
+
+      - id: reserve1
+        type: s2
+
+      - id: reserve2
+        type: s2
+
+      - id: reserve3
+        type: s2
+
+      - id: reserve4
+        type: s2
+
+      - id: reserve5
+        type: s2
+
+  shadow_outdoor_head:
+    seq:
+      - id: kind
+        type: u2
+
+      - id: map_id
+        type: s2
+
+      - id: obj_num
+        type: s2
+
+      - id: reserve1
+        type: s2
+
+      - id: reserve2
+        type: s2
+
+      - id: reserve3
+        type: s2
+
+      - id: reserve4
+        type: s2
+
+      - id: reserve5
+        type: s2
+
+  spot_light:
+    seq:
+      - id: c
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: zdir
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: range
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  shadow_geom_head:
+    seq:
+      - id: vertex_num
+        type: s2
+
+      - id: prim
+        type: s2
+
+      - id: send_data_num
+        type: s2
+
+      - id: ee_memory_size
+        type: s2
+
+      - id: boundary_x
+        type: s2
+
+      - id: boundary_y
+        type: s2
+
+      - id: boundary_z
+        type: s2
+
+      - id: boundary_r
+        type: s2
+
+  shadow_env:
+    seq:
+      - id: block
+        type: s2
+
+      - id: clip_kind
+        type: s2
+
+      - id: leng
+        type: f4
+
   u16:
     seq:
       - id: bytes

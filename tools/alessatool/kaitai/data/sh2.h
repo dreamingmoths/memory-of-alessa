@@ -147,4 +147,6 @@ NOTE: currently two lines in `sh2.py` need fixups after this last step as they u
 #include "view/vc_main.h"
 #include "view/vc_util.h"
 
+#include "sh2shd/sh2shd_structs.h"
+
 #endif
