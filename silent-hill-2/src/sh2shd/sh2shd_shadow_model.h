@@ -95,12 +95,4 @@ static inline void hword_struct_copy(short* _dst, short* _src) {
     } while (i > 0);
 }
 
-
-typedef struct SHADOW_ENV {
-    // total size: 0x8
-    short block; // offset 0x0, size 0x2
-    short clip_kind; // offset 0x2, size 0x2
-    float leng; // offset 0x4, size 0x4
-} SHADOW_ENV;
-
 #endif // SH2SHD_SHADOW_MODEL_H
