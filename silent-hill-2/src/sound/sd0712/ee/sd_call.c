@@ -33,6 +33,15 @@ static int Sd3dPrePlay(int call, int arg1, int arg2, float arg3, float arg4);
 
 static void Sd3dPlay(int call, int arg1, int arg2, float arg3, float arg4, int no);
 
+enum SD_CALL_CALLS {
+    SD_CALL_INIT    = 1000,
+    SD_3D_MONO_ON   = 1005,
+    SD_3D_MONO_OFF  = 1006,
+    SD_3D_MODE_ON   = 1041,
+    SD_3D_MODE_OFF  = 1040,
+    SD_3D_SET_VOL   = 1025,
+};
+
 static int dpath = 0; // size: 0x4, address: 0x1013B90
 static int sdsif_rdata[64]; // size: 0x100, address: 0x10E0380
 static int sdsif_idata[64] __attribute__(( aligned(64) )); // size: 0x100, address: 0x10E0280
@@ -1616,7 +1625,7 @@ int sd_call(int call, int direct, int dist, int pitch) {
 
 
     switch (call) {
-        case 0x3e8:
+        case SD_CALL_INIT:
 
             if (!sdinitflag) {
 
@@ -1630,19 +1639,19 @@ int sd_call(int call, int direct, int dist, int pitch) {
                 if (dpath) sd_sendpath();
             }
             break;
-        case 0x3ed:
+        case SD_3D_MONO_ON:
             Sd3dSteMono(1);
             break;
-        case 0x3ee:
+        case SD_3D_MONO_OFF:
             Sd3dSteMono(0);
             break;
-        case 0x411:
+        case SD_3D_MODE_ON:
             Sd3dMode(0);
             break;
-        case 0x410:
+        case SD_3D_MODE_OFF:
             Sd3dMode(1);
             break;
-        case 0x401:
+        case SD_3D_SET_VOL:
             Sd3dSetMVol(direct);
             break;
         default:
