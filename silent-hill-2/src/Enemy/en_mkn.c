@@ -971,7 +971,59 @@ static void enMKNCtrlDamage(EnLOCAL_DATA* dp) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCtrlConfuse);
+static void enMKNCtrlConfuse(EnLOCAL_DATA* dp) {
+    EnLOCAL_DATA* tp;
+    if (enCheckDamage()) {
+        if (enCheckSpray(dp)) {
+            if (dp->sslv != 4) {
+                ENEMY_SUB_STEP(0);
+            }
+        } else {
+            ENEMY_STEP(ENEMY_MKN_STATE_DAMAGE);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enReduceHP(dp);
+        enMKNAnimeSet(dp, 2);
+        ENEMY_NEXT_SUB_STEP();
+    } 
+    if (dp->sslv >= 4) {
+        tp = dp->mkn.tp;
+        dp->path.markangle = enCalcDirection(&tp->scp->pos, &dp->scp->pos);
+        enMoveAngle(&dp->path, enMKNGetRotSpeed());
+        dp->scp->rot.y = dp->path.angle;
+        enAttackCheck(dp, dp->anim == 3 ? (u_char) 38 : (u_char) 39);
+        
+        if (dp->anim_n == -1) {
+            if (++dp->sslv < 6) {
+                enAttackStart(dp);
+                enMKNAnimeSet(dp, dp->anim == 3 ? (u_char) 4 : (u_char) 3);
+            
+            } else {               
+                ENEMY_STEP(ENEMY_MKN_STATE_PRECAUTION);
+            }
+        }
+        return;
+    }
+    if ((dp->sslv == 1) && (dp->anim_n == -1)) {
+        tp = enGetNearOtherEnemy(dp);
+        if ((tp != NULL) && enGetSprayPower() && (shFloatAbs(tp->scp->pos.y - dp->scp->pos.y) < 250.0f) && (shVectorDistXz(&tp->scp->pos, &dp->scp->pos) < 1100.0f)) { // @todo: maybe we need a different inline for shFloatAbs?
+            
+            
+            dp->mkn.tp = tp;
+            enAttackStart(dp);
+            enMKNAnimeSet(dp, ((shRandI() >> 20) & 1) + 3);
+            enInitPath(&dp->path, dp->scp->rot.y);
+            ENEMY_SUB_STEP(4);          
+        } else {
+            ENEMY_NEXT_SUB_STEP();
+            enSetTimer(dp, 600 - (enGetMode() * 90));
+        }
+    } else if ((dp->sslv == 2) && (enReduceTimer(dp) <= 0)) {
+        ENEMY_STEP(ENEMY_MKN_STATE_PRECAUTION);
+    }
+}
 
 static void enMKNCtrlDown(EnLOCAL_DATA* dp) {
     switch (dp->sslv) {
