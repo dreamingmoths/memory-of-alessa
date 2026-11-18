@@ -13166,6 +13166,29 @@ types:
       - id: leng
         type: f4
 
+  shadow_outdoor_obj_head:
+    seq:
+      - id: map_id
+        type: u4
+
+      - id: obj_id
+        type: s2
+
+      - id: geom_num
+        type: s2
+
+      - id: origin_x
+        type: s2
+
+      - id: origin_y
+        type: s2
+
+      - id: origin_z
+        type: s2
+
+      - id: origin_w
+        type: s2
+
   u16:
     seq:
       - id: bytes

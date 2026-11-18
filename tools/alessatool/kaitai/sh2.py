@@ -11885,6 +11885,27 @@ class Sh2(KaitaiStruct):
             self.shape._fetch_instances()
 
 
+    class ShadowOutdoorObjHead(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShadowOutdoorObjHead, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.map_id = self._io.read_u4le()
+            self.obj_id = self._io.read_s2le()
+            self.geom_num = self._io.read_s2le()
+            self.origin_x = self._io.read_s2le()
+            self.origin_y = self._io.read_s2le()
+            self.origin_z = self._io.read_s2le()
+            self.origin_w = self._io.read_s2le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class ShadowPacketBuf(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.ShadowPacketBuf, self).__init__(_io)

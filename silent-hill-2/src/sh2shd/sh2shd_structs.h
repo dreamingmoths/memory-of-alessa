@@ -173,4 +173,15 @@ typedef struct SHADOW_ENV {
     float leng;      // offset 0x4, size 0x4
 } SHADOW_ENV;
 
+typedef struct SHADOW_OUTDOOR_OBJ_HEAD {
+    // total size: 0x10
+    u_int map_id; // offset 0x0, size 0x4
+    short obj_id; // offset 0x4, size 0x2
+    short geom_num; // offset 0x6, size 0x2
+    short origin_x; // offset 0x8, size 0x2
+    short origin_y; // offset 0xA, size 0x2
+    short origin_z; // offset 0xC, size 0x2
+    short origin_w; // offset 0xE, size 0x2
+} SHADOW_OUTDOOR_OBJ_HEAD;
+
 #endif // SH2SHD_STRUCTS_H
