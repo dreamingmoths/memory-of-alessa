@@ -2323,18 +2323,17 @@ int enCheckForbiddenArea(float* sp, float* ep, float size) {
     return f;
 }
 
-#ifdef HOLY_CANDLE
-int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, float* ep /* r2 */, float size /* r29 */) {
-    float x0; // r1
-    float z0; // r2
-    float x1; // r3
-    float z1; // r4
-    float sx; // r5
-    float sz; // r6
-    float vx; // r7
-    float vz; // r8
-    float c; // r29
-    int f; // r2
+int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa, float* sp, float* ep, float size) {
+    float x0;
+    float z0;
+    float x1;
+    float z1;
+    float sx;
+    float sz;
+    float vx;
+    float vz; 
+    float c;
+    int f;
 
     x0 = fa->x0 - size;
     z0 = fa->z0 - size;
@@ -2356,7 +2355,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             f = 1;
             ep[0] = x0;
             ep[2] = c;
-            vx = c;
+            vx = x0 - sx;
             vz = c - sz;
         }
     }
@@ -2366,7 +2365,7 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             f = 1;
             ep[0] = x1;
             ep[2] = c;
-            vx = c;
+            vx = x1 - sx;
             vz = c - sz;
         }
     }
@@ -2377,10 +2376,10 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
             ep[0] = c;
             ep[2] = z0;
             vx = c - sx;
-            vz = c;
+            vz = z0 - sz;
         }
     }
-    if ((sz > (z1 - (2.0f * size)))) {
+    if (sz > (z1 - (2.0f * size))) {
         c = sx + ((vx * (z1 - sz)) / vz);
         if ((c >= x0) && (c <= x1)) {
             f = 1;
@@ -2392,9 +2391,6 @@ int enCheckForbiddenAreaSub(EnFORBIDDENAREA* fa /* r2 */, float* sp /* r2 */, fl
 
 
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enCheckForbiddenAreaSub);
-#endif
 
 void enEventDriven(int event /* r2 */, int id /* r2 */) {
     int i; // r3
