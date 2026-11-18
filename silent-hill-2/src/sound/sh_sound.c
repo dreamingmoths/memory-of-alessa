@@ -1,5 +1,6 @@
 #include "sound/sh_sound.h"
 #include "sound/sh_sd_call.h"
+#include "sound/sd0712/ee/sd_call.h"
 
 #include "Chacter/character.h"
 #include "Chacter/chara_list.h"
