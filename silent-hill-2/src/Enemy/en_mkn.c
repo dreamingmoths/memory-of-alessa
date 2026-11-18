@@ -1295,7 +1295,39 @@ static void enMKNAnimeReset(EnLOCAL_DATA* dp, int anim) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNAnimeExec);
+static void enMKNAnimeExec(EnLOCAL_DATA* dp) {
+    int of = dp->anim_n;
+    enAnimeExec(dp, EnMKNAnime, MANNEQUIN_PLAY_ANIM(1));
+    if ((dp->anim_n == -1) || (dp->flag & 1)) return;
+    if ((dp->anim >= 14) &&
+        (dp->anim < 22)) {
+        enSetTrans(dp);
+    } else if ((dp->anim >= 3) &&
+               (dp->anim < 5)) {
+        enSetTransWalk(dp);
+    } else if ((dp->anim >= 11) &&
+               (dp->anim < 13)) {
+        enSetTransWalk(dp);
+    } else if (dp->anim == 1) {
+        
+        enSetTransWalk(dp);
+        
+        if ((dp->anim_s > 0 && ((of < 4800 && dp->anim_n >= 4800) || (of < 40800 && dp->anim_n >= 40800))) ||
+            (dp->anim_s < 0 && ((of > 28800 && dp->anim_n <= 28800) || (of > 67200 && dp->anim_n <= 67200)))) {
+            if (enCheckWater(dp)) {
+                enSoundCall(18808, 1.0f, &dp->scp->pos);
+            } else {
+                if (dp->flag & (1 << 12)) {
+                    enSoundCall3D(12500, 1.0f, &dp->scp->pos);
+                } else {
+                    enSoundCall(12500, 1.0f, &dp->scp->pos);
+                }
+            }
+            shEnemyMKN_EffectFoot(dp->scp, (dp->anim_n < 38400) ? 1 : 0);
+        }
+        
+    }
+}
 
 static void enMKNAutoRecovery(EnLOCAL_DATA* dp) {
     short recover_rate[5] = { 0, 10, 30, 60, 100 };
