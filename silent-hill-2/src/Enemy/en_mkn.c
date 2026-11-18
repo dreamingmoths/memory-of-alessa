@@ -1261,7 +1261,43 @@ static int enMKNCanSeePlayer(EnLOCAL_DATA* dp) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_mkn", enMKNCanSeePlayer2);
+static int enMKNCanSeePlayer2(EnLOCAL_DATA* dp) {
+    float* ppos = enGetPlayerPos(dp);
+    float dist; float a; float a1; float a2;
+    int wcd = enGetWorldCondition();
+    if (shFloatAbs(ppos[1] - dp->scp->pos.y) > 500.0f) {
+        
+        return 0;
+    }
+    dist = enCheckPath2(dp, ppos, &dp->scp->pos);
+    if (dist >= 0.0f) {
+        return 0;
+    }
+    dist = dp->p_dist;
+    a = enCalcDirection(ppos, &dp->scp->pos);
+    a1 = enCalcAngleDifference(a, dp->scp->rot.y);
+    if (wcd == 1) {
+        if (dist > 3500.0f) {
+            return 0;
+        }
+    
+    } else if (enCheckPlayerLight() != 0) {
+        a2 = enCalcAngleDifference(PI + enGetPlayerAngle(dp), a);
+        if ((dist > 2250.0f) || (a2 > TO_RAD(40))) {
+            if (dist < 900.0f) return 1;            
+            else return 0;
+        }
+    
+    } else if ((dist > 1250.0f) || (a1 > QUARTER_TURN)) {
+        if (dist < 900.0f) return 1;
+        else return 0;
+    }
+    
+    
+    if ((dist < 1100.0f) && (a1 < TO_RAD(15)) && !enCheckNoDamageHuman(dp)) 
+        return 2;    
+    return 1;
+}
 
 static void enMKNAnimeSet(EnLOCAL_DATA* dp, int anim) {
     if (anim == dp->anim) {
