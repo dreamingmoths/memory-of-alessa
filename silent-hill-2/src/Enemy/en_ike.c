@@ -506,7 +506,18 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlDead);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECountActive);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECheckOther);
+/* static */ int enIKECheckOther(EnLOCAL_DATA* dp) {
+    EnLOCAL_DATA* tp = enLocalWork.Data;
+    int i;
+    for (i = 0; i < ENEMY_MAX; i++, tp++) {
+        if (tp != dp) {
+            if ((tp->kind == EnKIND_IKE) && (tp->slv != ENEMY_IKE_STATE_DEAD) && (tp->slv != ENEMY_IKE_STATE_DAMAGE)) 
+                
+                if (enGetPlayerDistance(tp) < 500.0f) return 1;                            
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECheckOther2);
 
@@ -535,4 +546,3 @@ INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1522_0x0038E510);
 INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1562);
 
 INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1563);
-
