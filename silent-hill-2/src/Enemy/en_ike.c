@@ -1,6 +1,7 @@
 #include "sh2_common.h"
 #include "SH2_common/sh_vu0.h"
 #include "SH2_common/sh2dt.h"
+#include "Chacter/m3_ike.h"
 
 #include "vec.h"
 
@@ -35,27 +36,27 @@
 /* static */ int enIKECheckOther2(EnLOCAL_DATA* dp);
 
 UNLINKED(/* static */ EnANIME_DATA EnIKEAnime[21], {
-    { /* .anime = */ 5601, /* .loop = */ false, },
-    { /* .anime = */ 5601, /* .loop = */ true,  },
-    { /* .anime = */ 5602, /* .loop = */ false, },
-    { /* .anime = */ 5603, /* .loop = */ false, },
-    { /* .anime = */ 5605, /* .loop = */ true,  },
-    { /* .anime = */ 5606, /* .loop = */ false, },
-    { /* .anime = */ 5604, /* .loop = */ false, },
-    { /* .anime = */ 5619, /* .loop = */ false, },
-    { /* .anime = */ 5607, /* .loop = */ false, },
-    { /* .anime = */ 5608, /* .loop = */ false, },
-    { /* .anime = */ 5609, /* .loop = */ false, },
-    { /* .anime = */ 5610, /* .loop = */ false, },
-    { /* .anime = */ 5611, /* .loop = */ false, },
-    { /* .anime = */ 5612, /* .loop = */ false, },
-    { /* .anime = */ 5613, /* .loop = */ false, },
-    { /* .anime = */ 5614, /* .loop = */ false, },
-    { /* .anime = */ 5615, /* .loop = */ false, },
-    { /* .anime = */ 5616, /* .loop = */ false, },
-    { /* .anime = */ 5617, /* .loop = */ false, },
-    { /* .anime = */ 5618, /* .loop = */ false, },
-    { /* .anime = */ 5620, /* .loop = */ false, }
+    { /* .anime = */ IKE_PLAY_ANIM(1), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(1), /* .loop = */ true,  },
+    { /* .anime = */ IKE_PLAY_ANIM(2), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(3), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(5), /* .loop = */ true,  },
+    { /* .anime = */ IKE_PLAY_ANIM(6), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(4), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(19), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(7), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(8), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(9), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(10), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(11), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(12), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(13), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(14), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(15), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(16), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(17), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(18), /* .loop = */ false, },
+    { /* .anime = */ IKE_PLAY_ANIM(20), /* .loop = */ false, }
 });
 
 UNLINKED(/* static */ sceVu0FVECTOR appearance_point[7], {
@@ -98,11 +99,11 @@ void enIKEInitData(EnLOCAL_DATA* dp) {
     }; // r29+0x30
     int mode = enGetMode(); // r16
     
-    ENEMY_MLV(1);
-    ENEMY_STEP(1);
+    ENEMY_MLV(ENEMY_IKE_MODE_AUTOMATIC);
+    ENEMY_STEP(ENEMY_IKE_STATE_APPEARANCE);
     enSetBattleTarget(dp, true);
     if (dp->scp->pos.y < -2140.0f)
-        ENEMY_STEP(0);
+        ENEMY_STEP(ENEMY_IKE_STATE_WAIT);
 
 
     enSetSize(dp, 150.0f, 650.0f, 500.0f, 600.0f);
@@ -593,7 +594,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECanSeePlayer2);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEAnimeSet);
 
 /* static */ void enIKEAnimeExec(EnLOCAL_DATA* dp) {
-    enAnimeExec(dp, EnIKEAnime, 5601);
+    enAnimeExec(dp, EnIKEAnime, IKE_PLAY_ANIM(1));
 }
 
 /* static */ float enIKEGetMoveSpeed(EnLOCAL_DATA* dp) {
