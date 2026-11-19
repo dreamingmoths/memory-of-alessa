@@ -1,9 +1,13 @@
 #include "sh2_common.h"
+
 #include "sce/libvifpk.h"
+
 #include "vec.h"
 #include "sdk.h"
 #include "candles.h"
+
 #include "sh2shd/sh2shd_structs.h"
+#include "sh2shd/sh2shd_shadow_model.h"
 
 #define SHD_REFTAG_POOL_SIZE 6400
 #define SHD_KICK_PACKET_SIZE 640
@@ -23,8 +27,6 @@
     qwd.ui32[1] = 0;                          \
     qwd.ui32[2] = vifcode1;                   \
     qwd.ui32[3] = vifcode2
-
-extern SHADOW_OFF_WORK_BG shadow_off_work_bg[SHD_OFF_WORK_BG_NUM]; // size: 0x108, address: 0x1125340
 
 CANDLE(sh2shd_init_outdoor_man2, CANDLE_TYPE_GPR, *);
 
