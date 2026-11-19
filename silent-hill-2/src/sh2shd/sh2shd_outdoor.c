@@ -8,7 +8,21 @@
 #define SHD_REFTAG_POOL_SIZE 6400
 #define SHD_KICK_PACKET_SIZE 640
 #define SHD_OFF_WORK_BG_NUM  4
-#define REF_ADDR(x)          ((u_int) (x) & 0x7fffffff)
+
+#define STCYCL(wl, cl)           SCE_VIF1_SET_STCYCL(wl, cl, 0)
+#define UNPACK(vuaddr, num, cmd) SCE_VIF1_SET_UNPACK(vuaddr, num, cmd, 0)
+
+#define REF_ADDR(x) ((u_int) (x) & 0x7fffffff)
+#define REFTAG(qwd, count, addr, stcycl, upk) \
+    qwd.ui32[0] = DMAref | (count);           \
+    qwd.ui32[1] = (u_int) (addr);             \
+    qwd.ui32[2] = stcycl;                     \
+    qwd.ui32[3] = upk
+#define CNT(qwd, vifcode1, vifcode2)          \
+    qwd.ui32[0] = DMAcnt | 0;                 \
+    qwd.ui32[1] = 0;                          \
+    qwd.ui32[2] = vifcode1;                   \
+    qwd.ui32[3] = vifcode2
 
 extern SHADOW_OFF_WORK_BG shadow_off_work_bg[SHD_OFF_WORK_BG_NUM]; // size: 0x108, address: 0x1125340
 
@@ -32,7 +46,6 @@ void sh2shd_init_outdoor_man2(SHADOW_OUTDOOR_MAN* man, Q_WORDDATA* raw_data, int
     raw++;
 
     while (outdoor_head.obj_num != 0) {
-
         obj_head = *(SHADOW_OUTDOOR_OBJ_HEAD*) raw;
         raw++;
         obj_id++;
@@ -44,11 +57,10 @@ void sh2shd_init_outdoor_man2(SHADOW_OUTDOOR_MAN* man, Q_WORDDATA* raw_data, int
             geom_head.prim == 4 || geom_head.prim == 10) {
             sceVu0CopyMatrix(
                 man->shape[obj_id].local_world,
-                raw - 4);
-
+                raw - 4
+            );
             raw += geom_head.ee_memory_size;
         } else {
-
             sceVu0CopyMatrix(man->shape[obj_id].local_world, raw - 4);
 
             raw += geom_head.ee_memory_size;
@@ -90,16 +102,7 @@ void sh2shd_make_reftag_pool_outdoor(SHADOW_OUTDOOR_MAN* man, SHADOW_PACKET_BUF*
 
         man->shape[obj_head.obj_id].pRefPacket = ref->ui32;
 
-        #define REFTAG(i, count, address, wl, cl, vuaddr, num, cmd) \
-            ref[i].ui32[0] = DMAref | (count);                      \
-            ref[i].ui32[1] = (u_int) (address);                     \
-            ref[i].ui32[2] = SCE_VIF1_SET_STCYCL(wl, cl, 0);        \
-            ref[i].ui32[3] = SCE_VIF1_SET_UNPACK(vuaddr, num, cmd, 0);
-        #define CNT(i, vifcode1, vifcode2) \
-            ref[i].ui32[0] = DMAcnt | 0;   \
-            ref[i].ui32[1] = 0;            \
-            ref[i].ui32[2] = vifcode1;     \
-            ref[i].ui32[3] = vifcode2;
+        // @info these didn't use the macro according to the line numbers of sh2 v0.10 prototype
         ref[0].ui32[0] = DMAref | 4;
         ref[0].ui32[1] = REF_ADDR(raw + 1);
         ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
@@ -107,91 +110,49 @@ void sh2shd_make_reftag_pool_outdoor(SHADOW_OUTDOOR_MAN* man, SHADOW_PACKET_BUF*
 
         raw += 6;
 
-        REFTAG(1, 6, REF_ADDR(&man->shape[obj_head.obj_id]), 1, 1, 6, 6, SCE_VIF_UPK_V4_32);
+        REFTAG(ref[1], 6, REF_ADDR(&man->shape[obj_head.obj_id]), STCYCL(1, 1), UNPACK(6, 6, SCE_VIF_UPK_V4_32));
 
-        CNT(2, SCE_VIF1_SET_MSCAL(0, 0), SCE_VIF1_SET_FLUSH(0));
+        CNT(ref[2], SCE_VIF1_SET_MSCAL(0, 0), SCE_VIF1_SET_FLUSH(0));
         ref += 3;
 
         while (obj_head.geom_num != 0) {
-
             geom_head = *(SHADOW_GEOM_HEAD*) raw;
 
             #line 253
             if (geom_head.prim == 1 || geom_head.prim == 2) {
-
                 #line 258
-                REFTAG(0, 2, raw, 1, 1, 0x8000, 4, SCE_VIF_UPK_V4_16);
+                REFTAG(ref[0], 2, raw, STCYCL(1, 1), UNPACK(0x8000, 4, SCE_VIF_UPK_V4_16));
 
-                REFTAG(1, geom_head.ee_memory_size - 2, raw + 2, 1, 2, 0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16);
+                REFTAG(ref[1], geom_head.ee_memory_size - 2, raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                 ref += 2;
 
             } else if (geom_head.prim == 5 || geom_head.prim == 6) {
+                REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
 
-                REFTAG(0, 1, raw, 1, 1, 0x8000, 2, SCE_VIF_UPK_V4_16);
-
-                ref[1].ui32[0] = DMAref | 1;
-                ref[1].ui32[1] = (u_int) (raw + 1);
-                ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                ref[2].ui32[1] = (u_int) (raw + 2);
-                ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                REFTAG(ref[1], 1, raw + 1, STCYCL(1, 2), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(2, 3), UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                 ref += 3;
             } else if (geom_head.prim == 3 || geom_head.prim == 4) {
-                ref[0].ui32[0] = DMAref | 1;
-                ref[0].ui32[1] = (u_int) raw;
-                ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-                ref[0].ui32[3] = SCE_VIF1_SET_UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[1].ui32[0] = DMAref | 1;
-                ref[1].ui32[1] = (u_int) (raw + 1);
-                ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                ref[2].ui32[1] = (u_int) (raw + 2);
-                ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[1], 1, raw + 1, STCYCL(2, 3), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                 ref += 3;
             }
             if (spot_cam_angle < 0.0f) {
                 if (geom_head.prim == 7) {
-                    ref[0].ui32[0] = DMAref | 2;
-                    ref[0].ui32[1] = (u_int) raw;
-                    ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-                    ref[0].ui32[3] = SCE_VIF1_SET_UNPACK(0x8000, 4, SCE_VIF_UPK_V4_16, 0);
-                    ref[1].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                    ref[1].ui32[1] = (u_int) (raw + 2);
-                    ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                    ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                    REFTAG(ref[0], 2, raw, STCYCL(1, 1), UNPACK(0x8000, 4, SCE_VIF_UPK_V4_16));
+                    REFTAG(ref[1], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                     ref += 2;
                 } else if (geom_head.prim == 8 || geom_head.prim == 9) {
-                    ref[0].ui32[0] = DMAref | 1;
-                    ref[0].ui32[1] = (u_int) raw;
-                    ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-                    ref[0].ui32[3] = SCE_VIF1_SET_UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16, 0);
-                    ref[1].ui32[0] = DMAref | 1;
-                    ref[1].ui32[1] = (u_int) (raw + 1);
-                    ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                    ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                    ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                    ref[2].ui32[1] = (u_int) (raw + 2);
-                    ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                    ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                    REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
+                    REFTAG(ref[1], 1, raw + 1, STCYCL(1, 2), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                    REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(2, 3), UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                     ;
                     ref += 3;
                 } else if (geom_head.prim == 10) {
-                    ref[0].ui32[0] = DMAref | 1;
-                    ref[0].ui32[1] = (u_int) raw;
-                    ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-                    ref[0].ui32[3] = SCE_VIF1_SET_UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16, 0);
-                    ref[1].ui32[0] = DMAref | 1;
-                    ref[1].ui32[1] = (u_int) (raw + 1);
-                    ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                    ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                    ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                    ref[2].ui32[1] = (u_int) (raw + 2);
-                    ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                    ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                    REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
+                    REFTAG(ref[1], 1, raw + 1, STCYCL(2, 3), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                    REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                     ref += 3;
                 }
             }
@@ -234,16 +195,7 @@ void sh2shd_make_reftag_pool_outdoor_for_parallel(SHADOW_OUTDOOR_MAN* man, SHADO
 
         man->shape[obj_head.obj_id].pRefPacket = ref->ui32;
 
-        #define REFTAG(i, count, address, wl, cl, vuaddr, num, cmd) \
-            ref[i].ui32[0] = DMAref | (count);                      \
-            ref[i].ui32[1] = (u_int) (address);                     \
-            ref[i].ui32[2] = SCE_VIF1_SET_STCYCL(wl, cl, 0);        \
-            ref[i].ui32[3] = SCE_VIF1_SET_UNPACK(vuaddr, num, cmd, 0);
-        #define CNT(i, vifcode1, vifcode2) \
-            ref[i].ui32[0] = DMAcnt | 0;   \
-            ref[i].ui32[1] = 0;            \
-            ref[i].ui32[2] = vifcode1;     \
-            ref[i].ui32[3] = vifcode2;
+        // @info these didn't use the macro according to the line numbers of sh2 v0.10 prototype
         ref[0].ui32[0] = DMAref | 4;
         ref[0].ui32[1] = REF_ADDR(raw + 1);
         ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
@@ -251,52 +203,34 @@ void sh2shd_make_reftag_pool_outdoor_for_parallel(SHADOW_OUTDOOR_MAN* man, SHADO
 
         raw += 6;
 
-        REFTAG(1, 6, REF_ADDR(&man->shape[obj_head.obj_id]), 1, 1, 6, 6, SCE_VIF_UPK_V4_32);
+        REFTAG(ref[1], 6, REF_ADDR(&man->shape[obj_head.obj_id]), STCYCL(1, 1), UNPACK(6, 6, SCE_VIF_UPK_V4_32));
 
-        CNT(2, SCE_VIF1_SET_MSCAL(0, 0), SCE_VIF1_SET_FLUSH(0));
+        CNT(ref[2], SCE_VIF1_SET_MSCAL(0, 0), SCE_VIF1_SET_FLUSH(0));
         ref += 3;
 
         while (obj_head.geom_num != 0) {
-
             geom_head = *(SHADOW_GEOM_HEAD*) raw;
 
             #line 534
             if (geom_head.prim == 1 || geom_head.prim == 2) {
+                REFTAG(ref[0], 2, raw, STCYCL(1, 1), UNPACK(0x8000, 4, SCE_VIF_UPK_V4_16));
 
-                REFTAG(0, 2, raw, 1, 1, 0x8000, 4, SCE_VIF_UPK_V4_16);
+                REFTAG(ref[1], geom_head.ee_memory_size - 2, raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
 
-                REFTAG(1, geom_head.ee_memory_size - 2, raw + 2, 1, 2, 0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16);
-
-                CNT(2, 0, SCE_VIF1_SET_MSCNT(0));
+                CNT(ref[2], 0, SCE_VIF1_SET_MSCNT(0));
                 ref += 3;
             }
             if (geom_head.prim == 5 || geom_head.prim == 6) {
+                REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
 
-                REFTAG(0, 1, raw, 1, 1, 0x8000, 2, SCE_VIF_UPK_V4_16);
-
-                ref[1].ui32[0] = DMAref | 1;
-                ref[1].ui32[1] = (u_int) (raw + 1);
-                ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                ref[2].ui32[1] = (u_int) (raw + 2);
-                ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
-                CNT(3, 0, SCE_VIF1_SET_MSCNT(0));
+                REFTAG(ref[1], 1, raw + 1, STCYCL(1, 2), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(2, 3), UNPACK(0x8006, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
+                CNT(ref[3], 0, SCE_VIF1_SET_MSCNT(0));
                 ref += 4;
             } else if (geom_head.prim == 3 || geom_head.prim == 4) {
-                ref[0].ui32[0] = DMAref | 1;
-                ref[0].ui32[1] = (u_int) raw;
-                ref[0].ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-                ref[0].ui32[3] = SCE_VIF1_SET_UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[1].ui32[0] = DMAref | 1;
-                ref[1].ui32[1] = (u_int) (raw + 1);
-                ref[1].ui32[2] = SCE_VIF1_SET_STCYCL(2, 3, 0);
-                ref[1].ui32[3] = SCE_VIF1_SET_UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16, 0);
-                ref[2].ui32[0] = DMAref | (geom_head.ee_memory_size - 2);
-                ref[2].ui32[1] = (u_int) (raw + 2);
-                ref[2].ui32[2] = SCE_VIF1_SET_STCYCL(1, 2, 0);
-                ref[2].ui32[3] = SCE_VIF1_SET_UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16, 0);
+                REFTAG(ref[0], 1, raw, STCYCL(1, 1), UNPACK(0x8000, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[1], 1, raw + 1, STCYCL(2, 3), UNPACK(0x8002, 2, SCE_VIF_UPK_V4_16));
+                REFTAG(ref[2], (geom_head.ee_memory_size - 2), raw + 2, STCYCL(1, 2), UNPACK(0x8005, geom_head.send_data_num - 3, SCE_VIF_UPK_V4_16));
                 ref[3].ui32[0] = DMAcnt | 0;
                 ref[3].ui32[1] = 0;
                 ref[3].ui32[2] = 0;
@@ -329,11 +263,8 @@ void sh2shd_add_outdoor_to_kick_packet(SHADOW_OUTDOOR_MAN* man, SHADOW_PACKET_BU
 
     count_call_tag_num = 0;
 
-    curr->ui32[0] = DMAref | 3;
-    curr->ui32[1] = REF_ADDR(man->light_pos);
-    curr->ui32[2] = SCE_VIF1_SET_STCYCL(1, 1, 0);
-    curr->ui32[3] = SCE_VIF1_SET_UNPACK(12, 3, SCE_VIF_UPK_V4_32, 0);
-    curr          = curr + 1;
+    REFTAG(curr[0], 3, REF_ADDR(man->light_pos), STCYCL(1, 1), UNPACK(12, 3, SCE_VIF_UPK_V4_32));
+    curr++;
 
     top = curr;
 
@@ -419,7 +350,6 @@ void sh2shd_renew_outdoor_man_for_parallel(SHADOW_OUTDOOR_MAN* man, float* spot_
     SHADOW_GEOM_HEAD geom_head; // r29+0x90
 
     for (i = 0; i < man->obj_num; i++) {
-
         geom_head = *(SHADOW_GEOM_HEAD*) (man->shape[i].pRawData + 24);
 
         sceVu0InversMatrix(world_local, man->shape[i].local_world);
