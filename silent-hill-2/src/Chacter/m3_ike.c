@@ -1,314 +1,301 @@
-#include "sh2_common.h"
-#include "vec.h"
-#include "Enemy/en_common.h"
-#include "Chacter/character.h"
-#include "Chacter/m3_sc.h"
 #include "Chacter/m3_ike.h"
+#include "Chacter/m3_sc.h"
+#include "Enemy/en_common.h"
+#include "sce/libvu0.h"
+#include "vec.h"
 
-static const AnimeInfo ike_anim[] = {
+static const AnimeInfo ike_anim[21] = {
     {
-        /* .name = */ 0,
-        /* .frame = */ 0,
-        /* .speed = */ 0,
-        /* .start = */ 0,
-        /* .end = */ 0,
-        /* .loop = */ 0,
-        /* .pad = */ 0,
+        NULL
     },
     {
-        /* .name = */ 5601,
+        /* .name = */ IKE_PLAY_ANIM(1),
         /* .frame = */ 23,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 22,
-        /* .loop = */ 1,
+        /* .loop = */ true,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5602,
+        /* .name = */ IKE_PLAY_ANIM(2),
         /* .frame = */ 32,
         /* .speed = */ 2048,
         /* .start = */ 23,
         /* .end = */ 54,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5603,
+        /* .name = */ IKE_PLAY_ANIM(3),
         /* .frame = */ 16,
         /* .speed = */ 1024,
         /* .start = */ 55,
         /* .end = */ 70,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5604,
+        /* .name = */ IKE_PLAY_ANIM(4),
         /* .frame = */ 16,
         /* .speed = */ 2048,
         /* .start = */ 71,
         /* .end = */ 86,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5605,
+        /* .name = */ IKE_PLAY_ANIM(5),
         /* .frame = */ 24,
         /* .speed = */ 2048,
         /* .start = */ 87,
         /* .end = */ 110,
-        /* .loop = */ 1,
+        /* .loop = */ true,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5606,
+        /* .name = */ IKE_PLAY_ANIM(6),
         /* .frame = */ 15,
         /* .speed = */ 2048,
         /* .start = */ 111,
         /* .end = */ 125,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5607,
+        /* .name = */ IKE_PLAY_ANIM(7),
         /* .frame = */ 19,
         /* .speed = */ 2048,
         /* .start = */ 126,
         /* .end = */ 144,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5608,
+        /* .name = */ IKE_PLAY_ANIM(8),
         /* .frame = */ 19,
         /* .speed = */ 2048,
         /* .start = */ 145,
         /* .end = */ 163,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5609,
+        /* .name = */ IKE_PLAY_ANIM(9),
         /* .frame = */ 19,
         /* .speed = */ 2048,
         /* .start = */ 164,
         /* .end = */ 182,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5610,
+        /* .name = */ IKE_PLAY_ANIM(10),
         /* .frame = */ 19,
         /* .speed = */ 2048,
         /* .start = */ 183,
         /* .end = */ 201,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5611,
+        /* .name = */ IKE_PLAY_ANIM(11),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 202,
         /* .end = */ 234,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5612,
+        /* .name = */ IKE_PLAY_ANIM(12),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 235,
         /* .end = */ 267,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5613,
+        /* .name = */ IKE_PLAY_ANIM(13),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 268,
         /* .end = */ 300,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5614,
+        /* .name = */ IKE_PLAY_ANIM(14),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 301,
         /* .end = */ 333,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5615,
+        /* .name = */ IKE_PLAY_ANIM(15),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 334,
         /* .end = */ 366,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5616,
+        /* .name = */ IKE_PLAY_ANIM(16),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 367,
         /* .end = */ 399,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5617,
+        /* .name = */ IKE_PLAY_ANIM(17),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 400,
         /* .end = */ 432,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5618,
+        /* .name = */ IKE_PLAY_ANIM(18),
         /* .frame = */ 33,
         /* .speed = */ 2048,
         /* .start = */ 433,
         /* .end = */ 465,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5619,
+        /* .name = */ IKE_PLAY_ANIM(19),
         /* .frame = */ 28,
         /* .speed = */ 2048,
         /* .start = */ 466,
         /* .end = */ 493,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 5620,
+        /* .name = */ IKE_PLAY_ANIM(20),
         /* .frame = */ 23,
         /* .speed = */ 2048,
         /* .start = */ 494,
         /* .end = */ 516,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     }
 };
 
-static const AnimeInfo d_ike_anim[] = {
+static const AnimeInfo d_ike_anim[12] = {
     {
-        /* .name = */ 0,
-        /* .frame = */ 0,
-        /* .speed = */ 0,
-        /* .start = */ 0,
-        /* .end = */ 0,
-        /* .loop = */ 0,
-        /* .pad = */ 0,
+        NULL
     },
     {
-        /* .name = */ 6501,
+        /* .name = */ IKE_DRAMA_ANIM(1),
         /* .frame = */ 42,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 41,
-        /* .loop = */ 1,
+        /* .loop = */ true,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6502,
+        /* .name = */ IKE_DRAMA_ANIM(2),
         /* .frame = */ 778,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 777,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6503,
+        /* .name = */ IKE_DRAMA_ANIM(3),
         /* .frame = */ 93,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 92,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6504,
+        /* .name = */ IKE_DRAMA_ANIM(4),
         /* .frame = */ 641,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 640,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6505,
+        /* .name = */ IKE_DRAMA_ANIM(5),
         /* .frame = */ 34,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 33,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6506,
+        /* .name = */ IKE_DRAMA_ANIM(6),
         /* .frame = */ 661,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 660,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6507,
+        /* .name = */ IKE_DRAMA_ANIM(7),
         /* .frame = */ 778,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 777,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6508,
+        /* .name = */ IKE_DRAMA_ANIM(8),
         /* .frame = */ 93,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 92,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6509,
+        /* .name = */ IKE_DRAMA_ANIM(9),
         /* .frame = */ 641,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 640,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6510,
+        /* .name = */ IKE_DRAMA_ANIM(10),
         /* .frame = */ 34,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 34,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     },
     {
-        /* .name = */ 6511,
+        /* .name = */ IKE_DRAMA_ANIM(11),
         /* .frame = */ 661,
         /* .speed = */ 2048,
         /* .start = */ 0,
         /* .end = */ 660,
-        /* .loop = */ 0,
+        /* .loop = */ false,
         /* .pad = */ 0,
     }
 };
 
-static int dike_anime_adr_list[] = {
+static int dike_anime_adr_list[12] = {
     0, 
     0,
     0, 
@@ -329,7 +316,7 @@ static void EnemyIKEFunction(SubCharacter* this);
 
 #line 71
 static int EnemyIKEInit(SubCharacter* scp) {
-    scp->kind = 515;
+    scp->kind = EN_IKE_CHARA_KIND;
     return 0;
 }
 
@@ -353,7 +340,7 @@ static void EnemyIKEFunction(SubCharacter* this) {
             
                 SCAnimeTypeSwitch(this, true);
                 
-                shCharacterEnemyIKEAnimeSetP(this, 5601, 1);
+                shCharacterEnemyIKEAnimeSetP(this, IKE_PLAY_ANIM(1), 1);
                 
                 
                 
@@ -365,7 +352,7 @@ static void EnemyIKEFunction(SubCharacter* this) {
                 if (this->status & (1 << SCP_STATUS_BIT_ANIME_TYPE)) {
                 
                     
-                    if ((dp = enEntryEnemy(7)) != NULL) {
+                    if ((dp = enEntryEnemy(EnKIND_IKE)) != NULL) {
                         this->enemy_p = dp;
                         enInitData(dp, this);
                     } 
@@ -379,7 +366,7 @@ static void EnemyIKEFunction(SubCharacter* this) {
             shVectorCopy(&this->rot, rot);
             
             this->step++;
-            /* fallthrough */
+            
         case 1:
             return;
     }
@@ -396,16 +383,16 @@ void shCharacterSetEnemyIKELow(SubCharacter* scp) {
 int shCharacterEnemyIKEAnimeSet(SubCharacter* scp, int anime_id) {
     AnimeInfo* aip;
 
-    if (shCharacterGetModelID(scp) == 515) {
+    if (shCharacterGetModelID(scp) == EN_IKE_CHARA_KIND) {
         SCAnimeTypeSwitch(scp, false);
-        aip = (AnimeInfo*)&d_ike_anim[anime_id - 6500];
+        aip = (AnimeInfo*) &d_ike_anim[anime_id - IKE_DRAMA_ANIME_ID_START];
         shCharacterAnimeSet(
             scp, 
             0,
             2,
             aip,
-            dike_anime_adr_list[anime_id - 6500] + 
-            (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - 6500)
+            dike_anime_adr_list[anime_id - IKE_DRAMA_ANIME_ID_START] + 
+            (int) shCharacterGetAnimeAdrForDrama(scp, anime_id - IKE_DRAMA_ANIME_ID_START)
         );
         return 0;
     }
@@ -418,8 +405,8 @@ int shCharacterEnemyIKEAnimeSetP(SubCharacter* scp, int anime_id, int comp) {
     AnimeInfo* aip;
     
     
-    if (scp->status & (1 << SCP_STATUS_BIT_ANIME_TYPE) && shCharacterGetModelID(scp) == 515) {
-        aip = (AnimeInfo*)&ike_anim[anime_id - 5600];
+    if (scp->status & (1 << SCP_STATUS_BIT_ANIME_TYPE) && shCharacterGetModelID(scp) == EN_IKE_CHARA_KIND) {
+        aip = (AnimeInfo*) &ike_anim[anime_id - IKE_PLAY_ANIME_ID_START];
 
         
         shCharacterAnimeSet(
