@@ -549,7 +549,11 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEAnimeExec);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEGetMoveSpeed);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKESoundSwing);
+/* static */ void enIKESoundSwing(EnLOCAL_DATA* dp) {
+    
+    enSoundCall(((shRandI() >> 20) & 3) + 18508, 1.0f, &dp->scp->pos);
+
+}
 
 /* static */ void enIKESoundSigns(EnLOCAL_DATA* dp) {
     int signs;
