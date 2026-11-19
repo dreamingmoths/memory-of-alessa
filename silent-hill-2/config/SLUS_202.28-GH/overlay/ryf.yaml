@@ -1,0 +1,29 @@
+name: ryf
+sha1: d447a77ac92255cb22bd6f58f9d8aa78fa75cc7d
+options:
+  basename: ryf
+  elf_path: ryf.bin
+  target_path: rom/overlay/ryf.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/ryf_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/ryf_reloc_addrs.txt
+  ld_script_path: linkers/ryf.ld
+  undefined_funcs_auto_path: linkers/ryf_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/ryf_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: ryf
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, ryf_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_2f_f]
+      - [0x3680, data, Event/stage/stg_hotel_2f_f_data]
+      - { vram: 0x1F29D80, type: bss, name: Event/stage/stg_hotel_2f_f_bss }
+  - [0x4900]

@@ -1,0 +1,29 @@
+name: rbb
+sha1: 9d77c85db1e906ae63e0e4405abd288ab9a70da0
+options:
+  basename: rbb
+  elf_path: rbb.bin
+  target_path: rom/overlay/rbb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/rbb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/rbb_reloc_addrs.txt
+  ld_script_path: linkers/rbb.ld
+  undefined_funcs_auto_path: linkers/rbb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/rbb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: rbb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, rbb_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_bf_b]
+      - [0xF80, data, Event/stage/stg_hotel_bf_b_data]
+      - { vram: 0x1F26B80, type: bss, name: Event/stage/stg_hotel_bf_b_bss }
+  - [0x1700]

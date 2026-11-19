@@ -1,0 +1,29 @@
+name: erb
+sha1: e8c4a629f7d8f540c67fea2501e14fd7bc066c82
+options:
+  basename: erb
+  elf_path: erb.bin
+  target_path: rom/overlay/erb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/erb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/erb_reloc_addrs.txt
+  ld_script_path: linkers/erb.ld
+  undefined_funcs_auto_path: linkers/erb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/erb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: erb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0xD80
+    subsegments:
+      - [0x0, databin, erb_overlay_header]
+      - [0x80, c, Event/stage/stg_end_rebirth]
+      - [0x1900, data, Event/stage/stg_end_rebirth_data]
+      - { vram: 0x1F27B80, type: bss, name: Event/stage/stg_end_rebirth_bss }
+  - [0x2700]

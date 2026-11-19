@@ -1,0 +1,29 @@
+name: rxb
+sha1: 600ae7d15af80d028335a7cd38a5c22b76be59d4
+options:
+  basename: rxb
+  elf_path: rxb.bin
+  target_path: rom/overlay/rxb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/rxb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/rxb_reloc_addrs.txt
+  ld_script_path: linkers/rxb.ld
+  undefined_funcs_auto_path: linkers/rxb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/rxb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: rxb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, rxb_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_1f_b]
+      - [0x2080, data, Event/stage/stg_hotel_1f_b_data]
+      - { vram: 0x1F28180, type: bss, name: Event/stage/stg_hotel_1f_b_bss }
+  - [0x2D00]

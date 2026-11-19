@@ -1,0 +1,29 @@
+name: edb
+sha1: 88f6df6420088dc0b752a52c7de6182b8b659287
+options:
+  basename: edb
+  elf_path: edb.bin
+  target_path: rom/overlay/edb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/edb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/edb_reloc_addrs.txt
+  ld_script_path: linkers/edb.ld
+  undefined_funcs_auto_path: linkers/edb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/edb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: edb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, edb_overlay_header]
+      - [0x80, c, Event/stage/stg_eddie_boss]
+      - [0xC80, data, Event/stage/stg_eddie_boss_data]
+      - { vram: 0x1F26B80, type: bss, name: Event/stage/stg_eddie_boss_bss }
+  - [0x1700]
