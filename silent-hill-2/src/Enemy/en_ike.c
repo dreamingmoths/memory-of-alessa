@@ -500,7 +500,54 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlAttack2);
     }       
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlDamage);
+/* static */ void enIKECtrlDamage(EnLOCAL_DATA* dp) {
+    if (dp->sslv == 0) {
+        if (dp->last_atk == 17) {
+            
+            dp->scp->battle.damage /= ++dp->ike.pipe_count;
+            if (dp->ike.pipe_count > 4) {
+                if (dp->ike.pipe_count >= 10) {
+                    dp->ike.pipe_count = 0;
+                }
+                enReduceHP(dp);
+                if (!enCheckDeath(dp)) {
+                    ENEMY_STEP(ENEMY_IKE_STATE_KICK);
+                    return;
+                }
+            }
+        } else {
+            dp->ike.pipe_count = 0;
+        }
+        enReduceHP(dp);
+        if (enCheckSpray(dp)) {
+            dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
+            ENEMY_STEP(ENEMY_IKE_STATE_DEAD);
+            return;
+        }
+        enIKEAnimeSet(dp, enIKEGetDamageMotion(dp));
+        enSetHitBack(dp);
+        dp->hb_s *= 0.5f;
+        enSetNewSize(dp, 150.0f, 500.0f, 400.0f, 600.0f);
+        dp->trz = 0.0f;
+        ENEMY_NEXT_SUB_STEP();
+    }
+    if (enCheckDamage(dp)) {
+        enReduceHP(dp);
+        enSetHitBack(dp);
+        dp->hb_s *= 0.5f;
+    }
+    if (dp->anim_n == -1) {
+        dp->scp->pos.y = -1640.0f;
+        enSetNewSize(dp, 150.0f, 650.0f, 500.0f, 600.0f);
+        if (enCheckDeath(dp)) {
+            enKillCountUp(dp);
+            ENEMY_STEP(ENEMY_IKE_STATE_DEAD);
+        } else {
+            ENEMY_STEP(ENEMY_IKE_STATE_CHASE);
+        }
+    }
+    enIKECheckNearPlayer(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlDead);
 
@@ -545,7 +592,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECanSeePlayer2);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEAnimeSet);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEAnimeExec);
+/* static */ void enIKEAnimeExec(EnLOCAL_DATA* dp) {
+    enAnimeExec(dp, EnIKEAnime, 5601);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEGetMoveSpeed);
 
