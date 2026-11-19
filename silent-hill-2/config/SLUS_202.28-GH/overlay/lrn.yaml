@@ -1,0 +1,29 @@
+name: lrn
+sha1: 3d29c7f0afd28ad8f9628ac99358c2d90225b916
+options:
+  basename: lrn
+  elf_path: lrn.bin
+  target_path: rom/overlay/lrn.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/lrn_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/lrn_reloc_addrs.txt
+  ld_script_path: linkers/lrn.ld
+  undefined_funcs_auto_path: linkers/lrn_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/lrn_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: lrn
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, lrn_overlay_header]
+      - [0x80, c, Event/stage/stg_labyrinth_n]
+      - [0x1E00, data, Event/stage/stg_labyrinth_n_data]
+      - { vram: 0x1F29400, type: bss, name: Event/stage/stg_labyrinth_n_bss }
+  - [0x3F80]

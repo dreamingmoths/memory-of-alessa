@@ -1,0 +1,29 @@
+name: thv
+sha1: 49d20a85b9df1e54d35a7a7a438d90f604c33ee6
+options:
+  basename: thv
+  elf_path: thv.bin
+  target_path: rom/overlay/thv.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/thv_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/thv_reloc_addrs.txt
+  ld_script_path: linkers/thv.ld
+  undefined_funcs_auto_path: linkers/thv_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/thv_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: thv
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, thv_overlay_header]
+      - [0x80, c, Event/stage/stg_to_heaven]
+      - [0xD80, data, Event/stage/stg_to_heaven_data]
+      - { vram: 0x1F26600, type: bss, name: Event/stage/stg_to_heaven_bss }
+  - [0x1180]

@@ -1,0 +1,29 @@
+name: rxf
+sha1: b3ed0888ef126262be49a11f5216fd3a2949e697
+options:
+  basename: rxf
+  elf_path: rxf.bin
+  target_path: rom/overlay/rxf.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/rxf_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/rxf_reloc_addrs.txt
+  ld_script_path: linkers/rxf.ld
+  undefined_funcs_auto_path: linkers/rxf_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/rxf_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: rxf
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, rxf_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_1f_f]
+      - [0x3B80, data, Event/stage/stg_hotel_1f_f_data]
+      - { vram: 0x1F2A580, type: bss, name: Event/stage/stg_hotel_1f_f_bss }
+  - [0x5100]

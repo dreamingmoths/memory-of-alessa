@@ -1,0 +1,27 @@
+name: xhv
+sha1: c35a1dda672a4adc93f1a268a8f80468ca071843
+options:
+  basename: xhv
+  elf_path: xhv.bin
+  target_path: rom/overlay/xhv.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/xhv_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/xhv_reloc_addrs.txt
+  ld_script_path: linkers/xhv.ld
+  undefined_funcs_auto_path: linkers/xhv_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/xhv_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: xhv
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    subsegments:
+      - [0x0, databin, xhv_overlay_header]
+      - [0x80, c, Event/stage/stg_x_heaven]
+      - [0x500, data, Event/stage/stg_x_heaven_data]
+  - [0x900]

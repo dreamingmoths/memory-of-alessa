@@ -1,0 +1,29 @@
+name: hzf
+sha1: 8e2fe34bfcc8973a63d725accd1e59c1d408d0b3
+options:
+  basename: hzf
+  elf_path: hzf.bin
+  target_path: rom/overlay/hzf.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/hzf_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/hzf_reloc_addrs.txt
+  ld_script_path: linkers/hzf.ld
+  undefined_funcs_auto_path: linkers/hzf_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hzf_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: hzf
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, hzf_overlay_header]
+      - [0x80, c, Event/stage/stg_hospital_3f_f]
+      - [0x3700, data, Event/stage/stg_hospital_3f_f_data]
+      - { vram: 0x1F29C00, type: bss, name: Event/stage/stg_hospital_3f_f_bss }
+  - [0x4780]

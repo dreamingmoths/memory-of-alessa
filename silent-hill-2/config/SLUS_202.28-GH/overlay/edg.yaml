@@ -1,0 +1,27 @@
+name: edg
+sha1: 9e268965b30c7d70d14353f87d73b5e8cbd18506
+options:
+  basename: edg
+  elf_path: edg.bin
+  target_path: rom/overlay/edg.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/edg_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/edg_reloc_addrs.txt
+  ld_script_path: linkers/edg.ld
+  undefined_funcs_auto_path: linkers/edg_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/edg_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: edg
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    subsegments:
+      - [0x0, databin, edg_overlay_header]
+      - [0x80, c, Event/stage/stg_end_dog]
+      - [0x300, data, Event/stage/stg_end_dog_data]
+  - [0x480]

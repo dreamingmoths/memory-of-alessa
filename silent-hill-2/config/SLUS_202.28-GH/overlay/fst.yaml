@@ -1,0 +1,29 @@
+name: fst
+sha1: 1fd7b6a1867dbcfb7c423877ee29262918bffe9f
+options:
+  basename: fst
+  elf_path: fst.bin
+  target_path: rom/overlay/fst.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/fst_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/fst_reloc_addrs.txt
+  ld_script_path: linkers/fst.ld
+  undefined_funcs_auto_path: linkers/fst_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/fst_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: fst
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x100
+    subsegments:
+      - [0x0, databin, fst_overlay_header]
+      - [0x80, c, Event/stage/stg_forest]
+      - [0x2100, data, Event/stage/stg_forest_data]
+      - { vram: 0x1F28100, type: bss, name: Event/stage/stg_forest_bss }
+  - [0x2C80]

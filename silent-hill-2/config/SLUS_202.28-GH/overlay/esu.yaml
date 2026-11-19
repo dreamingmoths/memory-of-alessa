@@ -1,0 +1,29 @@
+name: esu
+sha1: 3fee34f97888e2f71e9edebd4e4c9b7b0a59dfef
+options:
+  basename: esu
+  elf_path: esu.bin
+  target_path: rom/overlay/esu.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/esu_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/esu_reloc_addrs.txt
+  ld_script_path: linkers/esu.ld
+  undefined_funcs_auto_path: linkers/esu_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/esu_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: esu
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0xD80
+    subsegments:
+      - [0x0, databin, esu_overlay_header]
+      - [0x80, c, Event/stage/stg_end_suicide]
+      - [0x2080, data, Event/stage/stg_end_suicide_data]
+      - { vram: 0x1F28400, type: bss, name: Event/stage/stg_end_suicide_bss }
+  - [0x2F80]
