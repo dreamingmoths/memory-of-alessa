@@ -596,7 +596,18 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEAnimeSet);
     enAnimeExec(dp, EnIKEAnime, 5601);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEGetMoveSpeed);
+/* static */ float enIKEGetMoveSpeed(EnLOCAL_DATA* dp) {
+    float speed_rate[5] = { 0.5f,
+                            0.8f,
+                            1.0f,
+                            1.2f,
+                            1.5f };
+    float r;
+
+    r = speed_rate[enGetMode()];
+    r *= (0.8f + (dp->scp->battle.hp_rate / 500.0f));
+    return 500.0f * r;
+}
 
 /* static */ void enIKESoundSwing(EnLOCAL_DATA* dp) {
     
