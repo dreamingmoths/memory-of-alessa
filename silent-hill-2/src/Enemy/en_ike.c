@@ -551,7 +551,19 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKEGetMoveSpeed);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKESoundSwing);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKESoundSigns);
+/* static */ void enIKESoundSigns(EnLOCAL_DATA* dp) {
+    int signs;
+    if ((dp->ike.count -= shGetDF()) <= 0) {
+        dp->ike.count = enCalcTimer(60);
+        do {
+            signs = (shRandI() >> 20) % 6;
+        } while (signs == dp->ike.signs);
+        dp->ike.signs = signs;
+        
+        enSoundCall(signs + 18512, 1.0f, &dp->scp->pos);
+    }
+
+}
 
 INCLUDE_RODATA("asm/nonmatchings/Enemy/en_ike", @1522_0x0038E510);
 
