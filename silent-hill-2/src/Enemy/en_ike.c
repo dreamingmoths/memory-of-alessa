@@ -504,7 +504,19 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlDamage);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECtrlDead);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_ike", enIKECountActive);
+/* static */ int enIKECountActive(EnLOCAL_DATA* dp) {
+    EnLOCAL_DATA* tp = enLocalWork.Data;
+    int i;
+    int n = 0;
+    for (i = 0; i < ENEMY_MAX; i++, tp++) 
+        if (tp != dp) 
+            if ((tp->kind == EnKIND_IKE) && (tp->slv != ENEMY_IKE_STATE_WAIT) && (tp->slv != ENEMY_IKE_STATE_DEAD)) {
+                
+                n++;
+            
+            }               
+    return n;    
+}
 
 /* static */ int enIKECheckOther(EnLOCAL_DATA* dp) {
     EnLOCAL_DATA* tp = enLocalWork.Data;
