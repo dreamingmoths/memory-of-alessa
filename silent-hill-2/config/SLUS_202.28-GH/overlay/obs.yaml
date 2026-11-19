@@ -1,0 +1,29 @@
+name: obs
+sha1: 6f0e446d67cdd59171fe5273d417f213b2f4051b
+options:
+  basename: obs
+  elf_path: obs.bin
+  target_path: rom/overlay/obs.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/obs_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/obs_reloc_addrs.txt
+  ld_script_path: linkers/obs.ld
+  undefined_funcs_auto_path: linkers/obs_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/obs_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: obs
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, obs_overlay_header]
+      - [0x80, c, Event/stage/stg_ovservation]
+      - [0x1100, data, Event/stage/stg_ovservation_data]
+      - { vram: 0x1F26980, type: bss, name: Event/stage/stg_ovservation_bss }
+  - [0x1500]

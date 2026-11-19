@@ -1,0 +1,29 @@
+name: ryb
+sha1: f6d074ebce47f2301fba5141aeadd533c2676ac3
+options:
+  basename: ryb
+  elf_path: ryb.bin
+  target_path: rom/overlay/ryb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/ryb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/ryb_reloc_addrs.txt
+  ld_script_path: linkers/ryb.ld
+  undefined_funcs_auto_path: linkers/ryb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/ryb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: ryb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, ryb_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_2f_b]
+      - [0x900, data, Event/stage/stg_hotel_2f_b_data]
+      - { vram: 0x1F26680, type: bss, name: Event/stage/stg_hotel_2f_b_bss }
+  - [0x1200]

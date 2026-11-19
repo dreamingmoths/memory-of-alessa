@@ -51,5 +51,16 @@
     "gz_erb": "stg_end_rebirth",
     "gz_edg": "stg_end_dog",
     "gx_xxx": "stg_xxx",
-    "o_align": "stg_num"
+    "gy_yyy": "stg_yyy",
+    "gz_zzz": "stg_zzz",
+    "o_align": "stg_num",
+
+
+
+    "gx_xap": "stg_x_apart",
+    "gx_xmb": "stg_x_mansion_bf",
+    "gx_xmy": "stg_x_mansion_2f",
+    "gx_xhv": "stg_x_heaven",
+    "gx_xmx": "stg_x_mansion_1f",
+    "gx_xtw": "stg_x_town"
 }

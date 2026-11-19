@@ -1,0 +1,27 @@
+name: xap
+sha1: 4f5b1b2d15a2b936a2334f90de3ad5c3e83086f6
+options:
+  basename: xap
+  elf_path: xap.bin
+  target_path: rom/overlay/xap.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/xap_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/xap_reloc_addrs.txt
+  ld_script_path: linkers/xap.ld
+  undefined_funcs_auto_path: linkers/xap_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/xap_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: xap
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    subsegments:
+      - [0x0, databin, xap_overlay_header]
+      - [0x80, c, Event/stage/stg_x_apart]
+      - [0x300, data, Event/stage/stg_x_apart_data]
+  - [0xA00]
