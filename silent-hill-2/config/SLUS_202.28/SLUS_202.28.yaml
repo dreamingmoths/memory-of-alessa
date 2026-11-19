@@ -154,7 +154,7 @@ segments:
       - { start: 0x0009f9f0,    type: c,          name: main                                             }
       - { start: 0x0009fe30,    type: c,          name: sh2gfw_all_sysinit                               }
       - { start: 0x000a0280,    type: c,          name: sh2gfw_drawloop_main                             }
-      - { start: 0x000a1020,    type: asm,        name: sh2shd/sh2shd_outdoor                            }
+      - { start: 0x000a1020,    type: c,          name: sh2shd/sh2shd_outdoor                            }
       - { start: 0x000a2350,    type: c,          name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x000a66c0,    type: asm,        name: sh2shd/sh2shd_shadow_vu1_packet                  }
       - { start: 0x000a6d00,    type: c,          name: sh2shd/sh2shd_stencil_shadow_main                }
@@ -933,7 +933,7 @@ segments:
       - { start: 0x00290830,    type: .rodata,    name: sound/sh_sound                                   }
       - { start: 0x00290c10,    type: .rodata,    name: view/vc_main                                     }
       - { start: 0x002910a0,    type: .rodata,    name: main                                             }
-      - { start: 0x00291180,    type: rodata,     name: sh2shd/sh2shd_outdoor                            }
+      - { start: 0x00291180,    type: .rodata,    name: sh2shd/sh2shd_outdoor                            }
       - { start: 0x00291290,    type: .rodata,    name: sh2shd/sh2shd_shadow_model                       }
       - { start: 0x002915c0,    type: .rodata,    name: Event/event                                      }
       - { start: 0x002917d0,    type: .rodata,    name: Event/event_sub                                  }

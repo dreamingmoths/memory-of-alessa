@@ -17,6 +17,7 @@ extern float sqrtf(float);
 
 extern double sin(double);
 extern double cos(double);
+extern double sqrt(double);
 
 extern int abs(int);
 
