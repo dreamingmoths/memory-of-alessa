@@ -13,6 +13,6 @@
  * CANDLE(Object_Draw, CANDLE_TYPE_FLOAT, *);
  * ```
  */
-#define CANDLE(_name, _type, _op) static _type candle_##_name(_type argument) { return argument _op argument; }
+#define CANDLE(_name, _type, _op) static _type candle_##_name(_type x) { return x _op x; }
 
 #endif // HOLY_CANDLES_H
