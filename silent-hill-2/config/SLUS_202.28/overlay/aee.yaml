@@ -24,6 +24,6 @@ segments:
     subsegments:
       - [0x0, databin, aee_overlay_header]
       - [0x80, c, Event/stage/stg_apart_e3fe]
-      - [0x900, data, Event/stage/stg_apart_e3fe_data]
-      - { vram: 0x1F03080, type: bss, name: Event/stage/stg_apart_e3fe_bss }
+      - [0x900, .data, Event/stage/stg_apart_e3fe]
+      - { vram: 0x1F03080, type: .bss, name: Event/stage/stg_apart_e3fe }
   - [0x1280]

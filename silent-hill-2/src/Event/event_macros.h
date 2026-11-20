@@ -95,6 +95,7 @@ do {                                 \
 #define GAME_FLAG_85   85
 #define GAME_FLAG_87   87
 #define GAME_FLAG_88   88
+#define GAME_FLAG_89   89
 #define GAME_FLAG_91   91
 #define GAME_FLAG_95   95
 #define GAME_FLAG_96   96
