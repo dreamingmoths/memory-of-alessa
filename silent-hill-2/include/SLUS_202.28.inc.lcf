@@ -165,15 +165,15 @@ SECTIONS
 		aee_overlay_header.s.o (.data)
 		stg_apart_e3fe.c.o (.text)
 
-		. = ALIGN(0x80);
+		. = ALIGN(0x100);
 		ALIGNALL(0x4);
 
-		stg_apart_e3fe_data.data.s.o (.data)
+		stg_apart_e3fe.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_apart_e3fe_bss.bss.s.o (.bss)
+		stg_apart_e3fe.c.o (.bss)
 	}	>	aee.bin
 
 	.ast.bin :
