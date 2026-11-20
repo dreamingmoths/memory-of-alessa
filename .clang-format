@@ -5,6 +5,7 @@ PointerAlignment: Left
 AllowShortLoopsOnASingleLine: true
 AlignConsecutiveMacros: true
 AlignConsecutiveAssignments: true
+AlignArrayOfStructures: Left
 AlignOperands: true
 AlignEscapedNewlines: Left
 AlignTrailingComments: true
