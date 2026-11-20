@@ -29,6 +29,7 @@ tools/kaitai-struct-compiler-0.11
 **/.vscode/*
 !.vscode/c_cpp_properties.json
 .splache
+.splat
 __pycache__
 *decorated.s
 tmp*.c
