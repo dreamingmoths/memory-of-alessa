@@ -9,16 +9,6 @@
 #include "Heap/utilheap.h"
 #include "view/camera_dat.h"
 
-#define SHADOW_CHAR_MAN_SIZE 16
-#define SHADOW_OUTDOOR_MAN_SIZE 4
-
-#define SHADOW_OFF_WORK_CHAR_SIZE 2
-#define SHADOW_OFF_WORK_CHAR_OBJ_COUNT 22
-#define SHADOW_OFF_WORK_BG_SIZE 4
-#define SHADOW_OFF_WORK_BG_OBJ_COUNT 32
-
-#define SHADOW_CALC_HEAP_SIZE 0xA0
-
 
 void sh2shd_init_shadow(void);
 
