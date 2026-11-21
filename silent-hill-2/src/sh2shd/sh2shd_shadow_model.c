@@ -74,7 +74,7 @@ void sh2shd_init_shadow(void) {
     
         shadow_off_work_char[i].kind = 0;
         shadow_off_work_char[i].id = -1;
-        for (j = 0; j < SHADOW_OFF_WORK_CHAR_OBJ_COUNT; j++)
+        for (j = 0; j < SHD_OFF_WORK_CHAR_NUM; j++)
             shadow_off_work_char[i].obj_id[j] = -1;
     }
 

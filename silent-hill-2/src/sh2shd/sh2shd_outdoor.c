@@ -7,26 +7,8 @@
 #include "candles.h"
 
 #include "sh2shd/sh2shd_structs.h"
+#include "sh2shd/sh2shd_macros.h"
 #include "sh2shd/sh2shd_shadow_model.h"
-
-#define SHD_REFTAG_POOL_SIZE 6400
-#define SHD_KICK_PACKET_SIZE 640
-#define SHD_OFF_WORK_BG_NUM  4
-
-#define STCYCL(wl, cl)           SCE_VIF1_SET_STCYCL(wl, cl, 0)
-#define UNPACK(vuaddr, num, cmd) SCE_VIF1_SET_UNPACK(vuaddr, num, cmd, 0)
-
-#define REF_ADDR(x) ((u_int) (x) & 0x7fffffff)
-#define REFTAG(qwd, count, addr, stcycl, upk) \
-    qwd.ui32[0] = DMAref | (count);           \
-    qwd.ui32[1] = (u_int) (addr);             \
-    qwd.ui32[2] = stcycl;                     \
-    qwd.ui32[3] = upk
-#define CNT(qwd, vifcode1, vifcode2)          \
-    qwd.ui32[0] = DMAcnt | 0;                 \
-    qwd.ui32[1] = 0;                          \
-    qwd.ui32[2] = vifcode1;                   \
-    qwd.ui32[3] = vifcode2
 
 CANDLE(sh2shd_init_outdoor_man2, CANDLE_TYPE_GPR, *);
 
