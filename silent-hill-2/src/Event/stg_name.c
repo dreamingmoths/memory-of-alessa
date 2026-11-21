@@ -896,7 +896,7 @@ int RoomName(int glb_crd, float pos_x, float pos_z) {
     tpwoin = z + (x << 5);
     
     
-    if (glb_crd == 0) glb_crd = stage->glb_crd;
+    if (glb_crd == Glb_crd_null) glb_crd = stage->glb_crd;
     
     switch (glb_crd) {
         
@@ -1241,7 +1241,7 @@ int BlockNumber(int* ret, int glb_crd, float pos_x, float pos_z) {
     int x; int z; 
     int xz;   
     int i;
-    if (glb_crd == 0) glb_crd = stage->glb_crd;
+    if (glb_crd == Glb_crd_null) glb_crd = stage->glb_crd;
     
     for (i = 0; i < 4; i++) ret[i] = 0;
     room = RoomName(glb_crd, pos_x, pos_z);
@@ -1281,7 +1281,7 @@ int BlockNumber(int* ret, int glb_crd, float pos_x, float pos_z) {
 }
 
 int BgIsOut(int glb_crd) {
-    if (glb_crd == 0) glb_crd = stage->glb_crd;
+    if (glb_crd == Glb_crd_null) glb_crd = stage->glb_crd;
     
     ASSERT_ON_LINE(glb_crd > Glb_crd_null && glb_crd < Glb_crd_num, 963);
 

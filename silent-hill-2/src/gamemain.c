@@ -17,6 +17,7 @@
 #include "Event/event.h"
 #include "Event/event_sub.h"
 #include "Event/title.h"
+#include "Event/stg_name.h"
 
 #include "DBG/dbflow.h"
 #include "DBG/dbfntprint.h"
@@ -97,7 +98,7 @@ int GameMain(void) {
 
     
     {
-        int glb_crd = 0;
+        int glb_crd = Glb_crd_null;
         float px = 0.0f;
         float pz = 0.0f;
         if (sh2jms.player != NULL) {

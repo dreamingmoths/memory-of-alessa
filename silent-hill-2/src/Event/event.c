@@ -23,6 +23,7 @@
 #include "Event/event.h"
 #include "Event/demoview.h"
 #include "Event/stg_overlay.h"
+#include "Event/stg_name.h"
 
 #include "MC/savedata.h"
 
@@ -1124,13 +1125,13 @@ int EventProgressCheck(void) {
     room = RoomNameJms();
 
     
-    if (stage->glb_crd == 6 && !GET_GAME_FLAG(GAME_FLAG_32)) {
+    if (stage->glb_crd == Glb_crd_extra && !GET_GAME_FLAG(GAME_FLAG_32)) {
         return 1;
     }
-    if (stage->glb_crd == 1 && !GET_GAME_FLAG(GAME_FLAG_36) && sh2jms.player->pos.x > -20000.0f && sh2jms.player->pos.z > -20000.0f) {
+    if (stage->glb_crd == Glb_crd_forest && !GET_GAME_FLAG(GAME_FLAG_36) && sh2jms.player->pos.x > -20000.0f && sh2jms.player->pos.z > -20000.0f) {
         return 2;
     }
-    if (stage->glb_crd == 2 && !GET_GAME_FLAG(GAME_FLAG_43)) {
+    if (stage->glb_crd == Glb_crd_town_east && !GET_GAME_FLAG(GAME_FLAG_43)) {
         return 3;
     } 
     if (GET_GAME_FLAG(GAME_FLAG_69) && !GET_GAME_FLAG(GAME_FLAG_70)) {
@@ -1139,16 +1140,16 @@ int EventProgressCheck(void) {
     if (GET_GAME_FLAG(GAME_FLAG_69) && room == 24) {
         return 5;
     }
-    if (stage->glb_crd == 3 && !GET_GAME_FLAG(GAME_FLAG_150)) {
+    if (stage->glb_crd == Glb_crd_town_west && !GET_GAME_FLAG(GAME_FLAG_150)) {
         return 6;
     }
     if (GET_GAME_FLAG(GAME_FLAG_150) && !GET_GAME_FLAG(GAME_FLAG_152)) {
         return 7;
     }
-    if (stage->glb_crd == 3 && GET_GAME_FLAG(GAME_FLAG_152) && !GET_GAME_FLAG(GAME_FLAG_157)) {
+    if (stage->glb_crd == Glb_crd_town_west && GET_GAME_FLAG(GAME_FLAG_152) && !GET_GAME_FLAG(GAME_FLAG_157)) {
         return 8;
     }
-    if (stage->glb_crd == 3 && GET_GAME_FLAG(GAME_FLAG_162) && !GET_GAME_FLAG(GAME_FLAG_163)) {
+    if (stage->glb_crd == Glb_crd_town_west && GET_GAME_FLAG(GAME_FLAG_162) && !GET_GAME_FLAG(GAME_FLAG_163)) {
         return 9;
     }
     if (GET_GAME_FLAG(GAME_FLAG_379) && !GET_GAME_FLAG(GAME_FLAG_380)) {

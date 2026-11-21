@@ -10,8 +10,8 @@ typedef enum _Sh2GlobalCoord {
     Glb_crd_null        = 0,
     Glb_crd_forest      = 1,
     Glb_crd_town_east   = 2,
-    Glb_crd_unknown3    = 3,
-    Glb_crd_unknown4    = 4,
+    Glb_crd_town_west   = 3,
+    Glb_crd_lake        = 4,
     Glb_crd_ovservation = 5,
 
     /**
