@@ -677,7 +677,7 @@ void sh2shd_renew_char_man_for_drop(SHADOW_CHAR_MAN* man, sceVu0FVECTOR spot_pos
     float low;                 // r29+0xAC
     float tmp;                 // r29+0xB0
 
-    sh2shd_get_height_for_alpha(&high, &low, man->kind, (u16) man->id);
+    sh2shd_get_height_for_alpha(&high, &low, man->kind, man->id);
     tmp = high;
     if (high > low) {
         high = low;
