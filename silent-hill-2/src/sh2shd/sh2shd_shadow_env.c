@@ -1,6 +1,10 @@
 #include "sh2_common.h"
+
 #include "Event/demoview.h"
+#include "Event/stg_name.h"
+
 #include "Chacter/m3_sc.h"
+
 #include "sh2shd/sh2shd_structs.h"
 
 static float get_demo_frame(void);
@@ -424,21 +428,21 @@ void sh2shd_get_shadow_env_chr(SHADOW_ENV* env, SHADOW_CHAR_MAN* chr_man, int gl
 
     switch (glb_coord) {
         default:
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-        case 13:
+        case Glb_crd_null:
+        case Glb_crd_forest:
+        case Glb_crd_town_east:
+        case Glb_crd_town_west:
+        case Glb_crd_lake:
+        case Glb_crd_ovservation:
+        case Glb_crd_extra:
+        case Glb_crd_bowling:
+        case Glb_crd_heaven:
+        case Glb_crd_hospital:
+        case Glb_crd_hotel_face:
+        case Glb_crd_hotel_back:
             break;
 
-        case 9:
+        case Glb_crd_apart:
             switch (map_id) {
                 case 22:
                     env->clip_kind = 999;
@@ -469,7 +473,7 @@ void sh2shd_get_shadow_env_chr(SHADOW_ENV* env, SHADOW_CHAR_MAN* chr_man, int gl
             }
             break;
 
-        case 11:
+        case Glb_crd_delusion:
             switch (map_id) {
                 case 15:
                     env->clip_kind = 999;
@@ -716,7 +720,7 @@ void sh2shd_get_jms_shadow_env(JMS_SHADOW_ENV* env, int light_kind, sceVu0FVECTO
     *env = default_env_self_para;
 
     switch (glb_coord) {
-        case 9:
+        case Glb_crd_apart:
             switch (map_id) {
                 case 34:
                     if (light_kind == 1) {
@@ -751,14 +755,14 @@ void sh2shd_get_jms_shadow_env(JMS_SHADOW_ENV* env, int light_kind, sceVu0FVECTO
                     break;
             }
             break;
-        case 10:
+        case Glb_crd_hospital:
             switch (map_id) {
                 case 69:
                     env->light_kind = 9;
                     break;
             }
             break;
-        case 11:
+        case Glb_crd_delusion:
             switch (map_id) {
                 case 1:
                     vwGetViewPosition(cam_pos);
@@ -781,7 +785,7 @@ void sh2shd_get_jms_shadow_env(JMS_SHADOW_ENV* env, int light_kind, sceVu0FVECTO
                     break;
             }
             break;
-        case 12:
+        case Glb_crd_hotel_face:
             switch (map_id) {
                 case 1:
                     env->light_kind = 2;
@@ -950,7 +954,7 @@ void sh2shd_get_drop_shadow_env(DROP_SHADOW_ENV* env, int glb_coord, int map_id,
     *env = default_drop_env;
 
     switch (glb_coord) {
-        case 1:
+        case Glb_crd_forest:
     
             
 
@@ -963,7 +967,7 @@ void sh2shd_get_drop_shadow_env(DROP_SHADOW_ENV* env, int glb_coord, int map_id,
             }
             break;
 
-        case 3:
+        case Glb_crd_town_west:
             switch (map_id) {
                 case 0x33:
                     if (x < -99100.0f) {
@@ -977,7 +981,7 @@ void sh2shd_get_drop_shadow_env(DROP_SHADOW_ENV* env, int glb_coord, int map_id,
             }
             break;
 
-        case 5:
+        case Glb_crd_ovservation:
             env->alpha_max = 128.0f;
             break;
     }
@@ -1483,7 +1487,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
 #line 2286
 void sh2shd_shadow_off(int glb_coord, int map_id) {
     switch (glb_coord) {
-        case 9:
+        case Glb_crd_apart:
             if (map_id == 88) {
                 sh2shd_add_char_to_shadow_off_work(EN_SCU_CHARA_KIND, 9);
                 sh2shd_off_char_all_parts(EN_SCU_CHARA_KIND, 9);
@@ -1491,7 +1495,7 @@ void sh2shd_shadow_off(int glb_coord, int map_id) {
             }
             break;
 
-        case 10:
+        case Glb_crd_hospital:
             if (map_id == 45) {
                 sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
                 sh2shd_off_char_all_parts(LAU_CHARA_KIND, 0);
@@ -1506,7 +1510,7 @@ void sh2shd_shadow_off(int glb_coord, int map_id) {
             }
             break;
 
-        case 11: {
+        case Glb_crd_delusion: {
             sceVu0FVECTOR cam_pos;
 
             if (map_id == 113) {
@@ -1524,7 +1528,7 @@ void sh2shd_shadow_off(int glb_coord, int map_id) {
             break;
         }
 
-        case 12: {
+        case Glb_crd_hotel_face: {
             sceVu0FVECTOR cam_pos;
 
             if (map_id == 9) {
@@ -1553,7 +1557,7 @@ int check_bg_light_exist(void) {
 
     get_map_id(&glb_coord, &map_id);
     switch (glb_coord) {
-        case 9:
+        case Glb_crd_apart:
             switch (map_id) {
                 default:
                     break;
@@ -1561,7 +1565,7 @@ int check_bg_light_exist(void) {
                     return 0;
             }
             break;
-        case 12:
+        case Glb_crd_hotel_face:
             if (map_id == 0x5B) {
                 return 4;
             }
