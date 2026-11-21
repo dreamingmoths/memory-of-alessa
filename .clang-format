@@ -1,5 +1,5 @@
 ---
-IndentWidth: 2
+IndentWidth: 4
 ColumnLimit: 0
 PointerAlignment: Left
 AllowShortLoopsOnASingleLine: true
@@ -16,8 +16,6 @@ SpaceAfterCStyleCast: true
 BinPackArguments: true
 BinPackParameters: true
 IndentCaseLabels: true
-PPIndentWidth: -1
-IndentPPDirectives: BeforeHash
 RemoveParentheses: MultipleParentheses
 
 # uncomment as needed!
