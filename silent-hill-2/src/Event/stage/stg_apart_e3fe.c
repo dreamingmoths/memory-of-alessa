@@ -21,6 +21,7 @@
 #include "Event/demoview.h"
 #include "Event/chara_admin.h"
 #include "Event/event_macros.h"
+#include "Event/stg_name.h"
 
 #include "GFW/sh2_DrawEnvData.h"
 #include "GFW/sh2gfw_macros.h"
@@ -561,7 +562,7 @@ Stage_Data stage_apart_e3fe = {
     /* .stageInit = */ stg_apart_e3fe_EvStageInit,
     /* .roomInit = */ NULL,
     /* .alltimeFunc = */ stg_apart_e3fe_EvAllTimeFunc,
-    /* .glbCrd = */ 9,
+    /* .glbCrd = */ Glb_crd_apart,
     /* .pcModel = */ 1,
     /* .stgAnimInfo = */ stg_apart_e3fe_pjames_stage_anim,
     /* .bgmControl = */ NULL,
