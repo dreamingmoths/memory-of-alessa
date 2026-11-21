@@ -208,4 +208,13 @@ typedef struct SHADOW_CHAR_OBJ_HEAD {
     short reserve4; // offset 0xE, size 0x2
 } SHADOW_CHAR_OBJ_HEAD;
 
+typedef struct DROP_SHADOW_ENV {
+    // total size: 0x14
+    short block; // offset 0x0, size 0x2
+    float alpha_min; // offset 0x4, size 0x4
+    float alpha_max; // offset 0x8, size 0x4
+    float height_revision; // offset 0xC, size 0x4
+    u_int color; // offset 0x10, size 0x4
+} DROP_SHADOW_ENV;
+
 #endif // SH2SHD_STRUCTS_H

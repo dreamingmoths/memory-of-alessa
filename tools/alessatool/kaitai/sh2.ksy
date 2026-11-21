@@ -13259,6 +13259,48 @@ types:
       - id: origin_w
         type: s2
 
+  shadow_char_obj_head:
+    seq:
+      - id: char_id
+        type: u4
+
+      - id: obj_id
+        type: s2
+
+      - id: geom_num
+        type: s2
+
+      - id: reserve1
+        type: s2
+
+      - id: reserve2
+        type: s2
+
+      - id: reserve3
+        type: s2
+
+      - id: reserve4
+        type: s2
+
+  drop_shadow_env:
+    seq:
+      - id: block
+        type: s2
+
+      - size: 2
+
+      - id: alpha_min
+        type: f4
+
+      - id: alpha_max
+        type: f4
+
+      - id: height_revision
+        type: f4
+
+      - id: color
+        type: u4
+
   u16:
     seq:
       - id: bytes
