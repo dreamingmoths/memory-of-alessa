@@ -954,7 +954,7 @@ void sh2shd_get_drop_shadow_env(DROP_SHADOW_ENV* env, int glb_coord, int map_id,
     
             
 
-            if ((map_id - 10) <= 1u || (map_id - 13) <= 1u) {
+            if ((map_id == 10) || (map_id == 11) || (map_id == 13) || (map_id == 14)) {
 
                 env->alpha_max = 64.0f;
                 env->color     = 0;
@@ -1241,7 +1241,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
         
         
         case DRAMA_DEMO_42: {
-            float cam_pos[4];
+            sceVu0FVECTOR cam_pos;
             float env_demo_frame;
             vwGetViewPosition(&cam_pos);
             env_demo_frame = get_demo_frame();
@@ -1352,7 +1352,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
 
 
         case DRAMA_DEMO_4A: {
-            float mat[4][4];
+            sceVu0FMATRIX mat;
             float env_demo_frame = get_demo_frame();
             shCharacterGetPartsMatrixForShadow(mat, LAU_CHARA_KIND, 0U, 0U);
             if (mat[3][2] > 59000.0f) {
