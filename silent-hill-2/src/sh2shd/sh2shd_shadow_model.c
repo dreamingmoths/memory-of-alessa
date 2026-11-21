@@ -8,6 +8,7 @@
 #include "sh2shd/sh2shd_char_jms.h"
 #include "sh2shd/sh2shd_shadow_env.h"
 #include "Event/demoview.h"
+#include "Event/stg_name.h"
 #include "Chacter/m3_sc.h"
 #include "Chacter_Draw/light_n.h"
 #include "SH2_common/map_ids.h"
@@ -121,11 +122,11 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
             light_dir[2] = 0.7796187f;
             light_dir[3] = 0.0f;
         }
-    } else if ((glb_coord == 9) && map_id == MAP_ID_0x1E && scp->kind == EN_MKN_CHARA_KIND && light_kind == LIGHT_KIND_5) {
+    } else if ((glb_coord == Glb_crd_apart) && map_id == MAP_ID_0x1E && scp->kind == EN_MKN_CHARA_KIND && light_kind == LIGHT_KIND_5) {
         return 1;
     }
 
-    if ((light_kind == LIGHT_KIND_9) && ((glb_coord != 9) || (map_id != MAP_ID_0x48))) {
+    if ((light_kind == LIGHT_KIND_9) && ((glb_coord != Glb_crd_apart) || (map_id != MAP_ID_0x48))) {
         return 1;
     }
 

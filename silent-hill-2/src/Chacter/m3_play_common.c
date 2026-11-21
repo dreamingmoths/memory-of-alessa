@@ -12,6 +12,7 @@
 #include "Chacter/sh_character_battle.h"
 
 #include "Event/event.h"
+#include "Event/stg_name.h"
 
 static void PlayerCheckHuggedPos(float* l_pos, int dir, float mov);
 static int PlayerCheckKeyLStickTrg(int dir);
@@ -75,10 +76,10 @@ void PlayerUpdateStatus(SubCharacter* this) {
     } else {
 
         switch (stage->glb_crd) {
-            case 1:
-            case 2:
-            case 3:
-            case 5:
+            case Glb_crd_forest:
+            case Glb_crd_town_east:
+            case Glb_crd_town_west:
+            case Glb_crd_ovservation:
                 sh2jms.map_mode = 0;
                 break;
             default:

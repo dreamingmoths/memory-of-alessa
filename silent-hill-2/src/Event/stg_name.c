@@ -899,23 +899,22 @@ int RoomName(int glb_crd, float pos_x, float pos_z) {
     if (glb_crd == Glb_crd_null) glb_crd = stage->glb_crd;
     
     switch (glb_crd) {
-        
-        case 1: return 3;
-        case 2: return RoomNameTownEast(tpwoin);
-        case 3: return 8;
-        case 4: return 14;
-        case 5: return 2;
-        case 6: return RoomNameExtra(tpwoin);
-        case 7: return RoomNameBowling(tpwoin);
-        case 8: return RoomNameHeaven(tpwoin);
-        case 9: return RoomNameApart(tpwoin);
-        case 10: return RoomNameHospital(tpwoin);
-        case 11: return RoomNameDelusion(tpwoin);
-        case 12: return RoomNameHotelFace(tpwoin);
-        case 13: return RoomNameHotelBack(tpwoin);
-        case 14: return RoomNameLastStage(tpwoin);
-        case 15: return 191;
-        case 16: return RoomNameMansion(tpwoin);
+        case Glb_crd_forest:      return 3;
+        case Glb_crd_town_east:   return RoomNameTownEast(tpwoin);
+        case Glb_crd_town_west:   return 8;
+        case Glb_crd_lake:        return 14;
+        case Glb_crd_ovservation: return 2;
+        case Glb_crd_extra:       return RoomNameExtra(tpwoin);
+        case Glb_crd_bowling:     return RoomNameBowling(tpwoin);
+        case Glb_crd_heaven:      return RoomNameHeaven(tpwoin);
+        case Glb_crd_apart:       return RoomNameApart(tpwoin);
+        case Glb_crd_hospital:    return RoomNameHospital(tpwoin);
+        case Glb_crd_delusion:    return RoomNameDelusion(tpwoin);
+        case Glb_crd_hotel_face:  return RoomNameHotelFace(tpwoin);
+        case Glb_crd_hotel_back:  return RoomNameHotelBack(tpwoin);
+        case Glb_crd_last_stage:  return RoomNameLastStage(tpwoin);
+        case Glb_crd_unknown_15:  return 191;
+        case Glb_crd_mansion:     return RoomNameMansion(tpwoin);
     }          
     
     return 0;        
@@ -1257,11 +1256,10 @@ int BlockNumber(int* ret, int glb_crd, float pos_x, float pos_z) {
     xz = ((z > 0 ? z - 1 : z) + 16) + (((x > 0 ? x - 1 : x) + 16) << 5);
 
     switch (glb_crd) {
-        
-        case 1: default: block = block_a; no = 23; break;
-        case 2:          block = block_b; no = 55; break;
-        case 3:          block = block_c; no = 76; break;
-        case 4:          block = block_d; no = 7;  break;
+        case Glb_crd_forest:    default: block = block_a; no = 23; break;
+        case Glb_crd_town_east:          block = block_b; no = 55; break;
+        case Glb_crd_town_west:          block = block_c; no = 76; break;
+        case Glb_crd_lake:               block = block_d; no = 7;  break;
     }
     
     result = 0;
