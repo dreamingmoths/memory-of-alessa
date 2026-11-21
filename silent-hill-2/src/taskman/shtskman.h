@@ -1,7 +1,9 @@
 #ifndef SHTSKMAN_H
 #define SHTSKMAN_H
 
-#include "common.h"
+#include "sh2_common.h"
+
+#define TASK_LIST_SIZE 8
 
 // total size: 0x14
 typedef struct _shTskEXECUTE {
@@ -20,10 +22,23 @@ typedef struct _shTskTASK {
     u_char freemem[492]; // offset 0x14, size 0x1EC
 } shTskTASK;
 
-shTskTASK* shTSKSetTask(void (*func)(void*) /* r6 */, u_char num /* r2 */);
+void shTSKInitTaskList(u_char* buffer, u_int size);
+
+shTskTASK* shTSKSetTask(void (* func)(void *), u_char num);
+
+shTskTASK* shTSKSetTaskPrev(shTskTASK* task, void (* func)(void *));
+
 void shTSKDelTask(shTskTASK* task);
+
+shTskTASK* shTSKCutTask(shTskTASK* task);
+
+void shTSKExecuteTask(u_char num);
+
 shTskTASK* shTSKSearchTaskWithAtr(int atr, shTskTASK* start, u_char num);
 
-extern shTskTASK* shTskTaskListTop[8];
+void shTSKFreeTaskLine(u_char num);
+
+
+extern shTskTASK* shTskTaskListTop[TASK_LIST_SIZE];
 
 #endif // SHTSKMAN_H
