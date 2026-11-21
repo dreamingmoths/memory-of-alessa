@@ -1,4 +1,4 @@
-#include "common.h"
+#include "sh2_common.h"
 #include "Event/demoview.h"
 #include "Chacter/m3_sc.h"
 #include "sh2shd/sh2shd_structs.h"
@@ -315,7 +315,7 @@ void sh2shd_get_shadow_env_bg(SHADOW_ENV* env, SHADOW_OUTDOOR_HEAD* head) {
     *env = default_env_bg;
 
     switch (head->kind) {
-        case 2: 
+        case 2:
             for (i = 0; i < ENV_SIZE(cb_env); i++) {
                 if (head->map_id == cb_env[i].block) {
                     *env = cb_env[i];
@@ -323,7 +323,7 @@ void sh2shd_get_shadow_env_bg(SHADOW_ENV* env, SHADOW_OUTDOOR_HEAD* head) {
                 }
             }
             break;
-        case 3: 
+        case 3:
             for (i = 0; i < ENV_SIZE(cc_env); i++) {
                 if (head->map_id == cc_env[i].block) {
                     *env = cc_env[i];
@@ -331,7 +331,7 @@ void sh2shd_get_shadow_env_bg(SHADOW_ENV* env, SHADOW_OUTDOOR_HEAD* head) {
                 }
             }
             break;
-        case 7: 
+        case 7:
             for (i = 0; i < ENV_SIZE(bw_env); i++) {
                 if (head->map_id == bw_env[i].block) {
                     *env = bw_env[i];
@@ -339,25 +339,25 @@ void sh2shd_get_shadow_env_bg(SHADOW_ENV* env, SHADOW_OUTDOOR_HEAD* head) {
                 }
             }
             break;
-        case 8: 
+        case 8:
             if (head->map_id == 1) {
-                env->block = 1;
+                env->block     = 1;
                 env->clip_kind = 999;
-                env->leng = 6000.0f;
+                env->leng      = 6000.0f;
             } else if (head->map_id == 5) {
-                env->block = 5;
+                env->block     = 5;
                 env->clip_kind = 0;
-                env->leng = 6000.0f;
+                env->leng      = 6000.0f;
             }
             break;
-        case 9: 
-            for (i = 0; i <  ENV_SIZE(ap_env); i++) {
+        case 9:
+            for (i = 0; i < ENV_SIZE(ap_env); i++) {
                 if (head->map_id == ap_env[i].block) {
                     *env = ap_env[i];
                     break;
                 }
             }
-    
+
             switch (head->map_id) {
                 case 6:
                     env->clip_kind = 666;
@@ -386,7 +386,7 @@ void sh2shd_get_shadow_env_bg(SHADOW_ENV* env, SHADOW_OUTDOOR_HEAD* head) {
             for (i = 0; i < ENV_SIZE(ps_env); i++) {
                 if (head->map_id == ps_env[i].block) {
                     *env = ps_env[i];
-                break;
+                    break;
                 }
             }
             if (head->map_id == 145) {
@@ -424,25 +424,25 @@ void sh2shd_get_shadow_env_chr(SHADOW_ENV* env, SHADOW_CHAR_MAN* chr_man, int gl
 
     switch (glb_coord) {
         default:
-        case 0: 
-        case 1: 
-        case 2: 
-        case 3: 
-        case 4: 
-        case 5: 
-        case 6: 
-        case 7: 
-        case 8: 
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
         case 10:
         case 12:
         case 13:
             break;
 
-        case 9:     
+        case 9:
             switch (map_id) {
                 case 22:
                     env->clip_kind = 999;
-                    env->leng = 4000.0f;
+                    env->leng      = 4000.0f;
                     break;
                 case 30:
                     env->leng = 2000.0f;
@@ -455,7 +455,7 @@ void sh2shd_get_shadow_env_chr(SHADOW_ENV* env, SHADOW_CHAR_MAN* chr_man, int gl
                     break;
                 case 50:
                     if (!sh2gfw_Check_JmsSpotOnOff()) {
-                        if   (chr_man->scp->pos.z >  10550.00f &&
+                        if (chr_man->scp->pos.z > 10550.00f &&
                             ((chr_man->scp->pos.x > -105000.0f && chr_man->scp->pos.x < -103100.0f) || (chr_man->scp->pos.x > -102600.0f && chr_man->scp->pos.x < -101700.0f))) {
                             env->clip_kind = 666;
                             break;
@@ -463,13 +463,13 @@ void sh2shd_get_shadow_env_chr(SHADOW_ENV* env, SHADOW_CHAR_MAN* chr_man, int gl
                     }
                     break;
                 case 88:
-                    env->leng = 3000.0f;
+                    env->leng      = 3000.0f;
                     env->clip_kind = 999;
-                break;
+                    break;
             }
             break;
 
-        case 11:    
+        case 11:
             switch (map_id) {
                 case 15:
                     env->clip_kind = 999;
@@ -492,11 +492,12 @@ void sh2shd_get_demo_shadow_env_for_bg(SHADOW_ENV* env, int demo_no) {
     *env = default_env_bg;
 
     switch (demo_no) {
-        case 0: break;
+        case 0:
+            break;
 
         case 9:
             env->clip_kind = 999;
-            env->leng = 8000.0f;
+            env->leng      = 8000.0f;
             break;
 
         case 11:
@@ -509,7 +510,7 @@ void sh2shd_get_demo_shadow_env_for_bg(SHADOW_ENV* env, int demo_no) {
         case 14:
             env->clip_kind = 666;
             break;
-        
+
         case 15:
         case 19:
             break;
@@ -526,17 +527,16 @@ void sh2shd_get_demo_shadow_env_for_bg(SHADOW_ENV* env, int demo_no) {
             break;
 
         case 38:
-            env->leng = 2500.0f;
+            env->leng      = 2500.0f;
             env->clip_kind = 999;
             break;
 
         case 39:
             break;
-        
+
         case 40:
             env->clip_kind = 999;
             break;
-
 
         case 43:
         case 44:
@@ -579,7 +579,8 @@ void sh2shd_get_demo_shadow_env_for_char(SHADOW_ENV* env, SHADOW_CHAR_MAN* man, 
     *env = default_env_chr;
 
     switch (demo_no) {
-        case 0: break;
+        case 0:
+            break;
         case 9:
             env->clip_kind = 999;
             break;
@@ -591,24 +592,28 @@ void sh2shd_get_demo_shadow_env_for_char(SHADOW_ENV* env, SHADOW_CHAR_MAN* man, 
                 env->clip_kind = 666;
             }
             env->clip_kind = 999;
-            env->leng = 6000.0f;
+            env->leng      = 6000.0f;
             break;
-        case 75: break;
-        case 15: break;
+        case 75:
+            break;
+        case 15:
+            break;
         case 19:
             env->leng = 4000.0f;
             break;
         case 25:
             env->clip_kind = 999;
             break;
-        case 28: break;
+        case 28:
+            break;
         case 32:
             env->clip_kind = 999;
             break;
         case 33:
             env->clip_kind = 999;
             break;
-        case 34: break;
+        case 34:
+            break;
         case 38: {
             float env_demo_frame;
             sceVu0FVECTOR cam_pos;
@@ -626,7 +631,8 @@ void sh2shd_get_demo_shadow_env_for_char(SHADOW_ENV* env, SHADOW_CHAR_MAN* man, 
             }
             break;
         }
-        case 39: break;
+        case 39:
+            break;
         case 40: {
             float env_demo_frame = get_demo_frame();
             if (env_demo_frame > 784.0f && env_demo_frame < 875.0f) {
@@ -636,11 +642,13 @@ void sh2shd_get_demo_shadow_env_for_char(SHADOW_ENV* env, SHADOW_CHAR_MAN* man, 
             env->clip_kind = 999;
             break;
         }
-        case 43: break;
-        case 44: break;
+        case 43:
+            break;
+        case 44:
+            break;
         case 46:
             env->clip_kind = 999;
-            env->leng = 900.0f;
+            env->leng      = 900.0f;
             break;
         case 62:
             env->clip_kind = 999;
@@ -672,8 +680,10 @@ void sh2shd_get_demo_shadow_env_for_char(SHADOW_ENV* env, SHADOW_CHAR_MAN* man, 
         case 70:
             env->clip_kind = 999;
             break;
-        case 71: break;
-        case 78: break;
+        case 71:
+            break;
+        case 78:
+            break;
         case 79:
             env->clip_kind = 999;
             break;
@@ -723,7 +733,7 @@ void sh2shd_get_jms_shadow_env(JMS_SHADOW_ENV* env, int light_kind, sceVu0FVECTO
                 case 72:
                     vwGetViewPosition(cam_pos);
                     env->light_kind = 4;
-                    if ((cam_pos[0] > 17500.0f)) {
+                    if (cam_pos[0] > 17500.0f) {
                         sh2shd_add_char_to_shadow_off_work(HLL_JMS_CHARA_KIND, 0);
                         sh2shd_off_char_obj(HLL_JMS_CHARA_KIND, 0, 15);
                         sh2shd_off_char_obj(HLL_JMS_CHARA_KIND, 0, 8);
@@ -810,16 +820,17 @@ void sh2shd_get_jms_shadow_env(JMS_SHADOW_ENV* env, int light_kind, sceVu0FVECTO
 #line 1615
 void sh2shd_get_demo_jms_shadow_env(JMS_SHADOW_ENV* env, int demo_no) {
     static float height_test2 = 1300.0f;
-    static float scale_test2 = 10.0f;
-    static float bias_test2 = 300.0f;
+    static float scale_test2  = 10.0f;
+    static float bias_test2   = 300.0f;
 
     env->height_revision = 900.0f;
-    env->bias = 600.0f;
-    env->scale = 10.0f;
-    env->light_kind = -1;
+    env->bias            = 600.0f;
+    env->scale           = 10.0f;
+    env->light_kind      = -1;
 
     switch (demo_no) {
-        case 9: break;
+        case 9:
+            break;
         case 10:
             env->light_kind = 6;
             break;
@@ -827,9 +838,9 @@ void sh2shd_get_demo_jms_shadow_env(JMS_SHADOW_ENV* env, int demo_no) {
             env->light_kind = 2;
             break;
         case 14:
-            env->light_kind = 3;
+            env->light_kind      = 3;
             env->height_revision = 1800.0f;
-            env->bias = 500.0f;
+            env->bias            = 500.0f;
             break;
         case 16:
             env->light_kind = 9;
@@ -842,15 +853,15 @@ void sh2shd_get_demo_jms_shadow_env(JMS_SHADOW_ENV* env, int demo_no) {
             break;
         case 38: {
             float env_demo_frame = get_demo_frame();
-            if ((env_demo_frame >= 1000.0f && env_demo_frame < 1360.0f)) {
+            if (env_demo_frame >= 1000.0f && env_demo_frame < 1360.0f) {
                 env->light_kind = 3;
                 break;
             }
-            if ((env_demo_frame >= 1510.0f && env_demo_frame < 2240.0f)) {
+            if (env_demo_frame >= 1510.0f && env_demo_frame < 2240.0f) {
                 env->light_kind = 2;
                 break;
             }
-            if ((env_demo_frame > 2860.0f)) {
+            if (env_demo_frame > 2860.0f) {
                 env->light_kind = 9;
                 break;
             }
@@ -859,15 +870,15 @@ void sh2shd_get_demo_jms_shadow_env(JMS_SHADOW_ENV* env, int demo_no) {
         }
         case 40: {
             float env_demo_frame = get_demo_frame();
-            if ((env_demo_frame >= 0.0f && env_demo_frame <= 244.0f)) {
+            if (env_demo_frame >= 0.0f && env_demo_frame <= 244.0f) {
                 env->light_kind = 3;
                 break;
             }
-            if ((env_demo_frame > 244.0f && env_demo_frame <= 1100.0f)) {
+            if (env_demo_frame > 244.0f && env_demo_frame <= 1100.0f) {
                 env->light_kind = 2;
                 break;
             }
-            if ((env_demo_frame > 1100.0f)) {
+            if (env_demo_frame > 1100.0f) {
                 env->light_kind = 3;
                 break;
             }
@@ -877,33 +888,34 @@ void sh2shd_get_demo_jms_shadow_env(JMS_SHADOW_ENV* env, int demo_no) {
             env->light_kind = 8;
             break;
         case 51:
-            env->light_kind = 8;
+            env->light_kind      = 8;
             env->height_revision = 3000.0f;
             break;
         case 52:
             env->light_kind = 6;
             break;
-        case 65: break;
+        case 65:
+            break;
         case 66: {
             float env_demo_frame = get_demo_frame();
-            env->light_kind = -1;
-            if ((env_demo_frame >= 136.0f && env_demo_frame <= 192.0f)) {
+            env->light_kind      = -1;
+            if (env_demo_frame >= 136.0f && env_demo_frame <= 192.0f) {
                 env->light_kind = 9;
                 break;
             }
-            if ((env_demo_frame >= 517.0f && env_demo_frame <= 593.0f)) {
+            if (env_demo_frame >= 517.0f && env_demo_frame <= 593.0f) {
                 env->light_kind = 9;
                 break;
             }
-            if ((env_demo_frame >= 979.0f && env_demo_frame <= 1020.0f)) {
+            if (env_demo_frame >= 979.0f && env_demo_frame <= 1020.0f) {
                 env->light_kind = 9;
                 break;
             }
-            if ((env_demo_frame >= 2290.0f && env_demo_frame <= 2550.0f)) {
-                env->light_kind = 6;
-                env->bias = bias_test2;
+            if (env_demo_frame >= 2290.0f && env_demo_frame <= 2550.0f) {
+                env->light_kind      = 6;
+                env->bias            = bias_test2;
                 env->height_revision = height_test2;
-                env->scale = scale_test2;
+                env->scale           = scale_test2;
                 break;
             }
             break;
@@ -941,13 +953,12 @@ void sh2shd_get_drop_shadow_env(DROP_SHADOW_ENV* env, int glb_coord, int map_id,
         case 1:
     
             
-            
+
             if ((map_id - 10) <= 1u || (map_id - 13) <= 1u) {
-            
-                
+
                 env->alpha_max = 64.0f;
-                env->color = 0;
-                
+                env->color     = 0;
+
                 break;
             }
             break;
@@ -977,7 +988,7 @@ void sh2shd_get_demo_drop_shadow_env(DROP_SHADOW_ENV* env, int demo_no) {
     *env = default_drop_env;
 
     switch (demo_no) {
-        case 0: 
+        case 0:
             return;
 
         case 3:
@@ -1049,18 +1060,18 @@ void sh2shd_demo_shadow_off(int demo_no) {
         case DRAMA_DEMO_E:
             demo_frame = get_demo_frame();
         
-            
+
             sh2shd_add_char_to_shadow_off_work(HHH_JMS_CHARA_KIND, 0);
-            if (demo_frame <= 1699.0f) 
+            if (demo_frame <= 1699.0f)
                 sh2shd_off_char_all_parts(HHH_JMS_CHARA_KIND, 0);
             else {
-            
+
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0xF);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 8);
-                
+
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 1);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 3);
-                
+
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x1A);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x19);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0xE);
@@ -1070,15 +1081,15 @@ void sh2shd_demo_shadow_off(int demo_no) {
             }
             
             
-            
+
             sh2shd_add_char_to_shadow_off_work(EN_RED_CHARA_KIND, 0);
             if (get_demo_frame() < 190.0f) {
-                
+
                 sh2shd_off_char_obj(EN_RED_CHARA_KIND, 0, 0x24);
                 sh2shd_off_char_obj(EN_RED_CHARA_KIND, 0, 0x1D);
                 return;
             } else if (demo_frame >= 360.0f && demo_frame <= 1699.0f) {
-                
+
                 sh2shd_add_char_to_shadow_off_work(EN_RED_CHARA_KIND, 0);
                 sh2shd_off_char_all_parts(EN_RED_CHARA_KIND, 0);
             }
@@ -1094,9 +1105,9 @@ void sh2shd_demo_shadow_off(int demo_no) {
             
             
             
-        
+
             break;
-        
+
         
         
         
@@ -1120,18 +1131,18 @@ void sh2shd_demo_shadow_off(int demo_no) {
         
         case DRAMA_DEMO_21:
             if (get_demo_frame() < 902.0f) {
-        
+
                 sh2shd_add_char_to_shadow_off_work(HHH_JMS_CHARA_KIND, 0);
                 sh2shd_off_char_all_parts(HHH_JMS_CHARA_KIND, 0);
                 
-                
+
                 return;
             }
         
-            
+
             break;
 
-        
+
         case DRAMA_DEMO_26:
             sh2shd_add_char_to_shadow_off_work(HHH_JMS_CHARA_KIND, 0);
             sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x1A);
@@ -1149,11 +1160,11 @@ void sh2shd_demo_shadow_off(int demo_no) {
 
 
 
-        
+
         case DRAMA_DEMO_2E:
             demo_frame = get_demo_frame();
             if (demo_frame < 780.0f) {
-        
+
                 sh2shd_add_char_to_shadow_off_work(HHH_JMS_CHARA_KIND, 0);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x21);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x28);
@@ -1164,9 +1175,9 @@ void sh2shd_demo_shadow_off(int demo_no) {
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x23);
                 sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x1B);
         
-                
+
                 if (demo_frame > 510.0f) {
-                
+
                     sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 4);
                     sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 5);
                     
@@ -1203,7 +1214,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
                     
                     
                     
-                    
+
                     return;
                 }
             }
@@ -1214,10 +1225,10 @@ void sh2shd_demo_shadow_off(int demo_no) {
 
 
 
-        
+
         case DRAMA_DEMO_41:
             break;
-        
+
         
         
         
@@ -1234,9 +1245,9 @@ void sh2shd_demo_shadow_off(int demo_no) {
             float env_demo_frame;
             vwGetViewPosition(&cam_pos);
             env_demo_frame = get_demo_frame();
-            
+
             if (env_demo_frame >= 135.0f && env_demo_frame <= 192.0f) {
-                
+
                 sh2shd_add_char_to_shadow_off_work(EN_PAP_CHARA_KIND, 0);
                 sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0);
                 sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 3);
@@ -1253,29 +1264,27 @@ void sh2shd_demo_shadow_off(int demo_no) {
                 sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x1C);
             } else 
                 if (env_demo_frame >= 518.0f && env_demo_frame <= 608.0f) {
-                    
-                    sh2shd_add_char_to_shadow_off_work(EN_PAP_CHARA_KIND, 0);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 3);
-                    
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 5);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 7);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 8);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 9);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x11);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x12);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x13);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x17);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x1B);
-                    sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x1C);
-                    
-                    sh2shd_add_char_to_shadow_off_work(AGL_CHARA_KIND, 0);
-                    sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 0x1F);
-                    sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 6);
-                    sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 2);
-                    sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 0);
-                    
-                    
+
+                sh2shd_add_char_to_shadow_off_work(EN_PAP_CHARA_KIND, 0);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 3);
+
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 5);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 7);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 8);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 9);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x11);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x12);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x13);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x17);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x1B);
+                sh2shd_off_char_obj(EN_PAP_CHARA_KIND, 0, 0x1C);
+
+                sh2shd_add_char_to_shadow_off_work(AGL_CHARA_KIND, 0);
+                sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 0x1F);
+                sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 6);
+                sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 2);
+                sh2shd_off_char_obj(AGL_CHARA_KIND, 0, 0);
                     
                     
                     
@@ -1320,8 +1329,10 @@ void sh2shd_demo_shadow_off(int demo_no) {
                     
                     
                     
-                    return;
-                }
+                    
+
+                return;
+            }
             break;
         }
 
@@ -1345,20 +1356,20 @@ void sh2shd_demo_shadow_off(int demo_no) {
             float env_demo_frame = get_demo_frame();
             shCharacterGetPartsMatrixForShadow(mat, LAU_CHARA_KIND, 0U, 0U);
             if (mat[3][2] > 59000.0f) {
-                
+
                 if (env_demo_frame > 320.0f && env_demo_frame <= 962.0f) {
-                
+
                     sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
                     sh2shd_off_char_all_parts(LAU_CHARA_KIND, 0);
-                    
+
                     return;
                 }
 
 
 
-                
+
             } else if (env_demo_frame >= 782.0f && env_demo_frame < 1420.0f) {
-                
+
                 sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
                 sh2shd_off_char_obj(LAU_CHARA_KIND, 0, 0);
                 sh2shd_off_char_obj(LAU_CHARA_KIND, 0, 1);
@@ -1374,7 +1385,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
                 sh2shd_off_char_obj(LAU_CHARA_KIND, 0, 0x25);
                 
                 
-                
+
                 return;
             }
             break;
@@ -1387,13 +1398,13 @@ void sh2shd_demo_shadow_off(int demo_no) {
             if (demo_frame > 1750.0f) {
             
                 
-                
+
                 sh2shd_add_char_to_shadow_off_work(HHH_JMS_CHARA_KIND, 0);
-                
+
                 if (demo_frame < tmp_time)
                     sh2shd_off_char_all_parts(HHH_JMS_CHARA_KIND, 0);
                 else if (demo_frame < 3220.0f) {
-                     
+
                     sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x1A);
                     sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0x19);
                     sh2shd_off_char_obj(HHH_JMS_CHARA_KIND, 0, 0xE);
@@ -1414,7 +1425,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
                     
                     
                     
-                    
+
                     sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
                     sh2shd_off_char_obj(LAU_CHARA_KIND, 0, 0);
                     sh2shd_off_char_obj(LAU_CHARA_KIND, 0, 1);
@@ -1431,7 +1442,7 @@ void sh2shd_demo_shadow_off(int demo_no) {
                 }
             }
             break;
-        }
+    }
 
 
 
@@ -1482,9 +1493,9 @@ void sh2shd_shadow_off(int glb_coord, int map_id) {
 
         case 10:
             if (map_id == 45) {
-                    sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
-                    sh2shd_off_char_all_parts(LAU_CHARA_KIND, 0);
-                    break;
+                sh2shd_add_char_to_shadow_off_work(LAU_CHARA_KIND, 0);
+                sh2shd_off_char_all_parts(LAU_CHARA_KIND, 0);
+                break;
             } else if (map_id == 150) {
                 if (sh2jms.player->pos.z > -222800.0f) {
                     sh2shd_add_map_to_shadow_off_work(150);
@@ -1555,8 +1566,6 @@ int check_bg_light_exist(void) {
                 return 4;
             }
             break;
-        
     }
     return 9;
 }
-
