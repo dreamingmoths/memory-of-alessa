@@ -813,7 +813,58 @@ void sh2shd_get_height_for_alpha(sceVu0FVECTOR high, sceVu0FVECTOR low, u_short 
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/sh2shd/sh2shd_char_jms", sh2shd_get_shape_no);
+#line 1543
+int sh2shd_get_shape_no(u_short kind, int skel_no) {
+    int all_skel_num = skel_no; // r2 ($v0)
+    int shape_no;               // r2 ($v0)
+
+    switch (kind) {
+        case LLL_JMS_CHARA_KIND:
+        case HLL_JMS_CHARA_KIND:
+        case HHL_JMS_CHARA_KIND:
+        case HHH_JMS_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_jms(all_skel_num); // @hack these don't seem right
+            break;
+
+        case LLL_MAR_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_p_mar(all_skel_num);
+            break;
+
+        case HHH_MAR_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_mar(all_skel_num);
+            break;
+
+        case EN_SCU_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_scu(skel_no);
+            break;
+
+        case EN_MKN_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_mkn(skel_no);
+            break;
+
+        case EN_LLL_EDI_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_edb(skel_no);
+            break;
+
+        case EN_NSE_CHARA_KIND:
+        case EN_XOO_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_nse(skel_no);
+            break;
+
+        case EN_RED_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_red(skel_no);
+            break;
+
+        case EN_ONI_CHARA_KIND:
+            all_skel_num = shape_no = sh2shd_get_shape_no_oni(skel_no);
+            break;
+
+        default:
+            return -1;
+    }
+
+    return all_skel_num;
+}
 
 int sh2shd_get_shape_no_jms(int skel_no) {
     switch (skel_no) {
