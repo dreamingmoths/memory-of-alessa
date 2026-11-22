@@ -197,7 +197,7 @@ segments:
       - { start: 0x000db9a0,    type: asmtu,      name: Enemy/en_fly                                     }
       - { start: 0x000dbdc0,    type: c,          name: lib/wprtfsrc                                     }
       - { start: 0x000dc570,    type: asm,        name: Multi_thr/kernel/wrap_printf                     }
-      - { start: 0x000dc5b0,    type: asm,        name: MWCC/gcc_wrapper                                 }
+      - { start: 0x000dc5b0,    type: c,          name: MWCC/gcc_wrapper                                 }
       - { start: 0x000dc6a8,    type: asmtu,      name: sdk/lib_001DBFA8,      ld_align_segment_start: 8 }
       - { start: 0x000dc6c8,    type: asmtu,      name: sdk/lib_001DBFC8                                 }
       - { start: 0x000dc6e0,    type: asmtu,      name: sdk/lib_001DBFE0                                 }
