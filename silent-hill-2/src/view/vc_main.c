@@ -1695,7 +1695,7 @@ void vcMixSelfViewEffectToWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang
 
     vec_sub_xyz(watch_tgt_pos, w_p->cam_pos, vec);
 
-    view_xyz_len = vec3_length(vec);
+    view_xyz_len = shVectorLengthXyz(vec);
 
     xz_dist = shVectorLength(vec);
     

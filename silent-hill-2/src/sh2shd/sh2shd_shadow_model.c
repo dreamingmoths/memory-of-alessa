@@ -521,7 +521,7 @@ void sh2shd_renew_shadow_man(CAMERA_DAT* cam, int glb_coord, int map_id) {
                         
                         
                         shSubVector(&spot_cam_vector, &shadow_man.char_man[i]->light_pos, &cam_pos); 
-                        spot_cam_vector[3] = vec3_length(&spot_cam_vector);
+                        spot_cam_vector[3] = shVectorLengthXyz(&spot_cam_vector);
                         
                         
                         

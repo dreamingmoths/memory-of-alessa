@@ -481,7 +481,7 @@ void fogSetLocalPosV(void) {
     float * TVector = (float*) (SCRATCHPAD_START | 0x3fe0); // r2
     float d, dx;
     vec_sub_reverse(fwork.CameraPosV, fwork.WorldPosV, FVector);
-    d = vec3_length(FVector);
+    d = shVectorLengthXyz(FVector);
     if (fwork.Flag & 0x20) {
         shVectorCopy(TVector, fwork.LocalPosV);
         dx = FVector[0] / shFloatAbs(FVector[2]);

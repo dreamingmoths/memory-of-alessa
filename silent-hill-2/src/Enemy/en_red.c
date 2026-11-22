@@ -204,7 +204,7 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_red", enREDCtrlAutomatic); // matched htt
     
     pos = &scp->pos;
     shSubVector(vec, &dp->scp->pos, pos);
-    d = vec3_length(vec);
+    d = shVectorLengthXyz(vec);
     if (d < 250.0f) {
         shVectorCopy(vec, pos);
     } else {

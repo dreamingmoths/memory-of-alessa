@@ -522,7 +522,7 @@ static void enMKNCtrlWaitFall(EnLOCAL_DATA* dp) {
                 shSubVector(pos, ppos, vec);
             }
             shSubVector(vec, pos, (float*) &dp->scp->pos);
-            if (vec3_length(vec) < 2500.0f) {
+            if (shVectorLengthXyz(vec) < 2500.0f) {
                 shVectorCopy(dp->vec, vec);
             } else {
                 shSinCosV_Scale(dp->vec, shAtanV(&vec), 2500.0f);
