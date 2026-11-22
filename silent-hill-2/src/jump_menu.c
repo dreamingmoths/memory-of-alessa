@@ -3,6 +3,7 @@
 #include "Event/event.h"
 #include "Event/item.h"
 #include "Event/event_sub.h"
+#include "Event/stg_name.h"
 
 #include "Chacter/player_result.h"
 #include "Chacter/sh2_battle_list.h"
@@ -14,11 +15,11 @@ static int jump_after_data_set; // size: 0x4, address: 0x11B6998
 int jump_menu_select; // size: 0x4, address: 0x11B6990
 
 static JumpMenuUserData user_data = { // size: 0x14, address: 0x34C1A0
-    0, // x
-    0, // z 
-    0, // flg
-    0, // trg
-    0  // glb_crd
+    0,           // x
+    0,           // z 
+    0,           // flg
+    0,           // trg
+    Glb_crd_null // glb_crd
 }; 
 
 void JumpMenuPosNormal(void) {

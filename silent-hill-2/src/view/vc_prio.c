@@ -7,13 +7,13 @@ int vcRetPrioStgEvnt(int glb_crd) {
     int prio_f;
 
     switch (glb_crd) {
-        case 2:
+        case Glb_crd_town_east:
             prio_f = vcRetPrioCbEvnt();
             break;
-        case 9:
+        case Glb_crd_apart:
             prio_f = vcRetPrioApEvnt();
             break;
-        case 3:
+        case Glb_crd_town_west:
             prio_f = vcRetPrioCcEvnt();
             break;
     }

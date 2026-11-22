@@ -7,6 +7,7 @@
 #include "vw_calc.h"
 #include "Chacter/sh_character_status.h"
 #include "Event/event.h"
+#include "Event/stg_name.h"
 #include "SH2_common/playing_info.h"
 #include "sce/libvu0.h"
 #include "SH2_common/sh_vu0.h"
@@ -729,7 +730,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA** vc_road_ary_list) {
 
 
     
-    if (BgIsOut(0) != 0 || stage->glb_crd == 5) {
+    if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) {
         w_p->ideal_cam_pos_h = -450.0f + vcWork.chara_top_y;
     } else {
         w_p->ideal_cam_pos_h = -200.0f + vcWork.chara_top_y;
@@ -1641,7 +1642,7 @@ void vcMakeNormalWatchTgtPos(float* watch_tgt_pos, float* watch_tgt_ang_z_p, VC_
         case VC_MV_THROUGH_DOOR:
         case VC_MV_CHASE:
         case VC_MV_LOCUS_CIRCLE:
-            if (stage->glb_crd == 1 && sh2jms.player->pos.x >= -20000.0f) {
+            if (stage->glb_crd == Glb_crd_forest && sh2jms.player->pos.x >= -20000.0f) {
                 tgt_watch_cir_r = 1.75f * nml_tgt_watch_cir_r[cur_rd_area_size];
                 
                 min_cam2watch_dist = 1.75f * nml_cam2wth_min_dist[cur_rd_area_size];
@@ -2032,7 +2033,7 @@ float vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p)
     max_spd_xz = w_p->chara_mv_spd + 500.0f + shFloatAbs(w_p->chara_ang_spd_y * 8.0f);
 
     
-    if (BgIsOut(0) != 0 || stage->glb_crd == 5) {
+    if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) {
         if (!(sh2jms.player->status & 0x20000)) {
             max_spd_xz_stg = 3300.0f;
         } else {
@@ -2477,7 +2478,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(sceVu0FVECTOR ideal_pos, VC_WORK* w_p, VC_
 
 
     
-    if (stage->glb_crd == 1 && sh2jms.player->pos.x >= -20000.0f) {
+    if (stage->glb_crd == Glb_crd_forest && sh2jms.player->pos.x >= -20000.0f) {
         chara2ideal_r = 1.75f * mv_nml_chr2cam_r[cur_rd_area_size];
     } else if (sh2jms.player->status & 0x20000) {
         chara2ideal_r = 2000.0f;
@@ -2547,7 +2548,7 @@ void vcMakeIdealCamPosUseVC_ROAD_DATA(sceVu0FVECTOR ideal_pos, VC_WORK* w_p, VC_
 
 
     
-    if (stage->glb_crd == 1 && sh2jms.player->pos.x >= -20000.0f) {
+    if (stage->glb_crd == Glb_crd_forest && sh2jms.player->pos.x >= -20000.0f) {
         no_adj_max_dist = 1.75f * mv_nml_no_adj_max_dist[cur_rd_area_size];
 
         
@@ -2689,7 +2690,7 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
 
 
         
-        if (stage->glb_crd != 5 && stage->glb_crd != 2) {
+        if (stage->glb_crd != Glb_crd_ovservation && stage->glb_crd != Glb_crd_town_east) {
             
             max_dist = 3500.0f;
             min_dist = 600.0f;
@@ -2718,7 +2719,7 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
             
             abs_ofs_y = shFloatMax(0.0f, (to_chara_dist - 150.0f) / 4.0f);
             
-            if (stage->glb_crd == 1 && sh2jms.player->pos.x >= -20000.0f) {
+            if (stage->glb_crd == Glb_crd_forest && sh2jms.player->pos.x >= -20000.0f) {
                 max_tgt_y = -750.0f + (abs_ofs_y + w_p->chara_top_y);
                 min_tgt_y = -750.0f + (-abs_ofs_y + w_p->chara_top_y);
             } else {
@@ -2750,7 +2751,7 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
             float ofs_y;
 
             
-            if (BgIsOut(0) != 0 || stage->glb_crd == 5) ofs_y = -250.0f;
+            if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) ofs_y = -250.0f;
             else ofs_y = 0.0f;
             
             min_tgt_y = 
@@ -2764,7 +2765,7 @@ void vcAdjTgtMvVecYByCurNearRoad(sceVu0FVECTOR tgt_mv_vec, VC_WORK* w_p) {
         case VC_MV_THROUGH_DOOR: {
             float ofs_y;
             
-            if (BgIsOut(0) != 0 || stage->glb_crd == 5) ofs_y = -250.0f;
+            if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) ofs_y = -250.0f;
             else ofs_y = 0.0f;
             
             max_tgt_y = 
@@ -2931,7 +2932,7 @@ float vcFlipFromCamExclusionArea(float* flip_ang_y_p, float* old_cam_excl_area_r
     ofs_ang_y = shAngleRegulate(cntr2pos_ang_y - chara_eye_ang_y);
     if (ofs_ang_y < 0.0f) ofs_ang_y *= -1.0f;
     
-    if (stage->glb_crd == 1 && sh2jms.player->pos.x >= -20000.0f) {
+    if (stage->glb_crd == Glb_crd_forest && sh2jms.player->pos.x >= -20000.0f) {
         rate = 1.25f * excl_max_rate[cur_rd_area_size];
     } else {
         rate = excl_max_rate[cur_rd_area_size];
@@ -2989,7 +2990,7 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
 
 
         
-        if (BgIsOut(0) != 0 || stage->glb_crd == 5) {
+        if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) {
             if (!(sh2jms.player->status & 0x20000)) {
                 wth_mv_prm_stg_p = &watch_mv_prm_outdoor;
             } else {
@@ -3018,7 +3019,7 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
         
         *watch_mv_prm_pp = &vcWatchMvPrmSt;
         
-        if (BgIsOut(0) == 0 && stage->glb_crd != 5) {
+        if (BgIsOut(0) == 0 && stage->glb_crd != Glb_crd_ovservation) {
             vcWatchMvPrmSt.ang_accel_x += (wth_mv_prm_stg_p->ang_accel_x * far_watch_rate) / 2.0f;
             
             vcWatchMvPrmSt.ang_accel_y += (wth_mv_prm_stg_p->ang_accel_y * far_watch_rate) / 2.0f;
@@ -3042,7 +3043,7 @@ void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_P
         const VC_CAM_MV_PARAM* cam_mv_prm_stg_p;
         float diameter;
         
-        if (BgIsOut(0) != 0 || stage->glb_crd == 5) {
+        if (BgIsOut(0) != 0 || stage->glb_crd == Glb_crd_ovservation) {
             if (!(sh2jms.player->status & 0x20000)) {
                 cam_mv_prm_stg_p = &cam_mv_prm_outdoor;
                 diameter = 1.0f;

@@ -71,7 +71,7 @@ typedef int (func_t)(func2_t*);
     
     
     ConnectCharaWorkAdminClear();
-    if (BgIsOut(stage->glb_crd) == 0) ConnectCharaWorkAdminIn();         
+    if (!BgIsOut(stage->glb_crd)) ConnectCharaWorkAdminIn();         
     else ConnectCharaWorkAdminOut(0);
     PlayerInitOnConnect();    
     if (GET_GAME_FLAG(GAME_FLAG_15)) MariaInitOnConnect();

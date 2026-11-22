@@ -18,6 +18,7 @@
 #include "Event/picture.h"
 #include "Event/demoview.h"
 #include "Event/chara_admin.h"
+#include "Event/stg_name.h"
 
 #include "Effect/screen_effect.h"
 #include "sound/sh_sound.h"
@@ -659,7 +660,7 @@ Stage_Data stage_apart_stair = {
     /* .stageInit = */ NULL,
     /* .roomInit = */ stg_apart_stair_EvRoomInit,
     /* .alltimeFunc = */ stg_apart_stair_EvAllTimeFunc,
-    /* .glbCrd = */ 9,
+    /* .glbCrd = */ Glb_crd_apart,
     /* .pcModel = */ 1,
     /* .stgAnimInfo = */ stg_apart_stair_pjames_stage_anim,
     /* .bgmControl = */ NULL,

@@ -2259,42 +2259,42 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_common", enSetForbiddenArea)
 void enRoomForbiddenArea(void) {
     int f = 0;
     switch(stage->glb_crd) {
-    case 3:
-        
-        enSetForbiddenArea(-20000.0f, 40000.0f, -4000.0f, 57000.0f);
-        
-        enSetForbiddenArea(-100000.0f, 60000.0f, -80000.0f, 100000.0f);
-        break;
-    default:
-        switch (RoomNameJms()) {
-        case 48:
-        case 101:
-        case 187:
-            f = 1;
+        case Glb_crd_town_west:
+            
+            enSetForbiddenArea(-20000.0f, 40000.0f, -4000.0f, 57000.0f);
+            
+            enSetForbiddenArea(-100000.0f, 60000.0f, -80000.0f, 100000.0f);
             break;
-        case 7:
-            enSetForbiddenArea(83500.0f, -71300.0f, 85000.0f, -69600.0f);
-            break;
-        case 146:
-            enSetForbiddenArea(-20800.0f, 18400.0f, -19200.0f, 22800.0f);
-            break;
-        case 153:
-            enSetForbiddenArea(-64000.0f, 20800.0f, -63200.0f, 23500.0f);
-            enSetForbiddenArea(-60750.0f, 20750.0f, -59250.0f, 25600.0f);
-            break;
-        case 160:
-        case 178:
-            enSetForbiddenArea(60000.0f, -19400.0f, 60750.0f, -16800.0f);
-            enSetForbiddenArea(61200.0f, -19400.0f, 62000.0f, -16800.0f);
-            break;
-        case 163:
-        case 181:
-            enSetForbiddenArea(16000.0f, 20000.0f, 16800.0f, 22600.0f);
-            break;
-        case 168:
-            enSetForbiddenArea(-20800, -60000.0f, -19200.0f, -55600.0f);
-            break;
-        }
+        default:
+            switch (RoomNameJms()) {
+            case 48:
+            case 101:
+            case 187:
+                f = 1;
+                break;
+            case 7:
+                enSetForbiddenArea(83500.0f, -71300.0f, 85000.0f, -69600.0f);
+                break;
+            case 146:
+                enSetForbiddenArea(-20800.0f, 18400.0f, -19200.0f, 22800.0f);
+                break;
+            case 153:
+                enSetForbiddenArea(-64000.0f, 20800.0f, -63200.0f, 23500.0f);
+                enSetForbiddenArea(-60750.0f, 20750.0f, -59250.0f, 25600.0f);
+                break;
+            case 160:
+            case 178:
+                enSetForbiddenArea(60000.0f, -19400.0f, 60750.0f, -16800.0f);
+                enSetForbiddenArea(61200.0f, -19400.0f, 62000.0f, -16800.0f);
+                break;
+            case 163:
+            case 181:
+                enSetForbiddenArea(16000.0f, 20000.0f, 16800.0f, 22600.0f);
+                break;
+            case 168:
+                enSetForbiddenArea(-20800, -60000.0f, -19200.0f, -55600.0f);
+                break;
+            }
     } 
     if (f != 0) {
         enLocalWork.Status |= 2;

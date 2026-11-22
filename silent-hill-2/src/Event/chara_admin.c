@@ -390,7 +390,7 @@ SubCharacter* CharaWorkCreate(short kind /* r20 */, short id /* r19 */, float* p
 }
 
 static void DeleteEnemyWork(void) {
-    if ((stage->glb_crd != 4) && (stage->glb_crd != 3) && (stage->glb_crd != 2) && (stage->glb_crd != 1)) {
+    if ((stage->glb_crd != Glb_crd_lake) && (stage->glb_crd != Glb_crd_town_west) && (stage->glb_crd != Glb_crd_town_east) && (stage->glb_crd != Glb_crd_forest)) {
         DeleteEnemyWorkIn();
         return;
     }

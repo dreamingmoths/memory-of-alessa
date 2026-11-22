@@ -2,6 +2,7 @@
 
 #include "Chacter_Draw/light_n.h"
 #include "view/camera_dat.h"
+#include "Event/stg_name.h"
 #include "LoadBg/loadbg_kg2.h"
 #include "sh2shd/sh2shd_structs.h"
 #include "sh2shd/sh2shd_shadow_model.h"
@@ -23,13 +24,13 @@ Q_WORDDATA* stencil_shadow_main(CAMERA_DAT* cam /* r19 */) {
     
     get_map_id(&glb_coord, &map_id);
     
-    if (glb_coord == 12 && map_id == 91) {
+    if (glb_coord == Glb_crd_hotel_face && map_id == 91) {
         light_kind = LIGHT_KIND_REFLECTION;
 
         spot.zdir[0] = 0.07311368f;
         spot.zdir[1] = 0.683614f;
         spot.zdir[2] = 0.7261726f;
-    } else if (glb_coord == 9 && map_id == 42 && !sh2gfw_Check_JmsSpotOnOff()) {
+    } else if (glb_coord == Glb_crd_apart && map_id == 42 && !sh2gfw_Check_JmsSpotOnOff()) {
         light_kind = LIGHT_KIND_NONE;
 
         spot.c[0] = -58350.0f;

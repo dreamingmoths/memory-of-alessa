@@ -1,6 +1,7 @@
 #include "LoadBg/loadbg_all.h"
 #include "LoadBg/loadbg_common.h"
 #include "LoadBg/loadbg_2x2.h"
+#include "Event/stg_name.h"
 
 loadBgAll_2x2Info lbAll_2x2Info; // size: 0xC0, address: 0x1202DB0
 
@@ -24,7 +25,7 @@ void loadBgAll_Init(void) {
 
 static void loadBgAll_Set2x2Block(int id, int glb_crd, int block_no, int bx, int bz, float dist2) {
     int mid = 0;
-    if ((glb_crd != 0) && (block_no != 0)) mid = (glb_crd << 0x10) | block_no;
+    if ((glb_crd != Glb_crd_null) && (block_no != 0)) mid = (glb_crd << 0x10) | block_no;
     
     lbAll_2x2Info.block[id].mid = mid;
     lbAll_2x2Info.block[id].bx = bx;
