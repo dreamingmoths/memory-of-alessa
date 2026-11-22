@@ -2030,6 +2030,26 @@ class Sh2(KaitaiStruct):
 
 
 
+    class DropShadowEnv(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DropShadowEnv, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.block = self._io.read_s2le()
+            self._unnamed1 = self._io.read_bytes(2)
+            self.alpha_min = self._io.read_f4le()
+            self.alpha_max = self._io.read_f4le()
+            self.height_revision = self._io.read_f4le()
+            self.color = self._io.read_u4le()
+
+
+        def _fetch_instances(self):
+            pass
+
+
     class DynamicLight(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.DynamicLight, self).__init__(_io)
@@ -11590,6 +11610,27 @@ class Sh2(KaitaiStruct):
 
             self.raw_data._fetch_instances()
             self.shape._fetch_instances()
+
+
+    class ShadowCharObjHead(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShadowCharObjHead, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.char_id = self._io.read_u4le()
+            self.obj_id = self._io.read_s2le()
+            self.geom_num = self._io.read_s2le()
+            self.reserve1 = self._io.read_s2le()
+            self.reserve2 = self._io.read_s2le()
+            self.reserve3 = self._io.read_s2le()
+            self.reserve4 = self._io.read_s2le()
+
+
+        def _fetch_instances(self):
+            pass
 
 
     class ShadowEnv(KaitaiStruct):

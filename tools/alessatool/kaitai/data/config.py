@@ -119,7 +119,21 @@ SH2_DATA: DataTable = [
     SimpleData(name="stg_apart_e3fe_hdir",                  type="<4f",                                pattern=[4],   executable="aee"),
     StructData(name="stg_apart_e3fe_cam_data_01F02E10",     type=Sh2.EventCamSetData,                  count=1,       executable="aee"),
     SimpleData(name="stg_apart_e3fe_ap18_ap24_ClosetData",  type="<128f",                              pattern=[32,4],executable="aee"),
-
+    StructData(name="_Area_Info_List_0x0037D7B0",           type=Sh2.ShadowEnv,                        count=1                        ),
+    StructData(name="cb_env",                               type=Sh2.ShadowEnv,                        count=2                        ),
+    StructData(name="cc_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
+    StructData(name="er_env",                               type=Sh2.ShadowEnv,                        count=1                        ),
+    StructData(name="bw_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
+    StructData(name="ap_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
+    StructData(name="hp_env",                               type=Sh2.ShadowEnv,                        count=23                       ),
+    StructData(name="ps_env",                               type=Sh2.ShadowEnv,                        count=6                        ),
+    StructData(name="rr_env",                               type=Sh2.ShadowEnv,                        count=10                       ),
+    StructData(name="ru_env",                               type=Sh2.ShadowEnv,                        count=1                        ),
+    StructData(name="default_env_bg",                       type=Sh2.ShadowEnv,                        count=1                        ),
+    StructData(name="default_env_chr",                      type=Sh2.ShadowEnv,                        count=1                        ),
+    StructData(name="default_drop_env",                     type=Sh2.DropShadowEnv,                    count=1                        ),
+    StructData(name="@1231_0x00375DA0",                     type=Sh2.JmsShadowEnv,                     count=1                        ),
+    StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        )
 ]
 
 SH3_DATA: DataTable = []
