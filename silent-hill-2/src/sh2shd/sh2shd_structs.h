@@ -4,6 +4,20 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
 
+
+#define SHADOW_CHAR_MAN_SIZE    16
+#define SHADOW_OUTDOOR_MAN_SIZE 4
+
+#define SHADOW_OFF_WORK_CHAR_SIZE      2
+#define SHD_OFF_WORK_CHAR_NUM          22
+#define SHADOW_OFF_WORK_BG_SIZE        4
+#define SHADOW_OFF_WORK_BG_OBJ_COUNT   32
+
+#define SHADOW_CALC_HEAP_SIZE 160
+#define SHD_REFTAG_POOL_SIZE  6400
+#define SHD_KICK_PACKET_SIZE  640
+#define SHD_OFF_WORK_BG_NUM   4
+
 typedef struct SHADOW_PACKET_BUF {
     // total size: 0x8
     Q_WORDDATA* head; // offset 0x0, size 0x4
@@ -65,8 +79,8 @@ typedef struct SHADOW_MAN {
     short enemy_num;                           // offset 0x12, size 0x2
     short chr_shadow_switch;                   // offset 0x14, size 0x2
     short bg_shadow_switch;                    // offset 0x16, size 0x2
-    struct SHADOW_CHAR_MAN* char_man[16];      // offset 0x18, size 0x40
-    struct SHADOW_OUTDOOR_MAN* outdoor_man[4]; // offset 0x58, size 0x10
+    struct SHADOW_CHAR_MAN* char_man[SHADOW_CHAR_MAN_SIZE];      // offset 0x18, size 0x40
+    struct SHADOW_OUTDOOR_MAN* outdoor_man[SHADOW_OUTDOOR_MAN_SIZE]; // offset 0x58, size 0x10
     struct SHADOW_PACKET_BUF reftag_pool;      // offset 0x68, size 0x8
     struct SHADOW_PACKET_BUF kick_packet;      // offset 0x70, size 0x8
 } SHADOW_MAN;
@@ -102,14 +116,14 @@ typedef struct SHADOW_MICRO_FRAME {
 typedef struct SHADOW_OFF_WORK_BG {
     // total size: 0x42
     short map_id;     // offset 0x0, size 0x2
-    short obj_id[32]; // offset 0x2, size 0x40
+    short obj_id[SHADOW_OFF_WORK_BG_OBJ_COUNT]; // offset 0x2, size 0x40
 } SHADOW_OFF_WORK_BG;
 
 typedef struct SHADOW_OFF_WORK_CHAR {
     // total size: 0x30
     u_short kind;     // offset 0x0, size 0x2
     short id;         // offset 0x2, size 0x2
-    short obj_id[22]; // offset 0x4, size 0x2C
+    short obj_id[SHD_OFF_WORK_CHAR_NUM]; // offset 0x4, size 0x2C
 } SHADOW_OFF_WORK_CHAR;
 
 typedef struct JMS_SHADOW_ENV {
@@ -183,5 +197,15 @@ typedef struct SHADOW_OUTDOOR_OBJ_HEAD {
     short origin_z; // offset 0xC, size 0x2
     short origin_w; // offset 0xE, size 0x2
 } SHADOW_OUTDOOR_OBJ_HEAD;
+typedef struct SHADOW_CHAR_OBJ_HEAD {
+    // total size: 0x10
+    u_int char_id; // offset 0x0, size 0x4
+    short obj_id; // offset 0x4, size 0x2
+    short geom_num; // offset 0x6, size 0x2
+    short reserve1; // offset 0x8, size 0x2
+    short reserve2; // offset 0xA, size 0x2
+    short reserve3; // offset 0xC, size 0x2
+    short reserve4; // offset 0xE, size 0x2
+} SHADOW_CHAR_OBJ_HEAD;
 
 #endif // SH2SHD_STRUCTS_H

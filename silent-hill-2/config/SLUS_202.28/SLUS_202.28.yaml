@@ -648,7 +648,7 @@ segments:
       - { start: 0x001b6b50,    type: .data,      name: Multi_thr/dma/texslot                            }
       - { start: 0x001b6ba0,    type: .data,      name: Multi_thr/util/utilexcl                          }
       - { start: 0x001b6bb0,    type: .data,      name: shPad/lib_sh_pad                                 }
-      - { start: 0x001b6c00,    type: data,       name: sh2shd/sh2shd_char_jms                           }
+      - { start: 0x001b6c00,    type: .data,      name: sh2shd/sh2shd_char_jms                           }
       - { start: 0x001b6c20,    type: .data,      name: shGs/sh2gfw_GS_NewLoopEnv                        }
       - { start: 0x001b6c30,    type: .data,      name: sound/sd0712/ee/sd_call                          }
       - { start: 0x001b8c70,    type: .data,      name: sound/sh_sound                                   }
@@ -1203,7 +1203,7 @@ segments:
       - { vram:  0x010138c0,    type: .bss,       name: Multi_thr/dma/sh_dma1                            }
       - { vram:  0x010138c8,    type: .bss,       name: Multi_thr/dma/sh_dma2                            }
       - { vram:  0x01013900,    type: .bss,       name: shPad/lib_sh_pad                                 }
-      - { vram:  0x01013b80,    type: bss,        name: sh2shd/sh2shd_char_jms                           }
+      - { vram:  0x01013b80,    type: .bss,       name: sh2shd/sh2shd_char_jms                           }
       - { vram:  0x01013b90,    type: .bss,       name: sound/sd0712/ee/sd_call                          }
       - { vram:  0x010e0480,    type: .bss,       name: sound/sh_sound                                   }
       - { vram:  0x010e58d8,    type: .bss,       name: taskman/shtskman                                 }
