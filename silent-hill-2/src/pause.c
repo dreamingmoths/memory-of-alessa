@@ -10,18 +10,9 @@
 
 #include "pause.h"
 
-typedef enum PAUSE_TYPE {
-    PAUSE_TYPE_NONE = 0,
-    PAUSE_TYPE_UNDEFINED = 1,
-    PAUSE_TYPE_GAME_PAUSE = 2,
-    PAUSE_TYPE_NOW_LOADING = 3,
-    PAUSE_TYPE_LOAD_DELAY = 4,
-    PAUSE_TYPE_TRAY_OPEN = 5,
-    PAUSE_TYPE_DISC_EMPTY = 6,
-    PAUSE_TYPE_DISC_CHECK = 7,
-    PAUSE_TYPE_DISC_ILLEGAL = 8,
-    PAUSE_TYPE_PAD_DISCONNECT = 9,
-} PAUSE_TYPE;
+static void __DrawRect(int x0, int y0, int x1, int y1);
+static void* draw_rect(void* pkt, int x, int y, int w, int h, int, int);
+static void* draw_belt(void* pkt, int y, int h, int z, u_int c);
 
 static PAUSE_TYPE pause_type = PAUSE_TYPE_NONE; // size: 0x1, address: 0x1F01C28
 
