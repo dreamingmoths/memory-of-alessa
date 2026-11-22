@@ -3,7 +3,8 @@
 
 #include "sh2_common.h"
 
-#define TASK_LIST_SIZE 8
+#define TASK_LIST_SIZE    8
+#define EN_EFFECT_TASK_ID 5
 
 // total size: 0x14
 typedef struct _shTskEXECUTE {

@@ -426,11 +426,11 @@ int enTransID(int id) {
 int enGetWorldCondition(void) {
     if (sh2gfw_Get_NightOrDay()) {
         if (item.light_switch) {
-            return BgIsOut(stage->glb_crd) ? 2 : 3;
+            return BgIsOut(stage->glb_crd) ? WORLD_NIGHT_OUTDOR_LIGHT_ON : WORLD_NIGHT_INDOOR_LIGHT_OFF;
         }
-        return 4;
+        return WORLD_NIGHT_LIGHT_OFF;
     }
-    return 1;
+    return WORLD_DAY;
 }
 
 int enGetPlace(void) {
