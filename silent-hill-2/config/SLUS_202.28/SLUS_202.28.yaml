@@ -568,7 +568,7 @@ segments:
       - { start: 0x00196800,    type: c,          name: Effect2/hh_class_water_80                        }
       - { start: 0x00197870,    type: c,          name: Effect2/hh_class_water_90                        }
       - { start: 0x001988b0,    type: c,          name: Effect2/hh_class_boatmask                        }
-      - { start: 0x00199090,    type: asm,        name: pause                                            }
+      - { start: 0x00199090,    type: c,          name: pause                                            }
       - { start: 0x001996a0,    type: c,          name: now_loading                                      }
       # -----------------------------------------    vutext   ------------------------------------------ #
       - { start: 0x00199a00,    type: vutext,     name: vsm/vutext/vu0_mic_cal_util                      }
@@ -838,7 +838,7 @@ segments:
       - { start: 0x0027dc40,    type: .data,      name: Effect2/hh_class_water_80                        }
       - { start: 0x0027dea8,    type: .data,      name: Effect2/hh_class_water_90                        }
       - { start: 0x0027e040,    type: .data,      name: Effect2/hh_class_boatmask                        }
-      - { start: 0x0027e120,    type: data,       name: pause                                            }
+      - { start: 0x0027e120,    type: .data,      name: pause                                            }
       # -----------------------------------------    vudata   ------------------------------------------ #
       - { start: 0x0027e280,    type: vudata,     name: vsm/vudata/model2_vu_load                        }
       - { start: 0x0027ff40,    type: vudata,     name: vsm/vudata/model3_mpg0_clip0                     }
@@ -1115,7 +1115,7 @@ segments:
       - { start: 0x0029cb00,    type: .rodata,    name: Effect2/hh_memory_manage                         }
       - { start: 0x0029cb80,    type: .rodata,    name: SH2_common/mem_share                             }
       - { start: 0x0029cc20,    type: .rodata,    name: SH2_common/result                                }
-      - { start: 0x0029ccb0,    type: rodata,     name: pause                                            }
+      - { start: 0x0029ccb0,    type: .rodata,    name: pause                                            }
       - { start: 0x0029cce0,    type: .rodata,    name: now_loading                                      }
       - { start: 0x0029cd00,    type: rodata,     name: rodata_0x29cd00                                  }
 #     - { start: 0x0029cd00,    type: rodata,     name: Multi_thr/filesys/filecmd_rodata                 }
@@ -1332,6 +1332,6 @@ segments:
       - { vram:  0x0126fbc0,    type: .bss,       name: SH2_common/mem_share                             }
       - { vram:  0x01f01bc0,    type: .bss,       name: Effect2/hh_class_water_80                        }
       - { vram:  0x01f01bf0,    type: .bss,       name: Effect2/hh_class_water_90                        }
-      - { vram:  0x01f01c28,    type: bss,        name: pause                                            }
+      - { vram:  0x01f01c28,    type: .bss,       name: pause                                            }
       - { vram:  0x01f01dd0,    type: bss,        name: now_loading                                      }
   - [0x2c8480]

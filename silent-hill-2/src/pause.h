@@ -1,4 +1,20 @@
 #ifndef PAUSE_H
 #define PAUSE_H
 
+typedef enum PAUSE_TYPE {
+    PAUSE_TYPE_NONE = 0,
+    PAUSE_TYPE_UNDEFINED = 1,
+    PAUSE_TYPE_GAME_PAUSE = 2,
+    PAUSE_TYPE_NOW_LOADING = 3,
+    PAUSE_TYPE_LOAD_DELAY = 4,
+    PAUSE_TYPE_TRAY_OPEN = 5,
+    PAUSE_TYPE_DISC_EMPTY = 6,
+    PAUSE_TYPE_DISC_CHECK = 7,
+    PAUSE_TYPE_DISC_ILLEGAL = 8,
+    PAUSE_TYPE_PAD_DISCONNECT = 9,
+} PAUSE_TYPE;
+
+int PauseSetType(int type);
+int PauseDisp(void);
+
 #endif // PAUSE_H
