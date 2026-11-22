@@ -515,30 +515,28 @@ void EvSubPictureCursor(int color) {
 }
 
 void EvDispControlModelEntry(int* list, int room, int no) {
-    int temp; // not present in DWARF
-    int map_id;
-    temp = stage->glb_crd << 16; temp |= room;
+    int map_id = (stage->glb_crd << 16) | room;
     
-    for (; (map_id = *list, map_id != 0); list += 2) { if (map_id == temp) break; }
-    if (map_id == 0) {
+    for (; list[0] != 0; list += 2) if (list[0] == map_id) break;            
+    if (list[0] == 0) {
         list[1] = 0;
         list[2] = 0;
     }
-    *list = temp;
-    if (no >= 0) { list[1] |= 1 << no; }
+    list[0] = map_id;
+    if (no >= 0) list[1] |= (1 << no);    
 }
 
 void EvDispControlModelExec(int* list) {
     switch (BgIsOut(0)) {
         default:
             sh2gfw_Init_DispOnOffObj();
-            for (; *list != 0; list = list + 2) {
-                sh2gfw_FastSet_DispOnOffObj(*list,list[1]);
+            for (; list[0] != 0; list += 2) {
+                sh2gfw_FastSet_DispOnOffObj(list[0], list[1]);
             }
             break;
         case 0:
-            for (; *list != 0; list = list + 2) {
-                sh2gfw_Set_DispOnOffObj(*list,list[1]);
+            for (; list[0] != 0; list += 2) {
+                sh2gfw_Set_DispOnOffObj(list[0], list[1]);
             }
     }
   return;
