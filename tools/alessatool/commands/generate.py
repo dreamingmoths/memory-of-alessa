@@ -161,6 +161,7 @@ def generate_lcf(args: GenerationArgs):
 
     lcf_blocks: list[str] = []
     vutext_aligned = False
+    vudata_aligned = False
 
     for section_type, alignment in SECTION_ALIGNMENT_PAIRS:
         objects = entries_by_section_type[section_type]
@@ -214,6 +215,10 @@ def generate_lcf(args: GenerationArgs):
 
                 if object_type == ".vutext" and not vutext_aligned:
                     vutext_aligned = True
+                    block.append("")
+                    block.append("\t\t. = ALIGN(0x80);")
+                if object_type == ".vudata" and not vudata_aligned:
+                    vudata_aligned = True
                     block.append("")
                     block.append("\t\t. = ALIGN(0x80);")
 
