@@ -121,7 +121,7 @@ endif
 endif
 
 WIBO_BINARY := wibo-$(if $(filter $(ARCH),arm64),macos,$(ARCH))
-WIBO := $(TOOLS)/$(WIBO_BINARY)
+WIBO := wine # $(TOOLS)/$(WIBO_BINARY)
 
 PS2ISO_BINARY := ps2iso_$(if $(filter $(PLATFORM),macos),osx,linux)
 PS2ISO := $(TOOLS)/$(PS2ISO_BINARY)
@@ -389,9 +389,9 @@ $(OBJDIFF_CONFIG): $(OBJDIFF_FRAGMENTS)
 $(BUILD)/objdiff/%.json: $(CONFIG)/%.yaml
 	$(GENERATE_EXPECTED) --objdiff-output-path=$(BUILD)/objdiff/$*.json --make-full-disasm-for-code $(SPLAT_CONFIG) $<
 ###############################################################
-$(WIBO):
-	wget -O $@ $(WIBO_HOST)/$(WIBO_BINARY)
-	chmod +x $(WIBO)
+# $(WIBO):
+# 	wget -O $@ $(WIBO_HOST)/$(WIBO_BINARY)
+# 	chmod +x $(WIBO)
 
 $(MWCC):
 	@mkdir -p "$(@D)"
@@ -406,7 +406,7 @@ $(MWLD): | $(MWCC)
 $(AS):
 	@mkdir -p "$(@D)"
 	@touch $(BINUTILS_VERSION_FILE)
-	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
+# 	wget -O- $(BINUTILS_HOST)/$(BINUTILS_TAR) | tar xzv -C "$(@D)"
 	@chmod +x $(@D)/*
 
 $(OBJDIFF):
