@@ -43,6 +43,46 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb21[2]); /
 UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb49[14]); // @ 0x1F06250
 UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); // @ 0x1F066B0
 
+UNMIGRATED(/* static */ int stg_town_east_sig_timer_b); // size: 0x4, address: 0x1F08218
+UNMIGRATED(/* static */ int stg_town_east_sig_timer_b2); // size: 0x4, address: 0x1F08220
+UNMIGRATED(/* static */ int stg_town_east_sig_num_a); // size: 0x4, address: 0x1F08228
+UNMIGRATED(/* static */ int stg_town_east_sig_num_b); // size: 0x4, address: 0x1F08230
+
+static int stg_town_east_EvProgShadowOfSomenthing(void);
+static int stg_town_east_EvProgSandersBack(void);
+static int stg_town_east_EvProgFirstMonsterStart(void);
+static int stg_town_east_EvProgFirstMonsterCorpse(void);
+static int stg_town_east_EvProgFirstMonsterEnd(void);
+static int stg_town_east_EvProgBloodSwamp(void);
+static int stg_town_east_EvProgGetApartGateKey(void);
+static int stg_town_east_EvProgUseApartGateKey(void);
+static int stg_town_east_EvProgLookMemoFalled(void);
+static void stg_town_east_EvStageInit(void);
+static int stg_town_east_EvCharaDataClear(void);
+static void stg_town_east_EvRoomInit(void);
+static void stg_town_east_EvAllTimeFunc(void);
+static int stg_town_east_EvBgmControl(void);
+static void stg_town_east_EvLockSetCb46(int* list);
+static void stg_town_east_EvCorpseSetCb18(int* list);
+static void stg_town_east_EvCorpseSetCb26(int* list); // @note: signature different from DWARF
+static void stg_town_east_EvWallSetCb19(int* list);
+static void stg_town_east_EvWallSetCb20(int* list);
+static void stg_town_east_EvWallSetCb21(int* list);
+static void stg_town_east_EvWallSetCb49(int* list);
+static void stg_town_east_EvWallSetCb52(int* list);
+static void stg_town_east_EvSignalControlCb27(int* list);
+static void stg_town_east_EvSignalControlCb28(int* list);
+static void stg_town_east_EvSignalControlCb29(int* list);
+static void stg_town_east_EvSignalControlCb35(int* list);
+static void stg_town_east_EvSignalControlCb36(int* list);
+static void stg_town_east_EvSignalControlCb37(int* list);
+static void stg_town_east_EvTapeSetCb11(int* list);
+static void stg_town_east_EvTapeSetCb12(int* list);
+static float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm);
+static void stg_town_east_CB_1stMoster_FogHosei(void);
+static void stg_town_east_CB_1stMonster_Filter(void);
+static void stg_town_east_Draw_CB_Tonnel(void);
+static void stg_town_east_Monster1st_Look(void* sp, float* ambient);
 
 /* static */ int stg_town_east_EvProgShadowOfSomenthing(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos0); // @ 0x01F07E50
@@ -84,7 +124,7 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); /
             DramaDemoFade();
             if (EvSubMessage(28)) {
                 stg_town_east_info_01F07E20.adr_dds_top = stg_town_east_dds_adr[3];
-                *(u_long128 *)scu_rot = 0;
+                *(u_long128*) scu_rot = 0;
                 CharaWorkCreate(EN_SCU_CHARA_KIND, 0, stg_town_east_scu_pos_01F07E80, scu_rot, 17);
                 ev_timer = 0.0f;
                 EV_PROG_STEP(23);
@@ -438,7 +478,74 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUs
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomInit);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTimeFunc);
+/* static */ void stg_town_east_EvAllTimeFunc(void) {
+    int disp_ctrl_list[129];
+    int pos_x; int pos_z; int pos;
+    int i; int j;
+    
+    disp_ctrl_list[0] = 0;
+    pos_x = shFloatToInt(16.0f + (sh2jms.player->pos.x / 20000.0f));
+    pos_z = shFloatToInt(16.0f + (sh2jms.player->pos.z / 20000.0f));
+    
+    stg_town_east_sig_timer_b += shGetDF();
+    
+    for (i = -1; i <= 1; i++) {
+        for (j = -1; j <= 1; j++) {
+            pos = (pos_z + j) + ((pos_x + i) << 5);
+            switch (pos) {
+                case 0x231:
+                    stg_town_east_EvWallSetCb49(disp_ctrl_list);
+                    break;
+                case 0x22E:
+                    stg_town_east_EvWallSetCb52(disp_ctrl_list);
+                    break;
+                case 0x1F0:
+                    stg_town_east_EvTapeSetCb11(disp_ctrl_list);
+                    break;
+                case 0x1EF:
+                    stg_town_east_EvTapeSetCb12(disp_ctrl_list);
+                    break;
+                case 0x1D1:
+                    stg_town_east_EvCorpseSetCb18(disp_ctrl_list);
+                    break;
+                case 0x1D0:
+                    stg_town_east_EvWallSetCb19(disp_ctrl_list);
+                    break;
+                case 0x1CF:
+                    stg_town_east_EvWallSetCb20(disp_ctrl_list);
+                    break;
+                case 0x1CE:
+                    stg_town_east_EvWallSetCb21(disp_ctrl_list);
+                    break;
+                case 0x1B1:
+                    stg_town_east_EvCorpseSetCb26(disp_ctrl_list);
+                    break;
+                case 0x1B0:
+                    stg_town_east_EvSignalControlCb27(disp_ctrl_list);
+                    break;
+                case 0x1AF:
+                    stg_town_east_EvSignalControlCb28(disp_ctrl_list);
+                    break;
+                case 0x1AE:
+                    stg_town_east_EvSignalControlCb29(disp_ctrl_list);
+                    break;
+                case 0x190:
+                    stg_town_east_EvSignalControlCb35(disp_ctrl_list);
+                    break;
+                case 0x18F:
+                    stg_town_east_EvSignalControlCb36(disp_ctrl_list);
+                    break;
+                case 0x18E:
+                    stg_town_east_EvSignalControlCb37(disp_ctrl_list);
+                    break;
+                case 0x150:
+                    stg_town_east_EvLockSetCb46(disp_ctrl_list);
+                    break;
+            }
+        }
+    }
+    EvDispControlModelExec(disp_ctrl_list);
+}
 
 /* static */ int stg_town_east_EvBgmControl(void) {
     if (GET_GAME_FLAG(GAME_FLAG_518)) {
@@ -464,7 +571,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     EvDispControlModelEntry(list, 0x12, -1);
 }
 
-/* static */ void stg_town_east_EvCorpseSetCb26(void) {
+/* static */ void stg_town_east_EvCorpseSetCb26(int* list) {
     return;
 }
 
@@ -517,17 +624,231 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     sh2shd_off_obj(0x34, 0x36);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb27);
+static void stg_town_east_EvSignalControlCb27(int* list) {
+    int i;
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb28);
+    
+    
+    
+    
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += (shRandI() % 1000) + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1B, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1B, 1);
+    else if (stg_town_east_sig_num_b == 3) 
+        EvDispControlModelEntry(list, 0x1B, 0);
+    else
+        EvDispControlModelEntry(list, 0x1B, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x1B, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1B, 4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb29);
+static void stg_town_east_EvSignalControlCb28(int* list) {
+    int i;
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb35);
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1C, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1C, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x1C, 0);
+    else
+        EvDispControlModelEntry(list, 0x1C, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x1C, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1C, 4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb36);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb37);
+
+static void stg_town_east_EvSignalControlCb29(int* list) {
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    
+    
+    
+    
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1D, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1D, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x1D, 0);
+    else
+        EvDispControlModelEntry(list, 0x1D, 5);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x1D, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1D, 4);
+}
+
+static void stg_town_east_EvSignalControlCb35(int* list) {
+    int i;
+
+    
+    
+    
+    
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x23, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x23, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x23, 0);
+    else
+        EvDispControlModelEntry(list, 0x23, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x23, 3);
+    else 
+        EvDispControlModelEntry(list, 0x23, 4);
+}
+
+static void stg_town_east_EvSignalControlCb36(int* list) {
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    
+    
+    
+    
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x24, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x24, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x24, 0);
+    else
+        EvDispControlModelEntry(list, 0x24, 5);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x24, 3);
+    else
+        EvDispControlModelEntry(list, 0x24, 4);
+}
+
+static void stg_town_east_EvSignalControlCb37(int* list) {
+    int i; // r2 // @note: idk how they used it
+
+    if (GET_GAME_FLAG(GAME_FLAG_43)) {
+        EvDispControlModelEntry(list, 0x25, 0);
+    }  
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_b = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2750) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 3050) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x25, 3);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x25, 2);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x25, 1);
+    else 
+        EvDispControlModelEntry(list, 0x25, 6);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x25, 4);
+    else
+        EvDispControlModelEntry(list, 0x25, 5);
+}
 
 /* static */ void stg_town_east_EvTapeSetCb11(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_43)) {
@@ -577,4 +898,22 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMo
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_Draw_CB_Tonnel);
 
+#ifdef NON_MATCHING
+/* static */ void stg_town_east_Monster1st_Look(void* sp, float* ambient) {
+    SubCharacter* scp;
+    float fac;
+    float ftmp;
+
+    if (DramaDemoNumber() == 6 || DramaDemoNumber() == 7) {
+        scp = sp;
+        if (scp->pos.z >= 49000.0f) {
+            fac = stg_town_east_LinearTrim(0.1f, 1.0f, 53000.0f, 49000.0f, scp->pos.z);            
+            ftmp = ambient[3];
+            sceVu0ScaleVector(ambient, ambient, fac);
+            ambient[3] = ftmp;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_Monster1st_Look);
+#endif
