@@ -206,7 +206,7 @@ static inline void shVectorCopyXyz(void* dst, void* src) {
         : "+r"(dst), "+r"(src)::"t7");
 }
 
-static inline float vec3_length(void* v) {
+static inline float shVectorLengthXyz(void* v) {
     float d;
     asm("lwc1    %1,0(%0)\n\
         lwc1     f8,4(%0)\n\

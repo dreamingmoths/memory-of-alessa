@@ -286,7 +286,7 @@ void func_01F6DE80_subway_02(sceVu0FVECTOR* arg0) {
 
         vec_sub(spC0, (sceVu0FVECTOR*) ((char*) p_arg0 + temp_a3), spB0);
 
-        temp_f0       = vec3_length(spB0);
+        temp_f0       = shVectorLengthXyz(spB0);
         temp_v0       = (func_001C7C80_struct*) ((char*) spD0 + temp_t0);
         temp_v0->unk0 = temp_f0;
 
