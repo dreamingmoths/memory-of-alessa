@@ -59,10 +59,10 @@ typedef struct Radio_Data {
     // Members
     int se_call;                                 // offset 0x0, size 0x4
     int event;                                   // offset 0x4, size 0x4
-    float track[4] __attribute__((aligned(16))); // offset 0x8, size 0x10
-    float pan[4] __attribute__((aligned(16)));   // offset 0x18, size 0x10
+    float track[4];                              // offset 0x8, size 0x10
+    float pan[4];                                // offset 0x18, size 0x10
     float volume;                                // offset 0x28, size 0x4
-    float pos[4] __attribute__((aligned(16)));   // offset 0x30, size 0x10
+    sceVu0FVECTOR pos;                           // offset 0x30, size 0x10
 } Radio_Data;
 
 typedef struct Model_List {
