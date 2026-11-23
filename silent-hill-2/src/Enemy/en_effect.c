@@ -25,18 +25,19 @@
 #define EN_SPRAY_EFCT_KIND      31
 #define EN_BUG_2D_EFCT_KIND     32
 
-#define POISON_FOG_RANGE_MIN -100.0f
-#define POISON_FOG_RANGE_MAX 10.0f
-#define SPRAY_RANGE_MIN     -50.0f
-#define SPRAY_RANGE_MAX      1.0f
+#define POISON_FOG_RANGE_MIN    -100.0f
+#define POISON_FOG_RANGE_MAX     10.0f
+#define SPRAY_RANGE_MIN         -50.0f
+#define SPRAY_RANGE_MAX          1.0f
 
 static u_int enMultColor(u_int color, int rate);
 
-extern struct EnEfctEnvData EnEfctEnvData; // size: 0x190, address: 0x5524C0
+struct EnEfctEnvData EnEfctEnvData; // size: 0x190, address: 0x5524C0
 static int en_efct_kind_list[4] = {
     EN_POISON_FOG_EFCT_KIND,
     EN_SPRAY_EFCT_KIND,
     EN_BUG_2D_EFCT_KIND,
+    -1
 }; // size: 0x10, address: 0x2AA250
 
 /**
@@ -435,14 +436,6 @@ void enEfctDrawInsect(void* p) {
     EnEfctEnvData.SetInsectTex = 1;
 }
 
-
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_effect.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x0014FA30 -> 0x0014FA64
-*/
-// Range: 0x14FA30 -> 0x14FA64
 void enEfctSetInsectTex(void) {
     *(u_long*) &EnEfctEnvData.Insect[1] = HH_Effect_Object_Texture_GS_Register_Tex0_Get(18, 0);
 
