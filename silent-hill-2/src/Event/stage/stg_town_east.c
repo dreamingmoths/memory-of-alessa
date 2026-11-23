@@ -7,8 +7,11 @@
 #include "Collision/cl_main.h"
 
 #include "data/fs_structs.h"
+#include "data/daily.thu/data_chr_scu.h"
 #include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_chr_wp.h"
+#include "data/daily.thu/data_demo_machi.h"
+#include "data/daily.thu/data_demo_saisho.h"
 
 #include "Event/event.h"
 #include "Event/event_sub.h"
@@ -25,9 +28,6 @@
 
 #include "view/vc_main.h"
 #include "view/vc_util.h"
-
-UNMIGRATED(fsFileIndex data_demo_saisho_scu_anm[1]); // data_demo_saisho.c
-UNMIGRATED(fsFileIndex data_chr_scu_scu_anm[1]); // data_chr_scu.c
 
 UNMIGRATED(/* static */ u_long128* stg_town_east_anim_adr); // size: 0x4, address: 0x1F08200
 UNMIGRATED(/* static */ char* stg_town_east_dds_adr[4]); // size: 0x10, address: 0x1F07DD0
@@ -84,7 +84,7 @@ static void stg_town_east_CB_1stMonster_Filter(void);
 static void stg_town_east_Draw_CB_Tonnel(void);
 static void stg_town_east_Monster1st_Look(void* sp, float* ambient);
 
-/* static */ int stg_town_east_EvProgShadowOfSomenthing(void) {
+static int stg_town_east_EvProgShadowOfSomenthing(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos0); // @ 0x01F07E50
     UNMIGRATED(Event_CamSetData stg_town_east_cam_data_01F07DE0); // @ 0x01F07DE0
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos1); // @ 0x01F07E60
@@ -164,7 +164,7 @@ static void stg_town_east_Monster1st_Look(void* sp, float* ambient);
     return 0;
 }
 
-/* static */ int stg_town_east_EvProgSandersBack(void) {
+static int stg_town_east_EvProgSandersBack(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos); // @ 0x01F08990
     
     switch (ev_p_step) {
@@ -273,7 +273,7 @@ static void stg_town_east_Monster1st_Look(void* sp, float* ambient);
 }
 
 
-/* static */ int stg_town_east_EvProgFirstMonsterCorpse(void) {
+static int stg_town_east_EvProgFirstMonsterCorpse(void) {
     UNMIGRATED(float stg_town_east_jms_rot_01F08240); // @ 0x01F08240
     UNMIGRATED(sceVu0FVECTOR stg_town_east_jms_pos_01F07F70); // @ 0x01F07F70
     UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_a_01F07F40); // @ 0x01F07F40
@@ -334,7 +334,7 @@ UNMIGRATED(CharaData_DemoList stg_town_east_enemy_list_01F07FF0[3]); // @ 0x01F0
 UNMIGRATED(float stg_town_east_jms_rot_01F08040); // @ 0x01F08040
 UNMIGRATED(sceVu0FVECTOR stg_town_east_jms_pos_01F08030); // @ 0x01F08030
 UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_b_01F07FC0); // @ 0x01F07FC0
-/* static */ int stg_town_east_EvProgFirstMonsterEnd(void) {
+static int stg_town_east_EvProgFirstMonsterEnd(void) {
     
     
     
@@ -463,7 +463,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUs
     return 0;
 }
 
-/* static */ void stg_town_east_EvStageInit(void) {
+static void stg_town_east_EvStageInit(void) {
     if (GET_GAME_FLAG(GAME_FLAG_1303)) 
         SET_GAME_FLAG(GAME_FLAG_1269);    
     if (GET_GAME_FLAG(GAME_FLAG_1302))
@@ -472,13 +472,30 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUs
         SET_GAME_FLAG(GAME_FLAG_1295);
 }
 
-/* static */ int stg_town_east_EvCharaDataClear(void) {
+static int stg_town_east_EvCharaDataClear(void) {
     return !GET_GAME_FLAG(GAME_FLAG_43);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomInit);
+static void stg_town_east_EvRoomInit(void) {
+    UNMIGRATED(/* static */ CharaData_DemoList stg_town_east_chara_01F08060[4]); // @ 0x01F08060
+    if (!GET_GAME_FLAG(GAME_FLAG_43)) {
+        CharaDataLoadDemo(stg_town_east_chara_01F08060, 0);
+        stg_town_east_anim_adr = CharaDataLoadExtra(data_demo_saisho_scu_anm, 0x200);
+        stg_town_east_dds_adr[0] = CharaDataLoadExtra(data_demo_saisho_saisho_dds, 0x200);
+        stg_town_east_dds_adr[1] = CharaDataLoadExtra(data_demo_saisho_saisho_c_dds, 0x200);
+        stg_town_east_dds_adr[2] = CharaDataLoadExtra(data_demo_saisho_saisho_d_dds, 0x200);
+        stg_town_east_wp_anm = CharaDataLoadExtra(data_chr_jms_jms_wpkaku_anm, 0x200);
+        stg_town_east_wp_mdl = CharaDataLoadExtra(data_chr_wp_wp_kakuzai_mdl, 0x200);
+        stg_town_east_dds_adr[3] = CharaDataLoadExtra(data_demo_machi_machi_dds, 0x200);
+        fsSync(0, -1);
+        radio.event = 1;
+        radio.pos[0] = 47716.9f;
+        radio.pos[1] = -268.4f;
+        radio.pos[2] = 49627.9f;
+    }
+}
 
-/* static */ void stg_town_east_EvAllTimeFunc(void) {
+static void stg_town_east_EvAllTimeFunc(void) {
     int disp_ctrl_list[129];
     int pos_x; int pos_z; int pos;
     int i; int j;
@@ -547,14 +564,14 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomIn
     EvDispControlModelExec(disp_ctrl_list);
 }
 
-/* static */ int stg_town_east_EvBgmControl(void) {
+static int stg_town_east_EvBgmControl(void) {
     if (GET_GAME_FLAG(GAME_FLAG_518)) {
         return 4;
     }
     return GET_GAME_FLAG(GAME_FLAG_41) != 0;
 }
 
-/* static */ void stg_town_east_EvLockSetCb46(int* list) {
+static void stg_town_east_EvLockSetCb46(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_49)) {
         EvDispControlModelEntry(list, 0x2E, 0); // @todo: add room id
         return;
@@ -562,7 +579,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomIn
     EvDispControlModelEntry(list, 0x2E, 1);
 }
 
-/* static */ void stg_town_east_EvCorpseSetCb18(int* list) {
+static void stg_town_east_EvCorpseSetCb18(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_43)) {
         clAddDynamicWall(stg_town_east_clActWallList_cb18);
         EvDispControlModelEntry(list, 0x12, 0); // @todo: add room id
@@ -571,11 +588,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomIn
     EvDispControlModelEntry(list, 0x12, -1);
 }
 
-/* static */ void stg_town_east_EvCorpseSetCb26(int* list) {
+static void stg_town_east_EvCorpseSetCb26(int* list) {
     return;
 }
 
-/* static */ void stg_town_east_EvWallSetCb19(int* list) {
+static void stg_town_east_EvWallSetCb19(int* list) {
     EvDispControlModelEntry(list, 0x13, -1); // @todo: add room id
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x13, 0);
@@ -591,7 +608,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomIn
     }
 }
 
-/* static */ void stg_town_east_EvWallSetCb21(int* list) {
+static void stg_town_east_EvWallSetCb21(int* list) {
     EvDispControlModelEntry(list, 0x15, -1);
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         clAddDynamicWall(stg_town_east_clActWallList_cb21);
@@ -602,7 +619,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomIn
     sh2shd_off_obj(0x15, 8); // @todo: add room id and obj id
 }
 
-/* static */ void stg_town_east_EvWallSetCb49(int* list) {
+static void stg_town_east_EvWallSetCb49(int* list) {
     if (!GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x31, 1); // @todo: add room id
         clAddDynamicWall(&stg_town_east_clActWallList_cb49[4]);
@@ -850,7 +867,7 @@ static void stg_town_east_EvSignalControlCb37(int* list) {
         EvDispControlModelEntry(list, 0x25, 5);
 }
 
-/* static */ void stg_town_east_EvTapeSetCb11(int* list) {
+static void stg_town_east_EvTapeSetCb11(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_43)) {
         EvDispControlModelEntry(list, 0xB, 0); // @todo: add room id
         return;
@@ -868,15 +885,15 @@ static void stg_town_east_EvSignalControlCb37(int* list) {
     clAddDynamicWall(stg_town_east_clActWallList_cb12);
 }
 
-/* static */ float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
+static float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
     return Yst + (((Yen - Yst) * (Parm - Xst)) / (Xen - Xst));
 }
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMoster_FogHosei);
 
-/* static */ void stg_town_east_CB_1stMonster_Filter(void) {
-    FilterParams* pfp; // r16
-    sceVu0FVECTOR campos; // r29+0x20
+static void stg_town_east_CB_1stMonster_Filter(void) {
+    FilterParams* pfp;
+    sceVu0FVECTOR campos;
     
     vwGetViewPosition(campos);
     if ((campos[2] < 50000.0f) && (campos[1] > -2000.0f) && ((DramaDemoNumber() == 6) || (DramaDemoNumber() == 7))) {
@@ -899,7 +916,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMo
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_Draw_CB_Tonnel);
 
 #ifdef NON_MATCHING
-/* static */ void stg_town_east_Monster1st_Look(void* sp, float* ambient) {
+static void stg_town_east_Monster1st_Look(void* sp, float* ambient) {
     SubCharacter* scp;
     float fac;
     float ftmp;
