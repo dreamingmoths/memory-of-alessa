@@ -96,16 +96,6 @@ static inline long shFastSetSt(float s, float t) {
     return a;
 }
 
-// static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
-//     u_long128 xyz = *(u_long128*) vector;
-//     asm("\
-//         pexch        t7,  %0;\
-//         pextuw       %0,  zero, %0;\
-//         pextlw       %0,  %0, t7"
-//     : "+r"(xyz) :: "$15");
-//     return xyz;
-// }
-
 static inline u_long128 shVectorQWord(sceVu0IVECTOR vector) {
     return *(u_long128*) vector;
 }
