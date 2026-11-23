@@ -1285,7 +1285,7 @@ int command_kind(int kind) {
         case SH2_ITEM_72:
             return 9;
 
-        case APART_GATE_KEY:
+        case SH2_ITEM_APART_GATE_KEY:
         case SH2_ITEM_25:
         case SH2_ITEM_29:
         case SH2_ITEM_33:
@@ -1464,7 +1464,7 @@ void examine_file_load(void) {
             FcRead(data_pic_item_x_plate_female_tex, layer_adr);
             return;
 
-        case APART_GATE_KEY:
+        case SH2_ITEM_APART_GATE_KEY:
             FcRead(data_pic_item_x_keygate_tex, layer_adr);
             return;
 
@@ -1516,7 +1516,7 @@ void examine2_main(void) {
                 
                 t.use_item = 0;
             
-            if (t.item_kind == APART_GATE_KEY)
+            if (t.item_kind == SH2_ITEM_APART_GATE_KEY)
                 SET_GAME_FLAG(GAME_FLAG_1270);
             break;
 
