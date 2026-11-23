@@ -69,6 +69,7 @@ do {                                 \
 #define GAME_FLAG_40   40
 #define GAME_FLAG_41   41
 #define GAME_FLAG_43   43
+#define GAME_FLAG_44   44
 #define GAME_FLAG_47   47
 #define GAME_FLAG_49   49
 #define GAME_FLAG_50   50
