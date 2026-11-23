@@ -37,15 +37,16 @@ static inline void shScaleVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float t) {
 	": : "r" (v0) , "r" (v1), "f" (t):"t7", "memory");
 }
 
-static inline void shTransformVectorPerspective(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
-    asm ("\
-         lqc2         vf4, 0x0(%0)\n\
-         lqc2         vf5, 0x0(%1)\n\
-         lqc2         vf6, 0x10(%1)\n\
+static inline float shTransformVectorPerspective(sceVu0FVECTOR out, sceVu0FMATRIX mat, sceVu0FVECTOR vec) {
+   float q;
+   asm("\
+         lqc2         vf4, 0x0(%3)\n\
+         lqc2         vf5, 0x0(%2)\n\
+         lqc2         vf6, 0x10(%2)\n\
          vmulax.xyzw  ACC, vf5, vf4x\n\
          vmadday.xyzw ACC, vf6, vf4y\n\
-         lqc2         vf5, 0x20(%1)\n\
-         lqc2         vf6, 0x30(%1)\n\
+         lqc2         vf5, 0x20(%2)\n\
+         lqc2         vf6, 0x30(%2)\n\
          vmaddaz.xyzw ACC, vf5, vf4z\n\
          vmaddw.xyzw  vf4, vf6, vf4w\n\
          vdiv         Q, vf0w, vf4w\n\
@@ -53,8 +54,9 @@ static inline void shTransformVectorPerspective(sceVu0FVECTOR vec, sceVu0FMATRIX
          vmulq.xyz    vf4, vf4, Q\n\
          cfc2         t7, $vi22\n\
          sqc2         vf4, 0x0(%0)\n\
-         mtc1         t7, $f0"
-        : "+r"(vec) : "r"(mat) : "t7", "f0");
+         mtc1         t7, %1"
+        : "=r"(out), "=f"(q) : "r"(mat), "r"(vec) : "t7", "f0");
+    return q;
 }
 
 /* all inlines below may be used, but they may not exist forever. */

@@ -977,7 +977,7 @@ int enCheckIntoScreen(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec; // r29+0x10
     shVectorCopyVu0(vec, &dp->scp->pos);    
     vec[1] -= dp->eye_y;
-    shTransformVectorPerspective(vec, VbWvsMatrix.wsm);    
+    shTransformVectorPerspective(vec, VbWvsMatrix.wsm, vec);    
     if (shScreenClipF(vec)) {
         return 0;
     }
