@@ -4,6 +4,7 @@
 
 #include "gs.h"
 #include "vec.h"
+#include "candles.h"
 
 #include "sce/libgraph.h"
 
@@ -475,7 +476,6 @@ void enEfctSetSpray(sceVu0FVECTOR pos, sceVu0FVECTOR vec, u_int color, int timer
     }
 }
 
-#include "candles.h"
 CANDLE(enEfctMoveSpray, CANDLE_TYPE_GPR, *);
 
 #line 464
@@ -484,7 +484,7 @@ void enEfctMoveSpray(EnEFCT_TASK* pt) {
     float d, rt; // r20
     switch (pt->step) {
         case 0:
-            rt = (1.0f / pt->spray.timer1);
+            rt = (1.0f / shIntToFloat(pt->spray.timer1));
             d = rt * pt->count;
             shScaleVector(vec, pt->spray.vec, 0.3f * pt->spray.size * rt);
             shAddVectorXyz(pt->spray.pos, vec, pt->spray.pos);
@@ -495,7 +495,7 @@ void enEfctMoveSpray(EnEFCT_TASK* pt) {
             }
             break;
         case 1:
-            rt = (1.0f / pt->spray.timer2);
+            rt = (1.0f / shIntToFloat(pt->spray.timer2));
             d = rt * (pt->count - pt->spray.timer1);
             shScaleVector(vec, pt->spray.vec, 0.3f * pt->spray.size * rt);
             vec[1] += 100.0f * shGetDT();
@@ -507,16 +507,16 @@ void enEfctMoveSpray(EnEFCT_TASK* pt) {
             }
             break;
         case 2:
-            rt = (1.0f / pt->spray.timer);
+            rt = (1.0f / shIntToFloat(pt->spray.timer));
             d = rt * (pt->count - pt->spray.timer);
             shScaleVector(vec, pt->spray.vec, 0.5f * pt->spray.size * rt);
             vec[1] += 100.0f * shGetDT();
             shAddVectorXyz(pt->spray.pos, vec, pt->spray.pos);
             pt->spray.alpha = 32.0f * (1.0f - d);
             pt->spray.scattar = 0.4f + (0.4f * d);
-            if ((pt->count += shGetDF()) >= pt->spray.timer * 2) {
-                shTSKDelTask(pt);
-            }
+            if ((pt->count += shGetDF()) < pt->spray.timer * 2)
+                break;
+            shTSKDelTask(pt);
             break;
     }
 }
