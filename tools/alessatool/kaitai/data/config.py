@@ -133,7 +133,23 @@ SH2_DATA: DataTable = [
     StructData(name="default_env_chr",                      type=Sh2.ShadowEnv,                        count=1                        ),
     StructData(name="default_drop_env",                     type=Sh2.DropShadowEnv,                    count=1                        ),
     StructData(name="@1231_0x00375DA0",                     type=Sh2.JmsShadowEnv,                     count=1                        ),
-    StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        )
+    StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        ),
+    StructData(name="stg_town_east_pjames_stage_anim",      type=Sh2.AnimeInfo,                        count=21,      executable="twe"),
+    StructData(name="stg_town_east_ev_list",                type=Sh2.EventList,                        count=48,      executable="twe"),
+    StructData(name="stg_town_east_gi_list",                type=Sh2.ItemList,                         count=18,      executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb11",     type=Sh2.ClHitpolyPlane,                   count=8,       executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb12",     type=Sh2.ClHitpolyPlane,                   count=7,       executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb18",     type=Sh2.ClHitpolyPlane,                   count=4,       executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb19",     type=Sh2.ClHitpolyPlane,                   count=10,      executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb20",     type=Sh2.ClHitpolyPlane,                   count=10,      executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb21",     type=Sh2.ClHitpolyPlane,                   count=2,       executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb49",     type=Sh2.ClHitpolyPlane,                   count=14,      executable="twe"),
+    StructData(name="stg_town_east_clActWallList_cb52",     type=Sh2.ClHitpolyPlane,                   count=2,       executable="twe"),
+    SimpleData(name="stg_town_east_ev_prog",                type=Pointer,                              pattern=[10],  executable="twe"),
+    StructData(name="stg_town_east_mdl_list",               type=Sh2.ModelList,                        count=72,      executable="twe"),
+    StructData(name="stg_town_east_en_list",                type=Sh2.EnemyList,                        count=108,     executable="twe"),
+    StructData(name="stg_town_east_SpecialDrawFunctions",   type=Sh2.GfwFunc,                          count=1,       executable="twe"),
+    StructData(name="stage_town_east",                      type=Sh2.StageData,                        count=1,       executable="twe"),
 ]
 
 SH3_DATA: DataTable = []
