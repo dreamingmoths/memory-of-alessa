@@ -1,5 +1,6 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
+#include "vec.h"
 
 #include "Chacter/m3_play_event.h"
 #include "Chacter/m3_sc.h"
@@ -21,6 +22,8 @@
 #include "Event/item.h"
 #include "Event/stg_name.h"
 
+#include "GFW/sh2_DrawEnvData.h"
+#include "GFW/sh2_set_drawenv.h"
 #include "GFW/sh2gfw_2d_filters.h"
 
 #include "SH2_common/pad.h"
@@ -3751,7 +3754,72 @@ static float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst
     return Yst + (((Yen - Yst) * (Parm - Xst)) / (Xen - Xst));
 }
 
+static sceVu0FVECTOR stg_town_east_ShadowPos; // size: 0x10, address: 0x1F080B0
+
+#ifdef NON_MATCHING
+static void stg_town_east_CB_1stMoster_FogHosei(void) {
+    switch (DramaDemoNumber()) {
+        case 6:
+        case 7:
+        case 8: {
+            sceVu0FVECTOR campos;
+    
+            vwGetViewPosition(campos);
+            if ((campos[2] < 50000.0f) && (campos[0] <= 48000.0f)) {
+                
+                
+                sh2gfw_Set_Fogfar(6500.0f);
+                sh2gfw_Set_FogNear(6000.0f);
+                Env_ctl.camera_parms2[2] = 12000.0f;
+            } else {
+                
+                sh2gfw_Set_Fogfar(5500.0f);
+                sh2gfw_Set_FogNear(3000.0f);
+                Env_ctl.camera_parms2[2] = 7500.0f;
+            }
+            break;
+        }
+        
+        case 5: {
+            float ddt = (demo_frame > 115.0f) ? 115.0f : demo_frame;
+            
+            float ffar = stg_town_east_LinearTrim(6900.0f, 5500.0f, 115.0f, 0.0f, ddt);;    
+            sh2gfw_Set_Fogfar(ffar);
+            ffar = stg_town_east_LinearTrim(3500.0f, 3000.0f, 115.0f, 0.0f, ddt);
+            sh2gfw_Set_FogNear(ffar);
+            
+            
+            
+            break;
+        }
+        default:
+            if (EventProgressCheck() == 3) {
+                sceVu0FVECTOR campos;
+                float ffar; float dist;
+                vwGetViewPosition(campos);
+                dist = vec3_dist_reverse(stg_town_east_ShadowPos, campos);
+                
+                Env_ctl.camera_parms2[2] = 8100.0f;
+                
+                if (dist > 3500.0f) dist = 3500.0f;
+                
+                ffar = stg_town_east_LinearTrim(5500.0f, 6900.0f, 3500.0f, 0.0f, dist);
+                sh2gfw_Set_Fogfar(ffar);
+                ffar = stg_town_east_LinearTrim(3000.0f, 3500.0f, 3500.0f, 0.0f, dist);
+                sh2gfw_Set_FogNear(ffar);
+            
+            } else {
+                sh2gfw_Set_Fogfar(5500.0f);
+                sh2gfw_Set_FogNear(3000.0f);
+                Env_ctl.camera_parms2[2] = 7500.0f;
+            }
+            break;
+    }
+
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMoster_FogHosei);
+#endif
 
 static void stg_town_east_CB_1stMonster_Filter(void) {
     FilterParams* pfp;
