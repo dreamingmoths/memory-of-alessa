@@ -90,8 +90,17 @@ static inline long shFastSetXyz(int x, int y, int z) {
     return a;
 }
 
-static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
-    u_long128 xyz = *(u_long128*) vector;
+static inline long shFastSetSt(float s, float t) {
+    long a;
+    asm("mfc1 %0, %1; mfc1 t7, %2; pextlw %0, t7, %0" : "+r"(a) : "f"(s), "f"(t));
+    return a;
+}
+
+static inline u_long128 shVectorQWord(sceVu0IVECTOR vector) {
+    return *(u_long128*) vector;
+}
+
+static inline u_long128 shFastPackXyz(u_long128 xyz) {
     asm("\
         pexch        t7,  %0;\
         pextuw       %0,  zero, %0;\
@@ -99,6 +108,18 @@ static inline u_long128 shFastPackXyz(sceVu0IVECTOR vector) {
     : "+r"(xyz) :: "$15");
     return xyz;
 }
+
+static inline u_long shFloatToIntXyz3(sceVu0FVECTOR v0) {
+    u_long ret;
+    asm("lqc2     vf5,   0(%1);  \
+         vftoi4.xy vf4xy, vf5xy; \
+         vftoi0.z vf4z,  vf5z;   \
+         qmfc2    %0,    vf4" : "=r"(ret): "r"(v0));
+    return ret;
+}
+
+#define SH_GIF_SET_AQ(c, a, q) ((u_long) (c) | ((u_long) (a) << 24) | ((u_long) (q) << 32))
+#define SH_GIF_SET_UV(u, v) (((u_long) (u) << 4) | ((u_long) (v) << 20))
 
 #define PP_NARG(...) \
     PP_NARG_(__VA_ARGS__, PP_RSEQ_N())

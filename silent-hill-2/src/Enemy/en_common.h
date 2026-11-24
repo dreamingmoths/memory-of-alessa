@@ -68,6 +68,11 @@ typedef enum ENEMY_FLAG {
     ENEMY_FLAG_15 = 1 << 15,
 } ENEMY_FLAG;
 
+#define WORLD_DAY                    1
+#define WORLD_NIGHT_OUTDOR_LIGHT_ON  2
+#define WORLD_NIGHT_INDOOR_LIGHT_OFF 3
+#define WORLD_NIGHT_LIGHT_OFF        4
+
 typedef struct EnSOUND_QUEUE {
     // total size: 0x10
     struct SubCharacter* scp; // offset 0x0, size 0x4

@@ -86,7 +86,7 @@ segments:
       - { start: 0x00041ab0,    type: c,          name: Enemy/en_common                                  }
       - { start: 0x00047f50,    type: c,          name: Enemy/en_draw                                    }
       - { start: 0x00049bc0,    type: asmtu,      name: Enemy/en_edb                                     }
-      - { start: 0x0004e720,    type: asm,        name: Enemy/en_effect                                  }
+      - { start: 0x0004e720,    type: c,          name: Enemy/en_effect                                  }
       - { start: 0x00051250,    type: asmtu,      name: Enemy/en_ike                                     }
       - { start: 0x00053b10,    type: asmtu,      name: Enemy/en_mkn                                     }
       - { start: 0x00057eb0,    type: c,          name: Enemy/en_nse                                     }
@@ -615,7 +615,7 @@ segments:
       - { start: 0x001aa160,    type: .data,      name: Enemy/en_bos                                     }
       - { start: 0x001aa230,    type: .data,      name: Enemy/en_common                                  }
       - { start: 0x001aa3e0,    type: .data,      name: Enemy/en_edb                                     }
-      - { start: 0x001aa950,    type: data,       name: Enemy/en_effect                                  }
+      - { start: 0x001aa950,    type: .data,      name: Enemy/en_effect                                  }
       - { start: 0x001aa9a0,    type: .data,      name: Enemy/en_ike                                     }
       - { start: 0x001aab00,    type: .data,      name: Enemy/en_mkn                                     }
       - { start: 0x001aad10,    type: .data,      name: Enemy/en_nse                                     }
@@ -1171,7 +1171,7 @@ segments:
       - { vram:  0x00550680,    type: bss,        name: Effect/ef_packet                                 }
       - { vram:  0x005506a0,    type: .bss,       name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: .bss,       name: Enemy/en_draw                                    }
-      - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
+      - { vram:  0x005524c0,    type: .bss,       name: Enemy/en_effect                                  }
       - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }
       - { vram:  0x005526a8,    type: .bss,       name: Exec_Env/local_env                               }
       - { vram:  0x005526c0,    type: bss,        name: Fog/fog                                          }
