@@ -277,7 +277,7 @@ void enEfctDrawPoisonFog(EnEFCT_TASK* pt) {
         return;
     }
     
-    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRIFAN, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, shVu0FloatToInt(v0[3]), 2U);
+    spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 1, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRIFAN, 1, 1, 0, 1, 0, 0, 0, 0), SCE_GIF_PACKED, 1), SCE_GIF_PACKED_AD, shVu0FloatToInt(v0[3]), 2);
     
     
     
@@ -574,7 +574,7 @@ void enEfctDrawTYU2D(EnEFCT_TASK* pt) {
         g = lcolor[1];
         b = lcolor[2];
         
-        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 13), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ2, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ2), shVu0FloatToInt(w), 8U);
+        spkOpenDGiftag(SCE_GIF_SET_TAG(0, 1, 0, 0, SCE_GIF_REGLIST, 13), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ2, SCE_GS_ST, SCE_GS_RGBAQ, SCE_GS_XYZ2), shVu0FloatToInt(w), 8);
         
         (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 0, SCE_GS_TRUE /* texture mapping */, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
         for (i = 0; i < 4; i++) {

@@ -117,8 +117,7 @@ void fogSetEnvironment(FOG_ENV_DATA* edata) {
     fog_asm_data1.minus_alpha = -d / 32.0f;
     fwork.GridRate = edata->GridRate;
     if (sh2gfw_Get_NightOrDay() && fwork.Global < 5) {
-        int v = edata->PartNum >> 1; // not part of dwarf, and nonmatching line numbers
-        fogSetPartNum(edata->PartNum < 0 ? ((edata->PartNum + 1) >> 1) : v);
+        fogSetPartNum(edata->PartNum / 2);
     } else {
         fogSetPartNum(edata->PartNum);
     }
