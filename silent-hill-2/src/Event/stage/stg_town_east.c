@@ -1187,7 +1187,7 @@ static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb49[14] = { // size: 0x460,
     }
 };
 
-static CL_HITPOLY_PLANE clActWallList_cb52[2] = { // size: 0xA0, address: 0x1F066B0
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2] = { // size: 0xA0, address: 0x1F066B0
     {
         /* .kind = */ 1,
         /* .shape = */ 1,
@@ -1208,7 +1208,7 @@ static CL_HITPOLY_PLANE clActWallList_cb52[2] = { // size: 0xA0, address: 0x1F06
     }
 };
 
-int (*stg_town_east_ev_prog[10])() = { 
+static int (*stg_town_east_ev_prog[10])() = { 
     NULL, 
     stg_town_east_EvProgShadowOfSomenthing,
     stg_town_east_EvProgSandersBack,
@@ -1221,15 +1221,45 @@ int (*stg_town_east_ev_prog[10])() = {
     stg_town_east_EvProgLookMemoFalled
 };
 
-UNMIGRATED(/* static */ u_long128* stg_town_east_anim_adr); // size: 0x4, address: 0x1F08200
-UNMIGRATED(/* static */ char* stg_town_east_dds_adr[4]); // size: 0x10, address: 0x1F07DD0
-UNMIGRATED(/* static */ u_long128* stg_town_east_wp_mdl); // size: 0x4, address: 0x1F08208
-UNMIGRATED(/* static */ u_long128* stg_town_east_wp_anm); // size: 0x4, address: 0x1F08210
+// static Model_List stg_town_east_mdl_list
 
-UNMIGRATED(/* static */ int stg_town_east_sig_timer_b); // size: 0x4, address: 0x1F08218
-UNMIGRATED(/* static */ int stg_town_east_sig_timer_b2); // size: 0x4, address: 0x1F08220
-UNMIGRATED(/* static */ int stg_town_east_sig_num_a); // size: 0x4, address: 0x1F08228
-UNMIGRATED(/* static */ int stg_town_east_sig_num_b); // size: 0x4, address: 0x1F08230
+// static Enemy_List stg_town_east_en_list
+
+static GfwFunc stg_town_east_SpecialDrawFunctions = {
+    /* .specDraw = */ stg_town_east_Draw_CB_Tonnel,
+    /* .preDraw = */ stg_town_east_CB_1stMoster_FogHosei,
+    /* .postDraw = */ stg_town_east_CB_1stMonster_Filter,
+    /* .charaDrawHook = */ stg_town_east_Monster1st_Look,
+};
+
+Stage_Data stage_town_east = {
+    /* .evList = */ stg_town_east_ev_list,
+    /* .evPos = */ stg_town_east_ev_pos,
+    /* .evProg = */ stg_town_east_ev_prog,
+    /* .giList = */ stg_town_east_gi_list,
+    /* .mdlList = */ stg_town_east_mdl_list,
+    /* .enList = */ stg_town_east_en_list,
+    /* .stageInit = */ stg_town_east_EvStageInit,
+    /* .roomInit = */ stg_town_east_EvRoomInit,
+    /* .alltimeFunc = */ stg_town_east_EvAllTimeFunc,
+    /* .glbCrd = */ 2,
+    /* .pcModel = */ 0,
+    /* .stgAnimInfo = */ stg_town_east_pjames_stage_anim,
+    /* .bgmControl = */ stg_town_east_EvBgmControl,
+    /* .gfwFunc = */ stg_town_east_SpecialDrawFunctions,
+    /* .charaDataClear = */ stg_town_east_EvCharaDataClear,
+    /* .soundCallAfterLoad = */ NULL,
+    /* .reserve11 = */ 0,
+};
+
+static u_long128* anim_adr; // size: 0x4, address: 0x1F08200
+static char* dds_adr[4]; // size: 0x10, address: 0x1F07DD0
+static u_long128* wp_mdl; // size: 0x4, address: 0x1F08208
+static u_long128* wp_anm; // size: 0x4, address: 0x1F08210
+static int sig_timer_b; // size: 0x4, address: 0x1F08218
+static int sig_timer_b2; // size: 0x4, address: 0x1F08220
+static int sig_num_a; // size: 0x4, address: 0x1F08228
+static int sig_num_b; // size: 0x4, address: 0x1F08230
 
 static int stg_town_east_EvProgShadowOfSomenthing(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos0); // @ 0x01F07E50
