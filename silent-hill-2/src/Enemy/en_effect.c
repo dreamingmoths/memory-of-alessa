@@ -353,11 +353,12 @@ static inline void shClampVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float min, 
 static inline long shFastSetRgbaq(int r, int g, int b, int a, float q) {
     long ret = r;
     asm volatile("\
-        mfc1    t6,%4;   \
         pextlb  %0,%1,%0;\
         pextlb  t7,%3,%2;\
+        mfc1    t6,%4;   \
         pextlh  %0,t7,%0;\
-        pextlw  %0,t6,%0"
+        pextlw  %0,t6,%0;\
+        .set reorder"
     : "+r"(ret): "r"(g), "r"(b), "r"(a), "f"(q));
     return ret;
 }
