@@ -4,6 +4,15 @@
 #include "sh2_common.h"
 #include "taskman/shtskman.h"
 
+#define EN_POISON_FOG_EFCT_KIND 30
+#define EN_SPRAY_EFCT_KIND      31
+#define EN_BUG_2D_EFCT_KIND     32
+
+#define POISON_FOG_RANGE_MIN    -100.0f
+#define POISON_FOG_RANGE_MAX     10.0f
+#define SPRAY_RANGE_MIN         -50.0f
+#define SPRAY_RANGE_MAX          1.0f
+
 typedef struct EnEFCT_PFOG_DATA {
     // total size: 0x40
     sceVu0FVECTOR pos; // offset 0x0, size 0x10

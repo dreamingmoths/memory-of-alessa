@@ -22,28 +22,16 @@
 
 #include "view/vb_main.h"
 
-#define EN_POISON_FOG_EFCT_KIND 30
-#define EN_SPRAY_EFCT_KIND      31
-#define EN_BUG_2D_EFCT_KIND     32
-
-#define POISON_FOG_RANGE_MIN    -100.0f
-#define POISON_FOG_RANGE_MAX     10.0f
-#define SPRAY_RANGE_MIN         -50.0f
-#define SPRAY_RANGE_MAX          1.0f
-
 static u_int enMultColor(u_int color, int rate);
 
-struct EnEfctEnvData EnEfctEnvData; // size: 0x190, address: 0x5524C0
+struct EnEfctEnvData EnEfctEnvData;
 static int en_efct_kind_list[4] = {
     EN_POISON_FOG_EFCT_KIND,
     EN_SPRAY_EFCT_KIND,
     EN_BUG_2D_EFCT_KIND,
     -1
-}; // size: 0x10, address: 0x2AA250
+};
 
-/**
- * sin(rad(x)) for x in range(0, 360, 22.5)
- */
 static float sintable[16] = {
     /* sinf(TO_RAD(0.0000)) */ +0.0f,
     /* sinf(TO_RAD(22.500)) */ +0.3826834f,
