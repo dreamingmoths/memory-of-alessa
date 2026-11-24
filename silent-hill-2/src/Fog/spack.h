@@ -87,9 +87,9 @@ void* spkDmaKick(void);
 
 extern struct SPACK_DATA spack;
 
-static inline spkAddressData(u_long address, u_long data) {
-    (*spack.pos++) = address;
+static inline spkAddressData(u_long data, u_long address) {
     (*spack.pos++) = data;
+    (*spack.pos++) = address;
 }
 
 #endif // SPACK_H

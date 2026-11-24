@@ -86,7 +86,7 @@ segments:
       - { start: 0x00041ab0,    type: c,          name: Enemy/en_common                                  }
       - { start: 0x00047f50,    type: c,          name: Enemy/en_draw                                    }
       - { start: 0x00049bc0,    type: asmtu,      name: Enemy/en_edb                                     }
-      - { start: 0x0004e720,    type: asm,        name: Enemy/en_effect                                  }
+      - { start: 0x0004e720,    type: c,          name: Enemy/en_effect                                  }
       - { start: 0x00051250,    type: asmtu,      name: Enemy/en_ike                                     }
       - { start: 0x00053b10,    type: asmtu,      name: Enemy/en_mkn                                     }
       - { start: 0x00057eb0,    type: c,          name: Enemy/en_nse                                     }
@@ -105,7 +105,7 @@ segments:
       - { start: 0x00072de0,    type: asm,        name: GFW/gfw_test/camera                              }
       - { start: 0x00073030,    type: asmtu,      name: GFW/gfw_test/kari_probe_draw                     }
       - { start: 0x000745e0,    type: asm,        name: GFW/gfw_test/sh2_dmachain_regist                 }
-      - { start: 0x000748b0,    type: asm,        name: GFW/gfw_test/sh2gfw_shcamtest                    }
+      - { start: 0x000748b0,    type: c,          name: GFW/gfw_test/sh2gfw_shcamtest                    }
       - { start: 0x00074ac0,    type: c,          name: GFW/gfw_test/sh2gfw_util                         }
       - { start: 0x000758d0,    type: asm,        name: GFW/sh2_get_drawenv                              }
       - { start: 0x00075eb0,    type: asm,        name: GFW/sh2_set_drawenv                              }
@@ -197,7 +197,7 @@ segments:
       - { start: 0x000db9a0,    type: asmtu,      name: Enemy/en_fly                                     }
       - { start: 0x000dbdc0,    type: c,          name: lib/wprtfsrc                                     }
       - { start: 0x000dc570,    type: asm,        name: Multi_thr/kernel/wrap_printf                     }
-      - { start: 0x000dc5b0,    type: asm,        name: MWCC/gcc_wrapper                                 }
+      - { start: 0x000dc5b0,    type: c,          name: MWCC/gcc_wrapper                                 }
       - { start: 0x000dc6a8,    type: asmtu,      name: sdk/lib_001DBFA8,      ld_align_segment_start: 8 }
       - { start: 0x000dc6c8,    type: asmtu,      name: sdk/lib_001DBFC8                                 }
       - { start: 0x000dc6e0,    type: asmtu,      name: sdk/lib_001DBFE0                                 }
@@ -615,7 +615,7 @@ segments:
       - { start: 0x001aa160,    type: .data,      name: Enemy/en_bos                                     }
       - { start: 0x001aa230,    type: .data,      name: Enemy/en_common                                  }
       - { start: 0x001aa3e0,    type: .data,      name: Enemy/en_edb                                     }
-      - { start: 0x001aa950,    type: data,       name: Enemy/en_effect                                  }
+      - { start: 0x001aa950,    type: .data,      name: Enemy/en_effect                                  }
       - { start: 0x001aa9a0,    type: .data,      name: Enemy/en_ike                                     }
       - { start: 0x001aab00,    type: .data,      name: Enemy/en_mkn                                     }
       - { start: 0x001aad10,    type: .data,      name: Enemy/en_nse                                     }
@@ -1171,7 +1171,7 @@ segments:
       - { vram:  0x00550680,    type: bss,        name: Effect/ef_packet                                 }
       - { vram:  0x005506a0,    type: .bss,       name: Enemy/en_common                                  }
       - { vram:  0x005524b0,    type: .bss,       name: Enemy/en_draw                                    }
-      - { vram:  0x005524c0,    type: bss,        name: Enemy/en_effect                                  }
+      - { vram:  0x005524c0,    type: .bss,       name: Enemy/en_effect                                  }
       - { vram:  0x00552650,    type: .bss,       name: Exec_Env/exec_env                                }
       - { vram:  0x005526a8,    type: .bss,       name: Exec_Env/local_env                               }
       - { vram:  0x005526c0,    type: bss,        name: Fog/fog                                          }

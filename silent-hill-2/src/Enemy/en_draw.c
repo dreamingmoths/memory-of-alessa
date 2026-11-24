@@ -287,7 +287,7 @@ static void enDrawWall(sceVu0FVECTOR wall_pos1, sceVu0FVECTOR wall_pos2, sceVu0F
     scr[0] = enDrawX(vec[2]);
     scr[1] = enDrawY(vec[0]);
     if (scr[0] < 0 || scr[1] < 0 || scr[0] > 65535 || scr[1] > 65535) return;
-    xyz = shFastPackXyz(scr);
+    xyz = shFastPackXyz(shVectorQWord(scr));
     shRotVectorY(vec2, vec2, prot);
     scr[0] = enDrawX(vec2[2]);
     scr[1] = enDrawY(vec2[0]);
@@ -300,7 +300,7 @@ static void enDrawWall(sceVu0FVECTOR wall_pos1, sceVu0FVECTOR wall_pos2, sceVu0F
         (*spack.pos++) = SCE_GS_SET_RGBAQ(0, 80, 255, 64, 0);
     }
     (*spack.pos++) = xyz;
-    (*spack.pos++) = shFastPackXyz(scr);
+    (*spack.pos++) = shFastPackXyz(shVectorQWord(scr));
 }
 
 #line 1233
@@ -317,21 +317,21 @@ static void enDrawColumn(sceVu0FVECTOR column_pos, float size, sceVu0FVECTOR ppo
     scr[0] = enDrawX(vec2[2]);
     scr[1] = enDrawY(vec2[0]);
     if (scr[0] < 0 || scr[1] < 0 || scr[0] > 65535 || scr[1] > 65535) return;
-    xyz1 = shFastPackXyz(scr);
+    xyz1 = shFastPackXyz(shVectorQWord(scr));
     shVectorCopy(vec2, vec);
     vec2[2] += size;
     shRotVectorY(vec2, vec2, prot);
     scr[0] = enDrawX(vec2[2]);
     scr[1] = enDrawY(vec2[0]);
     if (scr[0] < 0 || scr[1] < 0 || scr[0] > 65535 || scr[1] > 65535) return;
-    xyz2 = shFastPackXyz(scr);
+    xyz2 = shFastPackXyz(shVectorQWord(scr));
     shVectorCopy(vec2, vec);
     vec2[2] -= size;
     shRotVectorY(vec2, vec2, prot);
     scr[0] = enDrawX(vec2[2]);
     scr[1] = enDrawY(vec2[0]);
     if (scr[0] < 0 || scr[1] < 0 || scr[0] > 65535 || scr[1] > 65535) return;
-    xyz3 = shFastPackXyz(scr);
+    xyz3 = shFastPackXyz(shVectorQWord(scr));
     shVectorCopy(vec2, vec);
     vec2[0] += size;
     shRotVectorY(vec2, vec2, prot);
@@ -343,7 +343,7 @@ static void enDrawColumn(sceVu0FVECTOR column_pos, float size, sceVu0FVECTOR ppo
     (*spack.pos++) = xyz1;
     (*spack.pos++) = xyz2;
     (*spack.pos++) = xyz3;
-    (*spack.pos++) = shFastPackXyz(scr);
+    (*spack.pos++) = shFastPackXyz(shVectorQWord(scr));
 }
 
 #line 1278
