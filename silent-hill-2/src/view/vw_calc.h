@@ -1,7 +1,7 @@
 #ifndef VW_CALC_H
 #define VW_CALC_H
 
-#include "vc_main.h"
+#include "view/vc_main.h"
 #include "sce/libvu0.h"
 
 void vwRenewalXZVelocityToTargetPos(sceVu0FVECTOR velo_xz, sceVu0FVECTOR now_pos, sceVu0FVECTOR tgt_pos, float tgt_r, float accel, float total_max_spd, float dec_forwd_lim_spd, float dec_accel_side);
