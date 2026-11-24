@@ -323,62 +323,6 @@ void enEfctSetPoisonTex(void) {
     #line 349
 }
 
-static inline void sHVectorTransform3d(sceVu0FVECTOR vec, sceVu0FMATRIX mat) {
-    asm("\
-        lqc2         vf4, 0x0(%0)\n\
-        lqc2         vf5, 0x0(%1)\n\
-        lqc2         vf6, 0x10(%1)\n\
-        vmulax.xyzw  ACC, vf5, vf4x\n\
-        lqc2         vf5, 0x20(%1)\n\
-        vmadday.xyzw ACC, vf6, vf4y\n\
-        vmaddaz.xyzw ACC, vf5, vf4z\n\
-        vmaddw.xyzw  vf4, vf0, vf4w\n\
-        sqc2         vf4, 0x0(%0)"
-        : "+r"(vec): "r"(mat));
-}
-
-static inline void shClampVector(sceVu0FVECTOR v0, sceVu0FVECTOR v1, float min, float max) {
-    __asm__ __volatile__("\
-        mfc1    t6,%2;\
-        mfc1    t7,%3;\
-	    lqc2    vf4,0x0(%1);\
-        qmtc2    t6,vf5;\
-    	vmaxx.xyzw $vf04,$vf04,$vf05;\
-        qmtc2    t7,vf6;\
-    	vminix.xyzw $vf04,$vf04,$vf06;\
-    	sqc2    vf4,0x0(%0);\
-	": : "r" (v0) , "r" (v1), "f" (min), "f" (max):"$8","$9","memory");
-}
-
-static inline long shFastSetRgbaq(int r, int g, int b, int a, float q) {
-    long ret = r;
-    asm volatile("\
-        pextlb  %0,%1,%0;\
-        pextlb  t7,%3,%2;\
-        mfc1    t6,%4;   \
-        pextlh  %0,t7,%0;\
-        pextlw  %0,t6,%0;\
-        .set reorder"
-    : "+r"(ret): "r"(g), "r"(b), "r"(a), "f"(q));
-    return ret;
-}
-
-static inline void shVectorTransformTo(sceVu0FVECTOR dst, sceVu0FMATRIX mat, sceVu0FVECTOR src) {
-    asm("\
-        lqc2         vf4, 0x0(%2)\n\
-        lqc2         vf5, 0x0(%1)\n\
-        lqc2         vf6, 0x10(%1)\n\
-        vmulax.xyzw  ACC, vf5, vf4x\n\
-        lqc2         vf5, 0x20(%1)\n\
-        vmadday.xyzw ACC, vf6, vf4y\n\
-        lqc2         vf6, 0x30(%1)\n\
-        vmaddaz.xyzw ACC, vf5, vf4z\n\
-        vmaddw.xyzw  vf4, vf6, vf4w\n\
-        sqc2         vf4, 0x0(%0)"
-        : "+r"(dst) : "r"(mat), "r"(src));
-}
-
-
 #line 359
 void enEfctDrawInsect(void* p) {
     EnLOCAL_DATA* dp = (EnLOCAL_DATA*) p;
