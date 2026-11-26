@@ -6,6 +6,7 @@
 #include "vec.h"
 
 #include "sound/sh_sound.h"
+#include "Fog/fog.h"
 
 #include "Enemy/en_common.h"
 #include "Enemy/en_insect.h"
@@ -133,7 +134,7 @@ void enWaitAllInsect(void) {
 
 #line 162
 SubCharacter* enINSGetSubCharacter(EnLOCAL_DATA* dp) {
-    return (SubCharacter*) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS) + ((int) dp - (int) &enLocalWork) / (int) sizeof(EnLOCAL_DATA);
+    return (SubCharacter*) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS) + ENEMY_DATA_INDEX(dp);
 }
 
 

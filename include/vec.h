@@ -261,7 +261,7 @@ static inline void shVectorCopyXyz(void* dst, void* src) {
          sd t7, 0(%0)\n\
          pcpyud t7, t7, zero\n\
          sw t7, 8(%0)"
-        : "+r"(dst), "+r"(src)::"t7");
+        :: "r"(dst), "r"(src));
 }
 
 static inline float shVectorLengthXyz(void* v) {
@@ -495,6 +495,16 @@ static inline void shUnitVector(sceVu0FVECTOR out) {
     asm("\
         sqc2 vf0, 0x0(%0)"
         : "+r"(out));
+}
+
+
+static inline void shRotMatrixZyx(sceVu0FMATRIX m0, sceVu0FMATRIX m1, sceVu0FVECTOR rot) {
+    extern void shRotMatrixZ(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rz);
+    extern void shRotMatrixY(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float ry);
+    extern void shRotMatrixX(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx);
+    shRotMatrixZ(m0, m1, rot[2]);
+    shRotMatrixY(m0, m0, rot[1]);
+    shRotMatrixX(m0, m0, rot[0]);
 }
 
 #endif // ALESSA_VEC_H

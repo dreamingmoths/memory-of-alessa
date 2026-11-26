@@ -8,7 +8,7 @@
 #include "SH2_common/sh2dt.h"
 #include "vec.h"
 
-#include "shared/Fog/fog.h" // @note: float_sign needs to be moved
+#include "shared/Fog/fog.h" // @note: shFloatSign needs to be moved
 
 static void enONICtrlAutomatic(EnLOCAL_DATA* dp);
 static void enONICtrlSleep(EnLOCAL_DATA* dp);
@@ -505,7 +505,7 @@ static void enONICtrlBothAttack(EnLOCAL_DATA* dp) {
             enONIGetWalkSpeed(dp);
             ENEMY_NEXT_SUB_STEP();
         case 1:
-            shSinCosV_Scale(vec, a1 - (TO_RAD(60) * float_sign(a2)), 2500.0f);
+            shSinCosV_Scale(vec, a1 - (TO_RAD(60) * shFloatSign(a2)), 2500.0f);
             
             shAddVector(vec, enGetPlayerPos(dp), vec);
             enSetPath(dp, vec, &dp->scp->pos);
