@@ -81,7 +81,7 @@ static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
 
 #define ENEMY_TYU_BASE_SPEED       1250.0f
 #define ENEMY_TYU_SOUND_START      12200
-#define ENEMY_TYU_FOG_ID(dp)       (ENEMY_DATA_INDEX(dp) + 10)
+#define ENEMY_TYU_FOG_ID           10
 
 /* == tyu 2 states == */
 
@@ -663,7 +663,7 @@ static void enTYUCtrlDead(EnLOCAL_DATA* dp) {
         enFlagSetDead(dp);
         enFlagResetLieDown(dp);
         enFlagResetMoved(dp);
-        fogEraseObj(ENEMY_TYU_FOG_ID(dp));
+        fogEraseObj(ENEMY_DATA_INDEX(dp) + ENEMY_TYU_FOG_ID);
         ENEMY_NEXT_SUB_STEP();
         
         if (enLocalWork.Status & (1 << 1)) {
@@ -1146,7 +1146,7 @@ static void enTY2CtrlDead(EnLOCAL_DATA* dp) {
         enFlagSetDead(dp);
         enFlagResetLieDown(dp);
         enFlagResetMoved(dp);
-        fogEraseObj(ENEMY_TYU_FOG_ID(dp));
+        fogEraseObj(ENEMY_DATA_INDEX(dp) + ENEMY_TYU_FOG_ID);
         ENEMY_NEXT_SUB_STEP();
     }
 }
