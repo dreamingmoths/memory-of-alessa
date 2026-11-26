@@ -254,7 +254,7 @@ void fogChangeWind(int wind) {
         a1 = shAtanV(&fwork.WindV);
         a2 = shAngleRegulate(a1 - shAtanV(Wind));
         if (shFloatAbs(a2) > (PI / 3)) {
-            a1 += ((PI / 3) * float_sign(a2));
+            a1 += ((PI / 3) * shFloatSign(a2));
             shSinCosV_Scale(Wind2, a1, vec2_length(&Wind[0], &Wind[2]));
             Wind[0] = Wind2[0];
             Wind[2] = Wind2[2];

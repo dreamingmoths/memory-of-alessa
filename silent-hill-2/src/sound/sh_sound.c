@@ -19,7 +19,7 @@
 
 #include "Multi_thr/filesys/fcread.h"
 
-#include "shared/Fog/fog.h" // added only for float_sign, should be probably moved somewhere else
+#include "shared/Fog/fog.h" // added only for shFloatSign, should be probably moved somewhere else
 
 #include "SH2_common/playing_info.h"
 #include "sce/libvu0.h"
@@ -259,7 +259,7 @@ int SeCallPosDirection(float* pos) {
     fv[0] -= 750.0f;
     fv[1] = 0.0f;
     shNormalizeVector(fv, fv);
-    sign = float_sign(-fv[0]);
+    sign = shFloatSign(-fv[0]);
     return (sign * (70.0f - (70.0f * fv[2])));
 }
 

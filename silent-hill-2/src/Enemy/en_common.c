@@ -1511,7 +1511,7 @@ int enSetPath(EnLOCAL_DATA* dp, float* target, float* pos) {
             a = shAngleRegulate(ma - p->angle);
             if (a == 0.0f) a = TO_RAD(1);
             if (shFloatAbs(a) < TO_RAD(15)) a1 = ma;
-            else a1 = p->angle + TO_RAD(15) * float_sign(a); 
+            else a1 = p->angle + TO_RAD(15) * shFloatSign(a); 
             shSinCosV_Scale(vec, a1, dist);
             shAddVector(vec, pos, vec);
             d1 = enCheckPath(dp, vec, pos);
@@ -1532,7 +1532,7 @@ int enSetPath(EnLOCAL_DATA* dp, float* target, float* pos) {
                 a1 = ma;
                 d1 = d2;
             }
-            a = float_sign(a); a2 = p->angle - TO_RAD(15) * a;
+            a = shFloatSign(a); a2 = p->angle - TO_RAD(15) * a;
             shSinCosV_Scale(vec, a2, dist);
             shAddVector(vec, pos, vec);
             d2 = enCheckPath(dp, vec, pos);

@@ -2,6 +2,7 @@
 #include "SH2_common/sh_vu0.h"
 #include "vec.h"
 #include "Enemy/en_tyu.h"
+#include "Fog/fog.h"
 
 static void enTYUAnimeSet(EnLOCAL_DATA* dp, int anim);
 static void enTYUAnimeExec(EnLOCAL_DATA* dp);
@@ -12,7 +13,7 @@ static float enTYUGetSpeed(void);
 static void enTYUSoundMove(EnLOCAL_DATA* dp);
 static void enTYUCheckUnderWall(EnLOCAL_DATA* dp);
 static int enTYUCheckNearWall(EnLOCAL_DATA* dp);
-static int enTYUCheckNormal(float* normal);
+static int enTYUCheckNormal(sceVu0FVECTOR normal);
 static int enTYUSetPathV(EnLOCAL_DATA* dp);
 static void enTYUSetAttackTime(EnLOCAL_DATA* dp);
 static void enTYUSetDownTime(EnLOCAL_DATA* dp);
@@ -644,13 +645,218 @@ static void enTYUCtrlDead(EnLOCAL_DATA* dp) {
     }
 }
 
+#line 773
+static int enTYUSetPathV(EnLOCAL_DATA* dp) {
+    EnPATH_DATA* p = &dp->path; // r16
+    float dist, ma, a, a1, a2, d1, d2;
+    sceVu0FMATRIX rmat; // r29+0x60
+    sceVu0FVECTOR pos, rot; // r29+0xA0, r29+0xB0
+    int k; // r17
+    shUnitMatrix(rmat);
+    shRotMatrixZyx(rmat, rmat, (float*) &dp->scp->rot);
+    shVectorZero(rot);
+    rot[1] = 60.0f;
+    shVectorTransformTo(rot, rmat, rot);
+    shSubVector(pos, (float*) &dp->scp->pos, rot);
+    shVectorCopy(rot, (float*) &dp->scp->rot);
+    dist = enCheckForward(dp, pos, rot, 500.0f);
+    ma = p->markangle;
+    if (dist < 0.0f) {
+        p->dist = -dist;
+        p->step = 0;
+        p->deadend = 0;
+        return FALSE;
+    }
+    p->dist = dist;
+    dist += 50.0f;
+    switch ((k = p->step)) {
+        case 0:
+            p->step = 1;
+            rot[1] = a1 = TO_RAD(15) + ma;
+            d1 = enCheckForward(dp, pos, rot, dist);
+            rot[1] = a2 = ma - TO_RAD(15);
+            d2 = enCheckForward(dp, pos, rot, dist);
+            if (d1 < 0.0f && d2 >= 0.0f) {
+                ma = a1;
+            } else if ((d1 >= 0.0f) && (d2 < 0.0f)) {
+                ma = a2;
+            } else {
+                if ((d1 >= 0.0f) && (d2 >= 0.0f) && ++p->deadend >= 3) {
+                    ma = PI + ma;
+                    p->step = -1;
+                } else {
+                    ma -= TO_RAD(0.1);
+                    p->step = 2;
+                }
+            }
+            break;
+        case 1:
+            a2 = shAngleRegulate(ma - p->angle);
+            if (a2 == 0.0f) a2 = TO_RAD(1);
+            if (shFloatAbs(a2) < TO_RAD(15)) a1 = ma;
+            else a1 = p->angle + (TO_RAD(15) * shFloatSign(a2));
+            rot[1] = a1;
+            d1 = enCheckForward(dp, pos, rot, dist);
+            if (d1 < 0.0f) {
+                ma = a1;
+                break;
+            }
+            rot[1] = ma;
+            d2 = enCheckForward(dp, pos, rot, dist);
+            if (d2 < 0.0f) break;
 
+            #line 833
+            if (d1 < d2) {
+                a1 = ma;
+                d1 = d2;
+            }
+            a2 = p->angle - (TO_RAD(15) * shFloatSign(a2));
+            rot[1] = a2;
+            d2 = enCheckForward(dp, pos, rot, dist);
+            if (d2 < 0.0f) {
+                ma = a2;
+            } else if (d1 < 0.0f) {
+                ma = a1;
+                break;
+            } else {       
+                ma = a1;
+                p->step = 2;
+            }
+            break;
+        case -1:
+            ma = p->markangle;
+            if (enCalcAngleDifference(ma, p->angle) < TO_RAD(15)) {
+                p->deadend = 0;
+                p->step = 1;
+            }
+            break;
+        
+        default:
+            a1 = ma + TO_RAD(15) * k;
+            rot[1] = a1;
+            d1 = enCheckForward(dp, pos, rot, dist);
+            a2 = ma - TO_RAD(15) * k;
+            rot[1] = a2;
+            d2 = enCheckForward(dp, pos, rot, dist);
+            if (d1 < 0.0f) {
+                if (d2 < 0.0f) {
+                    if (++k >= 6) {
+                        ma = a1;
+                        k = 1;
+                    }
+                } else {
+                    ma = a1;
+                    k = 1;
+                }
+            } else if (d2 < 0.0f) {
+                ma = a2;
+                k = 1;
+            } else {
+                if (d1 > d2) {
+                    ma = a1;
+                } else {
+                    ma = a2;
+                }
+                if (++k >= 6) {
+                    #line 886
+                    ma = PI + ma;
+                    k = -1;
+                }
+            }
+            p->step = k;
+    }
+    p->markangle = shAngleRegulate(ma);
+    return TRUE;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_tyu", enTYUSetPathV);
+/**
+ * returns true if the given vector's upward length is 
+ * greater than its horizontal length.
+ * if the vector points downward (positive), returns false.
+ */
+#line 899
+static int enTYUCheckNormal(sceVu0FVECTOR normal) {
+    float dx, dy = normal[1], dz;
+    if (dy >= 0.0f) return FALSE;
+    dx = normal[0];
+    dz = normal[2];
+    return dy * dy > dx * dx + dz * dz;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_tyu", enTYUCheckNormal);
+#line 912
+static int enTYUCheckNearWall(EnLOCAL_DATA* dp) {
+    CL_VHIT_RESULT* res = &enLocalWork.HitResult; // r16
+    sceVu0FVECTOR sp, ep, vec, cp;
+    float d; // r29+0x80
+    float r; // r20
+    float dm = MAX_FLOAT; // r29+0x80
+    shSinCosV_Scale(vec, dp->path.angle, 500.0f);
+    shSubVector(sp, (float*) &dp->scp->pos, vec);
+    shAddVector(ep, (float*) &dp->scp->pos, vec);
+    clCheckHitEyesOnlyWall(res, sp, ep);
+    if (res->kind == 1) {
+        dm = shVectorDistXz(res->hobj.wall.cp, (float*) &dp->scp->pos);
+        shNormalizeVector(res->hobj.wall.nl, vec);
+        shScaleVector(vec, vec, 50.0f);
+        shSubVector(cp, res->hobj.wall.cp, vec);
+        r = shAtanV(res->hobj.wall.nl);
+    }
+    sp[0] = dp->scp->pos.x + vec[2];
+    sp[2] = dp->scp->pos.z - vec[0];
+    ep[0] = dp->scp->pos.x - vec[2];
+    ep[2] = dp->scp->pos.z + vec[0];
+    clCheckHitEyesOnlyWall(res, sp, ep);
+    if (res->kind == 1) {
+        d = shVectorDistXz(res->hobj.wall.cp, (float*) &dp->scp->pos);
+        if (d < dm) {
+            dm = d;
+            shNormalizeVector(res->hobj.wall.nl, vec);
+            shScaleVector(vec, vec, 50.0f);
+            shSubVector(cp, res->hobj.wall.cp, vec);
+            r = shAtanV(res->hobj.wall.nl);
+        }
+    }
+    sp[0] = dp->scp->pos.x - vec[2];
+    sp[2] = dp->scp->pos.z + vec[0];
+    ep[0] = dp->scp->pos.x + vec[2];
+    ep[2] = dp->scp->pos.z - vec[0];
+    clCheckHitEyesOnlyWall(res, sp, ep);
+    if (res->kind == 1) {
+        d = shVectorDistXz(res->hobj.wall.cp, (float*) &dp->scp->pos);
+        if (d < dm) {
+            dm = d;
+            shNormalizeVector(res->hobj.wall.nl, vec);
+            shScaleVector(vec, vec, 50.0f);
+            shSubVector(cp, res->hobj.wall.cp, vec);
+            r = shAtanV(res->hobj.wall.nl);
+        }
+    }
+    sp[0] = dp->scp->pos.x + vec[0];
+    sp[2] = dp->scp->pos.z + vec[2];
+    ep[0] = dp->scp->pos.x - vec[0];
+    ep[2] = dp->scp->pos.z - vec[2];
+    clCheckHitEyesOnlyWall(res, sp, ep);
+    if (res->kind == 1) {
+        d = shVectorDistXz(res->hobj.wall.cp, (float*) &dp->scp->pos);
+        if (d < dm) {
+            dm = d;
+            shNormalizeVector(res->hobj.wall.nl, vec);
+            shScaleVector(vec, vec, 50.0f);
+            shSubVector(cp, res->hobj.wall.cp, vec);
+            r = shAtanV(res->hobj.wall.nl);
+        }
+    }
+    if (dm == MAX_FLOAT) return FALSE;
+    enFlagResetRotFloorJust(dp);
+    dp->flag = (1 << 1) | (1 << 4) | (1 << 5) | (1 << 10);
+    shVectorCopyVu0((float*) &dp->scp->pos, cp);
+    dp->scp->rot.x = dp->trx = QUARTER_TURN;
+    dp->scp->rot.y = 0.0f;
+    dp->scp->rot.z = dp->trz = shAngleRegulate(PI - r);
+    enInitPath(&dp->path, 0.0f);
+    return TRUE;
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_tyu", enTYUCheckNearWall);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_tyu", enTYUCheckWall);
 
