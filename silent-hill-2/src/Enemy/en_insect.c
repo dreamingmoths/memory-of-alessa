@@ -6,6 +6,7 @@
 #include "vec.h"
 
 #include "sound/sh_sound.h"
+#include "Fog/fog.h"
 
 #include "Enemy/en_common.h"
 #include "Enemy/en_insect.h"

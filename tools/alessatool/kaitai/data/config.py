@@ -133,7 +133,9 @@ SH2_DATA: DataTable = [
     StructData(name="default_env_chr",                      type=Sh2.ShadowEnv,                        count=1                        ),
     StructData(name="default_drop_env",                     type=Sh2.DropShadowEnv,                    count=1                        ),
     StructData(name="@1231_0x00375DA0",                     type=Sh2.JmsShadowEnv,                     count=1                        ),
-    StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        )
+    StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        ),
+    SimpleData(name="@965",                                 type=Pointer,                              pattern=[7]                    ),
+    SimpleData(name="@970_0x002AB300",                      type=Pointer,                              pattern=[9]                    )
 ]
 
 SH3_DATA: DataTable = []
