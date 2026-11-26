@@ -417,13 +417,6 @@ static void enTYUCtrlEscape(EnLOCAL_DATA* dp) {
     enTYUCheckWall(dp);
 }
 
-/*
-    Compile unit: E:\work\sh2(CVS全取得)\src\Enemy\en_tyu.c
-    Producer: MW MIPS C Compiler
-    Language: C
-    Code range: 0x00165D80 -> 0x00166050
-*/
-
 #line 503
 static void enTYUCtrlOnWall(EnLOCAL_DATA* dp) {
     sceVu0FVECTOR vec;
