@@ -81,6 +81,7 @@ static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
 
 #define ENEMY_TYU_BASE_SPEED       1250.0f
 #define ENEMY_TYU_SOUND_START      12200
+#define ENEMY_TYU_FOG_ID(dp)       (ENEMY_DATA_INDEX(dp) + 10)
 
 /* == tyu 2 states == */
 
@@ -262,7 +263,7 @@ static void enTYUCtrlStraight(EnLOCAL_DATA* dp) {
         return;
     }
     if (shRandF() < 0.003f) {
-        dp->path.angle = shAngleRegulate(dp->path.angle + ((PI * shRandF()) / 3.0f));
+        dp->path.angle = shAngleRegulate(dp->path.angle + (PI * shRandF() / 3.0f));
     }
     
     shSinCosV_Scale(vec, dp->scp->rot.y, 500.0f);
@@ -593,7 +594,7 @@ void enTYUCtrlDown(EnLOCAL_DATA* dp) {
                     enSetHitBack(dp);
                 }
             }
-            if ((enReduceTimer(dp) <= 0) && !enCheckFinishedByHuman(dp)) {
+            if (enReduceTimer(dp) <= 0 && !enCheckFinishedByHuman(dp)) {
                 enAnimeRestart(dp);
                 if (dp->endurance <= 0.0f) {
                     enAddHP(dp, 100.0f);
@@ -662,7 +663,7 @@ static void enTYUCtrlDead(EnLOCAL_DATA* dp) {
         enFlagSetDead(dp);
         enFlagResetLieDown(dp);
         enFlagResetMoved(dp);
-        fogEraseObj(((int) dp - (int) &enLocalWork) / (int) sizeof(EnLOCAL_DATA) + 10);
+        fogEraseObj(ENEMY_TYU_FOG_ID(dp));
         ENEMY_NEXT_SUB_STEP();
         
         if (enLocalWork.Status & (1 << 1)) {
@@ -1145,7 +1146,7 @@ static void enTY2CtrlDead(EnLOCAL_DATA* dp) {
         enFlagSetDead(dp);
         enFlagResetLieDown(dp);
         enFlagResetMoved(dp);
-        fogEraseObj(((int) dp - (int) &enLocalWork) / (int) sizeof(EnLOCAL_DATA) + 10);
+        fogEraseObj(ENEMY_TYU_FOG_ID(dp));
         ENEMY_NEXT_SUB_STEP();
     }
 }

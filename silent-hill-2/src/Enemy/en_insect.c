@@ -134,7 +134,7 @@ void enWaitAllInsect(void) {
 
 #line 162
 SubCharacter* enINSGetSubCharacter(EnLOCAL_DATA* dp) {
-    return (SubCharacter*) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS) + ((int) dp - (int) &enLocalWork) / (int) sizeof(EnLOCAL_DATA);
+    return (SubCharacter*) (MemShare_gp_data_buf + MCW_HEAP_ADDRESS) + ENEMY_DATA_INDEX(dp);
 }
 
 

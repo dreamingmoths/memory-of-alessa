@@ -49,6 +49,7 @@
 #define ENEMY_BATTLE_FLAG_UNSET(_flag) dp->scp->battle.status &= ~_flag;
 #define ENEMY_BATTLE_FLAG_CHECK(_flag) (dp->scp->battle.status & _flag)
 #define ENEMY_POS() ((float*) &dp->scp->pos)
+#define ENEMY_DATA_INDEX(dp) (((int) dp - (int) enLocalWork.Data) / (int) sizeof(EnLOCAL_DATA))
 
 typedef enum ENEMY_FLAG {
     ENEMY_FLAG_0  = 1 << 0,
