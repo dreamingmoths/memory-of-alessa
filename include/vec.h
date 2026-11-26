@@ -261,7 +261,7 @@ static inline void shVectorCopyXyz(void* dst, void* src) {
          sd t7, 0(%0)\n\
          pcpyud t7, t7, zero\n\
          sw t7, 8(%0)"
-        : "+r"(dst), "+r"(src)::"t7");
+        :: "r"(dst), "r"(src));
 }
 
 static inline float shVectorLengthXyz(void* v) {

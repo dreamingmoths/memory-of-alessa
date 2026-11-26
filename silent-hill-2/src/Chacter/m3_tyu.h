@@ -6,6 +6,7 @@
 
 #define TYU_PLAY_ANIME_ID_START 5200
 #define TYU_PLAY_ANIM_5201      5201
+#define TYU_PLAY_ANIM(id)       (id + TYU_PLAY_ANIME_ID_START)
 
 void shCharacterSetEnemyTYULow(SubCharacter* scp);
 int shCharacterEnemyTYUAnimeSetP(SubCharacter* scp, int anime_id, int comp);
