@@ -252,7 +252,7 @@ static inline void shVectorCopyVu0(void* dst, void* src) {
          lqc2 vf4, 0(%1)\n\
          vmove.w vf4, vf0\n\
          sqc2 vf4, 0(%0)"
-        : "+r"(dst), "+r"(src));
+        :: "r"(dst), "r"(src));
 }
 
 static inline void shVectorCopyXyz(void* dst, void* src) {
