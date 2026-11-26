@@ -3,6 +3,11 @@
 
 #include "Enemy/en_common.h"
 
+typedef enum {
+    TYUAnimeRest = 1,
+    TYUAnimeWalk = 2,
+} EnTYUAnimeKind;
+
 void enTYUInitData(EnLOCAL_DATA* dp);
 void enTYUCtrlMain(EnLOCAL_DATA* dp);
 

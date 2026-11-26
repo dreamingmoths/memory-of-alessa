@@ -13,54 +13,6 @@
 #include "Font/fj_man.h"
 #include "Event/chara_admin.h"
 
-static EnANIME_DATA EnTYUAnime[2] = {
-    { TYU_PLAY_ANIM(1), false },
-    { TYU_PLAY_ANIM(2), true  },
-};
-
-static void enTYUAnimeSet(EnLOCAL_DATA* dp, int anim);
-static void enTYUAnimeExec(EnLOCAL_DATA* dp);
-static void enTYUCheckWall(EnLOCAL_DATA* dp);
-static int enTYUCanSeePlayer(EnLOCAL_DATA* dp);
-static void enTYUCheckNearPlayer(EnLOCAL_DATA* dp);
-static float enTYUGetSpeed(void);
-static void enTYUSoundMove(EnLOCAL_DATA* dp);
-static void enTYUCheckUnderWall(EnLOCAL_DATA* dp);
-static int enTYUCheckNearWall(EnLOCAL_DATA* dp);
-static int enTYUCheckNormal(sceVu0FVECTOR normal);
-static int enTYUSetPathV(EnLOCAL_DATA* dp);
-static void enTYUSetAttackTime(EnLOCAL_DATA* dp);
-static void enTYUSetDownTime(EnLOCAL_DATA* dp);
-static void enTYUSetStopTime(EnLOCAL_DATA* dp);
-static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp);
-static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
-static void enTYUCtrlAutomatic(EnLOCAL_DATA* dp);
-static void enTYUCtrlSleep(EnLOCAL_DATA* dp);
-static void enTYUCtrlGoPlayable(EnLOCAL_DATA* dp);
-static void enTYUCtrlEvent(EnLOCAL_DATA* dp);
-static void enTYUCtrlHand(void);
-static void enTYUCtrlStraight(EnLOCAL_DATA* dp);
-static void enTYUCtrlChase(EnLOCAL_DATA* dp);
-static void enTYUCtrlGathering(EnLOCAL_DATA* dp);
-static void enTYUCtrlEscape(EnLOCAL_DATA* dp);
-static void enTYUCtrlOnWall(EnLOCAL_DATA* dp);
-static void enTYUCtrlOnCeiling(EnLOCAL_DATA* dp);
-static void enTYUCtrlAttack(EnLOCAL_DATA* dp);
-static void enTYUCtrlDown(EnLOCAL_DATA* dp);
-static void enTYUCtrlDead(EnLOCAL_DATA* dp);
-
-
-static void enTY2CtrlFloor(EnLOCAL_DATA* dp);
-static void enTY2CtrlWall(EnLOCAL_DATA* dp);
-static void enTY2CtrlCeiling(EnLOCAL_DATA* dp);
-static void enTY2CtrlDead(EnLOCAL_DATA* dp);
-static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp);
-
-static void enTY3CtrlFloor(EnLOCAL_DATA* dp);
-static void enTY3CtrlWall(EnLOCAL_DATA* dp);
-static void enTY3CtrlCeiling(EnLOCAL_DATA* dp);
-static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
-
 #define ENEMY_TYU_MODE_DUMMY       0
 #define ENEMY_TYU_MODE_AUTOMATIC   1
 #define ENEMY_TYU_MODE_SLEEP       2
@@ -95,6 +47,53 @@ static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
 #define ENEMY_TYU3_STATE_FLOOR     0
 #define ENEMY_TYU3_STATE_WALL      1
 #define ENEMY_TYU3_STATE_CEILING   2
+
+static void enTYUAnimeSet(EnLOCAL_DATA* dp, int anim);
+static void enTYUAnimeExec(EnLOCAL_DATA* dp);
+static void enTYUCheckWall(EnLOCAL_DATA* dp);
+static int enTYUCanSeePlayer(EnLOCAL_DATA* dp);
+static void enTYUCheckNearPlayer(EnLOCAL_DATA* dp);
+static float enTYUGetSpeed(void);
+static void enTYUSoundMove(EnLOCAL_DATA* dp);
+static void enTYUCheckUnderWall(EnLOCAL_DATA* dp);
+static int enTYUCheckNearWall(EnLOCAL_DATA* dp);
+static int enTYUCheckNormal(sceVu0FVECTOR normal);
+static int enTYUSetPathV(EnLOCAL_DATA* dp);
+static void enTYUSetAttackTime(EnLOCAL_DATA* dp);
+static void enTYUSetDownTime(EnLOCAL_DATA* dp);
+static void enTYUSetStopTime(EnLOCAL_DATA* dp);
+static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp);
+static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
+static void enTYUCtrlAutomatic(EnLOCAL_DATA* dp);
+static void enTYUCtrlSleep(EnLOCAL_DATA* dp);
+static void enTYUCtrlGoPlayable(EnLOCAL_DATA* dp);
+static void enTYUCtrlEvent(EnLOCAL_DATA* dp);
+static void enTYUCtrlHand(void);
+static void enTYUCtrlStraight(EnLOCAL_DATA* dp);
+static void enTYUCtrlChase(EnLOCAL_DATA* dp);
+static void enTYUCtrlGathering(EnLOCAL_DATA* dp);
+static void enTYUCtrlEscape(EnLOCAL_DATA* dp);
+static void enTYUCtrlOnWall(EnLOCAL_DATA* dp);
+static void enTYUCtrlOnCeiling(EnLOCAL_DATA* dp);
+static void enTYUCtrlAttack(EnLOCAL_DATA* dp);
+static void enTYUCtrlDown(EnLOCAL_DATA* dp);
+static void enTYUCtrlDead(EnLOCAL_DATA* dp);
+
+static void enTY2CtrlFloor(EnLOCAL_DATA* dp);
+static void enTY2CtrlWall(EnLOCAL_DATA* dp);
+static void enTY2CtrlCeiling(EnLOCAL_DATA* dp);
+static void enTY2CtrlDead(EnLOCAL_DATA* dp);
+static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp);
+
+static void enTY3CtrlFloor(EnLOCAL_DATA* dp);
+static void enTY3CtrlWall(EnLOCAL_DATA* dp);
+static void enTY3CtrlCeiling(EnLOCAL_DATA* dp);
+static void enTY3CheckCreateCharacter(EnLOCAL_DATA* dp);
+
+static EnANIME_DATA EnTYUAnime[2] = {
+    { TYU_PLAY_ANIM(TYUAnimeRest), false },
+    { TYU_PLAY_ANIM(TYUAnimeWalk), true  },
+};
 
 #line 118
 void enTYUInitData(EnLOCAL_DATA* dp) {
@@ -136,7 +135,7 @@ void enTYUInitData(EnLOCAL_DATA* dp) {
     enSetSize(dp, 100.0f, 150.0f, 75.0f, 100.0f);
     dp->weight = 1;
     enSetHP(dp, vitarity[mode], endurance[mode]);
-    enTYUAnimeSet(dp, 1);
+    enTYUAnimeSet(dp, TYUAnimeRest);
     enFlagSetRotFloor(dp);
     enFlagSetLieDown(dp);
     enFlagSetMoved(dp);
@@ -239,7 +238,7 @@ static void enTYUCtrlStraight(EnLOCAL_DATA* dp) {
         return;
     }
     if (dp->sslv == 0) {
-        enTYUAnimeSet(dp, 1);
+        enTYUAnimeSet(dp, TYUAnimeRest);
         dp->flag = 1 << 4;
         enFlagSetRotFloor(dp);
         enInitPath(&dp->path, dp->scp->rot.y);
@@ -302,7 +301,7 @@ void enTYUCtrlChase(EnLOCAL_DATA* dp) {
         return;
     }
     if (dp->sslv == 0) {
-        enTYUAnimeSet(dp, 1);
+        enTYUAnimeSet(dp, TYUAnimeRest);
         dp->flag = (1 << 4) | (1 << 10);
         enInitPath(&dp->path, enGetPlayerDirection(dp));
         enFlagSetRotFloor(dp);
@@ -344,7 +343,7 @@ static void enTYUCtrlGathering(EnLOCAL_DATA* dp) {
         }
     }
     if (dp->sslv == 0) {
-        enTYUAnimeSet(dp, 1);
+        enTYUAnimeSet(dp, TYUAnimeRest);
         enFlagSetRotFloor(dp);
         ENEMY_NEXT_SUB_STEP();
     }
@@ -377,7 +376,7 @@ static void enTYUCtrlEscape(EnLOCAL_DATA* dp) {
         return;
     }
     if (dp->sslv == 0) {
-        enTYUAnimeSet(dp, 1);
+        enTYUAnimeSet(dp, TYUAnimeRest);
         enInitPath(&dp->path, dp->scp->rot.y);
         enFlagSetRotFloor(dp);
         ENEMY_NEXT_SUB_STEP();
@@ -428,7 +427,7 @@ static void enTYUCtrlOnWall(EnLOCAL_DATA* dp) {
         return;
     }
     if (dp->sslv == 0) {
-        enTYUAnimeSet(dp, 1);
+        enTYUAnimeSet(dp, TYUAnimeRest);
         if (enTYUCheckNearWall(dp) == 0) {
             if (dp->type == 3) {
                 dp->type = 2;
@@ -1077,9 +1076,6 @@ void enTY2InitData(EnLOCAL_DATA* dp) {
     enFlagSetRotFloor(dp);
 }
 
-
-
-
 #line 1219
 void enTY2CtrlMain(EnLOCAL_DATA* dp) {
     void (* enCtrlTY2SubFunc[4])(EnLOCAL_DATA *) = {
@@ -1151,7 +1147,6 @@ static void enTY2CtrlDead(EnLOCAL_DATA* dp) {
     }
 }
 
-#define EnKIND_TYU  3
 #line 1291
 static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp) {
     SubCharacter* scp;
@@ -1185,10 +1180,10 @@ static void enTY2CheckCreateCharacter(EnLOCAL_DATA* dp) {
 }
 
 /* 
-pretty much same as ty2? some differences though:
-- no dead state
-- more HP
-- no bugged loop in enTY3CheckCreateCharacter
+    pretty much same as ty2? some differences though:
+    - no dead state
+    - more HP
+    - no bugged loop in enTY3CheckCreateCharacter
 */
 
 #line 1328
