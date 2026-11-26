@@ -1,4 +1,6 @@
 #include "Multi_thr/filesys/filecmd.h"
+#include "data/daily.thu/data_null_dev.h"
+#include "Multi_thr/filesys/sh_cdvd.h"
 
 static fsFile* ___fsSubCmdCheckRootFile(fsFile * fp /* r2 */);
 static fsFile* ___fsSubCmdCheckCdHdFixFile(fsFile* fp);
@@ -43,8 +45,6 @@ static int (* fsCmdParam_check_func)(fsFile**, void**) = NULL; // size: 0x4, add
 static inline fsFile* ID_fsFile(fsFileIndex* fileidx) {
     return fileidx->index.fp;
 }
-
-
 
 
 
@@ -863,11 +863,11 @@ static int fsSubCmdCdCheckTrayOpen(void) {
         shCdSync(1);
     }
 
-    if (traycnt) return 1;
+    if (traycnt) return true;
 
     stat = shCdStatus();
     if (stat == 1) {
-        return 1;
+        return true;
     }
     return stat == 32; //line mismatch
 
@@ -1092,17 +1092,17 @@ static int (* fsSubCmdHdRead)() = fsSubCmdHdError; // size: 0x4, address: 0x33B2
 int fsCmdHdInit(int enable /* r2 */) {
     if (enable) {
         shHdInit();
-        fs_stat.disk_emulation = 1;
+        fs_stat.disk_emulation = true;
 
 
         fsSubCmdHdRead = fsSubCmdHdRead0;
     } else {
-        fs_stat.disk_emulation = 0;
+        fs_stat.disk_emulation = false;
 
 
         fsSubCmdHdRead = fsSubCmdHdError;
     }
-    return 1;
+    return true;
 }
 
 
@@ -1191,7 +1191,7 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
 
     do {
         do {
-            fs_stat.now_reading = 1;
+            fs_stat.now_reading = true;
 
 
 
@@ -1208,16 +1208,16 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
                 readsize = 0x40000;
                 readbuf = buf;
 
-                ret = 1;
-                if (shHdLseek(fd, offset, 0) == -1) ret = 0;
+                ret = true;
+                if (shHdLseek(fd, offset, 0) == -1) ret = false;
 
 
                 if (readbuf != NULL) {
-                    while ((fs_stat.now_reading != 0) && (ret != 0) && (remainsize > 0)) {
+                    while (fs_stat.now_reading && ret && remainsize > 0) {
                         if (remainsize < readsize) {
                             readsize = remainsize;
                         }
-                        if (shHdRead(fd, readbuf, readsize) == -1) ret = 0;
+                        if (shHdRead(fd, readbuf, readsize) == -1) ret = false;
                         readbuf += readsize;
                         remainsize -= readsize;
                     }
@@ -1229,13 +1229,13 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
 
 
 
-                if (fs_stat.now_reading == 0) ret = 0;
-                fs_stat.now_reading = 0;
+                if (!fs_stat.now_reading) ret = false;
+                fs_stat.now_reading = false;
 
 
-                if (shHdCloseC(fd) == -1) ret = 0;
+                if (shHdCloseC(fd) == -1) ret = false;
             } else {
-                ret = 0;
+                ret = false;
             }
 
 
@@ -1252,10 +1252,10 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
 
 
 
-            if (ret != 0) {
-                return 1;
+            if (ret) {
+                return true;
             }
-            retry -= 1;
+            retry--;
         } while (retry > 0);
         retry = 60;
 
@@ -1271,18 +1271,18 @@ static int fsSubCmdHdRead0(s_char* name /* r30 */, int offset /* r29+0xAC */, in
 
 
 static int fsSubCmdHdError() {
-    return 0;
+    return false;
 }
 
 
 
 static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
-    if (fp ==ID_fsFile(data_null_dev)) {
+    if (fp == ID_fsFile(data_null_dev)) {
 
         if (buf != NULL) UtilMemSet(buf, 0, fp->cd.lsn);
-        return 1;
+        return true;
     } else if (fp->check.number) {
-        return fsSubCmdCdRead(fp->cd.lsn, (fp->cd.size + 0x7ff) / 2048, buf);
+        return fsSubCmdCdRead(fp->cd.lsn, (fp->cd.size + 2047) / 2048, buf);
     } else if (fp->hd.type & 0x80) {
         s_char fullpath[256]; // r29+0x30
         s_char* name; // r2
@@ -1290,12 +1290,12 @@ static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
         if (fp->hd.type & 0x20) {
             if (!shPathMakeHdDataBase(fullpath, name)) {
 
-                return 0;
+                return false;
             }
 
         } else if (!shPathMakeHdData(fullpath, name)) {
 
-            return 0;
+            return false;
         }
 
         return (*fsSubCmdHdRead)(fullpath, fp->hd.offset, fp->hd.size, buf);
@@ -1303,7 +1303,7 @@ static int fsSubCmdRealRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
 
 
 
-    return 0;
+    return false;
 
 }
 
@@ -1316,7 +1316,7 @@ static int fsSubCmdRead(fsFile* fp /* r2 */, void* buf /* r16 */) {
 
     if (fsSubCmdSetRealFile0(&realfp, fp) != NULL) {
 
-        return 0;
+        return false;
     } else
         ret = fsSubCmdRealRead(&realfp, buf);
     VERBOSE(3, "%s", realfp.hd.name);
@@ -1328,7 +1328,7 @@ static int ___fsCmdRead(fsFile* fp /* r17 */, void* buf /* r16 */) {
     int ret; // r16
     if (!fsCmdFixFile(fp)) {
 
-        return 0;
+        return false;
     } else {
         ret = fsSubCmdRead(fp, buf);
         verbose(3, ": read %s.\n", ret ? "finished" : "failed");
@@ -1489,7 +1489,7 @@ int fsCmdSetParamForCheckDisk(int media_permission /* r2 */, fsFile** fplist /* 
     fsCmdParam_fplist = fplist;
     fsCmdParam_buflist = buflist;
     fsCmdParam_check_func = check_func;
-    return 1;
+    return true;
 }
 
 
@@ -1517,7 +1517,7 @@ int fsCmdCdCheckDisk2(int force_check /* r2 */, int media_permission /* r29+0xAC
     int step = 0; // r20
 
 
-    if (force_check != 0) {
+    if (force_check) {
         step = 1;
     }
 
@@ -1645,9 +1645,9 @@ int fsCmdCdCheckDisk2(int force_check /* r2 */, int media_permission /* r29+0xAC
                 if (open == 1) {
                     step = 1;
                 } else {
-                    if ((buf != NULL) && (fsCmdCheckExistFile(fp) > 0)) {
+                    if (buf != NULL && fsCmdCheckExistFile(fp) > 0) {
 
-                        if (fsSubCmdRead(fp, buf) != 0) {
+                        if (fsSubCmdRead(fp, buf)) {
                             fpp++; bufp++;
                         } else {
 
