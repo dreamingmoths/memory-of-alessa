@@ -629,6 +629,7 @@
 #define RWEAPON_CHINANIFE_CHARA_KIND                                                  0x82a
 #define RWEAPON_CHINANIFE_NOTEX_CHARA_KIND                                            0x82a
 
-#define WEAPON_ID(_kind)                                                    ((_kind) & 0xff)
+#define WEAPON_MAX                                                                      0xf
+#define WEAPON_ID(_kind)                                                   ((_kind) & 0xff)
 
 #endif // SH2_CHARA_KINDS_H

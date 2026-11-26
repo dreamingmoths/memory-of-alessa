@@ -3,112 +3,112 @@
 #include "debug.h"
 #include "Multi_thr/filesys/fcread.h"
 
-static fsFileIndex *StgOverlayGetFileID(StgName stg_name) {
-    switch ((u_char) stg_name) {
+static fsFileIndex* StgOverlayGetFileID(StgName stg_name) {
+    switch (stg_name) {
         default:
             return NULL;
         case Stg_toilet:
-            return &root_stage_toilet_bin;
+            return root_stage_toilet_bin;
         case Stg_observation:
-            return &root_stage_observation_bin;
+            return root_stage_observation_bin;
         case Stg_forest:
-            return &root_stage_forest_bin;
+            return root_stage_forest_bin;
         case Stg_town_east:
-            return &root_stage_town_east_bin;
+            return root_stage_town_east_bin;
         case Stg_apart_e1f:
-            return &root_stage_apart_e1f_bin;
+            return root_stage_apart_e1f_bin;
         case Stg_apart_e2f:
-            return &root_stage_apart_e2f_bin;
+            return root_stage_apart_e2f_bin;
         case Stg_apart_e3fw:
-            return &root_stage_apart_e3fw_bin;
+            return root_stage_apart_e3fw_bin;
         case Stg_apart_e3fe:
-            return &root_stage_apart_e3fe_bin;
+            return root_stage_apart_e3fe_bin;
         case Stg_apart_w1f:
-            return &root_stage_apart_w1f_bin;
+            return root_stage_apart_w1f_bin;
         case Stg_apart_w2f:
-            return &root_stage_apart_w2f_bin;
+            return root_stage_apart_w2f_bin;
         case Stg_apart_stair:
-            return &root_stage_apart_stair_bin;
+            return root_stage_apart_stair_bin;
         case Stg_apart_out:
-            return &root_stage_apart_out_bin;
+            return root_stage_apart_out_bin;
         case Stg_town_west:
-            return &root_stage_town_west_bin;
+            return root_stage_town_west_bin;
         case Stg_bowling:
-            return &root_stage_bowling_bin;
+            return root_stage_bowling_bin;
         case Stg_to_heaven:
-            return &root_stage_to_heaven_bin;
+            return root_stage_to_heaven_bin;
         case Stg_heaven_night:
-            return &root_stage_heaven_night_bin;
+            return root_stage_heaven_night_bin;
         case Stg_hospital_1f_f:
-            return &root_stage_hospital_1f_f_bin;
+            return root_stage_hospital_1f_f_bin;
         case Stg_hospital_2f_f:
-            return &root_stage_hospital_2f_f_bin;
+            return root_stage_hospital_2f_f_bin;
         case Stg_hospital_3f_f:
-            return &root_stage_hospital_3f_f_bin;
+            return root_stage_hospital_3f_f_bin;
         case Stg_hospital_rf_f:
-            return &root_stage_hospital_rf_f_bin;
+            return root_stage_hospital_rf_f_bin;
         case Stg_hospital_1fw_b:
-            return &root_stage_hospital_1fw_b_bin;
+            return root_stage_hospital_1fw_b_bin;
         case Stg_hospital_1fe_b:
-            return &root_stage_hospital_1fe_b_bin;
+            return root_stage_hospital_1fe_b_bin;
         case Stg_hospital_2f_b:
-            return &root_stage_hospital_2f_b_bin;
+            return root_stage_hospital_2f_b_bin;
         case Stg_hospital_3f_b:
-            return &root_stage_hospital_3f_b_bin;
+            return root_stage_hospital_3f_b_bin;
         case Stg_hospital_bf_b:
-            return &root_stage_hospital_bf_b_bin;
+            return root_stage_hospital_bf_b_bin;
         case Stg_hospital_pass:
-            return &root_stage_hospital_pass_bin;
+            return root_stage_hospital_pass_bin;
         case Stg_society:
-            return &root_stage_society_bin;
+            return root_stage_society_bin;
         case Stg_delusion_2:
-            return &root_stage_delusion_2_bin;
+            return root_stage_delusion_2_bin;
         case Stg_delusion_3:
-            return &root_stage_delusion_3_bin;
+            return root_stage_delusion_3_bin;
         case Stg_prison_n:
-            return &root_stage_prison_n_bin;
+            return root_stage_prison_n_bin;
         case Stg_prison_s:
-            return &root_stage_prison_s_bin;
+            return root_stage_prison_s_bin;
         case Stg_prison_bf:
-            return &root_stage_prison_bf_bin;
+            return root_stage_prison_bf_bin;
         case Stg_labyrinth_w:
-            return &root_stage_labyrinth_w_bin;
+            return root_stage_labyrinth_w_bin;
         case Stg_labyrinth_e:
-            return &root_stage_labyrinth_e_bin;
+            return root_stage_labyrinth_e_bin;
         case Stg_labyrinth_n:
-            return &root_stage_labyrinth_n_bin;
+            return root_stage_labyrinth_n_bin;
         case Stg_eddie_boss:
-            return &root_stage_eddie_boss_bin;
+            return root_stage_eddie_boss_bin;
         case Stg_lake:
-            return &root_stage_lake_bin;
+            return root_stage_lake_bin;
         case Stg_hotel_bf_f:
-            return &root_stage_hotel_bf_f_bin;
+            return root_stage_hotel_bf_f_bin;
         case Stg_hotel_1f_f:
-            return &root_stage_hotel_1f_f_bin;
+            return root_stage_hotel_1f_f_bin;
         case Stg_hotel_2f_f:
-            return &root_stage_hotel_2f_f_bin;
+            return root_stage_hotel_2f_f_bin;
         case Stg_hotel_3f_f:
-            return &root_stage_hotel_3f_f_bin;
+            return root_stage_hotel_3f_f_bin;
         case Stg_hotel_bf_b:
-            return &root_stage_hotel_bf_b_bin;
+            return root_stage_hotel_bf_b_bin;
         case Stg_hotel_1f_b:
-            return &root_stage_hotel_1f_b_bin;
+            return root_stage_hotel_1f_b_bin;
         case Stg_hotel_2f_b:
-            return &root_stage_hotel_2f_b_bin;
+            return root_stage_hotel_2f_b_bin;
         case Stg_hotel_3f_b:
-            return &root_stage_hotel_3f_b_bin;
+            return root_stage_hotel_3f_b_bin;
         case Stg_hotel_fire:
-            return &root_stage_hotel_fire_bin;
+            return root_stage_hotel_fire_bin;
         case Stg_end_recovery:
-            return &root_stage_end_recovery_bin;
+            return root_stage_end_recovery_bin;
         case Stg_end_maria:
-            return &root_stage_end_maria_bin;
+            return root_stage_end_maria_bin;
         case Stg_end_suicide:
-            return &root_stage_end_suicide_bin;
+            return root_stage_end_suicide_bin;
         case Stg_end_rebirth:
-            return &root_stage_end_rebirth_bin;
+            return root_stage_end_rebirth_bin;
         case Stg_end_dog:
-            return &root_stage_end_dog_bin;
+            return root_stage_end_dog_bin;
     }
 }
 

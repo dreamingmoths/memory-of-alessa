@@ -602,40 +602,40 @@ static void shCharacterSetHandler(SubCharacter* scp /* r16 */) {
             shCharacterSetEnemyTY23Low(scp);
             return;
         default:
-            switch (scp->kind >> 0x8) {
-            case 8:
-                if (scp->kind  & 0x20) {
-                    shCharacterSetWeaponRLow(scp);
+            switch (GET_KIND_TYPE(scp->kind)) {
+                case WEAPON_CHARA_KIND:
+                    if (scp->kind  & MIRROR_MODE_CHARA_KIND_FLAG) {
+                        shCharacterSetWeaponRLow(scp);
+                        return;
+                    }
+                    shCharacterSetWeaponLow(scp);
+                    JamesWeaponSet(scp->kind & WEAPON_MAX);
                     return;
-                }
-                shCharacterSetWeaponLow(scp);
-                JamesWeaponSet(scp->kind & 0xF);
-                return;
-            case 4:
-                switch (scp->kind) {
-                case ITEM_RI_KNIFE_CHARA_KIND:
-                case ITEM_RI_PHOTO_CHARA_KIND:
-                    shCharacterSetRObjectLow(scp);
+                case OBJECT_ANIMATED_CHARA_KIND:
+                    switch (scp->kind) {
+                    case ITEM_RI_KNIFE_CHARA_KIND:
+                    case ITEM_RI_PHOTO_CHARA_KIND:
+                        shCharacterSetRObjectLow(scp);
+                        return;
+                    case ITEM_B_NIK_CHARA_KIND:
+                        shCharacterSetObjectNIKLow(scp);
+                        return;
+                    default:
+                        shCharacterSetObjectLow(scp);
+                        return;
+                    }
+                    break;
+                case OBJECT_SKELETAL_OUTDOOR_CHARA_KIND:
+                case OBJECT_STAY_CHARA_KIND:
+                    shCharacterSetStayObjectLow(scp);
                     return;
-                case ITEM_B_NIK_CHARA_KIND:
-                    shCharacterSetObjectNIKLow(scp);
+                case OBJECT_X_CHARA_KIND:
+                    shCharacterSetWorldScreenItemLow(scp);
                     return;
+                case OBJECT_G_CHARA_KIND:
+                    shCharacterSetItemScreenItemLow(scp);
                 default:
-                    shCharacterSetObjectLow(scp);
                     return;
-                }
-                break;
-            case 3:
-            case 5:
-                shCharacterSetStayObjectLow(scp);
-                return;
-            case 7:
-                shCharacterSetWorldScreenItemLow(scp);
-                return;
-            case 6:
-                shCharacterSetItemScreenItemLow(scp);
-            default:
-                return;
             }
             break;
     }
