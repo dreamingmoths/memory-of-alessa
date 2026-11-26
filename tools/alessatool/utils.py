@@ -178,7 +178,13 @@ def _filter_and_sort_items(items):
     items = sorted(items, key=lambda item : get_key_weight(item[0]))
     return items
 
-def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_splat_relocs=False):
+def write_symbol_addrs(
+        atlas: SplatSymbolAddrsAtlas,
+        justify=64,
+        align=True,
+        no_splat_relocs=False,
+        exclude_jumptable_align=True
+):
     symbol_addrs_lines = []
 
     for symbol in atlas.syms:
@@ -188,16 +194,24 @@ def write_symbol_addrs(atlas: SplatSymbolAddrsAtlas, justify=64, align=True, no_
             attributes["allow_duplicated"] = True
         else:
             attributes["allow_duplicated"] = None
-        if no_splat_relocs:
+
+        symbol_type = "type" in attributes and attributes["type"] or None
+        is_jumptable = symbol.name.startswith("jtbl") or symbol_type == "jtbl"
+        is_func = symbol_type == "func"
+
+        if no_splat_relocs and not is_func:
             attributes["can_reference"] = False
 
-        if align and (not "type" in attributes or attributes["type"] != "func"):
-            if   symbol.addr & 0x7F == 0:
-                attributes["align"] = 128
-            elif symbol.addr & 0x3F == 0:
-                attributes["align"] = 64
-            elif symbol.addr & 0x0F == 0:
-                attributes["align"] = 16
+        if align and not is_func:
+            if not (is_jumptable and exclude_jumptable_align):
+                if   symbol.addr & 0x7F == 0:
+                    attributes["align"] = 128
+                elif symbol.addr & 0x3F == 0:
+                    attributes["align"] = 64
+                elif symbol.addr & 0x0F == 0:
+                    attributes["align"] = 16
+            elif is_jumptable:
+                attributes["type"] = "jtbl"
 
         line = f"{symbol.name:<64} = 0x{symbol.addr:08x};"
         if attributes:
