@@ -256,7 +256,38 @@ static AnimeInfo stg_town_east_pjames_stage_anim[21] = { // size: 0xFC, address:
     }
 };
 
-static u_char stg_town_east_ev_pos[600]; // size: 0x258, address: 0x1F04F00
+static u_int stg_town_east_ev_pos[150] = { 
+    0x00000000, 0xD4008000, 0x6CE2C72D, 0xD0007065, 0x8000C604,
+    0xC72BE000, 0x6FD063D0, 0xC7B7CB53, 0xE3F5D3B3, 0x5E3FC772,
+    0x5800D1DD, 0x80004618, 0x460A4800, 0xDE005E40, 0x8000C755, 
+    0xC6E54C00, 0x04795FD0, 0x047A0000, 0x047B0000, 0xD4000000, 
+    0x80004694, 0xC68F5230, 0x90B45FF7, 0x80004680, 0x4685C800, 
+    0x57265B94, 0x4683BDCD, 0xE6CD8000, 0xDB944683, 0x4EDCD726, 
+    0x80004689, 0x468EFF4D, 0x57E76009, 0x468D5878, 0xFC3D8000, 
+    0xE009468F, 0xF64DD7E7, 0xD4D2C7CF, 0x457C393B, 0x0F4E62E3,
+    0x8000C705, 0x47187267, 0xE189D7BD, 0xE1B7E010, 0x8000E103, 
+    0xC7D1AF0E, 0x393B8000, 0x62E3457C, 0x47D9BCA6, 0x033E8000, 
+    0xE16B4718, 0xD435604B, 0x8000C566, 0x462116D2, 0xD0005E0C, 
+    0x80004736, 0x473F6800, 0x8703636C, 0x80004739, 0x473DE6FF, 
+    0x53E4DFBC, 0x4E40E1A0, 0x4734AA00, 0x38008000, 0x66D64747,
+    0x818065D2, 0x8000473B, 0x474591B3, 0x5615DD61, 0x604DDCF9, 
+    0x6115BD81, 0xC7C1C4A7, 0x71388000, 0x63CBC768, 0x479BE686,
+    0x70818000, 0x641CC76C, 0xC7683227, 0xD80F8000, 0xF6B2470F, 
+    0x8000C765, 0x4712C52A, 0xC7663FB4, 0xDE118000, 0xEFE64714, 
+    0x8000C767, 0x4717560B, 0xC7647332, 0x62EA8000, 0x97B44719, 
+    0x8000C768, 0x471B6911, 0xC7DE1200, 0x90008000, 0x5E404549, 
+    0x46279400, 0xA0008000, 0x5DEF452F, 0xC7570A00, 0xB2008000, 
+    0x70F44722, 0xC7DDF900, 0x46FF8000, 0x6FA44575, 0xC7A21C00, 
+    0xB0007A1A, 0x636C457E, 0xC60CA000, 0x00008000, 0x706546FA, 
+    0x70658000, 0x0000EE59, 0x0000ED5F, 0x80000000, 0x46FA0000,
+    0x80006DDC, 0xEBD06DDC, 0xEE590000, 0xC7DEA800, 0x00007A1A,
+    0x69DCC57A, 0x4000715F, 0x7A1AC59C, 0xC7686C00, 0x69DC70E2,
+    0x47379800, 0x7C007A1A, 0x67D0C712, 0x8C0065DC, 0x7A1A4739,
+    0xC72BE000, 0x65DC67D0, 0xC781E200, 0x64007A1A, 0x719D4716, 
+    0xE80069DC, 0x7A1AC77D, 0xC77DE800, 0x69DC70E2, 0xC7BA8600,
+    0x00007A1A, 0x67D0C57A, 0x6FD068E2, 0x70E268E2, 0x68008000, 
+    0x7A1AC7BF, 0xC75AC000, 0x8000721A, 0xE9DC7120, 0xE9DC0000 
+}; // size: 0x258, address: 0x1F04F00
 
 static Event_List stg_town_east_ev_list[48] = { // size: 0x300, address: 0x1F05160
     {
@@ -1227,15 +1258,15 @@ static int (*stg_town_east_ev_prog[10])() = {
 
 static Model_List stg_town_east_mdl_list[72] = {
     {
-        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .kind = */ 768,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-32139.349f, -0.000121999997f, 33349.375f, 0.0f},
-        /* .rot = */ {0.0f, -0.035999998f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.035999998f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .kind = */ 768,
         /* .id = */ 1,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1243,7 +1274,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .rot = */ {3.139503f, -0.23846f, 3.108061f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .kind = */ 768,
         /* .id = */ 2,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1256,14 +1287,14 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {35763.804f, -0.00060999998f, 32832.343f, 0.0f},
-        /* .rot = */ {-9.999999974752427e-07f, -1.3099999f, -9.999999974752427e-07f, 0.0f},
+        /* .rot = */ {-1e6, -1.3099999f, -9.999999974752427e-07f, 0.0f},
     },
     {
         /* .kind = */ 770,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
-        /* .pos = */ {-28591.857f, -0.00030499999f, -42377.378f, 0.0f},
+        /* .pos = */ {-28591.857f, -0.000305f, -42377.378f, 0.0f},
         /* .rot = */ {-3.141582f, -1.541592f, -3.141582f, 0.0f},
     },
     {
@@ -1272,7 +1303,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-70031.906f, 17.281921f, 1955.88928f, 0.0f},
-        /* .rot = */ {-0.034019f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.034019f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 771,
@@ -1312,7 +1343,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-30887.21f, 0.0f, -11060.582f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 773,
@@ -1320,7 +1351,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-88734.1f, 36.108886f, 2076.9162f, 0.0f},
-        /* .rot = */ {-0.032017998f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.032017998f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 773,
@@ -1336,7 +1367,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-10245.5576f, 32.50592f, -2049.2607f, 0.0f},
-        /* .rot = */ {0.033998f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.033998f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 774,
@@ -1384,7 +1415,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-30845.3f, 0.0f, 11670.45f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 777,
@@ -1392,7 +1423,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-62478.003f, 34.455f, -30141.47f, 0.0f},
-        /* .rot = */ {0.0f, 0.0f, -0.029999999f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, -0.029999999f, 0.0f},
     },
     {
         /* .kind = */ 778,
@@ -1408,7 +1439,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-51176.92f, 29.697265f, -1959.8823f, 0.0f},
-        /* .rot = */ {0.038015998f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.038015998f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 779,
@@ -1419,15 +1450,15 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .rot = */ {0.00112699996f, -1.453981f, 0.067119f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_B_DHA_CHARA_KIND,
+        /* .kind = */ 1317,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {47681.957f, 0.0f, 50945.906f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_DHB_CHARA_KIND,
+        /* .kind = */ 781,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1435,7 +1466,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .rot = */ {0.0f, -0.764001f, -9.999999974752427e-07f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_DHB_CHARA_KIND,
+        /* .kind = */ 781,
         /* .id = */ 1,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1456,7 +1487,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3293.6442f, -1250.0f, 21785.193f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1341,
@@ -1464,7 +1495,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3271.6208f, -1275.0168f, -43269.476f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1341,
@@ -1472,7 +1503,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-3250.2758f, -1100.0f, -37239.957f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1342,
@@ -1480,7 +1511,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3280.1879f, -1150.0118f, -43260.425f, 0.0f},
-        /* .rot = */ {-3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
         /* .kind = */ 1342,
@@ -1488,7 +1519,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-3259.8637f, -1250.0f, -37250.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 1342,
@@ -1496,7 +1527,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-28239.996f, -1250.0f, -37250.0f, 0.0f},
-        /* .rot = */ {-3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
         /* .kind = */ 1342,
@@ -1504,7 +1535,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-55737.925f, -1275.0f, -37218.558f, 0.0f},
-        /* .rot = */ {-3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
         /* .kind = */ 1342,
@@ -1512,7 +1543,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {30704.234f, -1274.94079f, -35496.453f, 0.0f},
-        /* .rot = */ {-3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
         /* .kind = */ 1346,
@@ -1520,7 +1551,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-92250.039f, -1150.0f, -2786.0012f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1347,
@@ -1528,7 +1559,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-31749.996f, -1100.0f, 2759.9997f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1347,
@@ -1536,7 +1567,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-28249.99f, -1100.0f, -2750.0009f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1347,
@@ -1544,7 +1575,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-28250.001f, -1120.01489f, -37240.003f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1348,
@@ -1552,7 +1583,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-55769.0f, -1165.22448f, -2789.4177f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1348,
@@ -1560,7 +1591,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-55747.003f, -1150.0f, -37209.945f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1348,
@@ -1568,7 +1599,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-64250.0f, -1300.0f, 2750.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 1348,
@@ -1576,7 +1607,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-63273.714f, -1275.0f, -56756.0f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1349,
@@ -1584,26 +1615,26 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {30695.007f, -1149.88049f, -35487.839f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .kind = */ 1350,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-31759.998f, -1250.0f, 2749.9997f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .kind = */ 1350,
         /* .id = */ 1,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-28240.0f, -1250.0f, -2750.0f, 0.0f},
-        /* .rot = */ {3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .kind = */ 1350,
         /* .id = */ 2,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1611,20 +1642,20 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .rot = */ {3.141592f, -9.999999747378752e-06f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .kind = */ 1350,
         /* .id = */ 3,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-64250.0f, -1200.0f, 2750.0f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .kind = */ 1350,
         /* .id = */ 4,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-92260.695f, -1300.0f, -2775.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 1351,
@@ -1632,7 +1663,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-63282.703f, -1125.0f, -56765.003f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 1352,
@@ -1640,58 +1671,58 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3303.2539f, -1100.0f, 21776.361f, 0.0f},
-        /* .rot = */ {3.141592f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {3.141592f, -0.0f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 0,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3260.2402f, -850.0f, 6252.033f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 1,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-3259.9997f, -1200.0f, -44750.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 2,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-55750.0f, -1250.0f, 2750.0f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 3,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-53244.007f, -1150.0f, -2779.9536f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 4,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-53771.92f, -1150.0f, -37218.574f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 5,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-55244.01f, -1125.0f, -42779.828f, 0.0f},
-        /* .rot = */ {-8.099999831756577e-05f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-8.099999831756577e-05f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 6,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
@@ -1699,60 +1730,60 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .rot = */ {-3.1415929f, 9.999999974752427e-07f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 7,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-64248.707f, -1120.0f, -2790.0344f, 0.0f},
-        /* .rot = */ {3.1415929f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {3.1415929f, -0.0f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 8,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-63248.703f, -1150.0f, -29739.984f, 0.0f},
-        /* .rot = */ {3.1415929f, 0.0f, 3.1415109f, 0.0f},
+        /* .rot = */ {3.1415929f, -0.0f, 3.1415109f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 9,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-69248.687f, -1125.0f, -57240.003f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 10,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-64248.699f, -1125.0f, -62790.003f, 0.0f},
-        /* .rot = */ {3.1415929f, 0.0f, 3.141592f, 0.0f},
+        /* .rot = */ {3.1415929f, -0.0f, 3.141592f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 11,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-86260.085f, -1125.0f, 2786.4643f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 12,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-82235.27f, -1125.0f, -2779.8679f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
-        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .kind = */ 1358,
         /* .id = */ 13,
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-107729.984f, -1125.0f, 2746.4792f, 0.0f},
-        /* .rot = */ {0.0f, -1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 1360,
@@ -1760,7 +1791,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {3238.8659f, -1230.0f, -1250.0f, 0.0f},
-        /* .rot = */ {0.0f, 1.570796f, 0.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
     },
     {
         /* .kind = */ 783,
@@ -1768,7 +1799,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {5.150391f, -2.2116699f, -59250.0f, 0.0f},
-        /* .rot = */ {0.0f, 0.0f, -0.001472f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, -0.001472f, 0.0f},
     },
     {
         /* .kind = */ 787,
@@ -1776,7 +1807,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 251,
         /* .pos = */ {-30000.0f, 0.0f, -485.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 786,
@@ -1784,7 +1815,7 @@ static Model_List stg_town_east_mdl_list[72] = {
         /* .flagOff = */ 0,
         /* .flagOn = */ 0,
         /* .pos = */ {-113700.0f, 0.0f, 3250.0f, 0.0f},
-        /* .rot = */ {},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
     },
     {
         /* .kind = */ 1826,
@@ -2915,7 +2946,7 @@ Stage_Data stage_town_east = {
 };
 
 static u_long128* stg_town_east_anim_adr; // size: 0x4, address: 0x1F08200
-static char* stg_town_east_dds_adr[4]; // size: 0x10, address: 0x1F07DD0
+static char* stg_town_east_dds_adr[4] = {NULL, NULL, NULL, NULL}; // size: 0x10, address: 0x1F07DD0
 static u_long128* stg_town_east_wp_mdl; // size: 0x4, address: 0x1F08208
 static u_long128* stg_town_east_wp_anm; // size: 0x4, address: 0x1F08210
 static int stg_town_east_sig_timer_b; // size: 0x4, address: 0x1F08218

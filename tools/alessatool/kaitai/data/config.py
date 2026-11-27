@@ -135,6 +135,7 @@ SH2_DATA: DataTable = [
     StructData(name="@1231_0x00375DA0",                     type=Sh2.JmsShadowEnv,                     count=1                        ),
     StructData(name="@1232",                                type=Sh2.JmsShadowEnv,                     count=1                        ),
     StructData(name="stg_town_east_pjames_stage_anim",      type=Sh2.AnimeInfo,                        count=21,      executable="twe"),
+    SimpleData(name="stg_town_east_ev_pos",                 type=f"<150I",                             pattern=[150], executable="twe"),
     StructData(name="stg_town_east_ev_list",                type=Sh2.EventList,                        count=48,      executable="twe"),
     StructData(name="stg_town_east_gi_list",                type=Sh2.ItemList,                         count=18,      executable="twe"),
     StructData(name="stg_town_east_clActWallList_cb11",     type=Sh2.ClHitpolyPlane,                   count=8,       executable="twe"),
