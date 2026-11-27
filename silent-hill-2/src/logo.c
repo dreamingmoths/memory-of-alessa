@@ -72,7 +72,7 @@ void logoCheckingMemcard(void) {
             } else if (msg_id) {
                 fontSetColor(FontColorBlue);
                 fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 112, 1, 0);
-                if ((sts == 0) && (mcw->menu_yesno)) {
+                if (sts == 0 && mcw->menu_yesno) {
                     switch (logoTellYesNo()) {
                         case 1:
                             sh2sys_set_2(3);
@@ -166,7 +166,7 @@ void logoDrawWarningCESA(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(388, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
+                    DEBUG_LOG_ON_LINE(388, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, (wait_loop % 60 * 100) / 60);
                     Sh2sys.step[SH2SYS_PLAYABLE_MAIN]++;
                     sh2sys_set_3(0);
                     return;
@@ -174,13 +174,13 @@ void logoDrawWarningCESA(void) {
                     DEBUG_LOG_ON_LINE(393, "!!! illegal fid=%d\n", fid);
                     return;
                 case -1:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(397, "title.tex: now reading(%d.)...\n", wait_loop / 60);
                         break;
                     }
                     break;
                 case -2:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(402, "title.tex: now waiting(%d.)...\n", wait_loop / 60);
                         return;
                     }
@@ -234,20 +234,20 @@ void logoDrawWarningSCE(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(494, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
+                    DEBUG_LOG_ON_LINE(494, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, (wait_loop % 60 * 100) / 60);
                     sh2sys_step_2();
                     return;
                 case 0:
                     DEBUG_LOG_ON_LINE(499, "!!! illegal fid=%d\n", fid);
                     return;
                 case -1:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(503, "title.tex: now reading(%d.)...\n", wait_loop / 60);
                         break;
                     }
                     break;
                 case -2:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(508, "title.tex: now waiting(%d.)...\n", wait_loop / 60);
                         return;
                     }
@@ -299,20 +299,20 @@ void logoDrawKonamiLogo(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(607, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
+                    DEBUG_LOG_ON_LINE(607, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, (wait_loop % 60 * 100) / 60);
                     sh2sys_step_2();
                     return;
                 case 0:
                     DEBUG_LOG_ON_LINE(612, "!!! illegal fid=%d\n", fid);
                     return;
                 case -1:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(616, "title.tex: now reading(%d.)...\n", wait_loop / 60);
                         return;
                     }
                     break;
                 case -2:
-                    if ((wait_loop % 60) == 0) {
+                    if (wait_loop % 60 == 0) {
                         DEBUG_LOG_ON_LINE(621, "title.tex: now waiting(%d.)...\n", wait_loop / 60);
                         return;
                     }
@@ -405,7 +405,7 @@ static int logoTellYesNo(void) {
         n = mcw->menu_yesno;
         SeCall(SH_SOUND_ENTER_SELECTION_10002, 1.0f, 0);
         mcw->menu_yesno = 0;
-        return (s32) n;
+        return n;
     }
     if (shPadTrigger(0, key_config.cancel)) {
         SeCall(SH_SOUND_CANCEL_SELECTION_10003, 1.0f, 0);
