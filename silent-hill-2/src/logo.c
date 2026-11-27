@@ -9,6 +9,8 @@
 
 #include "sce/libgraph.h"
 
+#include "shared/Font/font.h"
+
 #include "Event/event.h"
 #include "Event/picture.h"
 
@@ -66,14 +68,14 @@ void logoCheckingMemcard(void) {
                 }
 
             } else if (msg_id == 44) {
-                fontSetColor(2);
+                fontSetColor(FontColorBlue;
                 fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 240, 1, 1);
                 if ((--logoDispTimer <= 0) || (shPadTrigger(0, key_config.enter))) {
                     sh2sys_set_2(3);
                     break;
                 }
             } else if (msg_id) {
-                fontSetColor(2);
+                fontSetColor(FontColorBlue);
                 fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 112, 1, 0);
                 if ((sts == 0) && (mcw->menu_yesno)) {
                     switch (logoTellYesNo()) {
@@ -379,7 +381,7 @@ static int logoTellYesNo(void) {
         a = shFloatToInt(32.0f * (mcw->menu_count / 0.5f));
     }
     y = 386;
-    fontSetColor(0);
+    fontSetColor(FontColorGray;
     fontSetYesNo(y);
     if ((shPadRepeat(0, PAD_KEY_DPAD_LEFT)) || (shPadRepeat(0, PAD_KEY_DPAD_RIGHT))) {
         SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
