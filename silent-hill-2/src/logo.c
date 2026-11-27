@@ -34,9 +34,9 @@ extern u_short* fontGetMesAdr(u_short*, int);
 #define LOGO_XY_COORD(x, y) ((2048 - (SCREEN_WIDTH) / 2 + (x)) << 4) | ((u_long) (2048 - (SCREEN_HEIGHT) / 2 + (y)) << 20)
 
 void logoCheckingMemcard(void) {
-    static int msg_fid;  // @ 0x011B6768
-    static short msg_id; // @ 0x011B6760
-    int sts;             // r16
+    static int msg_fid;
+    static short msg_id;
+    int sts;
 
     switch (Sh2sys.step[2]) {
 
@@ -58,7 +58,7 @@ void logoCheckingMemcard(void) {
             sts = mcStartCheck();
             fontClear();
             if (msg_id == 74 || msg_id == 75) {
-                int t = sts - 2; // @note not in dwarf
+                int t = sts - 2;
 
                 if ((t == 0) || (t == 1) || (t == 2)) {
 
@@ -151,8 +151,8 @@ void logoCheckingMemcard(void) {
 }
 
 void logoDrawWarningCESA(void) {
-    static int fid;       // @ 0x011B6758
-    static int wait_loop; // @ 0x011B6750
+    static int fid;
+    static int wait_loop;
     switch (Sh2sys.step[2]) {
         case 0:
             fontClear();
@@ -169,7 +169,7 @@ void logoDrawWarningCESA(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(388, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 0x64) / 60);
+                    DEBUG_LOG_ON_LINE(388, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
                     Sh2sys.step[2]++;
                     sh2sys_set_3(0);
                     return;
@@ -222,8 +222,8 @@ void logoDrawWarningCESA(void) {
     }
 }
 void logoDrawWarningSCE(void) {
-    static int fid;       // @ 0x011B6748
-    static int wait_loop; // @ 0x011B6740
+    static int fid;
+    static int wait_loop;
     switch (Sh2sys.step[2]) {
         case 0:
             ScreenEffectFadeStart(3, 0.0f);
@@ -237,7 +237,7 @@ void logoDrawWarningSCE(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(494, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 0x64) / 60);
+                    DEBUG_LOG_ON_LINE(494, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
                     sh2sys_step_2();
                     return;
                 case 0:
@@ -287,8 +287,8 @@ void logoDrawWarningSCE(void) {
 }
 
 void logoDrawKonamiLogo(void) {
-    static int fid;       // @ 0x011B6738
-    static int wait_loop; // @ 0x011B6730
+    static int fid;
+    static int wait_loop;
     switch (Sh2sys.step[2]) {
         case 0:
             ScreenEffectFadeStart(3, 0.0f);
@@ -302,7 +302,7 @@ void logoDrawKonamiLogo(void) {
                 case 1:
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
-                    DEBUG_LOG_ON_LINE(607, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 0x64) / 60);
+                    DEBUG_LOG_ON_LINE(607, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
                     sh2sys_step_2();
                     return;
                 case 0:
@@ -365,10 +365,10 @@ static void logoDrawTexture(void) {
 }
 
 static int logoTellYesNo(void) {
-    int x; // r16
-    int y; // r17
-    int a; // r2
-    int n; // r16
+    int x;
+    int y;
+    int a;
+    int n;
 
     if ((mcw->menu_count += shGetDT()) > 1.0f) {
         mcw->menu_count -= 1.0f;
@@ -378,7 +378,7 @@ static int logoTellYesNo(void) {
     } else {
         a = shFloatToInt(32.0f * (mcw->menu_count / 0.5f));
     }
-    y = 0x182;
+    y = 386;
     fontSetColor(0);
     fontSetYesNo(y);
     if ((shPadRepeat(0, PAD_KEY_DPAD_LEFT)) || (shPadRepeat(0, PAD_KEY_DPAD_RIGHT))) {
@@ -390,9 +390,9 @@ static int logoTellYesNo(void) {
         }
     }
     if (mcw->menu_yesno == 1) {
-        x = 0xC8;
+        x = 200;
     } else {
-        x = 0x138;
+        x = 312;
     }
     spkOpenDGiftag(SCE_GIF_SET_TAG(0, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 4), GIF_REGLIST(SCE_GS_PRIM, SCE_GS_RGBAQ, SCE_GS_XYZ3, SCE_GS_XYZ2), -65531, 0);
     (*spack.pos++) = SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, SCE_GS_TRUE /* alpha blending */, 0, 0, 0, 0);
