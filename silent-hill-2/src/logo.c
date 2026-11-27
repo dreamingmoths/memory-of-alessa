@@ -1,7 +1,8 @@
 #include "sh2_common.h"
-#include "SH2_common/sh2sys.h"
-#include "SH2_common/sh2dt.h"
+#include "SH2_common/data_load.h"
 #include "SH2_common/pad.h"
+#include "SH2_common/sh2dt.h"
+#include "SH2_common/sh2sys.h"
 
 #include "gs.h"
 #include "gamemain.h"
