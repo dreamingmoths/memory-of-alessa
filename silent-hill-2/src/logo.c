@@ -33,6 +33,8 @@ extern u_short* fontGetMesAdr(u_short*, int);
 static int logoDispTimer;
 static PicDraw_Data Pic0;
 
+// @todo add messge enums!
+
 void logoCheckingMemcard(void) {
     static int msg_fid;
     static short msg_id;
