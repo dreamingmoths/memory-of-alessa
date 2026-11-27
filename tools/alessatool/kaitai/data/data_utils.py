@@ -8,6 +8,7 @@ from io import BytesIO
 from sys import stderr, stdout
 from typing import TextIO, Type
 from re import MULTILINE, finditer, sub
+from math import copysign
 
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
@@ -152,8 +153,11 @@ def find_smallest_float_string(f: float):
     float_string = str(f)
     f32 = c_float(f)
 
+    sign_value = copysign(1, f)
+    sign_symbol = sign_value < 0 and "-" or ""
+
     if f32.value == 0:
-        return "0.0f"
+        return f"{sign_symbol}0.0f"
 
     assert f32.value == c_float(f).value
 
@@ -182,6 +186,9 @@ def find_smallest_float_string(f: float):
 
     if "." not in result:
         result += ".0"
+
+    if not result.startswith(sign_symbol):
+        result = sign_symbol + result
 
     return result + "f"
 
@@ -296,7 +303,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
                 stream.write(f"{indent}/* .{attr_str} = */ {", ".join(list(map(lambda v : f"{v:X}", list(value))))},\n")
 
             elif isinstance(value, list):
-                if len(value) == 0 or not any(value):
+                if len(value) == 0 or (not any(value) and not isinstance(value[0], float)):
                     # empty array
                     stream.write(f"{indent}/* .{attr_str} = */ {{}},\n")
                 else:
