@@ -42,7 +42,7 @@ void logoCheckingMemcard(void) {
 
     switch (Sh2sys.step[SH2SYS_PLAYABLE_MAIN]) {
         case 0:
-            msg_fid = DataLoadMessage(4);
+            msg_fid = DataLoadMessage(SH2_MES_FILE_M_CARD);
             ScreenEffectInit();
             sh2sys_step_2();
             return;
