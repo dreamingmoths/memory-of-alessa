@@ -54,6 +54,7 @@ SH2_DATA: DataTable = [
     SimpleData(name="dpap_anime_adr_list",                  type="<8i"                                                                ),
     SimpleData(name="_square_stq",                          type="<16f",                               pattern=[4, 4]                 ),
     SimpleData(name="_square_00_vertex",                    type="<16f",                               pattern=[4, 4]                 ),
+    SimpleData(name="@846",                                 type="<16f",                               pattern=[4, 4]                 ),
     SimpleData(name="@539",                                 type=Pointer,                              pattern=[17]                   ),
     StructData(name="CA_DrawEnvData",                       type=Sh2.DrawEnvData,                      count=2                        ),
     StructData(name="CB_DrawEnvData",                       type=Sh2.DrawEnvData,                      count=2                        ),
