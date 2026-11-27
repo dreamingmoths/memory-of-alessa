@@ -24,16 +24,14 @@
 
 #include "data/daily.thu/data_pic_etc.h"
 
-// E:\work\sh2(CVS全取得)\src\logo.c
 static int logoTellYesNo(void);
 static void logoDrawTexture(void);
 
-static int logoDispTimer;
-static PicDraw_Data Pic0;
-
+// @note foward declaration required for match
 extern u_short* fontGetMesAdr(u_short*, int);
 
-#define LOGO_XY_COORD(x, y) ((2048 - (SCREEN_WIDTH) / 2 + (x)) << 4) | ((u_long) (2048 - (SCREEN_HEIGHT) / 2 + (y)) << 20)
+static int logoDispTimer;
+static PicDraw_Data Pic0;
 
 void logoCheckingMemcard(void) {
     static int msg_fid;
@@ -68,7 +66,7 @@ void logoCheckingMemcard(void) {
                 }
 
             } else if (msg_id == 44) {
-                fontSetColor(FontColorBlue;
+                fontSetColor(FontColorBlue);
                 fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 240, 1, 1);
                 if ((--logoDispTimer <= 0) || (shPadTrigger(0, key_config.enter))) {
                     sh2sys_set_2(3);
@@ -367,6 +365,7 @@ static void logoDrawTexture(void) {
 }
 
 static int logoTellYesNo(void) {
+    #define LOGO_XY_COORD(x, y) ((2048 - (SCREEN_WIDTH) / 2 + (x)) << 4) | ((u_long) (2048 - (SCREEN_HEIGHT) / 2 + (y)) << 20)
     int x;
     int y;
     int a;
@@ -381,7 +380,7 @@ static int logoTellYesNo(void) {
         a = shFloatToInt(32.0f * (mcw->menu_count / 0.5f));
     }
     y = 386;
-    fontSetColor(FontColorGray;
+    fontSetColor(FontColorGray);
     fontSetYesNo(y);
     if ((shPadRepeat(0, PAD_KEY_DPAD_LEFT)) || (shPadRepeat(0, PAD_KEY_DPAD_RIGHT))) {
         SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
