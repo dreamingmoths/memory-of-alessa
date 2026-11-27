@@ -148,7 +148,7 @@ SH2_DATA: DataTable = [
     StructData(name="stg_town_east_clActWallList_cb49",     type=Sh2.ClHitpolyPlane,                   count=14,      executable="twe"),
     StructData(name="stg_town_east_clActWallList_cb52",     type=Sh2.ClHitpolyPlane,                   count=2,       executable="twe"),
     SimpleData(name="stg_town_east_ev_prog",                type=Pointer,                              pattern=[10],  executable="twe"),
-    StructData(name="stg_town_east_mdl_list",               type=Sh2.ModelList,                        count=72,      executable="twe"),
+    StructData(name="stg_town_east_mdl_list",               type=Sh2.ModelList,   hex=True,                     count=72,      executable="twe"),
     StructData(name="stg_town_east_en_list",                type=Sh2.EnemyList,                        count=108,     executable="twe"),
     StructData(name="stg_town_east_SpecialDrawFunctions",   type=Sh2.GfwFunc,                          count=1,       executable="twe"),
     StructData(name="stage_town_east",                      type=Sh2.StageData,                        count=1,       executable="twe"),
