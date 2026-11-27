@@ -38,8 +38,7 @@ void logoCheckingMemcard(void) {
     static short msg_id;
     int sts;
 
-    switch (Sh2sys.step[2]) {
-
+    switch (Sh2sys.step[SH2SYS_PLAYABLE_MAIN]) {
         case 0:
             msg_fid = DataLoadMessage(4);
             ScreenEffectInit();
@@ -60,15 +59,13 @@ void logoCheckingMemcard(void) {
             if (msg_id == 74 || msg_id == 75) {
                 int t = sts - 2;
 
-                if ((t == 0) || (t == 1) || (t == 2)) {
-
+                if (t == 0 || t == 1 || t == 2) {
                     fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 240, 1, 1);
                 }
-
             } else if (msg_id == 44) {
                 fontSetColor(FontColorBlue);
                 fontPrintWord(fontGetMesAdr(msg_buffer, msg_id), 256, 240, 1, 1);
-                if ((--logoDispTimer <= 0) || (shPadTrigger(0, key_config.enter))) {
+                if (--logoDispTimer <= 0 || shPadTrigger(0, key_config.enter)) {
                     sh2sys_set_2(3);
                     break;
                 }
@@ -119,11 +116,11 @@ void logoCheckingMemcard(void) {
             }
             break;
         case 3:
-            if (Sh2sys.step[3] == 1) {
+            if (Sh2sys.step[SH2SYS_CONNECT] == 1) {
                 fontClear();
                 ScreenEffectFadeStart(1, 0.3f);
             }
-            if (Sh2sys.step[3] < 2) {
+            if (Sh2sys.step[SH2SYS_CONNECT] < 2) {
                 sh2sys_step_3();
                 return;
             }
@@ -133,12 +130,12 @@ void logoCheckingMemcard(void) {
             }
             break;
         case 4:
-            if (Sh2sys.step[3] == 1) {
+            if (Sh2sys.step[SH2SYS_CONNECT] == 1) {
                 fontClear();
-                SeCall(15002, 1.0f, 0);
+                SeCall(SH2_SOUND_15002, 1.0f, 0);
                 ScreenEffectFadeStart(1, 3.0f);
             }
-            if (Sh2sys.step[3] < 2) {
+            if (Sh2sys.step[SH2SYS_CONNECT] < 2) {
                 sh2sys_step_3();
                 return;
             }
@@ -153,14 +150,14 @@ void logoCheckingMemcard(void) {
 void logoDrawWarningCESA(void) {
     static int fid;
     static int wait_loop;
-    switch (Sh2sys.step[2]) {
+    switch (Sh2sys.step[SH2SYS_PLAYABLE_MAIN]) {
         case 0:
             fontClear();
             ScreenEffectInit();
             ScreenEffectFadeStart(3, 0.0f);
             fid       = FcRead(data_pic_etc_cesa_tex, get_gp_data_buf_addr());
             wait_loop = 0;
-            Sh2sys.step[2]++;
+            Sh2sys.step[SH2SYS_PLAYABLE_MAIN]++;
             sh2sys_set_3(0);
             return;
         case 1:
@@ -170,7 +167,7 @@ void logoDrawWarningCESA(void) {
                     ScreenEffectFadeStart(4, 0.3f);
                     logoDrawTexture();
                     DEBUG_LOG_ON_LINE(388, "title.tex: read finished(%d.%02d)\n", wait_loop / 60, ((wait_loop % 60) * 100) / 60);
-                    Sh2sys.step[2]++;
+                    Sh2sys.step[SH2SYS_PLAYABLE_MAIN]++;
                     sh2sys_set_3(0);
                     return;
                 case 0:
@@ -197,7 +194,7 @@ void logoDrawWarningCESA(void) {
             logoDrawTexture();
             if (ScreenEffectFadeCheck()) {
                 logoDispTimer = (int) (3.0f * shGetFPS());
-                Sh2sys.step[2]++;
+                Sh2sys.step[SH2SYS_PLAYABLE_MAIN]++;
                 sh2sys_set_3(0);
                 return;
             }
@@ -207,7 +204,7 @@ void logoDrawWarningCESA(void) {
             logoDispTimer--;
             if (logoDispTimer <= 0) {
                 ScreenEffectFadeStart(1, 0.3f);
-                Sh2sys.step[2]++;
+                Sh2sys.step[SH2SYS_PLAYABLE_MAIN]++;
                 sh2sys_set_3(0);
                 return;
             }
@@ -215,7 +212,7 @@ void logoDrawWarningCESA(void) {
         case 4:
             logoDrawTexture();
             if (ScreenEffectFadeCheck()) {
-                Sh2sys.step[1]++;
+                Sh2sys.step[SH2SYS_GAME_MAIN]++;
                 sh2sys_set_2(0);
             }
             break;
@@ -224,10 +221,10 @@ void logoDrawWarningCESA(void) {
 void logoDrawWarningSCE(void) {
     static int fid;
     static int wait_loop;
-    switch (Sh2sys.step[2]) {
+    switch (Sh2sys.step[SH2SYS_PLAYABLE_MAIN]) {
         case 0:
             ScreenEffectFadeStart(3, 0.0f);
-            fid  = FcRead(data_pic_etc_sce_tex, get_gp_data_buf_addr());
+            fid       = FcRead(data_pic_etc_sce_tex, get_gp_data_buf_addr());
             wait_loop = 0;
             sh2sys_step_2();
             return;
@@ -289,10 +286,10 @@ void logoDrawWarningSCE(void) {
 void logoDrawKonamiLogo(void) {
     static int fid;
     static int wait_loop;
-    switch (Sh2sys.step[2]) {
+    switch (Sh2sys.step[SH2SYS_PLAYABLE_MAIN]) {
         case 0:
             ScreenEffectFadeStart(3, 0.0f);
-            fid  = FcRead(data_pic_etc_konami_r_tex, get_gp_data_buf_addr());
+            fid       = FcRead(data_pic_etc_konami_r_tex, get_gp_data_buf_addr());
             wait_loop = 0;
             sh2sys_step_2();
             return;
@@ -365,7 +362,7 @@ static void logoDrawTexture(void) {
 }
 
 static int logoTellYesNo(void) {
-    #define LOGO_XY_COORD(x, y) ((2048 - (SCREEN_WIDTH) / 2 + (x)) << 4) | ((u_long) (2048 - (SCREEN_HEIGHT) / 2 + (y)) << 20)
+#define LOGO_XY_COORD(x, y) ((2048 - (SCREEN_WIDTH) / 2 + (x)) << 4) | ((u_long) (2048 - (SCREEN_HEIGHT) / 2 + (y)) << 20)
     int x;
     int y;
     int a;
@@ -379,10 +376,12 @@ static int logoTellYesNo(void) {
     } else {
         a = shFloatToInt(32.0f * (mcw->menu_count / 0.5f));
     }
+
     y = 386;
     fontSetColor(FontColorGray);
     fontSetYesNo(y);
-    if ((shPadRepeat(0, PAD_KEY_DPAD_LEFT)) || (shPadRepeat(0, PAD_KEY_DPAD_RIGHT))) {
+
+    if (shPadRepeat(0, PAD_KEY_DPAD_LEFT) || shPadRepeat(0, PAD_KEY_DPAD_RIGHT)) {
         SeCall(SH_SOUND_CHANGE_SELECTION_10000, 1.0f, 0);
         if (mcw->menu_yesno == 1) {
             mcw->menu_yesno = 2;
