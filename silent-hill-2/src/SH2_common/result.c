@@ -1,7 +1,8 @@
 #include "sh2_common.h"
+#include "SH2_common/data_load.h"
 #include "SH2_common/pad.h"
-#include "SH2_common/sh2sys.h"
 #include "SH2_common/playing_info.h"
+#include "SH2_common/sh2sys.h"
 
 #include "gs.h"
 #include "sce/libgraph.h"
@@ -80,7 +81,7 @@ void ResultMain(void) {
             }
             ScreenEffectFadeStart(3, 0.0f);
             
-            DataLoadMessage(5);
+            DataLoadMessage(SH2_MES_FILE_RESULT);
             
             if ((playing.clear_end_kind & (1 << 4)) && 
                 (playing.language == 0)             && 

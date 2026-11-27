@@ -252,7 +252,7 @@ static inline void shVectorCopyVu0(void* dst, void* src) {
          lqc2 vf4, 0(%1)\n\
          vmove.w vf4, vf0\n\
          sqc2 vf4, 0(%0)"
-        : "+r"(dst), "+r"(src));
+        :: "r"(dst), "r"(src));
 }
 
 static inline void shVectorCopyXyz(void* dst, void* src) {
@@ -261,7 +261,7 @@ static inline void shVectorCopyXyz(void* dst, void* src) {
          sd t7, 0(%0)\n\
          pcpyud t7, t7, zero\n\
          sw t7, 8(%0)"
-        : "+r"(dst), "+r"(src)::"t7");
+        :: "r"(dst), "r"(src));
 }
 
 static inline float shVectorLengthXyz(void* v) {
@@ -345,8 +345,8 @@ static inline float shVectorLength(float* a) {
     return result;
 }
 
-/* @todo deduplicate with sh3 version in subway overlay (vec3_dot_product) */
-static inline float vec3_dot_product(void* v, void* w) {
+/* @todo deduplicate with sh3 version in subway overlay (shVectorDotProductXyz) */
+static inline float shVectorDotProductXyz(void* v, void* w) {
     float d;
 
     asm ("\
@@ -364,7 +364,7 @@ static inline float vec3_dot_product(void* v, void* w) {
     return d;
 }
 
-static inline float sh3_vec3_dot_product(void* v, void* w) {
+static inline float sh3VectorDotProductXyz(void* v, void* w) {
     float d;
 
     asm volatile("\
@@ -495,6 +495,16 @@ static inline void shUnitVector(sceVu0FVECTOR out) {
     asm("\
         sqc2 vf0, 0x0(%0)"
         : "+r"(out));
+}
+
+
+static inline void shRotMatrixZyx(sceVu0FMATRIX m0, sceVu0FMATRIX m1, sceVu0FVECTOR rot) {
+    extern void shRotMatrixZ(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rz);
+    extern void shRotMatrixY(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float ry);
+    extern void shRotMatrixX(sceVu0FMATRIX m0, sceVu0FMATRIX m1, float rx);
+    shRotMatrixZ(m0, m1, rot[2]);
+    shRotMatrixY(m0, m0, rot[1]);
+    shRotMatrixX(m0, m0, rot[0]);
 }
 
 #endif // ALESSA_VEC_H

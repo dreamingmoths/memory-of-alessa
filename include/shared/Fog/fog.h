@@ -241,7 +241,7 @@ typedef struct ScratchpadFog {
 #ifndef __ALESSASTRUCT__
 // @todo this function could be written in a more portable syntax, but mwcc is
 // fussing over it. >_>
-static inline float float_sign(float x) {
+static inline float shFloatSign(float x) {
     asm (".set noreorder;\
          sub.s $f8, $f8;\
          lui  $t7,0x3F80;\

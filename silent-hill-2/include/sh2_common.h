@@ -27,6 +27,7 @@
 #define SH_SOUND_ENTER_SELECTION_10002  10002
 #define SH_SOUND_CANCEL_SELECTION_10003 10003
 #define SH2_SOUND_10006                 10006
+#define SH2_SOUND_15002                 15002
 #define SH2_SOUND_16021                 16021
 #define SH2_SOUND_16502                 16502
 #define SH2_SOUND_19023                 19023

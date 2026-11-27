@@ -54,6 +54,7 @@ SH2_DATA: DataTable = [
     SimpleData(name="dpap_anime_adr_list",                  type="<8i"                                                                ),
     SimpleData(name="_square_stq",                          type="<16f",                               pattern=[4, 4]                 ),
     SimpleData(name="_square_00_vertex",                    type="<16f",                               pattern=[4, 4]                 ),
+    SimpleData(name="@846",                                 type="<16f",                               pattern=[4, 4]                 ),
     SimpleData(name="@539",                                 type=Pointer,                              pattern=[17]                   ),
     StructData(name="CA_DrawEnvData",                       type=Sh2.DrawEnvData,                      count=2                        ),
     StructData(name="CB_DrawEnvData",                       type=Sh2.DrawEnvData,                      count=2                        ),
@@ -151,6 +152,15 @@ SH2_DATA: DataTable = [
     StructData(name="stg_town_east_en_list",                type=Sh2.EnemyList,                        count=108,     executable="twe"),
     StructData(name="stg_town_east_SpecialDrawFunctions",   type=Sh2.GfwFunc,                          count=1,       executable="twe"),
     StructData(name="stage_town_east",                      type=Sh2.StageData,                        count=1,       executable="twe"),
+    SimpleData(name="@965",                                 type=Pointer,                              pattern=[7]                    ),
+    SimpleData(name="@970_0x002AB300",                      type=Pointer,                              pattern=[9]                    ),
+    SimpleData(name="@1733_0x002AB350",                     type="<5f",                                pattern=[5]                    ),
+    SimpleData(name="@1738_0x002AB368",                     type="<5h",                                pattern=[5]                    ),
+    SimpleData(name="@1743",                                type="<5h",                                pattern=[5]                    ),
+    SimpleData(name="@1748_0x002AB388",                     type="<5h",                                pattern=[5]                    ),
+    StructData(name="djames_anim",                          type=Sh2.AnimeInfo,                        count=188                      ),
+    SimpleData(name="djames_anime_adr_list",                type="<188i"                                                              ),
+    SimpleData(name="djames_clani_adr_list",                type="<188i"                                                              ),
 ]
 
 SH3_DATA: DataTable = []

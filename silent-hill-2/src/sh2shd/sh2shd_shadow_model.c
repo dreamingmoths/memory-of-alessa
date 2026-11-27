@@ -150,10 +150,10 @@ int sh2shd_add_char(SubCharacter* scp, Q_WORDDATA* raw_data, short light_kind, f
             light_vec[1] = 0;
             vec_sub_reverse(chr_pos, light_vec, light_vec);
             shNormalizeVector(light_vec, light_vec);
-            if (vec3_dot_product(cam_pos, light_vec) < -0.707f) {
+            if (shVectorDotProductXyz(cam_pos, light_vec) < -0.707f) {
                 vwGetViewPosition(cam_pos);
                 vec_sub_reverse(cam_pos, &scp->pos, cam_pos);
-                if (sqrtf(vec3_dot_product(cam_pos, cam_pos)) < 1800.0f) {
+                if (sqrtf(shVectorDotProductXyz(cam_pos, cam_pos)) < 1800.0f) {
                     sh2shd_del_jms_upper_body(scp->kind, scp->id);
                 }
             }
@@ -720,7 +720,7 @@ void sh2shd_renew_shadow_man(CAMERA_DAT* cam, int glb_coord, int map_id) {
                             chara_pos[2] = shadow_man.char_man[i]->scp->pos.z;
                             chara_pos[3] = 1.0f;
                             shSubVector(&vec, &chara_pos, shadow_man.char_man[i]->light_pos);
-                            light_leng = vec3_dot_product(&vec, &vec);
+                            light_leng = shVectorDotProductXyz(&vec, &vec);
                             light_leng = 0.3f * sqrtf(light_leng);
                             
                             shadow_man.char_man[i]->light_pos[1] -= light_leng;

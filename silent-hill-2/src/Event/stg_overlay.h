@@ -2,6 +2,8 @@
 #define STG_OVERLAY_H
 
 #include "sh2_common.h"
+#include "data/fs_structs.h"
+#include "Event/event.h"
 
 extern void* _ovl_start_addr;
 
@@ -20,167 +22,167 @@ typedef struct mwOverlayHeader {
 } mwOverlayHeader;
 
 typedef enum {
-    Stg_null = 0x00,
-    Stg_tgs_trial = 0x01,
-    Stg_toilet = 0x02,
-    Stg_observation = 0x03,
-    Stg_forest = 0x04,
-    Stg_town_east = 0x05,
-    Stg_apart_e1f = 0x06,
-    Stg_apart_e2f = 0x07,
-    Stg_apart_e3fw = 0x08,
-    Stg_apart_e3fe = 0x09,
-    Stg_apart_w1f = 0x0A,
-    Stg_apart_w2f = 0x0B,
-    Stg_apart_stair = 0x0C,
-    Stg_apart_out = 0x0D,
-    Stg_town_west = 0x0E,
-    Stg_bowling = 0x0F,
-    Stg_to_heaven = 0x10,
-    Stg_heaven_night = 0x11,
-    Stg_hospital_1f_f = 0x12,
-    Stg_hospital_2f_f = 0x13,
-    Stg_hospital_3f_f = 0x14,
-    Stg_hospital_rf_f = 0x15,
+    Stg_null           = 0x00,
+    Stg_tgs_trial      = 0x01,
+    Stg_toilet         = 0x02,
+    Stg_observation    = 0x03,
+    Stg_forest         = 0x04,
+    Stg_town_east      = 0x05,
+    Stg_apart_e1f      = 0x06,
+    Stg_apart_e2f      = 0x07,
+    Stg_apart_e3fw     = 0x08,
+    Stg_apart_e3fe     = 0x09,
+    Stg_apart_w1f      = 0x0A,
+    Stg_apart_w2f      = 0x0B,
+    Stg_apart_stair    = 0x0C,
+    Stg_apart_out      = 0x0D,
+    Stg_town_west      = 0x0E,
+    Stg_bowling        = 0x0F,
+    Stg_to_heaven      = 0x10,
+    Stg_heaven_night   = 0x11,
+    Stg_hospital_1f_f  = 0x12,
+    Stg_hospital_2f_f  = 0x13,
+    Stg_hospital_3f_f  = 0x14,
+    Stg_hospital_rf_f  = 0x15,
     Stg_hospital_1fw_b = 0x16,
     Stg_hospital_1fe_b = 0x17,
-    Stg_hospital_2f_b = 0x18,
-    Stg_hospital_3f_b = 0x19,
-    Stg_hospital_bf_b = 0x1A,
-    Stg_hospital_pass = 0x1B,
-    Stg_society = 0x1C,
-    Stg_delusion_2 = 0x1D,
-    Stg_delusion_3 = 0x1E,
-    Stg_prison_n = 0x1F,
-    Stg_prison_s = 0x20,
-    Stg_prison_bf = 0x21,
-    Stg_labyrinth_w = 0x22,
-    Stg_labyrinth_e = 0x23,
-    Stg_labyrinth_n = 0x24,
-    Stg_eddie_boss = 0x25,
-    Stg_lake = 0x26,
-    Stg_hotel_bf_f = 0x27,
-    Stg_hotel_1f_f = 0x28,
-    Stg_hotel_2f_f = 0x29,
-    Stg_hotel_3f_f = 0x2A,
-    Stg_hotel_bf_b = 0x2B,
-    Stg_hotel_1f_b = 0x2C,
-    Stg_hotel_2f_b = 0x2D,
-    Stg_hotel_3f_b = 0x2E,
-    Stg_hotel_fire = 0x2F,
-    Stg_end_recovery = 0x30,
-    Stg_end_maria = 0x31,
-    Stg_end_suicide = 0x32,
-    Stg_end_rebirth = 0x33,
-    Stg_end_dog = 0x34,
-    Stg_num = 0x35,
+    Stg_hospital_2f_b  = 0x18,
+    Stg_hospital_3f_b  = 0x19,
+    Stg_hospital_bf_b  = 0x1A,
+    Stg_hospital_pass  = 0x1B,
+    Stg_society        = 0x1C,
+    Stg_delusion_2     = 0x1D,
+    Stg_delusion_3     = 0x1E,
+    Stg_prison_n       = 0x1F,
+    Stg_prison_s       = 0x20,
+    Stg_prison_bf      = 0x21,
+    Stg_labyrinth_w    = 0x22,
+    Stg_labyrinth_e    = 0x23,
+    Stg_labyrinth_n    = 0x24,
+    Stg_eddie_boss     = 0x25,
+    Stg_lake           = 0x26,
+    Stg_hotel_bf_f     = 0x27,
+    Stg_hotel_1f_f     = 0x28,
+    Stg_hotel_2f_f     = 0x29,
+    Stg_hotel_3f_f     = 0x2A,
+    Stg_hotel_bf_b     = 0x2B,
+    Stg_hotel_1f_b     = 0x2C,
+    Stg_hotel_2f_b     = 0x2D,
+    Stg_hotel_3f_b     = 0x2E,
+    Stg_hotel_fire     = 0x2F,
+    Stg_end_recovery   = 0x30,
+    Stg_end_maria      = 0x31,
+    Stg_end_suicide    = 0x32,
+    Stg_end_rebirth    = 0x33,
+    Stg_end_dog        = 0x34,
+    Stg_num            = 0x35,
 } StgName;
 
-extern union fsFileIndex root_stage_apart_e1f_bin;
-extern union fsFileIndex root_stage_apart_e2f_bin;
-extern union fsFileIndex root_stage_apart_e3fe_bin;
-extern union fsFileIndex root_stage_apart_e3fw_bin;
-extern union fsFileIndex root_stage_apart_out_bin;
-extern union fsFileIndex root_stage_apart_stair_bin;
-extern union fsFileIndex root_stage_apart_w1f_bin;
-extern union fsFileIndex root_stage_apart_w2f_bin;
-extern union fsFileIndex root_stage_bowling_bin;
-extern union fsFileIndex root_stage_delusion_2_bin;
-extern union fsFileIndex root_stage_delusion_3_bin;
-extern union fsFileIndex root_stage_eddie_boss_bin;
-extern union fsFileIndex root_stage_end_dog_bin;
-extern union fsFileIndex root_stage_end_maria_bin;
-extern union fsFileIndex root_stage_end_rebirth_bin;
-extern union fsFileIndex root_stage_end_recovery_bin;
-extern union fsFileIndex root_stage_end_suicide_bin;
-extern union fsFileIndex root_stage_forest_bin;
-extern union fsFileIndex root_stage_heaven_night_bin;
-extern union fsFileIndex root_stage_hospital_1f_f_bin;
-extern union fsFileIndex root_stage_hospital_1fe_b_bin;
-extern union fsFileIndex root_stage_hospital_1fw_b_bin;
-extern union fsFileIndex root_stage_hospital_2f_b_bin;
-extern union fsFileIndex root_stage_hospital_2f_f_bin;
-extern union fsFileIndex root_stage_hospital_3f_b_bin;
-extern union fsFileIndex root_stage_hospital_3f_f_bin;
-extern union fsFileIndex root_stage_hospital_bf_b_bin;
-extern union fsFileIndex root_stage_hospital_pass_bin;
-extern union fsFileIndex root_stage_hospital_rf_f_bin;
-extern union fsFileIndex root_stage_hotel_1f_b_bin;
-extern union fsFileIndex root_stage_hotel_1f_f_bin;
-extern union fsFileIndex root_stage_hotel_2f_b_bin;
-extern union fsFileIndex root_stage_hotel_2f_f_bin;
-extern union fsFileIndex root_stage_hotel_3f_b_bin;
-extern union fsFileIndex root_stage_hotel_3f_f_bin;
-extern union fsFileIndex root_stage_hotel_bf_b_bin;
-extern union fsFileIndex root_stage_hotel_bf_f_bin;
-extern union fsFileIndex root_stage_hotel_fire_bin;
-extern union fsFileIndex root_stage_labyrinth_e_bin;
-extern union fsFileIndex root_stage_labyrinth_n_bin;
-extern union fsFileIndex root_stage_labyrinth_w_bin;
-extern union fsFileIndex root_stage_lake_bin;
-extern union fsFileIndex root_stage_observation_bin;
-extern union fsFileIndex root_stage_prison_bf_bin;
-extern union fsFileIndex root_stage_prison_n_bin;
-extern union fsFileIndex root_stage_prison_s_bin;
-extern union fsFileIndex root_stage_society_bin;
-extern union fsFileIndex root_stage_to_heaven_bin;
-extern union fsFileIndex root_stage_toilet_bin;
-extern union fsFileIndex root_stage_town_east_bin;
-extern union fsFileIndex root_stage_town_west_bin;
+extern fsFileIndex root_stage_apart_e1f_bin[1];
+extern fsFileIndex root_stage_apart_e2f_bin[1];
+extern fsFileIndex root_stage_apart_e3fe_bin[1];
+extern fsFileIndex root_stage_apart_e3fw_bin[1];
+extern fsFileIndex root_stage_apart_out_bin[1];
+extern fsFileIndex root_stage_apart_stair_bin[1];
+extern fsFileIndex root_stage_apart_w1f_bin[1];
+extern fsFileIndex root_stage_apart_w2f_bin[1];
+extern fsFileIndex root_stage_bowling_bin[1];
+extern fsFileIndex root_stage_delusion_2_bin[1];
+extern fsFileIndex root_stage_delusion_3_bin[1];
+extern fsFileIndex root_stage_eddie_boss_bin[1];
+extern fsFileIndex root_stage_end_dog_bin[1];
+extern fsFileIndex root_stage_end_maria_bin[1];
+extern fsFileIndex root_stage_end_rebirth_bin[1];
+extern fsFileIndex root_stage_end_recovery_bin[1];
+extern fsFileIndex root_stage_end_suicide_bin[1];
+extern fsFileIndex root_stage_forest_bin[1];
+extern fsFileIndex root_stage_heaven_night_bin[1];
+extern fsFileIndex root_stage_hospital_1f_f_bin[1];
+extern fsFileIndex root_stage_hospital_1fe_b_bin[1];
+extern fsFileIndex root_stage_hospital_1fw_b_bin[1];
+extern fsFileIndex root_stage_hospital_2f_b_bin[1];
+extern fsFileIndex root_stage_hospital_2f_f_bin[1];
+extern fsFileIndex root_stage_hospital_3f_b_bin[1];
+extern fsFileIndex root_stage_hospital_3f_f_bin[1];
+extern fsFileIndex root_stage_hospital_bf_b_bin[1];
+extern fsFileIndex root_stage_hospital_pass_bin[1];
+extern fsFileIndex root_stage_hospital_rf_f_bin[1];
+extern fsFileIndex root_stage_hotel_1f_b_bin[1];
+extern fsFileIndex root_stage_hotel_1f_f_bin[1];
+extern fsFileIndex root_stage_hotel_2f_b_bin[1];
+extern fsFileIndex root_stage_hotel_2f_f_bin[1];
+extern fsFileIndex root_stage_hotel_3f_b_bin[1];
+extern fsFileIndex root_stage_hotel_3f_f_bin[1];
+extern fsFileIndex root_stage_hotel_bf_b_bin[1];
+extern fsFileIndex root_stage_hotel_bf_f_bin[1];
+extern fsFileIndex root_stage_hotel_fire_bin[1];
+extern fsFileIndex root_stage_labyrinth_e_bin[1];
+extern fsFileIndex root_stage_labyrinth_n_bin[1];
+extern fsFileIndex root_stage_labyrinth_w_bin[1];
+extern fsFileIndex root_stage_lake_bin[1];
+extern fsFileIndex root_stage_observation_bin[1];
+extern fsFileIndex root_stage_prison_bf_bin[1];
+extern fsFileIndex root_stage_prison_n_bin[1];
+extern fsFileIndex root_stage_prison_s_bin[1];
+extern fsFileIndex root_stage_society_bin[1];
+extern fsFileIndex root_stage_to_heaven_bin[1];
+extern fsFileIndex root_stage_toilet_bin[1];
+extern fsFileIndex root_stage_town_east_bin[1];
+extern fsFileIndex root_stage_town_west_bin[1];
 
-extern struct Stage_Data stage_tgs_trial;
-extern struct Stage_Data stage_toilet;
-extern struct Stage_Data stage_observation;
-extern struct Stage_Data stage_forest;
-extern struct Stage_Data stage_town_east;
-extern struct Stage_Data stage_apart_e1f;
-extern struct Stage_Data stage_apart_e2f;
-extern struct Stage_Data stage_apart_e3fe;
-extern struct Stage_Data stage_apart_w1f;
-extern struct Stage_Data stage_apart_w2f;
-extern struct Stage_Data stage_apart_stair;
-extern struct Stage_Data stage_apart_out;
+extern Stage_Data stage_tgs_trial;
+extern Stage_Data stage_toilet;
+extern Stage_Data stage_observation;
+extern Stage_Data stage_forest;
+extern Stage_Data stage_town_east;
+extern Stage_Data stage_apart_e1f;
+extern Stage_Data stage_apart_e2f;
+extern Stage_Data stage_apart_e3fe;
+extern Stage_Data stage_apart_w1f;
+extern Stage_Data stage_apart_w2f;
+extern Stage_Data stage_apart_stair;
+extern Stage_Data stage_apart_out;
 
 /*         not present in the prototype!         */
 /* these are hardcoded as linker symbols for now */
-extern struct Stage_Data stage_town_west;
-extern struct Stage_Data stage_bowling;
-extern struct Stage_Data stage_to_heaven;
-extern struct Stage_Data stage_heaven_night;
-extern struct Stage_Data stage_hospital_1f_f;
-extern struct Stage_Data stage_hospital_2f_f;
-extern struct Stage_Data stage_hospital_3f_f;
-extern struct Stage_Data stage_hospital_rf_f;
-extern struct Stage_Data stage_hospital_1fw_b;
-extern struct Stage_Data stage_hospital_1fe_b;
-extern struct Stage_Data stage_hospital_2f_b;
-extern struct Stage_Data stage_hospital_3f_b;
-extern struct Stage_Data stage_hospital_bf_b;
-extern struct Stage_Data stage_hospital_pass;
-extern struct Stage_Data stage_society;
-extern struct Stage_Data stage_delusion_2;
-extern struct Stage_Data stage_delusion_3;
-extern struct Stage_Data stage_prison_n;
-extern struct Stage_Data stage_prison_s;
-extern struct Stage_Data stage_prison_bf;
-extern struct Stage_Data stage_labyrinth_w;
-extern struct Stage_Data stage_labyrinth_e;
-extern struct Stage_Data stage_labyrinth_n;
-extern struct Stage_Data stage_eddie_boss;
-extern struct Stage_Data stage_lake;
-extern struct Stage_Data stage_hotel_bf_f;
-extern struct Stage_Data stage_hotel_1f_f;
-extern struct Stage_Data stage_hotel_2f_f;
-extern struct Stage_Data stage_hotel_3f_f;
-extern struct Stage_Data stage_hotel_bf_b;
-extern struct Stage_Data stage_hotel_1f_b;
-extern struct Stage_Data stage_hotel_2f_b;
-extern struct Stage_Data stage_hotel_3f_b;
-extern struct Stage_Data stage_hotel_fire;
-extern struct Stage_Data stage_end_recovery;
-extern struct Stage_Data stage_end_maria;
-extern struct Stage_Data stage_end_suicide;
-extern struct Stage_Data stage_end_dog;
+extern Stage_Data stage_town_west;
+extern Stage_Data stage_bowling;
+extern Stage_Data stage_to_heaven;
+extern Stage_Data stage_heaven_night;
+extern Stage_Data stage_hospital_1f_f;
+extern Stage_Data stage_hospital_2f_f;
+extern Stage_Data stage_hospital_3f_f;
+extern Stage_Data stage_hospital_rf_f;
+extern Stage_Data stage_hospital_1fw_b;
+extern Stage_Data stage_hospital_1fe_b;
+extern Stage_Data stage_hospital_2f_b;
+extern Stage_Data stage_hospital_3f_b;
+extern Stage_Data stage_hospital_bf_b;
+extern Stage_Data stage_hospital_pass;
+extern Stage_Data stage_society;
+extern Stage_Data stage_delusion_2;
+extern Stage_Data stage_delusion_3;
+extern Stage_Data stage_prison_n;
+extern Stage_Data stage_prison_s;
+extern Stage_Data stage_prison_bf;
+extern Stage_Data stage_labyrinth_w;
+extern Stage_Data stage_labyrinth_e;
+extern Stage_Data stage_labyrinth_n;
+extern Stage_Data stage_eddie_boss;
+extern Stage_Data stage_lake;
+extern Stage_Data stage_hotel_bf_f;
+extern Stage_Data stage_hotel_1f_f;
+extern Stage_Data stage_hotel_2f_f;
+extern Stage_Data stage_hotel_3f_f;
+extern Stage_Data stage_hotel_bf_b;
+extern Stage_Data stage_hotel_1f_b;
+extern Stage_Data stage_hotel_2f_b;
+extern Stage_Data stage_hotel_3f_b;
+extern Stage_Data stage_hotel_fire;
+extern Stage_Data stage_end_recovery;
+extern Stage_Data stage_end_maria;
+extern Stage_Data stage_end_suicide;
+extern Stage_Data stage_end_dog;
 
 int FcRead(union fsFileIndex* id, void* databuf);
 void FlushCache(int);
@@ -192,6 +194,6 @@ int fsSync(int mode, int fid);
 void shSyncVEnd(int mode);
 void verbose(int, const char*);
 extern union fsFileIndex* last_stage_bin;
-extern struct Stage_Data* stage;
+extern Stage_Data* stage;
 
 #endif
