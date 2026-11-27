@@ -1098,7 +1098,7 @@ static int MariaTouchJamesCheck(void) {
         shNormalizeVector(to_jms, to_jms);
         jms_vec[0] = shSinF(sh2jms.rot_y);
         jms_vec[2] = shCosF(sh2jms.rot_y);
-        if (vec3_dot_product(to_jms, jms_vec) < -0.85f) {
+        if (shVectorDotProductXyz(to_jms, jms_vec) < -0.85f) {
             return true;
         }
     }

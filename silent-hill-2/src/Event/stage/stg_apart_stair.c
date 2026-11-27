@@ -696,7 +696,7 @@ static void stg_apart_stair_AP_Hosei_Light(void) {
             sceVu0CopyVector(stg_apart_stair_DynamicLW.BeforeCamDir, stg_apart_stair_DynamicLW.NowCamDir);
             sceVu0CopyVector(stg_apart_stair_DynamicLW.BeforeDir, stg_apart_stair_DynamicLW.NowDir);
             sh2gde_Get_EyeDir(&stg_apart_stair_DynamicLW);
-            inner /* inner product */ = vec3_dot_product(stg_apart_stair_DynamicLW.NowCamDir, stg_apart_stair_DynamicLW.BeforeDir);
+            inner /* inner product */ = shVectorDotProductXyz(stg_apart_stair_DynamicLW.NowCamDir, stg_apart_stair_DynamicLW.BeforeDir);
             shVectorCrossProduct(plane, stg_apart_stair_DynamicLW.NowCamDir, stg_apart_stair_DynamicLW.BeforeDir);
             shNormalizeVector(plane, plane);
             shVectorCrossProduct(aimdir, stg_apart_stair_DynamicLW.BeforeDir, plane);

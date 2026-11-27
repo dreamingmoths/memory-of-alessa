@@ -37,7 +37,7 @@ void sh2gde_Get_EyeDir(sceVu0FVECTOR svt) {
 
 #line 86
 float sh2gde_Get_InnerVectorJmsCam(void) {
-    return vec3_dot_product(shJmsDirVec, shEyeDirVec);
+    return shVectorDotProductXyz(shJmsDirVec, shEyeDirVec);
 }
 
 #line 102

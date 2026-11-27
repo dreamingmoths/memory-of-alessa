@@ -3473,7 +3473,7 @@ void PlayerCheckStraightLine(SubCharacter* this, float spd_roty) {
         shNormalizeVector(me, me);
         shNormalizeVector(wall, wall);
                         
-        sh2jms.inner_to_wall = vec3_dot_product(me, wall);
+        sh2jms.inner_to_wall = shVectorDotProductXyz(me, wall);
         
         
         

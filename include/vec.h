@@ -345,8 +345,8 @@ static inline float shVectorLength(float* a) {
     return result;
 }
 
-/* @todo deduplicate with sh3 version in subway overlay (vec3_dot_product) */
-static inline float vec3_dot_product(void* v, void* w) {
+/* @todo deduplicate with sh3 version in subway overlay (shVectorDotProductXyz) */
+static inline float shVectorDotProductXyz(void* v, void* w) {
     float d;
 
     asm ("\
@@ -364,7 +364,7 @@ static inline float vec3_dot_product(void* v, void* w) {
     return d;
 }
 
-static inline float sh3_vec3_dot_product(void* v, void* w) {
+static inline float sh3VectorDotProductXyz(void* v, void* w) {
     float d;
 
     asm volatile("\
