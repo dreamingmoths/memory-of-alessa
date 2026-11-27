@@ -27,7 +27,7 @@
 static int logoTellYesNo(void);
 static void logoDrawTexture(void);
 
-// @note foward declaration required for match
+// @note forward declaration required for match
 extern u_short* fontGetMesAdr(u_short*, int);
 
 static int logoDispTimer;
