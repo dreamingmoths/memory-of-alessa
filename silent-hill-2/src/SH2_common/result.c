@@ -80,7 +80,7 @@ void ResultMain(void) {
             }
             ScreenEffectFadeStart(3, 0.0f);
             
-            DataLoadMessage(5);
+            DataLoadMessage(SH2_MES_FILE_RESULT);
             
             if ((playing.clear_end_kind & (1 << 4)) && 
                 (playing.language == 0)             && 
