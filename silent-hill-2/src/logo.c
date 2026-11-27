@@ -111,7 +111,7 @@ void logoCheckingMemcard(void) {
                     return;
                 case -3:
                     msg_id        = 44;
-                    logoDispTimer = fptosi(3.0f * shGetFPS());
+                    logoDispTimer = (int) (3.0f * shGetFPS());
                     return;
             }
             break;
