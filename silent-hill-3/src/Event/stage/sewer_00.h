@@ -2,8 +2,7 @@
 #define SEWER_00_H
 
 #include "Chacter/m3_sc.h"
-#include "common.h"
-#include "sce/libvu0.h"
+#include "vec.h"
 
 void func_0013D250(int, int*, float);
 void func_0013D280(int);
@@ -16,20 +15,19 @@ int func_0016C1C0(int);
 void func_0016C3C0(void);
 int func_0016C540(int*, int*);
 void func_0016CA40(int);
-void func_0016CBD0(Q**, Q*, int);
+void func_0016CBD0(sceVu0FMATRIX*[], sceVu0FMATRIX*[], int);
 int func_0016CB70(void);
-void func_0016CC50(int, int, Q*, Q*);
+void func_0016CC50(int, int, sceVu0FMATRIX*, sceVu0FVECTOR*);
 int func_001E2110(SubCharacter*);
 void func_0016CD00(int*);
-void func_0016D170(int, int (*)[4], int, int, float, float);
+void func_0016D170(int, float (*)[4], int, int, float, float, int);
 void func_0016D0E0(int, int);
-int func_0016D240(int, int (*)[4], int, int, float, float);
+int func_0016D240(float, float, int, float (*)[4], int, int);
 void func_0016ECE0(int);
 int func_0016E0F0(void);
 void func_0016E400(int, int);
 int func_00190950(void);
-void func_00190A20(int);
-void func_001A06F0(void*);
+int func_00190A20(int);
 void func_001C2290(int, float);
 void func_001C2A80(int, sceVu0FMATRIX*);
 int func_001C2580(int);
@@ -42,6 +40,17 @@ void func_003174B0(float);
 int RoomName(void);
 u_char GetActionLevel(void);
 int SeCall(int, float, float);
+void clAddDynamicWall(int*);
+
+int func_01F6D680_sewer_00(void);
+int func_01F6D870_sewer_00(void);
+int func_01F6D980_sewer_00(void);
+int func_01F6DAB0_sewer_00(void);
+int func_01F6DE40_sewer_00(void);
+void func_01F6DEC0_sewer_00(void);
+void func_01F6E060_sewer_00(void);
+void func_01F6E130_sewer_00(void);
+void func_01F6E270_sewer_00(void);
 
 extern int D_01F6F8F0_sewer_00[];
 extern int D_01F6F850_sewer_00[];
@@ -55,15 +64,15 @@ extern int D_01F6FBF0_sewer_00[];
 extern int D_01F6FC00_sewer_00[];
 extern int D_01F6FC80_sewer_00[];
 extern int D_01F6FC98_sewer_00[];
-extern int D_01F6FCB0_sewer_00[4];
-extern int D_01F6FCC0_sewer_00[4];
+extern float D_01F6FCB0_sewer_00[4];
+extern float D_01F6FCC0_sewer_00[4];
 extern int D_01F6FC60_sewer_00[];
 extern Q D_01F6FBE0_sewer_00;
 extern int D_01F6FE00_sewer_00;
 extern int D_01F6FE20_sewer_00;
 extern int D_01F6FE28_sewer_00;
 extern int D_01F6FE30_sewer_00;
-extern Q D_01F6FE40_sewer_00;
+extern sceVu0FVECTOR D_01F6FE40_sewer_00;
 extern int D_01F6FE50_sewer_00;
 extern int D_01F6FE58_sewer_00;
 extern int D_01F6FE60_sewer_00;

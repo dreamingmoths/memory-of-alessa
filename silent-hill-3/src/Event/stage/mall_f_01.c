@@ -826,7 +826,6 @@ void func_01F6F2B0_mall_f_01(Shakespeare_Keypad_Work* work) {
     sh3_PictureLoadImageWrapped(pic_load);
 }
 
-#ifdef NON_MATCHING
 void func_01F6F300_mall_f_01(Shakespeare_Keypad_Work* work, int key) {
     int u_start;
     int v_start;
@@ -838,7 +837,7 @@ void func_01F6F300_mall_f_01(Shakespeare_Keypad_Work* work, int key) {
     PicDraw_Data* pic_key;
     D_01F72990_struct* temp_D_01F72990;
 
-    if (key < 0 || key >= 11) {
+    if (key < 0 || key > 10) {
         return;
     }
 
@@ -888,9 +887,6 @@ void func_01F6F300_mall_f_01(Shakespeare_Keypad_Work* work, int key) {
     pic_key->otp = 3;
     sh3_PictureDrawWrapped(pic_key);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/Event/stage/mall_f_01", func_01F6F300_mall_f_01);
-#endif
 
 void func_01F6F510_mall_f_01(Shakespeare_Keypad_Work* work) {
     int i;
