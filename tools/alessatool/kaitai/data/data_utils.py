@@ -1,23 +1,19 @@
-from collections.abc import Callable
 from dataclasses import dataclass
-from ctypes import c_float
 from functools import reduce
 from pathlib import Path
 from struct import unpack, calcsize
 from io import BytesIO
-from sys import stderr, stdout
+from sys import stderr
 from typing import TextIO, Type
 from re import MULTILINE, finditer, sub
-from math import copysign
 
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
 from kaitai.data.data_types import Pointer, ProjectDataConfig, SimpleData, String, StructData
+from kaitai.data.lib.libalessaformat import alessaformat
 
 from constants import CONFIG, INDENT_SIZE, PROJECT_CONFIG
-from kaitai.sh2 import Sh2
 from utils import AddressConversion, ExeInfoByName, SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml
-
 class DataMigrationStore:
     '''A cache of information to be reused across data migration calls.'''
     atlas: SplatSymbolAddrsAtlas
@@ -144,54 +140,6 @@ def read_string(file: BytesIO, offset: int) -> str:
         c = file.read(1)
     return string
 
-def find_smallest_float_string(f: float):
-    '''
-    Try to minimize the length of a decimal string representing a float.
-    
-    a slow, silly way
-    '''
-    float_string = str(f)
-    f32 = c_float(f)
-
-    sign_value = copysign(1, f)
-    sign_symbol = sign_value < 0 and "-" or ""
-
-    if f32.value == 0:
-        return f"{sign_symbol}0.0f"
-
-    assert f32.value == c_float(f).value
-
-    size = len(float_string)
-    for i in range(len(float_string), 0, -1):
-        candidate = float_string[:i]
-        if candidate == "-": continue
-        try:
-            if c_float(float(candidate)).value != f32.value:
-                break
-        except:
-            break
-        size = i
-
-    result = float_string[:size]
-
-    match result:
-        case "3.1415927":
-            return "PI"
-        case "-3.1415927":
-            return "-PI"
-        case "1.57079637":
-            return "QUARTER_TURN"
-        case "-1.57079637":
-            return "-QUARTER_TURN"
-
-    if "." not in result:
-        result += ".0"
-
-    if not result.startswith(sign_symbol):
-        result = sign_symbol + result
-
-    return result + "f"
-
 def pretty_print_kaitai(object: KaitaiStruct, indent=""):
     '''
     Debug print a parsed KaitaiStruct.
@@ -310,7 +258,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
                     element = value[0]
                     if isinstance(element, float):
                         # float array
-                        stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(find_smallest_float_string, value)).replace("\0", "")}}},\n")
+                        stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(alessaformat.formatter, value)).replace("\0", "")}}},\n")
                     elif isinstance(element, int):
                         # int array
                         stream.write(f"{indent}/* .{attr_str} = */ {{{", ".join(map(str, value)).replace("\0", "")}}},\n")
@@ -320,7 +268,7 @@ def c_print_kaitai(object: KaitaiStruct, options: KaitaiCFormatterOptions, inden
 
             elif isinstance(value, float):
                 # float
-                stream.write(f"{indent}/* .{attr_str} = */ {find_smallest_float_string(value)},\n")
+                stream.write(f"{indent}/* .{attr_str} = */ {alessaformat.pretty_print_float(value)},\n")
             else:
                 # unknown
                 stream.write(f"{indent}/* .{attr_str} = */ {value},\n")
@@ -361,7 +309,7 @@ def migrate_struct_data(request: StructDataMigrationRequest):
 
 def default_to_str(value, hex=False):
     if isinstance(value, float):
-        return find_smallest_float_string(value)
+        return alessaformat.pretty_print_float(value)
     if isinstance(value, bytes):
         assert len(value) == 1
         return str(int(value[0]))
@@ -463,6 +411,8 @@ def run_data_migration(request: DataMigrationRequest):
         store = request.store or DataMigrationStore()
 
         store.read(project, name)
+
+        alessaformat.open_dylib()
 
         atlas = store.atlas
         data_config = store.data_config
