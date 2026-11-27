@@ -141,6 +141,9 @@ SH2_DATA: DataTable = [
     SimpleData(name="@1738_0x002AB368",                     type="<5h",                                pattern=[5]                    ),
     SimpleData(name="@1743",                                type="<5h",                                pattern=[5]                    ),
     SimpleData(name="@1748_0x002AB388",                     type="<5h",                                pattern=[5]                    ),
+    StructData(name="djames_anim",                          type=Sh2.AnimeInfo,                        count=188                      ),
+    SimpleData(name="djames_anime_adr_list",                type="<188i"                                                              ),
+    SimpleData(name="djames_clani_adr_list",                type="<188i"                                                              ),
 ]
 
 SH3_DATA: DataTable = []
