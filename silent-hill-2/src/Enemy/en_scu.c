@@ -73,7 +73,41 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlPrecaution);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlChase);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlBackward);
+static void enSCUCtrlBackward(EnLOCAL_DATA* dp) {
+    int t;
+    if (enCheckDamage(dp)) {
+        ENEMY_STEP(8);
+        return;
+    }
+    if (dp->sslv == 0) {
+        enSCUAnimeSet(dp, 1);
+        enSCUGetWalkSpeed(dp);
+        enAnimeReverse(dp);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    
+    enMoveAngleToPlayer(dp, enSCUGetRotSpeed());
+    enSCUAutoRecovery(dp);
+    
+    t = enSCUCanSeePlayer(dp);
+    if ((t == 2) && ((dp->anim_loop >= 2) || (enGetMode() >= 4))) {
+       
+        ENEMY_STEP(7);
+    } else if ((t == 0) && (dp->anim_loop >= 2) && (dp->p_dist > enSCUGetFeelRange())) {
+        
+        if (enCommunicateTribe(1, &dp->scp->pos) == NULL) {
+        
+            ENEMY_STEP(0);
+        } else {
+            ENEMY_STEP(1);
+        }
+    } else if ((dp->anim_loop >= 3) && (dp->p_dist > 750.0f)) {
+        
+        ENEMY_STEP(1);
+    }
+    enSCUSoundLife(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAmbush);
 
@@ -173,7 +207,7 @@ static void enSCUCtrlCrawl(EnLOCAL_DATA* dp) {
                         
                         
 
-                        if (enGetMode() == 0) {
+                        if (enGetMode() == SH2_BATTLE_LEVEL_BEGINNER) {
                         
                             dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
                             enKillCountUp(dp);
@@ -246,7 +280,7 @@ static void enSCUCtrlCrawl(EnLOCAL_DATA* dp) {
 
 
                     #line 1046
-                    if (enGetMode() == 0) {
+                    if (enGetMode() == SH2_BATTLE_LEVEL_BEGINNER) {
                     
                         enSCUAnimeSet(dp, 26);
                         dp->scp->battle.hp = dp->scp->battle.hp_rate = 0.0f;
