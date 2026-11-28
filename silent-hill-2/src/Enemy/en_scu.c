@@ -519,7 +519,21 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetAttackRange);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetAttackAngle);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetAttackProbability);
+static float enSCUGetAttackProbability(EnLOCAL_DATA* dp) {
+    float attack_rate[5] = { 0.2f, 0.5f, 0.7f, 0.8f, 1.0f };
+    int m;
+    
+    
+    
+    
+    
+    m = enGetMode();
+    if (BgIsOut(0) && (dp->type != 32)) return 1.0f;
+    if ((m < 3) && (enCheckPlayerBulletEmpty())) {
+        return 0.2f * attack_rate[m];
+    }
+    return attack_rate[m];
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetRepertAttackProbability);
 
