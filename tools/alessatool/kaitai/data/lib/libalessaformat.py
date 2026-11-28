@@ -6,7 +6,7 @@ from kaitai.data.float import end_float_string, find_smallest_float_string
 
 class Alessaformat:
     DYLIB_NAME = "libalessaformat.dylib"
-    SUPPORTED_PLATFORMS = ("darwin")
+    SUPPORTED_PLATFORMS = ("darwin", "linux", "linux2")
     PRINT_PLATFORM_WARNING = True
 
     lib = None
@@ -64,6 +64,7 @@ class Alessaformat:
     def warn(self, message: str):
         print(f"warning: {message}")
         print("\tfloat formatting may not be ideal.")
+        print("\trun `alessatool migrate --update` to download alessaformat.")
         self.warned_once = True
 
     def should_warn_about_platform(self):
