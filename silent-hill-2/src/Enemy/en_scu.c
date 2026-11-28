@@ -539,7 +539,9 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUSetDc);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUSoundLife);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUSoundCrawlInit);
+static void enSCUSoundCrawlInit(EnLOCAL_DATA* dp) {
+    dp->scu.count = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUSoundCrawl);
 
