@@ -529,13 +529,22 @@ static float enSCUGetAttackProbability(EnLOCAL_DATA* dp) {
     
     m = enGetMode();
     if (BgIsOut(0) && (dp->type != 32)) return 1.0f;
-    if ((m < 3) && (enCheckPlayerBulletEmpty())) {
+    if ((m <= SH2_BATTLE_LEVEL_NORMAL) && (enCheckPlayerBulletEmpty())) {
         return 0.2f * attack_rate[m];
     }
     return attack_rate[m];
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetRepertAttackProbability);
+static float enSCUGetRepertAttackProbability(void) {
+    float attack_rate[5] = { 0.0f, 0.0f, 0.2f, 0.5f, 0.99f };
+
+    
+    
+    
+    
+    
+    return attack_rate[enGetMode()];
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUGetAttackSpeed);
 
