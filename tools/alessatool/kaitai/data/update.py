@@ -6,10 +6,13 @@ import subprocess
 from dataclasses import dataclass
 from hashlib import sha1
 from pathlib import Path
-from constants import ALESSASTRUCT, ALESSASTRUCT_SH2_PYTHON, ALESSATOOL_KAITAI, KAITAI_STRUCT_COMPILER, KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER, KAITAI_STRUCT_COMPILER_ZIP
 from traceback import print_exception
 from urllib.request import urlretrieve
 from zipfile import ZipFile
+
+from utils import get_library_ext, get_target_platform
+from constants import ALESSAFORMAT, ALESSASTRUCT, ALESSASTRUCT_SH2_PYTHON, ALESSATOOL_KAITAI, KAITAI_STRUCT_COMPILER, KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER, KAITAI_STRUCT_COMPILER_ZIP
+
 
 @dataclass
 class AlessastructVersionInfo:
@@ -18,6 +21,7 @@ class AlessastructVersionInfo:
     url: str
 
 ALESSASTRUCT_URL_BASE = "https://github.com/dreamingmoths/alessastruct/releases/download"
+ALESSAFORMAT_URL_BASE = "https://github.com/dreamingmoths/alessaformat/releases/download"
 KAITAI_STRUCT_URL     = "https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/0.11/kaitai-struct-compiler-0.11.zip"
 ALESSASTRUCT_VERSIONS = [
     AlessastructVersionInfo(
@@ -29,6 +33,19 @@ ALESSASTRUCT_VERSIONS = [
         platform="macos", 
         hash="7217d2cb9eee22a611d3ab352562c6d84a64c7ac",
         url="v0.0.1/alessastruct-macos-arm64"
+    ),
+]
+
+ALESSAFORMAT_VERSIONS = [
+    AlessastructVersionInfo(
+        platform="linux", 
+        hash="33750f7829e05c7b2f2f14fb3c3d4e9e87555a79",
+        url="v0.0.1/libalessaformat.so"
+    ),
+    AlessastructVersionInfo(
+        platform="macos", 
+        hash="5ef43f76225e331fc5bbfcfb2679519e973d906f",
+        url="v0.0.1/libalessaformat.dylib"
     ),
 ]
 
@@ -50,17 +67,14 @@ KAITAI_STRUCT_COMPILER_INVOCATION = [
     f"--outdir={ALESSATOOL_KAITAI}"
 ]
 
-def get_target_platform():
-    return sys.platform == "darwin" and "macos" or "linux"
-
-def get_version_info_by_hash(target_hash: str):
-    for version_info in ALESSASTRUCT_VERSIONS:
+def get_version_info_by_hash(versions: list[AlessastructVersionInfo], target_hash: str):
+    for version_info in versions:
         if version_info.hash == target_hash:
              return version_info
     return None
 
-def get_version_info_by_platform(target_platform: str):
-    for version_info in ALESSASTRUCT_VERSIONS:
+def get_version_info_by_platform(versions: list[AlessastructVersionInfo], target_platform: str):
+    for version_info in versions:
         if version_info.platform == target_platform:
              return version_info
     return None
@@ -76,38 +90,58 @@ def make_file_executable(path: Path):
 def download_file(url: str, path: Path):
     urlretrieve(url, path.as_posix(), print_progress)
 
-def verify_alessastruct(alessastruct_path: Path) -> bool:
+def get_alessaformat_path():
+    return f"{ALESSAFORMAT}.{get_library_ext()}"
+
+def run_alessatoolchain_verification(tool_name: str, url_base: str, versions: list[AlessastructVersionInfo], tool_path: Path) -> bool:
     version_info      = None
 
-    if alessastruct_path.exists():
-        alessastruct_hash = sha1(alessastruct_path.read_bytes()).hexdigest()
-        version_info = get_version_info_by_hash(alessastruct_hash)
+    if tool_path.exists():
+        tool_hash = sha1(tool_path.read_bytes()).hexdigest()
+        version_info = get_version_info_by_hash(versions, tool_hash)
         if version_info:
-            print(f"🌺 found an alessastruct version for {version_info.platform}")
+            print(f"🌺 found an {tool_name} version for {version_info.platform}")
         else:
-            print(f"out-of-date alessastruct version: {alessastruct_hash}")
+            print(f"out-of-date {tool_name} version: {tool_hash}")
     else:
-        print(f"couldn't find an alessastruct version")
+        print(f"couldn't find an {tool_name} version")
 
     if not version_info:
         try:
             target_platform = get_target_platform()
-            version_info = get_version_info_by_platform(target_platform)
-            url = f"{ALESSASTRUCT_URL_BASE}/{version_info.url}"
+            version_info = get_version_info_by_platform(versions, target_platform)
+            url = f"{url_base}/{version_info.url}"
 
-            download_file(url, alessastruct_path)
-            make_file_executable(alessastruct_path)
+            download_file(url, tool_path)
+            make_file_executable(tool_path)
 
-            print(f"🟣 updated alessastruct version from {version_info.url}")
-            print(f"   @ {alessastruct_path.as_posix()}")
+            print(f"🟣 updated {tool_name} version from {version_info.url}")
+            print(f"   @ {tool_path.as_posix()}")
         except Exception as exception:
-            print(f"🔴 failed to update alessastruct version")
+            print(f"🔴 failed to update {tool_name} version")
             print_exception(exception)
+            return False
 
     if not version_info:
         return False
 
     return True
+
+def verify_alessastruct(alessastruct_path: Path) -> bool:
+    return run_alessatoolchain_verification(
+        tool_name="alessastruct",
+        url_base=ALESSASTRUCT_URL_BASE,
+        versions=ALESSASTRUCT_VERSIONS,
+        tool_path=alessastruct_path
+    )
+
+def verify_alessaformat(alessaformat_path: Path) -> bool:
+    return run_alessatoolchain_verification(
+        tool_name="alessaformat",
+        url_base=ALESSAFORMAT_URL_BASE,
+        versions=ALESSAFORMAT_VERSIONS,
+        tool_path=alessaformat_path
+    )
 
 def strtobool(value: str) -> bool:
     value = value.lower()
@@ -155,10 +189,11 @@ def find_kaitai_struct_compiler(kaitai_struct_path: Path) -> Path | None:
     return kaitai_struct_path
 
 def clean_alessastruct_dependencies():
-    result = input("this will delete the local copy of the kaitai struct compiler and alessastruct. continue (y/n)?: ")
+    result = input("this will delete the local copy of the kaitai struct compiler and the alessatoolchain. continue (y/n)?: ")
     if strtobool(result):
         subprocess.run(["rm", "-rf", KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER])
         subprocess.run(["rm", "-f",  ALESSASTRUCT])
+        subprocess.run(["rm", "-f",  get_alessaformat_path()])
 
 def run_alessastruct(alessastruct_path: Path):
     subprocess.run([alessastruct_path.as_posix(), *ALESSASTRUCT_INVOCATION])
@@ -178,7 +213,10 @@ def postprocess_python_output():
 def update_alessastruct():
     alessastruct_path  = Path(ALESSASTRUCT)
     if not verify_alessastruct(alessastruct_path): return
-    
+
+    alessaformat_path = Path(get_alessaformat_path())
+    if not verify_alessaformat(alessaformat_path): return
+
     kaitai_struct_path = Path(KAITAI_STRUCT_COMPILER)
     kaitai_struct_path = find_kaitai_struct_compiler(kaitai_struct_path)
     if not kaitai_struct_path: return
