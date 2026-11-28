@@ -7,18 +7,46 @@
 
 #pragma fast_fptosi on
 
-static void enSCUSoundCrawl(EnLOCAL_DATA* dp);
-static float enSCUGetCrawlSpeed(EnLOCAL_DATA* dp);
-static void enSCUSoundCrawlInit(EnLOCAL_DATA* dp);
+static void enSCUCtrlAutomatic(EnLOCAL_DATA* dp);
+static void enSCUCtrlSleep(EnLOCAL_DATA* dp);
+static void enSCUCtrlGoPlayable(EnLOCAL_DATA* dp);
+static void enSCUCtrlEvent(EnLOCAL_DATA* dp);
+static void enSCUCtrlHand(void);
+static void enSCUCtrlWander(EnLOCAL_DATA* dp);
+static void enSCUCtrlPrecaution(EnLOCAL_DATA* dp);
+static void enSCUCtrlChase(EnLOCAL_DATA* dp);
+static void enSCUCtrlBackward(EnLOCAL_DATA* dp);
+static void enSCUCtrlAmbush(EnLOCAL_DATA* dp);
+static void enSCUCtrlWaitCar(EnLOCAL_DATA* dp);
+static void enSCUCtrlCrawl(EnLOCAL_DATA* dp);
+static void enSCUCtrlAttack(EnLOCAL_DATA* dp);
+static void enSCUCtrlDamage(EnLOCAL_DATA* dp);
+static void enSCUCtrlConfuse(EnLOCAL_DATA* dp);
+static void enSCUCtrlDown(EnLOCAL_DATA* dp);
 static int enSCUCanSeePlayer(EnLOCAL_DATA* dp);
+static int enSCUCheckAmbush(EnLOCAL_DATA* dp);
 static int enSCUCheckUpper(EnLOCAL_DATA* dp);
 static void enSCUAnimeSet(EnLOCAL_DATA* dp, int anim);
+static void enSCUAnimeReset(EnLOCAL_DATA* dp, int anim);
+static void enSCUAnimeExec(EnLOCAL_DATA* dp);
 static void enSCUAutoRecovery(EnLOCAL_DATA* dp);
-static int enSCUCheckAmbush(EnLOCAL_DATA* dp);
+static float enSCUGetWalkSpeed(EnLOCAL_DATA* dp);
+static float enSCUGetCrawlSpeed(EnLOCAL_DATA* dp);
+static float enSCUGetFeelRange(void);
+static float enSCUGetAttackRange(void);
+static float enSCUGetAttackAngle(void);
+static float enSCUGetAttackProbability(EnLOCAL_DATA* dp);
+static float enSCUGetRepertAttackProbability(void);
+static float enSCUGetAttackSpeed(EnLOCAL_DATA* dp);
 static float enSCUGetRotSpeed(void);
-static void enSCUCtrlWaitCar(EnLOCAL_DATA* dp):
-static void enSCUCtrlCrawl(EnLOCAL_DATA* dp);
-static void enSCUAnimeSet(EnLOCAL_DATA* dp, int anim);
+static float enSCUGetAimingSpeed(void);
+static void enSCUSetDownTime(EnLOCAL_DATA* dp);
+static float enSCUGetCrawlProbability(void);
+static void enSCUSetMoveCount(EnLOCAL_DATA* dp);
+static void enSCUSetDc(EnLOCAL_DATA* dp);
+static void enSCUSoundLife(EnLOCAL_DATA* dp);
+static void enSCUSoundCrawlInit(EnLOCAL_DATA* dp);
+static void enSCUSoundCrawl(EnLOCAL_DATA* dp);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUInitData);
 
@@ -43,8 +71,6 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlChase);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlBackward);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAmbush);
-
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlWaitCar);
 
 static void enSCUCtrlWaitCar(EnLOCAL_DATA* dp) {
     if (dp->sslv == 0) {
@@ -270,7 +296,70 @@ static void enSCUCtrlCrawl(EnLOCAL_DATA* dp) {
     enSCUAutoRecovery(dp);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAttack);
+static void enSCUCtrlAttack(EnLOCAL_DATA* dp) {
+    if (enCheckDamage(dp)) {
+        ENEMY_STEP(8);
+        return;
+    }
+    switch (dp->sslv) {
+        case 0:
+            if (shRandF() < enSCUGetAttackProbability(dp)) {
+                enSCUAnimeReset(dp, 3);
+                enSCUGetAttackSpeed(dp);
+                enFlagSetCritical(dp);
+                enAttackStart(dp);
+                ENEMY_NEXT_SUB_STEP();
+            } else {
+                if (dp->anim == 2) {
+                    enSCUSetMoveCount(dp);
+                    dp->anim_n = 0;
+                } else {
+                    enSCUAnimeReset(dp, 2);
+                }
+                ENEMY_SUB_STEP(2);
+            }
+            break;
+        case 1:
+            enMoveAngleToPlayer(dp, enSCUGetAimingSpeed());
+            
+            enAttackCheck(dp, 36);
+            if (dp->anim_n == -1) {
+                enFlagResetCritical(dp);
+                if ((shRandF() < enSCUGetRepertAttackProbability()) && (enSCUCanSeePlayer(dp) == 2)) {
+                    
+                   
+                    ENEMY_SUB_STEP(0);
+                } else
+                    if (dp->type & 2) {
+                        if ((enGetPlayerDistance(dp) < 750.0f) && (enGetMode() >= SH2_BATTLE_LEVEL_EASY)) {
+                            
+                            ENEMY_STEP(3);
+                        } else {
+                            ENEMY_STEP(2);
+                        }
+                } else {
+                    ENEMY_STEP(2);
+                }
+            }
+            
+            break;
+        case 2:
+            enSCUSoundLife(dp);
+            if (dp->anim_n == -1) {
+                if (dp->type & 2) {
+                    if (enGetPlayerDistance(dp) < 750.0f) {
+                        ENEMY_SUB_STEP(0);
+                    } else {
+                        ENEMY_STEP(2);
+                    }
+                } else {
+                    ENEMY_STEP(2);
+                }
+            }
+            break;
+    }
+    enSCUAutoRecovery(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlDamage);
 
