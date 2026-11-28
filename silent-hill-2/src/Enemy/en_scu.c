@@ -16,7 +16,9 @@ static void enSCUAnimeSet(EnLOCAL_DATA* dp, int anim);
 static void enSCUAutoRecovery(EnLOCAL_DATA* dp);
 static int enSCUCheckAmbush(EnLOCAL_DATA* dp);
 static float enSCUGetRotSpeed(void);
+static void enSCUCtrlWaitCar(EnLOCAL_DATA* dp):
 static void enSCUCtrlCrawl(EnLOCAL_DATA* dp);
+static void enSCUAnimeSet(EnLOCAL_DATA* dp, int anim);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUInitData);
 
@@ -43,6 +45,25 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlBackward);
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAmbush);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlWaitCar);
+
+static void enSCUCtrlWaitCar(EnLOCAL_DATA* dp) {
+    if (dp->sslv == 0) {
+        enSetSize(dp, 250.0f, 200.0f, 100.0f, 200.0f);
+        enSCUAnimeSet(dp, 24);
+        enFlagSetRotFloor(dp);
+        enFlagResetMoved(dp);
+        dp->flag |= (1 << 3);
+        dp->lie = 0;
+        ENEMY_NEXT_SUB_STEP();
+    }
+    if (dp->p_dist < 2000.0f) {
+        dp->scp->rot.y = enGetPlayerDirection(dp);
+        enFlagSetMoved(dp);
+        dp->flag &= ~(1 << 3);
+        dp->type &= ~(1 << 3);
+        ENEMY_STEP(6);
+    }
+}
 
 #line 898
 static void enSCUCtrlCrawl(EnLOCAL_DATA* dp) {
