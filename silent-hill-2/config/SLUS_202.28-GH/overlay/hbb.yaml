@@ -1,0 +1,29 @@
+name: hbb
+sha1: bbaff15cdbb40fe48e1d3a0740c2e973ef540632
+options:
+  basename: hbb
+  elf_path: hbb.bin
+  target_path: rom/overlay/hbb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/hbb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/hbb_reloc_addrs.txt
+  ld_script_path: linkers/hbb.ld
+  undefined_funcs_auto_path: linkers/hbb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hbb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: hbb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, hbb_overlay_header]
+      - [0x80, c, Event/stage/stg_hospital_bf_b]
+      - [0x1F00, data, Event/stage/stg_hospital_bf_b_data]
+      - { vram: 0x1F27F00, type: bss, name: Event/stage/stg_hospital_bf_b_bss }
+  - [0x2A80]

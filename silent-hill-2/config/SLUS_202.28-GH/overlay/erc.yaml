@@ -1,0 +1,29 @@
+name: erc
+sha1: d22a0c35e9b53fe3e0037d3db2fe6ddaf38c13be
+options:
+  basename: erc
+  elf_path: erc.bin
+  target_path: rom/overlay/erc.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/erc_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/erc_reloc_addrs.txt
+  ld_script_path: linkers/erc.ld
+  undefined_funcs_auto_path: linkers/erc_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/erc_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: erc
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0xD80
+    subsegments:
+      - [0x0, databin, erc_overlay_header]
+      - [0x80, c, Event/stage/stg_end_recovery]
+      - [0x1980, data, Event/stage/stg_end_recovery_data]
+      - { vram: 0x1F27D00, type: bss, name: Event/stage/stg_end_recovery_bss }
+  - [0x2880]

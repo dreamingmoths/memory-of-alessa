@@ -1,0 +1,29 @@
+name: hxe
+sha1: 4073a4e64e27821cc496f9ac5ba154416de63940
+options:
+  basename: hxe
+  elf_path: hxe.bin
+  target_path: rom/overlay/hxe.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/hxe_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/hxe_reloc_addrs.txt
+  ld_script_path: linkers/hxe.ld
+  undefined_funcs_auto_path: linkers/hxe_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hxe_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: hxe
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, hxe_overlay_header]
+      - [0x80, c, Event/stage/stg_hospital_1fe_b]
+      - [0xB00, data, Event/stage/stg_hospital_1fe_b_data]
+      - { vram: 0x1F26580, type: bss, name: Event/stage/stg_hospital_1fe_b_bss }
+  - [0x1100]

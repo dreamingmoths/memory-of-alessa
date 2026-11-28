@@ -1,0 +1,29 @@
+name: aey
+sha1: fae420d4fd5ea0e75ba7f1338d1dca4ef6f30e05
+options:
+  basename: aey
+  elf_path: aey.bin
+  target_path: rom/overlay/aey.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/aey_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/aey_reloc_addrs.txt
+  ld_script_path: linkers/aey.ld
+  undefined_funcs_auto_path: linkers/aey_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/aey_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: aey
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, aey_overlay_header]
+      - [0x80, c, Event/stage/stg_apart_e2f]
+      - [0x4100, data, Event/stage/stg_apart_e2f_data]
+      - { vram: 0x1F2B380, type: bss, name: Event/stage/stg_apart_e2f_bss }
+  - [0x5F00]

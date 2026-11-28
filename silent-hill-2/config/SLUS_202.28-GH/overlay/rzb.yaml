@@ -1,0 +1,27 @@
+name: rzb
+sha1: 22f866dc45cbd3fce786ce982e08391b7de6a62d
+options:
+  basename: rzb
+  elf_path: rzb.bin
+  target_path: rom/overlay/rzb.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/rzb_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/rzb_reloc_addrs.txt
+  ld_script_path: linkers/rzb.ld
+  undefined_funcs_auto_path: linkers/rzb_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/rzb_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: rzb
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    subsegments:
+      - [0x0, databin, rzb_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_3f_b]
+      - [0x280, data, Event/stage/stg_hotel_3f_b_data]
+  - [0x580]

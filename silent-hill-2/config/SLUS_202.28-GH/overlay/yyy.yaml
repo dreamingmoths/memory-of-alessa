@@ -1,0 +1,27 @@
+name: yyy
+sha1: 04097cc353e36b16f6b35051cbdce9acf3cff10a
+options:
+  basename: yyy
+  elf_path: yyy.bin
+  target_path: rom/overlay/yyy.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/yyy_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/yyy_reloc_addrs.txt
+  ld_script_path: linkers/yyy.ld
+  undefined_funcs_auto_path: linkers/yyy_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/yyy_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: yyy
+    type: code
+    vram: 0x1E08700
+    start: 0x0
+    subsegments:
+      - [0x0, databin, yyy_overlay_header]
+      - [0x80, c, Event/stage/stg_yyy]
+      - [0x100, data, Event/stage/stg_yyy_data]
+  - [0x200]

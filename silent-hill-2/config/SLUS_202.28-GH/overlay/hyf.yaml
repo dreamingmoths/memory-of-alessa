@@ -1,0 +1,29 @@
+name: hyf
+sha1: 5063544f8ee4acb338a5c2e5ace3a5cdefdd1196
+options:
+  basename: hyf
+  elf_path: hyf.bin
+  target_path: rom/overlay/hyf.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/hyf_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/hyf_reloc_addrs.txt
+  ld_script_path: linkers/hyf.ld
+  undefined_funcs_auto_path: linkers/hyf_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/hyf_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: hyf
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, hyf_overlay_header]
+      - [0x80, c, Event/stage/stg_hospital_2f_f]
+      - [0xC00, data, Event/stage/stg_hospital_2f_f_data]
+      - { vram: 0x1F26B80, type: bss, name: Event/stage/stg_hospital_2f_f_bss }
+  - [0x1700]

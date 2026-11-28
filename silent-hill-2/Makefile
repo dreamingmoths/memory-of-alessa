@@ -1,4 +1,4 @@
-SERIAL := SLUS_202.28
+SERIAL ?= SLUS_202.28
 OVERLAYS ?= \
 		aee \
 		aew \

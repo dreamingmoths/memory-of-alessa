@@ -1,0 +1,29 @@
+name: dly
+sha1: 69286d84a9687efa88d85f0b18f06c65d0fef0a0
+options:
+  basename: dly
+  elf_path: dly.bin
+  target_path: rom/overlay/dly.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/dly_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/dly_reloc_addrs.txt
+  ld_script_path: linkers/dly.ld
+  undefined_funcs_auto_path: linkers/dly_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/dly_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: dly
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0x80
+    subsegments:
+      - [0x0, databin, dly_overlay_header]
+      - [0x80, c, Event/stage/stg_delusion_2]
+      - [0x500, data, Event/stage/stg_delusion_2_data]
+      - { vram: 0x1F25D80, type: bss, name: Event/stage/stg_delusion_2_bss }
+  - [0x900]

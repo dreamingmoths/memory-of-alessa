@@ -1,0 +1,29 @@
+name: twe
+sha1: f7cc8cc56ca60170bd9230182aeeb586f11b38a1
+options:
+  basename: twe
+  elf_path: twe.bin
+  target_path: rom/overlay/twe.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/twe_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/twe_reloc_addrs.txt
+  ld_script_path: linkers/twe.ld
+  undefined_funcs_auto_path: linkers/twe_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/twe_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: twe
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    bss_size: 0xD80
+    subsegments:
+      - [0x0, databin, twe_overlay_header]
+      - [0x80, c, Event/stage/stg_town_east]
+      - [0x3C00, data, Event/stage/stg_town_east_data]
+      - { vram: 0x1F2C800, type: bss, name: Event/stage/stg_town_east_bss }
+  - [0x7380]

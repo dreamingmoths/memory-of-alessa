@@ -1,0 +1,27 @@
+name: rfr
+sha1: b3ea72baf41044ff5282bc356991ee1c8242a2a4
+options:
+  basename: rfr
+  elf_path: rfr.bin
+  target_path: rom/overlay/rfr.bin
+  find_file_boundaries: False
+  asm_path: asm
+  symbol_addrs_path:
+   - overlay/rfr_symbol_addrs.txt
+   - symbol_addrs.txt
+   - sdk_symbol_addrs.txt
+  reloc_addrs_path: overlay/rfr_reloc_addrs.txt
+  ld_script_path: linkers/rfr.ld
+  undefined_funcs_auto_path: linkers/rfr_undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/rfr_undefined_syms_auto.main.txt
+  symbol_name_format: $VRAM_$SEG
+segments:
+  - name: rfr
+    type: code
+    vram: 0x1F25480
+    start: 0x0
+    subsegments:
+      - [0x0, databin, rfr_overlay_header]
+      - [0x80, c, Event/stage/stg_hotel_fire]
+      - [0x500, data, Event/stage/stg_hotel_fire_data]
+  - [0x900]
