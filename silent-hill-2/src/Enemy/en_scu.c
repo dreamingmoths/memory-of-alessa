@@ -91,7 +91,44 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlHand);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlWander);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlPrecaution);
+static void enSCUCtrlPrecaution(EnLOCAL_DATA* dp) {
+    int t;
+    if (enCheckDamage(dp)) {
+        ENEMY_STEP(8);
+        return;
+    }
+    if (dp->sslv == 0) {
+        enSCUAnimeReset(dp, 2);
+        enInitPath(&dp->path, dp->scp->rot.y);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    if (enSCUCheckAmbush(dp)) {
+        ENEMY_STEP(4);
+        return;
+    }
+    if (dp->anim_n == -1) {
+        
+        t = enSCUCanSeePlayer(dp);
+        if (t == 2) {
+            ENEMY_STEP(7);
+        } else if ((t == 1) && (dp->p_dist > 500.0f)) {
+            
+            ENEMY_STEP(2);
+        } else if (enCommunicateTribe(1, &dp->scp->pos) == NULL) {
+            
+            if (dp->p_dist > enSCUGetAttackRange()) {
+                ENEMY_STEP(0);
+            }
+        } else {
+            enSCUAnimeReset(dp, 2);
+        }
+    }
+    
+    enMoveAngleToPlayer(dp, enSCUGetRotSpeed());
+    enSCUAutoRecovery(dp);
+    enSCUSoundLife(dp);
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlChase);
 
