@@ -6,6 +6,10 @@ from utils import get_library_ext
 from kaitai.data.float import end_float_string, find_smallest_float_string
 
 class Alessaformat:
+    '''
+    https://github.com/dreamingmoths/alessaformat
+    '''
+
     DYLIB_NAME = "libalessaformat"
     SUPPORTED_PLATFORMS = ("darwin", "linux", "linux2")
     PRINT_PLATFORM_WARNING = True

@@ -123,7 +123,6 @@ SH2_DATA: DataTable = [
     StructData(name="_Area_Info_List_0x0037D7B0",           type=Sh2.ShadowEnv,                        count=1                        ),
     StructData(name="cb_env",                               type=Sh2.ShadowEnv,                        count=2                        ),
     StructData(name="cc_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
-    StructData(name="er_env",                               type=Sh2.ShadowEnv,                        count=1                        ),
     StructData(name="bw_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
     StructData(name="ap_env",                               type=Sh2.ShadowEnv,                        count=3                        ),
     StructData(name="hp_env",                               type=Sh2.ShadowEnv,                        count=23                       ),
