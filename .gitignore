@@ -19,7 +19,9 @@ tools/mwccgap.version
 tools/ps2iso_*
 tools/alessastruct
 tools/kaitai-struct-compiler-0.11
+
 libalessaformat.dylib
+libalessaformat.so
 
 **/iso/*.iso
 **/iso/files
