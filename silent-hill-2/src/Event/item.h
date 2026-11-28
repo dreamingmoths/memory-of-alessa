@@ -30,7 +30,7 @@
 #define SH2_ITEM_20      20
 #define SH2_ITEM_21      21
 #define SH2_ITEM_22      22
-#define APART_GATE_KEY   23
+#define SH2_ITEM_APART_GATE_KEY   23
 #define APART_202_KEY    24
 #define SH2_ITEM_25      25
 #define SH2_ITEM_26      26

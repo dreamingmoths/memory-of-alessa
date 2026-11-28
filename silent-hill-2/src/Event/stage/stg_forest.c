@@ -83,7 +83,7 @@ static float stg_forest_forest_se_r = 0.0f; // size: 0x4, address: 0x1F03E28
             EV_PROG_STEP(2);
             /* fallthrough */
         case 2:
-            if (!EvSubFileLoadAndFadeOut(NULL, &data_pic_out_p_redpaper_tex, 0))
+            if (!EvSubFileLoadAndFadeOut(NULL, data_pic_out_p_redpaper_tex, 0))
                 break;
             ScreenEffectFadeStart(4, 0.0f);
             EV_PROG_STEP(3);

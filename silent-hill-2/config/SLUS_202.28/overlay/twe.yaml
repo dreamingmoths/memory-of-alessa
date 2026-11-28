@@ -24,6 +24,6 @@ segments:
     subsegments:
       - [0x0, databin, twe_overlay_header]
       - [0x80, c, Event/stage/stg_town_east]
-      - [0x3000, data, Event/stage/stg_town_east_data]
-      - { vram: 0x1F08200, type: bss, name: Event/stage/stg_town_east_bss }
+      - [0x3000, .data, Event/stage/stg_town_east]
+      - { vram: 0x1F08200, type: .bss, name: Event/stage/stg_town_east }
   - [0x6400]

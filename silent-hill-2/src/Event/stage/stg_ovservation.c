@@ -132,7 +132,7 @@ static int stg_ovservation_py_01F02DC8 = -506;
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_ovservation", stg_ovservation_EvProgItemInCar);
 
 /* static */ int stg_ovservation_EvProgNothingTakeInCar(void) {
-    return EvSubPictureDisplay(&data_pic_out_p_incar_tex, 3);
+    return EvSubPictureDisplay(data_pic_out_p_incar_tex, 3);
 }
 
 /* static */ int stg_ovservation_EvProgHadBetterGetMap(void) {

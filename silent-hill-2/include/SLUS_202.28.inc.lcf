@@ -299,12 +299,12 @@ SECTIONS
 		. = ALIGN(0x80);
 		ALIGNALL(0x4);
 
-		stg_town_east_data.data.s.o (.data)
+		stg_town_east.c.o (.data)
 
 		. = ALIGN(0x80);
 		ALIGNALL(0x8);
 
-		stg_town_east_bss.bss.s.o (.bss)
+		stg_town_east.c.o (.bss)
 	}	>	twe.bin
 
 	.obs.bin :

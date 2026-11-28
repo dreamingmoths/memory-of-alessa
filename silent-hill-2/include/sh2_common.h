@@ -29,6 +29,7 @@
 #define SH2_SOUND_10006                 10006
 #define SH2_SOUND_15002                 15002
 #define SH2_SOUND_16021                 16021
+#define SH2_SOUND_16502                 16502
 #define SH2_SOUND_19023                 19023
 #define SH2_SOUND_19025                 19025
 #define SH2_SOUND_19031                 19031

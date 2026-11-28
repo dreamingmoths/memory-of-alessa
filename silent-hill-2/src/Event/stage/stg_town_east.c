@@ -1,5 +1,6 @@
 #include "sh2_common.h"
 #include "sce/libvu0.h"
+#include "vec.h"
 
 #include "Chacter/m3_play_event.h"
 #include "Chacter/m3_sc.h"
@@ -7,15 +8,22 @@
 #include "Collision/cl_main.h"
 
 #include "data/fs_structs.h"
+#include "data/daily.thu/data_chr_scu.h"
 #include "data/daily.thu/data_chr_jms.h"
 #include "data/daily.thu/data_chr_wp.h"
+#include "data/daily.thu/data_demo_machi.h"
+#include "data/daily.thu/data_demo_saisho.h"
+#include "data/daily.thu/data_pic_out.h"
 
+#include "Event/chara_data_load.h"
 #include "Event/event.h"
 #include "Event/event_sub.h"
 #include "Event/demoview.h"
 #include "Event/item.h"
-#include "Event/chara_data_load.h"
+#include "Event/stg_name.h"
 
+#include "GFW/sh2_DrawEnvData.h"
+#include "GFW/sh2_set_drawenv.h"
 #include "GFW/sh2gfw_2d_filters.h"
 
 #include "SH2_common/pad.h"
@@ -26,25 +34,2927 @@
 #include "view/vc_main.h"
 #include "view/vc_util.h"
 
-UNMIGRATED(fsFileIndex data_demo_saisho_scu_anm[1]); // data_demo_saisho.c
-UNMIGRATED(fsFileIndex data_chr_scu_scu_anm[1]); // data_chr_scu.c
+static int stg_town_east_EvProgShadowOfSomenthing(void);
+static int stg_town_east_EvProgSandersBack(void);
+static int stg_town_east_EvProgFirstMonsterStart(void);
+static int stg_town_east_EvProgFirstMonsterCorpse(void);
+static int stg_town_east_EvProgFirstMonsterEnd(void);
+static int stg_town_east_EvProgBloodSwamp(void);
+static int stg_town_east_EvProgGetApartGateKey(void);
+static int stg_town_east_EvProgUseApartGateKey(void);
+static int stg_town_east_EvProgLookMemoFalled(void);
+static void stg_town_east_EvStageInit(void);
+static int stg_town_east_EvCharaDataClear(void);
+static void stg_town_east_EvRoomInit(void);
+static void stg_town_east_EvAllTimeFunc(void);
+static int stg_town_east_EvBgmControl(void);
+static void stg_town_east_EvLockSetCb46(int* list);
+static void stg_town_east_EvCorpseSetCb18(int* list);
+static void stg_town_east_EvCorpseSetCb26(int* list); // @note: signature different from DWARF
+static void stg_town_east_EvWallSetCb19(int* list);
+static void stg_town_east_EvWallSetCb20(int* list);
+static void stg_town_east_EvWallSetCb21(int* list);
+static void stg_town_east_EvWallSetCb49(int* list);
+static void stg_town_east_EvWallSetCb52(int* list);
+static void stg_town_east_EvSignalControlCb27(int* list);
+static void stg_town_east_EvSignalControlCb28(int* list);
+static void stg_town_east_EvSignalControlCb29(int* list);
+static void stg_town_east_EvSignalControlCb35(int* list);
+static void stg_town_east_EvSignalControlCb36(int* list);
+static void stg_town_east_EvSignalControlCb37(int* list);
+static void stg_town_east_EvTapeSetCb11(int* list);
+static void stg_town_east_EvTapeSetCb12(int* list);
+static float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm);
+static void stg_town_east_CB_1stMoster_FogHosei(void);
+static void stg_town_east_CB_1stMonster_Filter(void);
+static void stg_town_east_Draw_CB_Tonnel(void);
+static void stg_town_east_Monster1st_Look(void* sp, float* ambient);
 
-UNMIGRATED(/* static */ u_long128* stg_town_east_anim_adr); // size: 0x4, address: 0x1F08200
-UNMIGRATED(/* static */ char* stg_town_east_dds_adr[4]); // size: 0x10, address: 0x1F07DD0
-UNMIGRATED(/* static */ u_long128* stg_town_east_wp_mdl); // size: 0x4, address: 0x1F08208
-UNMIGRATED(/* static */ u_long128* stg_town_east_wp_anm); // size: 0x4, address: 0x1F08210
+static AnimeInfo stg_town_east_pjames_stage_anim[21] = { // size: 0xFC, address: 0x1F04E00
+    {
+        /* .name = */ 20001,
+        /* .frame = */ 20,
+        /* .speed = */ 1024,
+        /* .start = */ 1024,
+        /* .end = */ 1043,
+        /* .loop = */ 0,
+        /* .pad = */ 10,
+    },
+    {
+        /* .name = */ 20007,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1044,
+        /* .end = */ 1073,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20008,
+        /* .frame = */ 15,
+        /* .speed = */ 768,
+        /* .start = */ 1074,
+        /* .end = */ 1088,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20009,
+        /* .frame = */ 15,
+        /* .speed = */ 768,
+        /* .start = */ 1089,
+        /* .end = */ 1103,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20010,
+        /* .frame = */ 30,
+        /* .speed = */ 768,
+        /* .start = */ 1104,
+        /* .end = */ 1133,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20011,
+        /* .frame = */ 30,
+        /* .speed = */ 768,
+        /* .start = */ 1134,
+        /* .end = */ 1163,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20012,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1168,
+        /* .end = */ 1178,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20013,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1183,
+        /* .end = */ 1193,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20014,
+        /* .frame = */ 30,
+        /* .speed = */ 640,
+        /* .start = */ 1194,
+        /* .end = */ 1223,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20015,
+        /* .frame = */ 30,
+        /* .speed = */ 640,
+        /* .start = */ 1224,
+        /* .end = */ 1253,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20016,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1258,
+        /* .end = */ 1268,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20017,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1273,
+        /* .end = */ 1283,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20018,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1284,
+        /* .end = */ 1313,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20019,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1314,
+        /* .end = */ 1343,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20020,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1344,
+        /* .end = */ 1373,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20025,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1378,
+        /* .end = */ 1388,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20026,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1393,
+        /* .end = */ 1403,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20027,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1404,
+        /* .end = */ 1433,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20028,
+        /* .frame = */ 30,
+        /* .speed = */ 1024,
+        /* .start = */ 1434,
+        /* .end = */ 1463,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        /* .name = */ 20037,
+        /* .frame = */ 15,
+        /* .speed = */ 1024,
+        /* .start = */ 1464,
+        /* .end = */ 1478,
+        /* .loop = */ 0,
+        /* .pad = */ 0,
+    },
+    {
+        NULL
+    }
+};
 
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb11[8]); // @ 0x1F05580
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb12[7]); // @ 0x1F05800
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb18[4]); // @ 0x1F05A30
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb19[10]); // @ 0x1F05B70
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb20[10]); // @ 0x1F05E90
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb21[2]); // @ 0x1F061B0
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb49[14]); // @ 0x1F06250
-UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); // @ 0x1F066B0
+static u_int stg_town_east_ev_pos[150] = { 
+    0x00000000, 0xD4008000, 0x6CE2C72D, 0xD0007065, 0x8000C604,
+    0xC72BE000, 0x6FD063D0, 0xC7B7CB53, 0xE3F5D3B3, 0x5E3FC772,
+    0x5800D1DD, 0x80004618, 0x460A4800, 0xDE005E40, 0x8000C755, 
+    0xC6E54C00, 0x04795FD0, 0x047A0000, 0x047B0000, 0xD4000000, 
+    0x80004694, 0xC68F5230, 0x90B45FF7, 0x80004680, 0x4685C800, 
+    0x57265B94, 0x4683BDCD, 0xE6CD8000, 0xDB944683, 0x4EDCD726, 
+    0x80004689, 0x468EFF4D, 0x57E76009, 0x468D5878, 0xFC3D8000, 
+    0xE009468F, 0xF64DD7E7, 0xD4D2C7CF, 0x457C393B, 0x0F4E62E3,
+    0x8000C705, 0x47187267, 0xE189D7BD, 0xE1B7E010, 0x8000E103, 
+    0xC7D1AF0E, 0x393B8000, 0x62E3457C, 0x47D9BCA6, 0x033E8000, 
+    0xE16B4718, 0xD435604B, 0x8000C566, 0x462116D2, 0xD0005E0C, 
+    0x80004736, 0x473F6800, 0x8703636C, 0x80004739, 0x473DE6FF, 
+    0x53E4DFBC, 0x4E40E1A0, 0x4734AA00, 0x38008000, 0x66D64747,
+    0x818065D2, 0x8000473B, 0x474591B3, 0x5615DD61, 0x604DDCF9, 
+    0x6115BD81, 0xC7C1C4A7, 0x71388000, 0x63CBC768, 0x479BE686,
+    0x70818000, 0x641CC76C, 0xC7683227, 0xD80F8000, 0xF6B2470F, 
+    0x8000C765, 0x4712C52A, 0xC7663FB4, 0xDE118000, 0xEFE64714, 
+    0x8000C767, 0x4717560B, 0xC7647332, 0x62EA8000, 0x97B44719, 
+    0x8000C768, 0x471B6911, 0xC7DE1200, 0x90008000, 0x5E404549, 
+    0x46279400, 0xA0008000, 0x5DEF452F, 0xC7570A00, 0xB2008000, 
+    0x70F44722, 0xC7DDF900, 0x46FF8000, 0x6FA44575, 0xC7A21C00, 
+    0xB0007A1A, 0x636C457E, 0xC60CA000, 0x00008000, 0x706546FA, 
+    0x70658000, 0x0000EE59, 0x0000ED5F, 0x80000000, 0x46FA0000,
+    0x80006DDC, 0xEBD06DDC, 0xEE590000, 0xC7DEA800, 0x00007A1A,
+    0x69DCC57A, 0x4000715F, 0x7A1AC59C, 0xC7686C00, 0x69DC70E2,
+    0x47379800, 0x7C007A1A, 0x67D0C712, 0x8C0065DC, 0x7A1A4739,
+    0xC72BE000, 0x65DC67D0, 0xC781E200, 0x64007A1A, 0x719D4716, 
+    0xE80069DC, 0x7A1AC77D, 0xC77DE800, 0x69DC70E2, 0xC7BA8600,
+    0x00007A1A, 0x67D0C57A, 0x6FD068E2, 0x70E268E2, 0x68008000, 
+    0x7A1AC7BF, 0xC75AC000, 0x8000721A, 0xE9DC7120, 0xE9DC0000 
+}; // size: 0x258, address: 0x1F04F00
 
+static Event_List stg_town_east_ev_list[48] = { // size: 0x300, address: 0x1F05160
+    {
+        /* .flag = */ 2555904,
+        /* .cond = */ 1073786880,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 16423,
+    },
+    {
+        /* .flag = */ 2818048,
+        /* .cond = */ 1074704384,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 32768,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 538726400,
+        /* .rslt0 = */ 1076498496,
+        /* .rslt1 = */ 0,
+    },
+    {
+        /* .flag = */ -2131034112,
+        /* .cond = */ 540426240,
+        /* .rslt0 = */ 1078079552,
+        /* .rslt1 = */ 4195575,
+    },
+    {
+        /* .flag = */ 16449536,
+        /* .cond = */ 540426240,
+        /* .rslt0 = */ 1078865984,
+        /* .rslt1 = */ 4195575,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 542789636,
+        /* .rslt0 = */ -1610612736,
+        /* .rslt1 = */ 50425,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 543707140,
+        /* .rslt0 = */ -1610612736,
+        /* .rslt1 = */ 50425,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 544624640,
+        /* .rslt0 = */ 1082413056,
+        /* .rslt1 = */ 37748736,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 545542144,
+        /* .rslt0 = */ 1081495552,
+        /* .rslt1 = */ 37748736,
+    },
+    {
+        /* .flag = */ -2131034112,
+        /* .cond = */ 546447360,
+        /* .rslt0 = */ -1879048192,
+        /* .rslt1 = */ 62898176,
+    },
+    {
+        /* .flag = */ 3080192,
+        /* .cond = */ 547254272,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 114735,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ -1601035912,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 131120,
+    },
+    {
+        /* .flag = */ -2144337920,
+        /* .cond = */ 546447360,
+        /* .rslt0 = */ 1085542816,
+        /* .rslt1 = */ 58720305,
+    },
+    {
+        /* .flag = */ 3145728,
+        /* .cond = */ 546447360,
+        /* .rslt0 = */ -2147483648,
+        /* .rslt1 = */ 58720256,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 549474304,
+        /* .rslt0 = */ 1610612736,
+        /* .rslt1 = */ 0,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 550375428,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 98348,
+    },
+    {
+        /* .flag = */ 2850858,
+        /* .cond = */ 551161856,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 81963,
+    },
+    {
+        /* .flag = */ -2144665600,
+        /* .cond = */ 551161856,
+        /* .rslt0 = */ 1088839680,
+        /* .rslt1 = */ 0,
+    },
+    {
+        /* .flag = */ -2144665600,
+        /* .cond = */ 551968768,
+        /* .rslt0 = */ 1088032768,
+        /* .rslt1 = */ 0,
+    },
+    {
+        /* .flag = */ 2621440,
+        /* .cond = */ 551968768,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 49192,
+    },
+    {
+        /* .flag = */ -2144796630,
+        /* .cond = */ 268435456,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 65578,
+    },
+    {
+        /* .flag = */ 82444288,
+        /* .cond = */ 1090039808,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1258,
+    },
+    {
+        /* .flag = */ 2752512,
+        /* .cond = */ 551161856,
+        /* .rslt0 = */ 1610612736,
+        /* .rslt1 = */ 98304,
+    },
+    {
+        /* .flag = */ -2144731136,
+        /* .cond = */ 554070016,
+        /* .rslt0 = */ 1610612736,
+        /* .rslt1 = */ 49152,
+    },
+    {
+        /* .flag = */ 17104896,
+        /* .cond = */ 555495428,
+        /* .rslt0 = */ -2147483648,
+        /* .rslt1 = */ 33555700,
+    },
+    {
+        /* .flag = */ -2130378752,
+        /* .cond = */ 555495424,
+        /* .rslt0 = */ 1093157312,
+        /* .rslt1 = */ 33555701,
+    },
+    {
+        /* .flag = */ 1077084160,
+        /* .cond = */ 557056004,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 147506,
+    },
+    {
+        /* .flag = */ 1077215232,
+        /* .cond = */ 557711364,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 147508,
+    },
+    {
+        /* .flag = */ 1077346304,
+        /* .cond = */ 558366724,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 147510,
+    },
+    {
+        /* .flag = */ 1077477376,
+        /* .cond = */ 559022084,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 147512,
+    },
+    {
+        /* .flag = */ 1077608448,
+        /* .cond = */ 559677444,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 147514,
+    },
+    {
+        /* .flag = */ 1113784320,
+        /* .cond = */ 560332804,
+        /* .rslt0 = */ 805306368,
+        /* .rslt1 = */ 148066,
+    },
+    {
+        /* .flag = */ -2131034112,
+        /* .cond = */ 561000448,
+        /* .rslt0 = */ 1098662336,
+        /* .rslt1 = */ 33555741,
+    },
+    {
+        /* .flag = */ 16449536,
+        /* .cond = */ 561000448,
+        /* .rslt0 = */ -2147483648,
+        /* .rslt1 = */ 33554432,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 562569220,
+        /* .rslt0 = */ 1610612736,
+        /* .rslt1 = */ 16384,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 563359748,
+        /* .rslt0 = */ 1610612736,
+        /* .rslt1 = */ 16384,
+    },
+    {
+        /* .flag = */ 0,
+        /* .cond = */ 564142080,
+        /* .rslt0 = */ -1879048192,
+        /* .rslt1 = */ 62898176,
+    },
+    {
+        /* .flag = */ 82575360,
+        /* .cond = */ 1101844484,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1260,
+    },
+    {
+        /* .flag = */ 82575360,
+        /* .cond = */ 1103286276,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1260,
+    },
+    {
+        /* .flag = */ 82968576,
+        /* .cond = */ 1104719876,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1266,
+    },
+    {
+        /* .flag = */ 82640896,
+        /* .cond = */ 1105637380,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1261,
+    },
+    {
+        /* .flag = */ 82706432,
+        /* .cond = */ 1106554884,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1262,
+    },
+    {
+        /* .flag = */ 82771968,
+        /* .cond = */ 1107472388,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1263,
+    },
+    {
+        /* .flag = */ 82837504,
+        /* .cond = */ 1108389892,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1264,
+    },
+    {
+        /* .flag = */ 82903040,
+        /* .cond = */ 1109307396,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1265,
+    },
+    {
+        /* .flag = */ 83034112,
+        /* .cond = */ 1110233092,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1267,
+    },
+    {
+        /* .flag = */ 83492864,
+        /* .cond = */ 1111674884,
+        /* .rslt0 = */ 268435456,
+        /* .rslt1 = */ 1274,
+    },
+    {
+        NULL
+    }
+};
 
-/* static */ int stg_town_east_EvProgShadowOfSomenthing(void) {
+static Item_List stg_town_east_gi_list[18] = { // size: 0x120, address: 0x1F05460
+    {
+        /* .posX = */ 3134.51f,
+        /* .posZ = */ 29744.269f,
+        /* .posY = */ 53824,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484457,
+    },
+    {
+        /* .posX = */ -7424.31f,
+        /* .posZ = */ -4462.06f,
+        /* .posY = */ 54144,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484459,
+    },
+    {
+        /* .posX = */ -7351.52f,
+        /* .posZ = */ -4546.5f,
+        /* .posY = */ 53664,
+        /* .rotY = */ 32768,
+        /* .st = */ 537920301,
+    },
+    {
+        /* .posX = */ -31707.5f,
+        /* .posZ = */ 14621.0195f,
+        /* .posY = */ 53504,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484463,
+    },
+    {
+        /* .posX = */ -28249.91f,
+        /* .posZ = */ -24580.349f,
+        /* .posY = */ 53344,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484467,
+    },
+    {
+        /* .posX = */ -46008.53f,
+        /* .posZ = */ -50619.21f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 14671,
+        /* .st = */ 1611662433,
+    },
+    {
+        /* .posX = */ -54182.37f,
+        /* .posZ = */ -49684.78f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 47271,
+        /* .st = */ 1611662435,
+    },
+    {
+        /* .posX = */ -54250.28f,
+        /* .posZ = */ -49724.39f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 14659,
+        /* .st = */ 1611662437,
+    },
+    {
+        /* .posX = */ -46116.42f,
+        /* .posZ = */ -50657.3f,
+        /* .posY = */ 53119,
+        /* .rotY = */ 14372,
+        /* .st = */ 2684355687,
+    },
+    {
+        /* .posX = */ -63134.89f,
+        /* .posZ = */ 9542.2597f,
+        /* .posY = */ 53343,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484777,
+    },
+    {
+        /* .posX = */ -63219.16f,
+        /* .posZ = */ 9586.6298f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 14778,
+        /* .st = */ 537920619,
+    },
+    {
+        /* .posX = */ -72056.867f,
+        /* .posZ = */ -62756.03f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 14909,
+        /* .st = */ 537920621,
+    },
+    {
+        /* .posX = */ -72101.5f,
+        /* .posZ = */ -62729.25f,
+        /* .posY = */ 52480,
+        /* .rotY = */ 45490,
+        /* .st = */ 537920623,
+    },
+    {
+        /* .posX = */ 39381.55f,
+        /* .posZ = */ -45792.87f,
+        /* .posY = */ 52158,
+        /* .rotY = */ 15390,
+        /* .st = */ 537920309,
+    },
+    {
+        /* .posX = */ 24842.089f,
+        /* .posZ = */ -47810.53f,
+        /* .posY = */ 52991,
+        /* .rotY = */ 15390,
+        /* .st = */ 537920311,
+    },
+    {
+        /* .posX = */ 39439.71f,
+        /* .posZ = */ -45890.429f,
+        /* .posY = */ 53183,
+        /* .rotY = */ 32768,
+        /* .st = */ 2147484473,
+    },
+    {
+        /* .posX = */ 24907.009f,
+        /* .posZ = */ -47896.0f,
+        /* .posY = */ 0,
+        /* .rotY = */ 46628,
+        /* .st = */ 1074791227,
+    },
+    {
+        /* .posX = */ 0.0f,
+        /* .posZ = */ 0.0f,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .st = */ 3758096384,
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb11[8] = { // size: 0x280, address: 0x1F05580
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7642.5498f, -441.476f, 2368.445f, 1.0f, -7642.5498f, 6.7411999f, 2368.445f, 1.0f, -7361.2998f, 6.7411999f, 2070.62f, 1.0f, -7361.2998f, -441.68148f, 2070.62f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7345.85f, -441.68148f, 92.4645f, 1.0f, -7345.85f, 6.7411999f, 92.4645f, 1.0f, -7600.0498f, 6.7411999f, -4.6283397f, 1.0f, -7600.0498f, -441.68148f, -4.6283397f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7545.95f, -441.06549f, 3265.31f, 1.0f, -7545.95f, 6.7411999f, 3265.31f, 1.0f, -7642.5498f, 6.7411999f, 2368.445f, 1.0f, -7642.5498f, -441.476f, 2368.445f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7442.2998f, 6.7411999f, 459.401f, 1.0f, -7442.2998f, -441.68148f, 459.401f, 1.0f, -7537.2f, -441.68148f, 518.09497f, 1.0f, -7537.2f, 6.7411999f, 518.09497f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7545.95f, 6.7411999f, 3265.31f, 1.0f, -7545.95f, -441.06549f, 3265.31f, 1.0f, -7344.35f, -440.85998f, 3475.705f, 1.0f, -7344.35f, 6.7411999f, 3475.705f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7662.2f, 6.7411999f, 1611.84497f, 1.0f, -7662.2f, -441.68148f, 1611.84497f, 1.0f, -7498.25f, -441.68148f, 1734.67f, 1.0f, -7498.25f, 6.7411999f, 1734.67f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7537.2f, 6.7411999f, 518.09497f, 1.0f, -7537.2f, -441.68148f, 518.09497f, 1.0f, -7662.2f, -441.68148f, 1611.84497f, 1.0f, -7662.2f, 6.7411999f, 1611.84497f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+}; 
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb12[7] = { // size: 0x230, address: 0x1F05800
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7633.45f, 6.7411999f, -2194.665f, 1.0f, -7633.45f, -441.476f, -2194.665f, 1.0f, -7427.2f, -441.68148f, -1996.84497f, 1.0f, -7427.2f, 6.7411999f, -1996.84497f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7637.2f, 6.7411999f, -1511.84497f, 1.0f, -7637.2f, -441.68148f, -1511.84497f, 1.0f, -7587.2f, -441.68148f, 25.65575f, 1.0f, -7587.2f, 6.7411999f, 25.65575f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7720.95f, 6.7411999f, -3115.31f, 1.0f, -7720.95f, -441.06549f, -3115.31f, 1.0f, -7633.45f, -441.476f, -2194.665f, 1.0f, -7633.45f, 6.7411999f, -2194.665f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7462.2f, -441.68148f, -1649.34497f, 1.0f, -7462.2f, 6.7411999f, -1649.34497f, 1.0f, -7427.2f, 6.7411999f, -1996.84497f, 1.0f, -7427.2f, -441.68148f, -1996.84497f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7720.95f, -441.06549f, -3115.31f, 1.0f, -7720.95f, 6.7411999f, -3115.31f, 1.0f, -7452.2f, 6.7411999f, -3388.135f, 1.0f, -7452.2f, -440.85998f, -3388.135f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 12,
+        /* .flg = */ 0,
+        /* .p = */ {-7637.2f, -441.68148f, -1511.84497f, 1.0f, -7637.2f, 6.7411999f, -1511.84497f, 1.0f, -7462.2f, 6.7411999f, -1649.34497f, 1.0f, -7462.2f, -441.68148f, -1649.34497f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb18[4] = { // size: 0x140, address: 0x1F05A30
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {-34187.148f, 45.82125f, 38317.648f, 1.0f, -34187.148f, -321.8515f, 38317.648f, 1.0f, -34063.3f, -321.8515f, 39026.398f, 1.0f, -34063.3f, 45.82125f, 39026.398f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {-34705.1f, 45.82125f, 39026.398f, 1.0f, -34705.1f, -321.8515f, 39026.398f, 1.0f, -34583.75f, -321.8515f, 38294.648f, 1.0f, -34583.75f, 45.82125f, 38294.648f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {-34583.75f, 45.82125f, 38294.648f, 1.0f, -34583.75f, -321.8515f, 38294.648f, 1.0f, -34187.148f, -321.8515f, 38317.648f, 1.0f, -34187.148f, 45.82125f, 38317.648f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb19[10] = { // size: 0x320, address: 0x1F05B70
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-28560.0f, -1250.0f, 4065.0f, 1.0f, -29967.5f, -1250.0f, 4065.0f, 1.0f, -29967.5f, -2500.0f, 4065.0f, 1.0f, -28560.0f, -2500.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-31570.0f, -975.0f, 4065.0f, 1.0f, -30040.0f, -975.0f, 4065.0f, 1.0f, -30040.0f, 0.0f, 4065.0f, 1.0f, -31570.0f, 0.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-30040.0f, -975.0f, 4065.0f, 1.0f, -29967.5f, -975.0f, 4065.0f, 1.0f, -29967.5f, 0.0f, 4065.0f, 1.0f, -30040.0f, 0.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-30040.0f, -1250.0f, 4065.0f, 1.0f, -31570.0f, -1250.0f, 4065.0f, 1.0f, -31570.0f, -2500.0f, 4065.0f, 1.0f, -30040.0f, -2500.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-29967.5f, -1250.0f, 4065.0f, 1.0f, -30040.0f, -1250.0f, 4065.0f, 1.0f, -30040.0f, -2500.0f, 4065.0f, 1.0f, -29967.5f, -2500.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-29967.5f, -975.0f, 4065.0f, 1.0f, -28560.0f, -975.0f, 4065.0f, 1.0f, -28560.0f, 0.0f, 4065.0f, 1.0f, -29967.5f, 0.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-30040.0f, -975.0f, 4065.0f, 1.0f, -31570.0f, -975.0f, 4065.0f, 1.0f, -31570.0f, -1250.0f, 4065.0f, 1.0f, -30040.0f, -1250.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-29967.5f, -975.0f, 4065.0f, 1.0f, -30040.0f, -975.0f, 4065.0f, 1.0f, -30040.0f, -1250.0f, 4065.0f, 1.0f, -29967.5f, -1250.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-28560.0f, -975.0f, 4065.0f, 1.0f, -29967.5f, -975.0f, 4065.0f, 1.0f, -29967.5f, -1250.0f, 4065.0f, 1.0f, -28560.0f, -1250.0f, 4065.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb20[10] = { // size: 0x320, address: 0x1F05E90
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-31508.75f, -1250.0f, -4965.0f, 1.0f, -30041.25f, -1250.0f, -4965.0f, 1.0f, -30041.25f, -2500.0f, -4965.0f, 1.0f, -31508.75f, -2500.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-28498.75f, -975.0f, -4965.0f, 1.0f, -29968.75f, -975.0f, -4965.0f, 1.0f, -29968.75f, 0.0f, -4965.0f, 1.0f, -28498.75f, 0.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-29968.75f, -975.0f, -4965.0f, 1.0f, -30041.25f, -975.0f, -4965.0f, 1.0f, -30041.25f, 0.0f, -4965.0f, 1.0f, -29968.75f, 0.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-29968.75f, -1250.0f, -4965.0f, 1.0f, -28498.75f, -1250.0f, -4965.0f, 1.0f, -28498.75f, -2500.0f, -4965.0f, 1.0f, -29968.75f, -2500.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-30041.25f, -1250.0f, -4965.0f, 1.0f, -29968.75f, -1250.0f, -4965.0f, 1.0f, -29968.75f, -2500.0f, -4965.0f, 1.0f, -30041.25f, -2500.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 8,
+        /* .flg = */ 0,
+        /* .p = */ {-30041.25f, -975.0f, -4965.0f, 1.0f, -31508.75f, -975.0f, -4965.0f, 1.0f, -31508.75f, 0.0f, -4965.0f, 1.0f, -30041.25f, 0.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-29968.75f, -975.0f, -4965.0f, 1.0f, -28498.75f, -975.0f, -4965.0f, 1.0f, -28498.75f, -1250.0f, -4965.0f, 1.0f, -29968.75f, -1250.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-30041.25f, -975.0f, -4965.0f, 1.0f, -29968.75f, -975.0f, -4965.0f, 1.0f, -29968.75f, -1250.0f, -4965.0f, 1.0f, -30041.25f, -1250.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 5,
+        /* .flg = */ 0,
+        /* .p = */ {-31508.75f, -975.0f, -4965.0f, 1.0f, -30041.25f, -975.0f, -4965.0f, 1.0f, -30041.25f, -1250.0f, -4965.0f, 1.0f, -31508.75f, -1250.0f, -4965.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb21[2] = { // size: 0xA0, address: 0x1F061B0
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {-31567.699f, -11.0000495f, -35600.0f, 1.0f, -31567.699f, -3489.0f, -35600.0f, 1.0f, -28432.3f, -3489.0f, -35600.0f, 1.0f, -28432.3f, -11.0000495f, -35600.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb49[14] = { // size: 0x460, address: 0x1F06250
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {34514.3f, -1819.89f, 28316.4f, 1.0f, 34514.3f, 67.254997f, 28316.4f, 1.0f, 33964.6f, 67.254997f, 28250.9f, 1.0f, 33964.6f, -1819.89f, 28250.9f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {36617.898f, -1819.89f, 26473.599f, 1.0f, 36617.898f, 67.254997f, 26473.599f, 1.0f, 34514.3f, 67.254997f, 28316.4f, 1.0f, 34514.3f, -1819.89f, 28316.4f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {36634.148f, -1819.89f, 25912.349f, 1.0f, 36634.148f, 67.254997f, 25912.349f, 1.0f, 36617.898f, 67.254997f, 26473.599f, 1.0f, 36617.898f, -1819.89f, 26473.599f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {35610.398f, -1703.61499f, 27424.099f, 1.0f, 35610.398f, -1319.0849f, 27424.099f, 1.0f, 35436.949f, -1319.0849f, 27295.25f, 1.0f, 35436.949f, -1703.61499f, 27295.25f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {34625.898f, -1707.15f, 28373.449f, 1.0f, 34625.898f, -1322.61999f, 28373.449f, 1.0f, 34803.949f, -1319.0849f, 28505.5f, 1.0f, 34803.949f, -1703.61499f, 28505.5f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {35610.398f, -1319.0849f, 27424.099f, 1.0f, 35610.398f, -1703.61499f, 27424.099f, 1.0f, 34803.949f, -1703.61499f, 28505.5f, 1.0f, 34803.949f, -1319.0849f, 28505.5f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {36559.75f, -1701.665f, 27983.449f, 1.0f, 36559.75f, -9.500000305706635e-05f, 27983.449f, 1.0f, 36813.3f, -9.500000305706635e-05f, 27996.4f, 1.0f, 36813.3f, -1701.665f, 27996.4f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {36559.75f, -9.500000305706635e-05f, 27983.449f, 1.0f, 36559.75f, -1701.665f, 27983.449f, 1.0f, 36549.148f, -1701.665f, 26191.949f, 1.0f, 36549.148f, -9.500000305706635e-05f, 26191.949f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {36813.3f, -1701.665f, 27996.4f, 1.0f, 36813.3f, -9.500000305706635e-05f, 27996.4f, 1.0f, 37743.199f, -9.500000305706635e-05f, 26817.55f, 1.0f, 37743.199f, -1701.665f, 26817.55f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {35490.0f, 0.0f, 27327.199f, 1.0f, 35490.0f, -1704.925f, 27327.199f, 1.0f, 34586.5f, -1704.925f, 28527.349f, 1.0f, 34586.5f, 0.0f, 28527.349f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {35434.6f, -1704.925f, 27281.599f, 1.0f, 35434.6f, 0.0f, 27281.599f, 1.0f, 34382.3f, 0.0f, 28605.099f, 1.0f, 34382.3f, -1704.925f, 28605.099f, 1.0f},
+    },
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 9,
+        /* .flg = */ 0,
+        /* .p = */ {35434.6f, 0.0f, 27281.599f, 1.0f, 35434.6f, -1704.925f, 27281.599f, 1.0f, 35490.0f, -1704.925f, 27327.199f, 1.0f, 35490.0f, 0.0f, 27327.199f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2] = { // size: 0xA0, address: 0x1F066B0
+    {
+        /* .kind = */ 1,
+        /* .shape = */ 1,
+        /* .pad = */ 0,
+        /* .weight = */ 4,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {28415.849f, 0.0f, -36050.0f, 1.0f, 28415.849f, -1150.0f, -36050.0f, 1.0f, 32204.65f, -1150.0f, -36050.0f, 1.0f, 32204.65f, 0.0f, -36050.0f, 1.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .shape = */ 0,
+        /* .pad = */ 0,
+        /* .weight = */ 0,
+        /* .material = */ 0,
+        /* .flg = */ 0,
+        /* .p = */ {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static int (*stg_town_east_ev_prog[10])() = { 
+    NULL, 
+    stg_town_east_EvProgShadowOfSomenthing,
+    stg_town_east_EvProgSandersBack,
+    stg_town_east_EvProgFirstMonsterStart,
+    stg_town_east_EvProgFirstMonsterCorpse,
+    stg_town_east_EvProgFirstMonsterEnd,
+    stg_town_east_EvProgBloodSwamp,
+    stg_town_east_EvProgGetApartGateKey,
+    stg_town_east_EvProgUseApartGateKey,
+    stg_town_east_EvProgLookMemoFalled
+};
+
+static Model_List stg_town_east_mdl_list[72] = {
+    {
+        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-32139.35f, -0.000122f, 33349.375f, 0.0f},
+        /* .rot = */ {-0.0f, -0.036f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-57900.0f, 27.249634f, 9000.0f, 0.0f},
+        /* .rot = */ {3.139503f, -0.23846f, 3.108061f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C1B_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {2990.6863f, 20.310059f, -9173.88f, 0.0f},
+        /* .rot = */ {3.141073f, 0.023591f, -3.119586f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C2B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {35763.805f, -0.00061f, 32832.344f, 0.0f},
+        /* .rot = */ {-0.000001f, -1.31f, -0.000001f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C3B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-28591.857f, -0.000305f, -42377.38f, 0.0f},
+        /* .rot = */ {-3.141582f, -1.541592f, -3.141582f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C3B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-70031.91f, 17.281921f, 1955.8893f, 0.0f},
+        /* .rot = */ {-0.034019f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C4B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {2996.7947f, 18.871826f, -31369.564f, 0.0f},
+        /* .rot = */ {3.141593f, -0.012f, -3.103592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C4B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {27735.006f, -0.000122f, -17660.002f, 0.0f},
+        /* .rot = */ {-3.141593f, -0.262407f, -3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C5B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-91228.3f, 19.602112f, 2068.2537f, 0.0f},
+        /* .rot = */ {0.000777f, 1.562788f, -0.034773f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C5B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-88825.516f, 0.000305f, -63252.9f, 0.0f},
+        /* .rot = */ {0.000002f, 1.396f, -0.000001f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C6B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-30887.21f, 0.0f, -11060.582f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C6B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-88734.1f, 36.108887f, 2076.9163f, 0.0f},
+        /* .rot = */ {-0.032018f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C6B_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {48985.938f, 5.763794f, -41367.4f, 0.0f},
+        /* .rot = */ {-3.141593f, -0.067999f, -3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C7B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-10245.558f, 32.50592f, -2049.2607f, 0.0f},
+        /* .rot = */ {0.033998f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C7B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-62435.906f, 34.45056f, 35027.293f, 0.0f},
+        /* .rot = */ {-0.002053f, -0.053961f, -0.038046f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C8B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-57516.31f, 26.817444f, -10091.932f, 0.0f},
+        /* .rot = */ {-3.141593f, 0.000001f, 3.117591f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C8B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {43296.742f, 35.756042f, -37520.89f, 0.0f},
+        /* .rot = */ {3.11561f, 1.534784f, 3.141575f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_C9B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-2454.5686f, 28.069397f, 18688.398f, 0.0f},
+        /* .rot = */ {-0.000432f, -0.011992f, -0.036003f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CAB_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3008.23f, 21.57f, -28637.326f, 0.0f},
+        /* .rot = */ {-3.141593f, 0.143998f, -3.113592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CAB_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-30845.3f, 0.0f, 11670.45f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CAB_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-62478.004f, 34.455f, -30141.47f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, -0.03f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CBB_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-31236.387f, -0.000305f, -42388.58f, 0.0f},
+        /* .rot = */ {-0.000025f, -1.557998f, -0.000024f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CBB_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-51176.92f, 29.697266f, -1959.8823f, 0.0f},
+        /* .rot = */ {0.038016f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_CCB_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-94722.71f, 1.805289f, -62889.527f, 0.0f},
+        /* .rot = */ {0.001127f, -1.453981f, 0.067119f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_B_DHA_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {47681.957f, 0.0f, 50945.906f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_DHB_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-58951.207f, -8.847323f, 36842.832f, 0.0f},
+        /* .rot = */ {0.0f, -0.764001f, -0.000001f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_DHB_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-61715.797f, 4.474363f, -30503.12f, 0.0f},
+        /* .rot = */ {-0.037537f, -0.861845f, -0.028499f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_DHV_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-34398.34f, -0.068545f, 38713.68f, 0.0f},
+        /* .rot = */ {-0.000002f, -0.058644f, -0.000002f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S02_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3293.6443f, -1250.0f, 21785.193f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S02_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3271.6208f, -1275.0168f, -43269.477f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S02_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-3250.276f, -1100.0f, -37239.957f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S03_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3280.188f, -1150.0118f, -43260.426f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S03_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-3259.8638f, -1250.0f, -37250.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S03_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-28239.996f, -1250.0f, -37250.0f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S03_CHARA_KIND,
+        /* .id = */ 3,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55737.926f, -1275.0f, -37218.56f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S03_CHARA_KIND,
+        /* .id = */ 4,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {30704.234f, -1274.9408f, -35496.453f, 0.0f},
+        /* .rot = */ {-3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S07_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-92250.04f, -1150.0f, -2786.0012f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S08_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-31749.996f, -1100.0f, 2759.9998f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S08_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-28249.99f, -1100.0f, -2750.001f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S08_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-28250.002f, -1120.0149f, -37240.004f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S09_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55769.0f, -1165.2245f, -2789.4177f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S09_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55747.004f, -1150.0f, -37209.945f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S09_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-64250.0f, -1300.0f, 2750.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S09_CHARA_KIND,
+        /* .id = */ 3,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-63273.715f, -1275.0f, -56756.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0A_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {30695.008f, -1149.8805f, -35487.84f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-31759.998f, -1250.0f, 2749.9998f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-28240.0f, -1250.0f, -2750.0f, 0.0f},
+        /* .rot = */ {3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55759.996f, -1290.2245f, -2779.9978f, 0.0f},
+        /* .rot = */ {3.141592f, -0.00001f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .id = */ 3,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-64250.0f, -1200.0f, 2750.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0B_CHARA_KIND,
+        /* .id = */ 4,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-92260.695f, -1300.0f, -2775.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0C_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-63282.703f, -1125.0f, -56765.004f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0D_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3303.254f, -1100.0f, 21776.361f, 0.0f},
+        /* .rot = */ {3.141592f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3260.2402f, -850.0f, 6252.033f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 1,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-3259.9998f, -1200.0f, -44750.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 2,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55750.0f, -1250.0f, 2750.0f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 3,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-53244.008f, -1150.0f, -2779.9536f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 4,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-53771.92f, -1150.0f, -37218.574f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 5,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-55244.01f, -1125.0f, -42779.83f, 0.0f},
+        /* .rot = */ {-0.000081f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 6,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-56698.652f, -1125.0f, -60690.004f, 0.0f},
+        /* .rot = */ {-3.141593f, 0.000001f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 7,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-64248.707f, -1120.0f, -2790.0344f, 0.0f},
+        /* .rot = */ {3.141593f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 8,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-63248.703f, -1150.0f, -29739.984f, 0.0f},
+        /* .rot = */ {3.141593f, -0.0f, 3.141511f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 9,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-69248.69f, -1125.0f, -57240.004f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 0xA,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-64248.7f, -1125.0f, -62790.004f, 0.0f},
+        /* .rot = */ {3.141593f, -0.0f, 3.141592f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 0xB,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-86260.086f, -1125.0f, 2786.4644f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 0xC,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-82235.27f, -1125.0f, -2779.868f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0J_CHARA_KIND,
+        /* .id = */ 0xD,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-107729.984f, -1125.0f, 2746.4792f, 0.0f},
+        /* .rot = */ {0.0f, -1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_S0L_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {3238.866f, -1230.0f, -1250.0f, 0.0f},
+        /* .rot = */ {-0.0f, 1.570796f, -0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_URA2_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {5.150391f, -2.21167f, -59250.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, -0.001472f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_URA3_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0xFB,
+        /* .pos = */ {-30000.0f, 0.0f, -485.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_KAB_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {-113700.0f, 0.0f, 3250.0f, 0.0f},
+        /* .rot = */ {-0.0f, -0.0f, 0.0f, 0.0f},
+    },
+    {
+        /* .kind = */ ITEM_X_KEYGATE_CHARA_KIND,
+        /* .id = */ 0,
+        /* .flagOff = */ 0x2F,
+        /* .flagOn = */ 0x2B,
+        /* .pos = */ {-34200.0f, -12.200157f, 38650.215f, 0.0f},
+        /* .rot = */ {-1.570805f, -0.000008f, 0.757988f, 0.0f},
+    },
+    {
+        /* .kind = */ 0,
+        /* .id = */ 0,
+        /* .flagOff = */ 0,
+        /* .flagOn = */ 0,
+        /* .pos = */ {0.0f, 0.0f, 0.0f, 1.0f},
+        /* .rot = */ {0.0f, 0.0f, 0.0f, 1.0f},
+    }
+};
+
+static Enemy_List stg_town_east_en_list[108] = {
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 4,
+        /* .posX = */ 47500,
+        /* .posZ = */ 51150,
+        /* .posY = */ 0,
+        /* .rotY = */ 12867,
+        /* .status = */ 15,
+        /* .condition = */ 0,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 216,
+        /* .posX = */ 1400,
+        /* .posZ = */ 15400,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 217,
+        /* .posX = */ 1400,
+        /* .posZ = */ 6300,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 218,
+        /* .posX = */ 500,
+        /* .posZ = */ 8000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 219,
+        /* .posX = */ 200,
+        /* .posZ = */ -14800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 220,
+        /* .posX = */ 600,
+        /* .posZ = */ -15800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 221,
+        /* .posX = */ 3400,
+        /* .posZ = */ -15400,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 222,
+        /* .posX = */ 100,
+        /* .posZ = */ -18400,
+        /* .posY = */ 0,
+        /* .rotY = */ 12867,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 223,
+        /* .posX = */ 3000,
+        /* .posZ = */ -9000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 8,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 224,
+        /* .posX = */ 3600,
+        /* .posZ = */ -27200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 225,
+        /* .posX = */ 2500,
+        /* .posZ = */ -33000,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 226,
+        /* .posX = */ 8000,
+        /* .posZ = */ -39000,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 227,
+        /* .posX = */ 13500,
+        /* .posZ = */ -41800,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 228,
+        /* .posX = */ 2900,
+        /* .posZ = */ -41000,
+        /* .posY = */ 0,
+        /* .rotY = */ -3216,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 229,
+        /* .posX = */ -2000,
+        /* .posZ = */ 24300,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 230,
+        /* .posX = */ -700,
+        /* .posZ = */ 10800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 231,
+        /* .posX = */ -11700,
+        /* .posZ = */ -2700,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 232,
+        /* .posX = */ -4900,
+        /* .posZ = */ -16800,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_TYU_CHARA_KIND,
+        /* .id = */ 233,
+        /* .posX = */ -1700,
+        /* .posZ = */ -26000,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 234,
+        /* .posX = */ -17200,
+        /* .posZ = */ -39500,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 235,
+        /* .posX = */ -2600,
+        /* .posZ = */ -50000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 236,
+        /* .posX = */ -9600,
+        /* .posZ = */ -42000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 237,
+        /* .posX = */ -1500,
+        /* .posZ = */ -51000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 238,
+        /* .posX = */ -32000,
+        /* .posZ = */ 33500,
+        /* .posY = */ 0,
+        /* .rotY = */ 12867,
+        /* .status = */ 8,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_TYU_CHARA_KIND,
+        /* .id = */ 239,
+        /* .posX = */ -30000,
+        /* .posZ = */ 10000,
+        /* .posY = */ 0,
+        /* .rotY = */ -3216,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_TYU_CHARA_KIND,
+        /* .id = */ 240,
+        /* .posX = */ -29400,
+        /* .posZ = */ 13000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 241,
+        /* .posX = */ -25700,
+        /* .posZ = */ -2600,
+        /* .posY = */ 0,
+        /* .rotY = */ 2573,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 242,
+        /* .posX = */ -27100,
+        /* .posZ = */ -2200,
+        /* .posY = */ 0,
+        /* .rotY = */ 3216,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 243,
+        /* .posX = */ -30000,
+        /* .posZ = */ -16500,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 244,
+        /* .posX = */ -34500,
+        /* .posZ = */ -100,
+        /* .posY = */ 0,
+        /* .rotY = */ 8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_TYU_CHARA_KIND,
+        /* .id = */ 245,
+        /* .posX = */ -30100,
+        /* .posZ = */ -24500,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 246,
+        /* .posX = */ -29000,
+        /* .posZ = */ -35500,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 247,
+        /* .posX = */ -25000,
+        /* .posZ = */ -42200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 248,
+        /* .posX = */ -36600,
+        /* .posZ = */ -40500,
+        /* .posY = */ 0,
+        /* .rotY = */ 3216,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 249,
+        /* .posX = */ -28300,
+        /* .posZ = */ -42500,
+        /* .posY = */ 0,
+        /* .rotY = */ 3216,
+        /* .status = */ 8,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 250,
+        /* .posX = */ -48500,
+        /* .posZ = */ 1800,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 251,
+        /* .posX = */ -56100,
+        /* .posZ = */ 4900,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 252,
+        /* .posX = */ -49700,
+        /* .posZ = */ -37000,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 253,
+        /* .posX = */ -46300,
+        /* .posZ = */ -42000,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 254,
+        /* .posX = */ -55000,
+        /* .posZ = */ -41100,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 255,
+        /* .posX = */ -58700,
+        /* .posZ = */ -52800,
+        /* .posY = */ 0,
+        /* .rotY = */ -1429,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 256,
+        /* .posX = */ -61300,
+        /* .posZ = */ 20000,
+        /* .posY = */ 0,
+        /* .rotY = */ 1608,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 257,
+        /* .posX = */ -62000,
+        /* .posZ = */ 30000,
+        /* .posY = */ 0,
+        /* .rotY = */ 12867,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_TYU_CHARA_KIND,
+        /* .id = */ 258,
+        /* .posX = */ -77000,
+        /* .posZ = */ 1200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 259,
+        /* .posX = */ -73000,
+        /* .posZ = */ 200,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 260,
+        /* .posX = */ -69900,
+        /* .posZ = */ 2050,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 8,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 261,
+        /* .posX = */ -63300,
+        /* .posZ = */ -11100,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 262,
+        /* .posX = */ -60500,
+        /* .posZ = */ -6000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 263,
+        /* .posX = */ -60400,
+        /* .posZ = */ -29200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 264,
+        /* .posX = */ -77000,
+        /* .posZ = */ -57400,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 265,
+        /* .posX = */ -62000,
+        /* .posZ = */ -41000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 266,
+        /* .posX = */ -67700,
+        /* .posZ = */ -61800,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 267,
+        /* .posX = */ -85100,
+        /* .posZ = */ 500,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 268,
+        /* .posX = */ -108000,
+        /* .posZ = */ -1000,
+        /* .posY = */ 0,
+        /* .rotY = */ 8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 269,
+        /* .posX = */ -102000,
+        /* .posZ = */ 1500,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 270,
+        /* .posX = */ 24600,
+        /* .posZ = */ -38400,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_SCU_CHARA_KIND,
+        /* .id = */ 271,
+        /* .posX = */ 39500,
+        /* .posZ = */ -41900,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 64,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 272,
+        /* .posX = */ 1400,
+        /* .posZ = */ 15400,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 273,
+        /* .posX = */ 1400,
+        /* .posZ = */ 6300,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 274,
+        /* .posX = */ 500,
+        /* .posZ = */ 8000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 275,
+        /* .posX = */ 200,
+        /* .posZ = */ -14800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 276,
+        /* .posX = */ 600,
+        /* .posZ = */ -15800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 279,
+        /* .posX = */ 2500,
+        /* .posZ = */ -33000,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 280,
+        /* .posX = */ 8000,
+        /* .posZ = */ -39000,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 282,
+        /* .posX = */ 13500,
+        /* .posZ = */ -41800,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 283,
+        /* .posX = */ 2900,
+        /* .posZ = */ -41000,
+        /* .posY = */ 0,
+        /* .rotY = */ -3216,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 284,
+        /* .posX = */ -2000,
+        /* .posZ = */ 24300,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 285,
+        /* .posX = */ -700,
+        /* .posZ = */ 10800,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 286,
+        /* .posX = */ -11700,
+        /* .posZ = */ 3700,
+        /* .posY = */ -1700,
+        /* .rotY = */ 0,
+        /* .status = */ 10,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 287,
+        /* .posX = */ -11700,
+        /* .posZ = */ -2700,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 288,
+        /* .posX = */ -4900,
+        /* .posZ = */ -16800,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_RED_CHARA_KIND,
+        /* .id = */ 289,
+        /* .posX = */ -1700,
+        /* .posZ = */ -26000,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 290,
+        /* .posX = */ -17200,
+        /* .posZ = */ -39500,
+        /* .posY = */ 0,
+        /* .rotY = */ -12867,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 291,
+        /* .posX = */ -2600,
+        /* .posZ = */ -50000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 292,
+        /* .posX = */ -9600,
+        /* .posZ = */ -42000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 293,
+        /* .posX = */ -1500,
+        /* .posZ = */ -51000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_RED_CHARA_KIND,
+        /* .id = */ 294,
+        /* .posX = */ -30000,
+        /* .posZ = */ 10000,
+        /* .posY = */ 0,
+        /* .rotY = */ -3216,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_RED_CHARA_KIND,
+        /* .id = */ 295,
+        /* .posX = */ -29400,
+        /* .posZ = */ 13000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 296,
+        /* .posX = */ -25700,
+        /* .posZ = */ -2600,
+        /* .posY = */ 0,
+        /* .rotY = */ 2573,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 297,
+        /* .posX = */ -27100,
+        /* .posZ = */ -2200,
+        /* .posY = */ 0,
+        /* .rotY = */ 3216,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 298,
+        /* .posX = */ -30000,
+        /* .posZ = */ -16500,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 299,
+        /* .posX = */ -34500,
+        /* .posZ = */ -100,
+        /* .posY = */ 0,
+        /* .rotY = */ 8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_RED_CHARA_KIND,
+        /* .id = */ 300,
+        /* .posX = */ -30100,
+        /* .posZ = */ -24500,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 301,
+        /* .posX = */ -29000,
+        /* .posZ = */ -35500,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 302,
+        /* .posX = */ -25000,
+        /* .posZ = */ -42200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 303,
+        /* .posX = */ -36600,
+        /* .posZ = */ -40500,
+        /* .posY = */ 0,
+        /* .rotY = */ 3216,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 304,
+        /* .posX = */ -48500,
+        /* .posZ = */ 1800,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 305,
+        /* .posX = */ -56100,
+        /* .posZ = */ 4900,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 306,
+        /* .posX = */ -49700,
+        /* .posZ = */ -37000,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 307,
+        /* .posX = */ -46300,
+        /* .posZ = */ -42000,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 308,
+        /* .posX = */ -55000,
+        /* .posZ = */ -41100,
+        /* .posY = */ 0,
+        /* .rotY = */ 4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 309,
+        /* .posX = */ -58700,
+        /* .posZ = */ -52800,
+        /* .posY = */ 0,
+        /* .rotY = */ -1429,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 310,
+        /* .posX = */ -61300,
+        /* .posZ = */ 20000,
+        /* .posY = */ 0,
+        /* .rotY = */ 1608,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 311,
+        /* .posX = */ -62000,
+        /* .posZ = */ 30000,
+        /* .posY = */ 0,
+        /* .rotY = */ 12867,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_RED_CHARA_KIND,
+        /* .id = */ 312,
+        /* .posX = */ -77000,
+        /* .posZ = */ 1200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 313,
+        /* .posX = */ -73000,
+        /* .posZ = */ 200,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 314,
+        /* .posX = */ -63300,
+        /* .posZ = */ -11100,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 315,
+        /* .posX = */ -60500,
+        /* .posZ = */ -6000,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 316,
+        /* .posX = */ -60400,
+        /* .posZ = */ -29200,
+        /* .posY = */ 0,
+        /* .rotY = */ -6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 317,
+        /* .posX = */ -77000,
+        /* .posZ = */ -57400,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 318,
+        /* .posX = */ -62000,
+        /* .posZ = */ -41000,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 319,
+        /* .posX = */ -67700,
+        /* .posZ = */ -61800,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 320,
+        /* .posX = */ -85100,
+        /* .posZ = */ 500,
+        /* .posY = */ 0,
+        /* .rotY = */ -4289,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 321,
+        /* .posX = */ -108000,
+        /* .posZ = */ -1000,
+        /* .posY = */ 0,
+        /* .rotY = */ 8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 322,
+        /* .posX = */ -102000,
+        /* .posZ = */ 1500,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_MKN_CHARA_KIND,
+        /* .id = */ 323,
+        /* .posX = */ 24600,
+        /* .posZ = */ -38400,
+        /* .posY = */ 0,
+        /* .rotY = */ 6433,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ EN_XOO_CHARA_KIND,
+        /* .id = */ 324,
+        /* .posX = */ 39500,
+        /* .posZ = */ -41900,
+        /* .posY = */ 0,
+        /* .rotY = */ -8578,
+        /* .status = */ 0,
+        /* .condition = */ 832,
+    },
+    {
+        /* .kind = */ 0,
+        /* .id = */ 0,
+        /* .posX = */ 0,
+        /* .posZ = */ 0,
+        /* .posY = */ 0,
+        /* .rotY = */ 0,
+        /* .status = */ 0,
+        /* .condition = */ 0,
+    }
+};
+
+static GfwFunc stg_town_east_SpecialDrawFunctions = {
+    /* .specDraw = */ stg_town_east_Draw_CB_Tonnel,
+    /* .preDraw = */ stg_town_east_CB_1stMoster_FogHosei,
+    /* .postDraw = */ stg_town_east_CB_1stMonster_Filter,
+    /* .charaDrawHook = */ stg_town_east_Monster1st_Look,
+};
+
+Stage_Data stage_town_east = {
+    /* .evList = */ stg_town_east_ev_list,
+    /* .evPos = */ stg_town_east_ev_pos,
+    /* .evProg = */ stg_town_east_ev_prog,
+    /* .giList = */ stg_town_east_gi_list,
+    /* .mdlList = */ stg_town_east_mdl_list,
+    /* .enList = */ stg_town_east_en_list,
+    /* .stageInit = */ stg_town_east_EvStageInit,
+    /* .roomInit = */ stg_town_east_EvRoomInit,
+    /* .alltimeFunc = */ stg_town_east_EvAllTimeFunc,
+    /* .glbCrd = */ Glb_crd_town_east,
+    /* .pcModel = */ 0,
+    /* .stgAnimInfo = */ stg_town_east_pjames_stage_anim,
+    /* .bgmControl = */ stg_town_east_EvBgmControl,
+    /* .gfwFunc = */ &stg_town_east_SpecialDrawFunctions,
+    /* .charaDataClear = */ stg_town_east_EvCharaDataClear,
+    /* .soundCallAfterLoad = */ NULL,
+    /* .reserve11 = */ 0,
+};
+
+static u_long128* stg_town_east_anim_adr; // size: 0x4, address: 0x1F08200
+static char* stg_town_east_dds_adr[4] = {NULL, NULL, NULL, NULL}; // size: 0x10, address: 0x1F07DD0
+static u_long128* stg_town_east_wp_mdl; // size: 0x4, address: 0x1F08208
+static u_long128* stg_town_east_wp_anm; // size: 0x4, address: 0x1F08210
+static int stg_town_east_sig_timer_b; // size: 0x4, address: 0x1F08218
+static int stg_town_east_sig_timer_b2; // size: 0x4, address: 0x1F08220
+static int stg_town_east_sig_num_a; // size: 0x4, address: 0x1F08228
+static int stg_town_east_sig_num_b; // size: 0x4, address: 0x1F08230
+
+static int stg_town_east_EvProgShadowOfSomenthing(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos0); // @ 0x01F07E50
     UNMIGRATED(Event_CamSetData stg_town_east_cam_data_01F07DE0); // @ 0x01F07DE0
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos1); // @ 0x01F07E60
@@ -84,7 +2994,7 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); /
             DramaDemoFade();
             if (EvSubMessage(28)) {
                 stg_town_east_info_01F07E20.adr_dds_top = stg_town_east_dds_adr[3];
-                *(u_long128 *)scu_rot = 0;
+                *(u_long128*) scu_rot = 0;
                 CharaWorkCreate(EN_SCU_CHARA_KIND, 0, stg_town_east_scu_pos_01F07E80, scu_rot, 17);
                 ev_timer = 0.0f;
                 EV_PROG_STEP(23);
@@ -124,7 +3034,7 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); /
     return 0;
 }
 
-/* static */ int stg_town_east_EvProgSandersBack(void) {
+static int stg_town_east_EvProgSandersBack(void) {
     UNMIGRATED(sceVu0FVECTOR stg_town_east_pos); // @ 0x01F08990
     
     switch (ev_p_step) {
@@ -158,7 +3068,7 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); /
     return 0;
 }
 
-/* static */ int stg_town_east_EvProgFirstMonsterStart(void) {
+static int stg_town_east_EvProgFirstMonsterStart(void) {
     UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_01F07EC0);
     UNMIGRATED(sceVu0FVECTOR stg_town_east_jms_pos_01F07EF0);
     UNMIGRATED(float stg_town_east_jms_rot_01F08238);
@@ -233,7 +3143,7 @@ UNMIGRATED(/* static */ CL_HITPOLY_PLANE stg_town_east_clActWallList_cb52[2]); /
 }
 
 
-/* static */ int stg_town_east_EvProgFirstMonsterCorpse(void) {
+static int stg_town_east_EvProgFirstMonsterCorpse(void) {
     UNMIGRATED(float stg_town_east_jms_rot_01F08240); // @ 0x01F08240
     UNMIGRATED(sceVu0FVECTOR stg_town_east_jms_pos_01F07F70); // @ 0x01F07F70
     UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_a_01F07F40); // @ 0x01F07F40
@@ -294,7 +3204,7 @@ UNMIGRATED(CharaData_DemoList stg_town_east_enemy_list_01F07FF0[3]); // @ 0x01F0
 UNMIGRATED(float stg_town_east_jms_rot_01F08040); // @ 0x01F08040
 UNMIGRATED(sceVu0FVECTOR stg_town_east_jms_pos_01F08030); // @ 0x01F08030
 UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_b_01F07FC0); // @ 0x01F07FC0
-/* static */ int stg_town_east_EvProgFirstMonsterEnd(void) {
+static int stg_town_east_EvProgFirstMonsterEnd(void) {
     
     
     
@@ -353,16 +3263,26 @@ UNMIGRATED(DramaDemo_PlayInfo stg_town_east_info_b_01F07FC0); // @ 0x01F07FC0
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgBloodSwamp);
+static int stg_town_east_EvProgBloodSwamp(void) {
+    
+    if (GET_GAME_FLAG(GAME_FLAG_44)) EvSubPictureDisplay(&data_pic_out_p_swamp_tex, 5); else EvSubPictureDisplay(&data_pic_out_p_swamp_tex, 4);
+    // Am I missing a really easy way to line match this that doesnt look stupid?
 
-/* static */ int stg_town_east_EvProgGetApartGateKey(void) {
-    return EvSubItemGetAndAnim(APART_GATE_KEY, 18);
+
+
+    
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUseApartGateKey);
+static int stg_town_east_EvProgGetApartGateKey(void) {
+    return EvSubItemGetAndAnim(SH2_ITEM_APART_GATE_KEY, 18);
+}
 
-/* static */ int stg_town_east_EvProgLookMemoFalled(void) {
-    int i; // r5
+static int stg_town_east_EvProgUseApartGateKey(void) {
+    return EvSubItemUse0(SH2_ITEM_APART_GATE_KEY, 19, SH2_SOUND_16502, 0, (sceVu0FVECTOR) { -107378.95f, -708.8825f, 3999.731f, 0.0f }, 1);
+}
+
+static int stg_town_east_EvProgLookMemoFalled(void) {
+    int i;
     
     switch (ev_p_step) {
         case 0:
@@ -423,7 +3343,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUs
     return 0;
 }
 
-/* static */ void stg_town_east_EvStageInit(void) {
+static void stg_town_east_EvStageInit(void) {
     if (GET_GAME_FLAG(GAME_FLAG_1303)) 
         SET_GAME_FLAG(GAME_FLAG_1269);    
     if (GET_GAME_FLAG(GAME_FLAG_1302))
@@ -432,22 +3352,122 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvProgUs
         SET_GAME_FLAG(GAME_FLAG_1295);
 }
 
-/* static */ int stg_town_east_EvCharaDataClear(void) {
+static int stg_town_east_EvCharaDataClear(void) {
     return !GET_GAME_FLAG(GAME_FLAG_43);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvRoomInit);
+static void stg_town_east_EvRoomInit(void) {
+    UNMIGRATED(/* static */ CharaData_DemoList stg_town_east_chara_01F08060[4]); // @ 0x01F08060
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (!GET_GAME_FLAG(GAME_FLAG_43)) {
+        CharaDataLoadDemo(stg_town_east_chara_01F08060, 0);
+        stg_town_east_anim_adr = CharaDataLoadExtra(data_demo_saisho_scu_anm, 0x200);
+        
+        stg_town_east_dds_adr[0] = CharaDataLoadExtra(data_demo_saisho_saisho_dds, 0x200);
+        
+        stg_town_east_dds_adr[1] = CharaDataLoadExtra(data_demo_saisho_saisho_c_dds, 0x200);
+        
+        stg_town_east_dds_adr[2] = CharaDataLoadExtra(data_demo_saisho_saisho_d_dds, 0x200);
+        
+        stg_town_east_wp_anm = CharaDataLoadExtra(data_chr_jms_jms_wpkaku_anm, 0x200);
+        
+        stg_town_east_wp_mdl = CharaDataLoadExtra(data_chr_wp_wp_kakuzai_mdl, 0x200);
+        
+        stg_town_east_dds_adr[3] = CharaDataLoadExtra(data_demo_machi_machi_dds, 0x200);
+        
+        fsSync(0, -1);
+        radio.event = 1; radio.pos[0] = 47716.9f; radio.pos[1] = -268.4f; radio.pos[2] = 49627.9f;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTimeFunc);
+static void stg_town_east_EvAllTimeFunc(void) {
+    int disp_ctrl_list[129];
+    int pos_x; int pos_z; int pos;
+    int i; int j;
+    
+    disp_ctrl_list[0] = 0;
+    pos_x = shFloatToInt(16.0f + (sh2jms.player->pos.x / 20000.0f));
+    pos_z = shFloatToInt(16.0f + (sh2jms.player->pos.z / 20000.0f));
+    
+    stg_town_east_sig_timer_b += shGetDF();
+    
+    for (i = -1; i <= 1; i++) {
+        for (j = -1; j <= 1; j++) {
+            pos = (pos_z + j) + ((pos_x + i) << 5);
+            switch (pos) {
+                case 0x231:
+                    stg_town_east_EvWallSetCb49(disp_ctrl_list);
+                    break;
+                case 0x22E:
+                    stg_town_east_EvWallSetCb52(disp_ctrl_list);
+                    break;
+                case 0x1F0:
+                    stg_town_east_EvTapeSetCb11(disp_ctrl_list);
+                    break;
+                case 0x1EF:
+                    stg_town_east_EvTapeSetCb12(disp_ctrl_list);
+                    break;
+                case 0x1D1:
+                    stg_town_east_EvCorpseSetCb18(disp_ctrl_list);
+                    break;
+                case 0x1D0:
+                    stg_town_east_EvWallSetCb19(disp_ctrl_list);
+                    break;
+                case 0x1CF:
+                    stg_town_east_EvWallSetCb20(disp_ctrl_list);
+                    break;
+                case 0x1CE:
+                    stg_town_east_EvWallSetCb21(disp_ctrl_list);
+                    break;
+                case 0x1B1:
+                    stg_town_east_EvCorpseSetCb26(disp_ctrl_list);
+                    break;
+                case 0x1B0:
+                    stg_town_east_EvSignalControlCb27(disp_ctrl_list);
+                    break;
+                case 0x1AF:
+                    stg_town_east_EvSignalControlCb28(disp_ctrl_list);
+                    break;
+                case 0x1AE:
+                    stg_town_east_EvSignalControlCb29(disp_ctrl_list);
+                    break;
+                case 0x190:
+                    stg_town_east_EvSignalControlCb35(disp_ctrl_list);
+                    break;
+                case 0x18F:
+                    stg_town_east_EvSignalControlCb36(disp_ctrl_list);
+                    break;
+                case 0x18E:
+                    stg_town_east_EvSignalControlCb37(disp_ctrl_list);
+                    break;
+                case 0x150:
+                    stg_town_east_EvLockSetCb46(disp_ctrl_list);
+                    break;
+            }
+        }
+    }
+    EvDispControlModelExec(disp_ctrl_list);
+}
 
-/* static */ int stg_town_east_EvBgmControl(void) {
+static int stg_town_east_EvBgmControl(void) {
     if (GET_GAME_FLAG(GAME_FLAG_518)) {
         return 4;
     }
     return GET_GAME_FLAG(GAME_FLAG_41) != 0;
 }
 
-/* static */ void stg_town_east_EvLockSetCb46(int* list) {
+static void stg_town_east_EvLockSetCb46(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_49)) {
         EvDispControlModelEntry(list, 0x2E, 0); // @todo: add room id
         return;
@@ -455,7 +3475,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     EvDispControlModelEntry(list, 0x2E, 1);
 }
 
-/* static */ void stg_town_east_EvCorpseSetCb18(int* list) {
+static void stg_town_east_EvCorpseSetCb18(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_43)) {
         clAddDynamicWall(stg_town_east_clActWallList_cb18);
         EvDispControlModelEntry(list, 0x12, 0); // @todo: add room id
@@ -464,11 +3484,11 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     EvDispControlModelEntry(list, 0x12, -1);
 }
 
-/* static */ void stg_town_east_EvCorpseSetCb26(void) {
+static void stg_town_east_EvCorpseSetCb26(int* list) {
     return;
 }
 
-/* static */ void stg_town_east_EvWallSetCb19(int* list) {
+static void stg_town_east_EvWallSetCb19(int* list) {
     EvDispControlModelEntry(list, 0x13, -1); // @todo: add room id
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x13, 0);
@@ -476,7 +3496,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     }
 }
 
-/* static */ void stg_town_east_EvWallSetCb20(int* list) {
+static void stg_town_east_EvWallSetCb20(int* list) {
     EvDispControlModelEntry(list, 0x14, -1); // @todo: add room id
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x14, 0);
@@ -484,7 +3504,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     }
 }
 
-/* static */ void stg_town_east_EvWallSetCb21(int* list) {
+static void stg_town_east_EvWallSetCb21(int* list) {
     EvDispControlModelEntry(list, 0x15, -1);
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         clAddDynamicWall(stg_town_east_clActWallList_cb21);
@@ -495,7 +3515,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     sh2shd_off_obj(0x15, 8); // @todo: add room id and obj id
 }
 
-/* static */ void stg_town_east_EvWallSetCb49(int* list) {
+static void stg_town_east_EvWallSetCb49(int* list) {
     if (!GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x31, 1); // @todo: add room id
         clAddDynamicWall(&stg_town_east_clActWallList_cb49[4]);
@@ -505,7 +3525,7 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     clAddDynamicWall(stg_town_east_clActWallList_cb49);
 }
 
-/* static */ void stg_town_east_EvWallSetCb52(int* list) {
+static void stg_town_east_EvWallSetCb52(int* list) {
     sh2shd_add_map_to_shadow_off_work(0x34);
     if (GET_GAME_FLAG(GAME_FLAG_251)) {
         EvDispControlModelEntry(list, 0x34, 1);
@@ -517,19 +3537,233 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvAllTim
     sh2shd_off_obj(0x34, 0x36);
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb27);
+static void stg_town_east_EvSignalControlCb27(int* list) {
+    int i;
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb28);
+    
+    
+    
+    
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += (shRandI() % 1000) + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1B, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1B, 1);
+    else if (stg_town_east_sig_num_b == 3) 
+        EvDispControlModelEntry(list, 0x1B, 0);
+    else
+        EvDispControlModelEntry(list, 0x1B, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x1B, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1B, 4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb29);
+static void stg_town_east_EvSignalControlCb28(int* list) {
+    int i;
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb35);
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1C, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1C, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x1C, 0);
+    else
+        EvDispControlModelEntry(list, 0x1C, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x1C, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1C, 4);
+}
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb36);
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignalControlCb37);
 
-/* static */ void stg_town_east_EvTapeSetCb11(int* list) {
+static void stg_town_east_EvSignalControlCb29(int* list) {
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    
+    
+    
+    
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x1D, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x1D, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x1D, 0);
+    else
+        EvDispControlModelEntry(list, 0x1D, 5);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x1D, 3);
+    else 
+        EvDispControlModelEntry(list, 0x1D, 4);
+}
+
+static void stg_town_east_EvSignalControlCb35(int* list) {
+    int i;
+
+    
+    
+    
+    
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    i = stg_town_east_sig_num_b;
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x23, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x23, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x23, 0);
+    else
+        EvDispControlModelEntry(list, 0x23, 5);
+    
+    stg_town_east_sig_num_b = i;
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1) 
+        EvDispControlModelEntry(list, 0x23, 3);
+    else 
+        EvDispControlModelEntry(list, 0x23, 4);
+}
+
+static void stg_town_east_EvSignalControlCb36(int* list) {
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1200) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 1500) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    
+    
+    
+    
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x24, 2);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x24, 1);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x24, 0);
+    else
+        EvDispControlModelEntry(list, 0x24, 5);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x24, 3);
+    else
+        EvDispControlModelEntry(list, 0x24, 4);
+}
+
+static void stg_town_east_EvSignalControlCb37(int* list) {
+    int i; // r2 // @note: idk how they used it
+
+    if (GET_GAME_FLAG(GAME_FLAG_43)) {
+        EvDispControlModelEntry(list, 0x25, 0);
+    }  
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_b = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2750) stg_town_east_sig_num_b = 3;
+    else if ((stg_town_east_sig_timer_b % 3100) < 3050) stg_town_east_sig_num_b = 2;
+    else stg_town_east_sig_num_b = 1;
+    
+    if (stg_town_east_sig_timer_b2 < stg_town_east_sig_timer_b) {
+        stg_town_east_sig_num_b = 0;
+        stg_town_east_sig_timer_b2 += shRandI() % 1000 + 400;
+    }
+    
+    if (stg_town_east_sig_num_b == 1) 
+        EvDispControlModelEntry(list, 0x25, 3);
+    else if (stg_town_east_sig_num_b == 2)
+        EvDispControlModelEntry(list, 0x25, 2);
+    else if (stg_town_east_sig_num_b == 3)
+        EvDispControlModelEntry(list, 0x25, 1);
+    else 
+        EvDispControlModelEntry(list, 0x25, 6);
+    
+    
+    
+    
+    if ((stg_town_east_sig_timer_b % 3100) < 1800) stg_town_east_sig_num_a = 1;
+    else if ((stg_town_east_sig_timer_b % 3100) < 2700) stg_town_east_sig_num_a = 0;
+    else stg_town_east_sig_num_a = 1;
+    
+    if (stg_town_east_sig_num_a == 1)
+        EvDispControlModelEntry(list, 0x25, 4);
+    else
+        EvDispControlModelEntry(list, 0x25, 5);
+}
+
+static void stg_town_east_EvTapeSetCb11(int* list) {
     if (GET_GAME_FLAG(GAME_FLAG_43)) {
         EvDispControlModelEntry(list, 0xB, 0); // @todo: add room id
         return;
@@ -547,15 +3781,80 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_EvSignal
     clAddDynamicWall(stg_town_east_clActWallList_cb12);
 }
 
-/* static */ float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
+static float stg_town_east_LinearTrim(float Yen, float Yst, float Xen, float Xst, float Parm) {
     return Yst + (((Yen - Yst) * (Parm - Xst)) / (Xen - Xst));
 }
 
-INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMoster_FogHosei);
+static sceVu0FVECTOR stg_town_east_ShadowPos; // size: 0x10, address: 0x1F080B0
 
-/* static */ void stg_town_east_CB_1stMonster_Filter(void) {
-    FilterParams* pfp; // r16
-    sceVu0FVECTOR campos; // r29+0x20
+#ifdef NON_MATCHING
+static void stg_town_east_CB_1stMoster_FogHosei(void) {
+    switch (DramaDemoNumber()) {
+        case 6:
+        case 7:
+        case 8: {
+            sceVu0FVECTOR campos;
+    
+            vwGetViewPosition(campos);
+            if ((campos[2] < 50000.0f) && (campos[0] <= 48000.0f)) {
+                
+                
+                sh2gfw_Set_Fogfar(6500.0f);
+                sh2gfw_Set_FogNear(6000.0f);
+                Env_ctl.camera_parms2[2] = 12000.0f;
+            } else {
+                
+                sh2gfw_Set_Fogfar(5500.0f);
+                sh2gfw_Set_FogNear(3000.0f);
+                Env_ctl.camera_parms2[2] = 7500.0f;
+            }
+            break;
+        }
+        
+        case 5: {
+            float ddt = (demo_frame > 115.0f) ? 115.0f : demo_frame;
+            
+            float ffar = stg_town_east_LinearTrim(6900.0f, 5500.0f, 115.0f, 0.0f, ddt);;    
+            sh2gfw_Set_Fogfar(ffar);
+            ffar = stg_town_east_LinearTrim(3500.0f, 3000.0f, 115.0f, 0.0f, ddt);
+            sh2gfw_Set_FogNear(ffar);
+            
+            
+            
+            break;
+        }
+        default:
+            if (EventProgressCheck() == 3) {
+                sceVu0FVECTOR campos;
+                float ffar; float dist;
+                vwGetViewPosition(campos);
+                dist = vec3_dist_reverse(stg_town_east_ShadowPos, campos);
+                
+                Env_ctl.camera_parms2[2] = 8100.0f;
+                
+                if (dist > 3500.0f) dist = 3500.0f;
+                
+                ffar = stg_town_east_LinearTrim(5500.0f, 6900.0f, 3500.0f, 0.0f, dist);
+                sh2gfw_Set_Fogfar(ffar);
+                ffar = stg_town_east_LinearTrim(3000.0f, 3500.0f, 3500.0f, 0.0f, dist);
+                sh2gfw_Set_FogNear(ffar);
+            
+            } else {
+                sh2gfw_Set_Fogfar(5500.0f);
+                sh2gfw_Set_FogNear(3000.0f);
+                Env_ctl.camera_parms2[2] = 7500.0f;
+            }
+            break;
+    }
+
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMoster_FogHosei);
+#endif
+
+static void stg_town_east_CB_1stMonster_Filter(void) {
+    FilterParams* pfp;
+    sceVu0FVECTOR campos;
     
     vwGetViewPosition(campos);
     if ((campos[2] < 50000.0f) && (campos[1] > -2000.0f) && ((DramaDemoNumber() == 6) || (DramaDemoNumber() == 7))) {
@@ -577,4 +3876,22 @@ INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_CB_1stMo
 
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_Draw_CB_Tonnel);
 
+#ifdef NON_MATCHING
+static void stg_town_east_Monster1st_Look(void* sp, float* ambient) {
+    SubCharacter* scp;
+    float fac;
+    float ftmp;
+
+    if (DramaDemoNumber() == 6 || DramaDemoNumber() == 7) {
+        scp = sp;
+        if (scp->pos.z >= 49000.0f) {
+            fac = stg_town_east_LinearTrim(0.1f, 1.0f, 53000.0f, 49000.0f, scp->pos.z);            
+            ftmp = ambient[3];
+            sceVu0ScaleVector(ambient, ambient, fac);
+            ambient[3] = ftmp;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/Event/stage/stg_town_east", stg_town_east_Monster1st_Look);
+#endif
