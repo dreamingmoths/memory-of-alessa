@@ -1,11 +1,12 @@
-from collections.abc import Callable
-from dataclasses import dataclass, field
+import sys
 from pathlib import Path
-from yaml import safe_load as safe_load_yaml
-from json import load as read_json
-from os import stat, remove
 from io import TextIOBase
 from subprocess import run
+from os import stat, remove
+from json import load as read_json
+from collections.abc import Callable
+from dataclasses import dataclass, field
+from yaml import safe_load as safe_load_yaml
 
 from constants import ASM, READELF_PATH, SRC, VSM
 
@@ -74,6 +75,12 @@ def get_file_size(file_path: Path):
 
 def hex_format(number: int) -> str:
     return f"0x{number:X}"
+
+def get_target_platform():
+    return sys.platform == "darwin" and "macos" or "linux"
+
+def get_library_ext():
+    return get_target_platform() == "macos" and "dylib" or "so"
 
 @dataclass
 class SplatSymbol:

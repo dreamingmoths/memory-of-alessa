@@ -6,10 +6,13 @@ import subprocess
 from dataclasses import dataclass
 from hashlib import sha1
 from pathlib import Path
-from constants import ALESSAFORMAT, ALESSASTRUCT, ALESSASTRUCT_SH2_PYTHON, ALESSATOOL_KAITAI, KAITAI_STRUCT_COMPILER, KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER, KAITAI_STRUCT_COMPILER_ZIP
 from traceback import print_exception
 from urllib.request import urlretrieve
 from zipfile import ZipFile
+
+from utils import get_library_ext, get_target_platform
+from constants import ALESSAFORMAT, ALESSASTRUCT, ALESSASTRUCT_SH2_PYTHON, ALESSATOOL_KAITAI, KAITAI_STRUCT_COMPILER, KAITAI_STRUCT_COMPILER_UNIVERSAL_FOLDER, KAITAI_STRUCT_COMPILER_ZIP
+
 
 @dataclass
 class AlessastructVersionInfo:
@@ -64,9 +67,6 @@ KAITAI_STRUCT_COMPILER_INVOCATION = [
     f"--outdir={ALESSATOOL_KAITAI}"
 ]
 
-def get_target_platform():
-    return sys.platform == "darwin" and "macos" or "linux"
-
 def get_version_info_by_hash(versions: list[AlessastructVersionInfo], target_hash: str):
     for version_info in versions:
         if version_info.hash == target_hash:
@@ -89,9 +89,6 @@ def make_file_executable(path: Path):
 
 def download_file(url: str, path: Path):
     urlretrieve(url, path.as_posix(), print_progress)
-
-def get_library_ext():
-    return get_target_platform() == "macos" and "dylib" or "so"
 
 def get_alessaformat_path():
     return f"{ALESSAFORMAT}.{get_library_ext()}"

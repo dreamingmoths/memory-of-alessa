@@ -2,10 +2,11 @@ import os
 import sys
 from ctypes import c_char_p, c_float, cast, cdll
 
+from utils import get_library_ext
 from kaitai.data.float import end_float_string, find_smallest_float_string
 
 class Alessaformat:
-    DYLIB_NAME = "libalessaformat.dylib"
+    DYLIB_NAME = "libalessaformat"
     SUPPORTED_PLATFORMS = ("darwin", "linux", "linux2")
     PRINT_PLATFORM_WARNING = True
 
@@ -25,7 +26,7 @@ class Alessaformat:
             return
 
         dirname = os.path.dirname(__file__)
-        dylib_path = os.path.join(dirname, Alessaformat.DYLIB_NAME)
+        dylib_path = os.path.join(dirname, f"{Alessaformat.DYLIB_NAME}.{get_library_ext()}")
 
         if not os.path.exists(dylib_path):
             self.warn_about_existence(dylib_path)

@@ -78,9 +78,9 @@ class Sh2(KaitaiStruct):
             pass
 
 
-    class Anon12(KaitaiStruct):
+    class Anon13(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.Anon12, self).__init__(_io)
+            super(Sh2.Anon13, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -1350,14 +1350,14 @@ class Sh2(KaitaiStruct):
         def _read(self):
             self.frame = self._io.read_f4le()
             self._unnamed1 = self._io.read_bytes(12)
-            self.camera = Sh2.DdsFrameAnon9(self._io, self, self._root)
+            self.camera = Sh2.DdsFrameAnon10(self._io, self, self._root)
             self.light = []
             for i in range(6):
-                self.light.append(Sh2.DdsFrameAnon10(self._io, self, self._root))
+                self.light.append(Sh2.DdsFrameAnon11(self._io, self, self._root))
 
             self.character = []
             for i in range(7):
-                self.character.append(Sh2.DdsFrameAnon11(self._io, self, self._root))
+                self.character.append(Sh2.DdsFrameAnon12(self._io, self, self._root))
 
 
 
@@ -1377,6 +1377,37 @@ class Sh2(KaitaiStruct):
     class DdsFrameAnon10(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.DdsFrameAnon10, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.position = []
+            for i in range(4):
+                self.position.append(self._io.read_f4le())
+
+            self.interest = []
+            for i in range(4):
+                self.interest.append(self._io.read_f4le())
+
+            self.roll = self._io.read_f4le()
+            self.plane = self._io.read_f4le()
+            self._unnamed4 = self._io.read_bytes(8)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.position)):
+                pass
+
+            for i in range(len(self.interest)):
+                pass
+
+
+
+    class DdsFrameAnon11(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.DdsFrameAnon11, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -1427,9 +1458,9 @@ class Sh2(KaitaiStruct):
 
 
 
-    class DdsFrameAnon11(KaitaiStruct):
+    class DdsFrameAnon12(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.DdsFrameAnon11, self).__init__(_io)
+            super(Sh2.DdsFrameAnon12, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -1446,37 +1477,6 @@ class Sh2(KaitaiStruct):
         def _fetch_instances(self):
             pass
             for i in range(len(self.position)):
-                pass
-
-
-
-    class DdsFrameAnon9(KaitaiStruct):
-        def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.DdsFrameAnon9, self).__init__(_io)
-            self._parent = _parent
-            self._root = _root
-            self._read()
-
-        def _read(self):
-            self.position = []
-            for i in range(4):
-                self.position.append(self._io.read_f4le())
-
-            self.interest = []
-            for i in range(4):
-                self.interest.append(self._io.read_f4le())
-
-            self.roll = self._io.read_f4le()
-            self.plane = self._io.read_f4le()
-            self._unnamed4 = self._io.read_bytes(8)
-
-
-        def _fetch_instances(self):
-            pass
-            for i in range(len(self.position)):
-                pass
-
-            for i in range(len(self.interest)):
                 pass
 
 
@@ -2293,6 +2293,245 @@ class Sh2(KaitaiStruct):
                 pass
 
             for i in range(len(self.mark)):
+                pass
+
+
+
+    class EnEfctEnvData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctEnvData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.poison = []
+            for i in range(6):
+                self.poison.append(Sh2.U16(self._io, self, self._root))
+
+            self.insect = []
+            for i in range(6):
+                self.insect.append(Sh2.U16(self._io, self, self._root))
+
+            self.spray = []
+            for i in range(6):
+                self.spray.append(Sh2.U16(self._io, self, self._root))
+
+            self.tyu2d = []
+            for i in range(6):
+                self.tyu2d.append(Sh2.U16(self._io, self, self._root))
+
+            self.set_poison_tex = self._io.read_s1()
+            self.set_insect_tex = self._io.read_s1()
+            self.set_insect_tex_bak = self._io.read_s1()
+            self.set_spray_tex = self._io.read_s1()
+            self.set_tyu2d_tex = self._io.read_s1()
+            self._unnamed9 = self._io.read_bytes(11)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.poison)):
+                pass
+                self.poison[i]._fetch_instances()
+
+            for i in range(len(self.insect)):
+                pass
+                self.insect[i]._fetch_instances()
+
+            for i in range(len(self.spray)):
+                pass
+                self.spray[i]._fetch_instances()
+
+            for i in range(len(self.tyu2d)):
+                pass
+                self.tyu2d[i]._fetch_instances()
+
+
+
+    class EnEfctPfogData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctPfogData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.vec = []
+            for i in range(4):
+                self.vec.append(self._io.read_f4le())
+
+            self.color = self._io.read_u4le()
+            self.alpha = self._io.read_s4le()
+            self.scattar = self._io.read_f4le()
+            self.size = self._io.read_f4le()
+            self.s = self._io.read_f4le()
+            self.t = self._io.read_f4le()
+            self._unnamed8 = self._io.read_bytes(8)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.vec)):
+                pass
+
+
+
+    class EnEfctSprayData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctSprayData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.vec = []
+            for i in range(4):
+                self.vec.append(self._io.read_f4le())
+
+            self.color = self._io.read_u4le()
+            self.timer = self._io.read_s4le()
+            self.timer1 = self._io.read_s4le()
+            self.timer2 = self._io.read_s4le()
+            self.alpha = self._io.read_s4le()
+            self.scattar = self._io.read_f4le()
+            self.size = self._io.read_f4le()
+            self.s = self._io.read_f4le()
+            self.t = self._io.read_f4le()
+            self._unnamed11 = self._io.read_bytes(12)
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.vec)):
+                pass
+
+
+
+    class EnEfctTask(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctTask, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.exe = Sh2.ShTskExecute(self._io, self, self._root)
+            self.step = self._io.read_s4le()
+            self.count = self._io.read_s4le()
+            self._unnamed3 = self._io.read_bytes(4)
+            self._raw__unnamed4 = self._io.read_bytes(80)
+            _io__raw__unnamed4 = KaitaiStream(BytesIO(self._raw__unnamed4))
+            self._unnamed4 = Sh2.EnEfctTaskAnon7(_io__raw__unnamed4, self, self._root)
+
+
+        def _fetch_instances(self):
+            pass
+            self.exe._fetch_instances()
+            self._unnamed4._fetch_instances()
+
+
+    class EnEfctTaskAnon7(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctTaskAnon7, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self._unnamed0 = self._io.read_bytes(80)
+
+
+        def _fetch_instances(self):
+            pass
+            _ = self.pfog
+            if hasattr(self, '_m_pfog'):
+                pass
+                self._m_pfog._fetch_instances()
+
+            _ = self.spray
+            if hasattr(self, '_m_spray'):
+                pass
+                self._m_spray._fetch_instances()
+
+            _ = self.tyu2d
+            if hasattr(self, '_m_tyu2d'):
+                pass
+                self._m_tyu2d._fetch_instances()
+
+
+        @property
+        def pfog(self):
+            if hasattr(self, '_m_pfog'):
+                return self._m_pfog
+
+            _pos = self._io.pos()
+            self._io.seek(0)
+            self._m_pfog = Sh2.EnEfctPfogData(self._io, self, self._root)
+            self._io.seek(_pos)
+            return getattr(self, '_m_pfog', None)
+
+        @property
+        def spray(self):
+            if hasattr(self, '_m_spray'):
+                return self._m_spray
+
+            _pos = self._io.pos()
+            self._io.seek(0)
+            self._m_spray = Sh2.EnEfctSprayData(self._io, self, self._root)
+            self._io.seek(_pos)
+            return getattr(self, '_m_spray', None)
+
+        @property
+        def tyu2d(self):
+            if hasattr(self, '_m_tyu2d'):
+                return self._m_tyu2d
+
+            _pos = self._io.pos()
+            self._io.seek(0)
+            self._m_tyu2d = Sh2.EnEfctTy2duData(self._io, self, self._root)
+            self._io.seek(_pos)
+            return getattr(self, '_m_tyu2d', None)
+
+
+    class EnEfctTy2duData(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.EnEfctTy2duData, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.pos = []
+            for i in range(4):
+                self.pos.append(self._io.read_f4le())
+
+            self.rot = []
+            for i in range(4):
+                self.rot.append(self._io.read_f4le())
+
+
+
+        def _fetch_instances(self):
+            pass
+            for i in range(len(self.pos)):
+                pass
+
+            for i in range(len(self.rot)):
                 pass
 
 
@@ -4071,7 +4310,7 @@ class Sh2(KaitaiStruct):
 
             _pos = self._io.pos()
             self._io.seek(0)
-            self._m_check = Sh2.FsFileAnon7(self._io, self, self._root)
+            self._m_check = Sh2.FsFileAnon8(self._io, self, self._root)
             self._io.seek(_pos)
             return getattr(self, '_m_check', None)
 
@@ -4131,9 +4370,9 @@ class Sh2(KaitaiStruct):
             return getattr(self, '_m_pack', None)
 
 
-    class FsFileAnon7(KaitaiStruct):
+    class FsFileAnon8(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.FsFileAnon7, self).__init__(_io)
+            super(Sh2.FsFileAnon8, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -4180,7 +4419,7 @@ class Sh2(KaitaiStruct):
 
             _pos = self._io.pos()
             self._io.seek(0)
-            self._m_index = Sh2.FsFileIndexAnon8(self._io, self, self._root)
+            self._m_index = Sh2.FsFileIndexAnon9(self._io, self, self._root)
             self._io.seek(_pos)
             return getattr(self, '_m_index', None)
 
@@ -4196,9 +4435,9 @@ class Sh2(KaitaiStruct):
             return getattr(self, '_m_pack', None)
 
 
-    class FsFileIndexAnon8(KaitaiStruct):
+    class FsFileIndexAnon9(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.FsFileIndexAnon8, self).__init__(_io)
+            super(Sh2.FsFileIndexAnon9, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -11534,6 +11773,51 @@ class Sh2(KaitaiStruct):
             self.free._fetch_instances()
 
 
+    class ShTskExecute(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShTskExecute, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.adrs = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.next = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.prev = Sh2.Pointer(u"data", self._io, self, self._root)
+            self.mode = self._io.read_s4le()
+            self.atr = self._io.read_s4le()
+
+
+        def _fetch_instances(self):
+            pass
+            self.adrs._fetch_instances()
+            self.next._fetch_instances()
+            self.prev._fetch_instances()
+
+
+    class ShTskTask(KaitaiStruct):
+        def __init__(self, _io, _parent=None, _root=None):
+            super(Sh2.ShTskTask, self).__init__(_io)
+            self._parent = _parent
+            self._root = _root
+            self._read()
+
+        def _read(self):
+            self.exe = Sh2.ShTskExecute(self._io, self, self._root)
+            self.freemem = []
+            for i in range(492):
+                self.freemem.append(self._io.read_u1())
+
+
+
+        def _fetch_instances(self):
+            pass
+            self.exe._fetch_instances()
+            for i in range(len(self.freemem)):
+                pass
+
+
+
     class ShadowCharHead(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
             super(Sh2.ShadowCharHead, self).__init__(_io)
@@ -14256,7 +14540,7 @@ class Sh2(KaitaiStruct):
             self.param = Sh2.Pointer(u"data", self._io, self, self._root)
             self.super = Sh2.Pointer(u"vb_coordinate", self._io, self, self._root)
             self.sub = Sh2.Pointer(u"vb_coordinate", self._io, self, self._root)
-            self.r = Sh2.VbCoordinateAnon13(self._io, self, self._root)
+            self.r = Sh2.VbCoordinateAnon14(self._io, self, self._root)
             self._unnamed8 = self._io.read_bytes(12)
             self.lw = []
             for i in range(16):
@@ -14295,9 +14579,9 @@ class Sh2(KaitaiStruct):
 
 
 
-    class VbCoordinateAnon13(KaitaiStruct):
+    class VbCoordinateAnon14(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.VbCoordinateAnon13, self).__init__(_io)
+            super(Sh2.VbCoordinateAnon14, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()
@@ -14714,7 +14998,7 @@ class Sh2(KaitaiStruct):
             self.cam_mv_type = self._io.read_s4le()
             self._raw_tmp = self._io.read_bytes(16)
             _io__raw_tmp = KaitaiStream(BytesIO(self._raw_tmp))
-            self.tmp = Sh2.VcRoadDataAnon14(_io__raw_tmp, self, self._root)
+            self.tmp = Sh2.VcRoadDataAnon15(_io__raw_tmp, self, self._root)
 
 
         def _fetch_instances(self):
@@ -14724,9 +15008,9 @@ class Sh2(KaitaiStruct):
             self.tmp._fetch_instances()
 
 
-    class VcRoadDataAnon14(KaitaiStruct):
+    class VcRoadDataAnon15(KaitaiStruct):
         def __init__(self, _io, _parent=None, _root=None):
-            super(Sh2.VcRoadDataAnon14, self).__init__(_io)
+            super(Sh2.VcRoadDataAnon15, self).__init__(_io)
             self._parent = _parent
             self._root = _root
             self._read()

@@ -10,7 +10,7 @@ from re import MULTILINE, finditer, sub
 from kaitaistruct import KaitaiStream, KaitaiStruct
 from kaitai.data.config import PROJECT_DATA_CONFIG
 from kaitai.data.data_types import Pointer, ProjectDataConfig, SimpleData, String, StructData
-from kaitai.data.lib.libalessaformat import alessaformat
+from kaitai.data.lib.alessaformat import alessaformat
 
 from constants import CONFIG, INDENT_SIZE, PROJECT_CONFIG
 from utils import AddressConversion, ExeInfoByName, SplatSymbolAddrsAtlas, get_exe_info_by_name, get_from_vram_conversion, load_yaml

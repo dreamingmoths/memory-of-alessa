@@ -4660,6 +4660,190 @@ types:
       - id: rate
         type: f4
 
+  sh_tsk_execute:
+    seq:
+      - id: adrs
+        type: pointer('data')
+
+      - id: next
+        type: pointer('data')
+
+      - id: prev
+        type: pointer('data')
+
+      - id: mode
+        type: s4
+
+      - id: atr
+        type: s4
+
+  sh_tsk_task:
+    seq:
+      - id: exe
+        type: sh_tsk_execute
+
+      - id: freemem
+        type: u1
+        repeat: expr
+        repeat-expr: 492
+
+  en_efct_pfog_data:
+    seq:
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vec
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: color
+        type: u4
+
+      - id: alpha
+        type: s4
+
+      - id: scattar
+        type: f4
+
+      - id: size
+        type: f4
+
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+      - size: 8
+
+  en_efct_spray_data:
+    seq:
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: vec
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: color
+        type: u4
+
+      - id: timer
+        type: s4
+
+      - id: timer1
+        type: s4
+
+      - id: timer2
+        type: s4
+
+      - id: alpha
+        type: s4
+
+      - id: scattar
+        type: f4
+
+      - id: size
+        type: f4
+
+      - id: s
+        type: f4
+
+      - id: t
+        type: f4
+
+      - size: 12
+
+  en_efct_ty2du_data:
+    seq:
+      - id: pos
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+      - id: rot
+        type: f4
+        repeat: expr
+        repeat-expr: 4
+
+  en_efct_task:
+    seq:
+      - id: exe
+        type: sh_tsk_execute
+
+      - id: step
+        type: s4
+
+      - id: count
+        type: s4
+
+      - size: 4
+
+      - type: en_efct_task_anon_7
+        size: 80
+
+  en_efct_task_anon_7:
+    instances:
+      pfog:
+        pos: 0
+        type: en_efct_pfog_data
+
+      spray:
+        pos: 0
+        type: en_efct_spray_data
+
+      tyu2d:
+        pos: 0
+        type: en_efct_ty2du_data
+
+    seq:
+      - size: 80
+
+  en_efct_env_data:
+    seq:
+      - id: poison
+        type: u16
+        repeat: expr
+        repeat-expr: 6
+
+      - id: insect
+        type: u16
+        repeat: expr
+        repeat-expr: 6
+
+      - id: spray
+        type: u16
+        repeat: expr
+        repeat-expr: 6
+
+      - id: tyu2d
+        type: u16
+        repeat: expr
+        repeat-expr: 6
+
+      - id: set_poison_tex
+        type: s1
+
+      - id: set_insect_tex
+        type: s1
+
+      - id: set_insect_tex_bak
+        type: s1
+
+      - id: set_spray_tex
+        type: s1
+
+      - id: set_tyu2d_tex
+        type: s1
+
+      - size: 11
+
   item:
     seq:
       - id: flag
@@ -5048,7 +5232,7 @@ types:
     instances:
       check:
         pos: 0
-        type: fs_file_anon_7
+        type: fs_file_anon_8
 
       pack:
         pos: 0
@@ -5077,7 +5261,7 @@ types:
     seq:
       - size: 16
 
-  fs_file_anon_7:
+  fs_file_anon_8:
     seq:
       - id: type
         type: b8
@@ -5098,7 +5282,7 @@ types:
     instances:
       index:
         pos: 0
-        type: fs_file_index_anon_8
+        type: fs_file_index_anon_9
 
       pack:
         pos: 0
@@ -5107,7 +5291,7 @@ types:
     seq:
       - size: 8
 
-  fs_file_index_anon_8:
+  fs_file_index_anon_9:
     seq:
       - id: fp
         type: pointer('fs_file')
@@ -5407,19 +5591,19 @@ types:
       - size: 12
 
       - id: camera
-        type: dds_frame_anon_9
+        type: dds_frame_anon_10
 
       - id: light
-        type: dds_frame_anon_10
+        type: dds_frame_anon_11
         repeat: expr
         repeat-expr: 6
 
       - id: character
-        type: dds_frame_anon_11
+        type: dds_frame_anon_12
         repeat: expr
         repeat-expr: 7
 
-  dds_frame_anon_9:
+  dds_frame_anon_10:
     seq:
       - id: position
         type: f4
@@ -5439,7 +5623,7 @@ types:
 
       - size: 8
 
-  dds_frame_anon_10:
+  dds_frame_anon_11:
     seq:
       - id: position
         type: f4
@@ -5476,7 +5660,7 @@ types:
 
       - size: 12
 
-  dds_frame_anon_11:
+  dds_frame_anon_12:
     seq:
       - id: position
         type: f4
@@ -10613,7 +10797,7 @@ types:
       - id: sce_gs_vs_cid
         type: s4
 
-  anon_12:
+  anon_13:
     seq:
       - id: status
         type: s4
@@ -12103,7 +12287,7 @@ types:
         type: pointer('vb_coordinate')
 
       - id: r
-        type: vb_coordinate_anon_13
+        type: vb_coordinate_anon_14
 
       - size: 12
 
@@ -12122,7 +12306,7 @@ types:
         repeat: expr
         repeat-expr: 4
 
-  vb_coordinate_anon_13:
+  vb_coordinate_anon_14:
     seq:
       - id: vx
         type: s2
@@ -12426,10 +12610,10 @@ types:
         type: s4
 
       - id: tmp
-        type: vc_road_data_anon_14
+        type: vc_road_data_anon_15
         size: 16
 
-  vc_road_data_anon_14:
+  vc_road_data_anon_15:
     instances:
       data:
         pos: 0
