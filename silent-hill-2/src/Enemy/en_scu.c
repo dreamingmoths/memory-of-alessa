@@ -461,7 +461,27 @@ static void enSCUCtrlAttack(EnLOCAL_DATA* dp) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlDamage);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlConfuse);
+static void enSCUCtrlConfuse(EnLOCAL_DATA* dp) {
+    if (enCheckDamage(dp)) {
+        if (enCheckSpray(dp)) {
+            ENEMY_SUB_STEP(0);
+        } else {
+            ENEMY_STEP(8);
+            return;
+        }
+    }
+    if (dp->sslv == 0) {
+        enReduceHP(dp);
+        enSCUAnimeSet(dp, 2);
+        ENEMY_NEXT_SUB_STEP();
+    }
+    if ((dp->sslv == 1) && (dp->anim_n == -1)) {
+        ENEMY_NEXT_SUB_STEP();
+        enSetTimer(dp, 600 - (enGetMode() * 90));
+    } else if ((dp->sslv == 2) && (enReduceTimer(dp) <= 0)) {
+        ENEMY_STEP(1);
+    } 
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlDown);
 
@@ -469,7 +489,17 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCanSeePlayer);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCheckAmbush);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCheckUpper);
+static int enSCUCheckUpper(EnLOCAL_DATA* dp) {
+    sceVu0FVECTOR pos1; sceVu0FVECTOR pos2;
+    shVectorCopy(pos1, &dp->scp->pos);
+    shVectorCopy(pos2, &dp->scp->pos);
+    pos1[1] -= 1300.0f;
+    pos2[1] -= 50.0f;
+    if (enCheckHitEyes(dp, pos1, pos2) >= 0.0f) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUAnimeSet);
 
