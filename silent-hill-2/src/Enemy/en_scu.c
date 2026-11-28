@@ -56,9 +56,31 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlMain);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlAutomatic);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlSleep);
+static void enSCUCtrlSleep(EnLOCAL_DATA* dp) {
+    if (enCheckSleepOut(dp)) {
+        enSleepOut(dp);
+        enFlagResetLieDown(dp);
+        ENEMY_MLV(3);
+        if (dp->type & (1 << 3)) {
+            enFlagResetMoved(dp);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlGoPlayable);
+static void enSCUCtrlGoPlayable(EnLOCAL_DATA* dp) {
+    ENEMY_MLV(1);
+    if (dp->type != -1) {
+        if (dp->type & (1 << 4)) {
+            ENEMY_STEP(6); 
+        } else if (dp->type & (1 << 3)) {
+            ENEMY_STEP(5);
+        } else {
+            ENEMY_STEP(0);
+        }
+    } else {
+        ENEMY_STEP(11);
+    } 
+}
 
 static void enSCUCtrlEvent(EnLOCAL_DATA* dp) {
     enSCUAnimeExec(dp);
