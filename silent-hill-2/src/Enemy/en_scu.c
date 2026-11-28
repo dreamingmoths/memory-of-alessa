@@ -1,9 +1,11 @@
 #include "sh2_common.h"
 #include "SH2_common/sh_vu0.h"
 
-#include "vec.h"
+#include "Chacter/sh2_battle_list.h"
 
 #include "Enemy/en_common.h"
+
+#include "vec.h"
 
 #pragma fast_fptosi on
 
@@ -58,7 +60,10 @@ INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlSleep);
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlGoPlayable);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlEvent);
+static void enSCUCtrlEvent(EnLOCAL_DATA* dp) {
+    enSCUAnimeExec(dp);
+    enMoveExec(dp);
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlHand);
 
