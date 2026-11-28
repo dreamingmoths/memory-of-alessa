@@ -485,7 +485,51 @@ static void enSCUCtrlConfuse(EnLOCAL_DATA* dp) {
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCtrlDown);
 
-INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCanSeePlayer);
+static int enSCUCanSeePlayer(EnLOCAL_DATA* dp) {
+    float* ppos = enGetPlayerPos(dp);
+    float dist; float a;
+    int wcd = enGetWorldCondition();
+    dist = enCheckPath2(dp, ppos, &dp->scp->pos);
+    if (dist >= 0.0f) {
+        if ((enGetMode() >= SH2_BATTLE_LEVEL_NORMAL) && (dp->p_dist < enSCUGetAttackRange())) {
+            
+            
+            a = enCalcDirection(ppos, &dp->scp->pos);
+            a = enCalcAngleDifference(a, dp->scp->rot.y);
+            if (a < enSCUGetAttackAngle()) return 2;            
+        }
+        if ((wcd >= 2) && (enCheckSeeLight(dp)) && !(enLocalWork.Status & 1)) {
+            
+            return 1;
+        }
+        return 0;
+    }
+    dist = dp->p_dist;
+    switch (wcd) {
+        case 0:
+            if (dist > 5000.0f) return 0;           
+            break;
+        case 1:
+            if (dist > 3000.0f) return 0;            
+            break;
+        case 2:
+        case 3:
+            if (dist > 4000.0f) return 0;
+            break;
+        case 4:
+            if (dist > 1000.0f) return 0;            
+            break;
+    }
+    a = enCalcDirection(ppos, &dp->scp->pos);
+    a = enCalcAngleDifference(a, dp->scp->rot.y);
+    if ((a < enSCUGetAttackAngle()) && (dist < enSCUGetAttackRange()) && !(enCheckNoDamageHuman(dp))) 
+        return 2;
+    if ((wcd >= 2) && (enCheckSeeLight(dp))) return 1;
+    
+    if (a > TO_RAD(70)) return 0;
+    return !(enLocalWork.Status & 1);
+
+}
 
 INCLUDE_ASM("asm/nonmatchings/Enemy/en_scu", enSCUCheckAmbush);
 
